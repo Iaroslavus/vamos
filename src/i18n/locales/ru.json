@@ -35,7 +35,10 @@
     "feedbackFailed": "Сердечки закончились",
     "correctAnswer": "Правильный ответ: {{answer}}",
     "progressA11y": "Прогресс {{solved}} из {{total}}",
-    "loadError": "Не удалось загрузить урок"
+    "loadError": "Не удалось загрузить урок",
+    "playAudio": "Слушать",
+    "playSlow": "Медленно",
+    "stopAudio": "Стоп"
   },
   "onboarding": {
     "title": "Добро пожаловать",

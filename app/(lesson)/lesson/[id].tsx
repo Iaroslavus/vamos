@@ -9,8 +9,11 @@ import { Button } from '@/components/Button';
 import { ProgressBar } from '@/components/ProgressBar';
 import { ResultSheet } from '@/components/ResultSheet';
 import { Text } from '@/components/Text';
+import { stopLessonAudio } from '@/features/audio/playback';
 import { BuildSentenceExercise } from '@/features/lesson/components/BuildSentenceExercise';
 import { LessonHearts } from '@/features/lesson/components/LessonHearts';
+import { ListenSelectExercise } from '@/features/lesson/components/ListenSelectExercise';
+import { MatchPairsExercise } from '@/features/lesson/components/MatchPairsExercise';
 import { SelectTranslationExercise } from '@/features/lesson/components/SelectTranslationExercise';
 import { loadLesson } from '@/features/lesson/loader';
 import { toPlayableExercises } from '@/features/lesson/playable';
@@ -62,6 +65,7 @@ export default function LessonScreen() {
     if (!loaded.ok) return;
     startLesson({ lessonId: loaded.lessonId, exercises: loaded.exercises });
     return () => {
+      void stopLessonAudio();
       reset();
     };
   }, [loaded, reset, startLesson]);
@@ -128,7 +132,10 @@ export default function LessonScreen() {
     return <View style={[styles.root, { backgroundColor: colors.ground }]} />;
   }
 
-  const canCheck = status === 'active' && userAnswer.trim().length > 0;
+  const canCheck =
+    status === 'active' &&
+    userAnswer.trim().length > 0 &&
+    (exercise.type !== 'match_pairs' || userAnswer === exercise.answer);
 
   return (
     <View style={[styles.root, { paddingTop: insets.top + space.sm }]}>
@@ -162,14 +169,31 @@ export default function LessonScreen() {
             disabled={status !== 'active'}
             onSelect={setAnswer}
           />
-        ) : (
+        ) : null}
+        {exercise.type === 'build_sentence' ? (
           <BuildSentenceExercise
             key={exercise.id}
             exercise={exercise}
             disabled={status !== 'active'}
             onAnswerChange={onAnswerChange}
           />
-        )}
+        ) : null}
+        {exercise.type === 'listen_select' ? (
+          <ListenSelectExercise
+            exercise={exercise}
+            selected={userAnswer}
+            disabled={status !== 'active'}
+            onSelect={setAnswer}
+          />
+        ) : null}
+        {exercise.type === 'match_pairs' ? (
+          <MatchPairsExercise
+            key={exercise.id}
+            exercise={exercise}
+            disabled={status !== 'active'}
+            onAnswerChange={onAnswerChange}
+          />
+        ) : null}
       </View>
 
       <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, space.lg) }]}>

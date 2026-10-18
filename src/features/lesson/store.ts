@@ -26,8 +26,27 @@ export type BuildSentenceItem = LessonExerciseBase & {
   tiles: readonly string[];
 };
 
+export type ListenSelectItem = LessonExerciseBase & {
+  type: 'listen_select';
+  options: readonly string[];
+  /** Content audio path; playback falls back to TTS of `speakText`. */
+  audio?: string;
+  speakText: string;
+};
+
+export type MatchPair = {
+  left: string;
+  right: string;
+};
+
+export type MatchPairsItem = LessonExerciseBase & {
+  type: 'match_pairs';
+  pairs: readonly MatchPair[];
+};
+
 /** Playable exercise payload for the lesson session (MVP types). */
-export type LessonExerciseItem = SelectTranslationItem | BuildSentenceItem;
+export type LessonExerciseItem =
+  SelectTranslationItem | BuildSentenceItem | ListenSelectItem | MatchPairsItem;
 
 export type LessonSessionStatus = 'idle' | 'active' | 'feedback' | 'completed' | 'failed';
 
