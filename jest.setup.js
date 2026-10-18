@@ -22,3 +22,17 @@ jest.mock('react-native-reanimated', () => {
     },
   };
 });
+
+jest.mock('react-native-svg', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+
+  const Mock = (props) => React.createElement(View, props);
+
+  return {
+    __esModule: true,
+    default: Mock,
+    Svg: Mock,
+    Circle: Mock,
+  };
+});
