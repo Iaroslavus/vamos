@@ -7,7 +7,8 @@
   },
   "learn": {
     "title": "Учиться",
-    "stub": "Здесь появится путь уроков — змейка узлов, цель дня и серия."
+    "stub": "Здесь появится путь уроков — змейка узлов, цель дня и серия.",
+    "startLesson": "Начать урок"
   },
   "dialog": {
     "title": "Диалог",
@@ -25,7 +26,16 @@
     "title": "Урок",
     "stub": "Экран урока скоро будет здесь.",
     "reviewTitle": "Повторение",
-    "reviewStub": "Карточки FSRS появятся здесь."
+    "reviewStub": "Карточки FSRS появятся здесь.",
+    "check": "Проверить",
+    "continue": "Дальше",
+    "feedbackCorrect": "Верно!",
+    "feedbackAlmost": "Почти!",
+    "feedbackWrong": "Неверно",
+    "feedbackFailed": "Сердечки закончились",
+    "correctAnswer": "Правильный ответ: {{answer}}",
+    "progressA11y": "Прогресс {{solved}} из {{total}}",
+    "loadError": "Не удалось загрузить урок"
   },
   "onboarding": {
     "title": "Добро пожаловать",
@@ -45,6 +55,7 @@
     "devComponents": "Компоненты (dev)",
     "openLesson": "Открыть урок",
     "openOnboarding": "Открыть онбординг",
+    "close": "Закрыть",
     "notFoundTitle": "Страница не найдена",
     "notFoundLink": "На главную"
   }

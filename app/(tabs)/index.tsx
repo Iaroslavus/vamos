@@ -14,9 +14,9 @@ export default function LearnScreen() {
   return (
     <StubScreen title={t('learn.title')} description={t('learn.stub')}>
       <Button
-        title={t('common.openLesson')}
+        title={t('learn.startLesson')}
         variant="primary"
-        onPress={() => router.push('/lesson/demo')}
+        onPress={() => router.push('/lesson/a1-u01-l01')}
       />
       <Button
         title={t('common.openOnboarding')}

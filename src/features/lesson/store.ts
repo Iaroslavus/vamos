@@ -8,11 +8,26 @@ export const DEFAULT_MAX_HEARTS = 5;
 export const XP_CORRECT = 10;
 export const XP_ALMOST = 8;
 
-export type LessonExerciseItem = {
+type LessonExerciseBase = {
   id: string;
   answer: string;
   accepted?: readonly string[];
+  prompt_ru: string;
 };
+
+export type SelectTranslationItem = LessonExerciseBase & {
+  type: 'select_translation';
+  prompt: string;
+  options: readonly string[];
+};
+
+export type BuildSentenceItem = LessonExerciseBase & {
+  type: 'build_sentence';
+  tiles: readonly string[];
+};
+
+/** Playable exercise payload for the lesson session (MVP types). */
+export type LessonExerciseItem = SelectTranslationItem | BuildSentenceItem;
 
 export type LessonSessionStatus = 'idle' | 'active' | 'feedback' | 'completed' | 'failed';
 

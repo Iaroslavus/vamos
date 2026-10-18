@@ -15,7 +15,7 @@ export default function LessonLayout() {
         contentStyle: { backgroundColor: colors.ground },
       }}
     >
-      <Stack.Screen name="lesson/[id]" options={{ title: t('lesson.title') }} />
+      <Stack.Screen name="lesson/[id]" options={{ headerShown: false, title: t('lesson.title') }} />
       <Stack.Screen name="lesson/review" options={{ title: t('lesson.reviewTitle') }} />
     </Stack>
   );

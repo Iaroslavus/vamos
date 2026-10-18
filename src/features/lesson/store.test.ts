@@ -7,9 +7,30 @@ import {
 } from './store';
 
 const EXERCISES: LessonExerciseItem[] = [
-  { id: 'e1', answer: 'hola', accepted: ['Hola'] },
-  { id: 'e2', answer: 'gracias' },
-  { id: 'e3', answer: 'café' },
+  {
+    id: 'e1',
+    type: 'select_translation',
+    prompt_ru: 'Выберите перевод',
+    prompt: 'hola',
+    options: ['привет', 'пока'],
+    answer: 'hola',
+    accepted: ['Hola'],
+  },
+  {
+    id: 'e2',
+    type: 'select_translation',
+    prompt_ru: 'Выберите перевод',
+    prompt: 'gracias',
+    options: ['спасибо', 'пожалуйста'],
+    answer: 'gracias',
+  },
+  {
+    id: 'e3',
+    type: 'build_sentence',
+    prompt_ru: 'Составьте',
+    tiles: ['café', 'el'],
+    answer: 'café',
+  },
 ];
 
 function resetStore() {
