@@ -10,11 +10,19 @@ export const PLAYABLE_TYPES = [
   'build_sentence',
   'listen_select',
   'match_pairs',
+  'type_translation',
+  'fill_gap',
 ] as const;
 export type PlayableType = (typeof PLAYABLE_TYPES)[number];
 
 export function isPlayableType(type: string): type is PlayableType {
   return (PLAYABLE_TYPES as readonly string[]).includes(type);
+}
+
+export function isTypingExercise(
+  exercise: LessonExerciseItem,
+): exercise is Extract<LessonExerciseItem, { type: 'type_translation' | 'fill_gap' }> {
+  return exercise.type === 'type_translation' || exercise.type === 'fill_gap';
 }
 
 /**
@@ -71,6 +79,32 @@ export function toPlayableExercises(lesson: Lesson): LessonExerciseItem[] {
         prompt_ru: exercise.prompt_ru,
         pairs: exercise.pairs,
         answer: serializePairs(exercise.pairs),
+      });
+      return;
+    }
+
+    if (exercise.type === 'type_translation') {
+      items.push({
+        id,
+        type: 'type_translation',
+        prompt_ru: exercise.prompt_ru,
+        prompt: exercise.prompt,
+        direction: exercise.direction,
+        answer: exercise.answer,
+        accepted: exercise.accepted,
+      });
+      return;
+    }
+
+    if (exercise.type === 'fill_gap') {
+      items.push({
+        id,
+        type: 'fill_gap',
+        prompt_ru: exercise.prompt_ru,
+        sentence_es: exercise.sentence_es,
+        answer: exercise.answer,
+        accepted: exercise.accepted,
+        options: exercise.options,
       });
     }
   });

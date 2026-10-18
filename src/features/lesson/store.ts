@@ -44,9 +44,27 @@ export type MatchPairsItem = LessonExerciseBase & {
   pairs: readonly MatchPair[];
 };
 
+export type TypeTranslationItem = LessonExerciseBase & {
+  type: 'type_translation';
+  prompt: string;
+  direction: 'ru_to_es' | 'es_to_ru';
+};
+
+export type FillGapItem = LessonExerciseBase & {
+  type: 'fill_gap';
+  /** Spanish sentence with `___` gap marker. */
+  sentence_es: string;
+  options?: readonly string[];
+};
+
 /** Playable exercise payload for the lesson session (MVP types). */
 export type LessonExerciseItem =
-  SelectTranslationItem | BuildSentenceItem | ListenSelectItem | MatchPairsItem;
+  | SelectTranslationItem
+  | BuildSentenceItem
+  | ListenSelectItem
+  | MatchPairsItem
+  | TypeTranslationItem
+  | FillGapItem;
 
 export type LessonSessionStatus = 'idle' | 'active' | 'feedback' | 'completed' | 'failed';
 

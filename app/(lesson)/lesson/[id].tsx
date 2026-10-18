@@ -1,8 +1,16 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { X } from 'lucide-react-native';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, View } from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/Button';
@@ -10,13 +18,17 @@ import { ProgressBar } from '@/components/ProgressBar';
 import { ResultSheet } from '@/components/ResultSheet';
 import { Text } from '@/components/Text';
 import { stopLessonAudio } from '@/features/audio/playback';
+import { AccentBar } from '@/features/lesson/components/AccentBar';
+import { type AnswerTextFieldHandle } from '@/features/lesson/components/AnswerTextField';
 import { BuildSentenceExercise } from '@/features/lesson/components/BuildSentenceExercise';
+import { FillGapExercise } from '@/features/lesson/components/FillGapExercise';
 import { LessonHearts } from '@/features/lesson/components/LessonHearts';
 import { ListenSelectExercise } from '@/features/lesson/components/ListenSelectExercise';
 import { MatchPairsExercise } from '@/features/lesson/components/MatchPairsExercise';
 import { SelectTranslationExercise } from '@/features/lesson/components/SelectTranslationExercise';
+import { TypeTranslationExercise } from '@/features/lesson/components/TypeTranslationExercise';
 import { loadLesson } from '@/features/lesson/loader';
-import { toPlayableExercises } from '@/features/lesson/playable';
+import { isTypingExercise, toPlayableExercises } from '@/features/lesson/playable';
 import { useLessonStore, type LessonExerciseItem } from '@/features/lesson/store';
 import { colors, space } from '@/theme/tokens';
 
@@ -40,6 +52,7 @@ export default function LessonScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const answerInputRef = useRef<AnswerTextFieldHandle>(null);
   const { id } = useLocalSearchParams<{ id: string }>();
   const lessonId = typeof id === 'string' ? id : Array.isArray(id) ? (id[0] ?? '') : '';
 
@@ -60,6 +73,7 @@ export default function LessonScreen() {
 
   const exercise = getCurrentExercise();
   const progress = getProgress();
+  const typing = exercise ? isTypingExercise(exercise) : false;
 
   useEffect(() => {
     if (!loaded.ok) return;
@@ -90,7 +104,11 @@ export default function LessonScreen() {
 
   const sheetMessage = useMemo(() => {
     if (!lastGrade) return undefined;
-    if (lastGrade.status === 'almost') return lastGrade.note;
+    if (lastGrade.status === 'almost') {
+      const hint = lastGrade.note ?? t('lesson.feedbackAlmostHint');
+      const correct = t('lesson.correctAnswer', { answer: lastGrade.correctAnswer });
+      return `${hint}\n${correct}`;
+    }
     if (lastGrade.status === 'wrong') {
       return t('lesson.correctAnswer', { answer: lastGrade.correctAnswer });
     }
@@ -138,7 +156,11 @@ export default function LessonScreen() {
     (exercise.type !== 'match_pairs' || userAnswer === exercise.answer);
 
   return (
-    <View style={[styles.root, { paddingTop: insets.top + space.sm }]}>
+    <KeyboardAvoidingView
+      style={[styles.root, { paddingTop: insets.top + space.sm }]}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
+    >
       <View style={styles.header}>
         <Pressable
           onPress={leaveLesson}
@@ -161,7 +183,12 @@ export default function LessonScreen() {
         <LessonHearts hearts={hearts} maxHearts={maxHearts} />
       </View>
 
-      <View style={styles.body}>
+      <ScrollView
+        style={styles.bodyScroll}
+        contentContainerStyle={styles.bodyContent}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="interactive"
+      >
         {exercise.type === 'select_translation' ? (
           <SelectTranslationExercise
             exercise={exercise}
@@ -194,7 +221,34 @@ export default function LessonScreen() {
             onAnswerChange={onAnswerChange}
           />
         ) : null}
-      </View>
+        {exercise.type === 'type_translation' ? (
+          <TypeTranslationExercise
+            key={exercise.id}
+            exercise={exercise}
+            value={userAnswer}
+            disabled={status !== 'active'}
+            onChangeText={onAnswerChange}
+            inputRef={answerInputRef}
+          />
+        ) : null}
+        {exercise.type === 'fill_gap' ? (
+          <FillGapExercise
+            key={exercise.id}
+            exercise={exercise}
+            value={userAnswer}
+            disabled={status !== 'active'}
+            onChangeText={onAnswerChange}
+            inputRef={answerInputRef}
+          />
+        ) : null}
+      </ScrollView>
+
+      {typing ? (
+        <AccentBar
+          disabled={status !== 'active'}
+          onInsert={(symbol) => answerInputRef.current?.insertSymbol(symbol)}
+        />
+      ) : null}
 
       <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, space.lg) }]}>
         <Button
@@ -202,6 +256,7 @@ export default function LessonScreen() {
           variant="primary"
           disabled={!canCheck}
           onPress={() => {
+            Keyboard.dismiss();
             checkAnswer();
           }}
         />
@@ -215,7 +270,7 @@ export default function LessonScreen() {
         continueLabel={status === 'failed' ? t('common.close') : t('lesson.continue')}
         onContinue={onContinue}
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -247,10 +302,14 @@ const styles = StyleSheet.create({
   progressWrap: {
     flex: 1,
   },
-  body: {
+  bodyScroll: {
     flex: 1,
+  },
+  bodyContent: {
+    flexGrow: 1,
     paddingHorizontal: space.xl,
     paddingTop: space.lg,
+    paddingBottom: space.lg,
   },
   footer: {
     paddingHorizontal: space.xl,
