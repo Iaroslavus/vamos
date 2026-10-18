@@ -53,7 +53,9 @@
     "lint": "expo lint",
     "test": "jest",
     "check": "npm run typecheck && npm run lint && npm test",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "db:types": "supabase gen types --lang=typescript --local --schema public > src/lib/database.types.ts && prettier --write src/lib/database.types.ts",
+    "db:test": "supabase test db"
   },
   "private": true
 }
