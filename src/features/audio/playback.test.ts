@@ -6,6 +6,8 @@ import {
   NORMAL_RATE,
   SLOW_RATE,
   SPEECH_LANGUAGE,
+  SPEECH_PITCH,
+  applyPlayerRate,
   playLessonAudio,
   resolveAudioSource,
   stopLessonAudio,
@@ -20,14 +22,16 @@ const mockPlay = jest.fn();
 const mockPause = jest.fn();
 const mockRemove = jest.fn();
 const mockSetPlaybackRate = jest.fn();
+const mockPlayer = {
+  play: mockPlay,
+  pause: mockPause,
+  remove: mockRemove,
+  setPlaybackRate: mockSetPlaybackRate,
+  shouldCorrectPitch: false,
+};
 
 jest.mock('expo-audio', () => ({
-  createAudioPlayer: jest.fn(() => ({
-    play: mockPlay,
-    pause: mockPause,
-    remove: mockRemove,
-    setPlaybackRate: mockSetPlaybackRate,
-  })),
+  createAudioPlayer: jest.fn(() => mockPlayer),
   setAudioModeAsync: jest.fn(() => Promise.resolve()),
 }));
 
@@ -49,9 +53,24 @@ describe('resolveAudioSource', () => {
   });
 });
 
+describe('applyPlayerRate', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockPlayer.shouldCorrectPitch = false;
+  });
+
+  it('enables pitch correction and forwards rate to setPlaybackRate', () => {
+    applyPlayerRate(mockPlayer as never, SLOW_RATE);
+
+    expect(mockPlayer.shouldCorrectPitch).toBe(true);
+    expect(mockSetPlaybackRate).toHaveBeenCalledWith(SLOW_RATE, 'high');
+  });
+});
+
 describe('playLessonAudio', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockPlayer.shouldCorrectPitch = false;
   });
 
   it('falls back to expo-speech (es-ES) when no file is available', async () => {
@@ -65,20 +84,22 @@ describe('playLessonAudio', () => {
     expect(Speech.speak).toHaveBeenCalledWith('Hola', {
       language: SPEECH_LANGUAGE,
       rate: NORMAL_RATE,
+      pitch: SPEECH_PITCH,
     });
     expect(createAudioPlayer).not.toHaveBeenCalled();
   });
 
-  it('uses slow rate 0.7 for speech fallback', async () => {
+  it('passes slow rate 0.7 and pitch 1 to speech fallback', async () => {
     await playLessonAudio({ text: 'Gracias', rate: SLOW_RATE });
 
     expect(Speech.speak).toHaveBeenCalledWith('Gracias', {
       language: SPEECH_LANGUAGE,
       rate: SLOW_RATE,
+      pitch: SPEECH_PITCH,
     });
   });
 
-  it('plays via expo-audio when a remote file URI is provided', async () => {
+  it('plays via expo-audio and applies rate after play (pitch preserved)', async () => {
     const source = await playLessonAudio({
       audio: 'https://cdn.example/clip.mp3',
       text: 'Hola',
@@ -88,9 +109,33 @@ describe('playLessonAudio', () => {
     expect(source).toBe('file');
     expect(setAudioModeAsync).toHaveBeenCalled();
     expect(createAudioPlayer).toHaveBeenCalledWith('https://cdn.example/clip.mp3');
-    expect(mockSetPlaybackRate).toHaveBeenCalledWith(SLOW_RATE, 'high');
     expect(mockPlay).toHaveBeenCalled();
+    expect(mockPlayer.shouldCorrectPitch).toBe(true);
+    expect(mockSetPlaybackRate).toHaveBeenCalledWith(SLOW_RATE, 'high');
     expect(Speech.speak).not.toHaveBeenCalled();
+
+    // Rate must be applied after play so iOS updates live AVPlayer.rate.
+    expect(mockPlay.mock.invocationCallOrder[0]).toBeLessThan(
+      mockSetPlaybackRate.mock.invocationCallOrder[0]!,
+    );
+  });
+
+  it('stops previous playback before starting again (no stacking)', async () => {
+    await playLessonAudio({
+      audio: 'https://cdn.example/clip.mp3',
+      text: 'Hola',
+      rate: NORMAL_RATE,
+    });
+    await playLessonAudio({
+      audio: 'https://cdn.example/clip.mp3',
+      text: 'Hola',
+      rate: SLOW_RATE,
+    });
+
+    expect(Speech.stop).toHaveBeenCalled();
+    expect(mockPause).toHaveBeenCalled();
+    expect(mockRemove).toHaveBeenCalled();
+    expect(mockSetPlaybackRate).toHaveBeenLastCalledWith(SLOW_RATE, 'high');
   });
 
   it('stops speech and file playback', async () => {
