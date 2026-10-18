@@ -16,6 +16,10 @@ export default function LessonLayout() {
       }}
     >
       <Stack.Screen name="lesson/[id]" options={{ headerShown: false, title: t('lesson.title') }} />
+      <Stack.Screen
+        name="lesson/summary"
+        options={{ headerShown: false, title: t('lesson.summaryTitle'), gestureEnabled: false }}
+      />
       <Stack.Screen name="lesson/review" options={{ title: t('lesson.reviewTitle') }} />
     </Stack>
   );

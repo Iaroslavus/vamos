@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 import { gradeAnswer, type GradeResult } from './grading';
+import type { VocabularyItem } from './schema';
 
 /** Soft life cap for free-tier lessons (DESIGN.md). */
 export const DEFAULT_MAX_HEARTS = 5;
@@ -80,11 +81,26 @@ export type LessonProgress = {
 type StartLessonInput = {
   lessonId: string;
   exercises: readonly LessonExerciseItem[];
+  /** New vocabulary shown on the summary screen. */
+  newItems?: readonly VocabularyItem[];
   /** Override starting hearts (defaults to DEFAULT_MAX_HEARTS). */
   hearts?: number;
   maxHearts?: number;
   /** Injectable clock for tests. */
   now?: () => number;
+};
+
+export type LessonSummary = {
+  lessonId: string | null;
+  status: LessonSessionStatus;
+  xpEarned: number;
+  /** 0–1 share of non-wrong checks. */
+  accuracy: number;
+  elapsedMs: number;
+  newItems: VocabularyItem[];
+  correctCount: number;
+  almostCount: number;
+  wrongCount: number;
 };
 
 type LessonStoreState = {
@@ -96,6 +112,7 @@ type LessonStoreState = {
   queue: string[];
   /** Ids from the initial start (stable progress denominator). */
   initialIds: string[];
+  newItems: VocabularyItem[];
   userAnswer: string;
   lastGrade: GradeResult | null;
   hearts: number;
@@ -123,6 +140,7 @@ type LessonStoreActions = {
   getCurrentExercise: () => LessonExerciseItem | null;
   getProgress: () => LessonProgress;
   getElapsedMs: () => number;
+  getSummary: () => LessonSummary;
 };
 
 export type LessonStore = LessonStoreState & LessonStoreActions;
@@ -133,6 +151,7 @@ const idleState = (): LessonStoreState => ({
   exerciseById: {},
   queue: [],
   initialIds: [],
+  newItems: [],
   userAnswer: '',
   lastGrade: null,
   hearts: DEFAULT_MAX_HEARTS,
@@ -168,7 +187,7 @@ function xpForStatus(status: GradeResult['status']): number {
 export const useLessonStore = create<LessonStore>()((set, get) => ({
   ...idleState(),
 
-  startLesson: ({ lessonId, exercises, hearts, maxHearts, now }) => {
+  startLesson: ({ lessonId, exercises, newItems, hearts, maxHearts, now }) => {
     if (exercises.length === 0) {
       throw new Error('Cannot start a lesson with no exercises');
     }
@@ -186,6 +205,7 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
       exerciseById,
       queue: [...initialIds],
       initialIds,
+      newItems: [...(newItems ?? [])],
       hearts: startHearts,
       maxHearts: max,
       startedAt: getNow(),
@@ -317,5 +337,23 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
     if (startedAt === null) return 0;
     const end = finishedAt ?? getNow();
     return Math.max(0, end - startedAt);
+  },
+
+  getSummary: () => {
+    const state = get();
+    const attempts = state.correctCount + state.almostCount + state.wrongCount;
+    const accuracy = attempts === 0 ? 0 : (state.correctCount + state.almostCount) / attempts;
+
+    return {
+      lessonId: state.lessonId,
+      status: state.status,
+      xpEarned: state.xpEarned,
+      accuracy,
+      elapsedMs: get().getElapsedMs(),
+      newItems: state.newItems,
+      correctCount: state.correctCount,
+      almostCount: state.almostCount,
+      wrongCount: state.wrongCount,
+    };
   },
 }));

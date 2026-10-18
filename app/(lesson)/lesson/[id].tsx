@@ -18,6 +18,7 @@ import { ProgressBar } from '@/components/ProgressBar';
 import { ResultSheet } from '@/components/ResultSheet';
 import { Text } from '@/components/Text';
 import { stopLessonAudio } from '@/features/audio/playback';
+import { playGradeSound } from '@/features/audio/sounds';
 import { AccentBar } from '@/features/lesson/components/AccentBar';
 import { type AnswerTextFieldHandle } from '@/features/lesson/components/AnswerTextField';
 import { BuildSentenceExercise } from '@/features/lesson/components/BuildSentenceExercise';
@@ -29,11 +30,17 @@ import { SelectTranslationExercise } from '@/features/lesson/components/SelectTr
 import { TypeTranslationExercise } from '@/features/lesson/components/TypeTranslationExercise';
 import { loadLesson } from '@/features/lesson/loader';
 import { isTypingExercise, toPlayableExercises } from '@/features/lesson/playable';
+import type { VocabularyItem } from '@/features/lesson/schema';
 import { useLessonStore, type LessonExerciseItem } from '@/features/lesson/store';
 import { colors, space } from '@/theme/tokens';
 
 type LoadResult =
-  | { ok: true; lessonId: string; exercises: LessonExerciseItem[] }
+  | {
+      ok: true;
+      lessonId: string;
+      exercises: LessonExerciseItem[];
+      newItems: VocabularyItem[];
+    }
   | { ok: false; reason: 'missing_id' | 'empty' | 'not_found' };
 
 function loadPlayableLesson(lessonId: string | undefined): LoadResult {
@@ -42,7 +49,7 @@ function loadPlayableLesson(lessonId: string | undefined): LoadResult {
     const lesson = loadLesson(lessonId);
     const exercises = toPlayableExercises(lesson);
     if (exercises.length === 0) return { ok: false, reason: 'empty' };
-    return { ok: true, lessonId, exercises };
+    return { ok: true, lessonId, exercises, newItems: lesson.new_items };
   } catch {
     return { ok: false, reason: 'not_found' };
   }
@@ -77,12 +84,16 @@ export default function LessonScreen() {
 
   useEffect(() => {
     if (!loaded.ok) return;
-    startLesson({ lessonId: loaded.lessonId, exercises: loaded.exercises });
+    startLesson({
+      lessonId: loaded.lessonId,
+      exercises: loaded.exercises,
+      newItems: loaded.newItems,
+    });
     return () => {
       void stopLessonAudio();
-      reset();
+      // Keep session stats for the summary screen; reset on explicit leave / summary continue.
     };
-  }, [loaded, reset, startLesson]);
+  }, [loaded, startLesson]);
 
   const onAnswerChange = useCallback(
     (value: string) => {
@@ -124,18 +135,22 @@ export default function LessonScreen() {
     }
   }, [reset, router]);
 
+  const goToSummary = useCallback(() => {
+    router.replace('/lesson/summary');
+  }, [router]);
+
   const onContinue = useCallback(() => {
     if (status === 'failed') {
-      leaveLesson();
+      goToSummary();
       return;
     }
 
     continueAfterFeedback();
     const nextStatus = useLessonStore.getState().status;
     if (nextStatus === 'completed') {
-      leaveLesson();
+      goToSummary();
     }
-  }, [continueAfterFeedback, leaveLesson, status]);
+  }, [continueAfterFeedback, goToSummary, status]);
 
   if (!loaded.ok) {
     return (
@@ -257,7 +272,10 @@ export default function LessonScreen() {
           disabled={!canCheck}
           onPress={() => {
             Keyboard.dismiss();
-            checkAnswer();
+            const grade = checkAnswer();
+            if (grade) {
+              playGradeSound(grade.status);
+            }
           }}
         />
       </View>

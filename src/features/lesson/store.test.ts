@@ -266,4 +266,26 @@ describe('lesson store', () => {
     useLessonStore.getState().setAnswer('Hola');
     expect(useLessonStore.getState().checkAnswer()?.status).toBe('correct');
   });
+
+  it('getSummary reports accuracy, xp, and new words after completion', () => {
+    useLessonStore.getState().startLesson({
+      lessonId: 'a1-u01-l01',
+      exercises: EXERCISES,
+      newItems: [{ id: 'hola', es: 'hola', ru: 'привет', pos: 'interjection', variant: 'both' }],
+      now: () => 1000,
+    });
+
+    for (const answer of ['hola', 'gracias', 'café']) {
+      useLessonStore.getState().setAnswer(answer);
+      useLessonStore.getState().checkAnswer();
+      useLessonStore.getState().continueAfterFeedback();
+    }
+
+    const summary = useLessonStore.getState().getSummary();
+    expect(summary.status).toBe('completed');
+    expect(summary.xpEarned).toBe(XP_CORRECT * 3);
+    expect(summary.accuracy).toBe(1);
+    expect(summary.newItems).toHaveLength(1);
+    expect(summary.newItems[0]?.es).toBe('hola');
+  });
 });

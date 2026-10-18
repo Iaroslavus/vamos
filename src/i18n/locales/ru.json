@@ -43,7 +43,15 @@
     "fillGapPlaceholder": "Вставьте слово",
     "directionRuToEs": "Русский → испанский",
     "directionEsToRu": "Испанский → русский",
-    "feedbackAlmostHint": "Почти верно — проверьте акценты и орфографию"
+    "feedbackAlmostHint": "Почти верно — проверьте акценты и орфографию",
+    "summaryTitle": "Урок пройден!",
+    "summaryFailedTitle": "Урок окончен",
+    "summaryXp": "Опыт",
+    "summaryAccuracy": "Точность",
+    "summaryTime": "Время",
+    "summaryNewWords": "Новые слова",
+    "summaryContinue": "Дальше",
+    "summaryEmpty": "Сначала пройдите урок"
   },
   "onboarding": {
     "title": "Добро пожаловать",
