@@ -1,10 +1,9 @@
 import { Link, Stack } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/Text';
 import { colors, space } from '@/theme/tokens';
-import { View } from '@/components/Themed';
 
 export default function NotFoundScreen() {
   const { t } = useTranslation();
