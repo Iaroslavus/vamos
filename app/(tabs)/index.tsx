@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 
@@ -13,6 +13,8 @@ export default function LearnScreen() {
 
   return (
     <StubScreen title={t('learn.title')} description={t('learn.stub')}>
+      {/* TEMP: intentional broken typed route to verify CI typecheck — revert before merge */}
+      <Link href="/modal" />
       <Button
         title={t('common.openLesson')}
         variant="primary"
