@@ -12,6 +12,7 @@ import {
   resolveAudioSource,
   stopLessonAudio,
 } from './playback';
+import { speechEngineRate } from './speechRate';
 
 jest.mock('expo-speech', () => ({
   speak: jest.fn(),
@@ -53,6 +54,13 @@ describe('resolveAudioSource', () => {
   });
 });
 
+describe('rates', () => {
+  it('keeps the slow listen button at 0.7×', () => {
+    expect(SLOW_RATE).toBe(0.7);
+    expect(NORMAL_RATE).toBe(1);
+  });
+});
+
 describe('applyPlayerRate', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -81,22 +89,51 @@ describe('playLessonAudio', () => {
     });
 
     expect(source).toBe('speech');
-    expect(Speech.speak).toHaveBeenCalledWith('Hola', {
-      language: SPEECH_LANGUAGE,
-      rate: NORMAL_RATE,
-      pitch: SPEECH_PITCH,
-    });
+    expect(Speech.speak).toHaveBeenCalledWith(
+      'Hola',
+      expect.objectContaining({
+        language: SPEECH_LANGUAGE,
+        rate: NORMAL_RATE,
+        pitch: SPEECH_PITCH,
+      }),
+    );
     expect(createAudioPlayer).not.toHaveBeenCalled();
   });
 
-  it('passes slow rate 0.7 and pitch 1 to speech fallback', async () => {
+  it('maps slow playback 0.7 through the iOS speech curve and keeps pitch 1', async () => {
     await playLessonAudio({ text: 'Gracias', rate: SLOW_RATE });
 
-    expect(Speech.speak).toHaveBeenCalledWith('Gracias', {
-      language: SPEECH_LANGUAGE,
-      rate: SLOW_RATE,
-      pitch: SPEECH_PITCH,
-    });
+    const engineRate = speechEngineRate(SLOW_RATE, 'ios');
+    expect(engineRate).toBeLessThan(SLOW_RATE);
+    expect(Speech.speak).toHaveBeenCalledWith(
+      'Gracias',
+      expect.objectContaining({
+        language: SPEECH_LANGUAGE,
+        rate: engineRate,
+        pitch: SPEECH_PITCH,
+      }),
+    );
+  });
+
+  it('logs speech duration from onStart to onDone', async () => {
+    const log = jest.spyOn(console, 'log').mockImplementation(() => {});
+    const now = jest.spyOn(Date, 'now');
+    await playLessonAudio({ text: 'Hola', rate: SLOW_RATE });
+
+    const options = (Speech.speak as jest.Mock).mock.calls.at(-1)?.[1] as {
+      onStart: () => void;
+      onDone: () => void;
+    };
+    now.mockReturnValueOnce(1_000);
+    options.onStart();
+    now.mockReturnValueOnce(2_400);
+    options.onDone();
+
+    expect(log).toHaveBeenCalledWith(expect.stringContaining('source=speech'));
+    expect(log).toHaveBeenCalledWith(expect.stringContaining('playbackRate=0.7'));
+    expect(log).toHaveBeenCalledWith(expect.stringContaining('durationMs=1400'));
+    log.mockRestore();
+    now.mockRestore();
   });
 
   it('plays via expo-audio and applies rate after play (pitch preserved)', async () => {
