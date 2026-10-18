@@ -1,0 +1,119 @@
+{
+  "id": "a1-u01-l03",
+  "level": "A1",
+  "unit": 1,
+  "title_ru": "Числа 1–10",
+  "draft": true,
+  "new_items": [
+    { "id": "uno", "es": "uno", "ru": "один", "pos": "numeral", "audio": "a1/uno.mp3", "variant": "both" },
+    { "id": "dos", "es": "dos", "ru": "два", "pos": "numeral", "audio": "a1/dos.mp3", "variant": "both" },
+    { "id": "tres", "es": "tres", "ru": "три", "pos": "numeral", "audio": "a1/tres.mp3", "variant": "both" },
+    { "id": "cuatro", "es": "cuatro", "ru": "четыре", "pos": "numeral", "audio": "a1/cuatro.mp3", "variant": "both" },
+    { "id": "cinco", "es": "cinco", "ru": "пять", "pos": "numeral", "audio": "a1/cinco.mp3", "variant": "both" },
+    { "id": "seis", "es": "seis", "ru": "шесть", "pos": "numeral", "audio": "a1/seis.mp3", "variant": "both" },
+    { "id": "siete", "es": "siete", "ru": "семь", "pos": "numeral", "audio": "a1/siete.mp3", "variant": "both" },
+    { "id": "ocho", "es": "ocho", "ru": "восемь", "pos": "numeral", "audio": "a1/ocho.mp3", "variant": "both" },
+    { "id": "nueve", "es": "nueve", "ru": "девять", "pos": "numeral", "audio": "a1/nueve.mp3", "variant": "both" },
+    { "id": "diez", "es": "diez", "ru": "десять", "pos": "numeral", "audio": "a1/diez.mp3", "variant": "both" }
+  ],
+  "exercises": [
+    {
+      "type": "select_translation",
+      "prompt_ru": "Выберите перевод",
+      "prompt": "cinco",
+      "options": ["три", "пять", "семь", "девять"],
+      "answer": "пять",
+      "audio": "a1/cinco.mp3"
+    },
+    {
+      "type": "select_translation",
+      "prompt_ru": "Выберите число",
+      "prompt": "восемь",
+      "options": ["seis", "siete", "ocho", "nueve"],
+      "answer": "ocho",
+      "audio": "a1/ocho.mp3"
+    },
+    {
+      "type": "match_pairs",
+      "prompt_ru": "Соедините числа",
+      "pairs": [
+        { "left": "uno", "right": "1" },
+        { "left": "tres", "right": "3" },
+        { "left": "seis", "right": "6" },
+        { "left": "diez", "right": "10" }
+      ]
+    },
+    {
+      "type": "listen_select",
+      "prompt_ru": "Какое число вы слышите?",
+      "audio": "a1/u01/l03-e04.mp3",
+      "options": ["dos", "doce", "diez", "tres"],
+      "answer": "dos"
+    },
+    {
+      "type": "listen_type",
+      "prompt_ru": "Напишите услышанное число словами",
+      "audio": "a1/u01/l03-e05.mp3",
+      "answer": "siete",
+      "accepted": ["Siete"]
+    },
+    {
+      "type": "type_translation",
+      "prompt_ru": "Напишите по-испански",
+      "prompt": "четыре",
+      "direction": "ru_to_es",
+      "answer": "cuatro",
+      "accepted": ["Cuatro"],
+      "audio": "a1/cuatro.mp3"
+    },
+    {
+      "type": "fill_gap",
+      "prompt_ru": "Сколько яблок? (картинка: 3)",
+      "sentence_es": "Hay ___ manzanas",
+      "answer": "tres",
+      "accepted": ["Tres"],
+      "options": ["dos", "tres", "cuatro", "cinco"],
+      "explain_ru": "Hay + число + существительное"
+    },
+    {
+      "type": "build_sentence",
+      "prompt_ru": "Составьте: «У меня есть два брата» (упрощённо)",
+      "answer": "Tengo dos hermanos",
+      "accepted": ["Tengo 2 hermanos"],
+      "tiles": ["Tengo", "dos", "hermanos", "tres", "uno"],
+      "explain_ru": "Tener: yo tengo"
+    },
+    {
+      "type": "speak_repeat",
+      "prompt_ru": "Посчитайте от одного до пяти",
+      "prompt_es": "uno, dos, tres, cuatro, cinco",
+      "audio": "a1/u01/l03-e09.mp3"
+    },
+    {
+      "type": "select_translation",
+      "prompt_ru": "Что означает «nueve»?",
+      "prompt": "nueve",
+      "options": ["7", "8", "9", "10"],
+      "answer": "9",
+      "audio": "a1/nueve.mp3"
+    },
+    {
+      "type": "match_pairs",
+      "prompt_ru": "Соедините оставшиеся числа",
+      "pairs": [
+        { "left": "cuatro", "right": "четыре" },
+        { "left": "cinco", "right": "пять" },
+        { "left": "ocho", "right": "восемь" },
+        { "left": "nueve", "right": "девять" }
+      ]
+    },
+    {
+      "type": "listen_select",
+      "prompt_ru": "Выберите услышанное число",
+      "audio": "a1/u01/l03-e12.mp3",
+      "options": ["uno", "uno y uno", "diez", "nueve"],
+      "answer": "diez",
+      "explain_ru": "Diez — десять; не путать с dos"
+    }
+  ]
+}
