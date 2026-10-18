@@ -1,0 +1,31 @@
+---
+description: Учебный контент, упражнения и ИИ-функции — применять при работе с content/, уроками и Edge Functions
+globs: content/**, src/features/lesson/**, src/features/review/**, supabase/functions/**
+alwaysApply: false
+---
+
+# Контент и методика
+
+Структура курса и форматы: @docs/CURRICULUM.md.
+
+## Принципы
+- Уровни строго по CEFR (Plan Curricular del Instituto Cervantes как ориентир по грамматике и лексике).
+- Урок = 3–7 минут, 10–15 упражнений. Блок = 6–10 уроков + повторение + диалог с ИИ + мини-тест.
+- Каждое новое слово/конструкция сразу попадает в очередь FSRS.
+- Испанский по умолчанию — нейтральный (Испания + Латинская Америка); различия помечать тегом `variant: "es" | "latam"`.
+- Аудио к каждой фразе (заранее сгенерированное TTS, хранится в Supabase Storage), две скорости.
+
+## Типы упражнений (enum ExerciseType)
+`select_translation`, `build_sentence` (слова-плитки), `type_translation`, `listen_select`,
+`listen_type` (диктант), `speak_repeat` (оценка произношения), `match_pairs`, `fill_gap`,
+`conjugate`, `reading_comprehension`, `free_writing` (проверка ИИ, B1+), `roleplay` (ИИ-диалог).
+
+## Проверка ответов
+- Сначала локально: нормализация (регистр, пунктуация, ¿¡), допуск опечаток расстоянием Левенштейна ≤1 для слов длиннее 4 букв, список допустимых вариантов.
+- Если локально не совпало, а тип допускает свободный ответ — Edge Function `grade-answer` с ИИ, возвращает JSON `{correct, corrected, explanation_ru}`.
+
+## ИИ-собеседник (Edge Function `tutor-chat`)
+- Системный промпт содержит: уровень пользователя, сценарий, изученную лексику блока, правило «говорить на уровне +1».
+- Ответ строго в JSON: `{reply_es, reply_ru, correction?: {original, better, why_ru}, suggestions: string[]}`.
+- Лимит для бесплатных: 3 диалога в неделю; для Plus — без лимита (с антиабуз-ограничением в сутки).
+- Логировать токены и стоимость на пользователя.

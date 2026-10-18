@@ -1,0 +1,40 @@
+---
+description: Общий контекст проекта Vamos — всегда применять
+alwaysApply: true
+---
+
+# Проект Vamos
+
+Мобильное приложение для изучения испанского языка русскоязычными пользователями, от A1 до C2 (шкала CEFR).
+Интерфейс на русском (позже — английский и другие языки через i18n), учебный контент на испанском.
+
+## Стек — не менять без явной просьбы
+- Expo (последний стабильный SDK), React Native, TypeScript strict
+- expo-router (файловая навигация, группы `(tabs)`, `(lesson)`, `(onboarding)`)
+- Состояние: Zustand для клиента, TanStack Query для серверных данных
+- Анимации: react-native-reanimated, moti, lottie-react-native, expo-haptics
+- Бэкенд: Supabase (auth, Postgres с RLS, storage, Edge Functions на Deno)
+- Подписки: react-native-purchases (RevenueCat)
+- Повторения: ts-fsrs
+- Аудио: expo-audio; запись голоса — expo-audio recorder
+- Аналитика: posthog-react-native; ошибки: @sentry/react-native
+- i18n: i18next + react-i18next
+
+## Структура
+```
+app/                  экраны (expo-router)
+src/components/       переиспользуемые UI-компоненты
+src/features/<name>/  логика фичи: hooks, store, api, types
+src/theme/            токены дизайна (tokens.ts) — единственный источник цветов/шрифтов
+src/lib/              клиенты supabase, purchases, analytics
+supabase/migrations/  SQL-миграции
+supabase/functions/   Edge Functions (ИИ-чат, проверка ответов, оценка произношения)
+content/              JSON-контент уроков по уровням
+```
+
+## Жёсткие правила
+- Никаких API-ключей ИИ/речи в клиенте. Всё через Supabase Edge Functions.
+- Офлайн-первый подход для уроков: контент блока кэшируется, прогресс синхронизируется при сети.
+- Каждая новая таблица — с RLS-политиками.
+- Любая платная фича проверяется через entitlement `plus` из RevenueCat, а не через локальный флаг.
+- Перед большими изменениями — сначала короткий план, потом код.
