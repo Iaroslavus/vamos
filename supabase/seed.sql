@@ -1,0 +1,2 @@
+-- Seed data for the local database (`supabase db reset` runs this after migrations).
+-- Intentionally empty for now: add test users / lesson progress here when the schema lands.
