@@ -197,12 +197,17 @@ describe('lesson store', () => {
     useLessonStore.getState().checkAnswer();
     useLessonStore.getState().continueAfterFeedback();
 
-    // e3 correct
+    // e3 correct → mistakes intro before retry
     useLessonStore.getState().setAnswer('café');
     useLessonStore.getState().checkAnswer();
     useLessonStore.getState().continueAfterFeedback();
+    expect(useLessonStore.getState().status).toBe('mistakes_intro');
+    expect(useLessonStore.getState().queue).toEqual(['e1']);
+
+    useLessonStore.getState().continueMistakesIntro();
 
     // retry e1
+    expect(useLessonStore.getState().status).toBe('active');
     expect(useLessonStore.getState().getCurrentExercise()?.id).toBe('e1');
     useLessonStore.getState().setAnswer('hola');
     useLessonStore.getState().checkAnswer();
@@ -210,6 +215,48 @@ describe('lesson store', () => {
 
     expect(useLessonStore.getState().status).toBe('completed');
     expect(useLessonStore.getState().getProgress().ratio).toBe(1);
+  });
+
+  it('shows mistakes intro exactly once when the main pass ends with retries', () => {
+    startWithClock();
+
+    useLessonStore.getState().setAnswer('nope');
+    useLessonStore.getState().checkAnswer();
+    useLessonStore.getState().continueAfterFeedback();
+
+    useLessonStore.getState().setAnswer('gracias');
+    useLessonStore.getState().checkAnswer();
+    useLessonStore.getState().continueAfterFeedback();
+
+    useLessonStore.getState().setAnswer('café');
+    useLessonStore.getState().checkAnswer();
+    useLessonStore.getState().continueAfterFeedback();
+
+    expect(useLessonStore.getState().status).toBe('mistakes_intro');
+    expect(useLessonStore.getState().mistakesIntroShown).toBe(true);
+    expect(useLessonStore.getState().queue).toHaveLength(1);
+
+    useLessonStore.getState().continueMistakesIntro();
+    expect(useLessonStore.getState().status).toBe('active');
+
+    // Wrong again during retries must not re-open the intro.
+    useLessonStore.getState().setAnswer('nope');
+    useLessonStore.getState().checkAnswer();
+    useLessonStore.getState().continueAfterFeedback();
+    expect(useLessonStore.getState().status).toBe('active');
+    expect(useLessonStore.getState().mistakesIntroShown).toBe(true);
+  });
+
+  it('skips mistakes intro when there are no wrongs to retry', () => {
+    startWithClock();
+    for (const answer of ['hola', 'gracias', 'café']) {
+      useLessonStore.getState().setAnswer(answer);
+      useLessonStore.getState().checkAnswer();
+      useLessonStore.getState().continueAfterFeedback();
+    }
+
+    expect(useLessonStore.getState().status).toBe('completed');
+    expect(useLessonStore.getState().mistakesIntroShown).toBe(false);
   });
 
   it('completes when every exercise is solved without retries', () => {

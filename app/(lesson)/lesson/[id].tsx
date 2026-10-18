@@ -26,6 +26,7 @@ import { FillGapExercise } from '@/features/lesson/components/FillGapExercise';
 import { LessonHearts } from '@/features/lesson/components/LessonHearts';
 import { ListenSelectExercise } from '@/features/lesson/components/ListenSelectExercise';
 import { MatchPairsExercise } from '@/features/lesson/components/MatchPairsExercise';
+import { MistakesIntro } from '@/features/lesson/components/MistakesIntro';
 import { SelectTranslationExercise } from '@/features/lesson/components/SelectTranslationExercise';
 import { TypeTranslationExercise } from '@/features/lesson/components/TypeTranslationExercise';
 import { loadLesson } from '@/features/lesson/loader';
@@ -75,13 +76,16 @@ export default function LessonScreen() {
   const setAnswer = useLessonStore((s) => s.setAnswer);
   const checkAnswer = useLessonStore((s) => s.checkAnswer);
   const continueAfterFeedback = useLessonStore((s) => s.continueAfterFeedback);
+  const continueMistakesIntro = useLessonStore((s) => s.continueMistakesIntro);
   const reset = useLessonStore((s) => s.reset);
   const getCurrentExercise = useLessonStore((s) => s.getCurrentExercise);
   const getProgress = useLessonStore((s) => s.getProgress);
+  const queue = useLessonStore((s) => s.queue);
 
   const exercise = getCurrentExercise();
   const progress = getProgress();
   const typing = exercise ? isTypingExercise(exercise) : false;
+  const mistakesIntroVisible = status === 'mistakes_intro';
 
   useEffect(() => {
     if (!loaded.ok) return;
@@ -162,12 +166,17 @@ export default function LessonScreen() {
     );
   }
 
-  if (!exercise || status === 'idle') {
+  if (status === 'idle') {
+    return <View style={[styles.root, { backgroundColor: colors.ground }]} />;
+  }
+
+  if (!exercise && !mistakesIntroVisible) {
     return <View style={[styles.root, { backgroundColor: colors.ground }]} />;
   }
 
   const canCheck =
     status === 'active' &&
+    !!exercise &&
     userAnswer.trim().length > 0 &&
     (exercise.type !== 'match_pairs' || countSerializedPairs(userAnswer) === exercise.pairs.length);
 
@@ -208,7 +217,7 @@ export default function LessonScreen() {
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="interactive"
       >
-        {exercise.type === 'select_translation' ? (
+        {exercise?.type === 'select_translation' ? (
           <SelectTranslationExercise
             exercise={exercise}
             selected={userAnswer}
@@ -217,7 +226,7 @@ export default function LessonScreen() {
             onSelect={setAnswer}
           />
         ) : null}
-        {exercise.type === 'build_sentence' ? (
+        {exercise?.type === 'build_sentence' ? (
           <BuildSentenceExercise
             key={exercise.id}
             exercise={exercise}
@@ -226,7 +235,7 @@ export default function LessonScreen() {
             onAnswerChange={onAnswerChange}
           />
         ) : null}
-        {exercise.type === 'listen_select' ? (
+        {exercise?.type === 'listen_select' ? (
           <ListenSelectExercise
             exercise={exercise}
             selected={userAnswer}
@@ -235,7 +244,7 @@ export default function LessonScreen() {
             onSelect={setAnswer}
           />
         ) : null}
-        {exercise.type === 'match_pairs' ? (
+        {exercise?.type === 'match_pairs' ? (
           <MatchPairsExercise
             key={exercise.id}
             exercise={exercise}
@@ -244,7 +253,7 @@ export default function LessonScreen() {
             onAnswerChange={onAnswerChange}
           />
         ) : null}
-        {exercise.type === 'type_translation' ? (
+        {exercise?.type === 'type_translation' ? (
           <TypeTranslationExercise
             key={exercise.id}
             exercise={exercise}
@@ -254,7 +263,7 @@ export default function LessonScreen() {
             inputRef={answerInputRef}
           />
         ) : null}
-        {exercise.type === 'fill_gap' ? (
+        {exercise?.type === 'fill_gap' ? (
           <FillGapExercise
             key={exercise.id}
             exercise={exercise}
@@ -295,6 +304,12 @@ export default function LessonScreen() {
         message={sheetMessage}
         continueLabel={status === 'failed' ? t('common.close') : t('lesson.continue')}
         onContinue={onContinue}
+      />
+
+      <MistakesIntro
+        visible={mistakesIntroVisible}
+        remaining={queue.length}
+        onContinue={continueMistakesIntro}
       />
     </KeyboardAvoidingView>
   );

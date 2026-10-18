@@ -67,7 +67,8 @@ export type LessonExerciseItem =
   | TypeTranslationItem
   | FillGapItem;
 
-export type LessonSessionStatus = 'idle' | 'active' | 'feedback' | 'completed' | 'failed';
+export type LessonSessionStatus =
+  'idle' | 'active' | 'feedback' | 'mistakes_intro' | 'completed' | 'failed';
 
 export type LessonProgress = {
   /** Successful checks (correct + almost). */
@@ -112,6 +113,13 @@ type LessonStoreState = {
   queue: string[];
   /** Ids from the initial start (stable progress denominator). */
   initialIds: string[];
+  /**
+   * How many main-pass exercises still need to be dismissed via continue.
+   * Hits 0 when the original set is done; remaining queue items are retries.
+   */
+  mainPassesLeft: number;
+  /** Mistakes intro is shown at most once per lesson session. */
+  mistakesIntroShown: boolean;
   newItems: VocabularyItem[];
   userAnswer: string;
   lastGrade: GradeResult | null;
@@ -134,8 +142,11 @@ type LessonStoreActions = {
   /**
    * After feedback sheet: advance queue.
    * Wrongs were already enqueued at check time; correct/almost just shift.
+   * When the main pass ends with retries left → `mistakes_intro` (once).
    */
   continueAfterFeedback: () => void;
+  /** Dismiss the mistakes intro and start the retry queue. */
+  continueMistakesIntro: () => void;
   reset: () => void;
   getCurrentExercise: () => LessonExerciseItem | null;
   getProgress: () => LessonProgress;
@@ -151,6 +162,8 @@ const idleState = (): LessonStoreState => ({
   exerciseById: {},
   queue: [],
   initialIds: [],
+  mainPassesLeft: 0,
+  mistakesIntroShown: false,
   newItems: [],
   userAnswer: '',
   lastGrade: null,
@@ -205,6 +218,8 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
       exerciseById,
       queue: [...initialIds],
       initialIds,
+      mainPassesLeft: initialIds.length,
+      mistakesIntroShown: false,
       newItems: [...(newItems ?? [])],
       hearts: startHearts,
       maxHearts: max,
@@ -302,7 +317,23 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
         queue: [],
         userAnswer: '',
         lastGrade: null,
+        mainPassesLeft: 0,
         finishedAt: state.getNow(),
+      });
+      return;
+    }
+
+    const mainPassesLeft = Math.max(0, state.mainPassesLeft - 1);
+    const enteringRetries = mainPassesLeft === 0 && !state.mistakesIntroShown && queue.length > 0;
+
+    if (enteringRetries) {
+      set({
+        status: 'mistakes_intro',
+        queue,
+        userAnswer: '',
+        lastGrade: null,
+        mainPassesLeft: 0,
+        mistakesIntroShown: true,
       });
       return;
     }
@@ -310,6 +341,26 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
     set({
       status: 'active',
       queue,
+      userAnswer: '',
+      lastGrade: null,
+      mainPassesLeft,
+    });
+  },
+
+  continueMistakesIntro: () => {
+    const state = get();
+    if (state.status !== 'mistakes_intro') return;
+    if (state.queue.length === 0) {
+      set({
+        status: 'completed',
+        userAnswer: '',
+        lastGrade: null,
+        finishedAt: state.getNow(),
+      });
+      return;
+    }
+    set({
+      status: 'active',
       userAnswer: '',
       lastGrade: null,
     });

@@ -55,7 +55,10 @@
     "summaryTime": "Время",
     "summaryNewWords": "Новые слова",
     "summaryContinue": "Дальше",
-    "summaryEmpty": "Сначала пройдите урок"
+    "summaryEmpty": "Сначала пройдите урок",
+    "mistakesIntroTitle": "А теперь давайте поработаем над ошибками",
+    "mistakesIntroSubtitle": "Осталось упражнений: {{count}}",
+    "mistakesIntroCta": "Поехали"
   },
   "onboarding": {
     "title": "Добро пожаловать",
