@@ -8,7 +8,11 @@
   "learn": {
     "title": "Учиться",
     "stub": "Здесь появится путь уроков — змейка узлов, цель дня и серия.",
-    "startLesson": "Начать урок"
+    "startLesson": "Начать урок",
+    "unitTitle": "{{level}} · Блок {{unit}}",
+    "dayGoalLabel": "Цель дня",
+    "dayGoalValue": "1 урок",
+    "xpLabel": "Опыт {{xp}}"
   },
   "dialog": {
     "title": "Диалог",

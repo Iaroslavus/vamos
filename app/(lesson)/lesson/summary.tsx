@@ -12,6 +12,7 @@ import { NewWordsList } from '@/features/lesson/components/NewWordsList';
 import { XpCounter } from '@/features/lesson/components/XpCounter';
 import { formatAccuracyPercent, formatElapsed } from '@/features/lesson/format';
 import { useLessonStore } from '@/features/lesson/store';
+import { usePathProgressStore } from '@/features/path/progressStore';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, space } from '@/theme/tokens';
 
@@ -22,6 +23,7 @@ export default function LessonSummaryScreen() {
   const reduceMotion = useReduceMotion();
   const summary = useLessonStore((s) => s.getSummary());
   const reset = useLessonStore((s) => s.reset);
+  const markComplete = usePathProgressStore((s) => s.markComplete);
 
   const finished = summary.status === 'completed' || summary.status === 'failed';
 
@@ -32,6 +34,9 @@ export default function LessonSummaryScreen() {
   }, [finished]);
 
   const goHome = () => {
+    if (summary.status === 'completed' && summary.lessonId) {
+      markComplete(summary.lessonId, summary.xpEarned);
+    }
     reset();
     router.replace('/(tabs)');
   };
