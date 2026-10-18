@@ -2,29 +2,29 @@
 
 export const colors = {
   // фон и поверхности
-  ground: '#FFF6EA',        // тёплый кремовый фон
+  ground: '#FFF6EA', // тёплый кремовый фон
   surface: '#FFFFFF',
   surfaceSunken: '#EDE3D4', // пустые прогресс-бары, закрытые узлы
   border: '#F0E2CF',
   borderStrong: '#E3D6C3',
 
   // текст
-  ink: '#1B1A2E',           // основной текст и тёмные карточки
+  ink: '#1B1A2E', // основной текст и тёмные карточки
   inkMuted: '#5B5870',
   inkDisabled: '#8A806F',
   inkOnDark: '#FFFFFF',
   inkOnDarkMuted: '#C9C6DC',
 
   // акценты
-  coral: '#E8553A',         // главное действие
-  coralDeep: '#B83A24',     // «подошва» кнопки
-  saffron: '#F5A524',       // награды, XP, подписка
+  coral: '#E8553A', // главное действие
+  coralDeep: '#B83A24', // «подошва» кнопки
+  saffron: '#F5A524', // награды, XP, подписка
   saffronDeep: '#B87A0E',
   saffronSoft: '#FFE3B3',
-  teal: '#0E6B64',          // успех, пройдено
+  teal: '#0E6B64', // успех, пройдено
   tealDeep: '#0A4F4A',
   tealSoft: '#D7F2E6',
-  blue: '#3D6FD6',          // аудирование
+  blue: '#3D6FD6', // аудирование
   errorSoft: '#FFE1DA',
   errorInk: '#9E2F1B',
   hint: '#FFF0C9',
