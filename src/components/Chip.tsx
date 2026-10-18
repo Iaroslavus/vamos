@@ -18,51 +18,116 @@ import Animated, {
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, depth, motion, radius, space, type } from '@/theme/tokens';
 
+export type ChipTone = 'neutral' | 'success' | 'error';
+
 export type ChipProps = Omit<PressableProps, 'children' | 'style'> & {
   label: string;
+  /** Empty / spent bank tile (sunken, not pressable). */
   used?: boolean;
+  /** Neutral ink selection highlight before grading. */
+  selected?: boolean;
+  /** Post-check correctness colors (teal / coral). */
+  tone?: ChipTone;
   style?: StyleProp<ViewStyle>;
 };
 
-export function Chip({ label, used = false, onPress, style, ...rest }: ChipProps) {
+type ChipPalette = {
+  face: string;
+  sole: string;
+  border: string;
+  label: string;
+};
+
+function paletteFor(used: boolean, selected: boolean, tone: ChipTone): ChipPalette {
+  if (tone === 'success') {
+    return {
+      face: colors.tealSoft,
+      sole: colors.tealDeep,
+      border: colors.teal,
+      label: colors.teal,
+    };
+  }
+  if (tone === 'error') {
+    return {
+      face: colors.errorSoft,
+      sole: colors.coralDeep,
+      border: colors.coral,
+      label: colors.errorInk,
+    };
+  }
+  if (used) {
+    return {
+      face: colors.surfaceSunken,
+      sole: colors.border,
+      border: colors.border,
+      label: colors.inkDisabled,
+    };
+  }
+  if (selected) {
+    return {
+      face: colors.surface,
+      sole: colors.ink,
+      border: colors.ink,
+      label: colors.ink,
+    };
+  }
+  return {
+    face: colors.surface,
+    sole: colors.borderStrong,
+    border: colors.borderStrong,
+    label: colors.ink,
+  };
+}
+
+export function Chip({
+  label,
+  used = false,
+  selected = false,
+  tone = 'neutral',
+  disabled = false,
+  onPress,
+  style,
+  ...rest
+}: ChipProps) {
   const reduceMotion = useReduceMotion();
-  const scale = useSharedValue(reduceMotion ? 1 : motion.pop.from);
+  const scale = useSharedValue(1);
   const opacity = useSharedValue(reduceMotion ? 1 : 0);
+  const isDisabled = Boolean(disabled || used);
 
   useEffect(() => {
     if (reduceMotion) {
       opacity.value = withTiming(1, { duration: motion.press.duration });
       return;
     }
+    opacity.value = withTiming(1, { duration: Math.round(motion.pop.duration / 2) });
+  }, [opacity, reduceMotion]);
 
+  useEffect(() => {
+    if (!selected || reduceMotion || tone !== 'neutral') return;
     const half = Math.round(motion.pop.duration / 2);
-
-    opacity.value = withTiming(1, { duration: half });
-
     scale.value = withSequence(
+      withTiming(motion.pop.from, { duration: 0 }),
       withTiming(motion.pop.overshoot, { duration: half }),
       withTiming(1, { duration: half }),
     );
-  }, [opacity, reduceMotion, scale]);
+  }, [reduceMotion, scale, selected, tone]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
     opacity: opacity.value,
   }));
 
-  const faceColor = used ? colors.surfaceSunken : colors.surface;
-  const soleColor = used ? colors.border : colors.borderStrong;
-  const labelColor = used ? colors.inkDisabled : colors.ink;
+  const palette = paletteFor(used, selected, tone);
 
   return (
     <Animated.View style={[styles.wrap, animatedStyle, style]}>
-      <View style={[styles.sole, { backgroundColor: soleColor, top: depth.chip }]} />
+      <View style={[styles.sole, { backgroundColor: palette.sole, top: depth.chip }]} />
       <View
         style={[
           styles.face,
           {
-            backgroundColor: faceColor,
-            borderColor: used ? colors.border : colors.borderStrong,
+            backgroundColor: palette.face,
+            borderColor: palette.border,
             marginBottom: depth.chip,
           },
         ]}
@@ -70,12 +135,12 @@ export function Chip({ label, used = false, onPress, style, ...rest }: ChipProps
         <Pressable
           {...rest}
           accessibilityRole="button"
-          accessibilityState={{ disabled: used, selected: used }}
-          disabled={used}
-          onPress={used ? undefined : onPress}
+          accessibilityState={{ disabled: isDisabled, selected }}
+          disabled={isDisabled}
+          onPress={isDisabled ? undefined : onPress}
           style={styles.pressable}
         >
-          <Text style={[styles.label, { color: labelColor }]}>{label}</Text>
+          <Text style={[styles.label, { color: palette.label }]}>{label}</Text>
         </Pressable>
       </View>
     </Animated.View>

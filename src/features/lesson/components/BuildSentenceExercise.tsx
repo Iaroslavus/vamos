@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { Chip } from '@/components/Chip';
+import { Chip, type ChipTone } from '@/components/Chip';
 import { Text } from '@/components/Text';
 import { colors, radius, space } from '@/theme/tokens';
 
+import type { GradeStatus } from '../grading';
 import type { BuildSentenceItem } from '../store';
 
 type BuildSentenceExerciseProps = {
   exercise: BuildSentenceItem;
   disabled?: boolean;
+  gradeStatus?: GradeStatus | null;
   onAnswerChange: (answer: string) => void;
 };
 
@@ -26,13 +28,22 @@ function joinAnswer(slots: readonly TileSlot[]): string {
   return slots.map((slot) => slot.label).join(' ');
 }
 
+function resultTone(gradeStatus: GradeStatus | null | undefined): ChipTone {
+  if (!gradeStatus) return 'neutral';
+  if (gradeStatus === 'wrong') return 'error';
+  return 'success';
+}
+
 export function BuildSentenceExercise({
   exercise,
   disabled = false,
+  gradeStatus = null,
   onAnswerChange,
 }: BuildSentenceExerciseProps) {
   const [bank, setBank] = useState(() => toSlots(exercise.tiles));
   const [selected, setSelected] = useState<TileSlot[]>([]);
+  const revealed = Boolean(gradeStatus);
+  const tone = resultTone(gradeStatus);
 
   const pick = (slot: TileSlot) => {
     if (disabled) return;
@@ -67,6 +78,8 @@ export function BuildSentenceExercise({
               <Chip
                 key={slot.key}
                 label={slot.label}
+                selected={!revealed}
+                tone={tone}
                 disabled={disabled}
                 onPress={() => unpick(slot)}
                 accessibilityRole="button"

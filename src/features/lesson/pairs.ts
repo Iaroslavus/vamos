@@ -11,6 +11,13 @@ export function serializePairs(pairs: readonly MatchPair[]): string {
     .join(LIST_SEP);
 }
 
+/** How many pairs are encoded in a serialized match_pairs answer. */
+export function countSerializedPairs(serialized: string): number {
+  const trimmed = serialized.trim();
+  if (!trimmed) return 0;
+  return trimmed.split(LIST_SEP).filter((part) => part.length > 0).length;
+}
+
 export function shuffleInPlace<T>(items: T[], random: () => number = Math.random): T[] {
   for (let i = items.length - 1; i > 0; i -= 1) {
     const j = Math.floor(random() * (i + 1));

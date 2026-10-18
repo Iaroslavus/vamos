@@ -1,4 +1,4 @@
-import { serializePairs, shuffleInPlace } from './pairs';
+import { countSerializedPairs, serializePairs, shuffleInPlace } from './pairs';
 
 describe('serializePairs', () => {
   it('is order-independent', () => {
@@ -11,6 +11,21 @@ describe('serializePairs', () => {
       { left: 'hola', right: 'привет' },
     ]);
     expect(a).toBe(b);
+  });
+});
+
+describe('countSerializedPairs', () => {
+  it('counts pairs and treats empty as zero', () => {
+    expect(countSerializedPairs('')).toBe(0);
+    expect(countSerializedPairs('hola::привет')).toBe(1);
+    expect(
+      countSerializedPairs(
+        serializePairs([
+          { left: 'a', right: '1' },
+          { left: 'b', right: '2' },
+        ]),
+      ),
+    ).toBe(2);
   });
 });
 

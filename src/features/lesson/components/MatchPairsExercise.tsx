@@ -1,4 +1,3 @@
-import * as Haptics from 'expo-haptics';
 import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, {
@@ -18,79 +17,71 @@ import type { MatchPair, MatchPairsItem } from '../store';
 type MatchPairsExerciseProps = {
   exercise: MatchPairsItem;
   disabled?: boolean;
+  /** After «Проверить» — show teal/coral per provisional pair. */
+  revealResult?: boolean;
   onAnswerChange: (answer: string) => void;
 };
 
 type Side = 'left' | 'right';
-type Feedback = 'idle' | 'match' | 'error';
+type TileTone = 'idle' | 'selected' | 'success' | 'error';
+
+function isExpectedPair(pairs: readonly MatchPair[], left: string, right: string): boolean {
+  return pairs.some((pair) => pair.left === left && pair.right === right);
+}
 
 function PairTile({
   label,
-  selected,
-  locked,
-  feedback,
+  tone,
   disabled,
   onPress,
 }: {
   label: string;
-  selected: boolean;
-  locked: boolean;
-  feedback: Feedback;
+  tone: TileTone;
   disabled: boolean;
   onPress: () => void;
 }) {
   const reduceMotion = useReduceMotion();
   const scale = useSharedValue(1);
-  const shakeX = useSharedValue(0);
 
   useEffect(() => {
-    if (reduceMotion || feedback === 'idle') return;
-
-    if (feedback === 'match') {
-      scale.value = withSequence(
-        withTiming(motion.pop.overshoot, { duration: motion.pop.duration / 2 }),
-        withTiming(1, { duration: motion.pop.duration / 2 }),
-      );
-      return;
-    }
-
-    const d = motion.shake.distance;
-    shakeX.value = withSequence(
-      withTiming(-d, { duration: motion.shake.duration / 2 }),
-      withTiming(d, { duration: motion.shake.duration / 2 }),
-      withTiming(-d, { duration: motion.shake.duration / 2 }),
-      withTiming(0, { duration: motion.shake.duration / 2 }),
+    if (reduceMotion || tone !== 'selected') return;
+    const half = Math.round(motion.pop.duration / 2);
+    scale.value = withSequence(
+      withTiming(motion.pop.from, { duration: 0 }),
+      withTiming(motion.pop.overshoot, { duration: half }),
+      withTiming(1, { duration: half }),
     );
-  }, [feedback, reduceMotion, scale, shakeX]);
+  }, [reduceMotion, scale, tone]);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: shakeX.value }, { scale: scale.value }],
+    transform: [{ scale: scale.value }],
   }));
 
   let backgroundColor: string = colors.surface;
   let borderColor: string = colors.borderStrong;
   let textColor: string = colors.ink;
 
-  if (locked || feedback === 'match') {
+  if (tone === 'success') {
     backgroundColor = colors.tealSoft;
     borderColor = colors.teal;
     textColor = colors.teal;
-  } else if (feedback === 'error') {
+  } else if (tone === 'error') {
     backgroundColor = colors.errorSoft;
     borderColor = colors.coral;
     textColor = colors.errorInk;
-  } else if (selected) {
-    backgroundColor = colors.saffronSoft;
-    borderColor = colors.saffron;
+  } else if (tone === 'selected') {
+    backgroundColor = colors.surface;
+    borderColor = colors.ink;
+    textColor = colors.ink;
   }
 
   return (
     <Animated.View style={animatedStyle}>
       <Pressable
         onPress={onPress}
-        disabled={disabled || locked}
+        disabled={disabled}
         accessibilityRole="button"
-        accessibilityState={{ selected, disabled: disabled || locked }}
+        accessibilityState={{ selected: tone === 'selected', disabled }}
         style={[styles.tile, { backgroundColor, borderColor }]}
       >
         <Text variant="bodyBold" color={textColor}>
@@ -104,68 +95,75 @@ function PairTile({
 export function MatchPairsExercise({
   exercise,
   disabled = false,
+  revealResult = false,
   onAnswerChange,
 }: MatchPairsExerciseProps) {
   // Component is remounted with key={exercise.id}; shuffle once per mount.
   const [leftItems] = useState(() => shuffleInPlace(exercise.pairs.map((pair) => pair.left)));
   const [rightItems] = useState(() => shuffleInPlace(exercise.pairs.map((pair) => pair.right)));
 
-  const [matched, setMatched] = useState<MatchPair[]>([]);
+  const [paired, setPaired] = useState<MatchPair[]>([]);
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
   const [selectedRight, setSelectedRight] = useState<string | null>(null);
-  const [flash, setFlash] = useState<{ left?: string; right?: string; kind: Feedback } | null>(
-    null,
-  );
 
-  const lockedLeft = new Set(matched.map((pair) => pair.left));
-  const lockedRight = new Set(matched.map((pair) => pair.right));
+  const commitPair = (left: string, right: string) => {
+    const next = [...paired, { left, right }];
+    setPaired(next);
+    setSelectedLeft(null);
+    setSelectedRight(null);
+    onAnswerChange(serializePairs(next));
+  };
 
-  const tryMatch = (left: string | null, right: string | null) => {
-    if (!left || !right) return;
-
-    const expected = exercise.pairs.find((pair) => pair.left === left && pair.right === right);
-    if (expected) {
-      void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      setFlash({ left, right, kind: 'match' });
-      const next = [...matched, expected];
-      setMatched(next);
-      setSelectedLeft(null);
-      setSelectedRight(null);
-      onAnswerChange(serializePairs(next));
-      setTimeout(() => setFlash(null), 350);
-      return;
-    }
-
-    void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-    setFlash({ left, right, kind: 'error' });
-    setTimeout(() => {
-      setFlash(null);
-      setSelectedLeft(null);
-      setSelectedRight(null);
-    }, 420);
+  const unpair = (pair: MatchPair) => {
+    const next = paired.filter((item) => item.left !== pair.left || item.right !== pair.right);
+    setPaired(next);
+    setSelectedLeft(null);
+    setSelectedRight(null);
+    onAnswerChange(serializePairs(next));
   };
 
   const select = (side: Side, value: string) => {
     if (disabled) return;
-    if (side === 'left' && lockedLeft.has(value)) return;
-    if (side === 'right' && lockedRight.has(value)) return;
+
+    const existing =
+      side === 'left'
+        ? paired.find((pair) => pair.left === value)
+        : paired.find((pair) => pair.right === value);
+
+    if (existing) {
+      unpair(existing);
+      return;
+    }
 
     if (side === 'left') {
       const nextLeft = selectedLeft === value ? null : value;
       setSelectedLeft(nextLeft);
-      tryMatch(nextLeft, selectedRight);
+      if (nextLeft && selectedRight) {
+        commitPair(nextLeft, selectedRight);
+      }
       return;
     }
 
     const nextRight = selectedRight === value ? null : value;
     setSelectedRight(nextRight);
-    tryMatch(selectedLeft, nextRight);
+    if (selectedLeft && nextRight) {
+      commitPair(selectedLeft, nextRight);
+    }
   };
 
-  const tileFeedback = (side: Side, value: string): Feedback => {
-    if (!flash) return 'idle';
-    if (side === 'left' && flash.left === value) return flash.kind;
-    if (side === 'right' && flash.right === value) return flash.kind;
+  const tileTone = (side: Side, value: string): TileTone => {
+    const pair =
+      side === 'left'
+        ? paired.find((item) => item.left === value)
+        : paired.find((item) => item.right === value);
+
+    if (pair && revealResult) {
+      return isExpectedPair(exercise.pairs, pair.left, pair.right) ? 'success' : 'error';
+    }
+
+    if (pair) return 'selected';
+    if (side === 'left' && selectedLeft === value) return 'selected';
+    if (side === 'right' && selectedRight === value) return 'selected';
     return 'idle';
   };
 
@@ -181,9 +179,7 @@ export function MatchPairsExercise({
             <PairTile
               key={`L-${label}`}
               label={label}
-              selected={selectedLeft === label}
-              locked={lockedLeft.has(label)}
-              feedback={tileFeedback('left', label)}
+              tone={tileTone('left', label)}
               disabled={disabled}
               onPress={() => select('left', label)}
             />
@@ -194,9 +190,7 @@ export function MatchPairsExercise({
             <PairTile
               key={`R-${label}`}
               label={label}
-              selected={selectedRight === label}
-              locked={lockedRight.has(label)}
-              feedback={tileFeedback('right', label)}
+              tone={tileTone('right', label)}
               disabled={disabled}
               onPress={() => select('right', label)}
             />

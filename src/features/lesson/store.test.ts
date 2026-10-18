@@ -83,6 +83,53 @@ describe('lesson store', () => {
     expect(useLessonStore.getState().userAnswer).toBe('hola');
   });
 
+  it('selecting an answer does not change score, hearts, or status', () => {
+    startWithClock();
+    useLessonStore.getState().setAnswer('привет');
+
+    const state = useLessonStore.getState();
+    expect(state.status).toBe('active');
+    expect(state.xpEarned).toBe(0);
+    expect(state.correctCount).toBe(0);
+    expect(state.wrongCount).toBe(0);
+    expect(state.hearts).toBe(DEFAULT_MAX_HEARTS);
+    expect(state.lastGrade).toBeNull();
+  });
+
+  it('allows reselection without grading until checkAnswer', () => {
+    startWithClock();
+    useLessonStore.getState().setAnswer('пока');
+    useLessonStore.getState().setAnswer('привет');
+    useLessonStore.getState().setAnswer('');
+    useLessonStore.getState().setAnswer('привет');
+
+    const before = useLessonStore.getState();
+    expect(before.userAnswer).toBe('привет');
+    expect(before.status).toBe('active');
+    expect(before.xpEarned).toBe(0);
+    expect(before.wrongCount).toBe(0);
+    expect(before.lastGrade).toBeNull();
+
+    // Store test fixtures use Spanish answer keys; grade via matching answer.
+    useLessonStore.getState().setAnswer('hola');
+    const grade = useLessonStore.getState().checkAnswer();
+    expect(grade?.status).toBe('correct');
+    expect(useLessonStore.getState().xpEarned).toBe(XP_CORRECT);
+    expect(useLessonStore.getState().status).toBe('feedback');
+  });
+
+  it('grades only when checkAnswer is pressed, not on setAnswer', () => {
+    startWithClock();
+    useLessonStore.getState().setAnswer('adios');
+    expect(useLessonStore.getState().wrongCount).toBe(0);
+    expect(useLessonStore.getState().hearts).toBe(DEFAULT_MAX_HEARTS);
+
+    const grade = useLessonStore.getState().checkAnswer();
+    expect(grade?.status).toBe('wrong');
+    expect(useLessonStore.getState().wrongCount).toBe(1);
+    expect(useLessonStore.getState().hearts).toBe(DEFAULT_MAX_HEARTS - 1);
+  });
+
   it('checkAnswer marks correct and awards XP', () => {
     startWithClock();
     useLessonStore.getState().setAnswer('Hola!');

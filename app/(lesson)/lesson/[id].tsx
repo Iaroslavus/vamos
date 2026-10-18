@@ -29,6 +29,7 @@ import { MatchPairsExercise } from '@/features/lesson/components/MatchPairsExerc
 import { SelectTranslationExercise } from '@/features/lesson/components/SelectTranslationExercise';
 import { TypeTranslationExercise } from '@/features/lesson/components/TypeTranslationExercise';
 import { loadLesson } from '@/features/lesson/loader';
+import { countSerializedPairs } from '@/features/lesson/pairs';
 import { isTypingExercise, toPlayableExercises } from '@/features/lesson/playable';
 import type { VocabularyItem } from '@/features/lesson/schema';
 import { useLessonStore, type LessonExerciseItem } from '@/features/lesson/store';
@@ -168,7 +169,10 @@ export default function LessonScreen() {
   const canCheck =
     status === 'active' &&
     userAnswer.trim().length > 0 &&
-    (exercise.type !== 'match_pairs' || userAnswer === exercise.answer);
+    (exercise.type !== 'match_pairs' || countSerializedPairs(userAnswer) === exercise.pairs.length);
+
+  const gradeStatus =
+    status === 'feedback' || status === 'failed' ? (lastGrade?.status ?? null) : null;
 
   return (
     <KeyboardAvoidingView
@@ -209,6 +213,7 @@ export default function LessonScreen() {
             exercise={exercise}
             selected={userAnswer}
             disabled={status !== 'active'}
+            gradeStatus={gradeStatus}
             onSelect={setAnswer}
           />
         ) : null}
@@ -217,6 +222,7 @@ export default function LessonScreen() {
             key={exercise.id}
             exercise={exercise}
             disabled={status !== 'active'}
+            gradeStatus={gradeStatus}
             onAnswerChange={onAnswerChange}
           />
         ) : null}
@@ -225,6 +231,7 @@ export default function LessonScreen() {
             exercise={exercise}
             selected={userAnswer}
             disabled={status !== 'active'}
+            gradeStatus={gradeStatus}
             onSelect={setAnswer}
           />
         ) : null}
@@ -233,6 +240,7 @@ export default function LessonScreen() {
             key={exercise.id}
             exercise={exercise}
             disabled={status !== 'active'}
+            revealResult={Boolean(gradeStatus)}
             onAnswerChange={onAnswerChange}
           />
         ) : null}
