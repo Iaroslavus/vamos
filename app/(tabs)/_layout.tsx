@@ -1,68 +1,64 @@
-import { SymbolView } from 'expo-symbols';
-import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
+import { Tabs } from 'expo-router';
+import { BookOpen, MessageCircle, Trophy, User } from 'lucide-react-native';
+import { useTranslation } from 'react-i18next';
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import { colors } from '@/theme/tokens';
+
+const ICON_STROKE = 2.2;
+const ICON_SIZE = 24;
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { t } = useTranslation();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
+        headerShown: true,
+        headerStyle: { backgroundColor: colors.ground },
+        headerTintColor: colors.ink,
+        headerShadowVisible: false,
+        tabBarActiveTintColor: colors.coral,
+        tabBarInactiveTintColor: colors.inkMuted,
+        tabBarStyle: {
+          backgroundColor: colors.surface,
+          borderTopColor: colors.border,
+        },
+        sceneStyle: { backgroundColor: colors.ground },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
+          title: t('tabs.learn'),
           tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
-              }}
-              tintColor={color}
-              size={28}
-            />
-          ),
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable style={{ marginRight: 15 }}>
-                {({ pressed }) => (
-                  <SymbolView
-                    name={{ ios: 'info.circle', android: 'info', web: 'info' }}
-                    size={25}
-                    tintColor={Colors[colorScheme].text}
-                    style={{ opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
+            <BookOpen color={color} size={ICON_SIZE} strokeWidth={ICON_STROKE} />
           ),
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="dialog"
         options={{
-          title: 'Tab Two',
+          title: t('tabs.dialog'),
           tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
-              }}
-              tintColor={color}
-              size={28}
-            />
+            <MessageCircle color={color} size={ICON_SIZE} strokeWidth={ICON_STROKE} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="progress"
+        options={{
+          title: t('tabs.progress'),
+          tabBarIcon: ({ color }) => (
+            <Trophy color={color} size={ICON_SIZE} strokeWidth={ICON_STROKE} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: t('tabs.profile'),
+          tabBarIcon: ({ color }) => (
+            <User color={color} size={ICON_SIZE} strokeWidth={ICON_STROKE} />
           ),
         }}
       />

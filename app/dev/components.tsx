@@ -17,7 +17,7 @@ export default function DevComponentsScreen() {
   const [usedChip, setUsedChip] = useState(false);
 
   if (!__DEV__) {
-    return <Redirect href="/" />;
+    return <Redirect href="/(tabs)" />;
   }
 
   return (

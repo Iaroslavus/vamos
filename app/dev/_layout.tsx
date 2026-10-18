@@ -4,7 +4,7 @@ import { colors } from '@/theme/tokens';
 
 export default function DevLayout() {
   if (!__DEV__) {
-    return <Redirect href="/" />;
+    return <Redirect href="/(tabs)" />;
   }
 
   return (

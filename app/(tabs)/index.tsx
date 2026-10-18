@@ -1,47 +1,47 @@
-import { Link } from 'expo-router';
+import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { Button } from '@/components/Button';
+import { StubScreen } from '@/components/StubScreen';
+import { Text } from '@/components/Text';
 import { colors, space } from '@/theme/tokens';
 
-export default function TabOneScreen() {
+export default function LearnScreen() {
+  const { t } = useTranslation();
+  const router = useRouter();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+    <StubScreen title={t('learn.title')} description={t('learn.stub')}>
+      <Button
+        title={t('common.openLesson')}
+        variant="primary"
+        onPress={() => router.push('/lesson/demo')}
+      />
+      <Button
+        title={t('common.openOnboarding')}
+        variant="secondary"
+        onPress={() => router.push('/onboarding')}
+      />
       {__DEV__ ? (
-        <Link href="/dev/components" style={styles.devLink}>
-          <Text style={styles.devLinkText}>Dev components</Text>
-        </Link>
+        <Text
+          variant="bodyBold"
+          color={colors.coral}
+          style={styles.devLink}
+          onPress={() => router.push('/dev/components')}
+        >
+          {t('common.devComponents')}
+        </Text>
       ) : null}
-    </View>
+    </StubScreen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
   devLink: {
-    marginTop: space.xl,
+    alignSelf: 'center',
+    marginTop: space.sm,
     paddingVertical: space.sm,
-    paddingHorizontal: space.lg,
-  },
-  devLinkText: {
-    color: colors.coral,
-    fontWeight: '700',
+    textAlign: 'center',
   },
 });

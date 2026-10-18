@@ -8,8 +8,10 @@ import { useFonts } from 'expo-font';
 import { DefaultTheme, Stack, ThemeProvider, type Theme } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { I18nextProvider } from 'react-i18next';
 import 'react-native-reanimated';
 
+import i18n from '@/i18n';
 import { colors } from '@/theme/tokens';
 
 export {
@@ -18,7 +20,6 @@ export {
 } from 'expo-router';
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
   anchor: '(tabs)',
 };
 
@@ -34,7 +35,6 @@ const vamosTheme: Theme = {
   },
 };
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -45,7 +45,6 @@ export default function RootLayout() {
     Manrope_800ExtraBold,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -60,7 +59,11 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <I18nextProvider i18n={i18n}>
+      <RootLayoutNav />
+    </I18nextProvider>
+  );
 }
 
 function RootLayoutNav() {
@@ -74,7 +77,11 @@ function RootLayoutNav() {
         }}
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen
+          name="(lesson)"
+          options={{ presentation: 'fullScreenModal', headerShown: false }}
+        />
+        <Stack.Screen name="(onboarding)" options={{ presentation: 'modal', headerShown: false }} />
         {__DEV__ ? <Stack.Screen name="dev" options={{ headerShown: false }} /> : null}
       </Stack>
     </ThemeProvider>
