@@ -2,10 +2,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient, processLock, type SupabaseClient } from '@supabase/supabase-js';
 import { AppState, type AppStateStatus, Platform } from 'react-native';
 
+import type { Database } from '@/lib/database.types';
 import { env } from '@/lib/env';
 
-export function createSupabaseClient(): SupabaseClient {
-  return createClient(env.EXPO_PUBLIC_SUPABASE_URL, env.EXPO_PUBLIC_SUPABASE_ANON_KEY, {
+export type TypedSupabaseClient = SupabaseClient<Database>;
+
+export function createSupabaseClient(): TypedSupabaseClient {
+  return createClient<Database>(env.EXPO_PUBLIC_SUPABASE_URL, env.EXPO_PUBLIC_SUPABASE_ANON_KEY, {
     auth: {
       // On web supabase-js falls back to localStorage; AsyncStorage is only needed on native.
       ...(Platform.OS !== 'web' ? { storage: AsyncStorage } : {}),
@@ -23,7 +26,10 @@ export function createSupabaseClient(): SupabaseClient {
  * Token auto-refresh runs on a timer, which React Native pauses in the background. Keep it alive
  * only while the app is in the foreground and resume it (with an immediate refresh) on return.
  */
-export function handleAppStateChange(client: SupabaseClient, state: AppStateStatus): void {
+export function handleAppStateChange(
+  client: Pick<SupabaseClient, 'auth'>,
+  state: AppStateStatus,
+): void {
   if (state === 'active') {
     void client.auth.startAutoRefresh();
   } else {
@@ -31,7 +37,7 @@ export function handleAppStateChange(client: SupabaseClient, state: AppStateStat
   }
 }
 
-export function registerAppStateAutoRefresh(client: SupabaseClient) {
+export function registerAppStateAutoRefresh(client: Pick<SupabaseClient, 'auth'>) {
   return AppState.addEventListener('change', (state) => handleAppStateChange(client, state));
 }
 

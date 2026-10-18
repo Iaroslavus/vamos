@@ -93,12 +93,28 @@ supabase start
 машины, например `http://192.168.1.10:54321`. iOS-симулятор видит `127.0.0.1` напрямую,
 Android-эмулятор — через `http://10.0.2.2:54321`.
 
+### Схема, миграции и тесты БД
+
+Схема живёт в `supabase/migrations` (таблицы `profiles`, `lesson_progress`, `xp_events`, `streaks`,
+`review_cards`; профиль и строка серии создаются триггером при регистрации, RLS включён на всех
+таблицах — пользователь видит и меняет только свои строки). Проверки доступа — pgTAP-тесты в
+`supabase/tests`.
+
+```bash
+supabase db reset   # пересоздать БД из миграций и supabase/seed.sql
+npm run db:test     # pgTAP: supabase test db
+npm run db:types    # обновить src/lib/database.types.ts из локальной БД (коммитить вместе с миграцией)
+```
+
+Новая таблица = миграция + RLS-политики + pgTAP-тест + перегенерированные типы.
+CI (`.github/workflows/db.yml`) гоняет миграции и pgTAP на каждом PR, затрагивающем `supabase/**`,
+и падает, если `database.types.ts` не совпадает со схемой.
+
 ### Остановка
 
 ```bash
 supabase stop            # остановить контейнеры, данные сохраняются
 supabase stop --no-backup  # остановить и удалить локальные данные
-supabase db reset        # пересоздать БД из миграций и supabase/seed.sql
 ```
 
 ## Как работать с Cursor эффективно
