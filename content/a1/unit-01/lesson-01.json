@@ -1,0 +1,167 @@
+{
+  "id": "a1-u01-l01",
+  "level": "A1",
+  "unit": 1,
+  "title_ru": "Приветствия",
+  "draft": true,
+  "new_items": [
+    {
+      "id": "hola",
+      "es": "hola",
+      "ru": "привет",
+      "pos": "interjection",
+      "audio": "a1/hola.mp3",
+      "variant": "both"
+    },
+    {
+      "id": "buenos-dias",
+      "es": "buenos días",
+      "ru": "доброе утро",
+      "pos": "phrase",
+      "audio": "a1/buenos-dias.mp3",
+      "variant": "both"
+    },
+    {
+      "id": "buenas-tardes",
+      "es": "buenas tardes",
+      "ru": "добрый день / добрый вечер",
+      "pos": "phrase",
+      "audio": "a1/buenas-tardes.mp3",
+      "variant": "both"
+    },
+    {
+      "id": "buenas-noches",
+      "es": "buenas noches",
+      "ru": "спокойной ночи / добрый вечер",
+      "pos": "phrase",
+      "audio": "a1/buenas-noches.mp3",
+      "variant": "both"
+    },
+    {
+      "id": "adios",
+      "es": "adiós",
+      "ru": "до свидания",
+      "pos": "interjection",
+      "audio": "a1/adios.mp3",
+      "variant": "both"
+    },
+    {
+      "id": "hasta-luego",
+      "es": "hasta luego",
+      "ru": "пока / до скорого",
+      "pos": "phrase",
+      "audio": "a1/hasta-luego.mp3",
+      "variant": "both"
+    },
+    {
+      "id": "por-favor",
+      "es": "por favor",
+      "ru": "пожалуйста",
+      "pos": "phrase",
+      "audio": "a1/por-favor.mp3",
+      "variant": "both"
+    },
+    {
+      "id": "gracias",
+      "es": "gracias",
+      "ru": "спасибо",
+      "pos": "interjection",
+      "audio": "a1/gracias.mp3",
+      "variant": "both"
+    }
+  ],
+  "exercises": [
+    {
+      "type": "select_translation",
+      "prompt_ru": "Выберите перевод",
+      "prompt": "hola",
+      "options": ["привет", "спасибо", "пожалуйста", "до свидания"],
+      "answer": "привет",
+      "audio": "a1/hola.mp3",
+      "explain_ru": "Hola — универсальное приветствие в любое время суток"
+    },
+    {
+      "type": "select_translation",
+      "prompt_ru": "Выберите перевод",
+      "prompt": "gracias",
+      "options": ["пожалуйста", "спасибо", "привет", "пока"],
+      "answer": "спасибо",
+      "audio": "a1/gracias.mp3"
+    },
+    {
+      "type": "match_pairs",
+      "prompt_ru": "Соедините приветствия с переводом",
+      "pairs": [
+        { "left": "buenos días", "right": "доброе утро" },
+        { "left": "buenas tardes", "right": "добрый день" },
+        { "left": "buenas noches", "right": "спокойной ночи" },
+        { "left": "adiós", "right": "до свидания" }
+      ],
+      "explain_ru": "Дías / tardes / noches зависят от времени суток"
+    },
+    {
+      "type": "listen_select",
+      "prompt_ru": "Что вы слышите?",
+      "audio": "a1/u01/l01-e04.mp3",
+      "options": ["Hola", "Adiós", "Gracias", "Por favor"],
+      "answer": "Hola"
+    },
+    {
+      "type": "build_sentence",
+      "prompt_ru": "Составьте: «Доброе утро»",
+      "answer": "Buenos días",
+      "accepted": ["Buenos dias"],
+      "tiles": ["Buenos", "días", "Buenas", "noches", "Hola"],
+      "audio": "a1/buenos-dias.mp3",
+      "explain_ru": "Buenos согласуется с días (муж. мн.)"
+    },
+    {
+      "type": "fill_gap",
+      "prompt_ru": "Вставьте пропущенное слово",
+      "sentence_es": "___ días",
+      "answer": "Buenos",
+      "accepted": ["buenos"],
+      "options": ["Buenos", "Buenas", "Hola", "Gracias"],
+      "explain_ru": "Перед días — Buenos (мужской род)"
+    },
+    {
+      "type": "type_translation",
+      "prompt_ru": "Напишите по-испански",
+      "prompt": "спасибо",
+      "direction": "ru_to_es",
+      "answer": "gracias",
+      "accepted": ["Gracias"],
+      "audio": "a1/gracias.mp3"
+    },
+    {
+      "type": "speak_repeat",
+      "prompt_ru": "Повторите вслух",
+      "prompt_es": "Buenas tardes",
+      "audio": "a1/buenas-tardes.mp3",
+      "explain_ru": "Ударение на tar-des"
+    },
+    {
+      "type": "select_translation",
+      "prompt_ru": "Как сказать «пока»?",
+      "prompt": "пока / до скорого",
+      "options": ["hasta luego", "buenos días", "por favor", "hola"],
+      "answer": "hasta luego",
+      "audio": "a1/hasta-luego.mp3"
+    },
+    {
+      "type": "build_sentence",
+      "prompt_ru": "Составьте: «Спасибо» + «пожалуйста» (вежливый ответ)",
+      "answer": "De nada",
+      "accepted": ["de nada"],
+      "tiles": ["De", "nada", "Por", "favor", "Gracias"],
+      "explain_ru": "На «gracias» часто отвечают «de nada»"
+    },
+    {
+      "type": "listen_select",
+      "prompt_ru": "Выберите услышанную фразу прощания",
+      "audio": "a1/u01/l01-e11.mp3",
+      "options": ["Hasta luego", "Buenos días", "Por favor", "Hola"],
+      "answer": "Hasta luego"
+    }
+  ]
+}

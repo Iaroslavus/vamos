@@ -15,13 +15,20 @@ jest.mock('react-native-reanimated', () => {
     useAnimatedProps: (updater) => updater(),
     withTiming: NOOP,
     withSpring: NOOP,
+    withRepeat: NOOP,
     withSequence: (...animations) => animations[animations.length - 1],
     Easing: {
       out: (fn) => fn,
+      inOut: (fn) => fn,
+      ease: NOOP,
       cubic: NOOP,
     },
   };
 });
+
+jest.mock('@react-native-async-storage/async-storage', () =>
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
+);
 
 jest.mock('react-native-svg', () => {
   const React = require('react');
