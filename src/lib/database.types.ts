@@ -181,6 +181,7 @@ export type Database = {
       xp_events: {
         Row: {
           amount: number;
+          client_id: string | null;
           created_at: string;
           id: number;
           ref_id: string | null;
@@ -190,6 +191,7 @@ export type Database = {
         ComputedFields: never;
         Insert: {
           amount: number;
+          client_id?: string | null;
           created_at?: string;
           id?: never;
           ref_id?: string | null;
@@ -198,6 +200,7 @@ export type Database = {
         };
         Update: {
           amount?: number;
+          client_id?: string | null;
           created_at?: string;
           id?: never;
           ref_id?: string | null;
@@ -219,7 +222,24 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      save_lesson_progress: {
+        Args: { p_best_accuracy: number; p_completed_at: string; p_lesson_id: string };
+        Returns: {
+          best_accuracy: number | null;
+          completed_at: string | null;
+          created_at: string;
+          lesson_id: string;
+          status: Database['public']['Enums']['lesson_status'];
+          updated_at: string;
+          user_id: string;
+        };
+        SetofOptions: {
+          from: '*';
+          to: 'lesson_progress';
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
     };
     Enums: {
       cefr_level: 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
