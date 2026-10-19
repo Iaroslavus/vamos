@@ -4,6 +4,7 @@ import {
   Manrope_700Bold,
   Manrope_800ExtraBold,
 } from '@expo-google-fonts/manrope';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { DefaultTheme, Stack, ThemeProvider, type Theme } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -14,7 +15,9 @@ import 'react-native-reanimated';
 import { SessionError, SessionLoading } from '@/features/auth/components/SessionStatus';
 import { SessionProvider } from '@/features/auth/SessionProvider';
 import { useSession } from '@/features/auth/useSession';
+import { ProgressProvider } from '@/features/progress/ProgressProvider';
 import i18n from '@/i18n';
+import { queryClient } from '@/lib/queryClient';
 import { colors } from '@/theme/tokens';
 
 export {
@@ -54,9 +57,13 @@ export default function RootLayout() {
 
   return (
     <I18nextProvider i18n={i18n}>
-      <SessionProvider>
-        <AppShell fontsLoaded={loaded} />
-      </SessionProvider>
+      <QueryClientProvider client={queryClient}>
+        <SessionProvider>
+          <ProgressProvider>
+            <AppShell fontsLoaded={loaded} />
+          </ProgressProvider>
+        </SessionProvider>
+      </QueryClientProvider>
     </I18nextProvider>
   );
 }
