@@ -11,6 +11,9 @@ import { useEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import 'react-native-reanimated';
 
+import { SessionError, SessionLoading } from '@/features/auth/components/SessionStatus';
+import { SessionProvider } from '@/features/auth/SessionProvider';
+import { useSession } from '@/features/auth/useSession';
 import i18n from '@/i18n';
 import { colors } from '@/theme/tokens';
 
@@ -49,41 +52,50 @@ export default function RootLayout() {
     if (error) throw error;
   }, [error]);
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
   return (
     <I18nextProvider i18n={i18n}>
-      <RootLayoutNav />
+      <SessionProvider>
+        <AppShell fontsLoaded={loaded} />
+      </SessionProvider>
     </I18nextProvider>
+  );
+}
+
+function AppShell({ fontsLoaded }: { fontsLoaded: boolean }) {
+  const { status } = useSession();
+
+  useEffect(() => {
+    if (fontsLoaded) {
+      void SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) return null;
+  if (status === 'loading') return <SessionLoading />;
+
+  return (
+    <ThemeProvider value={vamosTheme}>
+      {status === 'error' ? <SessionError /> : <RootLayoutNav />}
+    </ThemeProvider>
   );
 }
 
 function RootLayoutNav() {
   return (
-    <ThemeProvider value={vamosTheme}>
-      <Stack
-        screenOptions={{
-          contentStyle: { backgroundColor: colors.ground },
-          headerStyle: { backgroundColor: colors.ground },
-          headerTintColor: colors.ink,
-        }}
-      >
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="(lesson)"
-          options={{ presentation: 'fullScreenModal', headerShown: false }}
-        />
-        <Stack.Screen name="(onboarding)" options={{ presentation: 'modal', headerShown: false }} />
-        {__DEV__ ? <Stack.Screen name="dev" options={{ headerShown: false }} /> : null}
-      </Stack>
-    </ThemeProvider>
+    <Stack
+      screenOptions={{
+        contentStyle: { backgroundColor: colors.ground },
+        headerStyle: { backgroundColor: colors.ground },
+        headerTintColor: colors.ink,
+      }}
+    >
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="(lesson)"
+        options={{ presentation: 'fullScreenModal', headerShown: false }}
+      />
+      <Stack.Screen name="(onboarding)" options={{ presentation: 'modal', headerShown: false }} />
+      {__DEV__ ? <Stack.Screen name="dev" options={{ headerShown: false }} /> : null}
+    </Stack>
   );
 }
