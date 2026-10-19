@@ -4,18 +4,21 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
-import { getCurriculumLessons, type PathNode } from '@/features/path/curriculum';
 import { LessonPath } from '@/features/path/components/LessonPath';
-import { usePathProgressStore } from '@/features/path/progressStore';
+import { completedLessonIds } from '@/features/path/completedLessons';
+import { getCurriculumLessons, type PathNode } from '@/features/path/curriculum';
+import { useProgress } from '@/features/progress/useProgress';
 import { colors, radius, space } from '@/theme/tokens';
 
 export default function LearnScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const completedIds = usePathProgressStore((s) => s.completedIds);
-  const totalXp = usePathProgressStore((s) => s.totalXp);
+  const { data } = useProgress();
+  const completedIds = useMemo(() => completedLessonIds(data?.lessons ?? []), [data?.lessons]);
+  const totalXp = data?.totalXp ?? 0;
 
   const lessons = useMemo(() => getCurriculumLessons(), []);
   const unitTitle = lessons[0]
@@ -55,6 +58,14 @@ export default function LearnScreen() {
         </View>
 
         <LessonPath lessons={lessons} completedIds={completedIds} onPressNode={onPressNode} />
+
+        <View style={styles.actions}>
+          <Button
+            title={t('common.openOnboarding')}
+            variant="secondary"
+            onPress={() => router.push('/onboarding')}
+          />
+        </View>
 
         {__DEV__ ? (
           <Pressable
@@ -98,6 +109,10 @@ const styles = StyleSheet.create({
   scroll: {
     paddingBottom: space.xxxl,
     paddingHorizontal: space.sm,
+  },
+  actions: {
+    marginHorizontal: space.lg,
+    marginTop: space.lg,
   },
   goalCard: {
     marginHorizontal: space.lg,

@@ -4,7 +4,7 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 type PathProgressState = {
   completedIds: string[];
-  /** Total XP accumulated locally (until Supabase Phase 3). */
+  /** Total XP kept in this local cache. The home path reads the progress repository. */
   totalXp: number;
   markComplete: (lessonId: string, xpEarned?: number) => void;
   isComplete: (lessonId: string) => boolean;

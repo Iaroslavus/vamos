@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import LottieView from 'lottie-react-native';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -11,8 +11,8 @@ import { playUiSound } from '@/features/audio/sounds';
 import { NewWordsList } from '@/features/lesson/components/NewWordsList';
 import { XpCounter } from '@/features/lesson/components/XpCounter';
 import { formatAccuracyPercent, formatElapsed } from '@/features/lesson/format';
+import { useFinishLesson } from '@/features/lesson/hooks/useFinishLesson';
 import { useLessonStore } from '@/features/lesson/store';
-import { usePathProgressStore } from '@/features/path/progressStore';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, space } from '@/theme/tokens';
 
@@ -22,8 +22,8 @@ export default function LessonSummaryScreen() {
   const insets = useSafeAreaInsets();
   const reduceMotion = useReduceMotion();
   const summary = useLessonStore((s) => s.getSummary());
-  const reset = useLessonStore((s) => s.reset);
-  const markComplete = usePathProgressStore((s) => s.markComplete);
+  const finishLesson = useFinishLesson();
+  const [leaving, setLeaving] = useState(false);
 
   const finished = summary.status === 'completed' || summary.status === 'failed';
 
@@ -34,18 +34,23 @@ export default function LessonSummaryScreen() {
   }, [finished]);
 
   const goHome = () => {
-    if (summary.status === 'completed' && summary.lessonId) {
-      markComplete(summary.lessonId, summary.xpEarned);
-    }
-    reset();
-    router.replace('/(tabs)');
+    if (leaving) return;
+    setLeaving(true);
+    void finishLesson(summary).finally(() => {
+      router.replace('/(tabs)');
+    });
   };
 
   if (!finished) {
     return (
       <View style={[styles.root, styles.centered, { paddingTop: insets.top + space.xl }]}>
         <Text variant="h3">{t('lesson.summaryEmpty')}</Text>
-        <Button title={t('lesson.summaryContinue')} variant="primary" onPress={goHome} />
+        <Button
+          title={t('lesson.summaryContinue')}
+          variant="primary"
+          disabled={leaving}
+          onPress={goHome}
+        />
       </View>
     );
   }
@@ -97,7 +102,12 @@ export default function LessonSummaryScreen() {
       </ScrollView>
 
       <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, space.lg) }]}>
-        <Button title={t('lesson.summaryContinue')} variant="primary" onPress={goHome} />
+        <Button
+          title={t('lesson.summaryContinue')}
+          variant="primary"
+          disabled={leaving}
+          onPress={goHome}
+        />
       </View>
     </View>
   );
