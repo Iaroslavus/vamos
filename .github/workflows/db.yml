@@ -22,7 +22,8 @@ jobs:
       - uses: actions/checkout@v5
 
       # Required on every PR, so the job always runs and succeeds. The local stack
-      # (and the type drift check, which needs that stack) runs only when supabase/** changed.
+      # (and the type drift check, which needs that stack) runs only when supabase/**
+      # changed — or the generated types / this workflow, which are validated by that stack.
       - name: Detect supabase changes
         id: changes
         uses: dorny/paths-filter@v3
@@ -30,6 +31,8 @@ jobs:
           filters: |
             supabase:
               - 'supabase/**'
+              - 'src/lib/database.types.ts'
+              - '.github/workflows/db.yml'
 
       - uses: actions/setup-node@v5
         if: steps.changes.outputs.supabase == 'true'
