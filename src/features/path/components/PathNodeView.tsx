@@ -1,6 +1,8 @@
+import * as Haptics from 'expo-haptics';
 import { Check, Lock } from 'lucide-react-native';
 import { useEffect } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { Pressable, View } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -11,22 +13,29 @@ import Animated, {
 
 import { Text } from '@/components/Text';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
-import { colors, depth, motion, radius, space } from '@/theme/tokens';
+import { colors, motion } from '@/theme/tokens';
 
-import type { PathNode } from '../curriculum';
+import type { PathNode, PathNodeStatus } from '../curriculum';
+import { pathNodeStyles as styles } from './pathNodeStyles';
 
 type PathNodeViewProps = {
   node: PathNode;
   onPress: () => void;
 };
 
-const NODE_SIZE = 64;
+const ICON_STROKE = 2.2;
 
 export function PathNodeView({ node, onPress }: PathNodeViewProps) {
+  const { t } = useTranslation();
   const reduceMotion = useReduceMotion();
   const pulse = useSharedValue(1);
-  const { status, lesson, side } = node;
-  const interactive = status === 'current' || status === 'completed';
+  const { status, side } = node;
+  const interactive = status !== 'locked';
+  const title = t(node.lesson.titleKey);
+  const accessibilityLabel = t('learn.nodeLabel', {
+    title,
+    status: t(`learn.status.${status}`),
+  });
 
   useEffect(() => {
     if (status !== 'current' || reduceMotion) {
@@ -49,140 +58,67 @@ export function PathNodeView({ node, onPress }: PathNodeViewProps) {
     opacity: 2 - pulse.value,
   }));
 
-  let face: string = colors.surfaceSunken;
-  let sole: string = colors.borderStrong;
-  let iconColor: string = colors.inkDisabled;
-
-  if (status === 'completed') {
-    face = colors.teal;
-    sole = colors.tealDeep;
-    iconColor = colors.inkOnDark;
-  } else if (status === 'current') {
-    face = colors.coral;
-    sole = colors.coralDeep;
-    iconColor = colors.inkOnDark;
-  }
+  const palette = facePalette(status);
 
   return (
-    <View
-      style={[styles.row, side === 'left' ? styles.alignLeft : styles.alignRight]}
-      accessibilityElementsHidden={false}
-    >
+    <View style={[styles.row, side === 'left' ? styles.alignLeft : styles.alignRight]}>
       <View style={styles.nodeWrap}>
-        {status === 'current' && !reduceMotion ? (
-          <Animated.View style={[styles.ring, ringStyle]} pointerEvents="none" />
+        {status === 'current' ? (
+          <Animated.View
+            pointerEvents="none"
+            style={[styles.ring, reduceMotion ? styles.ringStatic : ringStyle]}
+          />
         ) : null}
-        {status === 'current' && reduceMotion ? (
-          <View style={[styles.ring, styles.ringStatic]} pointerEvents="none" />
-        ) : null}
-
         <Pressable
-          onPress={onPress}
           disabled={!interactive}
           accessibilityRole="button"
           accessibilityState={{ disabled: !interactive }}
-          accessibilityLabel={`${lesson.title_ru}, ${status}`}
+          accessibilityLabel={accessibilityLabel}
+          accessibilityHint={status === 'locked' ? t('learn.lockedHint') : undefined}
+          onPress={() => {
+            void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            onPress();
+          }}
           style={({ pressed }) => [
             styles.node,
-            { backgroundColor: face, borderColor: sole },
-            pressed && interactive && styles.pressed,
+            { backgroundColor: palette.face },
+            pressed && interactive ? styles.pressed : null,
           ]}
         >
-          <View style={[styles.sole, { backgroundColor: sole }]} />
-          <View style={[styles.face, { backgroundColor: face }]}>
+          <View style={[styles.sole, { backgroundColor: palette.sole }]} />
+          <View style={[styles.face, { backgroundColor: palette.face }]}>
             {status === 'completed' ? (
-              <Check size={28} color={iconColor} strokeWidth={2.6} />
+              <Check size={28} color={palette.icon} strokeWidth={ICON_STROKE} />
             ) : null}
-            {status === 'locked' ? <Lock size={22} color={iconColor} strokeWidth={2.2} /> : null}
+            {status === 'locked' ? (
+              <Lock size={22} color={palette.icon} strokeWidth={ICON_STROKE} />
+            ) : null}
             {status === 'current' ? (
-              <Text variant="button" color={iconColor}>
+              <Text variant="button" color={palette.icon}>
                 {node.index + 1}
               </Text>
             ) : null}
           </View>
         </Pressable>
       </View>
-
       <Text
         variant="caption"
         color={status === 'locked' ? colors.inkDisabled : colors.ink}
         style={[styles.label, side === 'left' ? styles.labelRight : styles.labelLeft]}
         numberOfLines={2}
       >
-        {lesson.title_ru}
+        {title}
       </Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  row: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    minHeight: NODE_SIZE + depth.node + space.lg,
-    marginVertical: space.md,
-  },
-  alignLeft: {
-    justifyContent: 'flex-start',
-    paddingLeft: '18%',
-  },
-  alignRight: {
-    justifyContent: 'flex-end',
-    paddingRight: '18%',
-    flexDirection: 'row-reverse',
-  },
-  nodeWrap: {
-    width: NODE_SIZE + 16,
-    height: NODE_SIZE + 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ring: {
-    position: 'absolute',
-    width: NODE_SIZE + 18,
-    height: NODE_SIZE + 18,
-    borderRadius: radius.pill,
-    borderWidth: 3,
-    borderColor: colors.coral,
-  },
-  ringStatic: {
-    opacity: 0.45,
-  },
-  node: {
-    width: NODE_SIZE,
-    height: NODE_SIZE + depth.node,
-  },
-  sole: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: NODE_SIZE,
-    borderRadius: radius.pill,
-  },
-  face: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    height: NODE_SIZE,
-    borderRadius: radius.pill,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  pressed: {
-    transform: [{ translateY: depth.node }],
-  },
-  label: {
-    flexShrink: 1,
-    maxWidth: 120,
-    marginHorizontal: space.md,
-  },
-  labelRight: {
-    textAlign: 'left',
-  },
-  labelLeft: {
-    textAlign: 'right',
-  },
-});
+function facePalette(status: PathNodeStatus) {
+  if (status === 'completed') {
+    return { face: colors.teal, sole: colors.tealDeep, icon: colors.inkOnDark };
+  }
+  if (status === 'current') {
+    return { face: colors.coral, sole: colors.coralDeep, icon: colors.inkOnDark };
+  }
+  return { face: colors.surfaceSunken, sole: colors.borderStrong, icon: colors.inkDisabled };
+}

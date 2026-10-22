@@ -1,85 +1,81 @@
 import { useRouter } from 'expo-router';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Pressable, ScrollView, StyleSheet } from 'react-native';
 
 import { Button } from '@/components/Button';
+import { RetryNote } from '@/components/RetryNote';
 import { Text } from '@/components/Text';
+import { HomeStats } from '@/features/home/HomeStats';
+import { LearnSkeleton } from '@/features/home/LearnSkeleton';
 import { LessonPath } from '@/features/path/components/LessonPath';
-import { completedLessonIds } from '@/features/path/completedLessons';
-import { getCurriculumLessons, type PathNode } from '@/features/path/curriculum';
+import { getCurriculumLessons, pathUnit, type PathNode } from '@/features/path/curriculum';
+import { EMPTY_SNAPSHOT, studySnapshotNow } from '@/features/progress/study';
 import { useProgress } from '@/features/progress/useProgress';
-import { colors, radius, space } from '@/theme/tokens';
+import { colors, space } from '@/theme/tokens';
 
 export default function LearnScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const insets = useSafeAreaInsets();
-  const { data } = useProgress();
-  const completedIds = useMemo(() => completedLessonIds(data?.lessons ?? []), [data?.lessons]);
-  const totalXp = data?.totalXp ?? 0;
-
+  const { data, isLoading, isError, refetch } = useProgress();
   const lessons = useMemo(() => getCurriculumLessons(), []);
-  const unitTitle = lessons[0]
-    ? t('learn.unitTitle', { level: lessons[0].level, unit: lessons[0].unit })
-    : t('learn.title');
 
-  const onPressNode = (node: PathNode) => {
+  if (isLoading) return <LearnSkeleton label={t('learn.loading')} />;
+
+  if (isError && !data) {
+    return (
+      <RetryNote
+        title={t('learn.loadError')}
+        action={t('common.retry')}
+        onPress={() => {
+          void refetch();
+        }}
+      />
+    );
+  }
+
+  const stats = studySnapshotNow(data ?? EMPTY_SNAPSHOT);
+  const unit = pathUnit(lessons, stats.completedIds);
+
+  const openLesson = (node: PathNode) => {
     if (node.status === 'locked') return;
-    router.push(`/lesson/${node.lesson.id}`);
+    router.push({ pathname: '/lesson/[id]', params: { id: node.lesson.id } });
   };
 
   return (
-    <View style={[styles.root, { paddingTop: insets.top + space.md }]}>
-      <View style={styles.header}>
-        <View>
-          <Text variant="h2">{t('learn.title')}</Text>
-          <Text variant="caption" color={colors.inkMuted}>
-            {unitTitle}
+    <ScrollView
+      style={styles.root}
+      contentContainerStyle={styles.content}
+      showsVerticalScrollIndicator={false}
+    >
+      <HomeStats stats={stats} />
+      {unit ? (
+        <Text variant="h3" accessibilityRole="header" style={styles.unit}>
+          {t('learn.unitTitle', { level: unit.level, unit: unit.unit })}
+        </Text>
+      ) : (
+        <Text variant="body" color={colors.inkMuted}>
+          {t('learn.emptyPath')}
+        </Text>
+      )}
+      <LessonPath lessons={lessons} completedIds={stats.completedIds} onPressNode={openLesson} />
+      <Button
+        title={t('common.openOnboarding')}
+        variant="secondary"
+        onPress={() => router.push('/onboarding')}
+      />
+      {__DEV__ ? (
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => router.push('/dev/components')}
+          style={styles.devLink}
+        >
+          <Text variant="bodyBold" color={colors.coral} style={styles.devLinkText}>
+            {t('common.devComponents')}
           </Text>
-        </View>
-        <View style={styles.xpChip} accessibilityLabel={t('learn.xpLabel', { xp: totalXp })}>
-          <Text variant="label" color={colors.saffronDeep}>
-            XP
-          </Text>
-          <Text variant="bodyBold" color={colors.ink}>
-            {totalXp}
-          </Text>
-        </View>
-      </View>
-
-      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-        <View style={styles.goalCard}>
-          <Text variant="caption" color={colors.inkMuted}>
-            {t('learn.dayGoalLabel')}
-          </Text>
-          <Text variant="bodyBold">{t('learn.dayGoalValue')}</Text>
-        </View>
-
-        <LessonPath lessons={lessons} completedIds={completedIds} onPressNode={onPressNode} />
-
-        <View style={styles.actions}>
-          <Button
-            title={t('common.openOnboarding')}
-            variant="secondary"
-            onPress={() => router.push('/onboarding')}
-          />
-        </View>
-
-        {__DEV__ ? (
-          <Pressable
-            onPress={() => router.push('/dev/components')}
-            accessibilityRole="button"
-            style={styles.devLink}
-          >
-            <Text variant="bodyBold" color={colors.coral} style={styles.devLinkText}>
-              {t('common.devComponents')}
-            </Text>
-          </Pressable>
-        ) : null}
-      </ScrollView>
-    </View>
+        </Pressable>
+      ) : null}
+    </ScrollView>
   );
 }
 
@@ -88,45 +84,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.ground,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  content: {
     paddingHorizontal: space.xl,
-    paddingBottom: space.md,
-    gap: space.md,
-  },
-  xpChip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: space.sm,
-    backgroundColor: colors.saffronSoft,
-    borderRadius: radius.pill,
-    paddingHorizontal: space.md,
-    paddingVertical: space.sm,
-    minHeight: 44,
-  },
-  scroll: {
+    paddingTop: space.lg,
     paddingBottom: space.xxxl,
-    paddingHorizontal: space.sm,
+    gap: space.lg,
   },
-  actions: {
-    marginHorizontal: space.lg,
-    marginTop: space.lg,
-  },
-  goalCard: {
-    marginHorizontal: space.lg,
-    marginBottom: space.md,
-    padding: space.lg,
-    borderRadius: radius.lg,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    gap: space.xs,
+  unit: {
+    marginTop: space.sm,
   },
   devLink: {
     alignSelf: 'center',
-    marginTop: space.lg,
     minHeight: 44,
     justifyContent: 'center',
     paddingHorizontal: space.lg,

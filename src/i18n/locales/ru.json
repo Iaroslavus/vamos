@@ -7,12 +7,28 @@
   },
   "learn": {
     "title": "Учиться",
-    "stub": "Здесь появится путь уроков — змейка узлов, цель дня и серия.",
-    "startLesson": "Начать урок",
     "unitTitle": "{{level}} · Блок {{unit}}",
+    "streakLabel": "Серия {{count}}",
+    "streakCaption": "серия",
+    "xpLabel": "Опыт {{xp}}",
+    "xpShort": "XP",
     "dayGoalLabel": "Цель дня",
-    "dayGoalValue": "1 урок",
-    "xpLabel": "Опыт {{xp}}"
+    "dayGoalRing": "Цель дня: {{done}} из {{goal}} минут",
+    "nodeLabel": "{{title}}, {{status}}",
+    "lockedHint": "Сначала пройдите предыдущий урок",
+    "loading": "Загружаем путь",
+    "loadError": "Не удалось загрузить путь. Проверьте сеть и повторите.",
+    "emptyPath": "Уроки скоро появятся здесь.",
+    "status": {
+      "completed": "пройден",
+      "current": "текущий",
+      "locked": "закрыт"
+    },
+    "lessons": {
+      "a1-u01-l01": "Приветствия",
+      "a1-u01-l02": "Знакомство",
+      "a1-u01-l03": "Числа 1–10"
+    }
   },
   "dialog": {
     "title": "Диалог",
@@ -20,9 +36,29 @@
   },
   "progress": {
     "title": "Прогресс",
-    "stub": "Здесь появятся уровни A1–C2, навыки и тест в формате DELE.",
-    "summary": "Завершено уроков: {{lessons}}. Опыт: {{xp}}.",
-    "pending": "Ждёт отправки: {{count}}."
+    "levelsTitle": "Уровни",
+    "levelCount": "{{done}} из {{total}}",
+    "levelSoon": "Скоро",
+    "levelLabel": "{{level}}, {{done}} из {{total}}",
+    "levelSoonLabel": "{{level}}, скоро",
+    "skillsTitle": "Навыки",
+    "skills": {
+      "vocabulary": "Словарь",
+      "grammar": "Грамматика",
+      "listening": "Аудирование",
+      "speaking": "Разговор"
+    },
+    "skillLabel": "{{skill}}, {{percent}}%",
+    "skillValue": "{{percent}}%",
+    "reviewsTitle": "Повторить сегодня",
+    "reviewsLabel": "Повторить сегодня: {{count}}",
+    "timeTitle": "Время в языке",
+    "timeLabel": "Время в языке: {{time}}",
+    "timeMinutes": "{{count}} мин",
+    "timeHours": "{{hours}} ч {{minutes}} мин",
+    "pending": "Ждёт отправки: {{count}}.",
+    "loading": "Загружаем прогресс",
+    "loadError": "Не удалось загрузить прогресс. Проверьте сеть и повторите."
   },
   "profile": {
     "title": "Профиль",
@@ -68,7 +104,6 @@
   },
   "lesson": {
     "title": "Урок",
-    "stub": "Экран урока скоро будет здесь.",
     "reviewTitle": "Повторение",
     "reviewStub": "Карточки FSRS появятся здесь.",
     "check": "Проверить",
@@ -119,6 +154,7 @@
     "openLesson": "Открыть урок",
     "openOnboarding": "Открыть онбординг",
     "close": "Закрыть",
+    "retry": "Повторить",
     "notFoundTitle": "Страница не найдена",
     "notFoundLink": "На главную"
   }
