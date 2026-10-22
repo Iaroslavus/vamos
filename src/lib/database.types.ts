@@ -142,6 +142,61 @@ export type Database = {
           },
         ];
       };
+      review_logs: {
+        Row: {
+          card_id: string;
+          client_id: string;
+          created_at: string;
+          elapsed_days: number;
+          id: string;
+          rating: number;
+          reviewed_at: string;
+          scheduled_days: number;
+          state: number;
+          user_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          card_id: string;
+          client_id: string;
+          created_at?: string;
+          elapsed_days: number;
+          id?: string;
+          rating: number;
+          reviewed_at: string;
+          scheduled_days: number;
+          state: number;
+          user_id: string;
+        };
+        Update: {
+          card_id?: string;
+          client_id?: string;
+          created_at?: string;
+          elapsed_days?: number;
+          id?: string;
+          rating?: number;
+          reviewed_at?: string;
+          scheduled_days?: number;
+          state?: number;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'review_logs_card_user_fkey';
+            columns: ['card_id', 'user_id'];
+            isOneToOne: false;
+            referencedRelation: 'review_cards';
+            referencedColumns: ['id', 'user_id'];
+          },
+          {
+            foreignKeyName: 'review_logs_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       streaks: {
         Row: {
           current: number;

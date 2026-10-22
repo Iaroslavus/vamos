@@ -1,20 +1,28 @@
 -- Structural checks: tables, keys, RLS enabled everywhere, signup trigger wiring.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(20);
+select plan(23);
 
 select has_table('public', 'profiles', 'profiles table exists');
 select has_table('public', 'lesson_progress', 'lesson_progress table exists');
 select has_table('public', 'xp_events', 'xp_events table exists');
 select has_table('public', 'streaks', 'streaks table exists');
 select has_table('public', 'review_cards', 'review_cards table exists');
+select has_table('public', 'review_logs', 'review_logs table exists');
 
 select col_is_pk('public', 'profiles', 'id', 'profiles.id is the primary key');
 select col_is_pk('public', 'lesson_progress', array['user_id', 'lesson_id'], 'lesson_progress pk is (user_id, lesson_id)');
 select col_is_pk('public', 'xp_events', 'id', 'xp_events.id is the primary key');
 select col_is_pk('public', 'streaks', 'user_id', 'streaks.user_id is the primary key');
 select col_is_pk('public', 'review_cards', 'id', 'review_cards.id is the primary key');
+select col_is_pk('public', 'review_logs', 'id', 'review_logs.id is the primary key');
 select col_is_unique('public', 'review_cards', array['user_id', 'item_id'], 'one review card per (user, item)');
+select col_is_unique(
+  'public',
+  'review_logs',
+  array['user_id', 'client_id'],
+  'one review log per (user, client_id)'
+);
 
 select fk_ok('public', 'profiles', 'id', 'auth', 'users', 'id', 'profiles.id references auth.users.id');
 
