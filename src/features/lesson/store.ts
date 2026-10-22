@@ -131,6 +131,10 @@ type LessonStoreState = {
   wrongCount: number;
   startedAt: number | null;
   finishedAt: number | null;
+  /** Frozen result for the summary screen. Null until `finishLesson`. */
+  summary: LessonSummary | null;
+  /** True after the first completion write has been claimed for this session. */
+  completionSaved: boolean;
   getNow: () => number;
 };
 
@@ -148,6 +152,16 @@ type LessonStoreActions = {
   /** Dismiss the mistakes intro and start the retry queue. */
   continueMistakesIntro: () => void;
   reset: () => void;
+  /**
+   * Freeze the summary once when the session is completed or failed.
+   * Later calls return the same object.
+   */
+  finishLesson: () => LessonSummary | null;
+  /**
+   * Claim the single progress write for this session.
+   * Returns false when the summary is missing or the write was already claimed.
+   */
+  claimCompletionSave: () => boolean;
   getCurrentExercise: () => LessonExerciseItem | null;
   getProgress: () => LessonProgress;
   getElapsedMs: () => number;
@@ -175,8 +189,33 @@ const idleState = (): LessonStoreState => ({
   wrongCount: 0,
   startedAt: null,
   finishedAt: null,
+  summary: null,
+  completionSaved: false,
   getNow: Date.now,
 });
+
+function elapsedMs(state: Pick<LessonStoreState, 'startedAt' | 'finishedAt' | 'getNow'>): number {
+  if (state.startedAt === null) return 0;
+  const end = state.finishedAt ?? state.getNow();
+  return Math.max(0, end - state.startedAt);
+}
+
+function buildSummary(state: LessonStoreState): LessonSummary {
+  const attempts = state.correctCount + state.almostCount + state.wrongCount;
+  const accuracy = attempts === 0 ? 0 : (state.correctCount + state.almostCount) / attempts;
+
+  return {
+    lessonId: state.lessonId,
+    status: state.status,
+    xpEarned: state.xpEarned,
+    accuracy,
+    elapsedMs: elapsedMs(state),
+    newItems: state.newItems,
+    correctCount: state.correctCount,
+    almostCount: state.almostCount,
+    wrongCount: state.wrongCount,
+  };
+}
 
 function buildExerciseMap(
   exercises: readonly LessonExerciseItem[],
@@ -368,6 +407,22 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
 
   reset: () => set(idleState()),
 
+  finishLesson: () => {
+    const state = get();
+    if (state.summary) return state.summary;
+    if (state.status !== 'completed' && state.status !== 'failed') return null;
+    const summary = buildSummary(state);
+    set({ summary });
+    return summary;
+  },
+
+  claimCompletionSave: () => {
+    const state = get();
+    if (state.completionSaved || !state.summary) return false;
+    set({ completionSaved: true });
+    return true;
+  },
+
   getCurrentExercise: () => {
     const { queue, exerciseById } = get();
     const id = queue[0];
@@ -383,28 +438,7 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
     return { solved, total, ratio };
   },
 
-  getElapsedMs: () => {
-    const { startedAt, finishedAt, getNow } = get();
-    if (startedAt === null) return 0;
-    const end = finishedAt ?? getNow();
-    return Math.max(0, end - startedAt);
-  },
+  getElapsedMs: () => elapsedMs(get()),
 
-  getSummary: () => {
-    const state = get();
-    const attempts = state.correctCount + state.almostCount + state.wrongCount;
-    const accuracy = attempts === 0 ? 0 : (state.correctCount + state.almostCount) / attempts;
-
-    return {
-      lessonId: state.lessonId,
-      status: state.status,
-      xpEarned: state.xpEarned,
-      accuracy,
-      elapsedMs: get().getElapsedMs(),
-      newItems: state.newItems,
-      correctCount: state.correctCount,
-      almostCount: state.almostCount,
-      wrongCount: state.wrongCount,
-    };
-  },
+  getSummary: () => get().summary ?? buildSummary(get()),
 }));

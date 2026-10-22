@@ -11,21 +11,27 @@ import { playUiSound } from '@/features/audio/sounds';
 import { NewWordsList } from '@/features/lesson/components/NewWordsList';
 import { XpCounter } from '@/features/lesson/components/XpCounter';
 import { formatAccuracyPercent, formatElapsed } from '@/features/lesson/format';
-import { useFinishLesson } from '@/features/lesson/hooks/useFinishLesson';
+import type { VocabularyItem } from '@/features/lesson/schema';
 import { useLessonStore } from '@/features/lesson/store';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, space } from '@/theme/tokens';
+
+const EMPTY_NEW_ITEMS: VocabularyItem[] = [];
 
 export default function LessonSummaryScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const reduceMotion = useReduceMotion();
-  const summary = useLessonStore((s) => s.getSummary());
-  const finishLesson = useFinishLesson();
+  const status = useLessonStore((s) => s.summary?.status ?? 'idle');
+  const xpEarned = useLessonStore((s) => s.summary?.xpEarned ?? 0);
+  const accuracy = useLessonStore((s) => s.summary?.accuracy ?? 0);
+  const elapsedMs = useLessonStore((s) => s.summary?.elapsedMs ?? 0);
+  const newItems = useLessonStore((s) => s.summary?.newItems ?? EMPTY_NEW_ITEMS);
+  const reset = useLessonStore((s) => s.reset);
   const [leaving, setLeaving] = useState(false);
 
-  const finished = summary.status === 'completed' || summary.status === 'failed';
+  const finished = status === 'completed' || status === 'failed';
 
   useEffect(() => {
     if (finished) {
@@ -36,9 +42,8 @@ export default function LessonSummaryScreen() {
   const goHome = () => {
     if (leaving) return;
     setLeaving(true);
-    void finishLesson(summary).finally(() => {
-      router.replace('/(tabs)');
-    });
+    reset();
+    router.replace('/(tabs)');
   };
 
   if (!finished) {
@@ -76,10 +81,10 @@ export default function LessonSummaryScreen() {
         showsVerticalScrollIndicator={false}
       >
         <Text variant="h1" style={styles.title}>
-          {summary.status === 'failed' ? t('lesson.summaryFailedTitle') : t('lesson.summaryTitle')}
+          {status === 'failed' ? t('lesson.summaryFailedTitle') : t('lesson.summaryTitle')}
         </Text>
 
-        <XpCounter xp={summary.xpEarned} label={t('lesson.summaryXp')} />
+        <XpCounter xp={xpEarned} label={t('lesson.summaryXp')} />
 
         <View style={styles.stats}>
           <View style={styles.stat}>
@@ -87,18 +92,18 @@ export default function LessonSummaryScreen() {
               {t('lesson.summaryAccuracy')}
             </Text>
             <Text variant="h2" color={colors.teal}>
-              {formatAccuracyPercent(summary.accuracy)}
+              {formatAccuracyPercent(accuracy)}
             </Text>
           </View>
           <View style={styles.stat}>
             <Text variant="caption" color={colors.inkMuted}>
               {t('lesson.summaryTime')}
             </Text>
-            <Text variant="h2">{formatElapsed(summary.elapsedMs)}</Text>
+            <Text variant="h2">{formatElapsed(elapsedMs)}</Text>
           </View>
         </View>
 
-        <NewWordsList items={summary.newItems} />
+        <NewWordsList items={newItems} />
       </ScrollView>
 
       <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, space.lg) }]}>

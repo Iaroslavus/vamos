@@ -334,6 +334,8 @@ describe('lesson store', () => {
     expect(state.lessonId).toBeNull();
     expect(state.xpEarned).toBe(0);
     expect(state.queue).toEqual([]);
+    expect(state.summary).toBeNull();
+    expect(state.completionSaved).toBe(false);
   });
 
   it('progress ratio caps at 1 even with many almost+correct', () => {
@@ -381,5 +383,30 @@ describe('lesson store', () => {
     expect(summary.accuracy).toBe(1);
     expect(summary.newItems).toHaveLength(1);
     expect(summary.newItems[0]?.es).toBe('hola');
+  });
+
+  it('finishLesson freezes one summary and claims a single save', () => {
+    useLessonStore.getState().startLesson({
+      lessonId: 'a1-u01-l01',
+      exercises: EXERCISES,
+      now: () => 1000,
+    });
+
+    expect(useLessonStore.getState().finishLesson()).toBeNull();
+    expect(useLessonStore.getState().claimCompletionSave()).toBe(false);
+
+    for (const answer of ['hola', 'gracias', 'café']) {
+      useLessonStore.getState().setAnswer(answer);
+      useLessonStore.getState().checkAnswer();
+      useLessonStore.getState().continueAfterFeedback();
+    }
+
+    const first = useLessonStore.getState().finishLesson();
+    const second = useLessonStore.getState().finishLesson();
+    expect(first).not.toBeNull();
+    expect(second).toBe(first);
+    expect(useLessonStore.getState().getSummary()).toBe(first);
+    expect(useLessonStore.getState().claimCompletionSave()).toBe(true);
+    expect(useLessonStore.getState().claimCompletionSave()).toBe(false);
   });
 });

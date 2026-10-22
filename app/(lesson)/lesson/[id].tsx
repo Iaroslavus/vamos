@@ -29,6 +29,7 @@ import { MatchPairsExercise } from '@/features/lesson/components/MatchPairsExerc
 import { MistakesIntro } from '@/features/lesson/components/MistakesIntro';
 import { SelectTranslationExercise } from '@/features/lesson/components/SelectTranslationExercise';
 import { TypeTranslationExercise } from '@/features/lesson/components/TypeTranslationExercise';
+import { useFinishLesson } from '@/features/lesson/hooks/useFinishLesson';
 import { loadLesson } from '@/features/lesson/loader';
 import { countSerializedPairs } from '@/features/lesson/pairs';
 import { isTypingExercise, toPlayableExercises } from '@/features/lesson/playable';
@@ -78,12 +79,18 @@ export default function LessonScreen() {
   const continueAfterFeedback = useLessonStore((s) => s.continueAfterFeedback);
   const continueMistakesIntro = useLessonStore((s) => s.continueMistakesIntro);
   const reset = useLessonStore((s) => s.reset);
-  const getCurrentExercise = useLessonStore((s) => s.getCurrentExercise);
-  const getProgress = useLessonStore((s) => s.getProgress);
-  const queue = useLessonStore((s) => s.queue);
-
-  const exercise = getCurrentExercise();
-  const progress = getProgress();
+  const exercise = useLessonStore((s) => {
+    const id = s.queue[0];
+    return id ? (s.exerciseById[id] ?? null) : null;
+  });
+  const solved = useLessonStore((s) => s.correctCount + s.almostCount);
+  const total = useLessonStore((s) => s.initialIds.length);
+  const mistakesLeft = useLessonStore((s) => s.queue.length);
+  const finishLesson = useFinishLesson();
+  const progress = useMemo(() => {
+    const ratio = total === 0 ? 0 : Math.min(1, solved / total);
+    return { solved, total, ratio };
+  }, [solved, total]);
   const typing = exercise ? isTypingExercise(exercise) : false;
   const mistakesIntroVisible = status === 'mistakes_intro';
 
@@ -141,8 +148,9 @@ export default function LessonScreen() {
   }, [reset, router]);
 
   const goToSummary = useCallback(() => {
+    void finishLesson();
     router.replace('/lesson/summary');
-  }, [router]);
+  }, [finishLesson, router]);
 
   const onContinue = useCallback(() => {
     if (status === 'failed') {
@@ -308,7 +316,7 @@ export default function LessonScreen() {
 
       <MistakesIntro
         visible={mistakesIntroVisible}
-        remaining={queue.length}
+        remaining={mistakesLeft}
         onContinue={continueMistakesIntro}
       />
     </KeyboardAvoidingView>

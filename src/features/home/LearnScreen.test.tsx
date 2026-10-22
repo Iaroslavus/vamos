@@ -228,16 +228,20 @@ describe('LearnScreen', () => {
     await home.unmount();
 
     const lesson = await render(
-      <SafeAreaProvider
-        initialMetrics={{
-          frame: { x: 0, y: 0, width: 390, height: 844 },
-          insets: { top: 47, left: 0, right: 0, bottom: 34 },
-        }}
+      <QueryClientProvider
+        client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}
       >
-        <I18nextProvider i18n={i18n}>
-          <LessonScreen />
-        </I18nextProvider>
-      </SafeAreaProvider>,
+        <SafeAreaProvider
+          initialMetrics={{
+            frame: { x: 0, y: 0, width: 390, height: 844 },
+            insets: { top: 47, left: 0, right: 0, bottom: 34 },
+          }}
+        >
+          <I18nextProvider i18n={i18n}>
+            <LessonScreen />
+          </I18nextProvider>
+        </SafeAreaProvider>
+      </QueryClientProvider>,
     );
 
     expect(await lesson.findByText('Выберите перевод')).toBeOnTheScreen();

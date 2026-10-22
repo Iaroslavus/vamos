@@ -7,6 +7,7 @@ alwaysApply: true
 
 - TypeScript strict, без `any`. Типы данных из БД генерировать командой `supabase gen types typescript`.
 - Компоненты — функциональные, небольшие (до ~150 строк). Логика в хуках `src/features/*/hooks`.
+- Селекторы Zustand возвращают примитивы или существующее поле стора. Объект в селекторе — только через `useShallow` из `zustand/react/shallow`. Производные массивы (`.map` / `.filter` / `.slice`) считаются в `useMemo` вне селектора.
 - Стили через `StyleSheet.create` и токены из `src/theme/tokens.ts`.
 - Тексты интерфейса — только через i18n (`t('key')`), никаких строк в JSX.
 - Ошибки сети: показывать дружелюбный экран повтора, логировать в Sentry.
