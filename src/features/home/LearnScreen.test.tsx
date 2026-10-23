@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { I18nextProvider } from 'react-i18next';
@@ -14,6 +15,7 @@ import type {
   ProgressRemote,
   ProgressRepository,
 } from '@/features/progress/types';
+import { reviewStorageKey } from '@/features/review/repository';
 import i18n from '@/i18n';
 
 const mockPush = jest.fn();
@@ -136,8 +138,36 @@ async function flush(): Promise<void> {
   });
 }
 
+function dueCard(id: string) {
+  return {
+    id,
+    itemId: id,
+    direction: 'es_to_ru' as const,
+    due: new Date().toISOString(),
+    stability: 0,
+    difficulty: 0,
+    elapsedDays: 0,
+    scheduledDays: 0,
+    learningSteps: 0,
+    reps: 0,
+    lapses: 0,
+    state: 0,
+    lastReview: null,
+  };
+}
+
+async function seedDue(ids: readonly string[]): Promise<void> {
+  const cards: Record<string, ReturnType<typeof dueCard>> = {};
+  for (const id of ids) cards[`${id}:es_to_ru`] = dueCard(id);
+  await AsyncStorage.setItem(
+    reviewStorageKey('user-1'),
+    JSON.stringify({ version: 1, cards, logs: [], outbox: [] }),
+  );
+}
+
 describe('LearnScreen', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
+    await AsyncStorage.clear();
     mockPush.mockClear();
     mockSearchParams.id = undefined;
     useLessonStore.getState().reset();
@@ -197,6 +227,23 @@ describe('LearnScreen', () => {
     expect(screen.getByText('A1 · Блок 1')).toBeTruthy();
     expect(screen.getByLabelText('Приветствия, текущий')).toBeTruthy();
     expect(screen.getByLabelText('Знакомство, закрыт')).toBeDisabled();
+    expect(screen.queryByText(/повторения/)).toBeNull();
+    await flush();
+  });
+
+  it('shows words waiting for review above the path and opens the session', async () => {
+    await seedDue(['hola']);
+    await renderScreen(repository());
+
+    expect(await screen.findByText('1 слово ждёт повторения')).toBeTruthy();
+    expect(screen.getByText('A1 · Блок 1')).toBeTruthy();
+
+    mockPush.mockClear();
+    await fireEvent.press(screen.getByText('Повторить'));
+    expect(mockPush).toHaveBeenCalledWith('/review');
+    expect(i18n.t('learn.reviewDue', { count: 2 })).toBe('2 слова ждут повторения');
+    expect(i18n.t('learn.reviewDue', { count: 5 })).toBe('5 слов ждут повторения');
+    expect(i18n.t('learn.reviewDue', { count: 21 })).toBe('21 слово ждёт повторения');
     await flush();
   });
 

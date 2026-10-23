@@ -3,6 +3,7 @@
     "learn": "Учиться",
     "dialog": "Диалог",
     "progress": "Прогресс",
+    "progressDue": "Прогресс, повторить сегодня: {{count}}",
     "profile": "Профиль"
   },
   "learn": {
@@ -19,6 +20,11 @@
     "loading": "Загружаем путь",
     "loadError": "Не удалось загрузить путь. Проверьте сеть и повторите.",
     "emptyPath": "Уроки скоро появятся здесь.",
+    "reviewDue_one": "{{count}} слово ждёт повторения",
+    "reviewDue_few": "{{count}} слова ждут повторения",
+    "reviewDue_many": "{{count}} слов ждут повторения",
+    "reviewDue_other": "{{count}} слов ждут повторения",
+    "reviewCta": "Повторить",
     "status": {
       "completed": "пройден",
       "current": "текущий",
@@ -52,6 +58,17 @@
     "skillValue": "{{percent}}%",
     "reviewsTitle": "Повторить сегодня",
     "reviewsLabel": "Повторить сегодня: {{count}}",
+    "forecastTitle": "На 7 дней",
+    "forecastDay": "{{weekday}}: {{count}}",
+    "weekdays": {
+      "sun": "вс",
+      "mon": "пн",
+      "tue": "вт",
+      "wed": "ср",
+      "thu": "чт",
+      "fri": "пт",
+      "sat": "сб"
+    },
     "timeTitle": "Время в языке",
     "timeLabel": "Время в языке: {{time}}",
     "timeMinutes": "{{count}} мин",

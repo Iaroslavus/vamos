@@ -7,6 +7,7 @@ import { useLessonStore } from '@/features/lesson/store';
 import { ProgressRepositoryContext } from '@/features/progress/context';
 import { progressQueryKey } from '@/features/progress/useProgress';
 import { reviewRepository } from '@/features/review/defaultRepository';
+import { reviewDueQueryKey } from '@/features/review/hooks/useReviewDueCount';
 import { introduceCompletedLesson } from '@/features/review/sources';
 
 /**
@@ -38,5 +39,7 @@ export function useFinishLesson() {
     } catch {
       // A failed card write must not block the summary screen.
     }
+
+    void queryClient.invalidateQueries({ queryKey: reviewDueQueryKey(userId) });
   }, [queryClient, repository, userId]);
 }
