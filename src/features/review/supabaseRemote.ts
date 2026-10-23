@@ -2,7 +2,7 @@ import type { Tables, TablesInsert } from '@/lib/database.types';
 import type { TypedSupabaseClient } from '@/lib/supabase';
 
 import { ratingFromValue, ratingToValue } from './fsrs';
-import type { ReviewLog, ReviewRemote, StoredCard } from './types';
+import type { ReviewDirection, ReviewLog, ReviewRemote, StoredCard } from './types';
 
 type CardRow = Tables<'review_cards'>;
 type LogRow = Pick<
@@ -28,7 +28,7 @@ export function createSupabaseReviewRemote(client: TypedSupabaseClient): ReviewR
     },
 
     async upsertCard(userId, card) {
-      const existing = await readCard(client, userId, card.itemId);
+      const existing = await readCard(client, userId, card.itemId, card.direction);
       if (existing && reviewTime(existing.last_review) > reviewTime(card.lastReview)) {
         return mapCard(existing);
       }
@@ -36,7 +36,7 @@ export function createSupabaseReviewRemote(client: TypedSupabaseClient): ReviewR
       const { data, error } = await client
         .from('review_cards')
         .upsert(cardPayload(userId, { ...card, id: existing?.id ?? card.id }), {
-          onConflict: 'user_id,item_id',
+          onConflict: 'user_id,item_id,direction',
         })
         .select('*')
         .single();
@@ -58,12 +58,14 @@ async function readCard(
   client: TypedSupabaseClient,
   userId: string,
   itemId: string,
+  direction: ReviewDirection,
 ): Promise<CardRow | null> {
   const { data, error } = await client
     .from('review_cards')
     .select('*')
     .eq('user_id', userId)
     .eq('item_id', itemId)
+    .eq('direction', direction)
     .maybeSingle();
   if (error) throw error;
   return data;
@@ -74,6 +76,7 @@ function cardPayload(userId: string, card: StoredCard): TablesInsert<'review_car
     id: card.id,
     user_id: userId,
     item_id: card.itemId,
+    direction: card.direction,
     due: card.due,
     stability: card.stability,
     difficulty: card.difficulty,
@@ -104,6 +107,7 @@ function mapCard(row: CardRow): StoredCard {
   return {
     id: row.id,
     itemId: row.item_id,
+    direction: asDirection(row.direction),
     due: row.due,
     stability: row.stability,
     difficulty: row.difficulty,
@@ -127,6 +131,11 @@ function mapLog(row: LogRow): ReviewLog {
     scheduledDays: row.scheduled_days,
     state: row.state,
   };
+}
+
+function asDirection(value: string): ReviewDirection {
+  if (value === 'es_to_ru' || value === 'ru_to_es') return value;
+  throw new Error('Invalid review direction');
 }
 
 function asInt(value: number): number {

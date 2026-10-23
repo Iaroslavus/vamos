@@ -1,8 +1,13 @@
 import type { ReviewRating } from './fsrs';
 
+/** es→ru is recognition. ru→es is recall and stays closed until recognition succeeds. */
+export const REVIEW_DIRECTIONS = ['es_to_ru', 'ru_to_es'] as const;
+export type ReviewDirection = (typeof REVIEW_DIRECTIONS)[number];
+
 export type StoredCard = {
   id: string;
   itemId: string;
+  direction: ReviewDirection;
   due: string;
   stability: number;
   difficulty: number;
@@ -28,12 +33,14 @@ export type ReviewLog = {
 
 export type LocalReviewLog = ReviewLog & {
   itemId: string;
+  direction: ReviewDirection;
   /** Card as it stood after this rating. Present for reviews recorded on this device. */
   card?: StoredCard;
 };
 
 export type OutboxItem = {
-  kind: 'review';
+  /** `review` syncs a rating. `card` syncs a card that has not been rated yet. */
+  kind: 'review' | 'card';
   key: string;
   attempts: number;
 };
@@ -54,9 +61,16 @@ export type ReviewSnapshot = {
 export type RatingInput = {
   itemId: string;
   rating: ReviewRating;
+  /** Defaults to recognition. Recall is rated only after that direction exists. */
+  direction?: ReviewDirection;
   reviewedAt?: string;
   /** Stable id for this rating. Reusing it on retry must not apply the review again. */
   clientId?: string;
+  /**
+   * When false, a word that has no card yet is ignored.
+   * Lesson mistakes set this so an unknown word does not enter the deck.
+   */
+  createIfMissing?: boolean;
 };
 
 export type KeyValueStorage = {
@@ -83,6 +97,11 @@ export type Scheduler = (fn: () => void, delayMs: number) => () => void;
 
 export type ReviewRepository = {
   read(userId: string): Promise<ReviewSnapshot>;
+  /**
+   * Creates one recognition card per item that does not have one yet.
+   * An existing card keeps its schedule, so repeating a lesson does not duplicate it.
+   */
+  introduceItems(userId: string, items: readonly { id: string }[]): Promise<ReviewSnapshot>;
   recordRating(userId: string, input: RatingInput): Promise<ReviewSnapshot>;
   sync(userId: string): Promise<ReviewSnapshot>;
   start(userId: string, onSynced: () => void): () => void;

@@ -6,6 +6,7 @@ import type { StoredCard } from './types';
 const CARD: StoredCard = {
   id: 'card-1',
   itemId: 'hola',
+  direction: 'es_to_ru',
   due: '2026-10-23T12:10:00.000Z',
   stability: 2.3,
   difficulty: 5,
@@ -24,6 +25,7 @@ function cardRow(overrides: Partial<StoredCard> = {}) {
     id: card.id,
     user_id: 'user-1',
     item_id: card.itemId,
+    direction: card.direction,
     due: card.due,
     stability: card.stability,
     difficulty: card.difficulty,
@@ -41,9 +43,9 @@ function cardRow(overrides: Partial<StoredCard> = {}) {
 
 function clientDouble(existing: ReturnType<typeof cardRow> | null) {
   const maybeSingle = jest.fn().mockResolvedValue({ data: existing, error: null });
-  const eqItem = jest.fn(() => ({ maybeSingle }));
-  const eqUser = jest.fn(() => ({ eq: eqItem }));
-  const select = jest.fn(() => ({ eq: eqUser }));
+  const readChain = { eq: jest.fn(), maybeSingle };
+  readChain.eq.mockReturnValue(readChain);
+  const select = jest.fn(() => readChain);
   const single = jest.fn().mockResolvedValue({ data: existing ?? cardRow(), error: null });
   const upsertCard = jest.fn(() => ({ select: () => ({ single }) }));
   const upsertLog = jest.fn().mockResolvedValue({ error: null });
@@ -57,15 +59,21 @@ function clientDouble(existing: ReturnType<typeof cardRow> | null) {
 }
 
 describe('createSupabaseReviewRemote', () => {
-  it('upserts the card on user and item', async () => {
+  it('upserts the card on user, item, and direction', async () => {
     const { client, upsertCard } = clientDouble(null);
     const remote = createSupabaseReviewRemote(client);
 
     const saved = await remote.upsertCard('user-1', CARD);
 
     expect(upsertCard).toHaveBeenCalledWith(
-      expect.objectContaining({ user_id: 'user-1', item_id: 'hola', id: 'card-1', reps: 1 }),
-      { onConflict: 'user_id,item_id' },
+      expect.objectContaining({
+        user_id: 'user-1',
+        item_id: 'hola',
+        direction: 'es_to_ru',
+        id: 'card-1',
+        reps: 1,
+      }),
+      { onConflict: 'user_id,item_id,direction' },
     );
     expect(saved.itemId).toBe('hola');
     expect(saved.reps).toBe(1);

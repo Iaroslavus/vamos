@@ -54,10 +54,15 @@ describe('database.types', () => {
       updated_at: '2026-10-19T00:00:00Z',
     };
 
-    // Only user_id and item_id are required; every FSRS field has a DB default.
+    // user_id and item_id are required. direction defaults to recognition.
     const card: TablesInsert<'review_cards'> = {
       user_id: profile.id,
       item_id: 'hola',
+    };
+    const recall: TablesInsert<'review_cards'> = {
+      user_id: profile.id,
+      item_id: 'hola',
+      direction: 'ru_to_es',
     };
 
     const review: TablesInsert<'review_logs'> = {
@@ -76,6 +81,7 @@ describe('database.types', () => {
 
     expect(profile.level).toBe('A1');
     expect(card.item_id).toBe('hola');
+    expect(recall.direction).toBe('ru_to_es');
     expect(review.rating).toBe(3);
     expect(xp.amount).toBe(10);
   });

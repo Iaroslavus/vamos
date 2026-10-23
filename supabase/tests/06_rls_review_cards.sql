@@ -1,7 +1,7 @@
 -- RLS on public.review_cards: full CRUD on own FSRS cards, nothing on others.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(16);
+select plan(19);
 
 insert into auth.users (id, email, raw_user_meta_data, is_anonymous) values
   ('11111111-1111-1111-1111-111111111111', 'alice@example.com', '{}', false),
@@ -113,6 +113,34 @@ select throws_ok(
   '42501',
   null,
   'anon role cannot insert review cards'
+);
+
+reset role;
+
+select lives_ok(
+  $$
+    insert into public.review_cards (user_id, item_id, direction)
+    values ('11111111-1111-1111-1111-111111111111', 'hola', 'ru_to_es')
+  $$,
+  'the same word can have a recall card beside recognition'
+);
+select throws_ok(
+  $$
+    insert into public.review_cards (user_id, item_id, direction)
+    values ('11111111-1111-1111-1111-111111111111', 'hola', 'ru_to_es')
+  $$,
+  '23505',
+  null,
+  'a direction is not stored twice for the same word'
+);
+select throws_ok(
+  $$
+    insert into public.review_cards (user_id, item_id, direction)
+    values ('11111111-1111-1111-1111-111111111111', 'hola', 'sideways')
+  $$,
+  '23514',
+  null,
+  'direction is recognition or recall'
 );
 
 select * from finish();

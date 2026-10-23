@@ -6,6 +6,8 @@ import { saveLessonCompletion } from '@/features/lesson/completion';
 import { useLessonStore } from '@/features/lesson/store';
 import { ProgressRepositoryContext } from '@/features/progress/context';
 import { progressQueryKey } from '@/features/progress/useProgress';
+import { reviewRepository } from '@/features/review/defaultRepository';
+import { introduceCompletedLesson } from '@/features/review/sources';
 
 /**
  * Persists a finished lesson once, then leaves the frozen summary in the store
@@ -29,6 +31,12 @@ export function useFinishLesson() {
       }
     } catch {
       // A failed local write must not block the summary screen.
+    }
+
+    try {
+      await introduceCompletedLesson(reviewRepository, userId, summary);
+    } catch {
+      // A failed card write must not block the summary screen.
     }
   }, [queryClient, repository, userId]);
 }
