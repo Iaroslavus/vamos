@@ -62,7 +62,8 @@ function createRemote() {
       return [...logs.values()];
     },
     async upsertCard(_userId, card) {
-      const existing = cards.get(card.itemId);
+      const key = `${card.itemId}:${card.direction}`;
+      const existing = cards.get(key);
       if (
         existing?.lastReview &&
         card.lastReview &&
@@ -71,7 +72,7 @@ function createRemote() {
         return existing;
       }
       const stored = { ...card, id: existing?.id ?? card.id };
-      cards.set(card.itemId, stored);
+      cards.set(key, stored);
       return stored;
     },
     async insertLog(_userId, log) {
@@ -104,12 +105,13 @@ function setup(online: boolean) {
     scheduled.push({ run, delayMs });
     return () => undefined;
   };
+  let ids = 0;
   const repo = createReviewRepository({
     storage,
     network,
     remote: server.remote,
     now: () => '2026-10-23T12:00:00.000Z',
-    createId: () => 'generated-id',
+    createId: () => `generated-${(ids += 1)}`,
     schedule,
   });
   return { storage, network, server, scheduled, repo };
@@ -126,16 +128,19 @@ describe('review repository', () => {
     expect(server.logInserts).toEqual([]);
     expect(server.cards.size).toBe(0);
     const queued = await repo.read(USER);
-    expect(queued.cards).toHaveLength(1);
-    expect(queued.cards[0]?.reps).toBe(1);
-    expect(queued.dueCount).toBe(0);
-    expect(queued.pending).toBe(1);
+    const recognition = queued.cards.find((card) => card.direction === 'es_to_ru');
+    const recall = queued.cards.find((card) => card.direction === 'ru_to_es');
+    expect(recognition?.reps).toBe(1);
+    expect(recall?.reps).toBe(0);
+    expect(queued.dueCount).toBe(1);
+    expect(queued.pending).toBe(2);
 
     network.setOnline(true);
     await repo.settled();
 
     expect(server.logInserts).toEqual(['rev-1']);
-    expect(server.cards.get('hola')?.reps).toBe(1);
+    expect(server.cards.get('hola:es_to_ru')?.reps).toBe(1);
+    expect(server.cards.get('hola:ru_to_es')?.reps).toBe(0);
     expect(server.logs.get('rev-1')).toMatchObject({ rating: 'good', state: 0, elapsedDays: 0 });
     expect((await repo.read(USER)).pending).toBe(0);
     stop();
@@ -149,7 +154,7 @@ describe('review repository', () => {
     await repo.recordRating(USER, input);
 
     expect((await repo.read(USER)).cards[0]?.reps).toBe(1);
-    expect((await repo.read(USER)).pending).toBe(1);
+    expect((await repo.read(USER)).pending).toBe(2);
 
     network.setOnline(true);
     await repo.sync(USER);
@@ -157,7 +162,8 @@ describe('review repository', () => {
 
     expect(server.logInserts).toEqual(['rev-1']);
     expect(server.logs.size).toBe(1);
-    expect(server.cards.get('hola')?.reps).toBe(1);
+    expect(server.cards.get('hola:es_to_ru')?.reps).toBe(1);
+    expect(server.cards.size).toBe(2);
     expect((await repo.read(USER)).pending).toBe(0);
   });
 
@@ -176,7 +182,7 @@ describe('review repository', () => {
 
     expect(server.logInserts).toEqual(['rev-1', 'rev-1']);
     expect(server.logs.size).toBe(1);
-    expect(server.cards.size).toBe(1);
+    expect(server.cards.size).toBe(2);
     expect((await repo.read(USER)).cards[0]?.reps).toBe(1);
     expect((await repo.read(USER)).pending).toBe(0);
   });

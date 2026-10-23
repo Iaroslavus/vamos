@@ -83,6 +83,7 @@ export type Database = {
         Row: {
           created_at: string;
           difficulty: number;
+          direction: string;
           due: string;
           elapsed_days: number;
           id: string;
@@ -101,6 +102,7 @@ export type Database = {
         Insert: {
           created_at?: string;
           difficulty?: number;
+          direction?: string;
           due?: string;
           elapsed_days?: number;
           id?: string;
@@ -118,6 +120,7 @@ export type Database = {
         Update: {
           created_at?: string;
           difficulty?: number;
+          direction?: string;
           due?: string;
           elapsed_days?: number;
           id?: string;

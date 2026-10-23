@@ -30,6 +30,7 @@ import { MistakesIntro } from '@/features/lesson/components/MistakesIntro';
 import { SelectTranslationExercise } from '@/features/lesson/components/SelectTranslationExercise';
 import { TypeTranslationExercise } from '@/features/lesson/components/TypeTranslationExercise';
 import { useFinishLesson } from '@/features/lesson/hooks/useFinishLesson';
+import { useRecordLessonMistake } from '@/features/lesson/hooks/useRecordLessonMistake';
 import { loadLesson } from '@/features/lesson/loader';
 import { countSerializedPairs } from '@/features/lesson/pairs';
 import { isTypingExercise, toPlayableExercises } from '@/features/lesson/playable';
@@ -87,6 +88,7 @@ export default function LessonScreen() {
   const total = useLessonStore((s) => s.initialIds.length);
   const mistakesLeft = useLessonStore((s) => s.queue.length);
   const finishLesson = useFinishLesson();
+  const recordMistake = useRecordLessonMistake();
   const progress = useMemo(() => {
     const ratio = total === 0 ? 0 : Math.min(1, solved / total);
     return { solved, total, ratio };
@@ -297,10 +299,11 @@ export default function LessonScreen() {
           disabled={!canCheck}
           onPress={() => {
             Keyboard.dismiss();
+            const current = useLessonStore.getState().getCurrentExercise();
             const grade = checkAnswer();
-            if (grade) {
-              playGradeSound(grade.status);
-            }
+            if (!grade) return;
+            playGradeSound(grade.status);
+            if (current) recordMistake(current, grade.status);
           }}
         />
       </View>

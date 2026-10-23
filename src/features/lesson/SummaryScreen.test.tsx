@@ -9,6 +9,7 @@ import { useFinishLesson } from '@/features/lesson/hooks/useFinishLesson';
 import { useLessonStore, type LessonExerciseItem } from '@/features/lesson/store';
 import { ProgressProvider } from '@/features/progress/ProgressProvider';
 import type { ProgressRepository } from '@/features/progress/types';
+import { reviewRepository } from '@/features/review/defaultRepository';
 import i18n from '@/i18n';
 
 const EXERCISE: LessonExerciseItem = {
@@ -52,6 +53,12 @@ jest.mock('@/features/auth/useSession', () => ({
 
 jest.mock('@/lib/supabase', () => ({
   supabase: { auth: {} },
+}));
+
+jest.mock('@/features/review/defaultRepository', () => ({
+  reviewRepository: {
+    introduceItems: jest.fn(async () => ({ cards: [], dueCount: 0, pending: 0 })),
+  },
 }));
 
 function repository(recordCompletion: jest.Mock): ProgressRepository {
@@ -124,6 +131,7 @@ async function flush(): Promise<void> {
 
 describe('LessonSummaryScreen', () => {
   beforeEach(() => {
+    jest.mocked(reviewRepository.introduceItems).mockClear();
     finishLessonInStore();
   });
 
@@ -163,11 +171,16 @@ describe('LessonSummaryScreen', () => {
       accuracy: 100,
       xp: 10,
     });
+    expect(reviewRepository.introduceItems).toHaveBeenCalledTimes(1);
+    expect(reviewRepository.introduceItems).toHaveBeenCalledWith('user-1', [
+      { id: 'hola', es: 'hola', ru: 'привет', pos: 'interjection' },
+    ]);
 
     await view.rerender(summaryTree(recordCompletion, 1, view.client));
 
     expect(screen.getByText('Урок пройден!')).toBeOnTheScreen();
     expect(recordCompletion).toHaveBeenCalledTimes(1);
+    expect(reviewRepository.introduceItems).toHaveBeenCalledTimes(1);
   });
 
   it('shows the summary when saving the result fails', async () => {
@@ -180,5 +193,6 @@ describe('LessonSummaryScreen', () => {
     expect(screen.getByText('100%')).toBeOnTheScreen();
     await flush();
     expect(recordCompletion).toHaveBeenCalledTimes(1);
+    expect(reviewRepository.introduceItems).toHaveBeenCalledTimes(1);
   });
 });

@@ -1,7 +1,7 @@
 -- Structural checks: tables, keys, RLS enabled everywhere, signup trigger wiring.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(23);
+select plan(25);
 
 select has_table('public', 'profiles', 'profiles table exists');
 select has_table('public', 'lesson_progress', 'lesson_progress table exists');
@@ -16,7 +16,14 @@ select col_is_pk('public', 'xp_events', 'id', 'xp_events.id is the primary key')
 select col_is_pk('public', 'streaks', 'user_id', 'streaks.user_id is the primary key');
 select col_is_pk('public', 'review_cards', 'id', 'review_cards.id is the primary key');
 select col_is_pk('public', 'review_logs', 'id', 'review_logs.id is the primary key');
-select col_is_unique('public', 'review_cards', array['user_id', 'item_id'], 'one review card per (user, item)');
+select has_column('public', 'review_cards', 'direction', 'review_cards.direction exists');
+select col_not_null('public', 'review_cards', 'direction', 'review_cards.direction is required');
+select col_is_unique(
+  'public',
+  'review_cards',
+  array['user_id', 'item_id', 'direction'],
+  'one review card per (user, item, direction)'
+);
 select col_is_unique(
   'public',
   'review_logs',
