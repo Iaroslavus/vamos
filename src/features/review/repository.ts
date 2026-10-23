@@ -390,7 +390,7 @@ function toSnapshot(state: PersistedReviews, nowIso: string): ReviewSnapshot {
       left.itemId.localeCompare(right.itemId) || left.direction.localeCompare(right.direction),
   );
   const dueCount = selectDueCards(cards, new Date(nowIso)).length;
-  return { cards, dueCount, pending: state.outbox.length };
+  return { cards, logs: [...state.logs], dueCount, pending: state.outbox.length };
 }
 
 function toFsrs(card: StoredCard): FsrsCard {

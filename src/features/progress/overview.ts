@@ -6,10 +6,7 @@ export type SkillBar = {
   progress: number;
 };
 
-/**
- * Nothing is due until FSRS review cards drive this counter.
- * Keep the value at 0 rather than inventing a queue.
- */
+/** Shown before the review queue has been read. An empty deck is also zero. */
 export const REVIEWS_DUE = 0;
 
 /** Skill scores stay at 0 until exercises are tagged by skill. */

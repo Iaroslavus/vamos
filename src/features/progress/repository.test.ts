@@ -314,4 +314,32 @@ describe('progress repository', () => {
     await repo.sync(USER);
     expect(server.xp.size).toBe(2);
   });
+
+  it('awards review XP once and does not complete a lesson', async () => {
+    const { repo, server } = setup(true);
+
+    await repo.awardXp(USER, {
+      amount: 5,
+      source: 'review',
+      refId: 'session-1',
+      clientId: 'session-1',
+    });
+    await repo.awardXp(USER, {
+      amount: 5,
+      source: 'review',
+      refId: 'session-1',
+      clientId: 'session-1',
+    });
+
+    const snapshot = await repo.readProgress(USER);
+    expect(snapshot.totalXp).toBe(5);
+    expect(snapshot.lessons).toEqual([]);
+    expect(snapshot.pending).toBe(0);
+    expect(server.xpInserts).toEqual(['session-1']);
+    expect(server.xp.get('session-1')).toMatchObject({
+      amount: 5,
+      source: 'review',
+      lessonId: 'session-1',
+    });
+  });
 });

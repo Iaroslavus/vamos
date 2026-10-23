@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/Text';
 import { colors, radius, space } from '@/theme/tokens';
@@ -7,16 +7,36 @@ type MetricCardProps = {
   label: string;
   value: string;
   accessibilityLabel: string;
+  onPress?: () => void;
 };
 
-export function MetricCard({ label, value, accessibilityLabel }: MetricCardProps) {
-  return (
-    <View accessible accessibilityLabel={accessibilityLabel} style={styles.card}>
+export function MetricCard({ label, value, accessibilityLabel, onPress }: MetricCardProps) {
+  const content = (
+    <>
       <Text variant="h3">{value}</Text>
       <Text variant="caption" color={colors.inkMuted}>
         {label}
       </Text>
-    </View>
+    </>
+  );
+
+  if (!onPress) {
+    return (
+      <View accessible accessibilityLabel={accessibilityLabel} style={styles.card}>
+        {content}
+      </View>
+    );
+  }
+
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      onPress={onPress}
+      style={styles.card}
+    >
+      {content}
+    </Pressable>
   );
 }
 

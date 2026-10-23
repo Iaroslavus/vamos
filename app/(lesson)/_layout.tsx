@@ -20,7 +20,11 @@ export default function LessonLayout() {
         name="lesson/summary"
         options={{ headerShown: false, title: t('lesson.summaryTitle'), gestureEnabled: false }}
       />
-      <Stack.Screen name="lesson/review" options={{ title: t('lesson.reviewTitle') }} />
+      <Stack.Screen name="lesson/review" options={{ title: t('review.title') }} />
+      <Stack.Screen
+        name="review"
+        options={{ headerShown: false, title: t('review.title'), gestureEnabled: false }}
+      />
     </Stack>
   );
 }

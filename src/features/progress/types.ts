@@ -7,11 +7,25 @@ export type LessonProgress = {
   completedAt: string | null;
 };
 
+export type XpSource = 'lesson' | 'review';
+
 export type XpAward = {
   clientId: string;
+  /** Lesson id, or a review session id when `source` is `review`. */
   lessonId: string;
   amount: number;
   createdAt: string;
+  source?: XpSource;
+};
+
+export type XpGrantInput = {
+  amount: number;
+  source: XpSource;
+  /** Lesson id or review session id. Stored as `ref_id` on the server. */
+  refId: string;
+  /** Stable id for this award. Reusing it on retry must not add XP again. */
+  clientId?: string;
+  createdAt?: string;
 };
 
 export type OutboxItem = {
@@ -75,6 +89,8 @@ export type Scheduler = (fn: () => void, delayMs: number) => () => void;
 export type ProgressRepository = {
   readProgress(userId: string): Promise<ProgressSnapshot>;
   recordCompletion(userId: string, input: CompletionInput): Promise<ProgressSnapshot>;
+  /** Adds XP without completing a lesson. The same clientId is stored once. */
+  awardXp(userId: string, input: XpGrantInput): Promise<ProgressSnapshot>;
   sync(userId: string): Promise<ProgressSnapshot>;
   start(userId: string, onSynced: () => void): () => void;
   settled(): Promise<void>;

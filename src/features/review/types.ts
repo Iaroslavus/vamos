@@ -54,6 +54,8 @@ export type PersistedReviews = {
 
 export type ReviewSnapshot = {
   cards: StoredCard[];
+  /** Every local rating, oldest first. The session uses these for the daily caps. */
+  logs: LocalReviewLog[];
   dueCount: number;
   pending: number;
 };

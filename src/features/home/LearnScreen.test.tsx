@@ -60,6 +60,7 @@ function repository(overrides: Partial<ProgressRepository> = {}): ProgressReposi
   return {
     readProgress: jest.fn(async () => ({ lessons: [], totalXp: 0, pending: 0 })),
     recordCompletion: jest.fn(),
+    awardXp: jest.fn(),
     sync: jest.fn(async () => ({ lessons: [], totalXp: 0, pending: 0 })),
     start: jest.fn(() => () => undefined),
     settled: jest.fn(async () => undefined),

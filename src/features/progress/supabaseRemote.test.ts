@@ -62,4 +62,28 @@ describe('createSupabaseProgressRemote', () => {
       { onConflict: 'user_id,client_id', ignoreDuplicates: true },
     );
   });
+
+  it('stores review XP with the session id and the review source', async () => {
+    const { client, upsert } = clientDouble();
+    const remote = createSupabaseProgressRemote(client);
+
+    await remote.insertXp('user-1', {
+      clientId: 'session-1',
+      lessonId: 'session-1',
+      amount: 5,
+      createdAt: '2026-10-23T18:00:00.000Z',
+      source: 'review',
+    });
+
+    expect(upsert).toHaveBeenCalledWith(
+      {
+        user_id: 'user-1',
+        amount: 5,
+        source: 'review',
+        ref_id: 'session-1',
+        client_id: 'session-1',
+      },
+      { onConflict: 'user_id,client_id', ignoreDuplicates: true },
+    );
+  });
 });

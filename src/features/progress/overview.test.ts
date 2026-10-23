@@ -1,7 +1,7 @@
 import { REVIEWS_DUE, skillBars } from './overview';
 
 describe('progress overview', () => {
-  it('keeps reviews at zero until FSRS exists', () => {
+  it('starts from zero before the review queue is read', () => {
     expect(REVIEWS_DUE).toBe(0);
   });
 
