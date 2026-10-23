@@ -177,7 +177,16 @@
     "summaryAccuracy": "Точность",
     "summaryXp": "Опыт",
     "summaryContinue": "Дальше",
-    "close": "Закрыть"
+    "close": "Закрыть",
+    "chooseTitle": "Как повторяем?",
+    "chooseCount": "К повторению: {{count}}",
+    "modeCards": "Карточки",
+    "modeCardsHint": "Смотрите ответ и сами ставите оценку",
+    "modeQuick": "Быстрое повторение",
+    "modeQuickHint": "До {{count}} упражнений — оценку поставим сами",
+    "exerciseSelect": "Выберите перевод",
+    "exerciseListen": "Что вы слышите?",
+    "exerciseType": "Введите перевод"
   },
   "onboarding": {
     "title": "Добро пожаловать",

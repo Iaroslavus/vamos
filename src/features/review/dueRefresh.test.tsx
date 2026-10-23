@@ -80,6 +80,13 @@ function AgendaProbe() {
         accessibilityLabel="finish-lesson"
         onPress={() => finish()}
       />
+      {session.phase.status === 'choose' ? (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="start-cards"
+          onPress={() => session.begin('cards')}
+        />
+      ) : null}
       {session.phase.status === 'study' ? (
         <Pressable
           accessibilityRole="button"
@@ -154,6 +161,7 @@ describe('review counters refresh', () => {
     await renderProbe();
 
     expect(await screen.findByText('1 слово ждёт повторения')).toBeTruthy();
+    await fireEvent.press(await screen.findByLabelText('start-cards'));
     await fireEvent.press(await screen.findByLabelText('rate-again'));
 
     const snapshot = await reviewRepository.read('user-1');

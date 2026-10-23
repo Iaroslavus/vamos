@@ -1,12 +1,21 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useSession } from '@/features/auth/useSession';
+import type { GradeStatus } from '@/features/lesson/grading';
 import { courseVocabulary, type CourseWord } from '@/features/lesson/reviewSources';
+import { useLessonStore } from '@/features/lesson/store';
 import { deviceTimeZone } from '@/features/progress/study';
 import { useProgressRepository } from '@/features/progress/useProgress';
 
 import { reviewRepository } from '../defaultRepository';
+import {
+  buildQuickReviewExercises,
+  pendingExerciseRatings,
+  type ReviewExerciseSource,
+  type ReviewStudyMode,
+} from '../exercises';
 import type { ReviewRating } from '../fsrs';
 import {
   buildReviewQueue,
@@ -35,6 +44,7 @@ export type ReviewPhase =
   | { status: 'error' }
   | { status: 'empty' }
   | { status: 'limited' }
+  | { status: 'choose'; queue: StudyCard[] }
   | {
       status: 'study';
       index: number;
@@ -44,7 +54,16 @@ export type ReviewPhase =
       rateError: boolean;
       busy: boolean;
     }
+  | { status: 'practice'; busy: boolean; rateError: boolean }
   | { status: 'summary'; reviewed: number; accuracy: number; xp: number };
+
+type PendingRating = {
+  exerciseId: string;
+  itemId: string;
+  direction: ReviewDirection;
+  rating: ReviewRating;
+  clientId: string;
+};
 
 function newId(): string {
   const id = globalThis.crypto?.randomUUID?.();
@@ -64,13 +83,8 @@ function deckPhase(snapshot: ReviewSnapshot, now: Date, timeZone: string): Revie
   }
   const words = courseVocabulary();
   return {
-    status: 'study',
-    index: 0,
-    revealed: false,
-    ratings: [],
+    status: 'choose',
     queue: queue.cards.map((card) => toCard(card, words, now)),
-    rateError: false,
-    busy: false,
   };
 }
 
@@ -93,7 +107,19 @@ function toCard(card: StoredCard, words: readonly CourseWord[], now: Date): Stud
   };
 }
 
+function exerciseSource(card: StudyCard): ReviewExerciseSource {
+  const recognition = card.direction === 'es_to_ru';
+  return {
+    itemId: card.itemId,
+    direction: card.direction,
+    es: recognition ? card.front : card.back,
+    ru: recognition ? card.back : card.front,
+    ...(card.audio ? { audio: card.audio } : {}),
+  };
+}
+
 export function useReviewSession() {
+  const { t } = useTranslation();
   const { session } = useSession();
   const userId = session?.user.id ?? null;
   const progress = useProgressRepository();
@@ -104,18 +130,56 @@ export function useReviewSession() {
     setTrackedUser(userId);
     setPhase({ status: 'loading' });
   }
+  const phaseRef = useRef(phase);
   const sessionId = useRef('');
   const ratingId = useRef<string | null>(null);
   const lock = useRef(false);
   const heldIndex = useRef<number | null>(null);
   const mounted = useRef(true);
+  const practiceStarted = useRef(false);
+  const attemptsRef = useRef(new Map<string, GradeStatus[]>());
+  const ratedRef = useRef(new Set<string>());
+  const pendingRef = useRef<PendingRating[]>([]);
+  const ratingsRef = useRef<ReviewRating[]>([]);
+  const linksRef = useRef(new Map<string, { itemId: string; direction: ReviewDirection }>());
+
+  const clearPractice = useCallback(() => {
+    attemptsRef.current = new Map();
+    ratedRef.current = new Set();
+    pendingRef.current = [];
+    ratingsRef.current = [];
+    linksRef.current = new Map();
+  }, []);
+
+  const stopPractice = useCallback(() => {
+    if (!practiceStarted.current) return;
+    practiceStarted.current = false;
+    useLessonStore.getState().reset();
+  }, []);
 
   useEffect(() => {
     mounted.current = true;
     return () => {
       mounted.current = false;
+      if (practiceStarted.current) {
+        practiceStarted.current = false;
+        useLessonStore.getState().reset();
+      }
     };
   }, []);
+
+  const applySnapshot = useCallback(
+    (snapshot: ReviewSnapshot) => {
+      stopPractice();
+      clearPractice();
+      sessionId.current = newId();
+      ratingId.current = null;
+      lock.current = false;
+      heldIndex.current = null;
+      setPhase(deckPhase(snapshot, new Date(), deviceTimeZone()));
+    },
+    [clearPractice, stopPractice],
+  );
 
   const load = useCallback(async () => {
     if (!userId) return;
@@ -123,15 +187,11 @@ export function useReviewSession() {
     try {
       const snapshot = await reviewRepository.read(userId);
       if (!mounted.current) return;
-      sessionId.current = newId();
-      ratingId.current = null;
-      lock.current = false;
-      heldIndex.current = null;
-      setPhase(deckPhase(snapshot, new Date(), deviceTimeZone()));
+      applySnapshot(snapshot);
     } catch {
       if (mounted.current) setPhase({ status: 'error' });
     }
-  }, [userId]);
+  }, [applySnapshot, userId]);
 
   useEffect(() => {
     if (!userId) return;
@@ -140,11 +200,7 @@ export function useReviewSession() {
       try {
         const snapshot = await reviewRepository.read(userId);
         if (cancelled || !mounted.current) return;
-        sessionId.current = newId();
-        ratingId.current = null;
-        lock.current = false;
-        heldIndex.current = null;
-        setPhase(deckPhase(snapshot, new Date(), deviceTimeZone()));
+        applySnapshot(snapshot);
       } catch {
         if (!cancelled && mounted.current) setPhase({ status: 'error' });
       }
@@ -152,11 +208,14 @@ export function useReviewSession() {
     return () => {
       cancelled = true;
     };
-  }, [userId]);
+  }, [applySnapshot, userId]);
 
   useEffect(() => {
+    phaseRef.current = phase;
+    if (phase.status === 'summary') stopPractice();
+
     if (phase.status !== 'study') {
-      lock.current = false;
+      if (phase.status !== 'practice') lock.current = false;
       heldIndex.current = null;
       return;
     }
@@ -164,11 +223,155 @@ export function useReviewSession() {
       lock.current = false;
       heldIndex.current = null;
     }
-  }, [phase]);
+  }, [phase, stopPractice]);
 
   const reveal = useCallback(() => {
     setPhase((current) => (current.status === 'study' ? { ...current, revealed: true } : current));
   }, []);
+
+  const begin = useCallback(
+    (mode: ReviewStudyMode) => {
+      const current = phaseRef.current;
+      if (current.status !== 'choose') return;
+
+      if (mode === 'cards') {
+        setPhase({
+          status: 'study',
+          index: 0,
+          revealed: false,
+          ratings: [],
+          queue: current.queue,
+          rateError: false,
+          busy: false,
+        });
+        return;
+      }
+
+      const drafts = buildQuickReviewExercises({
+        cards: current.queue.map(exerciseSource),
+        pool: courseVocabulary(),
+        prompts: {
+          select: t('review.exerciseSelect'),
+          listen: t('review.exerciseListen'),
+          type: t('review.exerciseType'),
+        },
+      });
+      if (drafts.length === 0) return;
+
+      clearPractice();
+      linksRef.current = new Map(
+        drafts.map((draft) => [
+          draft.exercise.id,
+          { itemId: draft.itemId, direction: draft.direction },
+        ]),
+      );
+      useLessonStore.getState().startLesson({
+        lessonId: 'review-quick',
+        exercises: drafts.map((draft) => draft.exercise),
+      });
+      practiceStarted.current = true;
+      setPhase({ status: 'practice', busy: false, rateError: false });
+    },
+    [clearPractice, t],
+  );
+
+  const noteChecked = useCallback(
+    (exerciseId: string, status: GradeStatus, sessionFailed: boolean) => {
+      const grades = [...(attemptsRef.current.get(exerciseId) ?? []), status];
+      attemptsRef.current.set(exerciseId, grades);
+      const queued = new Set(pendingRef.current.map((item) => item.exerciseId));
+      const next = pendingExerciseRatings({
+        attempts: attemptsRef.current,
+        rated: ratedRef.current,
+        queued,
+        focusId: exerciseId,
+        sessionFailed,
+      });
+      const additions: PendingRating[] = [];
+      for (const item of next) {
+        const link = linksRef.current.get(item.exerciseId);
+        if (!link) continue;
+        additions.push({
+          exerciseId: item.exerciseId,
+          itemId: link.itemId,
+          direction: link.direction,
+          rating: item.rating,
+          clientId: `${sessionId.current}:${item.exerciseId}`,
+        });
+      }
+      pendingRef.current = [...pendingRef.current, ...additions];
+    },
+    [],
+  );
+
+  const advancePractice = useCallback((): Promise<void> => {
+    if (!userId || lock.current) return Promise.resolve();
+    const store = useLessonStore.getState();
+    if (store.status !== 'feedback' && store.status !== 'failed') return Promise.resolve();
+    const finishing = store.status === 'failed' || store.queue.length <= 1;
+    lock.current = true;
+    setPhase((current) =>
+      current.status === 'practice' ? { ...current, busy: true, rateError: false } : current,
+    );
+
+    return (async () => {
+      try {
+        let saved = false;
+        for (const item of pendingRef.current) {
+          if (ratedRef.current.has(item.exerciseId)) continue;
+          await reviewRepository.recordRating(userId, {
+            itemId: item.itemId,
+            direction: item.direction,
+            rating: item.rating,
+            clientId: item.clientId,
+          });
+          ratedRef.current.add(item.exerciseId);
+          ratingsRef.current = [...ratingsRef.current, item.rating];
+          saved = true;
+        }
+        pendingRef.current = [];
+        if (saved) {
+          void queryClient.invalidateQueries({ queryKey: reviewDueQueryKey(userId) });
+        }
+        if (!mounted.current) return;
+
+        if (!finishing) {
+          useLessonStore.getState().continueAfterFeedback();
+          lock.current = false;
+          if (!mounted.current) return;
+          setPhase((current) =>
+            current.status === 'practice' ? { ...current, busy: false, rateError: false } : current,
+          );
+          return;
+        }
+
+        const ratings = ratingsRef.current;
+        const xp = reviewSessionXp(ratings.length);
+        if (xp > 0) {
+          await progress.awardXp(userId, {
+            amount: xp,
+            source: 'review',
+            refId: sessionId.current,
+            clientId: sessionId.current,
+          });
+        }
+        if (!mounted.current) return;
+        lock.current = false;
+        setPhase({
+          status: 'summary',
+          reviewed: ratings.length,
+          accuracy: reviewAccuracy(ratings),
+          xp,
+        });
+      } catch {
+        lock.current = false;
+        if (!mounted.current) return;
+        setPhase((current) =>
+          current.status === 'practice' ? { ...current, busy: false, rateError: true } : current,
+        );
+      }
+    })();
+  }, [progress, queryClient, userId]);
 
   const rate = useCallback(
     (rating: ReviewRating): Promise<void> => {
@@ -228,8 +431,7 @@ export function useReviewSession() {
           });
         } catch {
           lock.current = false;
-          if (!mounted.current) return;
-          setPhase({ ...current, busy: false, rateError: true });
+          if (mounted.current) setPhase({ ...current, busy: false, rateError: true });
         }
       })();
     },
@@ -237,5 +439,5 @@ export function useReviewSession() {
   );
 
   const visible: ReviewPhase = userId ? phase : { status: 'error' };
-  return { phase: visible, reload: load, reveal, rate };
+  return { phase: visible, reload: load, reveal, rate, begin, noteChecked, advancePractice };
 }

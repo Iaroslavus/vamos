@@ -8,6 +8,8 @@ import { Button } from '@/components/Button';
 import { IconButton } from '@/components/IconButton';
 import { RetryNote } from '@/components/RetryNote';
 import { Text } from '@/components/Text';
+import { ReviewExerciseSession } from '@/features/review/components/ReviewExerciseSession';
+import { ReviewModeChoice } from '@/features/review/components/ReviewModeChoice';
 import { ReviewStudy } from '@/features/review/components/ReviewStudy';
 import { ReviewSummary } from '@/features/review/components/ReviewSummary';
 import { useReviewSession } from '@/features/review/hooks/useReviewSession';
@@ -17,7 +19,7 @@ export default function ReviewScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { phase, reload, reveal, rate } = useReviewSession();
+  const { phase, reload, reveal, rate, begin, noteChecked, advancePractice } = useReviewSession();
   const card = phase.status === 'study' ? phase.queue[phase.index] : undefined;
 
   const leave = () => {
@@ -69,6 +71,21 @@ export default function ReviewScreen() {
           </Text>
           <Button title={t('review.summaryContinue')} onPress={() => router.replace('/(tabs)')} />
         </View>
+      ) : null}
+
+      {phase.status === 'choose' ? (
+        <ReviewModeChoice count={phase.queue.length} onChoose={begin} />
+      ) : null}
+
+      {phase.status === 'practice' ? (
+        <ReviewExerciseSession
+          busy={phase.busy}
+          rateError={phase.rateError}
+          onChecked={noteChecked}
+          onAdvance={() => {
+            void advancePractice();
+          }}
+        />
       ) : null}
 
       {phase.status === 'study' && card ? (
