@@ -3,7 +3,28 @@ import type { ExerciseReference, VocabularyRef } from '@/features/review/sources
 import { loadAllLessons } from './loader';
 import type { LessonExerciseItem } from './store';
 
+export type CourseWord = {
+  id: string;
+  es: string;
+  ru: string;
+  audio?: string;
+};
+
 let cachedLexicon: VocabularyRef[] | null = null;
+let cachedWords: CourseWord[] | null = null;
+
+/** Spanish form, translation, and bundled audio for every vocabulary id. */
+export function courseVocabulary(): CourseWord[] {
+  if (cachedWords) return cachedWords;
+  const byId = new Map<string, CourseWord>();
+  for (const lesson of loadAllLessons()) {
+    for (const item of lesson.new_items) {
+      byId.set(item.id, { id: item.id, es: item.es, ru: item.ru, audio: item.audio });
+    }
+  }
+  cachedWords = [...byId.values()];
+  return cachedWords;
+}
 
 /** Spanish and Russian forms from every bundled lesson, keyed by vocabulary id. */
 export function courseLexicon(): VocabularyRef[] {

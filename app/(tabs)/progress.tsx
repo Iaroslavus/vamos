@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
@@ -8,13 +9,16 @@ import { LevelList } from '@/features/progress/components/LevelList';
 import { MetricCard } from '@/features/progress/components/MetricCard';
 import { ProgressSkeleton } from '@/features/progress/components/ProgressSkeleton';
 import { SkillList } from '@/features/progress/components/SkillList';
-import { REVIEWS_DUE, skillBars } from '@/features/progress/overview';
+import { skillBars } from '@/features/progress/overview';
 import { EMPTY_SNAPSHOT, formatStudyMinutes, studySnapshotNow } from '@/features/progress/study';
 import { useProgress } from '@/features/progress/useProgress';
+import { useReviewDueCount } from '@/features/review/hooks/useReviewDueCount';
 import { colors, space } from '@/theme/tokens';
 
 export default function ProgressScreen() {
   const { t } = useTranslation();
+  const router = useRouter();
+  const dueReviews = useReviewDueCount();
   const { data, isLoading, isError, refetch } = useProgress();
 
   if (isLoading) return <ProgressSkeleton label={t('progress.loading')} />;
@@ -48,8 +52,9 @@ export default function ProgressScreen() {
         />
         <MetricCard
           label={t('progress.reviewsTitle')}
-          value={String(REVIEWS_DUE)}
-          accessibilityLabel={t('progress.reviewsLabel', { count: REVIEWS_DUE })}
+          value={String(dueReviews)}
+          accessibilityLabel={t('progress.reviewsLabel', { count: dueReviews })}
+          onPress={() => router.push('/review')}
         />
       </View>
       <LevelList levels={levelProgress(stats.completedIds)} />

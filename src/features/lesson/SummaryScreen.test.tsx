@@ -65,6 +65,7 @@ function repository(recordCompletion: jest.Mock): ProgressRepository {
   return {
     readProgress: jest.fn(async () => ({ lessons: [], totalXp: 0, pending: 0 })),
     recordCompletion,
+    awardXp: jest.fn(async () => ({ lessons: [], totalXp: 0, pending: 0 })),
     sync: jest.fn(async () => ({ lessons: [], totalXp: 0, pending: 0 })),
     start: jest.fn(() => () => undefined),
     settled: jest.fn(async () => undefined),

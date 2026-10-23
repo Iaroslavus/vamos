@@ -14,6 +14,17 @@ import type {
 } from '@/features/progress/types';
 import i18n from '@/i18n';
 
+const mockPush = jest.fn();
+
+jest.mock('expo-router', () => ({
+  useRouter: () => ({
+    push: mockPush,
+    replace: jest.fn(),
+    back: jest.fn(),
+    canGoBack: () => true,
+  }),
+}));
+
 jest.mock('@/features/auth/useSession', () => ({
   useSession: () => ({
     status: 'ready',
@@ -31,6 +42,7 @@ function repository(overrides: Partial<ProgressRepository> = {}): ProgressReposi
   return {
     readProgress: jest.fn(async () => EMPTY),
     recordCompletion: jest.fn(),
+    awardXp: jest.fn(),
     sync: jest.fn(async () => EMPTY),
     start: jest.fn(() => () => undefined),
     settled: jest.fn(async () => undefined),
@@ -166,6 +178,10 @@ describe('ProgressScreen', () => {
     expect(screen.getByLabelText('Разговор, 0%')).toBeTruthy();
     expect(screen.queryByText(/Ждёт отправки/)).toBeNull();
     await flush();
+
+    mockPush.mockClear();
+    fireEvent.press(screen.getByLabelText('Повторить сегодня: 0'));
+    expect(mockPush).toHaveBeenCalledWith('/review');
   });
 
   it('turns seven finished lessons into one hour and ten minutes', async () => {

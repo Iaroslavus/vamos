@@ -66,7 +66,7 @@ function xpPayload(userId: string, award: XpAward) {
   return {
     user_id: userId,
     amount: award.amount,
-    source: 'lesson' as const,
+    source: award.source ?? 'lesson',
     ref_id: award.lessonId,
     client_id: award.clientId,
   };

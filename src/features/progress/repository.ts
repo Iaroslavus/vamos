@@ -17,6 +17,8 @@ import type {
   ProgressSnapshot,
   Scheduler,
   XpAward,
+  XpGrantInput,
+  XpSource,
 } from './types';
 
 const CLIENT_ID_MAX = 200;
@@ -132,7 +134,13 @@ export function createProgressRepository(deps: ProgressRepositoryDeps): Progress
         throw new Error('Invalid xp client id');
       }
       if (!state.xp.some((event) => event.clientId === clientId)) {
-        const award: XpAward = { clientId, lessonId, amount: input.xp, createdAt: completedAt };
+        const award: XpAward = {
+          clientId,
+          lessonId,
+          amount: input.xp,
+          createdAt: completedAt,
+          source: 'lesson',
+        };
         state = { ...state, xp: [...state.xp, award] };
         state = enqueue(state, { kind: 'xp', key: clientId, attempts: 0 });
       }
@@ -214,6 +222,31 @@ export function createProgressRepository(deps: ProgressRepositoryDeps): Progress
     }
   }
 
+  async function applyXp(userId: string, input: XpGrantInput): Promise<void> {
+    assertXp(input);
+    const refId = input.refId.trim();
+    const clientId = input.clientId ?? createId();
+    if (clientId.length < 1 || clientId.length > CLIENT_ID_MAX) {
+      throw new Error('Invalid xp client id');
+    }
+    const createdAt = input.createdAt ?? now();
+    if (Number.isNaN(Date.parse(createdAt))) throw new Error('Invalid createdAt');
+
+    let state = await load(userId);
+    if (state.xp.some((event) => event.clientId === clientId)) return;
+
+    const award: XpAward = {
+      clientId,
+      lessonId: refId,
+      amount: input.amount,
+      createdAt,
+      source: input.source,
+    };
+    state = { ...state, xp: [...state.xp, award] };
+    state = enqueue(state, { kind: 'xp', key: clientId, attempts: 0 });
+    await save(userId, state);
+  }
+
   async function syncBody(userId: string): Promise<ProgressSnapshot> {
     await migrateLegacy(userId);
     if (await deps.network.isOnline()) {
@@ -235,6 +268,23 @@ export function createProgressRepository(deps: ProgressRepositoryDeps): Progress
       return exclusive(async () => {
         await migrateLegacy(userId);
         await applyCompletion(userId, input);
+        if (await deps.network.isOnline()) {
+          try {
+            await flush(userId);
+          } catch {
+            scheduleRetry(() => flush(userId));
+          }
+        }
+        const snapshot = toSnapshot(await load(userId));
+        queueMicrotask(emit);
+        return snapshot;
+      });
+    },
+
+    awardXp(userId, input) {
+      return exclusive(async () => {
+        await migrateLegacy(userId);
+        await applyXp(userId, input);
         if (await deps.network.isOnline()) {
           try {
             await flush(userId);
@@ -334,6 +384,20 @@ function bump(state: PersistedProgress, item: OutboxItem): PersistedProgress {
 
 function sameItem(left: OutboxItem, right: OutboxItem): boolean {
   return left.kind === right.kind && left.key === right.key;
+}
+
+function assertXp(input: XpGrantInput): void {
+  if (!isXpSource(input.source)) throw new Error('Invalid xp source');
+  if (!Number.isInteger(input.amount) || input.amount <= 0) throw new Error('Invalid xp');
+  const refId = input.refId.trim();
+  if (refId.length < 1 || refId.length > 100) throw new Error('Invalid xp ref');
+  if (input.createdAt !== undefined && Number.isNaN(Date.parse(input.createdAt))) {
+    throw new Error('Invalid createdAt');
+  }
+}
+
+function isXpSource(value: string): value is XpSource {
+  return value === 'lesson' || value === 'review';
 }
 
 function assertCompletion(input: CompletionInput, lessonId: string): void {
