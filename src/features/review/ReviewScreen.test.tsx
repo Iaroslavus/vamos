@@ -6,6 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import ReviewScreen from '../../../app/(lesson)/review';
 import { playLessonAudio } from '@/features/audio/playback';
+import { useLessonStore } from '@/features/lesson/store';
 import { ProgressProvider } from '@/features/progress/ProgressProvider';
 import type { ProgressRepository } from '@/features/progress/types';
 import { reviewRepository } from '@/features/review/defaultRepository';
@@ -45,8 +46,14 @@ jest.mock('@/lib/supabase', () => ({
 }));
 
 jest.mock('@/features/audio/playback', () => ({
+  NORMAL_RATE: 1,
+  SLOW_RATE: 0.7,
   playLessonAudio: jest.fn(() => Promise.resolve('speech')),
   stopLessonAudio: jest.fn(() => Promise.resolve()),
+}));
+
+jest.mock('@/features/audio/sounds', () => ({
+  playGradeSound: jest.fn(),
 }));
 
 jest.mock('@/features/review/defaultRepository', () => ({
@@ -117,8 +124,18 @@ function renderReview() {
   );
 }
 
+async function startCards() {
+  fireEvent.press(await screen.findByText('Карточки'));
+}
+
+async function pressContinue() {
+  await fireEvent.press(screen.getByRole('button', { name: 'Дальше' }));
+  await new Promise((resolve) => setTimeout(resolve, 0));
+}
+
 describe('ReviewScreen', () => {
   beforeEach(() => {
+    useLessonStore.getState().reset();
     read.mockReset();
     recordRating.mockClear();
     awardXp.mockClear();
@@ -126,9 +143,14 @@ describe('ReviewScreen', () => {
     (Haptics.impactAsync as jest.Mock).mockClear();
   });
 
+  afterEach(() => {
+    useLessonStore.getState().reset();
+  });
+
   it('speaks a Spanish prompt, then rates it and shows when the card returns', async () => {
     read.mockResolvedValue({ cards: [card('hola')], logs: [], dueCount: 1, pending: 0 });
     await renderReview();
+    await startCards();
 
     expect(await screen.findByText('hola')).toBeTruthy();
     expect(playLessonAudio).toHaveBeenCalledWith({ text: 'hola', audio: 'a1/hola.mp3' });
@@ -163,6 +185,7 @@ describe('ReviewScreen', () => {
       pending: 0,
     });
     await renderReview();
+    await startCards();
 
     expect(await screen.findByText('спасибо')).toBeTruthy();
     expect(playLessonAudio).not.toHaveBeenCalled();
@@ -180,6 +203,7 @@ describe('ReviewScreen', () => {
       pending: 0,
     });
     await renderReview();
+    await startCards();
 
     for (let step = 0; step < 10; step += 1) {
       await fireEvent.press(await screen.findByText('Показать ответ'));
@@ -203,12 +227,56 @@ describe('ReviewScreen', () => {
   it('counts Again as a miss', async () => {
     read.mockResolvedValue({ cards: [card('hola')], logs: [], dueCount: 1, pending: 0 });
     await renderReview();
+    await startCards();
 
     await fireEvent.press(await screen.findByText('Показать ответ'));
     await pressRating('Снова');
 
     expect(screen.getByText('0%')).toBeTruthy();
     expect(screen.getByText('+0')).toBeTruthy();
+  });
+
+  it('rates a first-try exercise Good', async () => {
+    read.mockResolvedValue({ cards: [card('hola')], logs: [], dueCount: 1, pending: 0 });
+    await renderReview();
+
+    await fireEvent.press(await screen.findByText('Быстрое повторение'));
+    await fireEvent.press(await screen.findByRole('button', { name: 'привет' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Проверить' }));
+    await pressContinue();
+
+    expect(screen.getByText('Повторение готово')).toBeTruthy();
+    expect(screen.getByText('100%')).toBeTruthy();
+    expect(awardXp).not.toHaveBeenCalled();
+    expect(recordRating).toHaveBeenCalledTimes(1);
+    expect(recordRating).toHaveBeenCalledWith(
+      'user-1',
+      expect.objectContaining({ itemId: 'hola', direction: 'es_to_ru', rating: 'good' }),
+    );
+  });
+
+  it('rates a success after a miss Hard', async () => {
+    read.mockResolvedValue({ cards: [card('hola')], logs: [], dueCount: 1, pending: 0 });
+    await renderReview();
+
+    await fireEvent.press(await screen.findByText('Быстрое повторение'));
+    await fireEvent.press(await screen.findByRole('button', { name: 'до свидания' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Проверить' }));
+    await pressContinue();
+
+    expect(recordRating).not.toHaveBeenCalled();
+    await fireEvent.press(await screen.findByText('Поехали'));
+    await fireEvent.press(screen.getByRole('button', { name: 'привет' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Проверить' }));
+    await pressContinue();
+
+    expect(screen.getByText('Повторение готово')).toBeTruthy();
+    expect(screen.getByText('100%')).toBeTruthy();
+    expect(recordRating).toHaveBeenCalledTimes(1);
+    expect(recordRating).toHaveBeenCalledWith(
+      'user-1',
+      expect.objectContaining({ itemId: 'hola', direction: 'es_to_ru', rating: 'hard' }),
+    );
   });
 
   it('explains an empty deck', async () => {
