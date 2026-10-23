@@ -8,17 +8,18 @@ import { levelProgress } from '@/features/path/curriculum';
 import { LevelList } from '@/features/progress/components/LevelList';
 import { MetricCard } from '@/features/progress/components/MetricCard';
 import { ProgressSkeleton } from '@/features/progress/components/ProgressSkeleton';
+import { ReviewForecast } from '@/features/progress/components/ReviewForecast';
 import { SkillList } from '@/features/progress/components/SkillList';
 import { skillBars } from '@/features/progress/overview';
 import { EMPTY_SNAPSHOT, formatStudyMinutes, studySnapshotNow } from '@/features/progress/study';
 import { useProgress } from '@/features/progress/useProgress';
-import { useReviewDueCount } from '@/features/review/hooks/useReviewDueCount';
+import { useReviewAgenda } from '@/features/review/hooks/useReviewDueCount';
 import { colors, space } from '@/theme/tokens';
 
 export default function ProgressScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const dueReviews = useReviewDueCount();
+  const { dueCount: dueReviews, forecast } = useReviewAgenda();
   const { data, isLoading, isError, refetch } = useProgress();
 
   if (isLoading) return <ProgressSkeleton label={t('progress.loading')} />;
@@ -57,6 +58,7 @@ export default function ProgressScreen() {
           onPress={() => router.push('/review')}
         />
       </View>
+      <ReviewForecast days={forecast} />
       <LevelList levels={levelProgress(stats.completedIds)} />
       <SkillList skills={skillBars()} />
       {data && data.pending > 0 ? (

@@ -8,16 +8,19 @@ import { RetryNote } from '@/components/RetryNote';
 import { Text } from '@/components/Text';
 import { HomeStats } from '@/features/home/HomeStats';
 import { LearnSkeleton } from '@/features/home/LearnSkeleton';
+import { ReviewPrompt } from '@/features/home/ReviewPrompt';
 import { LessonPath } from '@/features/path/components/LessonPath';
 import { getCurriculumLessons, pathUnit, type PathNode } from '@/features/path/curriculum';
 import { EMPTY_SNAPSHOT, studySnapshotNow } from '@/features/progress/study';
 import { useProgress } from '@/features/progress/useProgress';
+import { useReviewDueCount } from '@/features/review/hooks/useReviewDueCount';
 import { colors, space } from '@/theme/tokens';
 
 export default function LearnScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const { data, isLoading, isError, refetch } = useProgress();
+  const dueReviews = useReviewDueCount();
   const lessons = useMemo(() => getCurriculumLessons(), []);
 
   if (isLoading) return <LearnSkeleton label={t('learn.loading')} />;
@@ -49,6 +52,7 @@ export default function LearnScreen() {
       showsVerticalScrollIndicator={false}
     >
       <HomeStats stats={stats} />
+      <ReviewPrompt count={dueReviews} onPress={() => router.push('/review')} />
       {unit ? (
         <Text variant="h3" accessibilityRole="header" style={styles.unit}>
           {t('learn.unitTitle', { level: unit.level, unit: unit.unit })}

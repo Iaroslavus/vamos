@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { I18nextProvider } from 'react-i18next';
@@ -12,6 +13,7 @@ import type {
   ProgressRepository,
   ProgressSnapshot,
 } from '@/features/progress/types';
+import { reviewStorageKey } from '@/features/review/repository';
 import i18n from '@/i18n';
 
 const mockPush = jest.fn();
@@ -118,7 +120,41 @@ async function flush(): Promise<void> {
   });
 }
 
+const WEEKDAY = '^(вс|пн|вт|ср|чт|пт|сб)';
+
+function dueCard(id: string) {
+  return {
+    id,
+    itemId: id,
+    direction: 'es_to_ru' as const,
+    due: new Date().toISOString(),
+    stability: 0,
+    difficulty: 0,
+    elapsedDays: 0,
+    scheduledDays: 0,
+    learningSteps: 0,
+    reps: 0,
+    lapses: 0,
+    state: 0,
+    lastReview: null,
+  };
+}
+
+async function seedDue(ids: readonly string[]): Promise<void> {
+  const cards: Record<string, ReturnType<typeof dueCard>> = {};
+  for (const id of ids) cards[`${id}:es_to_ru`] = dueCard(id);
+  await AsyncStorage.setItem(
+    reviewStorageKey('user-1'),
+    JSON.stringify({ version: 1, cards, logs: [], outbox: [] }),
+  );
+}
+
 describe('ProgressScreen', () => {
+  beforeEach(async () => {
+    await AsyncStorage.clear();
+    mockPush.mockClear();
+  });
+
   afterEach(async () => {
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
@@ -170,6 +206,8 @@ describe('ProgressScreen', () => {
 
     expect(await screen.findByLabelText('Время в языке: 0 мин')).toBeTruthy();
     expect(screen.getByLabelText('Повторить сегодня: 0')).toBeTruthy();
+    expect(screen.getByText('На 7 дней')).toBeTruthy();
+    expect(screen.getAllByLabelText(new RegExp(`${WEEKDAY}: 0$`))).toHaveLength(7);
     expect(screen.getByLabelText('A1, 0 из 3')).toBeTruthy();
     expect(screen.getAllByText('Скоро')).toHaveLength(5);
     expect(screen.getByLabelText('Словарь, 0%')).toBeTruthy();
@@ -182,6 +220,16 @@ describe('ProgressScreen', () => {
     mockPush.mockClear();
     fireEvent.press(screen.getByLabelText('Повторить сегодня: 0'));
     expect(mockPush).toHaveBeenCalledWith('/review');
+  });
+
+  it('shows today and the rest of the week from the deck', async () => {
+    await seedDue(['hola', 'gracias']);
+    await renderScreen(repository());
+
+    expect(await screen.findByLabelText('Повторить сегодня: 2')).toBeTruthy();
+    expect(screen.getAllByLabelText(new RegExp(`${WEEKDAY}: 0$`))).toHaveLength(6);
+    expect(screen.getByLabelText(new RegExp(`${WEEKDAY}: 2$`))).toBeTruthy();
+    await flush();
   });
 
   it('turns seven finished lessons into one hour and ten minutes', async () => {

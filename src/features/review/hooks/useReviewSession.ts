@@ -191,8 +191,8 @@ export function useReviewSession() {
             rating,
             clientId,
           });
-          if (!mounted.current) return;
           void queryClient.invalidateQueries({ queryKey: reviewDueQueryKey(userId) });
+          if (!mounted.current) return;
           const ratings = [...current.ratings, rating];
           const next = current.index + 1;
           if (next < current.queue.length) {
