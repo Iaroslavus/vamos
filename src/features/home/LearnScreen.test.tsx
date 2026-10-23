@@ -1,8 +1,11 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { I18nextProvider } from 'react-i18next';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import LessonScreen from '../../../app/(lesson)/lesson/[id]';
 import LearnScreen from '../../../app/(tabs)/index';
+import { useLessonStore } from '@/features/lesson/store';
 import { ProgressProvider } from '@/features/progress/ProgressProvider';
 import { createProgressRepository } from '@/features/progress/repository';
 import type {
@@ -14,9 +17,27 @@ import type {
 import i18n from '@/i18n';
 
 const mockPush = jest.fn();
+const mockSearchParams: { id?: string } = {};
 
 jest.mock('expo-router', () => ({
-  useRouter: () => ({ push: mockPush }),
+  useRouter: () => ({
+    push: mockPush,
+    replace: jest.fn(),
+    back: jest.fn(),
+    canGoBack: () => false,
+  }),
+  useLocalSearchParams: () => mockSearchParams,
+}));
+
+jest.mock('@/features/audio/playback', () => ({
+  NORMAL_RATE: 1,
+  SLOW_RATE: 0.7,
+  playLessonAudio: jest.fn(() => Promise.resolve('speech')),
+  stopLessonAudio: jest.fn(() => Promise.resolve()),
+}));
+
+jest.mock('@/features/audio/sounds', () => ({
+  playGradeSound: jest.fn(),
 }));
 
 jest.mock('expo-haptics', () => ({
@@ -117,6 +138,8 @@ async function flush(): Promise<void> {
 describe('LearnScreen', () => {
   beforeEach(() => {
     mockPush.mockClear();
+    mockSearchParams.id = undefined;
+    useLessonStore.getState().reset();
   });
 
   afterEach(async () => {
@@ -187,6 +210,45 @@ describe('LearnScreen', () => {
 
     await fireEvent.press(screen.getByLabelText('Знакомство, закрыт'));
     expect(mockPush).toHaveBeenCalledTimes(1);
+    await flush();
+  });
+
+  it('opens a1-u01-l01 on the first exercise when the first path node is pressed', async () => {
+    const home = await renderScreen(repository());
+
+    await fireEvent.press(await screen.findByLabelText('Приветствия, текущий'));
+
+    expect(mockPush).toHaveBeenCalledWith({
+      pathname: '/lesson/[id]',
+      params: { id: 'a1-u01-l01' },
+    });
+    const destination = mockPush.mock.calls[0]?.[0] as { params: { id: string } };
+    mockSearchParams.id = destination.params.id;
+    await flush();
+    await home.unmount();
+
+    const lesson = await render(
+      <QueryClientProvider
+        client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}
+      >
+        <SafeAreaProvider
+          initialMetrics={{
+            frame: { x: 0, y: 0, width: 390, height: 844 },
+            insets: { top: 47, left: 0, right: 0, bottom: 34 },
+          }}
+        >
+          <I18nextProvider i18n={i18n}>
+            <LessonScreen />
+          </I18nextProvider>
+        </SafeAreaProvider>
+      </QueryClientProvider>,
+    );
+
+    expect(await lesson.findByText('Выберите перевод')).toBeOnTheScreen();
+    expect(lesson.getByText('hola')).toBeOnTheScreen();
+    expect(lesson.getByText('привет')).toBeOnTheScreen();
+    expect(lesson.getByText('Проверить')).toBeOnTheScreen();
+    expect(lesson.queryByText('Экран урока скоро будет здесь.')).toBeNull();
     await flush();
   });
 
