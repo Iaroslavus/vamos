@@ -116,7 +116,10 @@ export const DialogSchema = z.object({
 });
 export type Dialog = z.infer<typeof DialogSchema>;
 
-/** A hand-written step that replaces the generated step at `index`. */
+/**
+ * Hand-written step at `index`.
+ * An index inside the generated lesson replaces that step; a later index appends one.
+ */
 export const LessonOverrideSchema = z.object({
   index: z.number().int().nonnegative(),
   type: ExerciseTypeSchema,
