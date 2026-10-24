@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { BookOpen, MessageCircle, Trophy, User } from 'lucide-react-native';
+import { LayoutGrid, Library, Sun, User } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
 import { useReviewDueCount } from '@/features/review/hooks/useReviewDueCount';
@@ -31,27 +31,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: t('tabs.learn'),
-          tabBarIcon: ({ color }) => (
-            <BookOpen color={color} size={ICON_SIZE} strokeWidth={ICON_STROKE} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="dialog"
-        options={{
-          title: t('tabs.dialog'),
-          tabBarIcon: ({ color }) => (
-            <MessageCircle color={color} size={ICON_SIZE} strokeWidth={ICON_STROKE} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="progress"
-        options={{
-          title: t('tabs.progress'),
+          title: t('tabs.today'),
           tabBarAccessibilityLabel:
-            dueReviews > 0 ? t('tabs.progressDue', { count: dueReviews }) : t('tabs.progress'),
+            dueReviews > 0 ? t('tabs.todayDue', { count: dueReviews }) : t('tabs.today'),
           tabBarBadge: dueReviews > 0 ? dueReviews : undefined,
           tabBarBadgeStyle: {
             backgroundColor: colors.coral,
@@ -59,7 +41,26 @@ export default function TabLayout() {
             fontFamily: fonts.bodyHeavy,
           },
           tabBarIcon: ({ color }) => (
-            <Trophy color={color} size={ICON_SIZE} strokeWidth={ICON_STROKE} />
+            <Sun color={color} size={ICON_SIZE} strokeWidth={ICON_STROKE} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="topics"
+        options={{
+          title: t('tabs.topics'),
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <LayoutGrid color={color} size={ICON_SIZE} strokeWidth={ICON_STROKE} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="vocab"
+        options={{
+          title: t('tabs.vocab'),
+          tabBarIcon: ({ color }) => (
+            <Library color={color} size={ICON_SIZE} strokeWidth={ICON_STROKE} />
           ),
         }}
       />
@@ -72,6 +73,8 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen name="dialog" options={{ href: null, title: t('dialog.title') }} />
+      <Tabs.Screen name="progress" options={{ href: null, title: t('progress.title') }} />
     </Tabs>
   );
 }
