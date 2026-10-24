@@ -21,8 +21,10 @@ type DialogChoicesProps = {
   rejectedIds: readonly string[];
   hint: string | null;
   shake: number;
-  /** R9 replaces the chips with «Сказать вслух». The button does not grade yet. */
+  /** `speak` hides the chips and leaves only «Сказать вслух». */
   responseMode: 'choose' | 'speak';
+  listening?: boolean;
+  speakDisabled?: boolean;
   onChoose: (optionId: string) => void;
   onSpeakAloud?: () => void;
 };
@@ -33,6 +35,8 @@ export function DialogChoices({
   hint,
   shake,
   responseMode,
+  listening = false,
+  speakDisabled = false,
   onChoose,
   onSpeakAloud,
 }: DialogChoicesProps) {
@@ -66,6 +70,15 @@ export function DialogChoices({
     transform: [{ translateX: offset.value }],
   }));
 
+  const speakButton = (
+    <Button
+      title={listening ? t('speech.listening') : t('lesson.dialogSpeak')}
+      variant="secondary"
+      disabled={speakDisabled}
+      onPress={() => onSpeakAloud?.()}
+    />
+  );
+
   return (
     <View style={styles.root}>
       {hint ? (
@@ -80,26 +93,25 @@ export function DialogChoices({
       ) : null}
       <Animated.View style={animated}>
         {responseMode === 'speak' ? (
-          <Button
-            title={t('lesson.dialogSpeak')}
-            variant="secondary"
-            onPress={() => onSpeakAloud?.()}
-          />
+          speakButton
         ) : (
-          <View style={styles.options}>
-            {options.map((option) => {
-              const rejected = rejectedIds.includes(option.id);
-              return (
-                <Chip
-                  key={option.id}
-                  label={option.es}
-                  tone={rejected ? 'error' : 'neutral'}
-                  disabled={rejected}
-                  onPress={() => onChoose(option.id)}
-                  style={styles.chip}
-                />
-              );
-            })}
+          <View style={styles.stack}>
+            <View style={styles.options}>
+              {options.map((option) => {
+                const rejected = rejectedIds.includes(option.id);
+                return (
+                  <Chip
+                    key={option.id}
+                    label={option.es}
+                    tone={rejected ? 'error' : 'neutral'}
+                    disabled={rejected}
+                    onPress={() => onChoose(option.id)}
+                    style={styles.chip}
+                  />
+                );
+              })}
+            </View>
+            {speakButton}
           </View>
         )}
       </Animated.View>
@@ -117,6 +129,9 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     paddingHorizontal: space.md,
     paddingVertical: space.sm,
+  },
+  stack: {
+    gap: space.md,
   },
   options: {
     flexDirection: 'row',
