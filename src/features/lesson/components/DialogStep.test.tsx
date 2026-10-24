@@ -1,4 +1,5 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
+import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 import type { ComponentProps } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -216,5 +217,48 @@ describe('DialogStep', () => {
     expect(screen.queryByText('gracias')).toBeNull();
     await fireEvent.press(screen.getByText('Сказать вслух'));
     expect(onSpeakAloud).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows «Сказать вслух» next to the chips and accepts a matching line', async () => {
+    await renderStep();
+    await finishPlayback();
+
+    expect(screen.getByText('Сказать вслух')).toBeTruthy();
+    expect(screen.getByText('gracias')).toBeTruthy();
+
+    await fireEvent.press(screen.getByText('Сказать вслух'));
+    const speech = ExpoSpeechRecognitionModule as unknown as {
+      __emit: (event: string, payload: unknown) => void;
+    };
+    await act(async () => {
+      speech.__emit('result', {
+        isFinal: true,
+        results: [{ transcript: 'buenos días', confidence: 1, segments: [] }],
+      });
+    });
+
+    expect(screen.getByLabelText('Ваша реплика: buenos días')).toBeTruthy();
+  });
+
+  it('keeps the chips when the recognizer misses the line', async () => {
+    await renderStep();
+    await finishPlayback();
+
+    await fireEvent.press(screen.getByText('Сказать вслух'));
+    const speech = ExpoSpeechRecognitionModule as unknown as {
+      __emit: (event: string, payload: unknown) => void;
+    };
+    await act(async () => {
+      speech.__emit('result', {
+        isFinal: true,
+        results: [{ transcript: 'zzzz', confidence: 1, segments: [] }],
+      });
+    });
+
+    expect(
+      screen.getByText('Не расслышали реплику. Скажите ещё раз или выберите её.'),
+    ).toBeTruthy();
+    expect(screen.getByText('gracias')).toBeTruthy();
+    expect(screen.queryByLabelText('Ваша реплика: buenos días')).toBeNull();
   });
 });

@@ -50,6 +50,52 @@ jest.mock('react-native-reanimated', () => {
   };
 });
 
+jest.mock('expo-speech-recognition', () => {
+  const listeners = new Map();
+
+  function addListener(event, listener) {
+    const bucket = listeners.get(event) ?? new Set();
+    bucket.add(listener);
+    listeners.set(event, bucket);
+    return {
+      remove() {
+        bucket.delete(listener);
+      },
+    };
+  }
+
+  function emit(event, payload) {
+    const bucket = listeners.get(event);
+    if (!bucket) return;
+    for (const listener of bucket) listener(payload);
+  }
+
+  const granted = {
+    granted: true,
+    canAskAgain: true,
+    expires: 'never',
+    status: 'granted',
+  };
+
+  return {
+    ExpoSpeechRecognitionModule: {
+      requestPermissionsAsync: jest.fn(async () => granted),
+      getPermissionsAsync: jest.fn(async () => granted),
+      getSupportedLocales: jest.fn(async () => ({
+        locales: ['es-ES'],
+        installedLocales: ['es-ES'],
+      })),
+      start: jest.fn(),
+      stop: jest.fn(),
+      abort: jest.fn(),
+      isRecognitionAvailable: jest.fn(() => true),
+      supportsOnDeviceRecognition: jest.fn(() => true),
+      addListener: jest.fn(addListener),
+      __emit: emit,
+    },
+  };
+});
+
 jest.mock('react-native-svg', () => {
   const React = require('react');
   const { View } = require('react-native');

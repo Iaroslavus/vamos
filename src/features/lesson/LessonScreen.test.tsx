@@ -259,7 +259,11 @@ async function playToSummary(session: LoadedLesson): Promise<void> {
       await playDialog(step, session, state.scriptIndex);
       continue;
     }
-    if (step.type === 'intro' || step.type === 'speak_repeat') {
+    if (step.type === 'speak_repeat') {
+      await press('Пропустить');
+      continue;
+    }
+    if (step.type === 'intro') {
       await press('Дальше');
       continue;
     }
