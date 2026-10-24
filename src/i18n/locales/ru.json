@@ -1,9 +1,9 @@
 {
   "tabs": {
-    "learn": "Учиться",
-    "dialog": "Диалог",
-    "progress": "Прогресс",
-    "progressDue": "Прогресс, повторить сегодня: {{count}}",
+    "today": "Сегодня",
+    "todayDue": "Сегодня, повторить: {{count}}",
+    "topics": "Темы",
+    "vocab": "Словник",
     "profile": "Профиль"
   },
   "learn": {
@@ -39,6 +39,61 @@
   "dialog": {
     "title": "Диалог",
     "stub": "Здесь появится ИИ-собеседник со сценариями и голосовым вводом."
+  },
+  "vocab": {
+    "title": "Словник",
+    "stub": "Здесь будут папки со словами и фразами."
+  },
+  "topics": {
+    "title": "Темы",
+    "searchLabel": "Поиск темы",
+    "searchPlaceholder": "Найти тему",
+    "clearSearch": "Очистить поиск",
+    "levelGroup": "Уровень",
+    "levelLabel": "Уровень {{level}}",
+    "levelSoon": "{{level}}, скоро",
+    "soonShort": "скоро",
+    "soonTitle": "Скоро",
+    "soonBody": "Темы этого уровня ещё готовятся.",
+    "emptySearch": "Ничего не нашли",
+    "emptySearchBody": "Попробуйте другое слово.",
+    "lessonCount_one": "{{count}} урок",
+    "lessonCount_few": "{{count}} урока",
+    "lessonCount_many": "{{count}} уроков",
+    "lessonCount_other": "{{count}} уроков",
+    "phraseCount_one": "{{count}} фраза",
+    "phraseCount_few": "{{count}} фразы",
+    "phraseCount_many": "{{count}} фраз",
+    "phraseCount_other": "{{count}} фраз",
+    "cardMeta": "{{lessons}} · {{phrases}}",
+    "cardLabel": "{{title}}, {{lessons}}, {{phrases}}, пройдено {{done}} из {{total}}",
+    "progressLabel": "Пройдено {{done}} из {{total}}",
+    "canDoTitle": "Смогу…",
+    "canDoDone": "{{goal}}, уже получается",
+    "canDoOpen": "{{goal}}, ещё впереди",
+    "lessonsTitle": "Уроки",
+    "stepLabel": "{{title}}, {{status}}",
+    "sceneCaption": "Сценка",
+    "sceneLockedCaption": "Сценка · закрыта",
+    "sceneLocked": "{{title}}, сценка, закрыта",
+    "sceneReady": "{{title}}, сценка",
+    "missing": "Такой темы нет",
+    "loading": "Загружаем темы",
+    "loadError": "Не удалось загрузить прогресс. Проверьте сеть и повторите.",
+    "categories": {
+      "first_steps": "Первые шаги",
+      "food": "Еда и напитки",
+      "shopping": "Покупки",
+      "city": "Город и транспорт",
+      "travel": "Путешествия",
+      "health": "Спорт и здоровье",
+      "home": "Дом и быт",
+      "social": "Общение",
+      "relocation": "Переезд и документы",
+      "work": "Работа и учёба",
+      "culture": "Культура и медиа",
+      "dele": "Экзамен DELE"
+    }
   },
   "progress": {
     "title": "Прогресс",

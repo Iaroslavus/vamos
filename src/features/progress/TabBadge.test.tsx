@@ -33,8 +33,14 @@ jest.mock('expo-router', () => {
     options,
   }: {
     name: string;
-    options?: { title?: string; tabBarBadge?: number; tabBarAccessibilityLabel?: string };
+    options?: {
+      title?: string;
+      href?: string | null;
+      tabBarBadge?: number;
+      tabBarAccessibilityLabel?: string;
+    };
   }) {
+    if (options?.href === null) return null;
     const badge = options?.tabBarBadge;
     return React.createElement(
       View,
@@ -163,10 +169,15 @@ describe('progress tab badge', () => {
   it('hides the badge when nothing is due', async () => {
     await renderTabs();
 
-    expect(await screen.findByText('Прогресс')).toBeTruthy();
+    expect(await screen.findByText('Сегодня')).toBeTruthy();
+    expect(screen.getByText('Темы')).toBeTruthy();
+    expect(screen.getByText('Словник')).toBeTruthy();
+    expect(screen.getByText('Профиль')).toBeTruthy();
+    expect(screen.queryByText('Диалог')).toBeNull();
+    expect(screen.queryByText('Прогресс')).toBeNull();
     await flush();
     expect(screen.queryByText(/^badge:/)).toBeNull();
-    expect(screen.getByText('a11y:Прогресс')).toBeTruthy();
+    expect(screen.getByText('a11y:Сегодня')).toBeTruthy();
   });
 
   it('shows the due count on the progress tab', async () => {
@@ -181,7 +192,7 @@ describe('progress tab badge', () => {
     await renderTabs();
 
     expect(await screen.findByText('badge:2')).toBeTruthy();
-    expect(screen.getByText('a11y:Прогресс, повторить сегодня: 2')).toBeTruthy();
+    expect(screen.getByText('a11y:Сегодня, повторить: 2')).toBeTruthy();
     await flush();
   });
 
@@ -189,13 +200,13 @@ describe('progress tab badge', () => {
     prepareLesson();
     await renderTabs(true);
 
-    expect(await screen.findByText('a11y:Прогресс')).toBeTruthy();
+    expect(await screen.findByText('a11y:Сегодня')).toBeTruthy();
     expect(screen.queryByText(/^badge:/)).toBeNull();
 
     await fireEvent.press(screen.getByLabelText('finish-lesson'));
 
     expect(await screen.findByText('badge:1')).toBeTruthy();
-    expect(screen.getByText('a11y:Прогресс, повторить сегодня: 1')).toBeTruthy();
+    expect(screen.getByText('a11y:Сегодня, повторить: 1')).toBeTruthy();
     await flush();
   });
 });
