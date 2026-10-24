@@ -13,6 +13,7 @@
     "expo": "~58.0.14",
     "expo-audio": "~58.0.9",
     "expo-constants": "~58.0.12",
+    "expo-dev-client": "~58.0.15",
     "expo-font": "~58.0.8",
     "expo-haptics": "~58.0.7",
     "expo-linking": "~58.0.13",
@@ -53,8 +54,10 @@
   },
   "scripts": {
     "start": "expo start",
+    "start:dev": "npx expo start --dev-client",
     "android": "expo start --android",
     "ios": "expo start --ios",
+    "ios:dev": "npx expo run:ios",
     "web": "expo start --web",
     "generate:typed-routes": "expo customize tsconfig.json",
     "typecheck": "npm run generate:typed-routes && tsc --noEmit",
