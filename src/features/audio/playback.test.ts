@@ -186,4 +186,24 @@ describe('playLessonAudio', () => {
     expect(mockPause).toHaveBeenCalled();
     expect(mockRemove).toHaveBeenCalled();
   });
+
+  it('calls onEnd when speech finishes and skips a replaced playback', async () => {
+    const onEnd = jest.fn();
+    await playLessonAudio({ text: 'Hola', onEnd });
+    const first = (Speech.speak as jest.Mock).mock.calls.at(-1)?.[1] as { onDone: () => void };
+
+    await playLessonAudio({ text: 'Adiós' });
+    first.onDone();
+    expect(onEnd).not.toHaveBeenCalled();
+
+    const second = (Speech.speak as jest.Mock).mock.calls.at(-1)?.[1] as { onDone: () => void };
+    second.onDone();
+    expect(onEnd).not.toHaveBeenCalled();
+
+    const heard = jest.fn();
+    await playLessonAudio({ text: 'Gracias', onEnd: heard });
+    const third = (Speech.speak as jest.Mock).mock.calls.at(-1)?.[1] as { onDone: () => void };
+    third.onDone();
+    expect(heard).toHaveBeenCalledTimes(1);
+  });
 });

@@ -158,7 +158,15 @@
     "introWhyClose": "Понятно",
     "introSave": "+ В словник",
     "introSaved": "В избранном",
-    "introRepeat": "Повторить вслух"
+    "introRepeat": "Повторить вслух",
+    "dialogTitle": "Мини-диалог",
+    "dialogShowTranslation": "Показать перевод: {{line}}",
+    "dialogHideTranslation": "Скрыть перевод: {{line}}",
+    "dialogReplay": "Ещё раз: {{line}}",
+    "dialogHint": "Подсказка: {{hint}}",
+    "dialogSpeak": "Сказать вслух",
+    "dialogRetryPrompt": "Выберите реплику",
+    "dialogYou": "Ваша реплика: {{line}}"
   },
   "review": {
     "title": "Повторение",
@@ -213,6 +221,7 @@
   "common": {
     "devComponents": "Компоненты (dev)",
     "devIntro": "Знакомство с фразой",
+    "devDialog": "Мини-диалог",
     "openLesson": "Открыть урок",
     "openOnboarding": "Открыть онбординг",
     "close": "Закрыть",

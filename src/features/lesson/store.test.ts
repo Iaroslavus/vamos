@@ -409,4 +409,124 @@ describe('lesson store', () => {
     expect(useLessonStore.getState().claimCompletionSave()).toBe(true);
     expect(useLessonStore.getState().claimCompletionSave()).toBe(false);
   });
+
+  it('awards XP for a dialog line chosen on the first try', () => {
+    startWithClock();
+    const result = useLessonStore.getState().recordDialogLine({
+      stepId: 's9',
+      lineIndex: 1,
+      itemId: 'hola.buenos_dias',
+      answer: 'buenos días',
+      options: ['buenos días', 'gracias'],
+      prompt: 'доброе утро',
+      promptRu: 'Выберите реплику',
+      missed: false,
+    });
+
+    expect(result).toEqual({ applied: true, failed: false, hearts: DEFAULT_MAX_HEARTS });
+    const state = useLessonStore.getState();
+    expect(state.correctCount).toBe(1);
+    expect(state.xpEarned).toBe(XP_CORRECT);
+    expect(state.wrongCount).toBe(0);
+    expect(state.queue).toEqual(['e1', 'e2', 'e3']);
+  });
+
+  it('queues a missed dialog line into the mistakes round', () => {
+    startWithClock();
+    const missed = useLessonStore.getState().recordDialogLine({
+      stepId: 's9',
+      lineIndex: 1,
+      itemId: 'hola.buenos_dias',
+      answer: 'buenos días',
+      options: ['buenos días', 'gracias'],
+      prompt: 'доброе утро',
+      promptRu: 'Выберите реплику',
+      missed: true,
+    });
+
+    expect(missed.applied).toBe(true);
+    expect(missed.hearts).toBe(DEFAULT_MAX_HEARTS - 1);
+    expect(
+      useLessonStore.getState().recordDialogLine({
+        stepId: 's9',
+        lineIndex: 1,
+        itemId: 'hola.buenos_dias',
+        answer: 'buenos días',
+        options: ['buenos días', 'gracias'],
+        prompt: 'доброе утро',
+        promptRu: 'Выберите реплику',
+        missed: true,
+      }).applied,
+    ).toBe(false);
+
+    const retryId = 'dialog-retry:s9:1';
+    expect(useLessonStore.getState().queue).toEqual(['e1', 'e2', 'e3', retryId]);
+    expect(useLessonStore.getState().exerciseById[retryId]).toMatchObject({
+      type: 'select_translation',
+      prompt: 'доброе утро',
+      answer: 'buenos días',
+    });
+
+    useLessonStore.getState().setAnswer('hola');
+    useLessonStore.getState().checkAnswer();
+    useLessonStore.getState().continueAfterFeedback();
+    useLessonStore.getState().setAnswer('gracias');
+    useLessonStore.getState().checkAnswer();
+    useLessonStore.getState().continueAfterFeedback();
+    useLessonStore.getState().setAnswer('café');
+    useLessonStore.getState().checkAnswer();
+    useLessonStore.getState().continueAfterFeedback();
+
+    expect(useLessonStore.getState().status).toBe('mistakes_intro');
+    expect(useLessonStore.getState().queue).toEqual([retryId]);
+    useLessonStore.getState().continueMistakesIntro();
+    expect(useLessonStore.getState().getCurrentExercise()).toMatchObject({
+      id: retryId,
+      answer: 'buenos días',
+    });
+  });
+
+  it('fails the lesson when a dialog miss spends the last heart', () => {
+    useLessonStore.getState().startLesson({
+      lessonId: 'hard',
+      exercises: [EXERCISES[0]!],
+      hearts: 1,
+      maxHearts: 1,
+      now: () => 5_000,
+    });
+
+    const result = useLessonStore.getState().recordDialogLine({
+      stepId: 's9',
+      lineIndex: 0,
+      itemId: 'hola.gracias',
+      answer: 'gracias',
+      options: ['gracias', 'hola'],
+      prompt: 'спасибо',
+      promptRu: 'Выберите реплику',
+      missed: true,
+    });
+
+    expect(result.failed).toBe(true);
+    const state = useLessonStore.getState();
+    expect(state.status).toBe('failed');
+    expect(state.hearts).toBe(0);
+    expect(state.finishedAt).toBe(5_000);
+    expect(state.queue).toEqual(['e1', 'dialog-retry:s9:0']);
+  });
+
+  it('ignores a dialog report when the lesson is not active', () => {
+    const result = useLessonStore.getState().recordDialogLine({
+      stepId: 's9',
+      lineIndex: 0,
+      itemId: 'hola.gracias',
+      answer: 'gracias',
+      options: ['gracias'],
+      prompt: 'спасибо',
+      promptRu: 'Выберите реплику',
+      missed: true,
+    });
+
+    expect(result).toEqual({ applied: false, failed: false, hearts: DEFAULT_MAX_HEARTS });
+    expect(useLessonStore.getState().queue).toEqual([]);
+  });
 });
