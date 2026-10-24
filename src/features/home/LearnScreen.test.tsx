@@ -6,6 +6,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import LessonScreen from '../../../app/(lesson)/lesson/[id]';
 import LearnScreen from '../../../app/(tabs)/index';
+import { LearnerProvider } from '@/features/learner/context';
+import type { LearnerProfile } from '@/features/learner/profile';
+import type { LearnerRepository } from '@/features/learner/repository';
 import { useLessonStore } from '@/features/lesson/store';
 import { ProgressProvider } from '@/features/progress/ProgressProvider';
 import { createProgressRepository } from '@/features/progress/repository';
@@ -117,6 +120,20 @@ function offlineRepository() {
   });
 }
 
+const LEARNER: LearnerProfile = {
+  name: 'Анна',
+  goal: 'travel',
+  dailyMinutes: 10,
+  preferencesAsked: true,
+};
+
+function learnerRepository(profile: LearnerProfile = LEARNER): LearnerRepository {
+  return {
+    read: async () => profile,
+    save: async () => profile,
+  };
+}
+
 function renderScreen(repo: ProgressRepository) {
   const client = new QueryClient({
     defaultOptions: { queries: { retry: false, gcTime: Infinity } },
@@ -125,7 +142,9 @@ function renderScreen(repo: ProgressRepository) {
     <QueryClientProvider client={client}>
       <I18nextProvider i18n={i18n}>
         <ProgressProvider repository={repo}>
-          <LearnScreen />
+          <LearnerProvider repository={learnerRepository()}>
+            <LearnScreen />
+          </LearnerProvider>
         </ProgressProvider>
       </I18nextProvider>
     </QueryClientProvider>,
@@ -165,7 +184,7 @@ async function seedDue(ids: readonly string[]): Promise<void> {
   );
 }
 
-describe('LearnScreen', () => {
+describe('Today screen', () => {
   beforeEach(async () => {
     await AsyncStorage.clear();
     mockPush.mockClear();
@@ -188,7 +207,7 @@ describe('LearnScreen', () => {
       }),
     );
 
-    expect(screen.getByLabelText('Загружаем путь')).toBeOnTheScreen();
+    expect(screen.getByLabelText('Загружаем сегодня')).toBeOnTheScreen();
     await act(async () => {
       release({ lessons: [], totalXp: 0, pending: 0 });
     });
@@ -208,7 +227,7 @@ describe('LearnScreen', () => {
     );
 
     expect(
-      await screen.findByText('Не удалось загрузить путь. Проверьте сеть и повторите.'),
+      await screen.findByText('Не удалось загрузить сегодня. Проверьте сеть и повторите.'),
     ).toBeTruthy();
     fail = false;
     await fireEvent.press(screen.getByText('Повторить'));
@@ -217,54 +236,56 @@ describe('LearnScreen', () => {
     await flush();
   });
 
-  it('shows the path, streak, XP, and daily goal from the repository', async () => {
+  it('shows the greeting, streak, XP, and day 1 of the starter course', async () => {
     await renderScreen(repository());
 
-    expect(await screen.findByLabelText('Серия 0')).toBeTruthy();
+    expect(await screen.findByText(/Анна/)).toBeTruthy();
+    expect(screen.getByLabelText('Серия 0')).toBeTruthy();
     expect(screen.getByLabelText('Опыт 0')).toBeTruthy();
-    expect(screen.getByLabelText('Цель дня: 0 из 10 минут')).toBeTruthy();
-    expect(screen.getByText('0/10')).toBeTruthy();
-    expect(screen.getByText('A1 · Блок 1')).toBeTruthy();
-    expect(screen.getByLabelText('Приветствия, текущий')).toBeTruthy();
-    expect(screen.getByLabelText('Знакомство, закрыт')).toBeDisabled();
-    expect(screen.queryByText(/повторения/)).toBeNull();
+    expect(screen.getByText('Заговори за 7 дней')).toBeTruthy();
+    expect(screen.getByText('День 1 из 7')).toBeTruthy();
+    expect(screen.getByText('Продолжить')).toBeTruthy();
+    expect(screen.getByText('Повторить 0 фраз')).toBeTruthy();
+    expect(screen.getByText('Сказать вслух')).toBeTruthy();
+    expect(screen.queryByText('Мои темы')).toBeNull();
     await flush();
   });
 
-  it('shows words waiting for review above the path and opens the session', async () => {
+  it('opens review from the phrase card, including when nothing is due', async () => {
     await seedDue(['hola']);
     await renderScreen(repository());
 
-    expect(await screen.findByText('1 слово ждёт повторения')).toBeTruthy();
-    expect(screen.getByText('A1 · Блок 1')).toBeTruthy();
-
+    expect(await screen.findByText('Повторить 1 фразу')).toBeTruthy();
     mockPush.mockClear();
-    await fireEvent.press(screen.getByText('Повторить'));
+    await fireEvent.press(screen.getByText('Повторить 1 фразу'));
     expect(mockPush).toHaveBeenCalledWith('/review');
-    expect(i18n.t('learn.reviewDue', { count: 2 })).toBe('2 слова ждут повторения');
-    expect(i18n.t('learn.reviewDue', { count: 5 })).toBe('5 слов ждут повторения');
-    expect(i18n.t('learn.reviewDue', { count: 21 })).toBe('21 слово ждёт повторения');
+    expect(i18n.t('today.review', { count: 2 })).toBe('Повторить 2 фразы');
+    expect(i18n.t('today.review', { count: 5 })).toBe('Повторить 5 фраз');
+    expect(i18n.t('today.review', { count: 21 })).toBe('Повторить 21 фразу');
     await flush();
   });
 
-  it('opens the current lesson and ignores a locked node', async () => {
+  it('continues day 1 and opens the say-aloud list for that lesson', async () => {
     await renderScreen(repository());
 
-    await fireEvent.press(await screen.findByLabelText('Приветствия, текущий'));
+    await fireEvent.press(await screen.findByText('Продолжить'));
     expect(mockPush).toHaveBeenCalledWith({
       pathname: '/lesson/[id]',
       params: { id: 'a1.hola.l1' },
     });
 
-    await fireEvent.press(screen.getByLabelText('Знакомство, закрыт'));
-    expect(mockPush).toHaveBeenCalledTimes(1);
+    await fireEvent.press(screen.getByText('Сказать вслух'));
+    expect(mockPush).toHaveBeenCalledWith({
+      pathname: '/speak',
+      params: { lessonId: 'a1.hola.l1' },
+    });
     await flush();
   });
 
-  it('opens a1.hola.l1 on the first exercise when the first path node is pressed', async () => {
+  it('opens a1.hola.l1 on the first exercise when continue is pressed', async () => {
     const home = await renderScreen(repository());
 
-    await fireEvent.press(await screen.findByLabelText('Приветствия, текущий'));
+    await fireEvent.press(await screen.findByText('Продолжить'));
 
     expect(mockPush).toHaveBeenCalledWith({
       pathname: '/lesson/[id]',
@@ -301,12 +322,12 @@ describe('LearnScreen', () => {
     await flush();
   });
 
-  it('updates the path, streak, XP, and ring after a lesson is saved', async () => {
+  it('keeps day 1 open and shows the started topic after its first lesson', async () => {
     const repo = offlineRepository();
     await renderScreen(repo);
 
     expect(await screen.findByLabelText('Опыт 0')).toBeTruthy();
-    expect(screen.getByLabelText('Приветствия, текущий')).toBeTruthy();
+    expect(screen.queryByText('Мои темы')).toBeNull();
 
     await act(async () => {
       await repo.recordCompletion('user-1', {
@@ -319,9 +340,9 @@ describe('LearnScreen', () => {
 
     expect(await screen.findByLabelText('Опыт 20')).toBeTruthy();
     expect(screen.getByLabelText('Серия 1')).toBeTruthy();
-    expect(screen.getByText('10/10')).toBeTruthy();
-    expect(screen.getByLabelText('Приветствия, пройден')).toBeTruthy();
-    expect(screen.getByLabelText('Знакомство, текущий')).toBeTruthy();
+    expect(screen.getByText('День 1 из 7')).toBeTruthy();
+    expect(screen.getByText('Мои темы')).toBeTruthy();
+    expect(screen.getByText('¡Hola! Знакомство')).toBeTruthy();
     await flush();
   });
 });
