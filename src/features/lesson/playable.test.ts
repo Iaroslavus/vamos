@@ -1,4 +1,4 @@
-import { loadLesson } from './loader';
+import { loadLesson } from './adapter';
 import { serializePairs } from './pairs';
 import { FIRST_A1_LESSON_ID, isTypingExercise, toPlayableExercises } from './playable';
 
@@ -20,5 +20,10 @@ describe('toPlayableExercises', () => {
 
     const typing = playable.filter(isTypingExercise);
     expect(typing.length).toBeGreaterThan(0);
+  });
+
+  it('maps a legacy lesson id onto the v2 lesson', () => {
+    expect(loadLesson('a1-u01-l01').id).toBe(FIRST_A1_LESSON_ID);
+    expect(loadLesson(FIRST_A1_LESSON_ID).title_ru).toBe('Приветствия');
   });
 });

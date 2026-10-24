@@ -1,0 +1,249 @@
+[
+  {
+    "id": "hola.hola",
+    "type": "word",
+    "es": "hola",
+    "ru": "привет",
+    "say_ru": "Ола",
+    "note_ru": "Подходит в любое время суток.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/hola.mp3", "latam": null },
+    "tags": ["greeting"],
+    "draft": true
+  },
+  {
+    "id": "hola.buenos_dias",
+    "type": "phrase",
+    "es": "buenos días",
+    "ru": "доброе утро",
+    "parts": [
+      { "es": "buenos", "ru": "добрые" },
+      { "es": "días", "ru": "утро" }
+    ],
+    "say_ru": "буЭнос дИас",
+    "note_ru": "Так говорят утром, примерно до обеда.",
+    "why_ru": "Día мужского рода, поэтому buenos, а не buenas.",
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/buenos-dias.mp3", "latam": null },
+    "tags": ["greeting"],
+    "draft": true
+  },
+  {
+    "id": "hola.buenas_tardes",
+    "type": "phrase",
+    "es": "buenas tardes",
+    "ru": "добрый день",
+    "parts": [
+      { "es": "buenas", "ru": "добрые" },
+      { "es": "tardes", "ru": "день" }
+    ],
+    "say_ru": "буЭнас тАрдес",
+    "note_ru": "После обеда и до вечера.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/buenas-tardes.mp3", "latam": null },
+    "tags": ["greeting"],
+    "draft": true
+  },
+  {
+    "id": "hola.buenas_noches",
+    "type": "phrase",
+    "es": "buenas noches",
+    "ru": "спокойной ночи",
+    "parts": [
+      { "es": "buenas", "ru": "добрые" },
+      { "es": "noches", "ru": "вечер" }
+    ],
+    "say_ru": "буЭнас нОчес",
+    "note_ru": "Вечером и когда прощаетесь на ночь.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/buenas-noches.mp3", "latam": null },
+    "tags": ["greeting"],
+    "draft": true
+  },
+  {
+    "id": "hola.adios",
+    "type": "word",
+    "es": "adiós",
+    "ru": "до свидания",
+    "say_ru": "адйОс",
+    "note_ru": "Прощание, когда не ждёте скорой встречи.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/adios.mp3", "latam": null },
+    "tags": ["greeting"],
+    "draft": true
+  },
+  {
+    "id": "hola.hasta_luego",
+    "type": "phrase",
+    "es": "hasta luego",
+    "ru": "до скорого",
+    "parts": [
+      { "es": "hasta", "ru": "до" },
+      { "es": "luego", "ru": "скоро" }
+    ],
+    "say_ru": "Аста луЭго",
+    "note_ru": "Мягкое «пока», если ещё увидитесь.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/hasta-luego.mp3", "latam": null },
+    "tags": ["greeting"],
+    "draft": true
+  },
+  {
+    "id": "hola.por_favor",
+    "type": "phrase",
+    "es": "por favor",
+    "ru": "пожалуйста",
+    "parts": [
+      { "es": "por", "ru": "из" },
+      { "es": "favor", "ru": "любезности" }
+    ],
+    "say_ru": "пор фавОр",
+    "note_ru": "Ставится и в начале просьбы, и в конце.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/por-favor.mp3", "latam": null },
+    "tags": ["polite"],
+    "draft": true
+  },
+  {
+    "id": "hola.gracias",
+    "type": "word",
+    "es": "gracias",
+    "ru": "спасибо",
+    "say_ru": "грАсиас",
+    "note_ru": "На «gracias» часто отвечают «de nada».",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/gracias.mp3", "latam": null },
+    "tags": ["polite"],
+    "draft": true
+  },
+  {
+    "id": "hola.me_llamo",
+    "type": "phrase",
+    "es": "me llamo",
+    "ru": "меня зовут",
+    "parts": [
+      { "es": "me", "ru": "меня" },
+      { "es": "llamo", "ru": "зовут" }
+    ],
+    "say_ru": "ме йАмо",
+    "note_ru": "Дальше сразу имя: me llamo Ana.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/me-llamo.mp3", "latam": null },
+    "tags": ["intro"],
+    "draft": true
+  },
+  {
+    "id": "hola.como_te_llamas",
+    "type": "phrase",
+    "es": "¿cómo te llamas?",
+    "ru": "как тебя зовут?",
+    "parts": [
+      { "es": "cómo", "ru": "как" },
+      { "es": "te", "ru": "тебя" },
+      { "es": "llamas", "ru": "зовут" }
+    ],
+    "say_ru": "кОмо те йАмас",
+    "note_ru": "Вопрос к человеку на «ты».",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/como-te-llamas.mp3", "latam": null },
+    "tags": ["intro"],
+    "draft": true
+  },
+  {
+    "id": "hola.mucho_gusto",
+    "type": "phrase",
+    "es": "mucho gusto",
+    "ru": "очень приятно",
+    "parts": [
+      { "es": "mucho", "ru": "очень" },
+      { "es": "gusto", "ru": "приятно" }
+    ],
+    "say_ru": "мУчо гУсто",
+    "note_ru": "Говорят сразу после того, как назвали имена.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/mucho-gusto.mp3", "latam": null },
+    "tags": ["intro"],
+    "draft": true
+  },
+  {
+    "id": "hola.soy",
+    "type": "word",
+    "es": "soy",
+    "ru": "я есть",
+    "say_ru": "сой",
+    "note_ru": "Имя и откуда вы: soy Ana, soy de Rusia.",
+    "why_ru": "Форма глагола ser для «я»: yo soy.",
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/soy.mp3", "latam": null },
+    "tags": ["intro"],
+    "draft": true
+  },
+  {
+    "id": "hola.de",
+    "type": "word",
+    "es": "de",
+    "ru": "из",
+    "say_ru": "де",
+    "note_ru": "Происхождение: soy de Rusia.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["intro"],
+    "draft": true
+  },
+  {
+    "id": "hola.encantado",
+    "type": "phrase",
+    "es": "encantado / encantada",
+    "ru": "рад(а) познакомиться",
+    "parts": [
+      { "es": "encantado", "ru": "рад" },
+      { "es": "encantada", "ru": "рада" }
+    ],
+    "say_ru": "энкантАдо / энкантАда",
+    "note_ru": "Окончание зависит от того, кто говорит.",
+    "why_ru": "Говорящий мужчина — encantado, женщина — encantada.",
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/encantado.mp3", "latam": null },
+    "tags": ["intro"],
+    "draft": true
+  },
+  {
+    "id": "hola.usted",
+    "type": "word",
+    "es": "usted",
+    "ru": "вы",
+    "say_ru": "устЭд",
+    "note_ru": "Вежливое «вы» с незнакомым человеком.",
+    "why_ru": "С usted вопрос звучит ¿cómo se llama?",
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/usted.mp3", "latam": null },
+    "tags": ["intro", "polite"],
+    "draft": true
+  }
+]

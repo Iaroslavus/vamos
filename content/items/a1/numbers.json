@@ -1,0 +1,119 @@
+[
+  {
+    "id": "numbers.uno",
+    "type": "word",
+    "es": "uno",
+    "ru": "один",
+    "say_ru": "Уно",
+    "note_ru": "Перед существительным мужского рода часто становится un: un café.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/uno.mp3", "latam": null },
+    "tags": ["number"],
+    "draft": true
+  },
+  {
+    "id": "numbers.dos",
+    "type": "word",
+    "es": "dos",
+    "ru": "два",
+    "say_ru": "дос",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/dos.mp3", "latam": null },
+    "tags": ["number"],
+    "draft": true
+  },
+  {
+    "id": "numbers.tres",
+    "type": "word",
+    "es": "tres",
+    "ru": "три",
+    "say_ru": "трес",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/tres.mp3", "latam": null },
+    "tags": ["number"],
+    "draft": true
+  },
+  {
+    "id": "numbers.cuatro_y_cinco",
+    "type": "phrase",
+    "es": "cuatro y cinco",
+    "ru": "четыре и пять",
+    "parts": [
+      { "es": "cuatro", "ru": "четыре" },
+      { "es": "y", "ru": "и" },
+      { "es": "cinco", "ru": "пять" }
+    ],
+    "say_ru": "куАтро и сИнко",
+    "note_ru": "y между числами читается как «и».",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["number"],
+    "draft": true
+  },
+  {
+    "id": "numbers.seis_y_siete",
+    "type": "phrase",
+    "es": "seis y siete",
+    "ru": "шесть и семь",
+    "parts": [
+      { "es": "seis", "ru": "шесть" },
+      { "es": "y", "ru": "и" },
+      { "es": "siete", "ru": "семь" }
+    ],
+    "say_ru": "сейс и сьЕте",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["number"],
+    "draft": true
+  },
+  {
+    "id": "numbers.ocho_y_nueve",
+    "type": "phrase",
+    "es": "ocho y nueve",
+    "ru": "восемь и девять",
+    "parts": [
+      { "es": "ocho", "ru": "восемь" },
+      { "es": "y", "ru": "и" },
+      { "es": "nueve", "ru": "девять" }
+    ],
+    "say_ru": "Очо и нуЭве",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["number"],
+    "draft": true
+  },
+  {
+    "id": "numbers.numero_diez",
+    "type": "phrase",
+    "es": "número diez",
+    "ru": "число десять",
+    "parts": [
+      { "es": "número", "ru": "число" },
+      { "es": "diez", "ru": "десять" }
+    ],
+    "say_ru": "нУмеро дьЕс",
+    "note_ru": "Diez — десять, не путать с dos.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": "a1/diez.mp3", "latam": null },
+    "tags": ["number"],
+    "draft": true
+  }
+]

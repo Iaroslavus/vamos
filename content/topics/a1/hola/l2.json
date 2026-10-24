@@ -1,0 +1,33 @@
+{
+  "id": "a1.hola.l2",
+  "topic": "a1.hola",
+  "title_ru": "Знакомство",
+  "items": [
+    "hola.me_llamo",
+    "hola.como_te_llamas",
+    "hola.mucho_gusto",
+    "hola.soy",
+    "hola.de",
+    "hola.encantado",
+    "hola.usted"
+  ],
+  "speak": ["hola.me_llamo", "hola.mucho_gusto"],
+  "dialog": {
+    "lines": [
+      { "who": "npc", "es": "¡Hola! ¿Cómo te llamas?", "ru": "Привет! Как тебя зовут?" },
+      {
+        "who": "user",
+        "target": "hola.me_llamo",
+        "options": ["hola.me_llamo", "hola.como_te_llamas", "hola.soy"]
+      },
+      { "who": "npc", "es": "Soy Ana. Mucho gusto.", "ru": "Я Ана. Очень приятно." },
+      {
+        "who": "user",
+        "target": "hola.mucho_gusto",
+        "options": ["hola.mucho_gusto", "hola.encantado", "hola.usted"]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

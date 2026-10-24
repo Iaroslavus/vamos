@@ -10,9 +10,9 @@ import {
 describe('curriculum path', () => {
   it('lists A1 unit 1 in lesson order', () => {
     expect(getCurriculumLessons().map((lesson) => lesson.id)).toEqual([
-      'a1-u01-l01',
-      'a1-u01-l02',
-      'a1-u01-l03',
+      'a1.hola.l1',
+      'a1.hola.l2',
+      'a1.numbers.l1',
     ]);
   });
 
@@ -21,15 +21,15 @@ describe('curriculum path', () => {
 
     expect(nodes.map((node) => node.status)).toEqual(['current', 'locked', 'locked']);
     expect(nodes.map((node) => node.side)).toEqual(['left', 'right', 'left']);
-    expect(pathUnit(getCurriculumLessons(), [])?.id).toBe('a1-u01-l01');
+    expect(pathUnit(getCurriculumLessons(), [])?.id).toBe('a1.hola.l1');
   });
 
   it('advances the current node after a lesson is completed', () => {
     const lessons = getCurriculumLessons();
-    const nodes = buildPathNodes(lessons, ['a1-u01-l01']);
+    const nodes = buildPathNodes(lessons, ['a1.hola.l1']);
 
     expect(nodes.map((node) => node.status)).toEqual(['completed', 'current', 'locked']);
-    expect(pathUnit(lessons, ['a1-u01-l01'])?.id).toBe('a1-u01-l02');
+    expect(pathUnit(lessons, ['a1.hola.l1'])?.id).toBe('a1.hola.l2');
   });
 
   it('keeps the last unit when every lesson is completed', () => {
@@ -37,7 +37,7 @@ describe('curriculum path', () => {
     const done = lessons.map((lesson) => lesson.id);
 
     expect(buildPathNodes(lessons, done).every((node) => node.status === 'completed')).toBe(true);
-    expect(pathUnit(lessons, done)?.id).toBe('a1-u01-l03');
+    expect(pathUnit(lessons, done)?.id).toBe('a1.numbers.l1');
   });
 
   it('returns no unit for an empty path', () => {

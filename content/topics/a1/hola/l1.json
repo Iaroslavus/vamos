@@ -1,0 +1,40 @@
+{
+  "id": "a1.hola.l1",
+  "topic": "a1.hola",
+  "title_ru": "Приветствия",
+  "items": [
+    "hola.hola",
+    "hola.buenos_dias",
+    "hola.buenas_tardes",
+    "hola.buenas_noches",
+    "hola.adios",
+    "hola.hasta_luego",
+    "hola.por_favor",
+    "hola.gracias"
+  ],
+  "speak": ["hola.buenos_dias", "hola.gracias"],
+  "dialog": {
+    "lines": [
+      { "who": "npc", "es": "¡Hola! Buenos días.", "ru": "Привет! Доброе утро." },
+      {
+        "who": "user",
+        "target": "hola.buenos_dias",
+        "options": ["hola.buenos_dias", "hola.buenas_noches", "hola.gracias"]
+      },
+      { "who": "npc", "es": "¿Un café?", "ru": "Кофе?" },
+      {
+        "who": "user",
+        "target": "hola.por_favor",
+        "options": ["hola.por_favor", "hola.adios", "hola.hasta_luego"]
+      },
+      { "who": "npc", "es": "Aquí tiene.", "ru": "Вот, пожалуйста." },
+      {
+        "who": "user",
+        "target": "hola.gracias",
+        "options": ["hola.gracias", "hola.hola", "hola.adios"]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

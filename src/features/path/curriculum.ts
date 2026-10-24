@@ -25,9 +25,9 @@ export type LevelProgress = {
 };
 
 const CURRICULUM: readonly CurriculumLesson[] = [
-  { id: 'a1-u01-l01', level: 'A1', unit: 1, titleKey: 'learn.lessons.a1-u01-l01' },
-  { id: 'a1-u01-l02', level: 'A1', unit: 1, titleKey: 'learn.lessons.a1-u01-l02' },
-  { id: 'a1-u01-l03', level: 'A1', unit: 1, titleKey: 'learn.lessons.a1-u01-l03' },
+  { id: 'a1.hola.l1', level: 'A1', unit: 1, titleKey: 'learn.lessons.a1-u01-l01' },
+  { id: 'a1.hola.l2', level: 'A1', unit: 1, titleKey: 'learn.lessons.a1-u01-l02' },
+  { id: 'a1.numbers.l1', level: 'A1', unit: 1, titleKey: 'learn.lessons.a1-u01-l03' },
 ];
 
 export function getCurriculumLessons(): CurriculumLesson[] {

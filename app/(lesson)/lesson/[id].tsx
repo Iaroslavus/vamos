@@ -31,7 +31,7 @@ import { SelectTranslationExercise } from '@/features/lesson/components/SelectTr
 import { TypeTranslationExercise } from '@/features/lesson/components/TypeTranslationExercise';
 import { useFinishLesson } from '@/features/lesson/hooks/useFinishLesson';
 import { useRecordLessonMistake } from '@/features/lesson/hooks/useRecordLessonMistake';
-import { loadLesson } from '@/features/lesson/loader';
+import { loadLesson } from '@/features/lesson/adapter';
 import { countSerializedPairs } from '@/features/lesson/pairs';
 import { isTypingExercise, toPlayableExercises } from '@/features/lesson/playable';
 import type { VocabularyItem } from '@/features/lesson/schema';
@@ -53,7 +53,7 @@ function loadPlayableLesson(lessonId: string | undefined): LoadResult {
     const lesson = loadLesson(lessonId);
     const exercises = toPlayableExercises(lesson);
     if (exercises.length === 0) return { ok: false, reason: 'empty' };
-    return { ok: true, lessonId, exercises, newItems: lesson.new_items };
+    return { ok: true, lessonId: lesson.id, exercises, newItems: lesson.new_items };
   } catch {
     return { ok: false, reason: 'not_found' };
   }
