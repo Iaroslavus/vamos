@@ -31,6 +31,11 @@ export default function DevComponentsScreen() {
           variant="secondary"
           onPress={() => router.push('/dev/intro')}
         />
+        <Button
+          title={t('common.devDialog')}
+          variant="secondary"
+          onPress={() => router.push('/dev/dialog')}
+        />
         <Section title="Text">
           <Text variant="h1">Heading 1</Text>
           <Text variant="h2">Heading 2</Text>

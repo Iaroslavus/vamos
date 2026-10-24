@@ -79,6 +79,32 @@ export type LessonProgress = {
   ratio: number;
 };
 
+export type DialogLineRecord = {
+  stepId: string;
+  lineIndex: number;
+  itemId: string;
+  /** Spanish the learner should have sent. */
+  answer: string;
+  /** Spanish option labels, including the answer. */
+  options: readonly string[];
+  /** Russian meaning, shown as the retry prompt. */
+  prompt: string;
+  /** Caption above the retry exercise. */
+  promptRu: string;
+  /** True when the first tap was wrong. */
+  missed: boolean;
+};
+
+export type DialogLineRecordResult = {
+  applied: boolean;
+  failed: boolean;
+  hearts: number;
+};
+
+export function dialogRetryExerciseId(stepId: string, lineIndex: number): string {
+  return `dialog-retry:${stepId}:${lineIndex}`;
+}
+
 type StartLessonInput = {
   lessonId: string;
   exercises: readonly LessonExerciseItem[];
@@ -135,6 +161,8 @@ type LessonStoreState = {
   summary: LessonSummary | null;
   /** True after the first completion write has been claimed for this session. */
   completionSaved: boolean;
+  /** `${stepId}:${lineIndex}` already written by `recordDialogLine`. */
+  dialogLineKeys: string[];
   getNow: () => number;
 };
 
@@ -162,6 +190,12 @@ type LessonStoreActions = {
    * Returns false when the summary is missing or the write was already claimed.
    */
   claimCompletionSave: () => boolean;
+  /**
+   * Record one dialog user-line.
+   * A first-try hit awards XP. A miss (wrong, even if the second chance lands)
+   * spends a heart and appends a select-translation retry for the mistakes round.
+   */
+  recordDialogLine: (record: DialogLineRecord) => DialogLineRecordResult;
   getCurrentExercise: () => LessonExerciseItem | null;
   getProgress: () => LessonProgress;
   getElapsedMs: () => number;
@@ -191,6 +225,7 @@ const idleState = (): LessonStoreState => ({
   finishedAt: null,
   summary: null,
   completionSaved: false,
+  dialogLineKeys: [],
   getNow: Date.now,
 });
 
@@ -403,6 +438,55 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
       userAnswer: '',
       lastGrade: null,
     });
+  },
+
+  recordDialogLine: (record) => {
+    const state = get();
+    if (state.status !== 'active') {
+      return { applied: false, failed: state.status === 'failed', hearts: state.hearts };
+    }
+
+    const key = `${record.stepId}:${record.lineIndex}`;
+    if (state.dialogLineKeys.includes(key)) {
+      return { applied: false, failed: false, hearts: state.hearts };
+    }
+
+    const dialogLineKeys = [...state.dialogLineKeys, key];
+    if (!record.missed) {
+      set({
+        dialogLineKeys,
+        correctCount: state.correctCount + 1,
+        xpEarned: state.xpEarned + XP_CORRECT,
+      });
+      return { applied: true, failed: false, hearts: state.hearts };
+    }
+
+    const id = dialogRetryExerciseId(record.stepId, record.lineIndex);
+    if (state.exerciseById[id]) {
+      throw new Error(`Duplicate exercise id: ${id}`);
+    }
+
+    const exercise: SelectTranslationItem = {
+      id,
+      type: 'select_translation',
+      prompt_ru: record.promptRu,
+      prompt: record.prompt,
+      options: [...record.options],
+      answer: record.answer,
+    };
+    const hearts = Math.max(0, state.hearts - 1);
+    const failed = hearts === 0;
+
+    set({
+      dialogLineKeys,
+      exerciseById: { ...state.exerciseById, [id]: exercise },
+      queue: [...state.queue, id],
+      wrongCount: state.wrongCount + 1,
+      hearts,
+      status: failed ? 'failed' : state.status,
+      finishedAt: failed ? state.getNow() : state.finishedAt,
+    });
+    return { applied: true, failed, hearts };
   },
 
   reset: () => set(idleState()),

@@ -24,6 +24,11 @@ export type PlayLessonAudioInput = {
   /** Spanish text for TTS fallback (and always used when no file). */
   text: string;
   rate?: number;
+  /**
+   * Fires when this playback finishes.
+   * A newer `playLessonAudio` / `stopLessonAudio` cancels it.
+   */
+  onEnd?: () => void;
 };
 
 let activePlayer: AudioPlayer | null = null;
@@ -91,9 +96,11 @@ export async function playLessonAudio({
   audio,
   text,
   rate = NORMAL_RATE,
+  onEnd,
 }: PlayLessonAudioInput): Promise<PlaybackSource> {
   const trimmed = text.trim();
   if (!trimmed && !audio) {
+    onEnd?.();
     return 'speech';
   }
 
@@ -128,16 +135,19 @@ export async function playLessonAudio({
       });
       player.play();
       applyPlayerRate(player, rate);
-      if (__DEV__ && typeof player.addListener === 'function') {
+      if (typeof player.addListener === 'function') {
         const subscription = player.addListener('playbackStatusUpdate', (status) => {
           if (!status.didJustFinish || generation !== playGeneration) return;
           subscription.remove();
-          logPlayback('done', {
-            source: 'file',
-            playbackRate: rate,
-            durationMs: Date.now() - startedAt,
-            text: JSON.stringify(trimmed),
-          });
+          if (__DEV__) {
+            logPlayback('done', {
+              source: 'file',
+              playbackRate: rate,
+              durationMs: Date.now() - startedAt,
+              text: JSON.stringify(trimmed),
+            });
+          }
+          onEnd?.();
         });
       }
       return 'file';
@@ -171,18 +181,23 @@ export async function playLessonAudio({
         timing.startedAt = Date.now();
       },
       onDone: () => {
-        if (timing.startedAt === 0 || generation !== playGeneration) return;
-        logPlayback('done', {
-          source: 'speech',
-          playbackRate: rate,
-          speechRate: Number(engineRate.toFixed(3)),
-          nativeUtteranceRate,
-          durationMs: Date.now() - timing.startedAt,
-          text: JSON.stringify(trimmed),
-        });
+        if (generation !== playGeneration) return;
+        if (timing.startedAt !== 0) {
+          logPlayback('done', {
+            source: 'speech',
+            playbackRate: rate,
+            speechRate: Number(engineRate.toFixed(3)),
+            nativeUtteranceRate,
+            durationMs: Date.now() - timing.startedAt,
+            text: JSON.stringify(trimmed),
+          });
+        }
+        onEnd?.();
       },
     });
+    return 'speech';
   }
 
+  if (generation === playGeneration) onEnd?.();
   return 'speech';
 }
