@@ -1,6 +1,6 @@
+import { listItems } from '@/features/content/loader';
 import type { ExerciseReference, VocabularyRef } from '@/features/review/sources';
 
-import { loadAllLessons } from './loader';
 import type { LessonExerciseItem } from './store';
 
 export type CourseWord = {
@@ -16,26 +16,19 @@ let cachedWords: CourseWord[] | null = null;
 /** Spanish form, translation, and bundled audio for every vocabulary id. */
 export function courseVocabulary(): CourseWord[] {
   if (cachedWords) return cachedWords;
-  const byId = new Map<string, CourseWord>();
-  for (const lesson of loadAllLessons()) {
-    for (const item of lesson.new_items) {
-      byId.set(item.id, { id: item.id, es: item.es, ru: item.ru, audio: item.audio });
-    }
-  }
-  cachedWords = [...byId.values()];
+  cachedWords = listItems().map((item) => ({
+    id: item.id,
+    es: item.es,
+    ru: item.ru,
+    audio: item.audio.es ?? undefined,
+  }));
   return cachedWords;
 }
 
 /** Spanish and Russian forms from every bundled lesson, keyed by vocabulary id. */
 export function courseLexicon(): VocabularyRef[] {
   if (cachedLexicon) return cachedLexicon;
-  const byId = new Map<string, VocabularyRef>();
-  for (const lesson of loadAllLessons()) {
-    for (const item of lesson.new_items) {
-      byId.set(item.id, { id: item.id, es: item.es, ru: item.ru });
-    }
-  }
-  cachedLexicon = [...byId.values()];
+  cachedLexicon = listItems().map((item) => ({ id: item.id, es: item.es, ru: item.ru }));
   return cachedLexicon;
 }
 

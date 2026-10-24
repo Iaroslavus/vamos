@@ -2,7 +2,7 @@ import type { Lesson } from './schema';
 import { serializePairs } from './pairs';
 import type { LessonExerciseItem } from './store';
 
-export const FIRST_A1_LESSON_ID = 'a1-u01-l01';
+export const FIRST_A1_LESSON_ID = 'a1.hola.l1';
 
 /** Exercise kinds the lesson player implements today. */
 export const PLAYABLE_TYPES = [

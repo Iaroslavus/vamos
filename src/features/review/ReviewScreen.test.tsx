@@ -148,7 +148,7 @@ describe('ReviewScreen', () => {
   });
 
   it('speaks a Spanish prompt, then rates it and shows when the card returns', async () => {
-    read.mockResolvedValue({ cards: [card('hola')], logs: [], dueCount: 1, pending: 0 });
+    read.mockResolvedValue({ cards: [card('hola.hola')], logs: [], dueCount: 1, pending: 0 });
     await renderReview();
     await startCards();
 
@@ -173,13 +173,13 @@ describe('ReviewScreen', () => {
     expect(awardXp).not.toHaveBeenCalled();
     expect(recordRating).toHaveBeenCalledWith(
       'user-1',
-      expect.objectContaining({ itemId: 'hola', direction: 'es_to_ru', rating: 'good' }),
+      expect.objectContaining({ itemId: 'hola.hola', direction: 'es_to_ru', rating: 'good' }),
     );
   });
 
   it('shows the translation first for recall and speaks Spanish after the flip', async () => {
     read.mockResolvedValue({
-      cards: [card('gracias', 'ru_to_es')],
+      cards: [card('hola.gracias', 'ru_to_es')],
       logs: [],
       dueCount: 1,
       pending: 0,
@@ -225,7 +225,7 @@ describe('ReviewScreen', () => {
   });
 
   it('counts Again as a miss', async () => {
-    read.mockResolvedValue({ cards: [card('hola')], logs: [], dueCount: 1, pending: 0 });
+    read.mockResolvedValue({ cards: [card('hola.hola')], logs: [], dueCount: 1, pending: 0 });
     await renderReview();
     await startCards();
 
@@ -237,7 +237,7 @@ describe('ReviewScreen', () => {
   });
 
   it('rates a first-try exercise Good', async () => {
-    read.mockResolvedValue({ cards: [card('hola')], logs: [], dueCount: 1, pending: 0 });
+    read.mockResolvedValue({ cards: [card('hola.hola')], logs: [], dueCount: 1, pending: 0 });
     await renderReview();
 
     await fireEvent.press(await screen.findByText('Быстрое повторение'));
@@ -251,12 +251,12 @@ describe('ReviewScreen', () => {
     expect(recordRating).toHaveBeenCalledTimes(1);
     expect(recordRating).toHaveBeenCalledWith(
       'user-1',
-      expect.objectContaining({ itemId: 'hola', direction: 'es_to_ru', rating: 'good' }),
+      expect.objectContaining({ itemId: 'hola.hola', direction: 'es_to_ru', rating: 'good' }),
     );
   });
 
   it('rates a success after a miss Hard', async () => {
-    read.mockResolvedValue({ cards: [card('hola')], logs: [], dueCount: 1, pending: 0 });
+    read.mockResolvedValue({ cards: [card('hola.hola')], logs: [], dueCount: 1, pending: 0 });
     await renderReview();
 
     await fireEvent.press(await screen.findByText('Быстрое повторение'));
@@ -275,7 +275,7 @@ describe('ReviewScreen', () => {
     expect(recordRating).toHaveBeenCalledTimes(1);
     expect(recordRating).toHaveBeenCalledWith(
       'user-1',
-      expect.objectContaining({ itemId: 'hola', direction: 'es_to_ru', rating: 'hard' }),
+      expect.objectContaining({ itemId: 'hola.hola', direction: 'es_to_ru', rating: 'hard' }),
     );
   });
 
@@ -287,7 +287,7 @@ describe('ReviewScreen', () => {
 
   it('stops when the daily cap of 20 new cards is already used', async () => {
     read.mockResolvedValue({
-      cards: [card('hola')],
+      cards: [card('hola.hola')],
       logs: Array.from({ length: 20 }, () => ({
         reviewedAt: new Date().toISOString(),
         state: 0,

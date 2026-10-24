@@ -280,6 +280,7 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      remap_content_v2_ids: { Args: Record<PropertyKey, never>; Returns: undefined };
       save_lesson_progress: {
         Args: { p_best_accuracy: number; p_completed_at: string; p_lesson_id: string };
         Returns: {

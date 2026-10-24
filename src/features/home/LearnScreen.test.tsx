@@ -253,7 +253,7 @@ describe('LearnScreen', () => {
     await fireEvent.press(await screen.findByLabelText('Приветствия, текущий'));
     expect(mockPush).toHaveBeenCalledWith({
       pathname: '/lesson/[id]',
-      params: { id: 'a1-u01-l01' },
+      params: { id: 'a1.hola.l1' },
     });
 
     await fireEvent.press(screen.getByLabelText('Знакомство, закрыт'));
@@ -261,14 +261,14 @@ describe('LearnScreen', () => {
     await flush();
   });
 
-  it('opens a1-u01-l01 on the first exercise when the first path node is pressed', async () => {
+  it('opens a1.hola.l1 on the first exercise when the first path node is pressed', async () => {
     const home = await renderScreen(repository());
 
     await fireEvent.press(await screen.findByLabelText('Приветствия, текущий'));
 
     expect(mockPush).toHaveBeenCalledWith({
       pathname: '/lesson/[id]',
-      params: { id: 'a1-u01-l01' },
+      params: { id: 'a1.hola.l1' },
     });
     const destination = mockPush.mock.calls[0]?.[0] as { params: { id: string } };
     mockSearchParams.id = destination.params.id;
@@ -309,7 +309,7 @@ describe('LearnScreen', () => {
 
     await act(async () => {
       await repo.recordCompletion('user-1', {
-        lessonId: 'a1-u01-l01',
+        lessonId: 'a1.hola.l1',
         accuracy: 100,
         xp: 20,
         completedAt: new Date().toISOString(),

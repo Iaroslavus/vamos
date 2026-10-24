@@ -235,9 +235,9 @@ describe('ProgressScreen', () => {
   it('turns seven finished lessons into one hour and ten minutes', async () => {
     const completedAt = '2020-01-01T00:00:00.000Z';
     const ids = [
-      'a1-u01-l01',
-      'a1-u01-l02',
-      'a1-u01-l03',
+      'a1.hola.l1',
+      'a1.hola.l2',
+      'a1.numbers.l1',
       'extra-4',
       'extra-5',
       'extra-6',
@@ -275,7 +275,7 @@ describe('ProgressScreen', () => {
 
     await act(async () => {
       await repo.recordCompletion('user-1', {
-        lessonId: 'a1-u01-l01',
+        lessonId: 'a1.hola.l1',
         accuracy: 80,
         xp: 18,
         completedAt: new Date().toISOString(),

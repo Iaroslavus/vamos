@@ -1,0 +1,33 @@
+{
+  "id": "a1.numbers.l1",
+  "topic": "a1.numbers",
+  "title_ru": "Числа 1–10",
+  "items": [
+    "numbers.uno",
+    "numbers.dos",
+    "numbers.tres",
+    "numbers.cuatro_y_cinco",
+    "numbers.seis_y_siete",
+    "numbers.ocho_y_nueve",
+    "numbers.numero_diez"
+  ],
+  "speak": ["numbers.tres", "numbers.numero_diez"],
+  "dialog": {
+    "lines": [
+      { "who": "npc", "es": "¿Cuántos?", "ru": "Сколько?" },
+      {
+        "who": "user",
+        "target": "numbers.tres",
+        "options": ["numbers.uno", "numbers.dos", "numbers.tres"]
+      },
+      { "who": "npc", "es": "¿Y del cuatro al diez?", "ru": "А от четырёх до десяти?" },
+      {
+        "who": "user",
+        "target": "numbers.cuatro_y_cinco",
+        "options": ["numbers.cuatro_y_cinco", "numbers.seis_y_siete", "numbers.numero_diez"]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

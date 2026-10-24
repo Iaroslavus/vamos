@@ -26,10 +26,10 @@ describe('course vocabulary', () => {
     const lexicon = courseLexicon();
 
     expect(itemsPracticed(exerciseReference(hola), lexicon)).toEqual([
-      { itemId: 'hola', direction: 'es_to_ru' },
+      { itemId: 'hola.hola', direction: 'es_to_ru' },
     ]);
     expect(itemsPracticed(exerciseReference(gracias), lexicon)).toEqual([
-      { itemId: 'gracias', direction: 'ru_to_es' },
+      { itemId: 'hola.gracias', direction: 'ru_to_es' },
     ]);
   });
 });
