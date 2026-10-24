@@ -1,5 +1,6 @@
-import { Redirect } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
 import { useState, type ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
@@ -13,6 +14,8 @@ import { colors, space } from '@/theme/tokens';
 type SheetDemo = 'success' | 'error' | null;
 
 export default function DevComponentsScreen() {
+  const { t } = useTranslation();
+  const router = useRouter();
   const [sheet, setSheet] = useState<SheetDemo>(null);
   const [usedChip, setUsedChip] = useState(false);
 
@@ -23,6 +26,11 @@ export default function DevComponentsScreen() {
   return (
     <View style={styles.root}>
       <ScrollView contentContainerStyle={styles.content}>
+        <Button
+          title={t('common.devIntro')}
+          variant="secondary"
+          onPress={() => router.push('/dev/intro')}
+        />
         <Section title="Text">
           <Text variant="h1">Heading 1</Text>
           <Text variant="h2">Heading 2</Text>

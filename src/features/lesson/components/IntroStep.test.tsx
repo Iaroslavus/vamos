@@ -1,0 +1,184 @@
+import { fireEvent, render, screen } from '@testing-library/react-native';
+import type { ComponentProps } from 'react';
+import { I18nextProvider } from 'react-i18next';
+import { StyleSheet } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import {
+  NORMAL_RATE,
+  playLessonAudio,
+  SLOW_RATE,
+  stopLessonAudio,
+} from '@/features/audio/playback';
+import type { Item } from '@/features/content/schema';
+import { useFavoritesStore } from '@/features/vocab/favoritesStore';
+import i18n from '@/i18n';
+
+import { IntroStep } from './IntroStep';
+
+jest.mock('expo-haptics', () => ({
+  notificationAsync: jest.fn(),
+  impactAsync: jest.fn(),
+  NotificationFeedbackType: { Success: 'success', Error: 'error' },
+  ImpactFeedbackStyle: { Light: 'light' },
+}));
+
+jest.mock('@/features/audio/playback', () => ({
+  NORMAL_RATE: 1,
+  SLOW_RATE: 0.7,
+  playLessonAudio: jest.fn(),
+  stopLessonAudio: jest.fn(),
+}));
+
+const phrase: Item = {
+  id: 'hola.buenos_dias',
+  type: 'phrase',
+  es: 'buenos días',
+  ru: 'доброе утро',
+  parts: [
+    { es: 'buenos', ru: 'добрые' },
+    { es: 'días', ru: 'утро' },
+  ],
+  say_ru: 'буЭнос дИас',
+  note_ru: 'Так говорят утром, примерно до обеда.',
+  why_ru: 'Día мужского рода, поэтому buenos, а не buenas.',
+  level: 'A1',
+  variant: 'both',
+  audio: { es: 'a1/buenos-dias.mp3', latam: 'a1/buenos-dias-latam.mp3' },
+  tags: ['greeting'],
+  draft: false,
+};
+
+function renderStep(item: Item, props: Partial<ComponentProps<typeof IntroStep>> = {}) {
+  return render(
+    <I18nextProvider i18n={i18n}>
+      <SafeAreaProvider
+        initialMetrics={{
+          frame: { x: 0, y: 0, width: 390, height: 844 },
+          insets: { top: 47, left: 0, right: 0, bottom: 34 },
+        }}
+      >
+        <IntroStep
+          item={item}
+          position={2}
+          total={6}
+          topicIcon="wave"
+          onNext={jest.fn()}
+          {...props}
+        />
+      </SafeAreaProvider>
+    </I18nextProvider>,
+  );
+}
+
+describe('IntroStep', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    useFavoritesStore.getState().reset();
+  });
+
+  it('shows the new-phrase label, translation, hint, note, and equal audio buttons', async () => {
+    await renderStep(phrase);
+
+    expect(screen.getByText('Новые фразы 2 из 6')).toBeTruthy();
+    expect(screen.getByText('buenos días')).toBeTruthy();
+    expect(screen.getByText('буЭнос дИас')).toBeTruthy();
+    expect(screen.getByText('доброе утро')).toBeTruthy();
+    expect(screen.getByText('Так говорят утром, примерно до обеда.')).toBeTruthy();
+    expect(screen.getByText('buenos · добрые')).toBeTruthy();
+    expect(screen.getByText('días · утро')).toBeTruthy();
+
+    const listen = StyleSheet.flatten(screen.getByTestId('intro-listen').props.style);
+    const slow = StyleSheet.flatten(screen.getByTestId('intro-slow').props.style);
+    expect(listen).toMatchObject({ width: 44, height: 44 });
+    expect(slow).toMatchObject({ width: 44, height: 44 });
+  });
+
+  it('plays the phrase when the card appears, and again for listen and slow', async () => {
+    await renderStep(phrase, { audioVariant: 'latam' });
+
+    expect(playLessonAudio).toHaveBeenCalledWith({
+      audio: 'a1/buenos-dias-latam.mp3',
+      text: 'buenos días',
+      rate: NORMAL_RATE,
+    });
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Слушать' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Медленно' }));
+
+    expect(playLessonAudio).toHaveBeenCalledWith({
+      audio: 'a1/buenos-dias-latam.mp3',
+      text: 'buenos días',
+      rate: NORMAL_RATE,
+    });
+    expect(playLessonAudio).toHaveBeenCalledWith({
+      audio: 'a1/buenos-dias-latam.mp3',
+      text: 'buenos días',
+      rate: SLOW_RATE,
+    });
+  });
+
+  it('speaks a part on its own when a chip is tapped', async () => {
+    await renderStep(phrase);
+
+    await fireEvent.press(screen.getByText('buenos · добрые'));
+
+    expect(playLessonAudio).toHaveBeenCalledWith({ text: 'buenos', rate: NORMAL_RATE });
+  });
+
+  it('hides the pronunciation hint above A2 and skips an empty why', async () => {
+    await renderStep({
+      ...phrase,
+      level: 'B1',
+      say_ru: 'буЭнос дИас',
+      why_ru: null,
+      note_ru: null,
+      parts: [],
+    });
+
+    expect(screen.queryByText('буЭнос дИас')).toBeNull();
+    expect(screen.queryByText('Почему так?')).toBeNull();
+    expect(screen.queryByText('Так говорят утром, примерно до обеда.')).toBeNull();
+  });
+
+  it('opens the why sheet when why_ru is set', async () => {
+    await renderStep(phrase);
+
+    expect(screen.queryByText(phrase.why_ru ?? '')).toBeNull();
+    await fireEvent.press(screen.getByText('Почему так?'));
+    expect(screen.getByText(phrase.why_ru ?? '')).toBeTruthy();
+
+    await fireEvent.press(screen.getByText('Понятно'));
+    expect(screen.queryByText(phrase.why_ru ?? '')).toBeNull();
+  });
+
+  it('saves the unit into local favorites', async () => {
+    await renderStep(phrase);
+
+    await fireEvent.press(screen.getByRole('button', { name: '+ В словник' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'В избранном' }));
+
+    expect(useFavoritesStore.getState().itemIds).toEqual(['hola.buenos_dias']);
+    expect(screen.getByRole('button', { name: 'В избранном' })).toBeTruthy();
+  });
+
+  it('goes on from Дальше and lets the learner repeat aloud without grading', async () => {
+    const onNext = jest.fn();
+    const onRepeatAloud = jest.fn();
+    await renderStep(phrase, { onNext, onRepeatAloud });
+    const playsBeforeRepeat = jest.mocked(playLessonAudio).mock.calls.length;
+
+    await fireEvent.press(screen.getByText('Повторить вслух'));
+    await fireEvent.press(screen.getByText('Дальше'));
+
+    expect(onRepeatAloud).toHaveBeenCalledTimes(1);
+    expect(onNext).toHaveBeenCalledTimes(1);
+    expect(playLessonAudio).toHaveBeenCalledTimes(playsBeforeRepeat);
+  });
+
+  it('stops audio when the step unmounts', async () => {
+    const view = await renderStep(phrase);
+    await view.unmount();
+    expect(stopLessonAudio).toHaveBeenCalled();
+  });
+});

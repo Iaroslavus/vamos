@@ -150,7 +150,15 @@
     "summaryEmpty": "Сначала пройдите урок",
     "mistakesIntroTitle": "А теперь давайте поработаем над ошибками",
     "mistakesIntroSubtitle": "Осталось упражнений: {{count}}",
-    "mistakesIntroCta": "Поехали"
+    "mistakesIntroCta": "Поехали",
+    "introTitle": "Знакомство с фразой",
+    "introProgress": "Новые фразы {{current}} из {{total}}",
+    "introPart": "{{es}} · {{ru}}",
+    "introWhy": "Почему так?",
+    "introWhyClose": "Понятно",
+    "introSave": "+ В словник",
+    "introSaved": "В избранном",
+    "introRepeat": "Повторить вслух"
   },
   "review": {
     "title": "Повторение",
@@ -204,6 +212,7 @@
   },
   "common": {
     "devComponents": "Компоненты (dev)",
+    "devIntro": "Знакомство с фразой",
     "openLesson": "Открыть урок",
     "openOnboarding": "Открыть онбординг",
     "close": "Закрыть",

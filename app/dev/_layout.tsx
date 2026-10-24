@@ -1,8 +1,11 @@
 import { Redirect, Stack } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { colors } from '@/theme/tokens';
 
 export default function DevLayout() {
+  const { t } = useTranslation();
+
   if (!__DEV__) {
     return <Redirect href="/(tabs)" />;
   }
@@ -16,7 +19,8 @@ export default function DevLayout() {
         headerShadowVisible: false,
       }}
     >
-      <Stack.Screen name="components" options={{ title: 'Components' }} />
+      <Stack.Screen name="components" options={{ title: t('common.devComponents') }} />
+      <Stack.Screen name="intro" options={{ title: t('lesson.introTitle') }} />
     </Stack>
   );
 }
