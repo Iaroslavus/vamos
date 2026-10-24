@@ -155,6 +155,8 @@ async function renderSummary(
   const client = new QueryClient({
     defaultOptions: { queries: { retry: false, gcTime: Infinity } },
   });
+  // Present on the first render, so «Дальше» does not race the profile query.
+  client.setQueryData(['learner', 'user-1'], profile);
   const view = await render(summaryTree(recordCompletion, screenKey, client, profile));
   return { client, ...view };
 }
