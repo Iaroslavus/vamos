@@ -15,6 +15,8 @@ import 'react-native-reanimated';
 import { SessionError, SessionLoading } from '@/features/auth/components/SessionStatus';
 import { SessionProvider } from '@/features/auth/SessionProvider';
 import { useSession } from '@/features/auth/useSession';
+import { LearnerGate } from '@/features/learner/LearnerGate';
+import { LearnerProvider } from '@/features/learner/context';
 import { ProgressProvider } from '@/features/progress/ProgressProvider';
 import i18n from '@/i18n';
 import { queryClient } from '@/lib/queryClient';
@@ -60,7 +62,9 @@ export default function RootLayout() {
       <QueryClientProvider client={queryClient}>
         <SessionProvider>
           <ProgressProvider>
-            <AppShell fontsLoaded={loaded} />
+            <LearnerProvider>
+              <AppShell fontsLoaded={loaded} />
+            </LearnerProvider>
           </ProgressProvider>
         </SessionProvider>
       </QueryClientProvider>
@@ -82,7 +86,13 @@ function AppShell({ fontsLoaded }: { fontsLoaded: boolean }) {
 
   return (
     <ThemeProvider value={vamosTheme}>
-      {status === 'error' ? <SessionError /> : <RootLayoutNav />}
+      {status === 'error' ? (
+        <SessionError />
+      ) : (
+        <LearnerGate>
+          <RootLayoutNav />
+        </LearnerGate>
+      )}
     </ThemeProvider>
   );
 }
@@ -101,7 +111,8 @@ function RootLayoutNav() {
         name="(lesson)"
         options={{ presentation: 'fullScreenModal', headerShown: false }}
       />
-      <Stack.Screen name="(onboarding)" options={{ presentation: 'modal', headerShown: false }} />
+      <Stack.Screen name="(onboarding)" options={{ headerShown: false, gestureEnabled: false }} />
+      <Stack.Screen name="speak" options={{ headerShown: true }} />
       {__DEV__ ? <Stack.Screen name="dev" options={{ headerShown: false }} /> : null}
     </Stack>
   );

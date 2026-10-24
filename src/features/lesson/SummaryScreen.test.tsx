@@ -1,10 +1,12 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react-native';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import { useEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import LessonSummaryScreen from '../../../app/(lesson)/lesson/summary';
+import { LearnerProvider } from '@/features/learner/context';
+import type { LearnerProfile } from '@/features/learner/profile';
 import { useFinishLesson } from '@/features/lesson/hooks/useFinishLesson';
 import { useLessonStore, type LessonExerciseItem } from '@/features/lesson/store';
 import { ProgressProvider } from '@/features/progress/ProgressProvider';
@@ -29,9 +31,11 @@ const EXERCISE: LessonExerciseItem = {
   answer: 'привет',
 };
 
+const mockReplace = jest.fn();
+
 jest.mock('expo-router', () => ({
   useRouter: () => ({
-    replace: jest.fn(),
+    replace: mockReplace,
     push: jest.fn(),
     back: jest.fn(),
     canGoBack: () => false,
@@ -105,7 +109,19 @@ function FinishThenSummary({ screenKey }: { screenKey: number }) {
   return <LessonSummaryScreen key={screenKey} />;
 }
 
-function summaryTree(recordCompletion: jest.Mock, screenKey: number, client: QueryClient) {
+const ASKED: LearnerProfile = {
+  name: 'Анна',
+  goal: 'travel',
+  dailyMinutes: 10,
+  preferencesAsked: true,
+};
+
+function summaryTree(
+  recordCompletion: jest.Mock,
+  screenKey: number,
+  client: QueryClient,
+  profile: LearnerProfile = ASKED,
+) {
   return (
     <QueryClientProvider client={client}>
       <I18nextProvider i18n={i18n}>
@@ -116,7 +132,14 @@ function summaryTree(recordCompletion: jest.Mock, screenKey: number, client: Que
           }}
         >
           <ProgressProvider repository={repository(recordCompletion)}>
-            <FinishThenSummary screenKey={screenKey} />
+            <LearnerProvider
+              repository={{
+                read: async () => profile,
+                save: async () => profile,
+              }}
+            >
+              <FinishThenSummary screenKey={screenKey} />
+            </LearnerProvider>
           </ProgressProvider>
         </SafeAreaProvider>
       </I18nextProvider>
@@ -124,11 +147,15 @@ function summaryTree(recordCompletion: jest.Mock, screenKey: number, client: Que
   );
 }
 
-async function renderSummary(recordCompletion: jest.Mock, screenKey = 0) {
+async function renderSummary(
+  recordCompletion: jest.Mock,
+  screenKey = 0,
+  profile: LearnerProfile = ASKED,
+) {
   const client = new QueryClient({
     defaultOptions: { queries: { retry: false, gcTime: Infinity } },
   });
-  const view = await render(summaryTree(recordCompletion, screenKey, client));
+  const view = await render(summaryTree(recordCompletion, screenKey, client, profile));
   return { client, ...view };
 }
 
@@ -219,5 +246,37 @@ describe('LessonSummaryScreen', () => {
     await flush();
     expect(recordCompletion).toHaveBeenCalledTimes(1);
     expect(reviewRepository.introduceItems).toHaveBeenCalledTimes(1);
+  });
+
+  it('opens goal and minutes after the first lesson of day 1', async () => {
+    useLessonStore.getState().reset();
+    useLessonStore.getState().startLesson({
+      lessonId: 'a1.hola.l1',
+      exercises: [EXERCISE],
+      newItems: [],
+      now: () => 1_000,
+    });
+    useLessonStore.getState().setAnswer('привет');
+    useLessonStore.getState().checkAnswer();
+    useLessonStore.getState().continueAfterFeedback();
+    useLessonStore.getState().finishLesson();
+    mockReplace.mockClear();
+
+    const recordCompletion = jest.fn().mockResolvedValue({ lessons: [], totalXp: 10, pending: 0 });
+    const view = await renderSummary(recordCompletion, 0, {
+      name: 'Анна',
+      goal: null,
+      dailyMinutes: 10,
+      preferencesAsked: false,
+    });
+    await waitFor(() => {
+      expect(view.client.getQueryData(['learner', 'user-1'])).toMatchObject({
+        name: 'Анна',
+        preferencesAsked: false,
+      });
+    });
+
+    await fireEvent.press(screen.getByText('Дальше'));
+    expect(mockReplace).toHaveBeenCalledWith('/onboarding/preferences');
   });
 });

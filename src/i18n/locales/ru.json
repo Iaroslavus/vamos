@@ -264,9 +264,56 @@
     "exerciseListen": "Что вы слышите?",
     "exerciseType": "Введите перевод"
   },
+  "today": {
+    "loading": "Загружаем сегодня",
+    "loadError": "Не удалось загрузить сегодня. Проверьте сеть и повторите.",
+    "courseTitle": "Заговори за 7 дней",
+    "dayCount": "День {{day}} из {{total}}",
+    "continue": "Продолжить",
+    "continueTopic": "Продолжить тему {{title}}",
+    "review_one": "Повторить {{count}} фразу",
+    "review_few": "Повторить {{count}} фразы",
+    "review_many": "Повторить {{count}} фраз",
+    "review_other": "Повторить {{count}} фраз",
+    "speak": "Сказать вслух",
+    "myTopics": "Мои темы",
+    "topicCount": "{{done}} из {{total}}",
+    "topicLabel": "{{title}}, пройдено {{done}} из {{total}}",
+    "greeting": {
+      "morning": "Доброе утро",
+      "afternoon": "Добрый день",
+      "evening": "Добрый вечер",
+      "night": "Доброй ночи"
+    },
+    "greetingNamed": "{{greeting}}, {{name}}"
+  },
+  "speak": {
+    "title": "Сказать вслух",
+    "empty": "Фразы появятся, когда откроется урок.",
+    "play": "Слушать: {{phrase}}",
+    "hint": "Послушайте и повторите. Оценку произношения добавим позже."
+  },
   "onboarding": {
     "title": "Добро пожаловать",
     "stub": "Онбординг из пяти шагов появится здесь.",
+    "nameTitle": "Как вас зовут?",
+    "nameBody": "Так мы будем к вам обращаться.",
+    "nameLabel": "Имя",
+    "namePlaceholder": "Имя",
+    "nameStart": "Начать",
+    "nameInvalid": "Введите имя — до 60 букв.",
+    "preferencesTitle": "Ещё пара вещей",
+    "preferencesBody": "Первая фраза уже ваша. Подстроим занятия.",
+    "goalQuestion": "Зачем вам испанский?",
+    "minutesQuestion": "Сколько минут в день?",
+    "preferencesContinue": "Дальше",
+    "goals": {
+      "travel": "Путешествия",
+      "work": "Работа",
+      "relocation": "Переезд",
+      "dele": "Экзамен DELE"
+    },
+    "minutes": "{{count}} минут",
     "goalTitle": "Цель",
     "goalStub": "Выбор цели обучения.",
     "levelTitle": "Уровень",

@@ -9,14 +9,20 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
 import { playUiSound } from '@/features/audio/sounds';
+import { listTopics } from '@/features/content/loader';
+import { useLearnerProfile } from '@/features/learner/useLearnerProfile';
 import { NewWordsList } from '@/features/lesson/components/NewWordsList';
 import { XpCounter } from '@/features/lesson/components/XpCounter';
 import { formatAccuracyPercent, formatElapsed } from '@/features/lesson/format';
 import type { VocabularyItem } from '@/features/lesson/schema';
 import { useLessonStore } from '@/features/lesson/store';
+import { useProgress } from '@/features/progress/useProgress';
+import { buildTodayPlan, learnerDestination } from '@/features/today/course';
 import { useFavoritesStore } from '@/features/vocab/favoritesStore';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, space } from '@/theme/tokens';
+
+const DAY_ONE = buildTodayPlan(listTopics(), []).dayOneLessonId;
 
 const EMPTY_NEW_ITEMS: VocabularyItem[] = [];
 
@@ -33,6 +39,8 @@ export default function LessonSummaryScreen() {
   const savedIds = useFavoritesStore((s) => s.itemIds);
   const addAll = useFavoritesStore((s) => s.addAll);
   const reset = useLessonStore((s) => s.reset);
+  const profile = useLearnerProfile();
+  const progress = useProgress();
   const [leaving, setLeaving] = useState(false);
   const allSaved = newItems.length > 0 && newItems.every((item) => savedIds.includes(item.id));
 
@@ -47,7 +55,29 @@ export default function LessonSummaryScreen() {
   const goHome = () => {
     if (leaving) return;
     setLeaving(true);
+    const lessonId = useLessonStore.getState().lessonId;
+    const completed =
+      progress.data?.lessons
+        .filter((lesson) => lesson.status === 'completed')
+        .map((lesson) => lesson.lessonId) ?? [];
+    const destination = profile.data
+      ? learnerDestination({
+          name: profile.data.name,
+          preferencesAsked: profile.data.preferencesAsked,
+          dayOneFirstLessonId: DAY_ONE,
+          completedLessonIds: completed,
+          justFinishedLessonId: lessonId,
+        })
+      : 'app';
     reset();
+    if (destination === 'preferences') {
+      router.replace('/onboarding/preferences');
+      return;
+    }
+    if (destination === 'name') {
+      router.replace('/onboarding/name');
+      return;
+    }
     router.replace('/(tabs)');
   };
 

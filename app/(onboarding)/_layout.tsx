@@ -15,6 +15,14 @@ export default function OnboardingLayout() {
         contentStyle: { backgroundColor: colors.ground },
       }}
     >
+      <Stack.Screen
+        name="onboarding/name"
+        options={{ headerShown: false, gestureEnabled: false }}
+      />
+      <Stack.Screen
+        name="onboarding/preferences"
+        options={{ headerShown: false, gestureEnabled: false }}
+      />
       <Stack.Screen name="onboarding/index" options={{ title: t('onboarding.title') }} />
       <Stack.Screen name="onboarding/goal" options={{ title: t('onboarding.goalTitle') }} />
       <Stack.Screen name="onboarding/level" options={{ title: t('onboarding.levelTitle') }} />
