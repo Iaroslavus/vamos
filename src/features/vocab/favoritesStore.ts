@@ -6,6 +6,8 @@ type FavoritesState = {
   /** Item ids kept in the local «Избранное» folder until real folders exist. */
   itemIds: string[];
   add: (itemId: string) => void;
+  /** Saves every id that is not already in Избранное. */
+  addAll: (itemIds: readonly string[]) => void;
   has: (itemId: string) => boolean;
   reset: () => void;
 };
@@ -23,6 +25,16 @@ export const useFavoritesStore = create<FavoritesState>()(
         const { itemIds } = get();
         if (itemIds.includes(itemId)) return;
         set({ itemIds: [...itemIds, itemId] });
+      },
+
+      addAll: (ids) => {
+        const { itemIds } = get();
+        const next = [...itemIds];
+        for (const id of ids) {
+          if (!next.includes(id)) next.push(id);
+        }
+        if (next.length === itemIds.length) return;
+        set({ itemIds: next });
       },
 
       has: (itemId) => get().itemIds.includes(itemId),

@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { act, cleanup, render, screen } from '@testing-library/react-native';
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react-native';
 import { useEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -10,7 +10,15 @@ import { useLessonStore, type LessonExerciseItem } from '@/features/lesson/store
 import { ProgressProvider } from '@/features/progress/ProgressProvider';
 import type { ProgressRepository } from '@/features/progress/types';
 import { reviewRepository } from '@/features/review/defaultRepository';
+import { useFavoritesStore } from '@/features/vocab/favoritesStore';
 import i18n from '@/i18n';
+
+jest.mock('expo-haptics', () => ({
+  impactAsync: jest.fn(() => Promise.resolve()),
+  notificationAsync: jest.fn(() => Promise.resolve()),
+  ImpactFeedbackStyle: { Light: 'light' },
+  NotificationFeedbackType: { Success: 'success', Error: 'error' },
+}));
 
 const EXERCISE: LessonExerciseItem = {
   id: 'e1',
@@ -133,6 +141,7 @@ async function flush(): Promise<void> {
 describe('LessonSummaryScreen', () => {
   beforeEach(() => {
     jest.mocked(reviewRepository.introduceItems).mockClear();
+    useFavoritesStore.setState({ itemIds: [] });
     finishLessonInStore();
   });
 
@@ -151,7 +160,9 @@ describe('LessonSummaryScreen', () => {
     expect(screen.getByText('Урок пройден!')).toBeOnTheScreen();
     expect(screen.getByText('100%')).toBeOnTheScreen();
     expect(screen.getByText('0:00')).toBeOnTheScreen();
+    expect(screen.getByText('1 новая фраза')).toBeOnTheScreen();
     expect(screen.getByText('hola')).toBeOnTheScreen();
+    expect(screen.getByText('В словник')).toBeOnTheScreen();
 
     const logged = errors.mock.calls.map((args) => args.map(String).join(' '));
     expect(logged.filter((line) => /getSnapshot|Maximum update depth/i.test(line))).toEqual([]);
@@ -182,6 +193,19 @@ describe('LessonSummaryScreen', () => {
     expect(screen.getByText('Урок пройден!')).toBeOnTheScreen();
     expect(recordCompletion).toHaveBeenCalledTimes(1);
     expect(reviewRepository.introduceItems).toHaveBeenCalledTimes(1);
+  });
+
+  it('saves every phrase from the lesson into the vocabulary list', async () => {
+    const recordCompletion = jest.fn().mockResolvedValue({ lessons: [], totalXp: 10, pending: 0 });
+
+    await renderSummary(recordCompletion);
+    await flush();
+
+    await fireEvent.press(screen.getByText('В словник'));
+
+    expect(useFavoritesStore.getState().itemIds).toEqual(['hola']);
+    expect(screen.getByText('В избранном')).toBeOnTheScreen();
+    expect(screen.queryByText('В словник')).toBeNull();
   });
 
   it('shows the summary when saving the result fails', async () => {

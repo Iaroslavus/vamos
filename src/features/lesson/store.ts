@@ -70,6 +70,16 @@ export type LessonExerciseItem =
 export type LessonSessionStatus =
   'idle' | 'active' | 'feedback' | 'mistakes_intro' | 'completed' | 'failed';
 
+/** How the session advances. `script` walks generated steps; `queue` is the exercise list. */
+export type LessonFlow = 'queue' | 'script';
+
+export type ScriptKind = 'intro' | 'exercise' | 'speak' | 'dialog' | 'prompt';
+
+export type ScriptEntry = {
+  id: string;
+  kind: ScriptKind;
+};
+
 export type LessonProgress = {
   /** Successful checks (correct + almost). */
   solved: number;
@@ -117,6 +127,18 @@ type StartLessonInput = {
   now?: () => number;
 };
 
+type StartScriptInput = {
+  lessonId: string;
+  /** Generated steps in teaching order. Exercise ids must exist in `exercises`. */
+  script: readonly ScriptEntry[];
+  exercises: readonly LessonExerciseItem[];
+  /** Units from the lesson intro, shown on the summary and sent to FSRS. */
+  newItems?: readonly VocabularyItem[];
+  hearts?: number;
+  maxHearts?: number;
+  now?: () => number;
+};
+
 export type LessonSummary = {
   lessonId: string | null;
   status: LessonSessionStatus;
@@ -132,6 +154,14 @@ export type LessonSummary = {
 
 type LessonStoreState = {
   status: LessonSessionStatus;
+  /** `script` until the generated steps are done, then the mistake queue uses `queue`. */
+  flow: LessonFlow;
+  script: ScriptEntry[];
+  scriptIndex: number;
+  /** Generated step count. Zero for a queue-only session (review). */
+  stepTotal: number;
+  /** Steps already left. The lesson bar is `stepsCompleted / stepTotal`. */
+  stepsCompleted: number;
   lessonId: string | null;
   /** Snapshot of exercises for the active session (id → item). */
   exerciseById: Record<string, LessonExerciseItem>;
@@ -168,6 +198,12 @@ type LessonStoreState = {
 
 type LessonStoreActions = {
   startLesson: (input: StartLessonInput) => void;
+  /**
+   * Start a generated lesson.
+   * Intro, speak, and other ungated steps advance with `advanceStep` and do not
+   * spend hearts. Graded steps use `checkAnswer`. Misses wait until the script ends.
+   */
+  startScript: (input: StartScriptInput) => void;
   setAnswer: (value: string) => void;
   /** Grade current answer; moves session to `feedback` (or `failed` if hearts hit 0). */
   checkAnswer: () => GradeResult | null;
@@ -177,6 +213,11 @@ type LessonStoreActions = {
    * When the main pass ends with retries left → `mistakes_intro` (once).
    */
   continueAfterFeedback: () => void;
+  /**
+   * Leave an intro, speak, dialog, or other ungated step.
+   * Does not change hearts, XP, or the correct/wrong counts.
+   */
+  advanceStep: () => void;
   /** Dismiss the mistakes intro and start the retry queue. */
   continueMistakesIntro: () => void;
   reset: () => void;
@@ -206,6 +247,11 @@ export type LessonStore = LessonStoreState & LessonStoreActions;
 
 const idleState = (): LessonStoreState => ({
   status: 'idle',
+  flow: 'queue',
+  script: [],
+  scriptIndex: 0,
+  stepTotal: 0,
+  stepsCompleted: 0,
   lessonId: null,
   exerciseById: {},
   queue: [],
@@ -271,6 +317,47 @@ function xpForStatus(status: GradeResult['status']): number {
   return 0;
 }
 
+function scriptExerciseId(script: readonly ScriptEntry[], index: number): string | undefined {
+  const entry = script[index];
+  if (!entry || entry.kind !== 'exercise') return undefined;
+  return entry.id;
+}
+
+/** Move past the current generated step. Hearts and scores stay as they are. */
+function leaveScriptStep(state: LessonStoreState): Partial<LessonStoreState> {
+  const scriptIndex = state.scriptIndex + 1;
+  const stepsCompleted = state.stepsCompleted + 1;
+  const cleared = {
+    userAnswer: '',
+    lastGrade: null,
+    scriptIndex,
+    stepsCompleted,
+  };
+
+  if (scriptIndex < state.script.length) {
+    return { ...cleared, status: 'active' };
+  }
+
+  if (state.queue.length > 0) {
+    return {
+      ...cleared,
+      flow: 'queue',
+      status: 'mistakes_intro',
+      mainPassesLeft: 0,
+      mistakesIntroShown: true,
+    };
+  }
+
+  return {
+    ...cleared,
+    flow: 'queue',
+    status: 'completed',
+    mainPassesLeft: 0,
+    queue: [],
+    finishedAt: state.getNow(),
+  };
+}
+
 export const useLessonStore = create<LessonStore>()((set, get) => ({
   ...idleState(),
 
@@ -302,6 +389,44 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
     });
   },
 
+  startScript: ({ lessonId, script, exercises, newItems, hearts, maxHearts, now }) => {
+    if (script.length === 0) {
+      throw new Error('Cannot start a lesson with no steps');
+    }
+
+    const exerciseById = buildExerciseMap(exercises);
+    for (const entry of script) {
+      if (entry.kind === 'exercise' && !exerciseById[entry.id]) {
+        throw new Error(`Missing exercise for step ${entry.id}`);
+      }
+    }
+
+    const max = maxHearts ?? DEFAULT_MAX_HEARTS;
+    const startHearts = hearts ?? max;
+    const getNow = now ?? Date.now;
+
+    set({
+      ...idleState(),
+      status: 'active',
+      flow: 'script',
+      script: script.map((entry) => ({ id: entry.id, kind: entry.kind })),
+      scriptIndex: 0,
+      stepTotal: script.length,
+      stepsCompleted: 0,
+      lessonId,
+      exerciseById,
+      queue: [],
+      initialIds: script.map((entry) => entry.id),
+      mainPassesLeft: script.length,
+      mistakesIntroShown: false,
+      newItems: [...(newItems ?? [])],
+      hearts: startHearts,
+      maxHearts: max,
+      startedAt: getNow(),
+      getNow,
+    });
+  },
+
   setAnswer: (value) => {
     const { status } = get();
     if (status !== 'active') return;
@@ -312,7 +437,8 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
     const state = get();
     if (state.status !== 'active') return null;
 
-    const currentId = state.queue[0];
+    const currentId =
+      state.flow === 'script' ? scriptExerciseId(state.script, state.scriptIndex) : state.queue[0];
     if (!currentId) return null;
 
     const exercise = state.exerciseById[currentId];
@@ -378,6 +504,11 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
     }
     if (state.status !== 'feedback') return;
 
+    if (state.flow === 'script') {
+      set(leaveScriptStep(state));
+      return;
+    }
+
     const grade = state.lastGrade;
     if (!grade) return;
 
@@ -419,6 +550,14 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
       lastGrade: null,
       mainPassesLeft,
     });
+  },
+
+  advanceStep: () => {
+    const state = get();
+    if (state.flow !== 'script' || state.status !== 'active') return;
+    const entry = state.script[state.scriptIndex];
+    if (!entry || entry.kind === 'exercise') return;
+    set(leaveScriptStep(state));
   },
 
   continueMistakesIntro: () => {
@@ -508,10 +647,11 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
   },
 
   getCurrentExercise: () => {
-    const { queue, exerciseById } = get();
-    const id = queue[0];
+    const state = get();
+    const id =
+      state.flow === 'script' ? scriptExerciseId(state.script, state.scriptIndex) : state.queue[0];
     if (!id) return null;
-    return exerciseById[id] ?? null;
+    return state.exerciseById[id] ?? null;
   },
 
   getProgress: () => {

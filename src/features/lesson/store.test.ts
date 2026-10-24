@@ -530,3 +530,93 @@ describe('lesson store', () => {
     expect(useLessonStore.getState().queue).toEqual([]);
   });
 });
+
+describe('lesson script', () => {
+  const exercise: LessonExerciseItem = {
+    id: 's1',
+    type: 'select_translation',
+    prompt_ru: 'Выберите перевод',
+    prompt: 'hola',
+    options: ['привет', 'пока'],
+    answer: 'привет',
+  };
+
+  beforeEach(() => {
+    useLessonStore.getState().reset();
+  });
+
+  it('lets an intro pass without hearts, errors, or xp', () => {
+    useLessonStore.getState().startScript({
+      lessonId: 'a1.hola.l1',
+      script: [
+        { id: 's0', kind: 'intro' },
+        { id: 's1', kind: 'exercise' },
+      ],
+      exercises: [exercise],
+    });
+
+    expect(useLessonStore.getState().checkAnswer()).toBeNull();
+    useLessonStore.getState().advanceStep();
+
+    const state = useLessonStore.getState();
+    expect(state.hearts).toBe(DEFAULT_MAX_HEARTS);
+    expect(state.wrongCount).toBe(0);
+    expect(state.correctCount).toBe(0);
+    expect(state.xpEarned).toBe(0);
+    expect(state.stepsCompleted).toBe(1);
+    expect(state.stepTotal).toBe(2);
+    expect(state.getCurrentExercise()?.id).toBe('s1');
+  });
+
+  it('holds a miss until the script ends, then opens the mistakes round', () => {
+    useLessonStore.getState().startScript({
+      lessonId: 'a1.hola.l1',
+      script: [
+        { id: 's0', kind: 'intro' },
+        { id: 's1', kind: 'exercise' },
+        { id: 's2', kind: 'speak' },
+      ],
+      exercises: [exercise],
+      now: () => 2_000,
+    });
+
+    useLessonStore.getState().advanceStep();
+    useLessonStore.getState().setAnswer('нет');
+    useLessonStore.getState().checkAnswer();
+    expect(useLessonStore.getState().hearts).toBe(DEFAULT_MAX_HEARTS - 1);
+    expect(useLessonStore.getState().status).toBe('feedback');
+
+    useLessonStore.getState().continueAfterFeedback();
+    expect(useLessonStore.getState().status).toBe('active');
+    expect(useLessonStore.getState().script[useLessonStore.getState().scriptIndex]?.kind).toBe(
+      'speak',
+    );
+
+    const xp = useLessonStore.getState().xpEarned;
+    useLessonStore.getState().advanceStep();
+    expect(useLessonStore.getState().xpEarned).toBe(xp);
+    expect(useLessonStore.getState().status).toBe('mistakes_intro');
+    expect(useLessonStore.getState().queue).toEqual(['s1']);
+    expect(useLessonStore.getState().stepsCompleted).toBe(3);
+
+    useLessonStore.getState().continueMistakesIntro();
+    useLessonStore.getState().setAnswer('привет');
+    useLessonStore.getState().checkAnswer();
+    useLessonStore.getState().continueAfterFeedback();
+    expect(useLessonStore.getState().status).toBe('completed');
+    expect(useLessonStore.getState().xpEarned).toBe(XP_CORRECT);
+  });
+
+  it('rejects a script with no steps or a missing exercise', () => {
+    expect(() =>
+      useLessonStore.getState().startScript({ lessonId: 'x', script: [], exercises: [] }),
+    ).toThrow(/no steps/);
+    expect(() =>
+      useLessonStore.getState().startScript({
+        lessonId: 'x',
+        script: [{ id: 's1', kind: 'exercise' }],
+        exercises: [],
+      }),
+    ).toThrow(/Missing exercise/);
+  });
+});

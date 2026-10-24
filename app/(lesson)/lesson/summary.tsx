@@ -1,3 +1,4 @@
+import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
 import LottieView from 'lottie-react-native';
 import { useEffect, useState } from 'react';
@@ -13,6 +14,7 @@ import { XpCounter } from '@/features/lesson/components/XpCounter';
 import { formatAccuracyPercent, formatElapsed } from '@/features/lesson/format';
 import type { VocabularyItem } from '@/features/lesson/schema';
 import { useLessonStore } from '@/features/lesson/store';
+import { useFavoritesStore } from '@/features/vocab/favoritesStore';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, space } from '@/theme/tokens';
 
@@ -28,8 +30,11 @@ export default function LessonSummaryScreen() {
   const accuracy = useLessonStore((s) => s.summary?.accuracy ?? 0);
   const elapsedMs = useLessonStore((s) => s.summary?.elapsedMs ?? 0);
   const newItems = useLessonStore((s) => s.summary?.newItems ?? EMPTY_NEW_ITEMS);
+  const savedIds = useFavoritesStore((s) => s.itemIds);
+  const addAll = useFavoritesStore((s) => s.addAll);
   const reset = useLessonStore((s) => s.reset);
   const [leaving, setLeaving] = useState(false);
+  const allSaved = newItems.length > 0 && newItems.every((item) => savedIds.includes(item.id));
 
   const finished = status === 'completed' || status === 'failed';
 
@@ -107,6 +112,17 @@ export default function LessonSummaryScreen() {
       </ScrollView>
 
       <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, space.lg) }]}>
+        {newItems.length > 0 ? (
+          <Button
+            title={allSaved ? t('lesson.introSaved') : t('lesson.summaryToVocab')}
+            variant="secondary"
+            disabled={allSaved || leaving}
+            onPress={() => {
+              void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              addAll(newItems.map((item) => item.id));
+            }}
+          />
+        ) : null}
         <Button
           title={t('lesson.summaryContinue')}
           variant="primary"
@@ -159,6 +175,7 @@ const styles = StyleSheet.create({
     minWidth: 100,
   },
   footer: {
+    gap: space.sm,
     paddingHorizontal: space.xl,
     paddingTop: space.md,
     zIndex: 2,

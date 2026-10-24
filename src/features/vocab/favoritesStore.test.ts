@@ -21,6 +21,17 @@ describe('useFavoritesStore', () => {
     expect(next.has('hola.adios')).toBe(false);
   });
 
+  it('saves every new id and skips the ones already kept', () => {
+    useFavoritesStore.getState().add('hola.hola');
+    useFavoritesStore.getState().addAll(['hola.hola', 'hola.gracias', 'hola.adios']);
+
+    expect(useFavoritesStore.getState().itemIds).toEqual([
+      'hola.hola',
+      'hola.gracias',
+      'hola.adios',
+    ]);
+  });
+
   it('persists saved ids locally', async () => {
     useFavoritesStore.getState().add('hola.hola');
 

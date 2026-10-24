@@ -21,41 +21,33 @@ import { stopLessonAudio } from '@/features/audio/playback';
 import { playGradeSound } from '@/features/audio/sounds';
 import { AccentBar } from '@/features/lesson/components/AccentBar';
 import { type AnswerTextFieldHandle } from '@/features/lesson/components/AnswerTextField';
-import { BuildSentenceExercise } from '@/features/lesson/components/BuildSentenceExercise';
-import { FillGapExercise } from '@/features/lesson/components/FillGapExercise';
+import { DialogStep } from '@/features/lesson/components/DialogStep';
+import { IntroStep } from '@/features/lesson/components/IntroStep';
+import { LessonExerciseBody } from '@/features/lesson/components/LessonExerciseBody';
 import { LessonHearts } from '@/features/lesson/components/LessonHearts';
-import { ListenSelectExercise } from '@/features/lesson/components/ListenSelectExercise';
-import { MatchPairsExercise } from '@/features/lesson/components/MatchPairsExercise';
 import { MistakesIntro } from '@/features/lesson/components/MistakesIntro';
-import { SelectTranslationExercise } from '@/features/lesson/components/SelectTranslationExercise';
-import { TypeTranslationExercise } from '@/features/lesson/components/TypeTranslationExercise';
+import { SpeakRepeatStep } from '@/features/lesson/components/SpeakRepeatStep';
 import { useFinishLesson } from '@/features/lesson/hooks/useFinishLesson';
 import { useRecordLessonMistake } from '@/features/lesson/hooks/useRecordLessonMistake';
-import { loadLesson } from '@/features/lesson/adapter';
 import { countSerializedPairs } from '@/features/lesson/pairs';
-import { isTypingExercise, toPlayableExercises } from '@/features/lesson/playable';
-import type { VocabularyItem } from '@/features/lesson/schema';
-import { useLessonStore, type LessonExerciseItem } from '@/features/lesson/store';
+import {
+  introPlace,
+  isTypingExercise,
+  loadLessonSession,
+  stepSurface,
+  type LoadedLesson,
+} from '@/features/lesson/session';
+import { useLessonStore } from '@/features/lesson/store';
 import { colors, space } from '@/theme/tokens';
 
-type LoadResult =
-  | {
-      ok: true;
-      lessonId: string;
-      exercises: LessonExerciseItem[];
-      newItems: VocabularyItem[];
-    }
-  | { ok: false; reason: 'missing_id' | 'empty' | 'not_found' };
+type LoadResult = { ok: true; session: LoadedLesson } | { ok: false };
 
-function loadPlayableLesson(lessonId: string | undefined): LoadResult {
-  if (!lessonId) return { ok: false, reason: 'missing_id' };
+function loadSession(lessonId: string | undefined): LoadResult {
+  if (!lessonId) return { ok: false };
   try {
-    const lesson = loadLesson(lessonId);
-    const exercises = toPlayableExercises(lesson);
-    if (exercises.length === 0) return { ok: false, reason: 'empty' };
-    return { ok: true, lessonId: lesson.id, exercises, newItems: lesson.new_items };
+    return { ok: true, session: loadLessonSession(lessonId) };
   } catch {
-    return { ok: false, reason: 'not_found' };
+    return { ok: false };
   }
 }
 
@@ -66,48 +58,59 @@ export default function LessonScreen() {
   const answerInputRef = useRef<AnswerTextFieldHandle>(null);
   const { id } = useLocalSearchParams<{ id: string }>();
   const lessonId = typeof id === 'string' ? id : Array.isArray(id) ? (id[0] ?? '') : '';
-
-  const loaded = useMemo(() => loadPlayableLesson(lessonId || undefined), [lessonId]);
+  const loaded = useMemo(() => loadSession(lessonId || undefined), [lessonId]);
 
   const status = useLessonStore((s) => s.status);
+  const flow = useLessonStore((s) => s.flow);
+  const scriptIndex = useLessonStore((s) => s.scriptIndex);
+  const stepsCompleted = useLessonStore((s) => s.stepsCompleted);
+  const stepTotal = useLessonStore((s) => s.stepTotal);
   const hearts = useLessonStore((s) => s.hearts);
   const maxHearts = useLessonStore((s) => s.maxHearts);
   const userAnswer = useLessonStore((s) => s.userAnswer);
   const lastGrade = useLessonStore((s) => s.lastGrade);
-  const startLesson = useLessonStore((s) => s.startLesson);
+  const startScript = useLessonStore((s) => s.startScript);
   const setAnswer = useLessonStore((s) => s.setAnswer);
   const checkAnswer = useLessonStore((s) => s.checkAnswer);
   const continueAfterFeedback = useLessonStore((s) => s.continueAfterFeedback);
+  const advanceStep = useLessonStore((s) => s.advanceStep);
   const continueMistakesIntro = useLessonStore((s) => s.continueMistakesIntro);
   const reset = useLessonStore((s) => s.reset);
   const exercise = useLessonStore((s) => {
-    const id = s.queue[0];
-    return id ? (s.exerciseById[id] ?? null) : null;
+    if (s.flow === 'script') {
+      const entry = s.script[s.scriptIndex];
+      if (!entry || entry.kind !== 'exercise') return null;
+      return s.exerciseById[entry.id] ?? null;
+    }
+    const head = s.queue[0];
+    return head ? (s.exerciseById[head] ?? null) : null;
   });
-  const solved = useLessonStore((s) => s.correctCount + s.almostCount);
-  const total = useLessonStore((s) => s.initialIds.length);
   const mistakesLeft = useLessonStore((s) => s.queue.length);
   const finishLesson = useFinishLesson();
   const recordMistake = useRecordLessonMistake();
+
+  const step = loaded.ok && flow === 'script' ? loaded.session.steps[scriptIndex] : undefined;
+  const surface = step ? stepSurface(step) : null;
   const progress = useMemo(() => {
-    const ratio = total === 0 ? 0 : Math.min(1, solved / total);
-    return { solved, total, ratio };
-  }, [solved, total]);
+    const total = stepTotal;
+    const ratio = total === 0 ? 0 : Math.min(1, stepsCompleted / total);
+    return { solved: stepsCompleted, total, ratio };
+  }, [stepTotal, stepsCompleted]);
   const typing = exercise ? isTypingExercise(exercise) : false;
   const mistakesIntroVisible = status === 'mistakes_intro';
 
   useEffect(() => {
     if (!loaded.ok) return;
-    startLesson({
-      lessonId: loaded.lessonId,
-      exercises: loaded.exercises,
-      newItems: loaded.newItems,
+    startScript({
+      lessonId: loaded.session.lessonId,
+      script: loaded.session.script,
+      exercises: loaded.session.exercises,
+      newItems: loaded.session.newItems,
     });
     return () => {
       void stopLessonAudio();
-      // Keep session stats for the summary screen; reset on explicit leave / summary continue.
     };
-  }, [loaded, startLesson]);
+  }, [loaded, startScript]);
 
   const onAnswerChange = useCallback(
     (value: string) => {
@@ -116,7 +119,7 @@ export default function LessonScreen() {
     [setAnswer],
   );
 
-  const sheetVisible = status === 'feedback' || status === 'failed';
+  const sheetVisible = lastGrade !== null && (status === 'feedback' || status === 'failed');
   const sheetSuccess = lastGrade?.status === 'correct' || lastGrade?.status === 'almost';
 
   const sheetTitle = useMemo(() => {
@@ -167,6 +170,19 @@ export default function LessonScreen() {
     }
   }, [continueAfterFeedback, goToSummary, status]);
 
+  const onSoftContinue = useCallback(() => {
+    if (useLessonStore.getState().status === 'failed') {
+      goToSummary();
+      return;
+    }
+    void stopLessonAudio();
+    advanceStep();
+    const nextStatus = useLessonStore.getState().status;
+    if (nextStatus === 'completed' || nextStatus === 'failed') {
+      goToSummary();
+    }
+  }, [advanceStep, goToSummary]);
+
   if (!loaded.ok) {
     return (
       <View style={[styles.root, styles.centered, { paddingTop: insets.top + space.lg }]}>
@@ -180,7 +196,7 @@ export default function LessonScreen() {
     return <View style={[styles.root, { backgroundColor: colors.ground }]} />;
   }
 
-  if (!exercise && !mistakesIntroVisible) {
+  if (!surface && !exercise && !mistakesIntroVisible) {
     return <View style={[styles.root, { backgroundColor: colors.ground }]} />;
   }
 
@@ -193,11 +209,13 @@ export default function LessonScreen() {
   const gradeStatus =
     status === 'feedback' || status === 'failed' ? (lastGrade?.status ?? null) : null;
 
+  const introItem = step?.type === 'intro' ? itemById(loaded.session, step.itemId) : null;
+  const intro = step ? introPlace(loaded.session.steps, scriptIndex) : null;
+
   return (
     <KeyboardAvoidingView
       style={[styles.root, { paddingTop: insets.top + space.sm }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
     >
       <View style={styles.header}>
         <Pressable
@@ -221,92 +239,89 @@ export default function LessonScreen() {
         <LessonHearts hearts={hearts} maxHearts={maxHearts} />
       </View>
 
-      <ScrollView
-        style={styles.bodyScroll}
-        contentContainerStyle={styles.bodyContent}
-        keyboardShouldPersistTaps="handled"
-        keyboardDismissMode="interactive"
-      >
-        {exercise?.type === 'select_translation' ? (
-          <SelectTranslationExercise
-            exercise={exercise}
-            selected={userAnswer}
-            disabled={status !== 'active'}
-            gradeStatus={gradeStatus}
-            onSelect={setAnswer}
-          />
-        ) : null}
-        {exercise?.type === 'build_sentence' ? (
-          <BuildSentenceExercise
-            key={exercise.id}
-            exercise={exercise}
-            disabled={status !== 'active'}
-            gradeStatus={gradeStatus}
-            onAnswerChange={onAnswerChange}
-          />
-        ) : null}
-        {exercise?.type === 'listen_select' ? (
-          <ListenSelectExercise
-            exercise={exercise}
-            selected={userAnswer}
-            disabled={status !== 'active'}
-            gradeStatus={gradeStatus}
-            onSelect={setAnswer}
-          />
-        ) : null}
-        {exercise?.type === 'match_pairs' ? (
-          <MatchPairsExercise
-            key={exercise.id}
-            exercise={exercise}
-            disabled={status !== 'active'}
-            revealResult={Boolean(gradeStatus)}
-            onAnswerChange={onAnswerChange}
-          />
-        ) : null}
-        {exercise?.type === 'type_translation' ? (
-          <TypeTranslationExercise
-            key={exercise.id}
-            exercise={exercise}
-            value={userAnswer}
-            disabled={status !== 'active'}
-            onChangeText={onAnswerChange}
-            inputRef={answerInputRef}
-          />
-        ) : null}
-        {exercise?.type === 'fill_gap' ? (
-          <FillGapExercise
-            key={exercise.id}
-            exercise={exercise}
-            value={userAnswer}
-            disabled={status !== 'active'}
-            onChangeText={onAnswerChange}
-            inputRef={answerInputRef}
-          />
-        ) : null}
-      </ScrollView>
+      {surface === 'intro' && introItem && intro ? (
+        <IntroStep
+          item={introItem}
+          position={intro.position}
+          total={intro.total}
+          topicIcon={loaded.session.topicIcon}
+          onNext={onSoftContinue}
+        />
+      ) : null}
 
-      {typing ? (
+      {surface === 'dialog' && step?.type === 'dialog' ? (
+        <DialogStep step={step} items={loaded.session.items} onContinue={onSoftContinue} />
+      ) : null}
+
+      {surface === 'speak' && step?.type === 'speak_repeat' ? (
+        <ScrollView
+          style={styles.bodyScroll}
+          contentContainerStyle={styles.bodyContent}
+          keyboardShouldPersistTaps="handled"
+        >
+          <SpeakRepeatStep
+            promptEs={step.prompt_es}
+            audio={step.audio}
+            title={t('lesson.speakTitle')}
+          />
+        </ScrollView>
+      ) : null}
+
+      {surface === 'prompt' && step && 'prompt_ru' in step ? (
+        <ScrollView style={styles.bodyScroll} contentContainerStyle={styles.bodyContent}>
+          <Text variant="h2">{step.prompt_ru}</Text>
+        </ScrollView>
+      ) : null}
+
+      {surface === 'exercise' || (!surface && exercise) ? (
+        <ScrollView
+          style={styles.bodyScroll}
+          contentContainerStyle={styles.bodyContent}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="interactive"
+        >
+          {exercise ? (
+            <LessonExerciseBody
+              exercise={exercise}
+              userAnswer={userAnswer}
+              disabled={status !== 'active'}
+              gradeStatus={gradeStatus}
+              onSelect={setAnswer}
+              onAnswerChange={onAnswerChange}
+              inputRef={answerInputRef}
+            />
+          ) : null}
+        </ScrollView>
+      ) : null}
+
+      {typing && (surface === 'exercise' || !surface) ? (
         <AccentBar
           disabled={status !== 'active'}
           onInsert={(symbol) => answerInputRef.current?.insertSymbol(symbol)}
         />
       ) : null}
 
-      <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, space.lg) }]}>
-        <Button
-          title={t('lesson.check')}
-          variant="primary"
-          disabled={!canCheck}
-          onPress={() => {
-            Keyboard.dismiss();
-            const current = useLessonStore.getState().getCurrentExercise();
-            const grade = checkAnswer();
-            if (!grade) return;
-            playGradeSound(grade.status);
-            if (current) recordMistake(current, grade.status);
-          }}
-        />
-      </View>
+      {surface === 'speak' || surface === 'prompt' || surface === 'exercise' || !surface ? (
+        <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, space.lg) }]}>
+          {surface === 'exercise' || !surface ? (
+            <Button
+              title={t('lesson.check')}
+              variant="primary"
+              disabled={!canCheck}
+              onPress={() => {
+                Keyboard.dismiss();
+                const current = useLessonStore.getState().getCurrentExercise();
+                const grade = checkAnswer();
+                if (!grade) return;
+                playGradeSound(grade.status);
+                if (current) recordMistake(current, grade.status);
+              }}
+            />
+          ) : (
+            <Button title={t('lesson.continue')} variant="primary" onPress={onSoftContinue} />
+          )}
+        </View>
+      ) : null}
 
       <ResultSheet
         visible={sheetVisible}
@@ -324,6 +339,10 @@ export default function LessonScreen() {
       />
     </KeyboardAvoidingView>
   );
+}
+
+function itemById(session: LoadedLesson, itemId: string) {
+  return session.items.find((item) => item.id === itemId) ?? null;
 }
 
 const styles = StyleSheet.create({

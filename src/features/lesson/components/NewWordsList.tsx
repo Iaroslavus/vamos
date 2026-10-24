@@ -21,7 +21,7 @@ export function NewWordsList({ items }: NewWordsListProps) {
 
   return (
     <View style={styles.root}>
-      <Text variant="h3">{t('lesson.summaryNewWords')}</Text>
+      <Text variant="h3">{t('lesson.summaryNewPhrases', { count: items.length })}</Text>
       <View style={styles.list}>
         {items.map((item) => (
           <Pressable
