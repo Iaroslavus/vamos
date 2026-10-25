@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { act, fireEvent, render, screen } from '@testing-library/react-native';
+import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 import type { ComponentProps } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { StyleSheet } from 'react-native';
@@ -13,6 +14,7 @@ import {
 import type { Item } from '@/features/content/schema';
 import i18n from '@/i18n';
 
+import { DEFAULT_MAX_HEARTS, useLessonStore } from '../store';
 import { IntroStep } from './IntroStep';
 
 jest.mock('expo-haptics', () => ({
@@ -110,10 +112,32 @@ function renderStep(item: Item, props: Partial<ComponentProps<typeof IntroStep>>
   );
 }
 
+const speech = ExpoSpeechRecognitionModule as unknown as {
+  __emit: (event: string, payload: unknown) => void;
+};
+
+const granted = {
+  granted: true,
+  canAskAgain: true,
+  expires: 'never' as const,
+  status: 'granted' as const,
+};
+
+function emitTranscript(transcript: string): void {
+  speech.__emit('result', {
+    isFinal: true,
+    results: [{ transcript, confidence: 1, segments: [] }],
+  });
+}
+
 describe('IntroStep', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockVocabMemory.clear();
+    useLessonStore.getState().reset();
+    jest.mocked(ExpoSpeechRecognitionModule.isRecognitionAvailable).mockReturnValue(true);
+    jest.mocked(ExpoSpeechRecognitionModule.getPermissionsAsync).mockResolvedValue(granted);
+    jest.mocked(ExpoSpeechRecognitionModule.requestPermissionsAsync).mockResolvedValue(granted);
   });
 
   it('shows the new-phrase label, translation, hint, note, and equal audio buttons', async () => {
@@ -200,6 +224,92 @@ describe('IntroStep', () => {
     expect(screen.getByRole('button', { name: 'Убрать из «Избранное»' })).toBeTruthy();
     await fireEvent.press(screen.getByText('Готово'));
     expect(await screen.findByRole('button', { name: 'В избранном' })).toBeTruthy();
+  });
+
+  it('opens speak practice when the learner taps repeat aloud', async () => {
+    await renderStep(phrase);
+
+    expect(screen.queryByText('Повторите вслух')).toBeNull();
+    expect(screen.queryByText('Слушать образец')).toBeNull();
+
+    await fireEvent.press(screen.getByText('Повторить вслух'));
+
+    expect(await screen.findByText('Повторите вслух')).toBeTruthy();
+    expect(screen.getByText('Слушать образец')).toBeTruthy();
+    expect(screen.getByLabelText('Говорить')).toBeTruthy();
+    expect(screen.getByText('Тренировка: сердечки и ошибки урока не меняются.')).toBeTruthy();
+  });
+
+  it('offers listen-and-repeat when recognition is unavailable', async () => {
+    jest.mocked(ExpoSpeechRecognitionModule.isRecognitionAvailable).mockReturnValue(false);
+    await renderStep(phrase);
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Повторить вслух' }));
+
+    expect(await screen.findByText('Распознавание недоступно')).toBeTruthy();
+    expect(screen.getByText(/Прослушайте фразу и повторите её сами/)).toBeTruthy();
+
+    await fireEvent.press(screen.getByText('Прослушать и повторить'));
+
+    expect(ExpoSpeechRecognitionModule.start).not.toHaveBeenCalled();
+    expect(playLessonAudio).toHaveBeenCalledWith(
+      expect.objectContaining({ text: 'buenos días', audio: 'a1/buenos-dias.mp3' }),
+    );
+  });
+
+  it('offers listen-and-repeat when the microphone stays blocked', async () => {
+    jest.mocked(ExpoSpeechRecognitionModule.getPermissionsAsync).mockResolvedValue({
+      granted: false,
+      canAskAgain: false,
+      expires: 'never',
+      status: 'denied',
+    });
+    await renderStep(phrase);
+
+    await fireEvent.press(screen.getByText('Повторить вслух'));
+
+    expect(await screen.findByText('Микрофон недоступен')).toBeTruthy();
+    expect(screen.getByText(/Прослушайте фразу и повторите её сами/)).toBeTruthy();
+
+    await fireEvent.press(screen.getByText('Прослушать и повторить'));
+
+    expect(ExpoSpeechRecognitionModule.start).not.toHaveBeenCalled();
+    expect(playLessonAudio).toHaveBeenCalledWith(
+      expect.objectContaining({ text: 'buenos días', audio: 'a1/buenos-dias.mp3' }),
+    );
+  });
+
+  it('scores a practice miss without hearts, mistakes, or lesson progress', async () => {
+    useLessonStore.getState().startLesson({
+      lessonId: 'a1.hola.l1',
+      exercises: [
+        {
+          id: 'e1',
+          type: 'select_translation',
+          prompt_ru: 'Выберите перевод',
+          prompt: 'hola',
+          options: ['привет'],
+          answer: 'hola',
+        },
+      ],
+    });
+    await renderStep(phrase);
+    await fireEvent.press(screen.getByText('Повторить вслух'));
+    expect(await screen.findByLabelText('Говорить')).toBeTruthy();
+
+    await act(async () => {
+      emitTranscript('zzzz');
+    });
+
+    expect(await screen.findByText('Не расслышали «buenos».')).toBeTruthy();
+    const state = useLessonStore.getState();
+    expect(state.hearts).toBe(DEFAULT_MAX_HEARTS);
+    expect(state.wrongCount).toBe(0);
+    expect(state.correctCount).toBe(0);
+    expect(state.almostCount).toBe(0);
+    expect(state.xpEarned).toBe(0);
+    expect(state.status).toBe('active');
+    expect(state.queue).toEqual(['e1']);
   });
 
   it('goes on from Дальше and lets the learner repeat aloud without grading', async () => {

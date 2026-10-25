@@ -9,13 +9,14 @@ import { Text } from '@/components/Text';
 import { Appear } from '@/features/auth/components/Appear';
 import type { Item } from '@/features/content/schema';
 import { resolveTopicIcon } from '@/features/content/topicIcons';
+import { SpeakPracticeSheet } from '@/features/speech/components/SpeakPracticeSheet';
 import { AddToVocabSheet } from '@/features/vocab/components/AddToVocabSheet';
 import { useItemSaveState } from '@/features/vocab/hooks/useItemSaveState';
 import { colors, radius, space } from '@/theme/tokens';
 
 import { useCardSwipe } from '../hooks/useCardSwipe';
 import { useIntroPlayback } from '../hooks/useIntroPlayback';
-import { showsSayRu, type AudioPreference } from '../intro';
+import { itemAudioPath, showsSayRu, type AudioPreference } from '../intro';
 import { IntroCard } from './IntroCard';
 import { IntroWhySheet } from './IntroWhySheet';
 
@@ -29,7 +30,7 @@ type IntroStepProps = {
   /** Which recording to prefer. Falls back to the other region. */
   audioVariant?: AudioPreference;
   onNext: () => void;
-  /** Spoken repeat. Nothing is recorded or graded yet. */
+  /** Optional notice when practice opens. The sheet itself does not grade the lesson. */
   onRepeatAloud?: () => void;
 };
 
@@ -48,6 +49,7 @@ export function IntroStep({
   const { playPhrase, playPart } = useIntroPlayback(item, audioVariant);
   const [whyItemId, setWhyItemId] = useState<string | null>(null);
   const [vocabOpen, setVocabOpen] = useState(false);
+  const [practiceItemId, setPracticeItemId] = useState<string | null>(null);
   const saveLabel = saveState.inFavorites
     ? t('lesson.introSaved')
     : saveState.inAny
@@ -90,7 +92,10 @@ export function IntroStep({
         <Button
           title={t('lesson.introRepeat')}
           variant="secondary"
-          onPress={() => onRepeatAloud?.()}
+          onPress={() => {
+            onRepeatAloud?.();
+            setPracticeItemId(item.id);
+          }}
         />
         <Button title={t('lesson.continue')} variant="primary" onPress={onNext} />
       </View>
@@ -105,6 +110,15 @@ export function IntroStep({
         itemIds={[item.id]}
         onClose={() => setVocabOpen(false)}
         onChanged={saveState.reload}
+      />
+      <SpeakPracticeSheet
+        visible={practiceItemId === item.id}
+        mode="practice"
+        phrase={item.es}
+        audio={itemAudioPath(item, audioVariant)}
+        sayRu={sayRu}
+        parts={item.parts}
+        onClose={() => setPracticeItemId(null)}
       />
     </View>
   );
