@@ -16,7 +16,7 @@ import { Text } from '@/components/Text';
 import { isProgressSaved, signOutWarningKind } from '@/features/auth/account';
 import { Appear } from '@/features/auth/components/Appear';
 import { ErrorNote } from '@/features/auth/components/ErrorNote';
-import { SaveProgressForm } from '@/features/auth/components/SaveProgressForm';
+import { UnsavedAccount } from '@/features/auth/components/UnsavedAccount';
 import { useSession } from '@/features/auth/useSession';
 import type { AuthErrorCode } from '@/features/auth/errors';
 import { colors, radius, space } from '@/theme/tokens';
@@ -24,7 +24,16 @@ import { colors, radius, space } from '@/theme/tokens';
 export default function ProfileScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { status, session, signingOut, signOut, requestEmailLink, confirmEmailLink } = useSession();
+  const {
+    status,
+    session,
+    signingOut,
+    signOut,
+    requestEmailLink,
+    confirmEmailLink,
+    requestEmailSignIn,
+    confirmEmailSignIn,
+  } = useSession();
   const [signOutError, setSignOutError] = useState<AuthErrorCode | null>(null);
 
   const user = session?.user ?? null;
@@ -67,26 +76,31 @@ export default function ProfileScreen() {
       >
         <Appear style={styles.flex}>
           <View style={styles.column}>
-            <Text variant="h3" accessibilityRole="header">
-              {saved ? t('auth.savedTitle') : t('auth.saveTitle')}
-            </Text>
-
             {status === 'loading' || !user ? (
-              <Text color={colors.inkMuted}>{t('auth.loading')}</Text>
-            ) : saved ? (
-              <View style={styles.saved}>
-                <Text variant="bodyBold">{email}</Text>
-                <Text color={colors.inkMuted}>{t('auth.savedBody')}</Text>
-              </View>
-            ) : (
               <>
-                <Text color={colors.inkMuted}>{t('auth.saveBody')}</Text>
-                <SaveProgressForm
-                  key={user.id}
-                  requestEmailLink={requestEmailLink}
-                  confirmEmailLink={confirmEmailLink}
-                />
+                <Text variant="h3" accessibilityRole="header">
+                  {t('auth.saveTitle')}
+                </Text>
+                <Text color={colors.inkMuted}>{t('auth.loading')}</Text>
               </>
+            ) : saved ? (
+              <>
+                <Text variant="h3" accessibilityRole="header">
+                  {t('auth.savedTitle')}
+                </Text>
+                <View style={styles.saved}>
+                  <Text variant="bodyBold">{email}</Text>
+                  <Text color={colors.inkMuted}>{t('auth.savedBody')}</Text>
+                </View>
+              </>
+            ) : (
+              <UnsavedAccount
+                key={user.id}
+                requestEmailLink={requestEmailLink}
+                confirmEmailLink={confirmEmailLink}
+                requestEmailSignIn={requestEmailSignIn}
+                confirmEmailSignIn={confirmEmailSignIn}
+              />
             )}
 
             {signOutError ? <ErrorNote message={t(`auth.errors.${signOutError}`)} /> : null}

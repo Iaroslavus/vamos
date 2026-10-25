@@ -2,6 +2,12 @@ jest.mock('expo-localization', () => ({
   getLocales: () => [{ languageCode: 'ru', languageTag: 'ru-RU' }],
 }));
 
+jest.mock('expo-linking', () => ({
+  createURL: (path) => `vamos://${String(path).replace(/^\//, '')}`,
+  getInitialURL: jest.fn(async () => null),
+  addEventListener: jest.fn(() => ({ remove: jest.fn() })),
+}));
+
 jest.mock('@react-native-async-storage/async-storage', () =>
   jest.requireActual('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 );

@@ -12,5 +12,7 @@ export type SessionContextValue = {
   retry: () => Promise<void>;
   requestEmailLink: (email: string) => Promise<LinkRequestResult>;
   confirmEmailLink: (email: string, code: string) => Promise<LinkConfirmResult>;
+  requestEmailSignIn: (email: string) => Promise<LinkRequestResult>;
+  confirmEmailSignIn: (email: string, code: string) => Promise<LinkConfirmResult>;
   signOut: () => Promise<EnsureResult>;
 };

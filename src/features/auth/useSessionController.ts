@@ -1,14 +1,25 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import i18n from '@/i18n';
+import { activeUiLanguage } from '@/i18n/language';
+
 import {
   confirmEmailLink as confirmEmailLinkAccount,
+  confirmEmailSignIn as confirmEmailSignInAccount,
   ensureAnonymousSession,
   requestEmailLink as requestEmailLinkAccount,
+  requestEmailSignIn as requestEmailSignInAccount,
   signOutAndRestart,
   type EnsureResult,
   type LinkConfirmResult,
   type LinkRequestResult,
 } from './account';
+import {
+  adoptAuthCallback,
+  bindAuthReturn,
+  initialAuthUrl,
+  sessionFromUserReload,
+} from './authReturn';
 import type { AuthErrorCode } from './errors';
 import type { AuthGateway, AuthSession } from './types';
 import type { SessionContextValue, SessionStatus } from './sessionTypes';
@@ -17,6 +28,7 @@ export function useSessionController(auth: AuthGateway): SessionContextValue {
   const sessionRef = useRef<AuthSession | null>(null);
   const mounted = useRef(true);
   const restarting = useRef(false);
+  const adopting = useRef(false);
 
   const [status, setStatus] = useState<SessionStatus>('loading');
   const [session, setSession] = useState<AuthSession | null>(null);
@@ -47,11 +59,11 @@ export function useSessionController(auth: AuthGateway): SessionContextValue {
 
   const requestEmailLink = useCallback(
     async (email: string): Promise<LinkRequestResult> => {
-      const result = await requestEmailLinkAccount(auth, email);
+      const result = await requestEmailLinkAccount(auth, email, activeUiLanguage(i18n.language));
       if (!mounted.current || !result.ok) return result;
 
       const current = sessionRef.current;
-      if (current && result.user.id === current.user.id) {
+      if (current && result.user && result.user.id === current.user.id) {
         applySession({ user: { ...current.user, ...result.user } });
       }
       return result;
@@ -67,6 +79,27 @@ export function useSessionController(auth: AuthGateway): SessionContextValue {
       const result = await confirmEmailLinkAccount(auth, email, code, userId);
       if (mounted.current && result.ok) applySession(result.session);
       return result;
+    },
+    [applySession, auth],
+  );
+
+  const requestEmailSignIn = useCallback(
+    async (email: string): Promise<LinkRequestResult> => {
+      return requestEmailSignInAccount(auth, email, activeUiLanguage(i18n.language));
+    },
+    [auth],
+  );
+
+  const confirmEmailSignIn = useCallback(
+    async (email: string, code: string): Promise<LinkConfirmResult> => {
+      adopting.current = true;
+      try {
+        const result = await confirmEmailSignInAccount(auth, email, code);
+        if (mounted.current && result.ok) applySession(result.session);
+        return result;
+      } finally {
+        adopting.current = false;
+      }
     },
     [applySession, auth],
   );
@@ -100,19 +133,55 @@ export function useSessionController(auth: AuthGateway): SessionContextValue {
 
   useEffect(() => {
     mounted.current = true;
+    const adoptUrl = async (url: string) => {
+      if (restarting.current) return;
+      try {
+        const next = await adoptAuthCallback(auth, url, sessionRef.current);
+        if (mounted.current && next && !restarting.current) applySession(next);
+      } catch {
+        // A bad redirect must not surface an error over the current session.
+      }
+    };
+
+    const reloadLinkedAccount = async () => {
+      if (restarting.current || adopting.current) return;
+      try {
+        const result = await auth.reloadUser();
+        if (!mounted.current || restarting.current || adopting.current) return;
+        const next = sessionFromUserReload(sessionRef.current, result.session);
+        if (next) applySession(next);
+      } catch {
+        // Keep the session already on screen.
+      }
+    };
+
     const unsubscribe = auth.onAuthStateChange((next) => {
       if (!mounted.current || !next || restarting.current) return;
       const current = sessionRef.current;
-      if (current && next.user.id !== current.user.id) return;
+      if (!adopting.current && current && next.user.id !== current.user.id) return;
       applySession(next);
     });
-    // Supabase is an external system: read or create the anonymous session, then store it.
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- auth bootstrap
-    void retry();
+    const stopReturn = bindAuthReturn({
+      onUrl: (url) => {
+        void adoptUrl(url);
+      },
+      onForeground: () => {
+        void reloadLinkedAccount();
+      },
+    });
+    // Supabase is an external system: restore the session, then pick up an email link.
+    void (async () => {
+      await retry();
+      if (!mounted.current) return;
+      const url = await initialAuthUrl();
+      if (url) await adoptUrl(url);
+      await reloadLinkedAccount();
+    })();
 
     return () => {
       mounted.current = false;
       unsubscribe();
+      stopReturn();
     };
   }, [auth, applySession, retry]);
 
@@ -124,6 +193,8 @@ export function useSessionController(auth: AuthGateway): SessionContextValue {
     retry,
     requestEmailLink,
     confirmEmailLink,
+    requestEmailSignIn,
+    confirmEmailSignIn,
     signOut,
   };
 }

@@ -6,6 +6,7 @@ import ProfileScreen from '../../../app/(tabs)/profile';
 import { SessionProvider } from '@/features/auth/SessionProvider';
 import type { AuthGateway, AuthSession, AuthUser } from '@/features/auth/types';
 import i18n from '@/i18n';
+import { activeUiLanguage } from '@/i18n/language';
 
 jest.mock('expo-router', () => ({
   useRouter: () => ({ push: jest.fn() }),
@@ -63,6 +64,16 @@ function createAuth() {
       emit(next);
       return { session: next, error: null };
     }),
+    requestEmailSignIn: jest.fn(async () => ({ error: null })),
+    verifyEmailSignIn: jest.fn(async (email: string) => {
+      const next: AuthSession = {
+        user: { id: 'saved-user', email, is_anonymous: false },
+      };
+      emit(next);
+      return { session: next, error: null };
+    }),
+    reloadUser: jest.fn(async () => ({ session: current, error: null })),
+    completeAuthRedirect: jest.fn(async () => ({ session: null, type: null, error: null })),
     signOut: jest.fn(async () => {
       emit(null);
       return { error: null };
@@ -117,7 +128,10 @@ describe('ProfileScreen', () => {
     fireEvent.press(send);
 
     expect(await screen.findByText('Код отправлен на ada@example.com')).toBeOnTheScreen();
-    expect(auth.updateUserEmail).toHaveBeenCalledWith('ada@example.com');
+    expect(auth.updateUserEmail).toHaveBeenCalledWith(
+      'ada@example.com',
+      activeUiLanguage(i18n.language),
+    );
 
     fireEvent.changeText(screen.getByLabelText('Код из письма'), '123456');
     fireEvent.press(await screen.findByRole('button', { name: 'Подтвердить', disabled: false }));
@@ -131,6 +145,38 @@ describe('ProfileScreen', () => {
       expect.objectContaining({
         session: expect.objectContaining({
           user: expect.objectContaining({ id: 'user-1', is_anonymous: false }),
+        }),
+      }),
+    );
+  });
+
+  it('signs into the saved account from a new device', async () => {
+    const auth = createAuth();
+    await renderProfile(auth);
+
+    fireEvent.press(await screen.findByRole('button', { name: 'Войти в сохранённый аккаунт' }));
+    expect(await screen.findByRole('header', { name: 'Войти в аккаунт' })).toBeOnTheScreen();
+    fireEvent.changeText(screen.getByLabelText('Email'), 'ada@example.com');
+    fireEvent.press(await screen.findByRole('button', { name: 'Отправить код', disabled: false }));
+
+    expect(await screen.findByText('Код отправлен на ada@example.com')).toBeOnTheScreen();
+    expect(auth.requestEmailSignIn).toHaveBeenCalledWith(
+      'ada@example.com',
+      activeUiLanguage(i18n.language),
+    );
+    expect(auth.updateUserEmail).not.toHaveBeenCalled();
+
+    fireEvent.changeText(screen.getByLabelText('Код из письма'), '123456');
+    fireEvent.press(await screen.findByRole('button', { name: 'Подтвердить', disabled: false }));
+
+    expect(await screen.findByText('Прогресс сохранён')).toBeOnTheScreen();
+    expect(screen.getByText('ada@example.com')).toBeOnTheScreen();
+    expect(auth.verifyEmailSignIn).toHaveBeenCalledWith('ada@example.com', '123456');
+    expect(auth.verifyEmailChange).not.toHaveBeenCalled();
+    await expect(jest.mocked(auth.verifyEmailSignIn).mock.results[0]?.value).resolves.toEqual(
+      expect.objectContaining({
+        session: expect.objectContaining({
+          user: expect.objectContaining({ id: 'saved-user', is_anonymous: false }),
         }),
       }),
     );

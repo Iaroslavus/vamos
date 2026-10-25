@@ -12,6 +12,8 @@ describe('mapAuthError', () => {
       'anonymous_disabled',
     );
     expect(mapAuthError({ message: 'bad', code: 'email_address_invalid' })).toBe('invalid_email');
+    expect(mapAuthError({ message: 'missing', code: 'user_not_found' })).toBe('email_not_found');
+    expect(mapAuthError({ message: 'Signups not allowed for otp' })).toBe('email_not_found');
   });
 
   it('treats fetch failures as a network error and everything else as unknown', () => {

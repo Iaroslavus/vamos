@@ -163,7 +163,8 @@ site_url = "http://127.0.0.1:8081"
 # external_url = ""
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
 # `vamos://` — scheme from app.json (dev build / production), `exp://` — Expo Go.
-additional_redirect_urls = ["vamos://**", "exp://**", "http://127.0.0.1:8081/**"]
+# `vamos://profile` is where email links return (updateUser / signInWithOtp emailRedirectTo).
+additional_redirect_urls = ["vamos://**", "vamos://profile", "exp://**", "http://127.0.0.1:8081/**"]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
 jwt_expiry = 3600
 # JWT issuer URL. If not set, defaults to auth.external_url.
@@ -248,10 +249,20 @@ otp_expiry = 3600
 # admin_email = "admin@email.com"
 # sender_name = "Admin"
 
-# OTP shown in the letter when an anonymous account links an email (verifyOtp email_change).
+# Letters include {{ .Token }} (6 digits, valid 1 hour) and the link as a second step.
+# Copy is chosen from user_metadata.ui_language: ru, uk, otherwise en.
+# Cloud dashboard needs the same HTML — see README, «Шаблоны писем в облаке».
 [auth.email.template.email_change]
-subject = "Код для сохранения прогресса"
+subject = '{{ if eq .Data.ui_language "ru" }}Код для сохранения прогресса{{ else if eq .Data.ui_language "uk" }}Код для збереження прогресу{{ else }}Code to save your progress{{ end }}'
 content_path = "./supabase/templates/email_change.html"
+
+[auth.email.template.magic_link]
+subject = '{{ if eq .Data.ui_language "ru" }}Код для входа в Vamos{{ else if eq .Data.ui_language "uk" }}Код для входу у Vamos{{ else }}Your Vamos sign-in code{{ end }}'
+content_path = "./supabase/templates/magic_link.html"
+
+[auth.email.template.confirmation]
+subject = '{{ if eq .Data.ui_language "ru" }}Подтвердите email в Vamos{{ else if eq .Data.ui_language "uk" }}Підтвердьте email у Vamos{{ else }}Confirm your email in Vamos{{ end }}'
+content_path = "./supabase/templates/confirmation.html"
 
 # Uncomment to customize email template
 # [auth.email.template.invite]
