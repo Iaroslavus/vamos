@@ -2,16 +2,19 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import { useEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';
+import { StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import LessonSummaryScreen from '../../../app/(lesson)/lesson/summary';
 import { LearnerProvider } from '@/features/learner/context';
 import type { LearnerProfile } from '@/features/learner/profile';
 import { useFinishLesson } from '@/features/lesson/hooks/useFinishLesson';
+import type { VocabularyItem } from '@/features/lesson/schema';
 import { useLessonStore, type LessonExerciseItem } from '@/features/lesson/store';
 import { ProgressProvider } from '@/features/progress/ProgressProvider';
 import type { ProgressRepository } from '@/features/progress/types';
 import { reviewRepository } from '@/features/review/defaultRepository';
+import { vocabRepository } from '@/features/vocab/defaultRepository';
 import i18n from '@/i18n';
 
 jest.mock('expo-haptics', () => ({
@@ -116,12 +119,15 @@ function repository(recordCompletion: jest.Mock): ProgressRepository {
   };
 }
 
-function finishLessonInStore(): void {
+const HOLA: VocabularyItem = { id: 'hola', es: 'hola', ru: 'привет', pos: 'interjection' };
+const ADIOS: VocabularyItem = { id: 'adios', es: 'adiós', ru: 'пока', pos: 'interjection' };
+
+function finishLessonInStore(newItems: VocabularyItem[] = [HOLA]): void {
   useLessonStore.getState().reset();
   useLessonStore.getState().startLesson({
     lessonId: 'a1-u01-l01',
     exercises: [EXERCISE],
-    newItems: [{ id: 'hola', es: 'hola', ru: 'привет', pos: 'interjection' }],
+    newItems,
     now: () => 1_000,
   });
   useLessonStore.getState().setAnswer('привет');
@@ -223,7 +229,18 @@ describe('LessonSummaryScreen', () => {
     expect(screen.getByText('0:00')).toBeOnTheScreen();
     expect(screen.getByText('1 новая фраза')).toBeOnTheScreen();
     expect(screen.getByText('hola')).toBeOnTheScreen();
-    expect(screen.getByText('В словник')).toBeOnTheScreen();
+    expect(screen.getByRole('button', { name: 'В словник · 1' })).toBeOnTheScreen();
+    expect(screen.getByRole('checkbox', { name: 'hola, привет' })).toBeChecked();
+
+    const check = screen.getByRole('checkbox', { name: 'hola, привет' });
+    const checkStyle = StyleSheet.flatten(check.props.style);
+    expect(checkStyle).toMatchObject({ width: 44, height: 44 });
+
+    const value = screen.getByText('+10');
+    expect(StyleSheet.flatten(value.props.style).lineHeight).toBeGreaterThanOrEqual(48);
+    const scroll = screen.getByTestId('lesson-summary-scroll');
+    const contentStyle = StyleSheet.flatten(scroll.props.contentContainerStyle);
+    expect(contentStyle.paddingTop).toBeGreaterThanOrEqual(47);
 
     const logged = errors.mock.calls.map((args) => args.map(String).join(' '));
     expect(logged.filter((line) => /getSnapshot|Maximum update depth/i.test(line))).toEqual([]);
@@ -262,12 +279,14 @@ describe('LessonSummaryScreen', () => {
     await renderSummary(recordCompletion);
     await flush();
 
-    await fireEvent.press(screen.getByText('В словник'));
-    await fireEvent.press(await screen.findByRole('button', { name: 'Добавить в «Избранное»' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'В словник · 1' }));
+    expect(await screen.findByTestId('bottom-sheet')).toBeOnTheScreen();
+    await fireEvent.press(await screen.findByRole('checkbox', { name: 'Добавить в «Избранное»' }));
     await fireEvent.press(screen.getByText('Готово'));
 
-    expect(await screen.findByText('В избранном')).toBeOnTheScreen();
-    expect(screen.queryByText('В словник')).toBeNull();
+    expect(await screen.findByText('1 фраза добавлена в «Избранное»')).toBeOnTheScreen();
+    expect(await folderItemIds('Избранное')).toEqual(['hola']);
+    expect(screen.getByRole('button', { name: 'В словник · 1' })).toBeOnTheScreen();
   });
 
   it('shows the summary when saving the result fails', async () => {
@@ -314,4 +333,115 @@ describe('LessonSummaryScreen', () => {
     await fireEvent.press(screen.getByText('Дальше'));
     expect(mockReplace).toHaveBeenCalledWith('/onboarding/preferences');
   });
+
+  it('selects, clears, and selects every phrase again', async () => {
+    finishLessonInStore([HOLA, ADIOS]);
+    const recordCompletion = jest.fn().mockResolvedValue({ lessons: [], totalXp: 10, pending: 0 });
+
+    await renderSummary(recordCompletion);
+    await flush();
+
+    expect(screen.getByRole('button', { name: 'В словник · 2' })).toBeEnabled();
+    expect(screen.getByRole('checkbox', { name: 'hola, привет' })).toBeChecked();
+    expect(screen.getByRole('checkbox', { name: 'adiós, пока' })).toBeChecked();
+    expect(screen.getByRole('button', { name: 'Снять все' })).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('checkbox', { name: 'adiós, пока' }));
+
+    expect(screen.getByRole('checkbox', { name: 'adiós, пока' })).not.toBeChecked();
+    expect(screen.getByRole('button', { name: 'В словник · 1' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Выбрать все' })).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Выбрать все' }));
+
+    expect(screen.getByRole('checkbox', { name: 'adiós, пока' })).toBeChecked();
+    expect(screen.getByRole('button', { name: 'В словник · 2' })).toBeEnabled();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Снять все' }));
+
+    expect(screen.getByRole('checkbox', { name: 'hola, привет' })).not.toBeChecked();
+    expect(screen.getByRole('button', { name: 'В словник · 0' })).toBeDisabled();
+  });
+
+  it('adds only the phrases that are selected', async () => {
+    finishLessonInStore([HOLA, ADIOS]);
+    const recordCompletion = jest.fn().mockResolvedValue({ lessons: [], totalXp: 10, pending: 0 });
+
+    await renderSummary(recordCompletion);
+    await flush();
+
+    await fireEvent.press(screen.getByRole('checkbox', { name: 'adiós, пока' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'В словник · 1' }));
+    await fireEvent.press(await screen.findByRole('checkbox', { name: 'Добавить в «Избранное»' }));
+    await fireEvent.press(screen.getByText('Готово'));
+
+    expect(await screen.findByText('1 фраза добавлена в «Избранное»')).toBeOnTheScreen();
+    expect(await folderItemIds('Избранное')).toEqual(['hola']);
+  });
+
+  it('adds only the phrase that was long-pressed', async () => {
+    finishLessonInStore([HOLA, ADIOS]);
+    const recordCompletion = jest.fn().mockResolvedValue({ lessons: [], totalXp: 10, pending: 0 });
+
+    await renderSummary(recordCompletion);
+    await flush();
+
+    fireEvent(screen.getByRole('button', { name: 'adiós, пока' }), 'longPress');
+    await fireEvent.press(await screen.findByRole('checkbox', { name: 'Добавить в «Избранное»' }));
+    await fireEvent.press(screen.getByText('Готово'));
+
+    expect(await screen.findByText('1 фраза добавлена в «Избранное»')).toBeOnTheScreen();
+    expect(await folderItemIds('Избранное')).toEqual(['adios']);
+  });
+
+  it('does not duplicate phrases that are already in the folder', async () => {
+    const recordCompletion = jest.fn().mockResolvedValue({ lessons: [], totalXp: 10, pending: 0 });
+
+    await renderSummary(recordCompletion);
+    await flush();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'В словник · 1' }));
+    await fireEvent.press(await screen.findByRole('checkbox', { name: 'Добавить в «Избранное»' }));
+    await fireEvent.press(screen.getByText('Готово'));
+    expect(await screen.findByText('1 фраза добавлена в «Избранное»')).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'В словник · 1' }));
+    await waitFor(() => {
+      expect(screen.getByRole('checkbox', { name: 'Уже в папке «Избранное»' })).toBeChecked();
+    });
+    await fireEvent.press(screen.getByText('Готово'));
+    await waitFor(() => {
+      expect(screen.queryByText('Добавить в словник')).toBeNull();
+    });
+
+    expect(await folderItemIds('Избранное')).toEqual(['hola']);
+  });
+
+  it('creates a folder from the sheet and saves the selected phrases there', async () => {
+    const recordCompletion = jest.fn().mockResolvedValue({ lessons: [], totalXp: 10, pending: 0 });
+
+    await renderSummary(recordCompletion);
+    await flush();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'В словник · 1' }));
+    await fireEvent.press(await screen.findByRole('button', { name: '+ Новая папка' }));
+    await fireEvent.changeText(screen.getByLabelText('Название'), 'Поездка');
+    await fireEvent.press(screen.getByRole('button', { name: 'Готово' }));
+
+    expect(await screen.findByText('1 фраза добавлена в «Поездка»')).toBeOnTheScreen();
+    expect(await folderItemIds('Поездка')).toEqual(['hola']);
+    expect(await folderItemIds('Избранное')).toEqual([]);
+  });
 });
+
+async function folderItemIds(name: string): Promise<string[]> {
+  const snapshot = await vocabRepository.read('user-1');
+  const folder = snapshot.folders.find(
+    (entry) => entry.name === name || (name === 'Избранное' && entry.systemKey === 'favorites'),
+  );
+  if (!folder) return [];
+  return snapshot.items
+    .filter((item) => item.folderId === folder.id)
+    .map((item) => item.itemId)
+    .sort();
+}

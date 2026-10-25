@@ -62,8 +62,11 @@ const styles = StyleSheet.create({
   wrap: {
     alignItems: 'center',
     gap: space.xs,
+    paddingVertical: space.md,
+    overflow: 'visible',
   },
   value: {
     letterSpacing: -0.5,
+    lineHeight: 52,
   },
 });

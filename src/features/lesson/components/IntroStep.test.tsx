@@ -219,10 +219,10 @@ describe('IntroStep', () => {
     await renderStep(phrase);
 
     await fireEvent.press(screen.getByRole('button', { name: '+ В словник' }));
-    await fireEvent.press(await screen.findByRole('button', { name: 'Добавить в «Избранное»' }));
-
-    expect(screen.getByRole('button', { name: 'Убрать из «Избранное»' })).toBeTruthy();
+    await fireEvent.press(await screen.findByRole('checkbox', { name: 'Добавить в «Избранное»' }));
     await fireEvent.press(screen.getByText('Готово'));
+
+    expect(await screen.findByText('1 фраза добавлена в «Избранное»')).toBeTruthy();
     expect(await screen.findByRole('button', { name: 'В избранном' })).toBeTruthy();
   });
 
