@@ -1,0 +1,20 @@
+{
+  "id": "a1.ropa",
+  "level": "A1",
+  "category": "shopping",
+  "title_ru": "Магазин одежды",
+  "icon": "shirt",
+  "can_do_ru": [
+    "Назвать размер и цвет",
+    "Попросить примерить",
+    "Сказать, что не подходит"
+  ],
+  "lessons": [
+    "a1.ropa.l1",
+    "a1.ropa.l2",
+    "a1.ropa.l3",
+    "a1.ropa.l4"
+  ],
+  "scene": "a1.ropa.scene",
+  "draft": true
+}

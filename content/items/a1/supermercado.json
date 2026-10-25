@@ -1,0 +1,787 @@
+[
+  {
+    "id": "supermercado.la_leche",
+    "type": "phrase",
+    "es": "La leche",
+    "ru": "молоко",
+    "parts": [
+      {
+        "es": "La",
+        "ru": "ж.р."
+      },
+      {
+        "es": "leche",
+        "ru": "молоко"
+      }
+    ],
+    "say_ru": "ла лЕче",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.el_pan",
+    "type": "phrase",
+    "es": "El pan",
+    "ru": "хлеб",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "pan",
+        "ru": "хлеб"
+      }
+    ],
+    "say_ru": "эль пан",
+    "note_ru": "Целый хлеб часто просят как una barra de pan.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.el_agua",
+    "type": "phrase",
+    "es": "El agua",
+    "ru": "вода",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "ж.р."
+      },
+      {
+        "es": "agua",
+        "ru": "вода"
+      }
+    ],
+    "say_ru": "эль Агуа",
+    "note_ru": null,
+    "why_ru": "Agua женского рода, но перед ударной a говорят el agua. Во множественном — las aguas.",
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.el_queso",
+    "type": "phrase",
+    "es": "El queso",
+    "ru": "сыр",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "queso",
+        "ru": "сыр"
+      }
+    ],
+    "say_ru": "эль кЭсо",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.el_pollo",
+    "type": "phrase",
+    "es": "El pollo",
+    "ru": "курица",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "pollo",
+        "ru": "курица"
+      }
+    ],
+    "say_ru": "эль пОльо",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.el_arroz",
+    "type": "phrase",
+    "es": "El arroz",
+    "ru": "рис",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "arroz",
+        "ru": "рис"
+      }
+    ],
+    "say_ru": "эль аррОс",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.los_huevos",
+    "type": "phrase",
+    "es": "Los huevos",
+    "ru": "яйца",
+    "parts": [
+      {
+        "es": "Los",
+        "ru": "мн.ч."
+      },
+      {
+        "es": "huevos",
+        "ru": "яйца"
+      }
+    ],
+    "say_ru": "лос уЭбос",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.donde_esta",
+    "type": "phrase",
+    "es": "¿Dónde está?",
+    "ru": "Где это?",
+    "parts": [
+      {
+        "es": "¿Dónde",
+        "ru": "где"
+      },
+      {
+        "es": "está?",
+        "ru": "находится"
+      }
+    ],
+    "say_ru": "дОнде эстА",
+    "note_ru": null,
+    "why_ru": "Один продукт — ¿dónde está? Несколько — ¿dónde están?",
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.al_fondo",
+    "type": "phrase",
+    "es": "Al fondo",
+    "ru": "в конце зала",
+    "parts": [
+      {
+        "es": "Al",
+        "ru": "в"
+      },
+      {
+        "es": "fondo",
+        "ru": "конце"
+      }
+    ],
+    "say_ru": "аль фОндо",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.a_la_derecha",
+    "type": "phrase",
+    "es": "A la derecha",
+    "ru": "направо",
+    "parts": [
+      {
+        "es": "A la",
+        "ru": "на"
+      },
+      {
+        "es": "derecha",
+        "ru": "право"
+      }
+    ],
+    "say_ru": "а ла дерЕча",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.a_la_izquierda",
+    "type": "phrase",
+    "es": "A la izquierda",
+    "ru": "налево",
+    "parts": [
+      {
+        "es": "A la",
+        "ru": "на"
+      },
+      {
+        "es": "izquierda",
+        "ru": "лево"
+      }
+    ],
+    "say_ru": "а ла искьЕрда",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.en_el_pasillo",
+    "type": "phrase",
+    "es": "En el pasillo",
+    "ru": "в проходе",
+    "parts": [
+      {
+        "es": "En el",
+        "ru": "в"
+      },
+      {
+        "es": "pasillo",
+        "ru": "проходе"
+      }
+    ],
+    "say_ru": "эн эль пасИльо",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.la_caja",
+    "type": "phrase",
+    "es": "La caja",
+    "ru": "касса",
+    "parts": [
+      {
+        "es": "La",
+        "ru": "ж.р."
+      },
+      {
+        "es": "caja",
+        "ru": "касса"
+      }
+    ],
+    "say_ru": "ла кАха",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.busco",
+    "type": "word",
+    "es": "busco",
+    "ru": "ищу",
+    "parts": [],
+    "say_ru": "бУско",
+    "note_ru": null,
+    "why_ru": "Форма «я» от buscar. Дальше продукт: busco la leche.",
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.una_botella",
+    "type": "phrase",
+    "es": "Una botella",
+    "ru": "одна бутылка",
+    "parts": [
+      {
+        "es": "Una",
+        "ru": "одна"
+      },
+      {
+        "es": "botella",
+        "ru": "бутылка"
+      }
+    ],
+    "say_ru": "уна ботЭлья",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.un_paquete",
+    "type": "phrase",
+    "es": "Un paquete",
+    "ru": "одна пачка",
+    "parts": [
+      {
+        "es": "Un",
+        "ru": "один"
+      },
+      {
+        "es": "paquete",
+        "ru": "пакет"
+      }
+    ],
+    "say_ru": "ун пакЭте",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.dos_litros",
+    "type": "phrase",
+    "es": "Dos litros",
+    "ru": "два литра",
+    "parts": [
+      {
+        "es": "Dos",
+        "ru": "два"
+      },
+      {
+        "es": "litros",
+        "ru": "литра"
+      }
+    ],
+    "say_ru": "дос лИтрос",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.una_barra_de_pan",
+    "type": "phrase",
+    "es": "Una barra de pan",
+    "ru": "батон",
+    "parts": [
+      {
+        "es": "Una barra",
+        "ru": "батон"
+      },
+      {
+        "es": "de pan",
+        "ru": "хлеба"
+      }
+    ],
+    "say_ru": "уна бАрра де пан",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.necesito",
+    "type": "word",
+    "es": "necesito",
+    "ru": "мне нужно",
+    "parts": [],
+    "say_ru": "несесИто",
+    "note_ru": null,
+    "why_ru": "Форма «я» от necesitar. Necesito leche — мне нужно молоко.",
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.tambien",
+    "type": "word",
+    "es": "también",
+    "ru": "ещё",
+    "parts": [],
+    "say_ru": "тамбьЕн",
+    "note_ru": "También ставится перед тем, что добавляем: también leche.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.hay_oferta",
+    "type": "phrase",
+    "es": "¿Hay oferta?",
+    "ru": "Есть скидка?",
+    "parts": [
+      {
+        "es": "¿Hay",
+        "ru": "есть"
+      },
+      {
+        "es": "oferta?",
+        "ru": "скидка"
+      }
+    ],
+    "say_ru": "ай офЭрта",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.la_tarjeta",
+    "type": "phrase",
+    "es": "La tarjeta",
+    "ru": "карта",
+    "parts": [
+      {
+        "es": "La",
+        "ru": "ж.р."
+      },
+      {
+        "es": "tarjeta",
+        "ru": "карта"
+      }
+    ],
+    "say_ru": "ла тархЭта",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.en_efectivo",
+    "type": "phrase",
+    "es": "En efectivo",
+    "ru": "наличными",
+    "parts": [
+      {
+        "es": "En",
+        "ru": "в"
+      },
+      {
+        "es": "efectivo",
+        "ru": "наличных"
+      }
+    ],
+    "say_ru": "эн эфектИво",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.una_bolsa",
+    "type": "phrase",
+    "es": "Una bolsa, por favor",
+    "ru": "Пакет, пожалуйста",
+    "parts": [
+      {
+        "es": "Una bolsa,",
+        "ru": "пакет"
+      },
+      {
+        "es": "por favor",
+        "ru": "пожалуйста"
+      }
+    ],
+    "say_ru": "уна бОльса, пор фавОр",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.el_ticket",
+    "type": "phrase",
+    "es": "El ticket",
+    "ru": "чек в Испании",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "ticket",
+        "ru": "чек"
+      }
+    ],
+    "say_ru": "эль тИкет",
+    "note_ru": "В Испании чек в магазине часто называют el ticket.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "es",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.el_recibo",
+    "type": "phrase",
+    "es": "El recibo",
+    "ru": "чек в Латинской Америке",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "recibo",
+        "ru": "чек"
+      }
+    ],
+    "say_ru": "эль ресИбо",
+    "note_ru": "В Латинской Америке чек чаще el recibo. В Мексике говорят и el ticket.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "latam",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.puede_pasar",
+    "type": "phrase",
+    "es": "Puede pasar",
+    "ru": "Проходите",
+    "parts": [
+      {
+        "es": "Puede",
+        "ru": "можете"
+      },
+      {
+        "es": "pasar",
+        "ru": "пройти"
+      }
+    ],
+    "say_ru": "пуЭде пасАр",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  },
+  {
+    "id": "supermercado.aqui_tiene",
+    "type": "phrase",
+    "es": "Aquí tiene",
+    "ru": "Вот, пожалуйста",
+    "parts": [
+      {
+        "es": "Aquí",
+        "ru": "вот"
+      },
+      {
+        "es": "tiene",
+        "ru": "держите"
+      }
+    ],
+    "say_ru": "акИ тьЕне",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "supermercado"
+    ],
+    "draft": true
+  }
+]

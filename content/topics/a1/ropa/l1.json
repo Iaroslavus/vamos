@@ -1,0 +1,52 @@
+{
+  "id": "a1.ropa.l1",
+  "topic": "a1.ropa",
+  "title_ru": "Размер",
+  "items": [
+    "ropa.la_talla",
+    "ropa.el_talle",
+    "ropa.una_talla_mas",
+    "ropa.una_talla_menos",
+    "ropa.que_talla_usa",
+    "ropa.me_queda",
+    "ropa.grande"
+  ],
+  "speak": [
+    "ropa.que_talla_usa",
+    "ropa.me_queda"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿Le queda grande?",
+        "ru": "Вам велико?"
+      },
+      {
+        "who": "user",
+        "target": "ropa.una_talla_menos",
+        "options": [
+          "ropa.una_talla_menos",
+          "ropa.una_talla_mas",
+          "ropa.grande"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "¿Qué talla usa?",
+        "ru": "Какой у вас размер?"
+      },
+      {
+        "who": "user",
+        "target": "ropa.me_queda",
+        "options": [
+          "ropa.me_queda",
+          "ropa.la_talla",
+          "ropa.el_talle"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

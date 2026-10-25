@@ -1,0 +1,52 @@
+{
+  "id": "a1.metro.l1",
+  "topic": "a1.metro",
+  "title_ru": "Билет",
+  "items": [
+    "metro.un_billete",
+    "metro.un_boleto",
+    "metro.ida_y_vuelta",
+    "metro.solo_ida",
+    "metro.cuanto_cuesta",
+    "metro.el_metro",
+    "metro.el_subte"
+  ],
+  "speak": [
+    "metro.un_billete",
+    "metro.ida_y_vuelta"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿Ida o ida y vuelta?",
+        "ru": "В одну сторону или туда и обратно?"
+      },
+      {
+        "who": "user",
+        "target": "metro.ida_y_vuelta",
+        "options": [
+          "metro.ida_y_vuelta",
+          "metro.solo_ida",
+          "metro.cuanto_cuesta"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "Son dos euros.",
+        "ru": "Два евро."
+      },
+      {
+        "who": "user",
+        "target": "metro.un_billete",
+        "options": [
+          "metro.un_billete",
+          "metro.un_boleto",
+          "metro.el_metro"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

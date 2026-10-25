@@ -1,0 +1,811 @@
+[
+  {
+    "id": "tiempo.el_lunes",
+    "type": "phrase",
+    "es": "El lunes",
+    "ru": "понедельник",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "lunes",
+        "ru": "понедельник"
+      }
+    ],
+    "say_ru": "эль лУнес",
+    "note_ru": null,
+    "why_ru": "Дни недели мужского рода: el lunes, el martes.",
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.el_martes",
+    "type": "phrase",
+    "es": "El martes",
+    "ru": "вторник",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "martes",
+        "ru": "вторник"
+      }
+    ],
+    "say_ru": "эль мАртес",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.el_miercoles",
+    "type": "phrase",
+    "es": "El miércoles",
+    "ru": "среда",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "miércoles",
+        "ru": "среда"
+      }
+    ],
+    "say_ru": "эль мьЕрколес",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.el_jueves",
+    "type": "phrase",
+    "es": "El jueves",
+    "ru": "четверг",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "jueves",
+        "ru": "четверг"
+      }
+    ],
+    "say_ru": "эль хуЭвес",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.el_viernes",
+    "type": "phrase",
+    "es": "El viernes",
+    "ru": "пятница",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "viernes",
+        "ru": "пятница"
+      }
+    ],
+    "say_ru": "эль бьЕрнес",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.el_sabado",
+    "type": "phrase",
+    "es": "El sábado",
+    "ru": "суббота",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "sábado",
+        "ru": "суббота"
+      }
+    ],
+    "say_ru": "эль сАбадо",
+    "note_ru": "В испанском календаре неделя обычно начинается с lunes.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.el_domingo",
+    "type": "phrase",
+    "es": "El domingo",
+    "ru": "воскресенье",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "domingo",
+        "ru": "воскресенье"
+      }
+    ],
+    "say_ru": "эль домИнго",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.que_hora_es",
+    "type": "phrase",
+    "es": "¿Qué hora es?",
+    "ru": "Который час?",
+    "parts": [
+      {
+        "es": "¿Qué",
+        "ru": "который"
+      },
+      {
+        "es": "hora",
+        "ru": "час"
+      },
+      {
+        "es": "es?",
+        "ru": "есть"
+      }
+    ],
+    "say_ru": "кэ Ора эс",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.es_la_una",
+    "type": "phrase",
+    "es": "Es la una",
+    "ru": "Час",
+    "parts": [
+      {
+        "es": "Es",
+        "ru": "сейчас"
+      },
+      {
+        "es": "la una",
+        "ru": "час"
+      }
+    ],
+    "say_ru": "эс ла Уна",
+    "note_ru": null,
+    "why_ru": "Один час — es la una. Два и дальше — son las dos, son las tres.",
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.son_las_dos",
+    "type": "phrase",
+    "es": "Son las dos",
+    "ru": "Два часа",
+    "parts": [
+      {
+        "es": "Son",
+        "ru": "сейчас"
+      },
+      {
+        "es": "las",
+        "ru": "часа"
+      },
+      {
+        "es": "dos",
+        "ru": "два"
+      }
+    ],
+    "say_ru": "сон лас дос",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.son_las_tres",
+    "type": "phrase",
+    "es": "Son las tres",
+    "ru": "Три часа",
+    "parts": [
+      {
+        "es": "Son",
+        "ru": "сейчас"
+      },
+      {
+        "es": "las",
+        "ru": "часа"
+      },
+      {
+        "es": "tres",
+        "ru": "три"
+      }
+    ],
+    "say_ru": "сон лас трес",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.y_media",
+    "type": "phrase",
+    "es": "y media",
+    "ru": "тридцать минут",
+    "parts": [
+      {
+        "es": "y",
+        "ru": "и"
+      },
+      {
+        "es": "media",
+        "ru": "половина"
+      }
+    ],
+    "say_ru": "и мЕдиа",
+    "note_ru": "Son las dos y media — 2:30, половина третьего.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.y_cuarto",
+    "type": "phrase",
+    "es": "y cuarto",
+    "ru": "пятнадцать минут",
+    "parts": [
+      {
+        "es": "y",
+        "ru": "и"
+      },
+      {
+        "es": "cuarto",
+        "ru": "четверть"
+      }
+    ],
+    "say_ru": "и куАрто",
+    "note_ru": "Son las tres y cuarto — 3:15.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.menos_cuarto",
+    "type": "phrase",
+    "es": "menos cuarto",
+    "ru": "без пятнадцати",
+    "parts": [
+      {
+        "es": "menos",
+        "ru": "без"
+      },
+      {
+        "es": "cuarto",
+        "ru": "четверти"
+      }
+    ],
+    "say_ru": "мЕнос куАрто",
+    "note_ru": "Son las tres menos cuarto — 2:45.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.hoy",
+    "type": "word",
+    "es": "hoy",
+    "ru": "сегодня",
+    "parts": [],
+    "say_ru": "ой",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.manana",
+    "type": "word",
+    "es": "mañana",
+    "ru": "завтра",
+    "parts": [],
+    "say_ru": "маньЯна",
+    "note_ru": "mañana — и «завтра», и «утро». Утром говорят por la mañana.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.hoy_es_lunes",
+    "type": "phrase",
+    "es": "Hoy es lunes",
+    "ru": "Сегодня понедельник",
+    "parts": [
+      {
+        "es": "Hoy",
+        "ru": "сегодня"
+      },
+      {
+        "es": "es",
+        "ru": "есть"
+      },
+      {
+        "es": "lunes",
+        "ru": "понедельник"
+      }
+    ],
+    "say_ru": "ой эс лУнес",
+    "note_ru": null,
+    "why_ru": "После es день без артикля: hoy es lunes. El lunes — когда говорим о понедельниках вообще.",
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.manana_es_martes",
+    "type": "phrase",
+    "es": "Mañana es martes",
+    "ru": "Завтра вторник",
+    "parts": [
+      {
+        "es": "Mañana",
+        "ru": "завтра"
+      },
+      {
+        "es": "es",
+        "ru": "есть"
+      },
+      {
+        "es": "martes",
+        "ru": "вторник"
+      }
+    ],
+    "say_ru": "маньЯна эс мАртес",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.por_la_manana",
+    "type": "phrase",
+    "es": "por la mañana",
+    "ru": "утром",
+    "parts": [
+      {
+        "es": "por la",
+        "ru": "в"
+      },
+      {
+        "es": "mañana",
+        "ru": "утро"
+      }
+    ],
+    "say_ru": "пор ла маньЯна",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.por_la_tarde",
+    "type": "phrase",
+    "es": "por la tarde",
+    "ru": "днём",
+    "parts": [
+      {
+        "es": "por la",
+        "ru": "в"
+      },
+      {
+        "es": "tarde",
+        "ru": "день"
+      }
+    ],
+    "say_ru": "пор ла тАрде",
+    "note_ru": "por la tarde — примерно с обеда до вечера.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.por_la_noche",
+    "type": "phrase",
+    "es": "por la noche",
+    "ru": "вечером",
+    "parts": [
+      {
+        "es": "por la",
+        "ru": "в"
+      },
+      {
+        "es": "noche",
+        "ru": "вечер"
+      }
+    ],
+    "say_ru": "пор ла нОче",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.a_que_hora",
+    "type": "phrase",
+    "es": "¿A qué hora?",
+    "ru": "Во сколько?",
+    "parts": [
+      {
+        "es": "¿A",
+        "ru": "в"
+      },
+      {
+        "es": "qué",
+        "ru": "какой"
+      },
+      {
+        "es": "hora?",
+        "ru": "час"
+      }
+    ],
+    "say_ru": "а кэ Ора",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.a_las_diez",
+    "type": "phrase",
+    "es": "A las diez",
+    "ru": "В десять",
+    "parts": [
+      {
+        "es": "A las",
+        "ru": "в"
+      },
+      {
+        "es": "diez",
+        "ru": "десять"
+      }
+    ],
+    "say_ru": "а лас дьЕс",
+    "note_ru": null,
+    "why_ru": "Время встречи: a las + число. Исключение — a la una.",
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.a_la_una",
+    "type": "phrase",
+    "es": "A la una",
+    "ru": "В час",
+    "parts": [
+      {
+        "es": "A la",
+        "ru": "в"
+      },
+      {
+        "es": "una",
+        "ru": "час"
+      }
+    ],
+    "say_ru": "а ла Уна",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.el_sabado_por_la_manana",
+    "type": "phrase",
+    "es": "El sábado por la mañana",
+    "ru": "В субботу утром",
+    "parts": [
+      {
+        "es": "El sábado",
+        "ru": "в субботу"
+      },
+      {
+        "es": "por la mañana",
+        "ru": "утром"
+      }
+    ],
+    "say_ru": "эль сАбадо пор ла маньЯна",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.quedamos_a_las_cinco",
+    "type": "phrase",
+    "es": "Quedamos a las cinco",
+    "ru": "Встречаемся в пять",
+    "parts": [
+      {
+        "es": "Quedamos",
+        "ru": "встречаемся"
+      },
+      {
+        "es": "a las cinco",
+        "ru": "в пять"
+      }
+    ],
+    "say_ru": "кедАмос а лас сИнко",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.vale",
+    "type": "word",
+    "es": "vale",
+    "ru": "ладно",
+    "parts": [],
+    "say_ru": "бАле",
+    "note_ru": "Vale чаще говорят в Испании. В Латинской Америке на «ладно» отвечают bueno или dale.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  },
+  {
+    "id": "tiempo.hasta_manana",
+    "type": "phrase",
+    "es": "Hasta mañana",
+    "ru": "До завтра",
+    "parts": [
+      {
+        "es": "Hasta",
+        "ru": "до"
+      },
+      {
+        "es": "mañana",
+        "ru": "завтра"
+      }
+    ],
+    "say_ru": "Аста маньЯна",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "tiempo"
+    ],
+    "draft": true
+  }
+]

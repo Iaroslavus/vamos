@@ -32,15 +32,23 @@ describe('content index', () => {
       'a1.camino',
       'a1.restaurante',
       'a1.primera',
+      'a1.mercado',
+      'a1.metro',
+      'a1.ropa',
+      'a1.supermercado',
+      'a1.tiempo',
     ]);
     expect(topicsByLevel('A2')).toEqual([]);
     expect(topicsByCategory('first_steps').map((topic) => topic.id)).toEqual([
       'a1.hola',
       'a1.numbers',
+      'a1.tiempo',
     ]);
     expect(topicsByCategory('food').map((topic) => topic.id)).toEqual([
       'a1.cafe',
       'a1.restaurante',
+      'a1.mercado',
+      'a1.supermercado',
     ]);
   });
 
@@ -48,9 +56,8 @@ describe('content index', () => {
     expect(listTopics().every((topic) => topic.draft)).toBe(true);
     expect(
       listTopics()
-        .map((topic) => topic.starter_day)
-        .slice()
-        .sort((left, right) => (left ?? 0) - (right ?? 0)),
+        .flatMap((topic) => (topic.starter_day === undefined ? [] : [topic.starter_day]))
+        .sort((left, right) => left - right),
     ).toEqual([1, 2, 3, 4, 5, 6, 7]);
     expect(listLessons().map((lesson) => lesson.id)).toEqual([
       'a1.cafe.l1',
@@ -59,17 +66,37 @@ describe('content index', () => {
       'a1.camino.l2',
       'a1.hola.l1',
       'a1.hola.l2',
+      'a1.mercado.l1',
+      'a1.mercado.l2',
+      'a1.mercado.l3',
+      'a1.mercado.l4',
+      'a1.metro.l1',
+      'a1.metro.l2',
+      'a1.metro.l3',
+      'a1.metro.l4',
       'a1.numbers.l1',
       'a1.numbers.l2',
       'a1.primera.l1',
       'a1.primera.l2',
       'a1.restaurante.l1',
       'a1.restaurante.l2',
+      'a1.ropa.l1',
+      'a1.ropa.l2',
+      'a1.ropa.l3',
+      'a1.ropa.l4',
+      'a1.supermercado.l1',
+      'a1.supermercado.l2',
+      'a1.supermercado.l3',
+      'a1.supermercado.l4',
+      'a1.tiempo.l1',
+      'a1.tiempo.l2',
+      'a1.tiempo.l3',
+      'a1.tiempo.l4',
       'a1.tienda.l1',
       'a1.tienda.l2',
     ]);
     expect(listItems().every((item) => item.draft)).toBe(true);
-    expect(listLessons()).toHaveLength(14);
+    expect(listLessons()).toHaveLength(34);
   });
 
   it('throws for an unknown id', () => {

@@ -1,0 +1,52 @@
+{
+  "id": "a1.mercado.l1",
+  "topic": "a1.mercado",
+  "title_ru": "Фрукты",
+  "items": [
+    "mercado.las_manzanas",
+    "mercado.las_naranjas",
+    "mercado.los_platanos",
+    "mercado.las_fresas",
+    "mercado.un_kilo",
+    "mercado.medio_kilo",
+    "mercado.me_da"
+  ],
+  "speak": [
+    "mercado.me_da",
+    "mercado.un_kilo"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿Qué le pongo?",
+        "ru": "Что вам положить?"
+      },
+      {
+        "who": "user",
+        "target": "mercado.me_da",
+        "options": [
+          "mercado.me_da",
+          "mercado.un_kilo",
+          "mercado.medio_kilo"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "¿Manzanas o naranjas?",
+        "ru": "Яблоки или апельсины?"
+      },
+      {
+        "who": "user",
+        "target": "mercado.las_manzanas",
+        "options": [
+          "mercado.las_manzanas",
+          "mercado.las_naranjas",
+          "mercado.los_platanos"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

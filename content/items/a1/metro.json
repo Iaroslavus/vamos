@@ -1,0 +1,816 @@
+[
+  {
+    "id": "metro.un_billete",
+    "type": "phrase",
+    "es": "Un billete",
+    "ru": "билет в Испании",
+    "parts": [
+      {
+        "es": "Un",
+        "ru": "один"
+      },
+      {
+        "es": "billete",
+        "ru": "билет"
+      }
+    ],
+    "say_ru": "ун бильЕте",
+    "note_ru": "В Испании билет на транспорт — un billete.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "es",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.un_boleto",
+    "type": "phrase",
+    "es": "Un boleto",
+    "ru": "билет в Латинской Америке",
+    "parts": [
+      {
+        "es": "Un",
+        "ru": "один"
+      },
+      {
+        "es": "boleto",
+        "ru": "билет"
+      }
+    ],
+    "say_ru": "ун болЭто",
+    "note_ru": "В Латинской Америке билет чаще un boleto.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "latam",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.ida_y_vuelta",
+    "type": "phrase",
+    "es": "Ida y vuelta",
+    "ru": "туда и обратно",
+    "parts": [
+      {
+        "es": "Ida",
+        "ru": "туда"
+      },
+      {
+        "es": "y",
+        "ru": "и"
+      },
+      {
+        "es": "vuelta",
+        "ru": "обратно"
+      }
+    ],
+    "say_ru": "Ида и вуЭльта",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.solo_ida",
+    "type": "phrase",
+    "es": "Solo ida",
+    "ru": "в одну сторону",
+    "parts": [
+      {
+        "es": "Solo",
+        "ru": "только"
+      },
+      {
+        "es": "ida",
+        "ru": "туда"
+      }
+    ],
+    "say_ru": "сОло Ида",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.cuanto_cuesta",
+    "type": "phrase",
+    "es": "¿Cuánto cuesta?",
+    "ru": "Сколько стоит?",
+    "parts": [
+      {
+        "es": "¿Cuánto",
+        "ru": "сколько"
+      },
+      {
+        "es": "cuesta?",
+        "ru": "стоит"
+      }
+    ],
+    "say_ru": "куАнто куЭста",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.el_metro",
+    "type": "phrase",
+    "es": "El metro",
+    "ru": "метро",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "metro",
+        "ru": "метро"
+      }
+    ],
+    "say_ru": "эль мЭтро",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.el_subte",
+    "type": "phrase",
+    "es": "El subte",
+    "ru": "метро в Буэнос-Айресе",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "subte",
+        "ru": "метро"
+      }
+    ],
+    "say_ru": "эль сУбте",
+    "note_ru": "В Буэнос-Айресе метро — el subte. В остальной Латинской Америке чаще el metro.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "latam",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.a_que_linea",
+    "type": "phrase",
+    "es": "¿A qué línea?",
+    "ru": "На какую линию?",
+    "parts": [
+      {
+        "es": "¿A",
+        "ru": "на"
+      },
+      {
+        "es": "qué",
+        "ru": "какую"
+      },
+      {
+        "es": "línea?",
+        "ru": "линию"
+      }
+    ],
+    "say_ru": "а кэ лИнеа",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.linea_dos",
+    "type": "phrase",
+    "es": "La línea dos",
+    "ru": "вторая линия",
+    "parts": [
+      {
+        "es": "La línea",
+        "ru": "линия"
+      },
+      {
+        "es": "dos",
+        "ru": "два"
+      }
+    ],
+    "say_ru": "ла лИнеа дос",
+    "note_ru": "Линии часто называют номером или цветом: línea dos.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.direccion_centro",
+    "type": "phrase",
+    "es": "Dirección centro",
+    "ru": "в сторону центра",
+    "parts": [
+      {
+        "es": "Dirección",
+        "ru": "направление"
+      },
+      {
+        "es": "centro",
+        "ru": "центр"
+      }
+    ],
+    "say_ru": "дирексьОн сЭнтро",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.donde_bajo",
+    "type": "phrase",
+    "es": "¿Dónde bajo?",
+    "ru": "Где выходить?",
+    "parts": [
+      {
+        "es": "¿Dónde",
+        "ru": "где"
+      },
+      {
+        "es": "bajo?",
+        "ru": "я выхожу"
+      }
+    ],
+    "say_ru": "дОнде бАхо",
+    "note_ru": null,
+    "why_ru": "Bajar — выходить из транспорта. ¿Dónde bajo? — где мне выйти.",
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.la_proxima",
+    "type": "phrase",
+    "es": "La próxima",
+    "ru": "следующая остановка",
+    "parts": [
+      {
+        "es": "La",
+        "ru": "ж.р."
+      },
+      {
+        "es": "próxima",
+        "ru": "следующая"
+      }
+    ],
+    "say_ru": "ла прОксима",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.transbordo",
+    "type": "word",
+    "es": "transbordo",
+    "ru": "пересадка",
+    "parts": [],
+    "say_ru": "трансбОрдо",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.salida",
+    "type": "word",
+    "es": "salida",
+    "ru": "выход",
+    "parts": [],
+    "say_ru": "салИда",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.el_autobus",
+    "type": "phrase",
+    "es": "El autobús",
+    "ru": "автобус в Испании",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "autobús",
+        "ru": "автобус"
+      }
+    ],
+    "say_ru": "эль аутобУс",
+    "note_ru": "В Испании — el autobús. В Мексике часто el camión, в Аргентине el colectivo.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "es",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.el_bus",
+    "type": "phrase",
+    "es": "El bus",
+    "ru": "автобус в Латинской Америке",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "bus",
+        "ru": "автобус"
+      }
+    ],
+    "say_ru": "эль бус",
+    "note_ru": "El bus понимают почти везде. Местное слово может быть другим.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "latam",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.numero_cinco",
+    "type": "phrase",
+    "es": "El número cinco",
+    "ru": "пятый номер",
+    "parts": [
+      {
+        "es": "El número",
+        "ru": "номер"
+      },
+      {
+        "es": "cinco",
+        "ru": "пять"
+      }
+    ],
+    "say_ru": "эль нУмеро сИнко",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.esta_parada",
+    "type": "phrase",
+    "es": "Esta parada",
+    "ru": "эта остановка",
+    "parts": [
+      {
+        "es": "Esta",
+        "ru": "эта"
+      },
+      {
+        "es": "parada",
+        "ru": "остановка"
+      }
+    ],
+    "say_ru": "Эста парАда",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.la_parada",
+    "type": "phrase",
+    "es": "La parada",
+    "ru": "остановка",
+    "parts": [
+      {
+        "es": "La",
+        "ru": "ж.р."
+      },
+      {
+        "es": "parada",
+        "ru": "остановка"
+      }
+    ],
+    "say_ru": "ла парАда",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.va_al_centro",
+    "type": "phrase",
+    "es": "¿Va al centro?",
+    "ru": "Он идёт в центр?",
+    "parts": [
+      {
+        "es": "¿Va",
+        "ru": "идёт"
+      },
+      {
+        "es": "al",
+        "ru": "в"
+      },
+      {
+        "es": "centro?",
+        "ru": "центр"
+      }
+    ],
+    "say_ru": "ба аль сЭнтро",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.si_al_centro",
+    "type": "phrase",
+    "es": "Sí, al centro",
+    "ru": "Да, в центр",
+    "parts": [
+      {
+        "es": "Sí,",
+        "ru": "да"
+      },
+      {
+        "es": "al centro",
+        "ru": "в центр"
+      }
+    ],
+    "say_ru": "си, аль сЭнтро",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.una_tarjeta",
+    "type": "phrase",
+    "es": "Una tarjeta de transporte",
+    "ru": "проездная карта",
+    "parts": [
+      {
+        "es": "Una tarjeta",
+        "ru": "карта"
+      },
+      {
+        "es": "de transporte",
+        "ru": "проездная"
+      }
+    ],
+    "say_ru": "уна тархЭта де транспОрте",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.donde_esta_la_salida",
+    "type": "phrase",
+    "es": "¿Dónde está la salida?",
+    "ru": "Где выход?",
+    "parts": [
+      {
+        "es": "¿Dónde",
+        "ru": "где"
+      },
+      {
+        "es": "está",
+        "ru": "находится"
+      },
+      {
+        "es": "la salida?",
+        "ru": "выход"
+      }
+    ],
+    "say_ru": "дОнде эстА ла салИда",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.el_anden",
+    "type": "phrase",
+    "es": "El andén",
+    "ru": "платформа",
+    "parts": [
+      {
+        "es": "El",
+        "ru": "м.р."
+      },
+      {
+        "es": "andén",
+        "ru": "платформа"
+      }
+    ],
+    "say_ru": "эль андЭн",
+    "note_ru": "Платформу объявляют так: andén uno, andén dos.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.anden_dos",
+    "type": "phrase",
+    "es": "Andén dos",
+    "ru": "вторая платформа",
+    "parts": [
+      {
+        "es": "Andén",
+        "ru": "платформа"
+      },
+      {
+        "es": "dos",
+        "ru": "два"
+      }
+    ],
+    "say_ru": "андЭн дос",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.se_puede_bajar",
+    "type": "phrase",
+    "es": "¿Se puede bajar aquí?",
+    "ru": "Здесь можно выйти?",
+    "parts": [
+      {
+        "es": "¿Se puede",
+        "ru": "можно ли"
+      },
+      {
+        "es": "bajar",
+        "ru": "выйти"
+      },
+      {
+        "es": "aquí?",
+        "ru": "здесь"
+      }
+    ],
+    "say_ru": "се пуЭде бахАр акИ",
+    "note_ru": "¿Se puede...? — вежливое «можно ли».",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.estoy_perdido",
+    "type": "phrase",
+    "es": "Estoy perdido",
+    "ru": "Я заблудился",
+    "parts": [
+      {
+        "es": "Estoy",
+        "ru": "я"
+      },
+      {
+        "es": "perdido",
+        "ru": "заблудился"
+      }
+    ],
+    "say_ru": "эстОй пердИдо",
+    "note_ru": null,
+    "why_ru": "Состояние «я потерялся» — estar: estoy perdido.",
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  },
+  {
+    "id": "metro.me_ayuda",
+    "type": "phrase",
+    "es": "¿Me ayuda?",
+    "ru": "Вы мне поможете?",
+    "parts": [
+      {
+        "es": "¿Me",
+        "ru": "мне"
+      },
+      {
+        "es": "ayuda?",
+        "ru": "вы помогаете"
+      }
+    ],
+    "say_ru": "ме аЙуда",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "metro"
+    ],
+    "draft": true
+  }
+]

@@ -1,0 +1,52 @@
+{
+  "id": "a1.mercado.l2",
+  "topic": "a1.mercado",
+  "title_ru": "Овощи и вес",
+  "items": [
+    "mercado.los_tomates",
+    "mercado.las_patatas",
+    "mercado.las_papas",
+    "mercado.la_cebolla",
+    "mercado.los_huevos",
+    "mercado.un_kilo_de_tomates",
+    "mercado.cuanto_cuesta"
+  ],
+  "speak": [
+    "mercado.los_tomates",
+    "mercado.cuanto_cuesta"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿Tomates o patatas?",
+        "ru": "Помидоры или картофель?"
+      },
+      {
+        "who": "user",
+        "target": "mercado.los_tomates",
+        "options": [
+          "mercado.los_tomates",
+          "mercado.las_patatas",
+          "mercado.las_papas"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "¿Un kilo?",
+        "ru": "Килограмм?"
+      },
+      {
+        "who": "user",
+        "target": "mercado.un_kilo_de_tomates",
+        "options": [
+          "mercado.un_kilo_de_tomates",
+          "mercado.la_cebolla",
+          "mercado.los_huevos"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

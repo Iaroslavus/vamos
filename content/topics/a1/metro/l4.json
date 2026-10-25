@@ -1,0 +1,52 @@
+{
+  "id": "a1.metro.l4",
+  "topic": "a1.metro",
+  "title_ru": "На станции",
+  "items": [
+    "metro.una_tarjeta",
+    "metro.donde_esta_la_salida",
+    "metro.el_anden",
+    "metro.anden_dos",
+    "metro.se_puede_bajar",
+    "metro.estoy_perdido",
+    "metro.me_ayuda"
+  ],
+  "speak": [
+    "metro.donde_esta_la_salida",
+    "metro.estoy_perdido"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿Le ayudo?",
+        "ru": "Вам помочь?"
+      },
+      {
+        "who": "user",
+        "target": "metro.estoy_perdido",
+        "options": [
+          "metro.estoy_perdido",
+          "metro.me_ayuda",
+          "metro.una_tarjeta"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "La salida está al fondo.",
+        "ru": "Выход в конце."
+      },
+      {
+        "who": "user",
+        "target": "metro.donde_esta_la_salida",
+        "options": [
+          "metro.donde_esta_la_salida",
+          "metro.el_anden",
+          "metro.anden_dos"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

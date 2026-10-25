@@ -115,9 +115,12 @@ export function draftIssues(
     issues.push('topic.lessons must list the lesson ids in file order');
   }
 
-  const lessonCount = spec.starterDay === undefined ? 3 : 2;
+  const lessonCount = spec.starterDay === undefined ? 4 : 2;
   if (draft.lessons.length !== lessonCount) {
     issues.push(`expected ${lessonCount} lessons, got ${draft.lessons.length}`);
+  }
+  if (spec.starterDay === undefined) {
+    issues.push(...fullTopicSizeIssues(draft));
   }
 
   for (const lesson of draft.lessons) {
@@ -151,10 +154,10 @@ export function draftIssues(
 
 export function topicPrompt(spec: TopicSpec): { system: string; user: string } {
   const id = topicIdFor(spec);
-  const lessons = spec.starterDay === undefined ? 3 : 2;
+  const lessons = spec.starterDay === undefined ? 4 : 2;
   const day =
     spec.starterDay === undefined
-      ? 'This topic is not in the starter week.'
+      ? 'This topic is not in the starter week. Write exactly 4 lessons and 28 units (7 in each lesson, within 25–30). Put each unit in only one lesson.'
       : `starter_day is ${spec.starterDay}. Write exactly 2 lessons so the day stays about 10 minutes.`;
 
   return {
@@ -254,6 +257,29 @@ function canonicalItem(item: Item): Item {
     tags: item.tags,
     draft: true,
   };
+}
+
+const FULL_TOPIC_MIN_UNITS = 25;
+const FULL_TOPIC_MAX_UNITS = 30;
+
+/** A topic outside the starter week is a full situation: 25–30 units, each taught once. */
+function fullTopicSizeIssues(draft: TopicDraft): string[] {
+  const issues: string[] = [];
+  if (draft.items.length < FULL_TOPIC_MIN_UNITS || draft.items.length > FULL_TOPIC_MAX_UNITS) {
+    issues.push(`expected 25–30 units, got ${draft.items.length}`);
+  }
+
+  const placements = new Map<string, number>();
+  for (const lesson of draft.lessons) {
+    for (const id of lesson.items) {
+      placements.set(id, (placements.get(id) ?? 0) + 1);
+    }
+  }
+  for (const item of draft.items) {
+    const count = placements.get(item.id) ?? 0;
+    if (count !== 1) issues.push(`item ${item.id} must be in exactly one lesson`);
+  }
+  return issues;
 }
 
 function phrasePartIssues(item: Item): string[] {

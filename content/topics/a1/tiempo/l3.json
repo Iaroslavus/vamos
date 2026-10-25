@@ -1,0 +1,52 @@
+{
+  "id": "a1.tiempo.l3",
+  "topic": "a1.tiempo",
+  "title_ru": "Сегодня и завтра",
+  "items": [
+    "tiempo.hoy",
+    "tiempo.manana",
+    "tiempo.hoy_es_lunes",
+    "tiempo.manana_es_martes",
+    "tiempo.por_la_manana",
+    "tiempo.por_la_tarde",
+    "tiempo.por_la_noche"
+  ],
+  "speak": [
+    "tiempo.hoy_es_lunes",
+    "tiempo.por_la_manana"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿Qué día es hoy?",
+        "ru": "Какой сегодня день?"
+      },
+      {
+        "who": "user",
+        "target": "tiempo.hoy_es_lunes",
+        "options": [
+          "tiempo.hoy_es_lunes",
+          "tiempo.manana_es_martes",
+          "tiempo.hoy"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "¿Quedamos por la mañana?",
+        "ru": "Встретимся утром?"
+      },
+      {
+        "who": "user",
+        "target": "tiempo.por_la_manana",
+        "options": [
+          "tiempo.por_la_manana",
+          "tiempo.por_la_tarde",
+          "tiempo.por_la_noche"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

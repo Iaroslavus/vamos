@@ -1,0 +1,52 @@
+{
+  "id": "a1.tiempo.l2",
+  "topic": "a1.tiempo",
+  "title_ru": "Который час",
+  "items": [
+    "tiempo.que_hora_es",
+    "tiempo.es_la_una",
+    "tiempo.son_las_dos",
+    "tiempo.son_las_tres",
+    "tiempo.y_media",
+    "tiempo.y_cuarto",
+    "tiempo.menos_cuarto"
+  ],
+  "speak": [
+    "tiempo.que_hora_es",
+    "tiempo.son_las_dos"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "Perdone, ¿qué hora es?",
+        "ru": "Простите, который час?"
+      },
+      {
+        "who": "user",
+        "target": "tiempo.son_las_dos",
+        "options": [
+          "tiempo.son_las_dos",
+          "tiempo.es_la_una",
+          "tiempo.son_las_tres"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "¿En punto o y media?",
+        "ru": "Ровно или половина?"
+      },
+      {
+        "who": "user",
+        "target": "tiempo.y_media",
+        "options": [
+          "tiempo.y_media",
+          "tiempo.y_cuarto",
+          "tiempo.menos_cuarto"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}
