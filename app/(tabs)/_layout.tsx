@@ -1,6 +1,7 @@
 import { Tabs } from 'expo-router';
 import { LayoutGrid, Library, Sun, User } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
+import { Text } from 'react-native';
 
 import { useReviewDueCount } from '@/features/review/hooks/useReviewDueCount';
 import { colors, fonts } from '@/theme/tokens';
@@ -25,6 +26,16 @@ export default function TabLayout() {
           backgroundColor: colors.surface,
           borderTopColor: colors.border,
         },
+        tabBarLabel: ({ color, children }) => (
+          <Text
+            style={{ color, fontFamily: fonts.bodyBold, fontSize: 11, textAlign: 'center' }}
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            minimumFontScale={0.75}
+          >
+            {children}
+          </Text>
+        ),
         sceneStyle: { backgroundColor: colors.ground },
       }}
     >

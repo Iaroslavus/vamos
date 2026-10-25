@@ -1,5 +1,4 @@
 {
-  "_todo": "source",
   "tabs": {
     "today": "Сегодня",
     "todayDue": "Сегодня, повторить: {{count}}",

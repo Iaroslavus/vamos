@@ -32,6 +32,10 @@ describe('interface language', () => {
     await i18n.changeLanguage('ru');
   });
 
+  afterEach(async () => {
+    await i18n.changeLanguage('ru');
+  });
+
   it('switches the list check and the active language without remounting', async () => {
     await renderWith(<SettingsScreen />);
 
@@ -40,16 +44,17 @@ describe('interface language', () => {
 
     fireEvent.press(screen.getByRole('radio', { name: 'Українська' }));
 
-    expect(await screen.findByRole('radio', { name: 'Українська, выбран' })).toBeOnTheScreen();
-    expect(screen.getByRole('header', { name: 'Язык интерфейса' })).toBeOnTheScreen();
+    expect(await screen.findByRole('radio', { name: 'Українська, вибрано' })).toBeOnTheScreen();
+    expect(screen.getByRole('header', { name: 'Мова інтерфейсу' })).toBeOnTheScreen();
     expect(i18n.language).toBe('uk');
-    expect(i18n.t('topics.phraseCount', { count: 2 })).toBe('2 фразы');
+    expect(i18n.t('topics.phraseCount', { count: 2 })).toBe('2 фрази');
 
     fireEvent.press(screen.getByRole('radio', { name: 'English' }));
 
-    expect(await screen.findByRole('radio', { name: 'English, выбран' })).toBeOnTheScreen();
+    expect(await screen.findByRole('radio', { name: 'English, selected' })).toBeOnTheScreen();
+    expect(screen.getByRole('header', { name: 'App language' })).toBeOnTheScreen();
     expect(i18n.language).toBe('en');
-    expect(i18n.t('topics.phraseCount', { count: 2 })).toBe('2 фраз');
+    expect(i18n.t('topics.phraseCount', { count: 2 })).toBe('2 phrases');
   });
 
   it('offers the switcher on the welcome screen', async () => {

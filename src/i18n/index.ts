@@ -6,6 +6,9 @@ import { languageFromDevice, UI_LANGUAGE_FALLBACK, UI_LANGUAGES } from './langua
 import en from './locales/en.json';
 import ru from './locales/ru.json';
 import uk from './locales/uk.json';
+import { installSlavicPluralRules } from './plurals';
+
+installSlavicPluralRules();
 
 const i18n = createInstance();
 
