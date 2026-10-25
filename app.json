@@ -9,7 +9,11 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.iaroslavus.vamos"
+      "bundleIdentifier": "com.iaroslavus.vamos",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "Vamos слушает фразу, чтобы проверить, понятно ли произношение. Запись не сохраняется.",
+        "NSSpeechRecognitionUsageDescription": "Vamos распознаёт испанскую речь, чтобы сравнить фразу с образцом. Запись не сохраняется."
+      }
     },
     "android": {
       "package": "com.iaroslavus.vamos",
@@ -37,7 +41,20 @@
           "backgroundColor": "#FFF6EA"
         }
       ],
-      "expo-audio"
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Vamos слушает фразу, чтобы проверить, понятно ли произношение. Запись не сохраняется."
+        }
+      ],
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Vamos слушает фразу, чтобы проверить, понятно ли произношение. Запись не сохраняется.",
+          "speechRecognitionPermission": "Vamos распознаёт испанскую речь, чтобы сравнить фразу с образцом. Запись не сохраняется.",
+          "androidSpeechServicePackages": ["com.google.android.googlequicksearchbox"]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

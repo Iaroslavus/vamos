@@ -254,17 +254,14 @@ export default function LessonScreen() {
       ) : null}
 
       {surface === 'speak' && step?.type === 'speak_repeat' ? (
-        <ScrollView
-          style={styles.bodyScroll}
-          contentContainerStyle={styles.bodyContent}
-          keyboardShouldPersistTaps="handled"
-        >
-          <SpeakRepeatStep
-            promptEs={step.prompt_es}
-            audio={step.audio}
-            title={t('lesson.speakTitle')}
-          />
-        </ScrollView>
+        <SpeakRepeatStep
+          promptEs={step.prompt_es}
+          audio={step.audio}
+          sayRu={itemById(loaded.session, step.itemIds[0] ?? '')?.say_ru ?? null}
+          parts={itemById(loaded.session, step.itemIds[0] ?? '')?.parts ?? []}
+          onSkip={onSoftContinue}
+          onContinue={onSoftContinue}
+        />
       ) : null}
 
       {surface === 'prompt' && step && 'prompt_ru' in step ? (
@@ -301,7 +298,7 @@ export default function LessonScreen() {
         />
       ) : null}
 
-      {surface === 'speak' || surface === 'prompt' || surface === 'exercise' || !surface ? (
+      {surface === 'prompt' || surface === 'exercise' || !surface ? (
         <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, space.lg) }]}>
           {surface === 'exercise' || !surface ? (
             <Button
