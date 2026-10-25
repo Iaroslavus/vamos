@@ -125,6 +125,7 @@ const LEARNER: LearnerProfile = {
   goal: 'travel',
   dailyMinutes: 10,
   preferencesAsked: true,
+  uiLanguage: null,
 };
 
 function learnerRepository(profile: LearnerProfile = LEARNER): LearnerRepository {

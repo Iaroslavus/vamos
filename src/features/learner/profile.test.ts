@@ -29,6 +29,12 @@ describe('applyPatch', () => {
     const next = applyPatch(EMPTY_PROFILE, { dailyMinutes: 15 as never });
     expect(next.dailyMinutes).toBe(10);
   });
+
+  it('rejects an interface language outside ru, uk, and en', () => {
+    const next = applyPatch({ ...EMPTY_PROFILE, uiLanguage: 'uk' }, { uiLanguage: 'fr' as never });
+    expect(next.uiLanguage).toBe('uk');
+    expect(applyPatch(EMPTY_PROFILE, { uiLanguage: 'en' }).uiLanguage).toBe('en');
+  });
 });
 
 describe('mergeProfiles', () => {
@@ -43,6 +49,7 @@ describe('mergeProfiles', () => {
       goal: 'travel',
       dailyMinutes: 10,
       preferencesAsked: true,
+      uiLanguage: null,
     });
   });
 
@@ -52,6 +59,7 @@ describe('mergeProfiles', () => {
       goal: 'work' as const,
       dailyMinutes: 20 as const,
       preferencesAsked: true,
+      uiLanguage: null,
     };
     const merged = mergeProfiles(local, {
       ...EMPTY_PROFILE,
@@ -67,5 +75,15 @@ describe('mergeProfiles', () => {
 
   it('returns the local profile when the server has nothing', () => {
     expect(mergeProfiles(EMPTY_PROFILE, null)).toBe(EMPTY_PROFILE);
+  });
+
+  it('keeps a language chosen on this device and otherwise takes the account language', () => {
+    expect(
+      mergeProfiles({ ...EMPTY_PROFILE, uiLanguage: 'uk' }, { ...EMPTY_PROFILE, uiLanguage: 'en' })
+        .uiLanguage,
+    ).toBe('uk');
+    expect(mergeProfiles(EMPTY_PROFILE, { ...EMPTY_PROFILE, uiLanguage: 'en' }).uiLanguage).toBe(
+      'en',
+    );
   });
 });

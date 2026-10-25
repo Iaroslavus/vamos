@@ -152,6 +152,7 @@ const ASKED: LearnerProfile = {
   goal: 'travel',
   dailyMinutes: 10,
   preferencesAsked: true,
+  uiLanguage: null,
 };
 
 function summaryTree(
@@ -322,6 +323,7 @@ describe('LessonSummaryScreen', () => {
       goal: null,
       dailyMinutes: 10,
       preferencesAsked: false,
+      uiLanguage: null,
     });
     await waitFor(() => {
       expect(view.client.getQueryData(['learner', 'user-1'])).toMatchObject({

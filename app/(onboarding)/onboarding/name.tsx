@@ -5,6 +5,7 @@ import { StyleSheet, TextInput, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
+import { LanguageOptions } from '@/features/settings/LanguageOptions';
 import { listTopics } from '@/features/content/loader';
 import { parseDisplayName } from '@/features/learner/profile';
 import { useSaveLearner } from '@/features/learner/useLearnerProfile';
@@ -45,6 +46,7 @@ export default function NameScreen() {
 
   return (
     <View style={styles.root}>
+      <LanguageOptions variant="switch" />
       <Text variant="h2" accessibilityRole="header">
         {t('onboarding.nameTitle')}
       </Text>

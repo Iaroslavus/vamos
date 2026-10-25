@@ -1,4 +1,5 @@
 {
+  "_todo": "source",
   "tabs": {
     "today": "Сегодня",
     "todayDue": "Сегодня, повторить: {{count}}",
@@ -195,6 +196,12 @@
     "loading": "Загружаем прогресс",
     "loadError": "Не удалось загрузить прогресс. Проверьте сеть и повторите."
   },
+  "settings": {
+    "title": "Настройки",
+    "open": "Настройки",
+    "languageTitle": "Язык интерфейса",
+    "languageSelected": "{{language}}, выбран"
+  },
   "profile": {
     "title": "Профиль",
     "stub": "Здесь появятся настройки, напоминания и подписка."
@@ -242,6 +249,7 @@
     "reviewTitle": "Повторение",
     "reviewStub": "Карточки FSRS появятся здесь.",
     "check": "Проверить",
+    "builtAnswer": "Собранный ответ",
     "continue": "Дальше",
     "feedbackCorrect": "Верно!",
     "feedbackAlmost": "Почти!",

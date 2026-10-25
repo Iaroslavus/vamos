@@ -9,6 +9,7 @@ import {
 } from '@/features/learner/profile';
 import type { DailyGoalMinutes } from '@/features/progress/streak';
 import type { KeyValueStorage } from '@/features/progress/types';
+import { isUiLanguage, resolveUiLanguage, type UiLanguage } from '@/i18n/language';
 
 export type LearnerRemote = {
   fetch(userId: string): Promise<LearnerProfile | null>;
@@ -20,9 +21,18 @@ export type LearnerRepository = {
   save(userId: string, patch: Partial<LearnerProfile>): Promise<LearnerProfile>;
 };
 
+export type UiLanguageStorage = {
+  read(): Promise<UiLanguage | null>;
+  write(language: UiLanguage): Promise<void>;
+};
+
 type CreateLearnerRepositoryInput = {
   storage: KeyValueStorage;
   remote: LearnerRemote;
+  /** Phone language used when neither the device key nor the account has one. */
+  deviceLanguage?: () => Promise<UiLanguage> | UiLanguage;
+  /** Device-level key, so the next launch can paint before the profile query. */
+  languageStorage?: UiLanguageStorage;
 };
 
 const VERSION = 1;
@@ -39,19 +49,40 @@ export function learnerStorageKey(userId: string): string {
 export function createLearnerRepository({
   storage,
   remote,
+  deviceLanguage,
+  languageStorage,
 }: CreateLearnerRepositoryInput): LearnerRepository {
   return {
     async read(userId) {
-      const local = await load(storage, userId);
       let remoteProfile: LearnerProfile | null = null;
+      let remoteKnown = false;
       try {
         remoteProfile = await remote.fetch(userId);
+        remoteKnown = true;
       } catch {
         remoteProfile = null;
       }
-      const merged = mergeProfiles(local, remoteProfile);
-      if (!profilesEqual(local, merged)) await store(storage, userId, merged);
-      if (remoteProfile && !profilesEqual(merged, remoteProfile)) {
+      const latest = await load(storage, userId);
+      let merged = mergeProfiles(latest, remoteProfile);
+      const stored = languageStorage ? await languageStorage.read() : null;
+      const device =
+        !stored && !merged.uiLanguage && remoteKnown && deviceLanguage
+          ? await deviceLanguage()
+          : null;
+      const resolved = resolveUiLanguage({
+        profile: merged.uiLanguage,
+        stored,
+        device: isUiLanguage(device) ? device : null,
+        remoteKnown,
+      });
+      if (resolved.language !== merged.uiLanguage) {
+        merged = { ...merged, uiLanguage: resolved.language };
+      }
+      if (resolved.persistStored && resolved.language && languageStorage) {
+        await languageStorage.write(resolved.language);
+      }
+      if (!profilesEqual(latest, merged)) await store(storage, userId, merged);
+      if (remoteKnown && remoteProfile && !profilesEqual(merged, remoteProfile)) {
         try {
           await remote.update(userId, merged);
         } catch {
@@ -64,6 +95,9 @@ export function createLearnerRepository({
     async save(userId, patch) {
       const next = applyPatch(await load(storage, userId), patch);
       await store(storage, userId, next);
+      if (languageStorage && patch.uiLanguage && next.uiLanguage) {
+        await languageStorage.write(next.uiLanguage);
+      }
       try {
         await remote.update(userId, next);
       } catch {
@@ -79,6 +113,7 @@ export function profileFromRemote(
     display_name: string | null;
     goal: string | null;
     daily_minutes: number;
+    ui_language: string | null;
   } | null,
 ): LearnerProfile | null {
   if (!row) return null;
@@ -89,6 +124,22 @@ export function profileFromRemote(
     goal,
     dailyMinutes,
     preferencesAsked: goal != null,
+    uiLanguage: isUiLanguage(row.ui_language) ? row.ui_language : null,
+  };
+}
+
+/** Column patch for `profiles`. A null language is omitted so a name save cannot clear it. */
+export function profileToRemote(profile: LearnerProfile): {
+  display_name: string | null;
+  goal: LearnerProfile['goal'];
+  daily_minutes: DailyGoalMinutes;
+  ui_language?: UiLanguage;
+} {
+  return {
+    display_name: profile.name,
+    goal: profile.goal,
+    daily_minutes: profile.dailyMinutes,
+    ...(profile.uiLanguage ? { ui_language: profile.uiLanguage } : {}),
   };
 }
 

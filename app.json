@@ -54,7 +54,8 @@
           "speechRecognitionPermission": "Vamos распознаёт испанскую речь, чтобы сравнить фразу с образцом. Запись не сохраняется.",
           "androidSpeechServicePackages": ["com.google.android.googlequicksearchbox"]
         }
-      ]
+      ],
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true

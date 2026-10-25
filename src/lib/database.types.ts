@@ -124,6 +124,7 @@ export type Database = {
           level: Database['public']['Enums']['cefr_level'];
           spanish_variant: Database['public']['Enums']['spanish_variant'];
           timezone: string;
+          ui_language: Database['public']['Enums']['ui_language'] | null;
           updated_at: string;
         };
         ComputedFields: never;
@@ -136,6 +137,7 @@ export type Database = {
           level?: Database['public']['Enums']['cefr_level'];
           spanish_variant?: Database['public']['Enums']['spanish_variant'];
           timezone?: string;
+          ui_language?: Database['public']['Enums']['ui_language'] | null;
           updated_at?: string;
         };
         Update: {
@@ -147,6 +149,7 @@ export type Database = {
           level?: Database['public']['Enums']['cefr_level'];
           spanish_variant?: Database['public']['Enums']['spanish_variant'];
           timezone?: string;
+          ui_language?: Database['public']['Enums']['ui_language'] | null;
           updated_at?: string;
         };
         Relationships: [];
@@ -384,6 +387,7 @@ export type Database = {
       learning_goal: 'travel' | 'work' | 'relocation' | 'dele';
       lesson_status: 'in_progress' | 'completed';
       spanish_variant: 'spain' | 'latam';
+      ui_language: 'ru' | 'uk' | 'en';
       xp_source: 'lesson' | 'review' | 'streak_bonus' | 'chat' | 'other';
     };
     CompositeTypes: {
@@ -501,6 +505,7 @@ export const Constants = {
       learning_goal: ['travel', 'work', 'relocation', 'dele'],
       lesson_status: ['in_progress', 'completed'],
       spanish_variant: ['spain', 'latam'],
+      ui_language: ['ru', 'uk', 'en'],
       xp_source: ['lesson', 'review', 'streak_bonus', 'chat', 'other'],
     },
   },

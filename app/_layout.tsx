@@ -8,8 +8,8 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { DefaultTheme, Stack, ThemeProvider, type Theme } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import { I18nextProvider } from 'react-i18next';
+import { useEffect, useState } from 'react';
+import { I18nextProvider, useTranslation } from 'react-i18next';
 import 'react-native-reanimated';
 
 import { SessionError, SessionLoading } from '@/features/auth/components/SessionStatus';
@@ -19,6 +19,7 @@ import { LearnerGate } from '@/features/learner/LearnerGate';
 import { LearnerProvider } from '@/features/learner/context';
 import { ProgressProvider } from '@/features/progress/ProgressProvider';
 import i18n from '@/i18n';
+import { hydrateUiLanguage } from '@/i18n/preference';
 import { queryClient } from '@/lib/queryClient';
 import { colors } from '@/theme/tokens';
 
@@ -52,10 +53,23 @@ export default function RootLayout() {
     Manrope_700Bold,
     Manrope_800ExtraBold,
   });
+  const [languageReady, setLanguageReady] = useState(false);
 
   useEffect(() => {
     if (error) throw error;
   }, [error]);
+
+  useEffect(() => {
+    let live = true;
+    void hydrateUiLanguage((language) => i18n.changeLanguage(language))
+      .catch(() => undefined)
+      .finally(() => {
+        if (live) setLanguageReady(true);
+      });
+    return () => {
+      live = false;
+    };
+  }, []);
 
   return (
     <I18nextProvider i18n={i18n}>
@@ -63,7 +77,7 @@ export default function RootLayout() {
         <SessionProvider>
           <ProgressProvider>
             <LearnerProvider>
-              <AppShell fontsLoaded={loaded} />
+              <AppShell fontsLoaded={loaded && languageReady} />
             </LearnerProvider>
           </ProgressProvider>
         </SessionProvider>
@@ -98,6 +112,8 @@ function AppShell({ fontsLoaded }: { fontsLoaded: boolean }) {
 }
 
 function RootLayoutNav() {
+  const { t } = useTranslation();
+
   return (
     <Stack
       screenOptions={{
@@ -113,6 +129,7 @@ function RootLayoutNav() {
       />
       <Stack.Screen name="(onboarding)" options={{ headerShown: false, gestureEnabled: false }} />
       <Stack.Screen name="speak" options={{ headerShown: true }} />
+      <Stack.Screen name="settings" options={{ title: t('settings.title') }} />
       {__DEV__ ? <Stack.Screen name="dev" options={{ headerShown: false }} /> : null}
     </Stack>
   );

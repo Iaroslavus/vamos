@@ -1,6 +1,15 @@
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
@@ -14,6 +23,7 @@ import { colors, radius, space } from '@/theme/tokens';
 
 export default function ProfileScreen() {
   const { t } = useTranslation();
+  const router = useRouter();
   const { status, session, signingOut, signOut, requestEmailLink, confirmEmailLink } = useSession();
   const [signOutError, setSignOutError] = useState<AuthErrorCode | null>(null);
 
@@ -81,6 +91,18 @@ export default function ProfileScreen() {
 
             {signOutError ? <ErrorNote message={t(`auth.errors.${signOutError}`)} /> : null}
 
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={t('settings.open')}
+              onPress={() => router.push('/settings')}
+              style={styles.settings}
+            >
+              <Text variant="bodyBold">{t('settings.open')}</Text>
+              <Text variant="caption" color={colors.inkMuted}>
+                {t('settings.languageTitle')}
+              </Text>
+            </Pressable>
+
             <View style={styles.footer}>
               <Button
                 title={signingOut ? t('auth.signingOut') : t('auth.signOut')}
@@ -117,6 +139,17 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     padding: space.lg,
     gap: space.sm,
+  },
+  settings: {
+    minHeight: 48,
+    justifyContent: 'center',
+    paddingHorizontal: space.lg,
+    paddingVertical: space.md,
+    borderRadius: radius.lg,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    gap: space.xs,
   },
   footer: {
     marginTop: 'auto',
