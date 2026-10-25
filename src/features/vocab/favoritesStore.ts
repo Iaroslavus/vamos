@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 type FavoritesState = {
-  /** Item ids kept in the local «Избранное» folder until real folders exist. */
+  /** Item ids kept before folders existed. The folder repository copies them once. */
   itemIds: string[];
   add: (itemId: string) => void;
   /** Saves every id that is not already in Избранное. */
@@ -13,8 +13,8 @@ type FavoritesState = {
 };
 
 /**
- * Local «Избранное». Folder screens and the add-to-folder sheet come later;
- * this only remembers which units the learner saved from a card.
+ * Legacy local «Избранное». New saves go through the folder repository,
+ * which reads this list once and then leaves it alone.
  */
 export const useFavoritesStore = create<FavoritesState>()(
   persist(

@@ -59,6 +59,7 @@ export default function TabLayout() {
         name="vocab"
         options={{
           title: t('tabs.vocab'),
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Library color={color} size={ICON_SIZE} strokeWidth={ICON_STROKE} />
           ),

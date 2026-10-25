@@ -10,8 +10,11 @@ import { useLessonStore } from '@/features/lesson/store';
 import { ProgressProvider } from '@/features/progress/ProgressProvider';
 import type { ProgressRepository } from '@/features/progress/types';
 import { reviewRepository } from '@/features/review/defaultRepository';
+import { vocabRepository } from '@/features/vocab/defaultRepository';
 import type { StoredCard } from '@/features/review/types';
 import i18n from '@/i18n';
+
+let mockReviewFolder: string | undefined;
 
 jest.mock('expo-router', () => ({
   useRouter: () => ({
@@ -20,7 +23,14 @@ jest.mock('expo-router', () => ({
     back: jest.fn(),
     canGoBack: () => false,
   }),
+  useLocalSearchParams: () => ({ folder: mockReviewFolder }),
   Redirect: () => null,
+}));
+
+jest.mock('@/features/vocab/defaultRepository', () => ({
+  vocabRepository: {
+    read: jest.fn(),
+  },
 }));
 
 jest.mock('expo-haptics', () => ({
@@ -64,6 +74,7 @@ jest.mock('@/features/review/defaultRepository', () => ({
 }));
 
 const read = reviewRepository.read as jest.Mock;
+const readFolders = vocabRepository.read as jest.Mock;
 const recordRating = reviewRepository.recordRating as jest.Mock;
 const awardXp = jest.fn(async () => ({ lessons: [], totalXp: 5, pending: 0 }));
 
@@ -135,8 +146,10 @@ async function pressContinue() {
 
 describe('ReviewScreen', () => {
   beforeEach(() => {
+    mockReviewFolder = undefined;
     useLessonStore.getState().reset();
     read.mockReset();
+    readFolders.mockReset();
     recordRating.mockClear();
     awardXp.mockClear();
     (playLessonAudio as jest.Mock).mockClear();
@@ -276,6 +289,43 @@ describe('ReviewScreen', () => {
     expect(recordRating).toHaveBeenCalledWith(
       'user-1',
       expect.objectContaining({ itemId: 'hola.hola', direction: 'es_to_ru', rating: 'hard' }),
+    );
+  });
+
+  it('studies only the cards that sit in the chosen folder', async () => {
+    mockReviewFolder = 'folder-1';
+    readFolders.mockResolvedValue({
+      folders: [
+        {
+          id: 'folder-1',
+          name: 'Работа',
+          color: 'ink',
+          kind: 'custom',
+          topicId: null,
+          systemKey: null,
+          createdAt: '2026-10-25T00:00:00.000Z',
+        },
+      ],
+      items: [{ folderId: 'folder-1', itemId: 'hola.hola', addedAt: '2026-10-25T00:00:00.000Z' }],
+      pending: 0,
+    });
+    read.mockResolvedValue({
+      cards: [card('hola.hola'), card('hola.gracias')],
+      logs: [],
+      dueCount: 2,
+      pending: 0,
+    });
+    await renderReview();
+    await startCards();
+
+    await fireEvent.press(await screen.findByText('Показать ответ'));
+    await pressRating('Хорошо');
+
+    expect(screen.getByText('Повторение готово')).toBeTruthy();
+    expect(recordRating).toHaveBeenCalledTimes(1);
+    expect(recordRating).toHaveBeenCalledWith(
+      'user-1',
+      expect.objectContaining({ itemId: 'hola.hola', rating: 'good' }),
     );
   });
 

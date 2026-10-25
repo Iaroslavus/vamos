@@ -9,10 +9,11 @@ import { Text } from '@/components/Text';
 import { Appear } from '@/features/auth/components/Appear';
 import type { Item } from '@/features/content/schema';
 import { resolveTopicIcon } from '@/features/content/topicIcons';
+import { AddToVocabSheet } from '@/features/vocab/components/AddToVocabSheet';
+import { useItemSaveState } from '@/features/vocab/hooks/useItemSaveState';
 import { colors, radius, space } from '@/theme/tokens';
 
 import { useCardSwipe } from '../hooks/useCardSwipe';
-import { useIntroFavorite } from '../hooks/useIntroFavorite';
 import { useIntroPlayback } from '../hooks/useIntroPlayback';
 import { showsSayRu, type AudioPreference } from '../intro';
 import { IntroCard } from './IntroCard';
@@ -43,9 +44,15 @@ export function IntroStep({
 }: IntroStepProps) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const { saved, save } = useIntroFavorite(item.id);
+  const saveState = useItemSaveState([item.id]);
   const { playPhrase, playPart } = useIntroPlayback(item, audioVariant);
   const [whyItemId, setWhyItemId] = useState<string | null>(null);
+  const [vocabOpen, setVocabOpen] = useState(false);
+  const saveLabel = saveState.inFavorites
+    ? t('lesson.introSaved')
+    : saveState.inAny
+      ? t('lesson.introInVocab')
+      : t('lesson.introSave');
   const whyOpen = whyItemId === item.id;
   const sayRu = showsSayRu(item.level) ? item.say_ru : null;
   const TopicIcon = resolveTopicIcon(topicIcon);
@@ -68,10 +75,11 @@ export function IntroStep({
               item={item}
               TopicIcon={TopicIcon}
               sayRu={sayRu}
-              saved={saved}
+              saved={saveState.inAny}
+              saveLabel={saveLabel}
               onPlay={playPhrase}
               onPlayPart={playPart}
-              onSave={save}
+              onSave={() => setVocabOpen(true)}
               onWhy={() => setWhyItemId(item.id)}
             />
           </Appear>
@@ -91,6 +99,12 @@ export function IntroStep({
         visible={whyOpen && Boolean(item.why_ru)}
         text={item.why_ru ?? ''}
         onClose={() => setWhyItemId(null)}
+      />
+      <AddToVocabSheet
+        visible={vocabOpen}
+        itemIds={[item.id]}
+        onClose={() => setVocabOpen(false)}
+        onChanged={saveState.reload}
       />
     </View>
   );

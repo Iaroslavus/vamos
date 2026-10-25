@@ -15,6 +15,8 @@ describe('database.types', () => {
       'streaks',
       'review_cards',
       'review_logs',
+      'folders',
+      'folder_items',
     ];
     const satisfiesTable: Record<PublicTable, true> = {
       profiles: true,
@@ -23,12 +25,15 @@ describe('database.types', () => {
       streaks: true,
       review_cards: true,
       review_logs: true,
+      folders: true,
+      folder_items: true,
     };
     expect(Object.keys(satisfiesTable).sort()).toEqual([...tables].sort());
   });
 
   it('matches the enum values declared in the migration', () => {
     expect(Constants.public.Enums.cefr_level).toEqual(['A1', 'A2', 'B1', 'B2', 'C1', 'C2']);
+    expect(Constants.public.Enums.folder_kind).toEqual(['system', 'custom']);
     expect(Constants.public.Enums.learning_goal).toEqual(['travel', 'work', 'relocation', 'dele']);
     expect(Constants.public.Enums.spanish_variant).toEqual(['spain', 'latam']);
     expect(Constants.public.Enums.lesson_status).toEqual(['in_progress', 'completed']);

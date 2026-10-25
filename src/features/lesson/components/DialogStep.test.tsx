@@ -29,6 +29,46 @@ jest.mock('@/features/audio/sounds', () => ({
   playGradeSound: jest.fn(),
 }));
 
+jest.mock('@/features/auth/useSession', () => ({
+  useSession: () => ({
+    status: 'ready',
+    session: { user: { id: 'user-1', is_anonymous: true } },
+  }),
+}));
+
+const mockVocabMemory = new Map<string, string>();
+
+jest.mock('@/features/vocab/defaultRepository', () => {
+  const { createVocabRepository } = jest.requireActual(
+    '@/features/vocab/repository',
+  ) as typeof import('@/features/vocab/repository');
+  return {
+    vocabRepository: createVocabRepository({
+      storage: {
+        getItem: async (key: string) => mockVocabMemory.get(key) ?? null,
+        setItem: async (key: string, value: string) => {
+          mockVocabMemory.set(key, value);
+        },
+        removeItem: async (key: string) => {
+          mockVocabMemory.delete(key);
+        },
+      },
+      network: {
+        isOnline: async () => false,
+        subscribe: () => () => undefined,
+      },
+      remote: {
+        fetchFolders: async () => [],
+        fetchItems: async () => [],
+        upsertFolder: async (_userId: string, folder: never) => folder,
+        insertItem: async () => undefined,
+        deleteItem: async () => undefined,
+      },
+      schedule: () => () => undefined,
+    }),
+  };
+});
+
 function item(id: string, es: string, ru: string): Item {
   return {
     id,
@@ -100,6 +140,7 @@ async function finishPlayback() {
 describe('DialogStep', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockVocabMemory.clear();
     useLessonStore.getState().reset();
   });
 
@@ -207,6 +248,16 @@ describe('DialogStep', () => {
     expect(onComplete).toHaveBeenCalledWith(
       expect.objectContaining({ missedItemIds: ['hola.buenos_dias'] }),
     );
+  });
+
+  it('opens the vocabulary sheet on a long press of a reply', async () => {
+    await renderStep();
+    await finishPlayback();
+
+    fireEvent(screen.getByRole('button', { name: 'buenos días' }), 'longPress');
+
+    expect(await screen.findByText('Добавить в словник')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Добавить в «Избранное»' })).toBeTruthy();
   });
 
   it('shows «Сказать вслух» instead of chips when speech mode is on', async () => {

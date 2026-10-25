@@ -8,6 +8,7 @@ import { courseVocabulary, type CourseWord } from '@/features/lesson/reviewSourc
 import { useLessonStore } from '@/features/lesson/store';
 import { deviceTimeZone } from '@/features/progress/study';
 import { useProgressRepository } from '@/features/progress/useProgress';
+import { vocabRepository } from '@/features/vocab/defaultRepository';
 
 import { reviewRepository } from '../defaultRepository';
 import {
@@ -71,9 +72,17 @@ function newId(): string {
   return `review-${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }
 
-function deckPhase(snapshot: ReviewSnapshot, now: Date, timeZone: string): ReviewPhase {
+function deckPhase(
+  snapshot: ReviewSnapshot,
+  now: Date,
+  timeZone: string,
+  itemIds: ReadonlySet<string> | null,
+): ReviewPhase {
+  const cards = itemIds
+    ? snapshot.cards.filter((card) => itemIds.has(card.itemId))
+    : snapshot.cards;
   const queue = buildReviewQueue({
-    cards: snapshot.cards,
+    cards,
     logs: snapshot.logs,
     now,
     timeZone,
@@ -118,7 +127,7 @@ function exerciseSource(card: StudyCard): ReviewExerciseSource {
   };
 }
 
-export function useReviewSession() {
+export function useReviewSession(folderId?: string) {
   const { t } = useTranslation();
   const { session } = useSession();
   const userId = session?.user.id ?? null;
@@ -169,38 +178,51 @@ export function useReviewSession() {
   }, []);
 
   const applySnapshot = useCallback(
-    (snapshot: ReviewSnapshot) => {
+    (snapshot: ReviewSnapshot, itemIds: ReadonlySet<string> | null) => {
       stopPractice();
       clearPractice();
       sessionId.current = newId();
       ratingId.current = null;
       lock.current = false;
       heldIndex.current = null;
-      setPhase(deckPhase(snapshot, new Date(), deviceTimeZone()));
+      setPhase(deckPhase(snapshot, new Date(), deviceTimeZone(), itemIds));
     },
     [clearPractice, stopPractice],
   );
+
+  const folderItems = useCallback(async (): Promise<ReadonlySet<string> | null> => {
+    if (!folderId || !userId) return null;
+    const folders = await vocabRepository.read(userId);
+    const folder = folders.folders.find((entry) => entry.id === folderId);
+    if (!folder) return new Set();
+    return new Set(
+      folders.items.filter((item) => item.folderId === folderId).map((item) => item.itemId),
+    );
+  }, [folderId, userId]);
 
   const load = useCallback(async () => {
     if (!userId) return;
     setPhase({ status: 'loading' });
     try {
-      const snapshot = await reviewRepository.read(userId);
+      const [snapshot, itemIds] = await Promise.all([reviewRepository.read(userId), folderItems()]);
       if (!mounted.current) return;
-      applySnapshot(snapshot);
+      applySnapshot(snapshot, itemIds);
     } catch {
       if (mounted.current) setPhase({ status: 'error' });
     }
-  }, [applySnapshot, userId]);
+  }, [applySnapshot, folderItems, userId]);
 
   useEffect(() => {
     if (!userId) return;
     let cancelled = false;
     void (async () => {
       try {
-        const snapshot = await reviewRepository.read(userId);
+        const [snapshot, itemIds] = await Promise.all([
+          reviewRepository.read(userId),
+          folderItems(),
+        ]);
         if (cancelled || !mounted.current) return;
-        applySnapshot(snapshot);
+        applySnapshot(snapshot, itemIds);
       } catch {
         if (!cancelled && mounted.current) setPhase({ status: 'error' });
       }
@@ -208,7 +230,7 @@ export function useReviewSession() {
     return () => {
       cancelled = true;
     };
-  }, [applySnapshot, userId]);
+  }, [applySnapshot, folderItems, userId]);
 
   useEffect(() => {
     phaseRef.current = phase;

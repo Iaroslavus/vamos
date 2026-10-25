@@ -27,6 +27,8 @@ type DialogChoicesProps = {
   speakDisabled?: boolean;
   onChoose: (optionId: string) => void;
   onSpeakAloud?: () => void;
+  onLongPressOption?: (optionId: string) => void;
+  longPressHint?: string;
 };
 
 export function DialogChoices({
@@ -39,6 +41,8 @@ export function DialogChoices({
   speakDisabled = false,
   onChoose,
   onSpeakAloud,
+  onLongPressOption,
+  longPressHint,
 }: DialogChoicesProps) {
   const { t } = useTranslation();
   const reduceMotion = useReduceMotion();
@@ -105,7 +109,9 @@ export function DialogChoices({
                     label={option.es}
                     tone={rejected ? 'error' : 'neutral'}
                     disabled={rejected}
+                    accessibilityHint={longPressHint}
                     onPress={() => onChoose(option.id)}
+                    onLongPress={onLongPressOption ? () => onLongPressOption(option.id) : undefined}
                     style={styles.chip}
                   />
                 );
