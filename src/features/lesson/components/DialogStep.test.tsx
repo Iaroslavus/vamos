@@ -257,7 +257,7 @@ describe('DialogStep', () => {
     fireEvent(screen.getByRole('button', { name: 'buenos días' }), 'longPress');
 
     expect(await screen.findByText('Добавить в словник')).toBeTruthy();
-    expect(screen.getByRole('button', { name: 'Добавить в «Избранное»' })).toBeTruthy();
+    expect(screen.getByRole('checkbox', { name: 'Добавить в «Избранное»' })).toBeTruthy();
   });
 
   it('shows «Сказать вслух» instead of chips when speech mode is on', async () => {

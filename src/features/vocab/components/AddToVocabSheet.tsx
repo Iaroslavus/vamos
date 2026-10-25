@@ -1,20 +1,18 @@
 import * as Haptics from 'expo-haptics';
-import { useEffect, useState } from 'react';
+import { Check } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
-import { useSession } from '@/features/auth/useSession';
-import { colors, radius, space } from '@/theme/tokens';
+import { colors, fonts, radius, space, type } from '@/theme/tokens';
 
 import { folderTitle } from '../display';
 import { folderSwatch, folderTint } from '../folderColor';
-import { folderHoldsAll, sortFolders } from '../model';
-import { vocabRepository } from '../defaultRepository';
-import type { FolderSnapshot } from '../types';
+import { useAddToVocabSheet } from '../hooks/useAddToVocabSheet';
+import { folderHoldsAll, FOLDER_NAME_MAX } from '../model';
 import { BottomSheet } from './BottomSheet';
-import { FolderFormSheet } from './FolderFormSheet';
+import { SaveToast } from './SaveToast';
 
 type AddToVocabSheetProps = {
   visible: boolean;
@@ -25,94 +23,61 @@ type AddToVocabSheetProps = {
 
 export function AddToVocabSheet({ visible, itemIds, onClose, onChanged }: AddToVocabSheetProps) {
   const { t } = useTranslation();
-  const { session } = useSession();
-  const userId = session?.user.id ?? null;
-  const [snapshot, setSnapshot] = useState<FolderSnapshot | null>(null);
-  const [creating, setCreating] = useState(false);
-  const [busyId, setBusyId] = useState<string | null>(null);
-  const [failed, setFailed] = useState(false);
-  const [wasVisible, setWasVisible] = useState(visible);
-  if (visible !== wasVisible) {
-    setWasVisible(visible);
-    if (visible) setFailed(false);
-  }
-
-  useEffect(() => {
-    if (!visible || !userId) return;
-    let cancelled = false;
-    void vocabRepository
-      .ensureBases(userId)
-      .then((next) => {
-        if (!cancelled) setSnapshot(next);
-      })
-      .catch(() => {
-        if (!cancelled) setFailed(true);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [userId, visible]);
-
-  const folders = sortFolders(snapshot?.folders ?? []).filter(
-    (folder) => folder.systemKey !== 'difficult',
-  );
-
-  const toggle = (folderId: string) => {
-    if (!userId || !snapshot || busyId) return;
-    const held = folderHoldsAll(snapshot.items, folderId, itemIds);
-    setBusyId(folderId);
-    void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    void (
-      held
-        ? removeItems(userId, folderId, itemIds)
-        : vocabRepository.addItems(userId, folderId, itemIds)
-    )
-      .then((next) => {
-        setSnapshot(next);
-        onChanged();
-      })
-      .catch(() => setFailed(true))
-      .finally(() => setBusyId(null));
-  };
+  const sheet = useAddToVocabSheet({ visible, itemIds, onClose, onChanged });
 
   return (
     <>
-      <BottomSheet visible={visible && !creating} onClose={onClose}>
+      <BottomSheet visible={visible} onClose={onClose}>
         <Text variant="h3" style={styles.center}>
           {t('vocab.addTitle')}
         </Text>
-        {failed ? (
+        {sheet.failed ? (
           <Text variant="caption" color={colors.errorInk} style={styles.center}>
             {t('vocab.saveError')}
           </Text>
         ) : null}
-        <ScrollView contentContainerStyle={styles.list} keyboardShouldPersistTaps="handled">
-          {folders.map((folder) => {
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          style={styles.list}
+          contentContainerStyle={styles.listContent}
+        >
+          {sheet.folders.map((folder) => {
             const title = folderTitle(folder, t);
-            const held = snapshot ? folderHoldsAll(snapshot.items, folder.id, itemIds) : false;
+            const held = sheet.snapshot
+              ? folderHoldsAll(sheet.snapshot.items, folder.id, itemIds)
+              : false;
+            const checked = sheet.checked.has(folder.id);
             return (
               <Pressable
                 key={folder.id}
-                accessibilityRole="button"
-                accessibilityState={{ selected: held, disabled: busyId !== null }}
+                accessibilityRole="checkbox"
+                accessibilityState={{ checked, disabled: sheet.busy }}
                 accessibilityLabel={
                   held
-                    ? t('vocab.removeFromFolder', { name: title })
+                    ? t('vocab.alreadyInFolder', { name: title })
                     : t('vocab.addToFolder', { name: title })
                 }
-                disabled={busyId !== null}
-                onPress={() => toggle(folder.id)}
+                disabled={sheet.busy}
+                onPress={() => {
+                  void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                  sheet.toggle(folder.id);
+                }}
                 style={styles.row}
               >
+                <View style={[styles.mark, checked ? styles.markOn : null]}>
+                  {checked ? <Check size={16} color={colors.inkOnDark} strokeWidth={2.6} /> : null}
+                </View>
                 <View style={[styles.dot, { backgroundColor: folderTint(folder.color) }]}>
                   <View style={[styles.core, { backgroundColor: folderSwatch(folder.color) }]} />
                 </View>
                 <Text variant="bodyBold" style={styles.name}>
                   {title}
                 </Text>
-                <Text variant="caption" color={held ? colors.teal : colors.inkMuted}>
-                  {held ? t('vocab.savedIn') : t('vocab.addShort')}
-                </Text>
+                {held ? (
+                  <Text variant="caption" color={colors.teal}>
+                    {t('vocab.alreadyIn')}
+                  </Text>
+                ) : null}
               </Pressable>
             );
           })}
@@ -120,39 +85,33 @@ export function AddToVocabSheet({ visible, itemIds, onClose, onChanged }: AddToV
         <Button
           title={t('vocab.newFolder')}
           variant="secondary"
-          onPress={() => setCreating(true)}
+          disabled={sheet.busy}
+          onPress={() => sheet.setCreating((open) => !open)}
         />
-        <Button title={t('vocab.done')} onPress={onClose} />
+        {sheet.creating ? (
+          <TextInput
+            accessibilityLabel={t('vocab.nameLabel')}
+            value={sheet.draft}
+            onChangeText={sheet.setDraft}
+            placeholder={t('vocab.namePlaceholder')}
+            placeholderTextColor={colors.inkDisabled}
+            autoCapitalize="sentences"
+            autoCorrect={false}
+            autoFocus
+            maxLength={FOLDER_NAME_MAX}
+            style={styles.input}
+          />
+        ) : null}
+        {sheet.invalid ? (
+          <Text variant="caption" color={colors.errorInk}>
+            {t('vocab.nameInvalid')}
+          </Text>
+        ) : null}
+        <Button title={t('vocab.done')} disabled={sheet.busy} onPress={() => void sheet.save()} />
       </BottomSheet>
-      <FolderFormSheet
-        visible={visible && creating}
-        title={t('vocab.createTitle')}
-        onClose={() => setCreating(false)}
-        onSubmit={async (input) => {
-          if (!userId) throw new Error('Invalid user id');
-          const next = await vocabRepository.createFolder(userId, input);
-          setSnapshot(next);
-          onChanged();
-        }}
-      />
+      <SaveToast message={sheet.toast} onHide={sheet.dismissToast} />
     </>
   );
-}
-
-async function removeItems(
-  userId: string,
-  folderId: string,
-  itemIds: readonly string[],
-): Promise<FolderSnapshot> {
-  let latest = await vocabRepository.read(userId);
-  for (const itemId of itemIds) {
-    const present = latest.items.some(
-      (item) => item.folderId === folderId && item.itemId === itemId,
-    );
-    if (!present) continue;
-    latest = await vocabRepository.removeItem(userId, folderId, itemId);
-  }
-  return latest;
 }
 
 const styles = StyleSheet.create({
@@ -160,6 +119,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   list: {
+    flexGrow: 0,
+    flexShrink: 1,
+    maxHeight: 320,
+  },
+  listContent: {
     gap: space.sm,
   },
   row: {
@@ -167,6 +131,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.md,
+  },
+  mark: {
+    width: 24,
+    height: 24,
+    borderRadius: radius.pill,
+    borderWidth: 2,
+    borderColor: colors.borderStrong,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.surface,
+  },
+  markOn: {
+    backgroundColor: colors.teal,
+    borderColor: colors.teal,
   },
   dot: {
     width: 44,
@@ -182,5 +160,16 @@ const styles = StyleSheet.create({
   },
   name: {
     flex: 1,
+  },
+  input: {
+    minHeight: 48,
+    borderRadius: radius.md,
+    borderWidth: 2,
+    borderColor: colors.borderStrong,
+    backgroundColor: colors.ground,
+    paddingHorizontal: space.lg,
+    color: colors.ink,
+    fontFamily: fonts.body,
+    fontSize: type.body.fontSize,
   },
 });

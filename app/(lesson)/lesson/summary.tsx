@@ -4,7 +4,7 @@ import LottieView from 'lottie-react-native';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { initialWindowMetrics, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
@@ -19,7 +19,6 @@ import { useLessonStore } from '@/features/lesson/store';
 import { useProgress } from '@/features/progress/useProgress';
 import { buildTodayPlan, learnerDestination } from '@/features/today/course';
 import { AddToVocabSheet } from '@/features/vocab/components/AddToVocabSheet';
-import { useItemSaveState } from '@/features/vocab/hooks/useItemSaveState';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, space } from '@/theme/tokens';
 
@@ -37,14 +36,34 @@ export default function LessonSummaryScreen() {
   const accuracy = useLessonStore((s) => s.summary?.accuracy ?? 0);
   const elapsedMs = useLessonStore((s) => s.summary?.elapsedMs ?? 0);
   const newItems = useLessonStore((s) => s.summary?.newItems ?? EMPTY_NEW_ITEMS);
-  const newItemIds = newItems.map((item) => item.id);
-  const saveState = useItemSaveState(newItemIds);
-  const [vocabOpen, setVocabOpen] = useState(false);
+  const phraseKey = newItems.map((item) => item.id).join('|');
+  const [selection, setSelection] = useState<{ key: string; ids: ReadonlySet<string> } | null>(
+    null,
+  );
+  const selectedIds =
+    selection?.key === phraseKey ? selection.ids : new Set(newItems.map((item) => item.id));
+  const [sheetIds, setSheetIds] = useState<readonly string[] | null>(null);
   const reset = useLessonStore((s) => s.reset);
   const profile = useLearnerProfile();
   const progress = useProgress();
   const [leaving, setLeaving] = useState(false);
-  const allSaved = newItems.length > 0 && saveState.inFavorites;
+  const topInset = Math.max(insets.top, initialWindowMetrics?.insets.top ?? 0);
+  const selectedCount = selectedIds.size;
+
+  const togglePhrase = (id: string) => {
+    const next = new Set(selectedIds);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    setSelection({ key: phraseKey, ids: next });
+  };
+
+  const toggleAll = () => {
+    const all = newItems.every((item) => selectedIds.has(item.id));
+    setSelection({
+      key: phraseKey,
+      ids: all ? new Set() : new Set(newItems.map((item) => item.id)),
+    });
+  };
 
   const finished = status === 'completed' || status === 'failed';
 
@@ -85,7 +104,7 @@ export default function LessonSummaryScreen() {
 
   if (!finished) {
     return (
-      <View style={[styles.root, styles.centered, { paddingTop: insets.top + space.xl }]}>
+      <View style={[styles.root, styles.centered, { paddingTop: topInset + space.xl }]}>
         <Text variant="h3">{t('lesson.summaryEmpty')}</Text>
         <Button
           title={t('lesson.summaryContinue')}
@@ -98,7 +117,7 @@ export default function LessonSummaryScreen() {
   }
 
   return (
-    <View style={[styles.root, { paddingTop: insets.top + space.md }]}>
+    <View style={styles.root}>
       {!reduceMotion ? (
         <View pointerEvents="none" style={styles.confetti}>
           <LottieView
@@ -111,9 +130,15 @@ export default function LessonSummaryScreen() {
       ) : null}
 
       <ScrollView
+        testID="lesson-summary-scroll"
+        style={styles.scroll}
+        removeClippedSubviews={false}
         contentContainerStyle={[
           styles.content,
-          { paddingBottom: Math.max(insets.bottom, space.lg) + space.xxxl },
+          {
+            paddingTop: topInset + space.xxl,
+            paddingBottom: Math.max(insets.bottom, space.lg) + space.xxxl,
+          },
         ]}
         showsVerticalScrollIndicator={false}
       >
@@ -121,7 +146,9 @@ export default function LessonSummaryScreen() {
           {status === 'failed' ? t('lesson.summaryFailedTitle') : t('lesson.summaryTitle')}
         </Text>
 
-        <XpCounter xp={xpEarned} label={t('lesson.summaryXp')} />
+        <View style={styles.xpWrap}>
+          <XpCounter xp={xpEarned} label={t('lesson.summaryXp')} />
+        </View>
 
         <View style={styles.stats}>
           <View style={styles.stat}>
@@ -140,18 +167,24 @@ export default function LessonSummaryScreen() {
           </View>
         </View>
 
-        <NewWordsList items={newItems} />
+        <NewWordsList
+          items={newItems}
+          selectedIds={selectedIds}
+          onToggle={togglePhrase}
+          onToggleAll={toggleAll}
+          onLongPressItem={(id) => setSheetIds([id])}
+        />
       </ScrollView>
 
       <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, space.lg) }]}>
         {newItems.length > 0 ? (
           <Button
-            title={allSaved ? t('lesson.introSaved') : t('lesson.summaryToVocab')}
+            title={t('lesson.summaryToVocabCount', { count: selectedCount })}
             variant="secondary"
-            disabled={leaving}
+            disabled={leaving || selectedCount === 0}
             onPress={() => {
               void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-              setVocabOpen(true);
+              setSheetIds([...selectedIds]);
             }}
           />
         ) : null}
@@ -163,10 +196,10 @@ export default function LessonSummaryScreen() {
         />
       </View>
       <AddToVocabSheet
-        visible={vocabOpen}
-        itemIds={newItemIds}
-        onClose={() => setVocabOpen(false)}
-        onChanged={saveState.reload}
+        visible={sheetIds !== null}
+        itemIds={sheetIds ?? []}
+        onClose={() => setSheetIds(null)}
+        onChanged={() => undefined}
       />
     </View>
   );
@@ -184,6 +217,10 @@ const styles = StyleSheet.create({
     gap: space.lg,
     paddingHorizontal: space.xl,
   },
+  scroll: {
+    flex: 1,
+    zIndex: 2,
+  },
   confetti: {
     position: 'absolute',
     top: 0,
@@ -196,7 +233,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: space.xxl,
     paddingHorizontal: space.xl,
-    paddingTop: space.xxl,
+  },
+  xpWrap: {
+    paddingVertical: space.sm,
+    overflow: 'visible',
+    zIndex: 2,
   },
   title: {
     textAlign: 'center',
