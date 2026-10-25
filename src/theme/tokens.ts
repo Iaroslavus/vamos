@@ -31,7 +31,7 @@ export const colors = {
 } as const;
 
 export const fonts = {
-  display: 'BricolageGrotesque_800ExtraBold',
+  display: 'Rubik_800ExtraBold',
   body: 'Manrope_600SemiBold',
   bodyBold: 'Manrope_700Bold',
   bodyHeavy: 'Manrope_800ExtraBold',
