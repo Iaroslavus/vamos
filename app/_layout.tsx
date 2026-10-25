@@ -1,9 +1,9 @@
-import { BricolageGrotesque_800ExtraBold } from '@expo-google-fonts/bricolage-grotesque';
 import {
   Manrope_600SemiBold,
   Manrope_700Bold,
   Manrope_800ExtraBold,
 } from '@expo-google-fonts/manrope';
+import { Rubik_800ExtraBold } from '@expo-google-fonts/rubik';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { DefaultTheme, Stack, ThemeProvider, type Theme } from 'expo-router';
@@ -48,7 +48,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    BricolageGrotesque_800ExtraBold,
+    Rubik_800ExtraBold,
     Manrope_600SemiBold,
     Manrope_700Bold,
     Manrope_800ExtraBold,
