@@ -1,6 +1,11 @@
 {
   "id": "a1.supermercado.scene",
   "topic": "a1.supermercado",
-  "title_ru": "У кассы",
-  "draft": true
+  "title": {
+    "ru": "У кассы",
+    "uk": "Біля каси",
+    "en": "At the till"
+  },
+  "draft": true,
+  "draft_i18n": true
 }

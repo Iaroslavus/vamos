@@ -1,7 +1,11 @@
 {
   "id": "a1.primera.l1",
   "topic": "a1.primera",
-  "title_ru": "В кафе",
+  "title": {
+    "ru": "В кафе",
+    "uk": "У кафе",
+    "en": "At a café"
+  },
   "items": [
     "hola.hola",
     "hola.me_llamo",
@@ -11,29 +15,70 @@
     "cafe.cuanto_es",
     "cafe.la_cuenta"
   ],
-  "speak": ["hola.me_llamo", "cafe.cafe_con_leche", "cafe.la_cuenta"],
+  "speak": [
+    "hola.me_llamo",
+    "cafe.cafe_con_leche",
+    "cafe.la_cuenta"
+  ],
   "dialog": {
     "lines": [
-      { "who": "npc", "es": "¡Hola! ¿Cómo te llamas?", "ru": "Привет! Как тебя зовут?" },
+      {
+        "who": "npc",
+        "es": "¡Hola! ¿Cómo te llamas?",
+        "tr": {
+          "ru": "Привет! Как тебя зовут?",
+          "uk": "Привіт! Як тебе звати?",
+          "en": "Hi! What's your name?"
+        }
+      },
       {
         "who": "user",
         "target": "hola.me_llamo",
-        "options": ["hola.me_llamo", "hola.que_tal", "hola.bien_gracias"]
+        "options": [
+          "hola.me_llamo",
+          "hola.que_tal",
+          "hola.bien_gracias"
+        ]
       },
-      { "who": "npc", "es": "¿Qué tal?", "ru": "Как дела?" },
+      {
+        "who": "npc",
+        "es": "¿Qué tal?",
+        "tr": {
+          "ru": "Как дела?",
+          "uk": "Як справи?",
+          "en": "How are you?"
+        }
+      },
       {
         "who": "user",
         "target": "hola.bien_gracias",
-        "options": ["hola.bien_gracias", "hola.que_tal", "hola.hola"]
+        "options": [
+          "hola.bien_gracias",
+          "hola.que_tal",
+          "hola.hola"
+        ]
       },
-      { "who": "npc", "es": "¿Qué le pongo?", "ru": "Что вам налить?" },
+      {
+        "who": "npc",
+        "es": "¿Qué le pongo?",
+        "tr": {
+          "ru": "Что вам налить?",
+          "uk": "Що вам налити?",
+          "en": "What can I pour you?"
+        }
+      },
       {
         "who": "user",
         "target": "cafe.cafe_con_leche",
-        "options": ["cafe.cafe_con_leche", "cafe.cuanto_es", "cafe.la_cuenta"]
+        "options": [
+          "cafe.cafe_con_leche",
+          "cafe.cuanto_es",
+          "cafe.la_cuenta"
+        ]
       }
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

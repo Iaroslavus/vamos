@@ -1,7 +1,11 @@
 {
   "id": "a1.restaurante.l2",
   "topic": "a1.restaurante",
-  "title_ru": "Заказ и аллергия",
+  "title": {
+    "ru": "Заказ и аллергия",
+    "uk": "Замовлення й алергія",
+    "en": "The order and an allergy"
+  },
   "items": [
     "restaurante.la_carta",
     "restaurante.el_menu",
@@ -11,29 +15,70 @@
     "restaurante.fructos",
     "cafe.la_cuenta"
   ],
-  "speak": ["restaurante.la_carta", "restaurante.alergia", "restaurante.sin_gluten"],
+  "speak": [
+    "restaurante.la_carta",
+    "restaurante.alergia",
+    "restaurante.sin_gluten"
+  ],
   "dialog": {
     "lines": [
-      { "who": "npc", "es": "¿Qué van a tomar?", "ru": "Что будете заказывать?" },
+      {
+        "who": "npc",
+        "es": "¿Qué van a tomar?",
+        "tr": {
+          "ru": "Что будете заказывать?",
+          "uk": "Що будете замовляти?",
+          "en": "What will you have?"
+        }
+      },
       {
         "who": "user",
         "target": "restaurante.la_carta",
-        "options": ["restaurante.la_carta", "restaurante.el_menu", "restaurante.para_mi"]
+        "options": [
+          "restaurante.la_carta",
+          "restaurante.el_menu",
+          "restaurante.para_mi"
+        ]
       },
-      { "who": "npc", "es": "¿Alguna alergia?", "ru": "Есть аллергия?" },
+      {
+        "who": "npc",
+        "es": "¿Alguna alergia?",
+        "tr": {
+          "ru": "Есть аллергия?",
+          "uk": "Є алергія?",
+          "en": "Any allergies?"
+        }
+      },
       {
         "who": "user",
         "target": "restaurante.alergia",
-        "options": ["restaurante.alergia", "restaurante.sin_gluten", "restaurante.fructos"]
+        "options": [
+          "restaurante.alergia",
+          "restaurante.sin_gluten",
+          "restaurante.fructos"
+        ]
       },
-      { "who": "npc", "es": "Muy bien. ¿Algo más?", "ru": "Хорошо. Ещё что-нибудь?" },
+      {
+        "who": "npc",
+        "es": "Muy bien. ¿Algo más?",
+        "tr": {
+          "ru": "Хорошо. Ещё что-нибудь?",
+          "uk": "Добре. Ще щось?",
+          "en": "All right. Anything else?"
+        }
+      },
       {
         "who": "user",
         "target": "cafe.la_cuenta",
-        "options": ["cafe.la_cuenta", "restaurante.para_mi", "restaurante.sin_gluten"]
+        "options": [
+          "cafe.la_cuenta",
+          "restaurante.para_mi",
+          "restaurante.sin_gluten"
+        ]
       }
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

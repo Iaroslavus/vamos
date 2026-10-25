@@ -2,12 +2,28 @@
   "id": "a1.tiempo",
   "level": "A1",
   "category": "first_steps",
-  "title_ru": "Время и дни недели",
+  "title": {
+    "ru": "Время и дни недели",
+    "uk": "Час і дні тижня",
+    "en": "Time and days of the week"
+  },
   "icon": "clock",
-  "can_do_ru": [
-    "Назвать день недели",
-    "Спросить, который час",
-    "Сказать, когда встреча"
+  "can_do": [
+    {
+      "ru": "Назвать день недели",
+      "uk": "Назвати день тижня",
+      "en": "Name a day of the week"
+    },
+    {
+      "ru": "Спросить, который час",
+      "uk": "Запитати, котра година",
+      "en": "Ask what time it is"
+    },
+    {
+      "ru": "Сказать, когда встреча",
+      "uk": "Сказати, коли зустріч",
+      "en": "Say when you are meeting"
+    }
   ],
   "lessons": [
     "a1.tiempo.l1",
@@ -16,5 +32,6 @@
     "a1.tiempo.l4"
   ],
   "scene": "a1.tiempo.scene",
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

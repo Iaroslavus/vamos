@@ -1,4 +1,5 @@
 import type { CefrLevel, Item } from '@/features/content/schema';
+import { fillLocales } from '@/features/content/text';
 
 import { itemAudioPath, shouldAdvanceOnSwipe, showsSayRu, SWIPE_NEXT_DISTANCE } from './intro';
 
@@ -7,16 +8,17 @@ function item(overrides: Partial<Item> = {}): Item {
     id: 'hola.buenos_dias',
     type: 'phrase',
     es: 'buenos días',
-    ru: 'доброе утро',
+    tr: fillLocales('доброе утро'),
     parts: [],
-    say_ru: 'буЭнос дИас',
-    note_ru: null,
-    why_ru: null,
+    say: fillLocales('буЭнос дИас'),
+    note: null,
+    why: null,
     level: 'A1',
     variant: 'both',
     audio: { es: 'a1/buenos-dias.mp3', latam: 'a1/buenos-dias-latam.mp3' },
     tags: [],
     draft: false,
+    draft_i18n: false,
     ...overrides,
   };
 }

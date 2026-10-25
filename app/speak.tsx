@@ -5,14 +5,15 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from '@/components/Text';
 import { playLessonAudio } from '@/features/audio/playback';
 import { getItem, getLesson } from '@/features/content/loader';
+import { contentLocale, textOf } from '@/features/content/text';
 import { colors, radius, space } from '@/theme/tokens';
 
 export default function SpeakScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const params = useLocalSearchParams<{ lessonId?: string | string[] }>();
   const lessonId = firstParam(params.lessonId);
-  const lines = speakLines(lessonId);
+  const lines = speakLines(lessonId, i18n.language);
 
   return (
     <ScrollView contentContainerStyle={styles.content}>
@@ -53,14 +54,16 @@ export default function SpeakScreen() {
 
 function speakLines(
   lessonId: string | null,
+  language: string,
 ): { id: string; es: string; ru: string; audio: string | null }[] {
   if (!lessonId) return [];
+  const locale = contentLocale(language);
   try {
     const lesson = getLesson(lessonId);
     return lesson.speak.flatMap((id) => {
       try {
         const item = getItem(id);
-        return [{ id: item.id, es: item.es, ru: item.ru, audio: item.audio.es }];
+        return [{ id: item.id, es: item.es, ru: textOf(item.tr, locale), audio: item.audio.es }];
       } catch {
         return [];
       }

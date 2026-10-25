@@ -1,15 +1,17 @@
 import { listLessons, listScenes, listTopics } from '@/features/content/loader';
 import type { Lesson, Scene, Topic } from '@/features/content/schema';
 
+import { fillLocales } from '@/features/content/text';
+
 import { buildTopicDetail, initialLevel, levelHasContent, topicSections } from './catalog';
 
 function topic(overrides: Partial<Topic> & { id: string }): Topic {
   return {
     level: 'A1',
     category: 'first_steps',
-    title_ru: overrides.id,
+    title: fillLocales(overrides.id),
     icon: 'wave',
-    can_do_ru: ['Одно', 'Два', 'Три'],
+    can_do: ['Одно', 'Два', 'Три'].map(fillLocales),
     lessons: ['l1', 'l2'],
     scene: `${overrides.id}.scene`,
     draft: false,
@@ -21,17 +23,17 @@ function lesson(id: string, items: string[], title = id): Lesson {
   return {
     id,
     topic: 'topic',
-    title_ru: title,
+    title: fillLocales(title),
     items,
     speak: [],
-    dialog: { lines: [{ who: 'npc', es: 'Hola', ru: 'Привет' }] },
+    dialog: { lines: [{ who: 'npc', es: 'Hola', tr: fillLocales('Привет') }] },
     overrides: [],
     draft: false,
   };
 }
 
 function scene(id: string, title: string): Scene {
-  return { id, topic: 'topic', title_ru: title, draft: false };
+  return { id, topic: 'topic', title: fillLocales(title), draft: false };
 }
 
 describe('topic catalog', () => {
@@ -76,10 +78,14 @@ describe('topic catalog', () => {
 
   it('searches titles and goals inside the selected level', () => {
     const topics = [
-      topic({ id: 'cafe', title_ru: 'В кафе', can_do_ru: ['Заказать напиток'] }),
-      topic({ id: 'shop', category: 'shopping', title_ru: 'Магазин', starter_day: 1 }),
-      topic({ id: 'later', title_ru: 'Позже', starter_day: undefined }),
-      topic({ id: 'a2', level: 'A2', title_ru: 'В кафе два' }),
+      topic({
+        id: 'cafe',
+        title: fillLocales('В кафе'),
+        can_do: [fillLocales('Заказать напиток')],
+      }),
+      topic({ id: 'shop', category: 'shopping', title: fillLocales('Магазин'), starter_day: 1 }),
+      topic({ id: 'later', title: fillLocales('Позже'), starter_day: undefined }),
+      topic({ id: 'a2', level: 'A2', title: fillLocales('В кафе два') }),
     ];
 
     expect(
@@ -105,7 +111,7 @@ describe('topic catalog', () => {
       topic({
         id: 'cafe',
         lessons: ['l1', 'l2', 'l3'],
-        can_do_ru: ['Заказать', 'Спросить цену', 'Попросить счёт'],
+        can_do: ['Заказать', 'Спросить цену', 'Попросить счёт'].map(fillLocales),
       }),
     ];
     const lessons = [
@@ -143,7 +149,9 @@ describe('topic catalog', () => {
   });
 
   it('keeps a missing lesson in the lock chain and falls back when the scene is absent', () => {
-    const topics = [topic({ id: 'gap', lessons: ['known', 'missing'], can_do_ru: ['Одно'] })];
+    const topics = [
+      topic({ id: 'gap', lessons: ['known', 'missing'], can_do: [fillLocales('Одно')] }),
+    ];
     const detail = buildTopicDetail('gap', topics, [lesson('known', ['a'], 'Есть')], [], ['known']);
 
     expect(detail?.phraseCount).toBe(1);

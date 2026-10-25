@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { contentIssues, type ContentBundle } from '../integrity';
+import { translationGaps } from '../translations';
 import {
   CefrLevelSchema,
   ItemSchema,
@@ -72,9 +73,9 @@ export function stripFences(text: string): string {
 export function forceDraft(draft: TopicDraft): TopicDraft {
   return {
     items: draft.items.map(canonicalItem),
-    topic: { ...draft.topic, draft: true },
-    lessons: draft.lessons.map((lesson) => ({ ...lesson, draft: true })),
-    scene: { ...draft.scene, draft: true },
+    topic: { ...draft.topic, draft: true, draft_i18n: true },
+    lessons: draft.lessons.map((lesson) => ({ ...lesson, draft: true, draft_i18n: true })),
+    scene: { ...draft.scene, draft: true, draft_i18n: true },
   };
 }
 
@@ -95,10 +96,11 @@ export function draftIssues(
   if (draft.topic.category !== spec.category) {
     issues.push(`topic category must be ${spec.category}`);
   }
-  if (draft.topic.title_ru !== spec.titleRu) issues.push('topic title_ru must match the spec');
+  if (draft.topic.title.ru !== spec.titleRu) issues.push('topic title.ru must match the spec');
   if (draft.topic.icon !== spec.icon) issues.push('topic icon must match the spec');
-  if (draft.topic.can_do_ru.join('\n') !== spec.canDoRu.join('\n')) {
-    issues.push('topic can_do_ru must match the spec');
+  const canDoRu = draft.topic.can_do.map((goal) => goal.ru ?? '');
+  if (canDoRu.join('\n') !== spec.canDoRu.join('\n')) {
+    issues.push('topic can_do.ru must match the spec');
   }
   if ((draft.topic.starter_day ?? null) !== (spec.starterDay ?? null)) {
     issues.push('topic starter_day must match the spec');
@@ -140,6 +142,14 @@ export function draftIssues(
   }
 
   for (const item of draft.items) issues.push(...phrasePartIssues(item));
+  for (const gap of translationGaps({
+    items: draft.items,
+    topics: [draft.topic],
+    lessons: draft.lessons,
+    scenes: [draft.scene],
+  })) {
+    issues.push(`missing ${gap.locale} translation: ${gap.ref}`);
+  }
 
   const merged = mergeContent(existing, draft);
   const byId = new Map(merged.items.map((item) => [item.id, item]));
@@ -162,15 +172,17 @@ export function topicPrompt(spec: TopicSpec): { system: string; user: string } {
 
   return {
     system: [
-      'You write draft Spanish course topics for Russian-speaking beginners.',
+      'You write draft Spanish course topics for learners who read Russian, Ukrainian, or English.',
       'Reply with one JSON object and no markdown.',
       'Spanish is neutral (Spain and Latin America). Mark real differences with variant "es" or "latam"; otherwise "both".',
       'About 60% of units are phrases. At most 3 words per lesson. Each lesson has 6–8 units.',
-      'A phrase needs parts (at least 2). Join part.es with a single space and it must equal es.',
-      'A1 and A2 units need say_ru, a Cyrillic pronunciation hint.',
+      'A phrase needs parts (at least 2). Join part.es with a single space and it must equal es. Each part has tr, not a bare ru string.',
+      'Every learner-facing string is an object {"ru","uk","en"}: tr, say, note, why, title, can_do, lesson and scene titles, and npc dialog lines (tr).',
+      'Write all three languages in the same response. Do not leave uk or en empty.',
+      "A1 and A2 units need say: a pronunciation hint in the learner's own letters. Russian and Ukrainian use Cyrillic. English uses a Latin respelling. Above A2, say is null.",
       'speak lists 2–3 unit ids from that lesson. dialog has 4–6 lines.',
       'User dialog options and the target must be ids from that lesson or an earlier lesson of the same topic.',
-      'Set draft to true and audio.es and audio.latam to null.',
+      'Set draft and draft_i18n to true. audio.es and audio.latam are null.',
       'Ids: topic ' +
         id +
         ', scene ' +
@@ -184,9 +196,10 @@ export function topicPrompt(spec: TopicSpec): { system: string; user: string } {
     user: [
       `level: ${spec.level}`,
       `category: ${spec.category}`,
-      `title_ru: ${spec.titleRu}`,
+      `title.ru: ${spec.titleRu}`,
       `icon: ${spec.icon}`,
-      `can_do_ru: ${spec.canDoRu.join(' | ')}`,
+      `can_do.ru: ${spec.canDoRu.join(' | ')}`,
+      'Copy those Russian strings exactly, then add uk and en for the title, every can_do, and every other gloss.',
       day,
       `Write exactly ${lessons} lessons plus a scene title.`,
       'Shape: {"items":[...],"topic":{...},"lessons":[...],"scene":{...}}',
@@ -246,16 +259,17 @@ function canonicalItem(item: Item): Item {
     id: item.id,
     type: item.type,
     es: item.es,
-    ru: item.ru,
+    tr: item.tr,
     parts: item.parts,
-    say_ru: item.say_ru,
-    note_ru: item.note_ru,
-    why_ru: item.why_ru,
+    say: item.say,
+    note: item.note,
+    why: item.why,
     level: item.level,
     variant: item.variant,
     audio: { es: null, latam: null },
     tags: item.tags,
     draft: true,
+    draft_i18n: true,
   };
 }
 

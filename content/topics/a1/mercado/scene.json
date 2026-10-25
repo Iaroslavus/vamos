@@ -1,6 +1,11 @@
 {
   "id": "a1.mercado.scene",
   "topic": "a1.mercado",
-  "title_ru": "У прилавка",
-  "draft": true
+  "title": {
+    "ru": "У прилавка",
+    "uk": "Біля прилавка",
+    "en": "At the stall"
+  },
+  "draft": true,
+  "draft_i18n": true
 }

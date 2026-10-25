@@ -1,6 +1,11 @@
 {
   "id": "a1.cafe.scene",
   "topic": "a1.cafe",
-  "title_ru": "У стойки",
-  "draft": true
+  "title": {
+    "ru": "У стойки",
+    "uk": "Біля стійки",
+    "en": "At the counter"
+  },
+  "draft": true,
+  "draft_i18n": true
 }

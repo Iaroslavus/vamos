@@ -1,5 +1,7 @@
 import type { Item, Lesson } from '../schema';
 import { contentIssues, type ContentBundle } from '../integrity';
+import { gapsByLocale, translationGaps } from '../translations';
+import { CONTENT_LOCALES, type ContentLocale } from '../text';
 
 export type LessonStat = {
   id: string;
@@ -19,6 +21,8 @@ export type ContentReport = {
   draftItems: number;
   draftLessons: number;
   missingAudio: string[];
+  /** Refs with no wording in that language. Does not fail the link check. */
+  missingTranslations: Record<ContentLocale, string[]>;
   issues: string[];
   ok: boolean;
 };
@@ -51,6 +55,7 @@ export function buildReport(
       .filter((item) => !hasPlayableAudio(item))
       .map((item) => item.id)
       .sort(),
+    missingTranslations: gapsByLocale(translationGaps(bundle)),
     issues,
     ok: issues.length === 0,
   };
@@ -72,6 +77,12 @@ export function formatReport(report: ContentReport): string {
     '',
     `Без аудио, озвучивает устройство: ${report.missingAudio.length}`,
     ...report.missingAudio.map((id) => `  ${id}`),
+    '',
+    'Не хватает переводов:',
+    ...CONTENT_LOCALES.flatMap((locale) => {
+      const refs = report.missingTranslations[locale];
+      return [`  ${locale}: ${refs.length}`, ...refs.map((ref) => `    ${ref}`)];
+    }),
     '',
     report.ok ? 'Ссылки: ок' : 'Ссылки: сломаны',
     ...report.issues.map((issue) => `  ${issue}`),

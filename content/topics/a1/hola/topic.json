@@ -2,11 +2,40 @@
   "id": "a1.hola",
   "level": "A1",
   "category": "first_steps",
-  "title_ru": "¡Hola! Знакомство",
+  "title": {
+    "ru": "¡Hola! Знакомство",
+    "uk": "¡Hola! Знайомство",
+    "en": "¡Hola! Introductions"
+  },
   "icon": "wave",
-  "can_do_ru": ["Поздороваться", "Поблагодарить", "Назвать имя", "Спросить, как дела"],
-  "lessons": ["a1.hola.l1", "a1.hola.l2"],
+  "can_do": [
+    {
+      "ru": "Поздороваться",
+      "uk": "Привітатися",
+      "en": "Say hello"
+    },
+    {
+      "ru": "Поблагодарить",
+      "uk": "Подякувати",
+      "en": "Say thank you"
+    },
+    {
+      "ru": "Назвать имя",
+      "uk": "Назвати ім'я",
+      "en": "Say your name"
+    },
+    {
+      "ru": "Спросить, как дела",
+      "uk": "Запитати, як справи",
+      "en": "Ask how someone is"
+    }
+  ],
+  "lessons": [
+    "a1.hola.l1",
+    "a1.hola.l2"
+  ],
   "scene": "a1.hola.scene",
   "starter_day": 1,
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

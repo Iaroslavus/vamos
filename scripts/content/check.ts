@@ -1,6 +1,6 @@
 /**
  * Content report for CI.
- * Prints units per lesson, phrase share, missing audio, and drafts.
+ * Prints units per lesson, phrase share, missing audio, missing translations, and drafts.
  * Exits with code 1 when a link does not resolve. Missing audio stays on device TTS.
  */
 import { loadContent } from '../../src/features/content/pipeline/load';

@@ -1,7 +1,11 @@
 {
   "id": "a1.metro.l2",
   "topic": "a1.metro",
-  "title_ru": "Куда ехать",
+  "title": {
+    "ru": "Куда ехать",
+    "uk": "Куди їхати",
+    "en": "Where to go"
+  },
   "items": [
     "metro.a_que_linea",
     "metro.linea_dos",
@@ -20,7 +24,11 @@
       {
         "who": "npc",
         "es": "¿A qué línea va?",
-        "ru": "На какую линию вам?"
+        "tr": {
+          "ru": "На какую линию вам?",
+          "uk": "На яку лінію вам?",
+          "en": "Which line do you need?"
+        }
       },
       {
         "who": "user",
@@ -34,7 +42,11 @@
       {
         "who": "npc",
         "es": "Dirección centro.",
-        "ru": "В сторону центра."
+        "tr": {
+          "ru": "В сторону центра.",
+          "uk": "У бік центру.",
+          "en": "Toward the centre."
+        }
       },
       {
         "who": "user",
@@ -48,5 +60,6 @@
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

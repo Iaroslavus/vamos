@@ -2,11 +2,35 @@
   "id": "a1.numbers",
   "level": "A1",
   "category": "first_steps",
-  "title_ru": "Числа и цены",
+  "title": {
+    "ru": "Числа и цены",
+    "uk": "Числа і ціни",
+    "en": "Numbers and prices"
+  },
   "icon": "hash",
-  "can_do_ru": ["Понять цену на слух", "Назвать количество", "Спросить «сколько стоит?»"],
-  "lessons": ["a1.numbers.l1", "a1.numbers.l2"],
+  "can_do": [
+    {
+      "ru": "Понять цену на слух",
+      "uk": "Зрозуміти ціну на слух",
+      "en": "Understand a price by ear"
+    },
+    {
+      "ru": "Назвать количество",
+      "uk": "Назвати кількість",
+      "en": "Say a quantity"
+    },
+    {
+      "ru": "Спросить «сколько стоит?»",
+      "uk": "Запитати «скільки коштує?»",
+      "en": "Ask «how much is it?»"
+    }
+  ],
+  "lessons": [
+    "a1.numbers.l1",
+    "a1.numbers.l2"
+  ],
   "scene": "a1.numbers.scene",
   "starter_day": 3,
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

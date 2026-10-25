@@ -1,7 +1,11 @@
 {
   "id": "a1.supermercado.l4",
   "topic": "a1.supermercado",
-  "title_ru": "На кассе",
+  "title": {
+    "ru": "На кассе",
+    "uk": "На касі",
+    "en": "At the checkout"
+  },
   "items": [
     "supermercado.la_tarjeta",
     "supermercado.en_efectivo",
@@ -20,7 +24,11 @@
       {
         "who": "npc",
         "es": "¿Tarjeta o efectivo?",
-        "ru": "Картой или наличными?"
+        "tr": {
+          "ru": "Картой или наличными?",
+          "uk": "Карткою чи готівкою?",
+          "en": "By card or in cash?"
+        }
       },
       {
         "who": "user",
@@ -34,7 +42,11 @@
       {
         "who": "npc",
         "es": "Puede pasar. Aquí tiene.",
-        "ru": "Проходите. Вот."
+        "tr": {
+          "ru": "Проходите. Вот.",
+          "uk": "Проходьте. Ось.",
+          "en": "Go ahead. Here."
+        }
       },
       {
         "who": "user",
@@ -48,5 +60,6 @@
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

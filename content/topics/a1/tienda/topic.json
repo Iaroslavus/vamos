@@ -2,11 +2,35 @@
   "id": "a1.tienda",
   "level": "A1",
   "category": "shopping",
-  "title_ru": "В магазине",
+  "title": {
+    "ru": "В магазине",
+    "uk": "У крамниці",
+    "en": "In the shop"
+  },
   "icon": "bag",
-  "can_do_ru": ["Спросить, есть ли товар", "Попросить пакет", "Оплатить картой"],
-  "lessons": ["a1.tienda.l1", "a1.tienda.l2"],
+  "can_do": [
+    {
+      "ru": "Спросить, есть ли товар",
+      "uk": "Запитати, чи є товар",
+      "en": "Ask if an item is in stock"
+    },
+    {
+      "ru": "Попросить пакет",
+      "uk": "Попросити пакет",
+      "en": "Ask for a bag"
+    },
+    {
+      "ru": "Оплатить картой",
+      "uk": "Оплатити карткою",
+      "en": "Pay by card"
+    }
+  ],
+  "lessons": [
+    "a1.tienda.l1",
+    "a1.tienda.l2"
+  ],
   "scene": "a1.tienda.scene",
   "starter_day": 4,
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

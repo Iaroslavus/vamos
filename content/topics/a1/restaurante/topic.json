@@ -2,11 +2,35 @@
   "id": "a1.restaurante",
   "level": "A1",
   "category": "food",
-  "title_ru": "В ресторане",
+  "title": {
+    "ru": "В ресторане",
+    "uk": "У ресторані",
+    "en": "At a restaurant"
+  },
   "icon": "utensils",
-  "can_do_ru": ["Забронировать стол", "Заказать", "Сказать об аллергии"],
-  "lessons": ["a1.restaurante.l1", "a1.restaurante.l2"],
+  "can_do": [
+    {
+      "ru": "Забронировать стол",
+      "uk": "Забронювати стіл",
+      "en": "Book a table"
+    },
+    {
+      "ru": "Заказать",
+      "uk": "Замовити",
+      "en": "Order"
+    },
+    {
+      "ru": "Сказать об аллергии",
+      "uk": "Сказати про алергію",
+      "en": "Mention an allergy"
+    }
+  ],
+  "lessons": [
+    "a1.restaurante.l1",
+    "a1.restaurante.l2"
+  ],
   "scene": "a1.restaurante.scene",
   "starter_day": 6,
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

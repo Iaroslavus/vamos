@@ -13,6 +13,9 @@ import {
   type TopicCategory,
 } from './schema';
 
+export { contentLanguage } from './language';
+export { contentLocale, pickText, textOf, type ContentLocale } from './text';
+
 /**
  * Bundled content. Metro only accepts literal `require()` calls,
  * so a new JSON file has to be added here.

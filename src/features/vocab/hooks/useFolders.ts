@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useSession } from '@/features/auth/useSession';
 import { listLessons, listTopics } from '@/features/content/loader';
+import { contentLocale, textOf } from '@/features/content/text';
 import { deviceTimeZone } from '@/features/progress/study';
 import { useProgress } from '@/features/progress/useProgress';
 import { reviewRepository } from '@/features/review/defaultRepository';
@@ -22,12 +23,13 @@ export type FolderRowModel = {
   icon?: string;
 };
 
-export function vocabQueryKey(userId: string, completedKey: string) {
-  return ['vocab', userId, completedKey] as const;
+export function vocabQueryKey(userId: string, completedKey: string, language: string) {
+  return ['vocab', userId, completedKey, language] as const;
 }
 
 export function useFolders() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = contentLocale(i18n.language);
   const { session } = useSession();
   const userId = session?.user.id ?? null;
   const progress = useProgress();
@@ -42,7 +44,7 @@ export function useFolders() {
   const completedKey = completedIds.join('|');
 
   const query = useQuery({
-    queryKey: userId ? vocabQueryKey(userId, completedKey) : ['vocab', 'signed-out'],
+    queryKey: userId ? vocabQueryKey(userId, completedKey, language) : ['vocab', 'signed-out'],
     enabled: userId != null && progress.isSuccess,
     networkMode: 'offlineFirst',
     queryFn: async () => {
@@ -52,7 +54,7 @@ export function useFolders() {
         topics: topicSeeds(
           listTopics().map((topic) => ({
             id: topic.id,
-            title: topic.title_ru,
+            title: textOf(topic.title, language),
             lessonIds: topic.lessons,
           })),
           listLessons().map((lesson) => ({

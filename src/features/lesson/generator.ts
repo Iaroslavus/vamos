@@ -1,3 +1,6 @@
+import i18n from '@/i18n';
+
+import { contentLanguage } from '@/features/content/language';
 import type {
   DialogLine,
   ExerciseType,
@@ -5,6 +8,7 @@ import type {
   Lesson,
   LessonOverride,
 } from '@/features/content/schema';
+import { contentLocale, textOf, type ContentLocale } from '@/features/content/text';
 import { normalizeForCompare } from '@/features/lesson/grading';
 
 /** Screen count for a generated lesson, including one intro card per new unit. */
@@ -16,15 +20,18 @@ const LESSON_STEP_TARGET = 22;
 const MIN_PRACTICE = 5;
 const CHOICE_DISTRACTORS = 3;
 
-const PROMPT = {
-  listen: 'Что вы слышите?',
-  match: 'Соедините пары',
-  select: 'Выберите перевод',
-  build: 'Составьте фразу',
-  gap: 'Вставьте пропущенное слово',
-  recall: 'Напишите по-испански',
-  speak: 'Повторите вслух',
-} as const;
+function lessonPrompts(language: ContentLocale) {
+  const lng = language;
+  return {
+    listen: i18n.t('lesson.promptListen', { lng }),
+    match: i18n.t('lesson.promptMatch', { lng }),
+    select: i18n.t('lesson.promptSelect', { lng }),
+    build: i18n.t('lesson.promptBuild', { lng }),
+    gap: i18n.t('lesson.promptGap', { lng }),
+    recall: i18n.t('lesson.promptRecall', { lng }),
+    speak: i18n.t('lesson.promptSpeak', { lng }),
+  };
+}
 
 export const LESSON_PHASES = ['intro', 'recognize', 'build', 'recall', 'speak', 'dialog'] as const;
 export type LessonPhase = (typeof LESSON_PHASES)[number];
@@ -138,6 +145,8 @@ export type GenerateLessonStepsInput = {
   seen?: readonly Item[];
   /** Same seed always yields the same steps. Defaults to the lesson id. */
   seed?: string;
+  /** Learner language for glosses and distractors. Defaults to the interface language. */
+  language?: string | null;
 };
 
 type Rng = {
@@ -158,6 +167,7 @@ type Choice = {
  */
 export function generateLessonSteps(input: GenerateLessonStepsInput): LessonStep[] {
   const lesson = input.lesson;
+  const language = contentLocale(input.language ?? contentLanguage());
   const rng = createRng(input.seed ?? lesson.id);
   const byId = indexItems([...input.items, ...(input.seen ?? [])]);
   const lessonItems = lesson.items.map((id) => requiredItem(byId, id));
@@ -171,8 +181,14 @@ export function generateLessonSteps(input: GenerateLessonStepsInput): LessonStep
   const pool = dedupe([...lessonItems, ...seenItems]).sort((left, right) =>
     left.id.localeCompare(right.id),
   );
-  const drafted = assemble({ lesson, lessonItems, pool, byId, rng });
-  const replaced = applyOverrides(drafted, lesson.overrides, { lessonItems, pool, byId, rng });
+  const drafted = assemble({ lesson, lessonItems, pool, byId, rng, language });
+  const replaced = applyOverrides(drafted, lesson.overrides, {
+    lessonItems,
+    pool,
+    byId,
+    rng,
+    language,
+  });
   return replaced.map((step, index) => ({ ...step, id: `s${index}` }));
 }
 
@@ -239,16 +255,20 @@ type AssembleInput = {
   pool: readonly Item[];
   byId: ReadonlyMap<string, Item>;
   rng: Rng;
+  language: ContentLocale;
 };
 
 function assemble(input: AssembleInput): LessonStep[] {
-  const { lesson, lessonItems, pool, byId, rng } = input;
+  const { lesson, lessonItems, pool, byId, rng, language } = input;
+  const prompts = lessonPrompts(language);
   const intros = lessonItems.map(introStep);
-  const recognizeBank = recognizeSteps(lessonItems, pool, rng);
-  const buildBank = buildSteps(lessonItems, pool, rng);
+  const recognizeBank = recognizeSteps(lessonItems, pool, rng, language, prompts);
+  const buildBank = buildSteps(lessonItems, pool, rng, prompts);
   const recallCount = chooseRecall(rng, lessonItems.length, lesson.speak.length);
-  const recall = shuffle(lessonItems, rng).slice(0, recallCount).map(typeTranslationStep);
-  const speak = lesson.speak.map((id) => speakStep(requiredItem(byId, id)));
+  const recall = shuffle(lessonItems, rng)
+    .slice(0, recallCount)
+    .map((item) => typeTranslationStep(item, language, prompts.recall));
+  const speak = lesson.speak.map((id) => speakStep(requiredItem(byId, id), prompts.speak));
   const dialog = dialogStep(lesson);
 
   const budget = practiceBudget(intros.length, speak.length, recall.length);
@@ -266,30 +286,45 @@ function assemble(input: AssembleInput): LessonStep[] {
   return [...intros, ...recognize, ...build, ...recall, ...speak, dialog];
 }
 
-function recognizeSteps(lessonItems: readonly Item[], pool: readonly Item[], rng: Rng) {
+type LessonPrompt = ReturnType<typeof lessonPrompts>;
+
+function recognizeSteps(
+  lessonItems: readonly Item[],
+  pool: readonly Item[],
+  rng: Rng,
+  language: ContentLocale,
+  prompts: LessonPrompt,
+) {
   const order = shuffle(lessonItems, rng);
   const listen = order.flatMap((item) => {
-    const step = listenSelectStep(item, pool, rng);
+    const step = listenSelectStep(item, pool, rng, language, prompts.listen);
     return step ? [step] : [];
   });
-  const match = matchGroups(lessonItems, rng).map(matchPairsStep);
+  const match = matchGroups(lessonItems, rng).map((group) =>
+    matchPairsStep(group, language, prompts.match),
+  );
   const select = order.flatMap((item) => {
-    const step = selectTranslationStep(item, pool, rng);
+    const step = selectTranslationStep(item, pool, rng, language, prompts.select);
     return step ? [step] : [];
   });
   return { listen, match, select };
 }
 
-function buildSteps(lessonItems: readonly Item[], pool: readonly Item[], rng: Rng) {
+function buildSteps(
+  lessonItems: readonly Item[],
+  pool: readonly Item[],
+  rng: Rng,
+  prompts: LessonPrompt,
+) {
   const phrases = shuffle(
     lessonItems.filter((item) => phrasePieces(item) !== null),
     rng,
   );
   const sentences = phrases.flatMap((item) => {
-    const step = buildSentenceStep(item, pool, rng);
+    const step = buildSentenceStep(item, pool, rng, prompts.build);
     return step ? [step] : [];
   });
-  const gaps = phrases.flatMap((item) => fillGapSteps(item, pool, rng));
+  const gaps = phrases.flatMap((item) => fillGapSteps(item, pool, rng, prompts.gap));
   return { sentences, gaps };
 }
 
@@ -369,17 +404,23 @@ function introStep(item: Item): IntroStep {
   };
 }
 
-function listenSelectStep(item: Item, pool: readonly Item[], rng: Rng): ListenSelectStep | null {
-  const choice = chooseTranslations(item, pool, rng);
+function listenSelectStep(
+  item: Item,
+  pool: readonly Item[],
+  rng: Rng,
+  language: ContentLocale,
+  promptRu: string,
+): ListenSelectStep | null {
+  const choice = chooseTranslations(item, pool, rng, language);
   if (!choice) return null;
   return {
     id: '',
     type: 'listen_select',
-    prompt_ru: PROMPT.listen,
+    prompt_ru: promptRu,
     speakText: item.es,
     audio: audioOf(item),
     options: choice.options,
-    answer: item.ru,
+    answer: choice.answer,
     itemIds: [item.id],
     distractorIds: choice.distractorIds,
   };
@@ -389,16 +430,18 @@ function selectTranslationStep(
   item: Item,
   pool: readonly Item[],
   rng: Rng,
+  language: ContentLocale,
+  promptRu: string,
 ): SelectTranslationStep | null {
-  const choice = chooseTranslations(item, pool, rng);
+  const choice = chooseTranslations(item, pool, rng, language);
   if (!choice) return null;
   return {
     id: '',
     type: 'select_translation',
-    prompt_ru: PROMPT.select,
+    prompt_ru: promptRu,
     prompt: item.es,
     options: choice.options,
-    answer: item.ru,
+    answer: choice.answer,
     itemIds: [item.id],
     distractorIds: choice.distractorIds,
   };
@@ -423,18 +466,27 @@ function matchGroups(items: readonly Item[], rng: Rng): Item[][] {
   return groups.filter((group) => group.length >= 2);
 }
 
-function matchPairsStep(group: readonly Item[]): MatchPairsStep {
+function matchPairsStep(
+  group: readonly Item[],
+  language: ContentLocale,
+  promptRu: string,
+): MatchPairsStep {
   return {
     id: '',
     type: 'match_pairs',
-    prompt_ru: PROMPT.match,
-    pairs: group.map((item) => ({ left: item.es, right: item.ru })),
+    prompt_ru: promptRu,
+    pairs: group.map((item) => ({ left: item.es, right: textOf(item.tr, language) })),
     itemIds: group.map((item) => item.id),
     distractorIds: [],
   };
 }
 
-function buildSentenceStep(item: Item, pool: readonly Item[], rng: Rng): BuildSentenceStep | null {
+function buildSentenceStep(
+  item: Item,
+  pool: readonly Item[],
+  rng: Rng,
+  promptRu: string,
+): BuildSentenceStep | null {
   const parts = phrasePieces(item);
   if (!parts) return null;
   const extras = extraTiles(item, parts, pool, 1 + rng.int(2), rng);
@@ -442,7 +494,7 @@ function buildSentenceStep(item: Item, pool: readonly Item[], rng: Rng): BuildSe
   const step: BuildSentenceStep = {
     id: '',
     type: 'build_sentence',
-    prompt_ru: PROMPT.build,
+    prompt_ru: promptRu,
     tiles: shuffle([...parts, ...extras.tiles], rng),
     answer,
     itemIds: [item.id],
@@ -454,7 +506,12 @@ function buildSentenceStep(item: Item, pool: readonly Item[], rng: Rng): BuildSe
   return step;
 }
 
-function fillGapSteps(item: Item, pool: readonly Item[], rng: Rng): FillGapStep[] {
+function fillGapSteps(
+  item: Item,
+  pool: readonly Item[],
+  rng: Rng,
+  promptRu: string,
+): FillGapStep[] {
   const parts = phrasePieces(item);
   if (!parts) return [];
   return parts.map((part, gapAt) => {
@@ -463,7 +520,7 @@ function fillGapSteps(item: Item, pool: readonly Item[], rng: Rng): FillGapStep[
     const step: FillGapStep = {
       id: '',
       type: 'fill_gap',
-      prompt_ru: PROMPT.gap,
+      prompt_ru: promptRu,
       sentence_es: sentence,
       answer: part,
       itemIds: [item.id],
@@ -476,12 +533,16 @@ function fillGapSteps(item: Item, pool: readonly Item[], rng: Rng): FillGapStep[
   });
 }
 
-function typeTranslationStep(item: Item): TypeTranslationStep {
+function typeTranslationStep(
+  item: Item,
+  language: ContentLocale,
+  promptRu: string,
+): TypeTranslationStep {
   return {
     id: '',
     type: 'type_translation',
-    prompt_ru: PROMPT.recall,
-    prompt: item.ru,
+    prompt_ru: promptRu,
+    prompt: textOf(item.tr, language),
     direction: 'ru_to_es',
     answer: item.es,
     itemIds: [item.id],
@@ -489,7 +550,7 @@ function typeTranslationStep(item: Item): TypeTranslationStep {
   };
 }
 
-function speakStep(item: Item, promptRu: string = PROMPT.speak): SpeakRepeatStep {
+function speakStep(item: Item, promptRu: string): SpeakRepeatStep {
   return {
     id: '',
     type: 'speak_repeat',
@@ -525,6 +586,7 @@ type OverrideContext = {
   pool: readonly Item[];
   byId: ReadonlyMap<string, Item>;
   rng: Rng;
+  language: ContentLocale;
 };
 
 function applyOverrides(
@@ -546,11 +608,13 @@ function applyOverrides(
 }
 
 function stepFromOverride(override: LessonOverride, ctx: OverrideContext): LessonStep {
+  const promptRu = textOf(override.prompt, ctx.language);
+  const prompts = lessonPrompts(ctx.language);
   if (isAuthoredType(override.type)) {
     return {
       id: '',
       type: override.type,
-      prompt_ru: override.prompt_ru,
+      prompt_ru: promptRu,
       ...(override.item ? { itemId: override.item } : {}),
       itemIds: override.item ? [override.item] : [],
       distractorIds: [],
@@ -562,39 +626,43 @@ function stepFromOverride(override: LessonOverride, ctx: OverrideContext): Lesso
 
   switch (override.type) {
     case 'listen_select': {
-      const step = listenSelectStep(focus, ctx.pool, ctx.rng);
+      const step = listenSelectStep(focus, ctx.pool, ctx.rng, ctx.language, prompts.listen);
       if (!step) throw new Error(`Cannot build listen_select for ${focus.id}`);
-      return { ...step, prompt_ru: override.prompt_ru };
+      return { ...step, prompt_ru: promptRu };
     }
     case 'select_translation': {
-      const step = selectTranslationStep(focus, ctx.pool, ctx.rng);
+      const step = selectTranslationStep(focus, ctx.pool, ctx.rng, ctx.language, prompts.select);
       if (!step) throw new Error(`Cannot build select_translation for ${focus.id}`);
-      return { ...step, prompt_ru: override.prompt_ru };
+      return { ...step, prompt_ru: promptRu };
     }
     case 'match_pairs':
       return {
-        ...matchPairsStep(matchGroupIncluding(focus, ctx.lessonItems, ctx.rng)),
-        prompt_ru: override.prompt_ru,
+        ...matchPairsStep(
+          matchGroupIncluding(focus, ctx.lessonItems, ctx.rng),
+          ctx.language,
+          prompts.match,
+        ),
+        prompt_ru: promptRu,
       };
     case 'build_sentence': {
-      const step = buildSentenceStep(focus, ctx.pool, ctx.rng);
+      const step = buildSentenceStep(focus, ctx.pool, ctx.rng, prompts.build);
       if (!step) throw new Error(`Cannot build build_sentence for ${focus.id}`);
-      return { ...step, prompt_ru: override.prompt_ru };
+      return { ...step, prompt_ru: promptRu };
     }
     case 'fill_gap': {
-      const step = fillGapSteps(focus, ctx.pool, ctx.rng)[0];
+      const step = fillGapSteps(focus, ctx.pool, ctx.rng, prompts.gap)[0];
       if (!step) throw new Error(`Cannot build fill_gap for ${focus.id}`);
-      return { ...step, prompt_ru: override.prompt_ru };
+      return { ...step, prompt_ru: promptRu };
     }
     case 'type_translation':
-      return { ...typeTranslationStep(focus), prompt_ru: override.prompt_ru };
+      return { ...typeTranslationStep(focus, ctx.language, prompts.recall), prompt_ru: promptRu };
     case 'speak_repeat':
-      return speakStep(focus, override.prompt_ru);
+      return speakStep(focus, promptRu);
     case 'listen_type':
       return {
         id: '',
         type: 'listen_type',
-        prompt_ru: override.prompt_ru,
+        prompt_ru: promptRu,
         speakText: focus.es,
         audio: audioOf(focus),
         answer: focus.es,
@@ -635,11 +703,19 @@ function phrasePieces(item: Item): string[] | null {
   return tokens.length >= 2 ? tokens : null;
 }
 
-function chooseTranslations(item: Item, pool: readonly Item[], rng: Rng): Choice | null {
-  const picked = pickFromPool(pool, item.id, 'ru', item.ru, CHOICE_DISTRACTORS, rng);
+function chooseTranslations(
+  item: Item,
+  pool: readonly Item[],
+  rng: Rng,
+  language: ContentLocale,
+): (Choice & { answer: string }) | null {
+  const answer = textOf(item.tr, language);
+  if (!answer) return null;
+  const picked = pickGlosses(pool, item.id, answer, CHOICE_DISTRACTORS, rng, language);
   if (picked.texts.length === 0) return null;
   return {
-    options: placeAnswer(item.ru, picked.texts, rng),
+    answer,
+    options: placeAnswer(answer, picked.texts, rng),
     distractorIds: picked.ids,
   };
 }
@@ -672,27 +748,27 @@ function extraTiles(
   };
 }
 
-function pickFromPool(
+function pickGlosses(
   pool: readonly Item[],
   currentId: string,
-  side: 'es' | 'ru',
   answer: string,
   count: number,
   rng: Rng,
+  language: ContentLocale,
 ): { texts: string[]; ids: string[] } {
   const answerKey = normalizeForCompare(answer);
-  const eligible: Item[] = [];
+  const eligible: { id: string; text: string }[] = [];
   const seen = new Set<string>();
   for (const item of pool) {
     if (item.id === currentId) continue;
-    const text = item[side];
+    const text = textOf(item.tr, language);
     const key = normalizeForCompare(text);
     if (!key || key === answerKey || seen.has(key)) continue;
     seen.add(key);
-    eligible.push(item);
+    eligible.push({ id: item.id, text });
   }
   const picked = shuffle(eligible, rng).slice(0, count);
-  return { texts: picked.map((item) => item[side]), ids: picked.map((item) => item.id) };
+  return { texts: picked.map((item) => item.text), ids: picked.map((item) => item.id) };
 }
 
 type TileCandidate = { id: string; text: string };
@@ -747,7 +823,7 @@ function audioOf(item: Item): string | null {
 }
 
 function cloneLine(line: DialogLine): DialogLine {
-  if (line.who === 'npc') return { who: 'npc', es: line.es, ru: line.ru };
+  if (line.who === 'npc') return { who: 'npc', es: line.es, tr: { ...line.tr } };
   return { who: 'user', target: line.target, options: [...line.options] };
 }
 

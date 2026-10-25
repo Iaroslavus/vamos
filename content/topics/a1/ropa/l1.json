@@ -1,7 +1,11 @@
 {
   "id": "a1.ropa.l1",
   "topic": "a1.ropa",
-  "title_ru": "Размер",
+  "title": {
+    "ru": "Размер",
+    "uk": "Розмір",
+    "en": "Size"
+  },
   "items": [
     "ropa.la_talla",
     "ropa.el_talle",
@@ -20,7 +24,11 @@
       {
         "who": "npc",
         "es": "¿Le queda grande?",
-        "ru": "Вам велико?"
+        "tr": {
+          "ru": "Вам велико?",
+          "uk": "Вам завелике?",
+          "en": "Is it too big?"
+        }
       },
       {
         "who": "user",
@@ -34,7 +42,11 @@
       {
         "who": "npc",
         "es": "¿Qué talla usa?",
-        "ru": "Какой у вас размер?"
+        "tr": {
+          "ru": "Какой у вас размер?",
+          "uk": "Який у вас розмір?",
+          "en": "What size do you take?"
+        }
       },
       {
         "who": "user",
@@ -48,5 +60,6 @@
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

@@ -1,6 +1,7 @@
 import { listItems, listLessons, listScenes, listTopics } from './loader';
 import { contentIssues, type ContentBundle } from './integrity';
 import { ItemSchema, LessonSchema, SceneSchema, TopicSchema } from './schema';
+import { fillLocales } from './text';
 
 function bundle(): ContentBundle {
   return {
@@ -44,9 +45,9 @@ describe('contentIssues', () => {
         id: 'a1.t',
         level: 'A1',
         category: 'first_steps',
-        title_ru: 'Тест',
+        title: fillLocales('Тест'),
         icon: 'wave',
-        can_do_ru: ['Проверить ссылки'],
+        can_do: [fillLocales('Проверить ссылки')],
         lessons: ['a1.t.l1'],
         scene: 'a1.t.scene',
         draft: true,
@@ -56,7 +57,7 @@ describe('contentIssues', () => {
       LessonSchema.parse({
         id: 'a1.t.l1',
         topic: 'a1.t',
-        title_ru: 'Тест',
+        title: fillLocales('Тест'),
         items: ['t.uno', 't.dos', 't.tres', 't.hola', 't.gracias_por', 't.por_favor'],
         speak: ['t.por_favor'],
         dialog: {
@@ -75,7 +76,7 @@ describe('contentIssues', () => {
       SceneSchema.parse({
         id: 'a1.t.scene',
         topic: 'a1.t',
-        title_ru: 'Сценка',
+        title: fillLocales('Сценка'),
         draft: true,
       }),
     ],
@@ -124,8 +125,8 @@ function word(id: string, es: string, ru: string) {
     id,
     type: 'word',
     es,
-    ru,
-    say_ru: es,
+    tr: fillLocales(ru),
+    say: fillLocales(es),
     level: 'A1',
     draft: true,
   });
@@ -136,8 +137,8 @@ function phrase(id: string, es: string, ru: string) {
     id,
     type: 'phrase',
     es,
-    ru,
-    say_ru: es,
+    tr: fillLocales(ru),
+    say: fillLocales(es),
     level: 'A1',
     draft: true,
   });

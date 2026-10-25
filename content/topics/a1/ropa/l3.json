@@ -1,7 +1,11 @@
 {
   "id": "a1.ropa.l3",
   "topic": "a1.ropa",
-  "title_ru": "Примерка",
+  "title": {
+    "ru": "Примерка",
+    "uk": "Примірка",
+    "en": "Trying it on"
+  },
   "items": [
     "ropa.puedo_probarme",
     "ropa.el_probador",
@@ -20,7 +24,11 @@
       {
         "who": "npc",
         "es": "El probador está libre.",
-        "ru": "Примерочная свободна."
+        "tr": {
+          "ru": "Примерочная свободна.",
+          "uk": "Примірочна вільна.",
+          "en": "The fitting room is free."
+        }
       },
       {
         "who": "user",
@@ -34,7 +42,11 @@
       {
         "who": "npc",
         "es": "¿Qué tal?",
-        "ru": "Ну как?"
+        "tr": {
+          "ru": "Ну как?",
+          "uk": "Ну як?",
+          "en": "Well?"
+        }
       },
       {
         "who": "user",
@@ -48,5 +60,6 @@
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

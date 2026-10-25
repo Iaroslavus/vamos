@@ -1,4 +1,5 @@
 import { ItemSchema, LessonSchema, SceneSchema, TopicSchema, type Item } from '../schema';
+import { fillLocales } from '../text';
 import { parseTopicArgs } from './args';
 import {
   chatCompletionBody,
@@ -37,6 +38,8 @@ describe('parseModelDraft', () => {
     const draft = parseModelDraft(`\`\`\`json\n${JSON.stringify(rawDraft())}\n\`\`\``);
 
     expect(draft.topic.draft).toBe(true);
+    expect(draft.topic.draft_i18n).toBe(true);
+    expect(draft.items.every((item) => item.draft_i18n)).toBe(true);
     expect(draft.lessons.every((lesson) => lesson.draft)).toBe(true);
     expect(draft.scene.draft).toBe(true);
     expect(draft.items.every((item) => item.draft && item.audio.es === null)).toBe(true);
@@ -64,6 +67,8 @@ describe('draftIssues', () => {
   it('puts the level and the goals into the model prompt', () => {
     const prompt = topicPrompt(spec);
     expect(prompt.system).toContain('a1.cafe');
+    expect(prompt.system).toContain('Ukrainian');
+    expect(prompt.user).toContain('uk and en');
     expect(prompt.user).toContain('A1');
     expect(prompt.user).toContain('Заказать напиток');
     expect(prompt.user).toContain('exactly 2 lessons');
@@ -122,6 +127,29 @@ describe('content report', () => {
     expect(report.lessons[0]).toMatchObject({ id: 'a1.cafe.l1', units: 6, draft: true });
     expect(formatReport(report)).toContain('a1.cafe.l1');
     expect(formatReport(report)).toContain('Ссылки: ок');
+    expect(formatReport(report)).toContain('Не хватает переводов');
+    expect(report.missingTranslations).toEqual({ ru: [], uk: [], en: [] });
+  });
+
+  it('lists a missing language and still treats links as ok', () => {
+    const draft = validDraft();
+    const gap = {
+      ...draft.items[0]!,
+      tr: { ru: draft.items[0]!.tr.ru, en: 'Coffee, please' },
+    };
+    const report = buildReport({
+      items: [gap, ...draft.items.slice(1)],
+      topics: [draft.topic],
+      lessons: draft.lessons,
+      scenes: [draft.scene],
+    });
+
+    expect(report.ok).toBe(true);
+    expect(report.missingTranslations.uk).toContain(`item ${gap.id} tr`);
+    expect(formatReport(report)).toContain(`item ${gap.id} tr`);
+    expect(
+      draftIssues({ ...draft, items: [gap, ...draft.items.slice(1)] }, spec).join('\n'),
+    ).toContain(`missing uk translation: item ${gap.id} tr`);
   });
 
   it('fails when a lesson points at a missing unit', () => {
@@ -243,6 +271,7 @@ describe('starter week on disk', () => {
     const report = buildReport(loaded.bundle, loaded.issues);
     expect(report.issues).toEqual([]);
     expect(report.ok).toBe(true);
+    expect(report.missingTranslations).toEqual({ ru: [], uk: [], en: [] });
     expect(report.draftTopics).toBe(report.topics);
     expect(report.phraseShare).toBeGreaterThanOrEqual(0.6);
   });
@@ -279,9 +308,9 @@ function validDraft(): TopicDraft {
     id: 'a1.cafe',
     level: 'A1',
     category: 'food',
-    title_ru: 'В кафе',
+    title: fillLocales('В кафе'),
     icon: 'cup',
-    can_do_ru: ['Заказать напиток'],
+    can_do: [fillLocales('Заказать напиток')],
     lessons: ['a1.cafe.l1', 'a1.cafe.l2'],
     scene: 'a1.cafe.scene',
     starter_day: 2,
@@ -315,7 +344,7 @@ function validDraft(): TopicDraft {
     scene: SceneSchema.parse({
       id: 'a1.cafe.scene',
       topic: 'a1.cafe',
-      title_ru: 'У стойки',
+      title: fillLocales('У стойки'),
       draft: true,
     }),
   };
@@ -327,14 +356,14 @@ function lesson(id: string, title: string, items: string[], speak: string[]) {
   return LessonSchema.parse({
     id,
     topic: 'a1.cafe',
-    title_ru: title,
+    title: fillLocales(title),
     items,
     speak,
     dialog: {
       lines: [
-        { who: 'npc', es: '¿Qué le pongo?', ru: 'Что вам?' },
+        { who: 'npc', es: '¿Qué le pongo?', tr: fillLocales('Что вам?') },
         { who: 'user', target, options: [target, other] },
-        { who: 'npc', es: 'Aquí tiene.', ru: 'Вот.' },
+        { who: 'npc', es: 'Aquí tiene.', tr: fillLocales('Вот.') },
         { who: 'user', target: other, options: [other, target] },
       ],
     },
@@ -348,12 +377,12 @@ function phrase(id: string, es: string, ru: string): Item {
     id,
     type: 'phrase',
     es,
-    ru,
+    tr: fillLocales(ru),
     parts: [
-      { es: first, ru: 'а' },
-      { es: rest.join(' '), ru: 'б' },
+      { es: first, tr: fillLocales('а') },
+      { es: rest.join(' '), tr: fillLocales('б') },
     ],
-    say_ru: es,
+    say: fillLocales(es),
     level: 'A1',
     draft: true,
   });
@@ -364,8 +393,8 @@ function word(id: string, es = 'aquí', ru = 'здесь'): Item {
     id,
     type: 'word',
     es,
-    ru,
-    say_ru: es,
+    tr: fillLocales(ru),
+    say: fillLocales(es),
     level: 'A1',
     draft: true,
   });

@@ -12,14 +12,23 @@ import {
 describe('content index', () => {
   it('loads topics, lessons, and items by id', () => {
     expect(getTopic('a1.hola')).toMatchObject({
-      title_ru: '¡Hola! Знакомство',
+      title: {
+        ru: '¡Hola! Знакомство',
+        uk: '¡Hola! Знайомство',
+        en: '¡Hola! Introductions',
+      },
       starter_day: 1,
       draft: true,
     });
-    expect(getLesson('a1.hola.l1').title_ru).toBe('Приветствия');
+    expect(getLesson('a1.hola.l1').title.ru).toBe('Приветствия');
     expect(getLesson('a1.hola.l2').items).toHaveLength(7);
     expect(getLesson('a1.numbers.l1').items).toHaveLength(7);
-    expect(getItem('hola.hola')).toMatchObject({ es: 'hola', ru: 'привет', draft: true });
+    expect(getItem('hola.hola')).toMatchObject({
+      es: 'hola',
+      tr: { ru: 'привет', uk: 'привіт', en: 'hello' },
+      draft: true,
+      draft_i18n: true,
+    });
     expect(getItem('numbers.uno').type).toBe('word');
   });
 

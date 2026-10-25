@@ -3,283 +3,767 @@
     "id": "hola.hola",
     "type": "word",
     "es": "hola",
-    "ru": "привет",
-    "say_ru": "Ола",
-    "note_ru": "Подходит в любое время суток.",
-    "why_ru": null,
+    "tr": {
+      "ru": "привет",
+      "uk": "привіт",
+      "en": "hello"
+    },
+    "say": {
+      "ru": "Ола",
+      "uk": "Ола",
+      "en": "Ola"
+    },
+    "note": {
+      "ru": "Подходит в любое время суток.",
+      "uk": "Пасує будь-якої пори дня.",
+      "en": "Fine at any time of day."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": "a1/hola.mp3", "latam": null },
-    "tags": ["greeting"],
-    "draft": true
+    "audio": {
+      "es": "a1/hola.mp3",
+      "latam": null
+    },
+    "tags": [
+      "greeting"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "hola.buenos_dias",
     "type": "phrase",
     "es": "buenos días",
-    "ru": "доброе утро",
+    "tr": {
+      "ru": "доброе утро",
+      "uk": "добрий ранок",
+      "en": "good morning"
+    },
     "parts": [
-      { "es": "buenos", "ru": "добрые" },
-      { "es": "días", "ru": "утро" }
+      {
+        "es": "buenos",
+        "tr": {
+          "ru": "добрые",
+          "uk": "добрі",
+          "en": "good"
+        }
+      },
+      {
+        "es": "días",
+        "tr": {
+          "ru": "утро",
+          "uk": "ранок",
+          "en": "morning"
+        }
+      }
     ],
-    "say_ru": "буЭнос дИас",
-    "note_ru": "Так говорят утром, примерно до обеда.",
-    "why_ru": "Día мужского рода, поэтому buenos, а не buenas.",
+    "say": {
+      "ru": "буЭнос дИас",
+      "uk": "буЕнос дІас",
+      "en": "buEnos dIas"
+    },
+    "note": {
+      "ru": "Так говорят утром, примерно до обеда.",
+      "uk": "Так кажуть вранці, приблизно до обіду.",
+      "en": "People say this in the morning, until about lunchtime."
+    },
+    "why": {
+      "ru": "Día мужского рода, поэтому buenos, а не buenas.",
+      "uk": "Día чоловічого роду, тому buenos, а не buenas.",
+      "en": "Día is masculine, so it is buenos, not buenas."
+    },
     "level": "A1",
     "variant": "both",
-    "audio": { "es": "a1/buenos-dias.mp3", "latam": null },
-    "tags": ["greeting"],
-    "draft": true
+    "audio": {
+      "es": "a1/buenos-dias.mp3",
+      "latam": null
+    },
+    "tags": [
+      "greeting"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "hola.buenas_tardes",
     "type": "phrase",
     "es": "buenas tardes",
-    "ru": "добрый день",
+    "tr": {
+      "ru": "добрый день",
+      "uk": "добрий день",
+      "en": "good afternoon"
+    },
     "parts": [
-      { "es": "buenas", "ru": "добрые" },
-      { "es": "tardes", "ru": "день" }
+      {
+        "es": "buenas",
+        "tr": {
+          "ru": "добрые",
+          "uk": "добрі",
+          "en": "good"
+        }
+      },
+      {
+        "es": "tardes",
+        "tr": {
+          "ru": "день",
+          "uk": "день",
+          "en": "day"
+        }
+      }
     ],
-    "say_ru": "буЭнас тАрдес",
-    "note_ru": "После обеда и до вечера.",
-    "why_ru": null,
+    "say": {
+      "ru": "буЭнас тАрдес",
+      "uk": "буЕнас тАрдес",
+      "en": "buEnas tArdes"
+    },
+    "note": {
+      "ru": "После обеда и до вечера.",
+      "uk": "Після обіду і до вечора.",
+      "en": "After lunch and until evening."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": "a1/buenas-tardes.mp3", "latam": null },
-    "tags": ["greeting"],
-    "draft": true
+    "audio": {
+      "es": "a1/buenas-tardes.mp3",
+      "latam": null
+    },
+    "tags": [
+      "greeting"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "hola.buenas_noches",
     "type": "phrase",
     "es": "buenas noches",
-    "ru": "спокойной ночи",
+    "tr": {
+      "ru": "спокойной ночи",
+      "uk": "на добраніч",
+      "en": "good night"
+    },
     "parts": [
-      { "es": "buenas", "ru": "добрые" },
-      { "es": "noches", "ru": "вечер" }
+      {
+        "es": "buenas",
+        "tr": {
+          "ru": "добрые",
+          "uk": "добрі",
+          "en": "good"
+        }
+      },
+      {
+        "es": "noches",
+        "tr": {
+          "ru": "вечер",
+          "uk": "вечір",
+          "en": "evening"
+        }
+      }
     ],
-    "say_ru": "буЭнас нОчес",
-    "note_ru": "Вечером и когда прощаетесь на ночь.",
-    "why_ru": null,
+    "say": {
+      "ru": "буЭнас нОчес",
+      "uk": "буЕнас нОчес",
+      "en": "buEnas nOches"
+    },
+    "note": {
+      "ru": "Вечером и когда прощаетесь на ночь.",
+      "uk": "Увечері і коли прощаєтесь на ніч.",
+      "en": "In the evening, and when you say good night."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": "a1/buenas-noches.mp3", "latam": null },
-    "tags": ["greeting"],
-    "draft": true
+    "audio": {
+      "es": "a1/buenas-noches.mp3",
+      "latam": null
+    },
+    "tags": [
+      "greeting"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "hola.adios",
     "type": "word",
     "es": "adiós",
-    "ru": "до свидания",
-    "say_ru": "адйОс",
-    "note_ru": "Прощание, когда не ждёте скорой встречи.",
-    "why_ru": null,
+    "tr": {
+      "ru": "до свидания",
+      "uk": "до побачення",
+      "en": "goodbye"
+    },
+    "say": {
+      "ru": "адйОс",
+      "uk": "адйОс",
+      "en": "adyOs"
+    },
+    "note": {
+      "ru": "Прощание, когда не ждёте скорой встречи.",
+      "uk": "Прощання, коли не чекаєте швидкої зустрічі.",
+      "en": "A goodbye when you do not expect to meet again soon."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": "a1/adios.mp3", "latam": null },
-    "tags": ["greeting"],
-    "draft": true
+    "audio": {
+      "es": "a1/adios.mp3",
+      "latam": null
+    },
+    "tags": [
+      "greeting"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "hola.hasta_luego",
     "type": "phrase",
     "es": "hasta luego",
-    "ru": "до скорого",
+    "tr": {
+      "ru": "до скорого",
+      "uk": "до зустрічі",
+      "en": "see you soon"
+    },
     "parts": [
-      { "es": "hasta", "ru": "до" },
-      { "es": "luego", "ru": "скоро" }
+      {
+        "es": "hasta",
+        "tr": {
+          "ru": "до",
+          "uk": "до",
+          "en": "until"
+        }
+      },
+      {
+        "es": "luego",
+        "tr": {
+          "ru": "скоро",
+          "uk": "скоро",
+          "en": "soon"
+        }
+      }
     ],
-    "say_ru": "Аста луЭго",
-    "note_ru": "Мягкое «пока», если ещё увидитесь.",
-    "why_ru": null,
+    "say": {
+      "ru": "Аста луЭго",
+      "uk": "Аста луЕго",
+      "en": "Asta luEgo"
+    },
+    "note": {
+      "ru": "Мягкое «пока», если ещё увидитесь.",
+      "uk": "М'яке «бувай», якщо ще побачитесь.",
+      "en": "A soft goodbye if you will see each other again."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": "a1/hasta-luego.mp3", "latam": null },
-    "tags": ["greeting"],
-    "draft": true
+    "audio": {
+      "es": "a1/hasta-luego.mp3",
+      "latam": null
+    },
+    "tags": [
+      "greeting"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "hola.por_favor",
     "type": "phrase",
     "es": "por favor",
-    "ru": "пожалуйста",
+    "tr": {
+      "ru": "пожалуйста",
+      "uk": "будь ласка",
+      "en": "please"
+    },
     "parts": [
-      { "es": "por", "ru": "из" },
-      { "es": "favor", "ru": "любезности" }
+      {
+        "es": "por",
+        "tr": {
+          "ru": "из",
+          "uk": "з",
+          "en": "from"
+        }
+      },
+      {
+        "es": "favor",
+        "tr": {
+          "ru": "любезности",
+          "uk": "ввічливості",
+          "en": "courtesy"
+        }
+      }
     ],
-    "say_ru": "пор фавОр",
-    "note_ru": "Ставится и в начале просьбы, и в конце.",
-    "why_ru": null,
+    "say": {
+      "ru": "пор фавОр",
+      "uk": "пор фавОр",
+      "en": "por favOr"
+    },
+    "note": {
+      "ru": "Ставится и в начале просьбы, и в конце.",
+      "uk": "Стоїть і на початку прохання, і в кінці.",
+      "en": "It goes at the start of a request or at the end."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": "a1/por-favor.mp3", "latam": null },
-    "tags": ["polite"],
-    "draft": true
+    "audio": {
+      "es": "a1/por-favor.mp3",
+      "latam": null
+    },
+    "tags": [
+      "polite"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "hola.gracias",
     "type": "word",
     "es": "gracias",
-    "ru": "спасибо",
-    "say_ru": "грАсиас",
-    "note_ru": "На «gracias» часто отвечают «de nada».",
-    "why_ru": null,
+    "tr": {
+      "ru": "спасибо",
+      "uk": "дякую",
+      "en": "thanks"
+    },
+    "say": {
+      "ru": "грАсиас",
+      "uk": "грАсіас",
+      "en": "grAsias"
+    },
+    "note": {
+      "ru": "На «gracias» часто отвечают «de nada».",
+      "uk": "На «gracias» часто відповідають «de nada».",
+      "en": "People often answer «gracias» with «de nada»."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": "a1/gracias.mp3", "latam": null },
-    "tags": ["polite"],
-    "draft": true
+    "audio": {
+      "es": "a1/gracias.mp3",
+      "latam": null
+    },
+    "tags": [
+      "polite"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "hola.me_llamo",
     "type": "phrase",
     "es": "me llamo",
-    "ru": "меня зовут",
+    "tr": {
+      "ru": "меня зовут",
+      "uk": "мене звати",
+      "en": "my name is"
+    },
     "parts": [
-      { "es": "me", "ru": "меня" },
-      { "es": "llamo", "ru": "зовут" }
+      {
+        "es": "me",
+        "tr": {
+          "ru": "меня",
+          "uk": "мене",
+          "en": "me"
+        }
+      },
+      {
+        "es": "llamo",
+        "tr": {
+          "ru": "зовут",
+          "uk": "звати",
+          "en": "is called"
+        }
+      }
     ],
-    "say_ru": "ме йАмо",
-    "note_ru": "Дальше сразу имя: me llamo Ana.",
-    "why_ru": null,
+    "say": {
+      "ru": "ме йАмо",
+      "uk": "ме йАмо",
+      "en": "me yAmo"
+    },
+    "note": {
+      "ru": "Дальше сразу имя: me llamo Ana.",
+      "uk": "Далі одразу ім'я: me llamo Ana.",
+      "en": "The name comes right after: me llamo Ana."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": "a1/me-llamo.mp3", "latam": null },
-    "tags": ["intro"],
-    "draft": true
+    "audio": {
+      "es": "a1/me-llamo.mp3",
+      "latam": null
+    },
+    "tags": [
+      "intro"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "hola.como_te_llamas",
     "type": "phrase",
     "es": "¿cómo te llamas?",
-    "ru": "как тебя зовут?",
+    "tr": {
+      "ru": "как тебя зовут?",
+      "uk": "як тебе звати?",
+      "en": "what's your name?"
+    },
     "parts": [
-      { "es": "cómo", "ru": "как" },
-      { "es": "te", "ru": "тебя" },
-      { "es": "llamas", "ru": "зовут" }
+      {
+        "es": "cómo",
+        "tr": {
+          "ru": "как",
+          "uk": "як",
+          "en": "how"
+        }
+      },
+      {
+        "es": "te",
+        "tr": {
+          "ru": "тебя",
+          "uk": "тебе",
+          "en": "you"
+        }
+      },
+      {
+        "es": "llamas",
+        "tr": {
+          "ru": "зовут",
+          "uk": "звати",
+          "en": "is called"
+        }
+      }
     ],
-    "say_ru": "кОмо те йАмас",
-    "note_ru": "Вопрос к человеку на «ты».",
-    "why_ru": null,
+    "say": {
+      "ru": "кОмо те йАмас",
+      "uk": "кОмо те йАмас",
+      "en": "kOmo te yAmas"
+    },
+    "note": {
+      "ru": "Вопрос к человеку на «ты».",
+      "uk": "Питання до людини на «ти».",
+      "en": "A question to someone you call tú."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": "a1/como-te-llamas.mp3", "latam": null },
-    "tags": ["intro"],
-    "draft": true
+    "audio": {
+      "es": "a1/como-te-llamas.mp3",
+      "latam": null
+    },
+    "tags": [
+      "intro"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "hola.mucho_gusto",
     "type": "phrase",
     "es": "mucho gusto",
-    "ru": "очень приятно",
+    "tr": {
+      "ru": "очень приятно",
+      "uk": "дуже приємно",
+      "en": "nice to meet you"
+    },
     "parts": [
-      { "es": "mucho", "ru": "очень" },
-      { "es": "gusto", "ru": "приятно" }
+      {
+        "es": "mucho",
+        "tr": {
+          "ru": "очень",
+          "uk": "дуже",
+          "en": "very"
+        }
+      },
+      {
+        "es": "gusto",
+        "tr": {
+          "ru": "приятно",
+          "uk": "приємно",
+          "en": "nice"
+        }
+      }
     ],
-    "say_ru": "мУчо гУсто",
-    "note_ru": "Говорят сразу после того, как назвали имена.",
-    "why_ru": null,
+    "say": {
+      "ru": "мУчо гУсто",
+      "uk": "мУчо гУсто",
+      "en": "mUcho gUsto"
+    },
+    "note": {
+      "ru": "Говорят сразу после того, как назвали имена.",
+      "uk": "Кажуть одразу після того, як назвали імена.",
+      "en": "People say this right after the names."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": "a1/mucho-gusto.mp3", "latam": null },
-    "tags": ["intro"],
-    "draft": true
+    "audio": {
+      "es": "a1/mucho-gusto.mp3",
+      "latam": null
+    },
+    "tags": [
+      "intro"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "hola.soy",
     "type": "word",
     "es": "soy",
-    "ru": "я есть",
-    "say_ru": "сой",
-    "note_ru": "Имя и откуда вы: soy Ana, soy de Rusia.",
-    "why_ru": "Форма глагола ser для «я»: yo soy.",
+    "tr": {
+      "ru": "я есть",
+      "uk": "я є",
+      "en": "I am"
+    },
+    "say": {
+      "ru": "сой",
+      "uk": "сой",
+      "en": "soy"
+    },
+    "note": {
+      "ru": "Имя и откуда вы: soy Ana, soy de Rusia.",
+      "uk": "Ім'я і звідки ви: soy Ana, soy de Rusia.",
+      "en": "Your name and where you are from: soy Ana, soy de Rusia."
+    },
+    "why": {
+      "ru": "Форма глагола ser для «я»: yo soy.",
+      "uk": "Форма дієслова ser для «я»: yo soy.",
+      "en": "The yo form of ser: yo soy."
+    },
     "level": "A1",
     "variant": "both",
-    "audio": { "es": "a1/soy.mp3", "latam": null },
-    "tags": ["intro"],
-    "draft": true
+    "audio": {
+      "es": "a1/soy.mp3",
+      "latam": null
+    },
+    "tags": [
+      "intro"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "hola.de",
     "type": "word",
     "es": "de",
-    "ru": "из",
-    "say_ru": "де",
-    "note_ru": "Происхождение: soy de Rusia.",
-    "why_ru": null,
+    "tr": {
+      "ru": "из",
+      "uk": "з",
+      "en": "from"
+    },
+    "say": {
+      "ru": "де",
+      "uk": "де",
+      "en": "de"
+    },
+    "note": {
+      "ru": "Происхождение: soy de Rusia.",
+      "uk": "Походження: soy de Rusia.",
+      "en": "Origin: soy de Rusia."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["intro"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "intro"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "hola.encantado",
     "type": "phrase",
     "es": "encantado / encantada",
-    "ru": "рад(а) познакомиться",
+    "tr": {
+      "ru": "рад(а) познакомиться",
+      "uk": "радий(а) познайомитися",
+      "en": "pleased to meet you"
+    },
     "parts": [
-      { "es": "encantado", "ru": "рад" },
-      { "es": "encantada", "ru": "рада" }
+      {
+        "es": "encantado",
+        "tr": {
+          "ru": "рад",
+          "uk": "радий",
+          "en": "pleased (m.)"
+        }
+      },
+      {
+        "es": "encantada",
+        "tr": {
+          "ru": "рада",
+          "uk": "рада",
+          "en": "pleased (f.)"
+        }
+      }
     ],
-    "say_ru": "энкантАдо / энкантАда",
-    "note_ru": "Окончание зависит от того, кто говорит.",
-    "why_ru": "Говорящий мужчина — encantado, женщина — encantada.",
+    "say": {
+      "ru": "энкантАдо / энкантАда",
+      "uk": "енкантАдо / енкантАда",
+      "en": "enkantAdo / enkantAda"
+    },
+    "note": {
+      "ru": "Окончание зависит от того, кто говорит.",
+      "uk": "Закінчення залежить від того, хто говорить.",
+      "en": "The ending depends on who is speaking."
+    },
+    "why": {
+      "ru": "Говорящий мужчина — encantado, женщина — encantada.",
+      "uk": "Чоловік, який говорить, — encantado, жінка — encantada.",
+      "en": "A man speaking says encantado, a woman says encantada."
+    },
     "level": "A1",
     "variant": "both",
-    "audio": { "es": "a1/encantado.mp3", "latam": null },
-    "tags": ["intro"],
-    "draft": true
+    "audio": {
+      "es": "a1/encantado.mp3",
+      "latam": null
+    },
+    "tags": [
+      "intro"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "hola.usted",
     "type": "word",
     "es": "usted",
-    "ru": "вы",
-    "say_ru": "устЭд",
-    "note_ru": "Вежливое «вы» с незнакомым человеком.",
-    "why_ru": "С usted вопрос звучит ¿cómo se llama?",
+    "tr": {
+      "ru": "вы",
+      "uk": "ви",
+      "en": "you"
+    },
+    "say": {
+      "ru": "устЭд",
+      "uk": "устЕд",
+      "en": "ustEd"
+    },
+    "note": {
+      "ru": "Вежливое «вы» с незнакомым человеком.",
+      "uk": "Ввічливе «ви» з незнайомою людиною.",
+      "en": "The polite you with someone you do not know."
+    },
+    "why": {
+      "ru": "С usted вопрос звучит ¿cómo se llama?",
+      "uk": "З usted питання звучить ¿cómo se llama?",
+      "en": "With usted the question is ¿cómo se llama?"
+    },
     "level": "A1",
     "variant": "both",
-    "audio": { "es": "a1/usted.mp3", "latam": null },
-    "tags": ["intro", "polite"],
-    "draft": true
+    "audio": {
+      "es": "a1/usted.mp3",
+      "latam": null
+    },
+    "tags": [
+      "intro",
+      "polite"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "hola.que_tal",
     "type": "phrase",
     "es": "¿Qué tal?",
-    "ru": "Как дела?",
+    "tr": {
+      "ru": "Как дела?",
+      "uk": "Як справи?",
+      "en": "How are you?"
+    },
     "parts": [
-      { "es": "¿Qué", "ru": "как" },
-      { "es": "tal?", "ru": "дела" }
+      {
+        "es": "¿Qué",
+        "tr": {
+          "ru": "как",
+          "uk": "як",
+          "en": "how"
+        }
+      },
+      {
+        "es": "tal?",
+        "tr": {
+          "ru": "дела",
+          "uk": "справи",
+          "en": "things"
+        }
+      }
     ],
-    "say_ru": "ке таль",
-    "note_ru": "Короткий вопрос «как дела?» с человеком на «ты».",
-    "why_ru": null,
+    "say": {
+      "ru": "ке таль",
+      "uk": "ке таль",
+      "en": "ke tal"
+    },
+    "note": {
+      "ru": "Короткий вопрос «как дела?» с человеком на «ты».",
+      "uk": "Коротке питання «як справи?» до людини на «ти».",
+      "en": "A short «how are you?» to someone you call tú."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["greeting"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "greeting"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "hola.bien_gracias",
     "type": "phrase",
     "es": "Bien, gracias",
-    "ru": "Хорошо, спасибо",
+    "tr": {
+      "ru": "Хорошо, спасибо",
+      "uk": "Добре, дякую",
+      "en": "Fine, thanks"
+    },
     "parts": [
-      { "es": "Bien,", "ru": "хорошо" },
-      { "es": "gracias", "ru": "спасибо" }
+      {
+        "es": "Bien,",
+        "tr": {
+          "ru": "хорошо",
+          "uk": "добре",
+          "en": "good"
+        }
+      },
+      {
+        "es": "gracias",
+        "tr": {
+          "ru": "спасибо",
+          "uk": "дякую",
+          "en": "thanks"
+        }
+      }
     ],
-    "say_ru": "бьен, грАсиас",
-    "note_ru": "Обычный ответ на «¿qué tal?».",
-    "why_ru": null,
+    "say": {
+      "ru": "бьен, грАсиас",
+      "uk": "бьен, грАсіас",
+      "en": "ben, grAsias"
+    },
+    "note": {
+      "ru": "Обычный ответ на «¿qué tal?».",
+      "uk": "Звичайна відповідь на «¿qué tal?».",
+      "en": "The usual answer to «¿qué tal?»."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["greeting"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "greeting"
+    ],
+    "draft": true,
+    "draft_i18n": true
   }
 ]

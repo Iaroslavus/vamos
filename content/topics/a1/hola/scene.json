@@ -1,6 +1,11 @@
 {
   "id": "a1.hola.scene",
   "topic": "a1.hola",
-  "title_ru": "Знакомство на улице",
-  "draft": true
+  "title": {
+    "ru": "Знакомство на улице",
+    "uk": "Знайомство на вулиці",
+    "en": "Meeting someone on the street"
+  },
+  "draft": true,
+  "draft_i18n": true
 }

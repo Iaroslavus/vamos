@@ -3,20 +3,40 @@
     "id": "mercado.las_manzanas",
     "type": "phrase",
     "es": "Las manzanas",
-    "ru": "яблоки",
+    "tr": {
+      "ru": "яблоки",
+      "uk": "яблука",
+      "en": "apples"
+    },
     "parts": [
       {
         "es": "Las",
-        "ru": "мн.ч."
+        "tr": {
+          "ru": "мн.ч.",
+          "uk": "мн.",
+          "en": "pl."
+        }
       },
       {
         "es": "manzanas",
-        "ru": "яблоки"
+        "tr": {
+          "ru": "яблоки",
+          "uk": "яблука",
+          "en": "apples"
+        }
       }
     ],
-    "say_ru": "лас мансАнас",
-    "note_ru": null,
-    "why_ru": "Фрукты во множественном числе с артиклем: las manzanas, los plátanos.",
+    "say": {
+      "ru": "лас мансАнас",
+      "uk": "лас мансАнас",
+      "en": "las mansAnas"
+    },
+    "note": null,
+    "why": {
+      "ru": "Фрукты во множественном числе с артиклем: las manzanas, los plátanos.",
+      "uk": "Фрукти в множині з артиклем: las manzanas, los plátanos.",
+      "en": "Fruit in the plural takes an article: las manzanas, los plátanos."
+    },
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -26,26 +46,43 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.las_naranjas",
     "type": "phrase",
     "es": "Las naranjas",
-    "ru": "апельсины",
+    "tr": {
+      "ru": "апельсины",
+      "uk": "апельсини",
+      "en": "oranges"
+    },
     "parts": [
       {
         "es": "Las",
-        "ru": "мн.ч."
+        "tr": {
+          "ru": "мн.ч.",
+          "uk": "мн.",
+          "en": "pl."
+        }
       },
       {
         "es": "naranjas",
-        "ru": "апельсины"
+        "tr": {
+          "ru": "апельсины",
+          "uk": "апельсини",
+          "en": "oranges"
+        }
       }
     ],
-    "say_ru": "лас нарАнхас",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "лас нарАнхас",
+      "uk": "лас нарАнхас",
+      "en": "las narAnkhas"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -55,26 +92,47 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.los_platanos",
     "type": "phrase",
     "es": "Los plátanos",
-    "ru": "бананы",
+    "tr": {
+      "ru": "бананы",
+      "uk": "банани",
+      "en": "bananas"
+    },
     "parts": [
       {
         "es": "Los",
-        "ru": "мн.ч."
+        "tr": {
+          "ru": "мн.ч.",
+          "uk": "мн.",
+          "en": "pl."
+        }
       },
       {
         "es": "plátanos",
-        "ru": "бананы"
+        "tr": {
+          "ru": "бананы",
+          "uk": "банани",
+          "en": "bananas"
+        }
       }
     ],
-    "say_ru": "лос плАтанос",
-    "note_ru": "В части Латинской Америки банан — el banano или el guineo. Plátano понимают почти везде.",
-    "why_ru": null,
+    "say": {
+      "ru": "лос плАтанос",
+      "uk": "лос плАтанос",
+      "en": "los plAtanos"
+    },
+    "note": {
+      "ru": "В части Латинской Америки банан — el banano или el guineo. Plátano понимают почти везде.",
+      "uk": "У частині Латинської Америки банан — el banano або el guineo. Plátano розуміють майже скрізь.",
+      "en": "In parts of Latin America a banana is el banano or el guineo. Plátano is understood almost everywhere."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -84,26 +142,43 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.las_fresas",
     "type": "phrase",
     "es": "Las fresas",
-    "ru": "клубника",
+    "tr": {
+      "ru": "клубника",
+      "uk": "полуниця",
+      "en": "strawberries"
+    },
     "parts": [
       {
         "es": "Las",
-        "ru": "мн.ч."
+        "tr": {
+          "ru": "мн.ч.",
+          "uk": "мн.",
+          "en": "pl."
+        }
       },
       {
         "es": "fresas",
-        "ru": "клубника"
+        "tr": {
+          "ru": "клубника",
+          "uk": "полуниця",
+          "en": "strawberries"
+        }
       }
     ],
-    "say_ru": "лас фрЭсас",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "лас фрЭсас",
+      "uk": "лас фрЕсас",
+      "en": "las frEsas"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -113,26 +188,43 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.un_kilo",
     "type": "phrase",
     "es": "Un kilo",
-    "ru": "один килограмм",
+    "tr": {
+      "ru": "один килограмм",
+      "uk": "один кілограм",
+      "en": "one kilogram"
+    },
     "parts": [
       {
         "es": "Un",
-        "ru": "один"
+        "tr": {
+          "ru": "один",
+          "uk": "один",
+          "en": "one"
+        }
       },
       {
         "es": "kilo",
-        "ru": "килограмм"
+        "tr": {
+          "ru": "килограмм",
+          "uk": "кілограм",
+          "en": "kilogram"
+        }
       }
     ],
-    "say_ru": "ун кИло",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "ун кИло",
+      "uk": "ун кІло",
+      "en": "un kIlo"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -142,26 +234,43 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.medio_kilo",
     "type": "phrase",
     "es": "Medio kilo",
-    "ru": "полкило",
+    "tr": {
+      "ru": "полкило",
+      "uk": "пів кіло",
+      "en": "half a kilo"
+    },
     "parts": [
       {
         "es": "Medio",
-        "ru": "половина"
+        "tr": {
+          "ru": "половина",
+          "uk": "половина",
+          "en": "half"
+        }
       },
       {
         "es": "kilo",
-        "ru": "килограмма"
+        "tr": {
+          "ru": "килограмма",
+          "uk": "кілограма",
+          "en": "of a kilogram"
+        }
       }
     ],
-    "say_ru": "мЕдио кИло",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "мЕдио кИло",
+      "uk": "мЕдіо кІло",
+      "en": "mEdio kIlo"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -171,26 +280,47 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.me_da",
     "type": "phrase",
     "es": "Me da",
-    "ru": "Дайте мне",
+    "tr": {
+      "ru": "Дайте мне",
+      "uk": "Дайте мені",
+      "en": "Give me"
+    },
     "parts": [
       {
         "es": "Me",
-        "ru": "мне"
+        "tr": {
+          "ru": "мне",
+          "uk": "мені",
+          "en": "to me"
+        }
       },
       {
         "es": "da",
-        "ru": "дайте"
+        "tr": {
+          "ru": "дайте",
+          "uk": "дайте",
+          "en": "give"
+        }
       }
     ],
-    "say_ru": "ме да",
-    "note_ru": null,
-    "why_ru": "На рынке просят так: Me da un kilo. Это вежливое «вы» от dar.",
+    "say": {
+      "ru": "ме да",
+      "uk": "ме да",
+      "en": "me da"
+    },
+    "note": null,
+    "why": {
+      "ru": "На рынке просят так: Me da un kilo. Это вежливое «вы» от dar.",
+      "uk": "На ринку просять так: Me da un kilo. Це ввічливе «ви» від dar.",
+      "en": "At the market people ask Me da un kilo. That is the polite you of dar."
+    },
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -200,26 +330,43 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.los_tomates",
     "type": "phrase",
     "es": "Los tomates",
-    "ru": "помидоры",
+    "tr": {
+      "ru": "помидоры",
+      "uk": "помідори",
+      "en": "tomatoes"
+    },
     "parts": [
       {
         "es": "Los",
-        "ru": "мн.ч."
+        "tr": {
+          "ru": "мн.ч.",
+          "uk": "мн.",
+          "en": "pl."
+        }
       },
       {
         "es": "tomates",
-        "ru": "помидоры"
+        "tr": {
+          "ru": "помидоры",
+          "uk": "помідори",
+          "en": "tomatoes"
+        }
       }
     ],
-    "say_ru": "лос томАтес",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "лос томАтес",
+      "uk": "лос томАтес",
+      "en": "los tomAtes"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -229,26 +376,47 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.las_patatas",
     "type": "phrase",
     "es": "Las patatas",
-    "ru": "картофель в Испании",
+    "tr": {
+      "ru": "картофель в Испании",
+      "uk": "картопля в Іспанії",
+      "en": "potatoes in Spain"
+    },
     "parts": [
       {
         "es": "Las",
-        "ru": "мн.ч."
+        "tr": {
+          "ru": "мн.ч.",
+          "uk": "мн.",
+          "en": "pl."
+        }
       },
       {
         "es": "patatas",
-        "ru": "картофель"
+        "tr": {
+          "ru": "картофель",
+          "uk": "картопля",
+          "en": "potatoes"
+        }
       }
     ],
-    "say_ru": "лас патАтас",
-    "note_ru": "В Испании картофель — las patatas.",
-    "why_ru": null,
+    "say": {
+      "ru": "лас патАтас",
+      "uk": "лас патАтас",
+      "en": "las patAtas"
+    },
+    "note": {
+      "ru": "В Испании картофель — las patatas.",
+      "uk": "В Іспанії картопля — las patatas.",
+      "en": "In Spain potatoes are las patatas."
+    },
+    "why": null,
     "level": "A1",
     "variant": "es",
     "audio": {
@@ -258,26 +426,47 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.las_papas",
     "type": "phrase",
     "es": "Las papas",
-    "ru": "картофель в Латинской Америке",
+    "tr": {
+      "ru": "картофель в Латинской Америке",
+      "uk": "картопля в Латинській Америці",
+      "en": "potatoes in Latin America"
+    },
     "parts": [
       {
         "es": "Las",
-        "ru": "мн.ч."
+        "tr": {
+          "ru": "мн.ч.",
+          "uk": "мн.",
+          "en": "pl."
+        }
       },
       {
         "es": "papas",
-        "ru": "картофель"
+        "tr": {
+          "ru": "картофель",
+          "uk": "картопля",
+          "en": "potatoes"
+        }
       }
     ],
-    "say_ru": "лас пАпас",
-    "note_ru": "В Латинской Америке картофель — las papas.",
-    "why_ru": null,
+    "say": {
+      "ru": "лас пАпас",
+      "uk": "лас пАпас",
+      "en": "las pApas"
+    },
+    "note": {
+      "ru": "В Латинской Америке картофель — las papas.",
+      "uk": "У Латинській Америці картопля — las papas.",
+      "en": "In Latin America potatoes are las papas."
+    },
+    "why": null,
     "level": "A1",
     "variant": "latam",
     "audio": {
@@ -287,26 +476,43 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.la_cebolla",
     "type": "phrase",
     "es": "La cebolla",
-    "ru": "лук",
+    "tr": {
+      "ru": "лук",
+      "uk": "цибуля",
+      "en": "onion"
+    },
     "parts": [
       {
         "es": "La",
-        "ru": "ж.р."
+        "tr": {
+          "ru": "ж.р.",
+          "uk": "ж.р.",
+          "en": "f."
+        }
       },
       {
         "es": "cebolla",
-        "ru": "лук"
+        "tr": {
+          "ru": "лук",
+          "uk": "цибуля",
+          "en": "onion"
+        }
       }
     ],
-    "say_ru": "ла себОлья",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "ла себОлья",
+      "uk": "ла себОлья",
+      "en": "la sebOlya"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -316,26 +522,43 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.los_huevos",
     "type": "phrase",
     "es": "Los huevos",
-    "ru": "яйца",
+    "tr": {
+      "ru": "яйца",
+      "uk": "яйця",
+      "en": "eggs"
+    },
     "parts": [
       {
         "es": "Los",
-        "ru": "мн.ч."
+        "tr": {
+          "ru": "мн.ч.",
+          "uk": "мн.",
+          "en": "pl."
+        }
       },
       {
         "es": "huevos",
-        "ru": "яйца"
+        "tr": {
+          "ru": "яйца",
+          "uk": "яйця",
+          "en": "eggs"
+        }
       }
     ],
-    "say_ru": "лос уЭбос",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "лос уЭбос",
+      "uk": "лос уЕбос",
+      "en": "los uEbos"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -345,26 +568,43 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.un_kilo_de_tomates",
     "type": "phrase",
     "es": "Un kilo de tomates",
-    "ru": "килограмм помидоров",
+    "tr": {
+      "ru": "килограмм помидоров",
+      "uk": "кілограм помідорів",
+      "en": "a kilogram of tomatoes"
+    },
     "parts": [
       {
         "es": "Un kilo",
-        "ru": "килограмм"
+        "tr": {
+          "ru": "килограмм",
+          "uk": "кілограм",
+          "en": "kilogram"
+        }
       },
       {
         "es": "de tomates",
-        "ru": "помидоров"
+        "tr": {
+          "ru": "помидоров",
+          "uk": "помідорів",
+          "en": "of tomatoes"
+        }
       }
     ],
-    "say_ru": "ун кИло де томАтес",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "ун кИло де томАтес",
+      "uk": "ун кІло де томАтес",
+      "en": "un kIlo de tomAtes"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -374,26 +614,43 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.cuanto_cuesta",
     "type": "phrase",
     "es": "¿Cuánto cuesta?",
-    "ru": "Сколько стоит?",
+    "tr": {
+      "ru": "Сколько стоит?",
+      "uk": "Скільки коштує?",
+      "en": "How much is it?"
+    },
     "parts": [
       {
         "es": "¿Cuánto",
-        "ru": "сколько"
+        "tr": {
+          "ru": "сколько",
+          "uk": "скільки",
+          "en": "how much"
+        }
       },
       {
         "es": "cuesta?",
-        "ru": "стоит"
+        "tr": {
+          "ru": "стоит",
+          "uk": "коштує",
+          "en": "costs"
+        }
       }
     ],
-    "say_ru": "куАнто куЭста",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "куАнто куЭста",
+      "uk": "куАнто куЕста",
+      "en": "kuAnto kuEsta"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -403,26 +660,47 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.estan_frescos",
     "type": "phrase",
     "es": "¿Están frescos?",
-    "ru": "Они свежие?",
+    "tr": {
+      "ru": "Они свежие?",
+      "uk": "Вони свіжі?",
+      "en": "Are they fresh?"
+    },
     "parts": [
       {
         "es": "¿Están",
-        "ru": "они есть"
+        "tr": {
+          "ru": "они есть",
+          "uk": "вони є",
+          "en": "they are"
+        }
       },
       {
         "es": "frescos?",
-        "ru": "свежие"
+        "tr": {
+          "ru": "свежие",
+          "uk": "свіжі",
+          "en": "fresh"
+        }
       }
     ],
-    "say_ru": "эстАн фрЭскос",
-    "note_ru": null,
-    "why_ru": "Свежесть — это состояние, поэтому estar. Tomates мужского рода: frescos. Manzana — fresca.",
+    "say": {
+      "ru": "эстАн фрЭскос",
+      "uk": "естАн фрЕскос",
+      "en": "estAn frEskos"
+    },
+    "note": null,
+    "why": {
+      "ru": "Свежесть — это состояние, поэтому estar. Tomates мужского рода: frescos. Manzana — fresca.",
+      "uk": "Свіжість — це стан, тому estar. Tomates чоловічого роду: frescos. Manzana — fresca.",
+      "en": "Freshness is a state, so use estar. Tomates is masculine: frescos. Manzana is fresca."
+    },
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -432,26 +710,43 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.esta_fresca",
     "type": "phrase",
     "es": "Está fresca",
-    "ru": "Она свежая",
+    "tr": {
+      "ru": "Она свежая",
+      "uk": "Вона свіжа",
+      "en": "It is fresh"
+    },
     "parts": [
       {
         "es": "Está",
-        "ru": "она есть"
+        "tr": {
+          "ru": "она есть",
+          "uk": "вона є",
+          "en": "she is"
+        }
       },
       {
         "es": "fresca",
-        "ru": "свежая"
+        "tr": {
+          "ru": "свежая",
+          "uk": "свіжа",
+          "en": "fresh"
+        }
       }
     ],
-    "say_ru": "эстА фрЭска",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "эстА фрЭска",
+      "uk": "естА фрЕска",
+      "en": "estA frEska"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -461,26 +756,47 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.esta_muy_rico",
     "type": "phrase",
     "es": "Está muy rico",
-    "ru": "Очень вкусно",
+    "tr": {
+      "ru": "Очень вкусно",
+      "uk": "Дуже смачно",
+      "en": "Very tasty"
+    },
     "parts": [
       {
         "es": "Está",
-        "ru": "это"
+        "tr": {
+          "ru": "это",
+          "uk": "це",
+          "en": "this"
+        }
       },
       {
         "es": "muy rico",
-        "ru": "очень вкусно"
+        "tr": {
+          "ru": "очень вкусно",
+          "uk": "дуже смачно",
+          "en": "very tasty"
+        }
       }
     ],
-    "say_ru": "эстА муй рИко",
-    "note_ru": "Rico здесь «вкусный», не «богатый».",
-    "why_ru": null,
+    "say": {
+      "ru": "эстА муй рИко",
+      "uk": "естА муй рІко",
+      "en": "estA muy rIko"
+    },
+    "note": {
+      "ru": "Rico здесь «вкусный», не «богатый».",
+      "uk": "Rico тут «смачний», не «багатий».",
+      "en": "Rico here means tasty, not rich."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -490,17 +806,29 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.quiero",
     "type": "word",
     "es": "quiero",
-    "ru": "хочу",
-    "parts": [],
-    "say_ru": "кьЕро",
-    "note_ru": null,
-    "why_ru": "Форма «я» от querer. Дальше сразу продукт: quiero fresas.",
+    "tr": {
+      "ru": "хочу",
+      "uk": "хочу",
+      "en": "I want"
+    },
+    "say": {
+      "ru": "кьЕро",
+      "uk": "кьЕро",
+      "en": "kEro"
+    },
+    "note": null,
+    "why": {
+      "ru": "Форма «я» от querer. Дальше сразу продукт: quiero fresas.",
+      "uk": "Форма «я» від querer. Далі одразу продукт: quiero fresas.",
+      "en": "The yo form of querer. The food comes right after: quiero fresas."
+    },
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -510,17 +838,29 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.quisiera",
     "type": "word",
     "es": "quisiera",
-    "ru": "хотел бы",
-    "parts": [],
-    "say_ru": "кисьЕра",
-    "note_ru": null,
-    "why_ru": "Quisiera — вежливое «я бы хотел». На A1 это готовая фраза.",
+    "tr": {
+      "ru": "хотел бы",
+      "uk": "хотів би",
+      "en": "I would like"
+    },
+    "say": {
+      "ru": "кисьЕра",
+      "uk": "кісьЕра",
+      "en": "kisEra"
+    },
+    "note": null,
+    "why": {
+      "ru": "Quisiera — вежливое «я бы хотел». На A1 это готовая фраза.",
+      "uk": "Quisiera — ввічливе «я б хотів». На A1 це готова фраза.",
+      "en": "Quisiera is a polite «I would like». On A1 it is a set phrase."
+    },
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -530,26 +870,43 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.algo_mas",
     "type": "phrase",
     "es": "¿Algo más?",
-    "ru": "Что-нибудь ещё?",
+    "tr": {
+      "ru": "Что-нибудь ещё?",
+      "uk": "Щось ще?",
+      "en": "Anything else?"
+    },
     "parts": [
       {
         "es": "¿Algo",
-        "ru": "что-нибудь"
+        "tr": {
+          "ru": "что-нибудь",
+          "uk": "щось",
+          "en": "anything"
+        }
       },
       {
         "es": "más?",
-        "ru": "ещё"
+        "tr": {
+          "ru": "ещё",
+          "uk": "ще",
+          "en": "else"
+        }
       }
     ],
-    "say_ru": "Альго мас",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "Альго мас",
+      "uk": "Альго мас",
+      "en": "Algo mas"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -559,30 +916,51 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.eso_es_todo",
     "type": "phrase",
     "es": "Eso es todo",
-    "ru": "Это всё",
+    "tr": {
+      "ru": "Это всё",
+      "uk": "Це все",
+      "en": "That's all"
+    },
     "parts": [
       {
         "es": "Eso",
-        "ru": "это"
+        "tr": {
+          "ru": "это",
+          "uk": "це",
+          "en": "this"
+        }
       },
       {
         "es": "es",
-        "ru": "есть"
+        "tr": {
+          "ru": "есть",
+          "uk": "є",
+          "en": "there is"
+        }
       },
       {
         "es": "todo",
-        "ru": "всё"
+        "tr": {
+          "ru": "всё",
+          "uk": "все",
+          "en": "all"
+        }
       }
     ],
-    "say_ru": "Эсо эс тОдо",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "Эсо эс тОдо",
+      "uk": "Есо ес тОдо",
+      "en": "Eso es tOdo"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -592,30 +970,51 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.me_da_un_kilo",
     "type": "phrase",
     "es": "Me da un kilo, por favor",
-    "ru": "Дайте килограмм, пожалуйста",
+    "tr": {
+      "ru": "Дайте килограмм, пожалуйста",
+      "uk": "Дайте кілограм, будь ласка",
+      "en": "A kilogram, please"
+    },
     "parts": [
       {
         "es": "Me da",
-        "ru": "дайте мне"
+        "tr": {
+          "ru": "дайте мне",
+          "uk": "дайте мені",
+          "en": "give me"
+        }
       },
       {
         "es": "un kilo,",
-        "ru": "килограмм"
+        "tr": {
+          "ru": "килограмм",
+          "uk": "кілограм",
+          "en": "kilogram"
+        }
       },
       {
         "es": "por favor",
-        "ru": "пожалуйста"
+        "tr": {
+          "ru": "пожалуйста",
+          "uk": "будь ласка",
+          "en": "please"
+        }
       }
     ],
-    "say_ru": "ме да ун кИло, пор фавОр",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "ме да ун кИло, пор фавОр",
+      "uk": "ме да ун кІло, пор фавОр",
+      "en": "me da un kIlo, por favOr"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -625,26 +1024,43 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.medio_kilo_de_fresas",
     "type": "phrase",
     "es": "Medio kilo de fresas",
-    "ru": "полкило клубники",
+    "tr": {
+      "ru": "полкило клубники",
+      "uk": "пів кіло полуниці",
+      "en": "half a kilo of strawberries"
+    },
     "parts": [
       {
         "es": "Medio kilo",
-        "ru": "полкило"
+        "tr": {
+          "ru": "полкило",
+          "uk": "пів кіло",
+          "en": "half a kilo"
+        }
       },
       {
         "es": "de fresas",
-        "ru": "клубники"
+        "tr": {
+          "ru": "клубники",
+          "uk": "полуниці",
+          "en": "of strawberries"
+        }
       }
     ],
-    "say_ru": "мЕдио кИло де фрЭсас",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "мЕдио кИло де фрЭсас",
+      "uk": "мЕдіо кІло де фрЕсас",
+      "en": "mEdio kIlo de frEsas"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -654,26 +1070,47 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.hay_fresas",
     "type": "phrase",
     "es": "¿Hay fresas?",
-    "ru": "Есть клубника?",
+    "tr": {
+      "ru": "Есть клубника?",
+      "uk": "Є полуниця?",
+      "en": "Do you have strawberries?"
+    },
     "parts": [
       {
         "es": "¿Hay",
-        "ru": "есть"
+        "tr": {
+          "ru": "есть",
+          "uk": "є",
+          "en": "there is"
+        }
       },
       {
         "es": "fresas?",
-        "ru": "клубника"
+        "tr": {
+          "ru": "клубника",
+          "uk": "полуниця",
+          "en": "strawberries"
+        }
       }
     ],
-    "say_ru": "ай фрЭсас",
-    "note_ru": null,
-    "why_ru": "Hay значит «есть, имеется» и не меняется по роду и числу. No hay — «нет».",
+    "say": {
+      "ru": "ай фрЭсас",
+      "uk": "ай фрЕсас",
+      "en": "ay frEsas"
+    },
+    "note": null,
+    "why": {
+      "ru": "Hay значит «есть, имеется» и не меняется по роду и числу. No hay — «нет».",
+      "uk": "Hay означає «є, мається» і не змінюється за родом і числом. No hay — «немає».",
+      "en": "Hay means «there is» and does not change for gender or number. No hay means «there isn't»."
+    },
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -683,26 +1120,43 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.no_hay",
     "type": "phrase",
     "es": "No hay",
-    "ru": "Нет в наличии",
+    "tr": {
+      "ru": "Нет в наличии",
+      "uk": "Немає в наявності",
+      "en": "Out of stock"
+    },
     "parts": [
       {
         "es": "No",
-        "ru": "нет"
+        "tr": {
+          "ru": "нет",
+          "uk": "немає",
+          "en": "there isn't"
+        }
       },
       {
         "es": "hay",
-        "ru": "имеется"
+        "tr": {
+          "ru": "имеется",
+          "uk": "мається",
+          "en": "there is"
+        }
       }
     ],
-    "say_ru": "но ай",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "но ай",
+      "uk": "но ай",
+      "en": "no ay"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -712,30 +1166,51 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.cuanto_es_todo",
     "type": "phrase",
     "es": "¿Cuánto es todo?",
-    "ru": "Сколько всего?",
+    "tr": {
+      "ru": "Сколько всего?",
+      "uk": "Скільки всього?",
+      "en": "How much is it all?"
+    },
     "parts": [
       {
         "es": "¿Cuánto",
-        "ru": "сколько"
+        "tr": {
+          "ru": "сколько",
+          "uk": "скільки",
+          "en": "how much"
+        }
       },
       {
         "es": "es",
-        "ru": "это"
+        "tr": {
+          "ru": "это",
+          "uk": "це",
+          "en": "this"
+        }
       },
       {
         "es": "todo?",
-        "ru": "всё"
+        "tr": {
+          "ru": "всё",
+          "uk": "все",
+          "en": "all"
+        }
       }
     ],
-    "say_ru": "куАнто эс тОдо",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "куАнто эс тОдо",
+      "uk": "куАнто ес тОдо",
+      "en": "kuAnto es tOdo"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -745,26 +1220,43 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.aqui_tiene",
     "type": "phrase",
     "es": "Aquí tiene",
-    "ru": "Вот, держите",
+    "tr": {
+      "ru": "Вот, держите",
+      "uk": "Ось, тримайте",
+      "en": "Here you are"
+    },
     "parts": [
       {
         "es": "Aquí",
-        "ru": "вот"
+        "tr": {
+          "ru": "вот",
+          "uk": "ось",
+          "en": "here"
+        }
       },
       {
         "es": "tiene",
-        "ru": "держите"
+        "tr": {
+          "ru": "держите",
+          "uk": "тримайте",
+          "en": "take it"
+        }
       }
     ],
-    "say_ru": "акИ тьЕне",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "акИ тьЕне",
+      "uk": "акІ тьЕне",
+      "en": "akI tEne"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -774,26 +1266,43 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "mercado.muchas_gracias",
     "type": "phrase",
     "es": "Muchas gracias",
-    "ru": "Большое спасибо",
+    "tr": {
+      "ru": "Большое спасибо",
+      "uk": "Дуже дякую",
+      "en": "Thank you very much"
+    },
     "parts": [
       {
         "es": "Muchas",
-        "ru": "большое"
+        "tr": {
+          "ru": "большое",
+          "uk": "велике",
+          "en": "big"
+        }
       },
       {
         "es": "gracias",
-        "ru": "спасибо"
+        "tr": {
+          "ru": "спасибо",
+          "uk": "дякую",
+          "en": "thanks"
+        }
       }
     ],
-    "say_ru": "мУчас грАсиас",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "мУчас грАсиас",
+      "uk": "мУчас грАсіас",
+      "en": "mUchas grAsias"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -803,6 +1312,7 @@
     "tags": [
       "mercado"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   }
 ]

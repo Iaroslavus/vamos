@@ -1,7 +1,11 @@
 {
   "id": "a1.mercado.l2",
   "topic": "a1.mercado",
-  "title_ru": "Овощи и вес",
+  "title": {
+    "ru": "Овощи и вес",
+    "uk": "Овочі і вага",
+    "en": "Vegetables and weight"
+  },
   "items": [
     "mercado.los_tomates",
     "mercado.las_patatas",
@@ -20,7 +24,11 @@
       {
         "who": "npc",
         "es": "¿Tomates o patatas?",
-        "ru": "Помидоры или картофель?"
+        "tr": {
+          "ru": "Помидоры или картофель?",
+          "uk": "Помідори чи картопля?",
+          "en": "Tomatoes or potatoes?"
+        }
       },
       {
         "who": "user",
@@ -34,7 +42,11 @@
       {
         "who": "npc",
         "es": "¿Un kilo?",
-        "ru": "Килограмм?"
+        "tr": {
+          "ru": "Килограмм?",
+          "uk": "Кілограм?",
+          "en": "A kilogram?"
+        }
       },
       {
         "who": "user",
@@ -48,5 +60,6 @@
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

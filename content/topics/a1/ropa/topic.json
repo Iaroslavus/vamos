@@ -2,12 +2,28 @@
   "id": "a1.ropa",
   "level": "A1",
   "category": "shopping",
-  "title_ru": "Магазин одежды",
+  "title": {
+    "ru": "Магазин одежды",
+    "uk": "Магазин одягу",
+    "en": "A clothes shop"
+  },
   "icon": "shirt",
-  "can_do_ru": [
-    "Назвать размер и цвет",
-    "Попросить примерить",
-    "Сказать, что не подходит"
+  "can_do": [
+    {
+      "ru": "Назвать размер и цвет",
+      "uk": "Назвати розмір і колір",
+      "en": "Say the size and colour"
+    },
+    {
+      "ru": "Попросить примерить",
+      "uk": "Попросити приміряти",
+      "en": "Ask to try something on"
+    },
+    {
+      "ru": "Сказать, что не подходит",
+      "uk": "Сказати, що не підходить",
+      "en": "Say it doesn't fit"
+    }
   ],
   "lessons": [
     "a1.ropa.l1",
@@ -16,5 +32,6 @@
     "a1.ropa.l4"
   ],
   "scene": "a1.ropa.scene",
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

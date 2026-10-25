@@ -1,7 +1,11 @@
 {
   "id": "a1.ropa.l4",
   "topic": "a1.ropa",
-  "title_ru": "Не подходит",
+  "title": {
+    "ru": "Не подходит",
+    "uk": "Не підходить",
+    "en": "It doesn't fit"
+  },
   "items": [
     "ropa.no_me_queda",
     "ropa.muy_caro",
@@ -20,7 +24,11 @@
       {
         "who": "npc",
         "es": "¿Se lo lleva?",
-        "ru": "Берёте?"
+        "tr": {
+          "ru": "Берёте?",
+          "uk": "Берете?",
+          "en": "Will you take it?"
+        }
       },
       {
         "who": "user",
@@ -34,7 +42,11 @@
       {
         "who": "npc",
         "es": "Hay rebaja esta semana.",
-        "ru": "На этой неделе скидка."
+        "tr": {
+          "ru": "На этой неделе скидка.",
+          "uk": "Цього тижня знижка.",
+          "en": "There's a discount this week."
+        }
       },
       {
         "who": "user",
@@ -48,5 +60,6 @@
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

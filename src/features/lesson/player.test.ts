@@ -1,17 +1,45 @@
-import { getLesson } from '@/features/content/loader';
+import { getItem, getLesson, listItems } from '@/features/content/loader';
+import { textOf, type ContentLocale } from '@/features/content/text';
+import i18n from '@/i18n';
 
 import { saveLessonCompletion } from './completion';
 import type { DialogStep } from './generator';
 import { loadLessonSession } from './session';
 import { DEFAULT_MAX_HEARTS, useLessonStore } from './store';
 
+const LEARNER_LANGUAGES = ['ru', 'uk', 'en'] as const;
+
 describe('lesson player session', () => {
   beforeEach(() => {
     useLessonStore.getState().reset();
   });
 
-  it('plays a1.hola.l1 from the intro through to the summary', async () => {
-    const session = loadLessonSession('a1.hola.l1');
+  afterEach(async () => {
+    await i18n.changeLanguage('ru');
+  });
+
+  it.each(LEARNER_LANGUAGES)('plays a1.hola.l1 in %s', async (language) => {
+    await i18n.changeLanguage(language);
+    const session = loadLessonSession('a1.hola.l1', language);
+    const glosses = new Set(listItems().map((item) => textOf(item.tr, language)));
+    const selects = session.steps.filter((step) => step.type === 'select_translation');
+    expect(selects.length).toBeGreaterThan(0);
+    for (const step of selects) {
+      if (step.type !== 'select_translation') continue;
+      const focus = getItem(step.itemIds[0] ?? '');
+      const other = language === 'en' ? 'ru' : 'en';
+      expect(step.answer).toBe(textOf(focus.tr, language));
+      expect(step.prompt_ru).toBe(i18n.t('lesson.promptSelect', { lng: language }));
+      expect(step.options).toContain(step.answer);
+      for (const option of step.options) expect(glosses.has(option)).toBe(true);
+      if (textOf(focus.tr, language) !== textOf(focus.tr, other)) {
+        expect(step.answer).not.toBe(textOf(focus.tr, other));
+      }
+    }
+    const dialog = session.steps.find((step) => step.type === 'dialog');
+    const npc = dialog?.type === 'dialog' ? dialog.lines.find((line) => line.who === 'npc') : null;
+    if (!npc || npc.who !== 'npc') throw new Error('missing npc line');
+    expect(npc.tr[language]?.trim().length).toBeGreaterThan(0);
     expect(session.steps[0]?.type).toBe('intro');
     expect(session.steps.some((step) => step.type === 'speak_repeat')).toBe(true);
     expect(session.steps.some((step) => step.type === 'dialog')).toBe(true);
@@ -54,7 +82,7 @@ describe('lesson player session', () => {
         }
 
         if (entry.kind === 'dialog' && step.type === 'dialog') {
-          answerDialog(step, session.items);
+          answerDialog(step, session.items, language);
           const hearts = useLessonStore.getState().hearts;
           useLessonStore.getState().advanceStep();
           expect(useLessonStore.getState().hearts).toBe(hearts);
@@ -103,7 +131,8 @@ describe('lesson player session', () => {
 
 function answerDialog(
   step: DialogStep,
-  items: readonly { id: string; es: string; ru: string }[],
+  items: readonly { id: string; es: string; tr: { ru?: string; uk?: string; en?: string } }[],
+  language: ContentLocale,
 ): void {
   step.lines.forEach((line, lineIndex) => {
     if (line.who !== 'user') return;
@@ -119,7 +148,7 @@ function answerDialog(
         if (!option) throw new Error(`Unknown item id: ${id}`);
         return option.es;
       }),
-      prompt: target.ru,
+      prompt: textOf(target.tr, language),
       promptRu: 'Выберите реплику',
       missed: false,
     });

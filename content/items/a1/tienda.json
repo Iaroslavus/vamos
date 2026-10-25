@@ -3,208 +3,548 @@
     "id": "tienda.tiene_pan",
     "type": "phrase",
     "es": "¿Tiene pan?",
-    "ru": "У вас есть хлеб?",
+    "tr": {
+      "ru": "У вас есть хлеб?",
+      "uk": "У вас є хліб?",
+      "en": "Do you have bread?"
+    },
     "parts": [
-      { "es": "¿Tiene", "ru": "есть у вас" },
-      { "es": "pan?", "ru": "хлеб" }
+      {
+        "es": "¿Tiene",
+        "tr": {
+          "ru": "есть у вас",
+          "uk": "є у вас",
+          "en": "do you have"
+        }
+      },
+      {
+        "es": "pan?",
+        "tr": {
+          "ru": "хлеб",
+          "uk": "хліб",
+          "en": "bread"
+        }
+      }
     ],
-    "say_ru": "тьЕне пан",
-    "note_ru": "В маленьком магазине часто говорят на «вы»: tiene.",
-    "why_ru": null,
+    "say": {
+      "ru": "тьЕне пан",
+      "uk": "тьЕне пан",
+      "en": "tEne pan"
+    },
+    "note": {
+      "ru": "В маленьком магазине часто говорят на «вы»: tiene.",
+      "uk": "У маленькій крамниці часто говорять на «ви»: tiene.",
+      "en": "In a small shop people often use the polite you: tiene."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["shop"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "shop"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "tienda.hay_leche",
     "type": "phrase",
     "es": "¿Hay leche?",
-    "ru": "Есть молоко?",
+    "tr": {
+      "ru": "Есть молоко?",
+      "uk": "Є молоко?",
+      "en": "Is there milk?"
+    },
     "parts": [
-      { "es": "¿Hay", "ru": "есть" },
-      { "es": "leche?", "ru": "молоко" }
+      {
+        "es": "¿Hay",
+        "tr": {
+          "ru": "есть",
+          "uk": "є",
+          "en": "there is"
+        }
+      },
+      {
+        "es": "leche?",
+        "tr": {
+          "ru": "молоко",
+          "uk": "молоко",
+          "en": "milk"
+        }
+      }
     ],
-    "say_ru": "ай лЕче",
-    "note_ru": "Вопрос, не называя собеседника.",
-    "why_ru": "Hay — «имеется», без лица и числа собеседника.",
+    "say": {
+      "ru": "ай лЕче",
+      "uk": "ай лЕче",
+      "en": "ay lEche"
+    },
+    "note": {
+      "ru": "Вопрос, не называя собеседника.",
+      "uk": "Питання, не називаючи співрозмовника.",
+      "en": "A question that does not address anyone."
+    },
+    "why": {
+      "ru": "Hay — «имеется», без лица и числа собеседника.",
+      "uk": "Hay — «мається», без особи й числа співрозмовника.",
+      "en": "Hay means «there is», with no person or number for the listener."
+    },
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["shop"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "shop"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "tienda.si_hay",
     "type": "phrase",
     "es": "Sí, hay",
-    "ru": "Да, есть",
+    "tr": {
+      "ru": "Да, есть",
+      "uk": "Так, є",
+      "en": "Yes, there is"
+    },
     "parts": [
-      { "es": "Sí,", "ru": "да" },
-      { "es": "hay", "ru": "есть" }
+      {
+        "es": "Sí,",
+        "tr": {
+          "ru": "да",
+          "uk": "так",
+          "en": "yes"
+        }
+      },
+      {
+        "es": "hay",
+        "tr": {
+          "ru": "есть",
+          "uk": "є",
+          "en": "there is"
+        }
+      }
     ],
-    "say_ru": "си, ай",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "си, ай",
+      "uk": "сі, ай",
+      "en": "si, ay"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["shop"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "shop"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "tienda.no_hay",
     "type": "phrase",
     "es": "No hay",
-    "ru": "Нет в наличии",
+    "tr": {
+      "ru": "Нет в наличии",
+      "uk": "Немає в наявності",
+      "en": "Out of stock"
+    },
     "parts": [
-      { "es": "No", "ru": "не" },
-      { "es": "hay", "ru": "есть" }
+      {
+        "es": "No",
+        "tr": {
+          "ru": "не",
+          "uk": "не",
+          "en": "not"
+        }
+      },
+      {
+        "es": "hay",
+        "tr": {
+          "ru": "есть",
+          "uk": "є",
+          "en": "there is"
+        }
+      }
     ],
-    "say_ru": "но ай",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "но ай",
+      "uk": "но ай",
+      "en": "no ay"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["shop"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "shop"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "tienda.esto",
     "type": "word",
     "es": "esto",
-    "ru": "это",
-    "say_ru": "Эсто",
-    "note_ru": "Показать на то, что рядом.",
-    "why_ru": null,
+    "tr": {
+      "ru": "это",
+      "uk": "це",
+      "en": "this"
+    },
+    "say": {
+      "ru": "Эсто",
+      "uk": "Есто",
+      "en": "Esto"
+    },
+    "note": {
+      "ru": "Показать на то, что рядом.",
+      "uk": "Показати на те, що поруч.",
+      "en": "Point at what is nearby."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["shop"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "shop"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "tienda.eso",
     "type": "word",
     "es": "eso",
-    "ru": "то",
-    "say_ru": "Эсо",
-    "note_ru": "То, что чуть дальше.",
-    "why_ru": null,
+    "tr": {
+      "ru": "то",
+      "uk": "те",
+      "en": "that"
+    },
+    "say": {
+      "ru": "Эсо",
+      "uk": "Есо",
+      "en": "Eso"
+    },
+    "note": {
+      "ru": "То, что чуть дальше.",
+      "uk": "Те, що трохи далі.",
+      "en": "The one a bit farther away."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["shop"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "shop"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "tienda.quiero_esto",
     "type": "phrase",
     "es": "Quiero esto",
-    "ru": "Я хочу это",
+    "tr": {
+      "ru": "Я хочу это",
+      "uk": "Я хочу це",
+      "en": "I want this"
+    },
     "parts": [
-      { "es": "Quiero", "ru": "хочу" },
-      { "es": "esto", "ru": "это" }
+      {
+        "es": "Quiero",
+        "tr": {
+          "ru": "хочу",
+          "uk": "хочу",
+          "en": "I want"
+        }
+      },
+      {
+        "es": "esto",
+        "tr": {
+          "ru": "это",
+          "uk": "це",
+          "en": "this"
+        }
+      }
     ],
-    "say_ru": "кьЕро Эсто",
-    "note_ru": "Показать на товар.",
-    "why_ru": null,
+    "say": {
+      "ru": "кьЕро Эсто",
+      "uk": "кьЕро Есто",
+      "en": "kEro Esto"
+    },
+    "note": {
+      "ru": "Показать на товар.",
+      "uk": "Показати на товар.",
+      "en": "Point at the item."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["shop"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "shop"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "tienda.una_bolsa",
     "type": "phrase",
     "es": "Una bolsa, por favor",
-    "ru": "Пакет, пожалуйста",
+    "tr": {
+      "ru": "Пакет, пожалуйста",
+      "uk": "Пакет, будь ласка",
+      "en": "A bag, please"
+    },
     "parts": [
-      { "es": "Una bolsa,", "ru": "пакет" },
-      { "es": "por favor", "ru": "пожалуйста" }
+      {
+        "es": "Una bolsa,",
+        "tr": {
+          "ru": "пакет",
+          "uk": "пакет",
+          "en": "a bag"
+        }
+      },
+      {
+        "es": "por favor",
+        "tr": {
+          "ru": "пожалуйста",
+          "uk": "будь ласка",
+          "en": "please"
+        }
+      }
     ],
-    "say_ru": "уна бОльса, пор фавОр",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "уна бОльса, пор фавОр",
+      "uk": "уна бОльса, пор фавОр",
+      "en": "una bOlsa, por favOr"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["shop"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "shop"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "tienda.con_tarjeta",
     "type": "phrase",
     "es": "Con tarjeta, por favor",
-    "ru": "Картой, пожалуйста",
+    "tr": {
+      "ru": "Картой, пожалуйста",
+      "uk": "Карткою, будь ласка",
+      "en": "By card, please"
+    },
     "parts": [
-      { "es": "Con tarjeta,", "ru": "картой" },
-      { "es": "por favor", "ru": "пожалуйста" }
+      {
+        "es": "Con tarjeta,",
+        "tr": {
+          "ru": "картой",
+          "uk": "карткою",
+          "en": "by card"
+        }
+      },
+      {
+        "es": "por favor",
+        "tr": {
+          "ru": "пожалуйста",
+          "uk": "будь ласка",
+          "en": "please"
+        }
+      }
     ],
-    "say_ru": "кон тархЕта, пор фавОр",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "кон тархЕта, пор фавОр",
+      "uk": "кон тархЕта, пор фавОр",
+      "en": "kon tarkhEta, por favOr"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["shop", "pay"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "shop",
+      "pay"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "tienda.en_efectivo",
     "type": "phrase",
     "es": "En efectivo",
-    "ru": "Наличными",
+    "tr": {
+      "ru": "Наличными",
+      "uk": "Готівкою",
+      "en": "In cash"
+    },
     "parts": [
-      { "es": "En", "ru": "в" },
-      { "es": "efectivo", "ru": "наличных" }
+      {
+        "es": "En",
+        "tr": {
+          "ru": "в",
+          "uk": "у",
+          "en": "in"
+        }
+      },
+      {
+        "es": "efectivo",
+        "tr": {
+          "ru": "наличных",
+          "uk": "готівки",
+          "en": "cash"
+        }
+      }
     ],
-    "say_ru": "эн эфектИво",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "эн эфектИво",
+      "uk": "ен ефектІво",
+      "en": "en efektIvo"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["shop", "pay"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "shop",
+      "pay"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "tienda.puedo_pagar",
     "type": "phrase",
     "es": "¿Puedo pagar con tarjeta?",
-    "ru": "Можно оплатить картой?",
+    "tr": {
+      "ru": "Можно оплатить картой?",
+      "uk": "Можна оплатити карткою?",
+      "en": "Can I pay by card?"
+    },
     "parts": [
-      { "es": "¿Puedo pagar", "ru": "могу оплатить" },
-      { "es": "con tarjeta?", "ru": "картой" }
+      {
+        "es": "¿Puedo pagar",
+        "tr": {
+          "ru": "могу оплатить",
+          "uk": "можу оплатити",
+          "en": "I can pay"
+        }
+      },
+      {
+        "es": "con tarjeta?",
+        "tr": {
+          "ru": "картой",
+          "uk": "карткою",
+          "en": "by card"
+        }
+      }
     ],
-    "say_ru": "пуЭдо пагАр кон тархЕта",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "пуЭдо пагАр кон тархЕта",
+      "uk": "пуЕдо пагАр кон тархЕта",
+      "en": "puEdo pagAr kon tarkhEta"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["shop", "pay"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "shop",
+      "pay"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "tienda.el_ticket",
     "type": "phrase",
     "es": "El ticket, por favor",
-    "ru": "Чек, пожалуйста",
+    "tr": {
+      "ru": "Чек, пожалуйста",
+      "uk": "Чек, будь ласка",
+      "en": "The receipt, please"
+    },
     "parts": [
-      { "es": "El ticket,", "ru": "чек" },
-      { "es": "por favor", "ru": "пожалуйста" }
+      {
+        "es": "El ticket,",
+        "tr": {
+          "ru": "чек",
+          "uk": "чек",
+          "en": "receipt"
+        }
+      },
+      {
+        "es": "por favor",
+        "tr": {
+          "ru": "пожалуйста",
+          "uk": "будь ласка",
+          "en": "please"
+        }
+      }
     ],
-    "say_ru": "эль тИкет, пор фавОр",
-    "note_ru": "В Латинской Америке чек чаще boleta или factura.",
-    "why_ru": null,
+    "say": {
+      "ru": "эль тИкет, пор фавОр",
+      "uk": "ель тІкет, пор фавОр",
+      "en": "el tIket, por favOr"
+    },
+    "note": {
+      "ru": "В Латинской Америке чек чаще boleta или factura.",
+      "uk": "У Латинській Америці чек частіше boleta або factura.",
+      "en": "In Latin America a receipt is more often a boleta or a factura."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["shop", "pay"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "shop",
+      "pay"
+    ],
+    "draft": true,
+    "draft_i18n": true
   }
 ]

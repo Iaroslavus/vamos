@@ -6,6 +6,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { RetryNote } from '@/components/RetryNote';
 import { Text } from '@/components/Text';
 import { listLessons, listScenes, listTopics } from '@/features/content/loader';
+import { contentLocale, textOf } from '@/features/content/text';
 import { buildTopicDetail } from '@/features/topics/catalog';
 import { TopicDetailView } from '@/features/topics/components/TopicDetailView';
 import { TopicsSkeleton } from '@/features/topics/components/TopicsSkeleton';
@@ -13,7 +14,8 @@ import { useCompletedLessons } from '@/features/topics/useCompletedLessons';
 import { colors, space } from '@/theme/tokens';
 
 export function TopicScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = contentLocale(i18n.language);
   const router = useRouter();
   const params = useLocalSearchParams<{ id?: string | string[] }>();
   const topicId = firstParam(params.id);
@@ -24,10 +26,10 @@ export function TopicScreen() {
   const topic = topics.find((item) => item.id === topicId) ?? null;
   const detail = useMemo(() => {
     if (!topicId) return null;
-    return buildTopicDetail(topicId, topics, lessons, scenes, progress.completedIds);
-  }, [lessons, progress.completedIds, scenes, topicId, topics]);
+    return buildTopicDetail(topicId, topics, lessons, scenes, progress.completedIds, language);
+  }, [language, lessons, progress.completedIds, scenes, topicId, topics]);
 
-  const title = topic?.title_ru ?? t('topics.missing');
+  const title = topic ? textOf(topic.title, language) : t('topics.missing');
   let body = detail ? (
     <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
       <TopicDetailView

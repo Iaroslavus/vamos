@@ -37,12 +37,13 @@ export function useDialogController({
   audioVariant,
   onComplete,
 }: UseDialogControllerInput) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = i18n.language;
   const recordDialogLine = useLessonStore((state) => state.recordDialogLine);
   const promptRu = t('lesson.dialogRetryPrompt');
   const playable = useMemo(
-    () => resolveDialogLines(step.lines, indexDialogItems(items), audioVariant),
-    [audioVariant, items, step.lines],
+    () => resolveDialogLines(step.lines, indexDialogItems(items), audioVariant, language),
+    [audioVariant, items, language, step.lines],
   );
   const [state, setState] = useState(() => createDialogState(playable));
   const blocked = useRef(false);

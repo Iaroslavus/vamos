@@ -1,7 +1,11 @@
 {
   "id": "a1.tiempo.l1",
   "topic": "a1.tiempo",
-  "title_ru": "Дни недели",
+  "title": {
+    "ru": "Дни недели",
+    "uk": "Дні тижня",
+    "en": "Days of the week"
+  },
   "items": [
     "tiempo.el_lunes",
     "tiempo.el_martes",
@@ -20,7 +24,11 @@
       {
         "who": "npc",
         "es": "¿Qué día es hoy?",
-        "ru": "Какой сегодня день?"
+        "tr": {
+          "ru": "Какой сегодня день?",
+          "uk": "Який сьогодні день?",
+          "en": "What day is it today?"
+        }
       },
       {
         "who": "user",
@@ -34,7 +42,11 @@
       {
         "who": "npc",
         "es": "¿Y mañana?",
-        "ru": "А завтра?"
+        "tr": {
+          "ru": "А завтра?",
+          "uk": "А завтра?",
+          "en": "And tomorrow?"
+        }
       },
       {
         "who": "user",
@@ -48,5 +60,6 @@
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

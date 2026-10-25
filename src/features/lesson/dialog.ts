@@ -1,4 +1,6 @@
+import { contentLanguage } from '@/features/content/language';
 import type { DialogLine, Item } from '@/features/content/schema';
+import { textOf } from '@/features/content/text';
 
 import type { AudioPreference } from './intro';
 import { itemAudioPath } from './intro';
@@ -46,7 +48,7 @@ export type DialogState = {
   visibleCount: number;
   attempt: 1 | 2;
   rejectedIds: readonly string[];
-  /** Russian of the correct line while the second chance is open. */
+  /** Gloss of the correct line while the second chance is open. */
   hint: string | null;
   /** Increments on each first miss so the choice row can replay the shake. */
   shake: number;
@@ -80,15 +82,16 @@ export function resolveDialogLines(
   lines: readonly DialogLine[],
   items: ReadonlyMap<string, Item>,
   preference: AudioPreference = 'es',
+  language: string | null | undefined = contentLanguage(),
 ): PlayableDialogLine[] {
   return lines.map((line) => {
-    if (line.who === 'npc') return { who: 'npc', es: line.es, ru: line.ru };
+    if (line.who === 'npc') return { who: 'npc', es: line.es, ru: textOf(line.tr, language) };
     const target = requiredItem(items, line.target);
     return {
       who: 'user',
       targetId: target.id,
       es: target.es,
-      ru: target.ru,
+      ru: textOf(target.tr, language),
       audio: itemAudioPath(target, preference),
       options: line.options.map((id) => {
         const option = requiredItem(items, id);

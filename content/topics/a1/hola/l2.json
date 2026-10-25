@@ -1,7 +1,11 @@
 {
   "id": "a1.hola.l2",
   "topic": "a1.hola",
-  "title_ru": "Знакомство",
+  "title": {
+    "ru": "Знакомство",
+    "uk": "Знайомство",
+    "en": "Introductions"
+  },
   "items": [
     "hola.me_llamo",
     "hola.como_te_llamas",
@@ -11,29 +15,70 @@
     "hola.bien_gracias",
     "hola.encantado"
   ],
-  "speak": ["hola.me_llamo", "hola.que_tal", "hola.bien_gracias"],
+  "speak": [
+    "hola.me_llamo",
+    "hola.que_tal",
+    "hola.bien_gracias"
+  ],
   "dialog": {
     "lines": [
-      { "who": "npc", "es": "¡Hola! ¿Cómo te llamas?", "ru": "Привет! Как тебя зовут?" },
+      {
+        "who": "npc",
+        "es": "¡Hola! ¿Cómo te llamas?",
+        "tr": {
+          "ru": "Привет! Как тебя зовут?",
+          "uk": "Привіт! Як тебе звати?",
+          "en": "Hi! What's your name?"
+        }
+      },
       {
         "who": "user",
         "target": "hola.me_llamo",
-        "options": ["hola.me_llamo", "hola.como_te_llamas", "hola.soy"]
+        "options": [
+          "hola.me_llamo",
+          "hola.como_te_llamas",
+          "hola.soy"
+        ]
       },
-      { "who": "npc", "es": "Soy Ana. ¿Qué tal?", "ru": "Я Ана. Как дела?" },
+      {
+        "who": "npc",
+        "es": "Soy Ana. ¿Qué tal?",
+        "tr": {
+          "ru": "Я Ана. Как дела?",
+          "uk": "Я Ана. Як справи?",
+          "en": "I'm Ana. How are you?"
+        }
+      },
       {
         "who": "user",
         "target": "hola.bien_gracias",
-        "options": ["hola.bien_gracias", "hola.que_tal", "hola.mucho_gusto"]
+        "options": [
+          "hola.bien_gracias",
+          "hola.que_tal",
+          "hola.mucho_gusto"
+        ]
       },
-      { "who": "npc", "es": "Bien. Mucho gusto.", "ru": "Хорошо. Очень приятно." },
+      {
+        "who": "npc",
+        "es": "Bien. Mucho gusto.",
+        "tr": {
+          "ru": "Хорошо. Очень приятно.",
+          "uk": "Добре. Дуже приємно.",
+          "en": "Fine. Nice to meet you."
+        }
+      },
       {
         "who": "user",
         "target": "hola.mucho_gusto",
-        "options": ["hola.mucho_gusto", "hola.encantado", "hola.me_llamo"]
+        "options": [
+          "hola.mucho_gusto",
+          "hola.encantado",
+          "hola.me_llamo"
+        ]
       }
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

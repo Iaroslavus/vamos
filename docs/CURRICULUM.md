@@ -44,28 +44,44 @@
 ## Формат контента v2
 Три вида файлов: общая **библиотека единиц**, **темы**, **уроки** (+ диалоги внутри урока/темы).
 
+Строки для ученика — словари `{ "ru", "uk", "en" }`: перевод `tr`, подсказка `say`, пояснения `note` и `why`, заголовки `title`, цели `can_do`, реплики npc и `parts[].tr`.
+Язык берётся из интерфейса. Если перевода нет, подставляется английский. Невычитанные uk и en помечаются `"draft_i18n": true`.
+
 ### Единица (content/items/a1/cafe.json — массив)
 ```json
 {
   "id": "cafe.cafe_con_leche",
   "type": "phrase",
   "es": "Un café con leche, por favor",
-  "ru": "Кофе с молоком, пожалуйста",
+  "tr": {
+    "ru": "Кофе с молоком, пожалуйста",
+    "uk": "Кава з молоком, будь ласка",
+    "en": "A coffee with milk, please"
+  },
   "parts": [
-    { "es": "un café", "ru": "кофе" },
-    { "es": "con leche", "ru": "с молоком" },
-    { "es": "por favor", "ru": "пожалуйста" }
+    { "es": "un café", "tr": { "ru": "кофе", "uk": "кава", "en": "a coffee" } },
+    { "es": "con leche", "tr": { "ru": "с молоком", "uk": "з молоком", "en": "with milk" } },
+    { "es": "por favor", "tr": { "ru": "пожалуйста", "uk": "будь ласка", "en": "please" } }
   ],
-  "say_ru": "ун кафЕ кон лЕче, пор фавОр",
-  "note_ru": "В Испании так заказывают кофе у стойки.",
-  "why_ru": null,
+  "say": {
+    "ru": "ун кафЕ кон лЕче, пор фавОр",
+    "uk": "ун кафЕ кон лЕче, пор фавОр",
+    "en": "oon ka-FEH kon LEH-cheh, por fa-VOR"
+  },
+  "note": {
+    "ru": "В Испании так заказывают кофе у стойки.",
+    "uk": "В Іспанії так замовляють каву біля стійки.",
+    "en": "In Spain this is how you order coffee at the counter."
+  },
+  "why": null,
   "level": "A1",
   "variant": "both",
   "audio": { "es": "items/a1/cafe/cafe_con_leche.es.mp3", "latam": null },
-  "tags": ["cafe", "pedir"]
+  "tags": ["cafe", "pedir"],
+  "draft_i18n": false
 }
 ```
-- `type`: `word` | `phrase`. `say_ru` — подсказка произношения кириллицей, только A1–A2.
+- `type`: `word` | `phrase`. `say` — подсказка произношения буквами языка ученика, только A1–A2. Для ru и uk это кириллица, для en — латинская запись. Выше A2 поле `say` равно `null`.
 - `variant`: `es` | `latam` | `both`. Если различается — две единицы с пометкой.
 - Одна единица может использоваться в нескольких темах (без дублей).
 
@@ -75,35 +91,48 @@
   "id": "a1.cafe",
   "level": "A1",
   "category": "food",
-  "title_ru": "В кафе",
+  "title": {
+    "ru": "В кафе",
+    "uk": "У кафе",
+    "en": "At a café"
+  },
   "icon": "cup",
-  "can_do_ru": ["Заказать напиток", "Спросить цену", "Попросить счёт"],
+  "can_do": [
+    { "ru": "Заказать напиток", "uk": "Замовити напій", "en": "Order a drink" },
+    { "ru": "Спросить цену", "uk": "Запитати ціну", "en": "Ask the price" },
+    { "ru": "Попросить счёт", "uk": "Попросити рахунок", "en": "Ask for the bill" }
+  ],
   "lessons": ["a1.cafe.l1", "a1.cafe.l2", "a1.cafe.l3"],
   "scene": "a1.cafe.scene",
   "starter_day": 2
 }
 ```
+У урока и сценки заголовок тоже словарь `title`, в тех же трёх языках.
 
 ### Урок (content/topics/a1/cafe/l1.json)
 ```json
 {
   "id": "a1.cafe.l1",
   "topic": "a1.cafe",
-  "title_ru": "Заказываем кофе",
+  "title": {
+    "ru": "Заказываем кофе",
+    "uk": "Замовляємо каву",
+    "en": "Ordering coffee"
+  },
   "items": ["cafe.hola_buenos_dias", "cafe.cafe_con_leche", "cafe.un_te", "cafe.cuanto_es", "cafe.para_llevar", "cafe.aqui"],
   "speak": ["cafe.cafe_con_leche", "cafe.cuanto_es"],
   "dialog": {
     "lines": [
-      { "who": "npc", "es": "¡Hola! ¿Qué le pongo?", "ru": "Здравствуйте! Что вам?" },
+      { "who": "npc", "es": "¡Hola! ¿Qué le pongo?", "tr": { "ru": "Здравствуйте! Что вам?", "uk": "Добрий день! Що вам?", "en": "Hello! What can I get you?" } },
       { "who": "user", "target": "cafe.cafe_con_leche", "options": ["cafe.cafe_con_leche", "cafe.un_te", "cafe.cuanto_es"] },
-      { "who": "npc", "es": "¿Para tomar aquí o para llevar?", "ru": "Здесь или с собой?" },
+      { "who": "npc", "es": "¿Para tomar aquí o para llevar?", "tr": { "ru": "Здесь или с собой?", "uk": "Тут чи із собою?", "en": "Here or to go?" } },
       { "who": "user", "target": "cafe.para_llevar", "options": ["cafe.para_llevar", "cafe.aqui"] }
     ]
   },
   "overrides": []
 }
 ```
-Шаги урока (знакомство → узнавание → сборка → вспоминание → сказать → диалог) **генерирует движок** из `items`, `speak` и `dialog`. `overrides` — ручные упражнения, если автогенерация не подходит.
+Шаги урока (знакомство → узнавание → сборка → вспоминание → сказать → диалог) **генерирует движок** из `items`, `speak` и `dialog` на языке ученика. Варианты ответа в `select_translation` — переводы того же языка. `overrides` — ручные упражнения, если автогенерация не подходит; их `prompt` тоже словарь языков.
 
 ## Производство контента
 1. Список тем и целей «смогу…» — по PCIC и здравому смыслу (что реально нужно в ситуации).

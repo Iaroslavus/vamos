@@ -1,7 +1,11 @@
 {
   "id": "a1.tienda.l2",
   "topic": "a1.tienda",
-  "title_ru": "Пакет и карта",
+  "title": {
+    "ru": "Пакет и карта",
+    "uk": "Пакет і картка",
+    "en": "A bag and a card"
+  },
   "items": [
     "tienda.una_bolsa",
     "tienda.con_tarjeta",
@@ -11,29 +15,69 @@
     "cafe.cuanto_es",
     "hola.gracias"
   ],
-  "speak": ["tienda.una_bolsa", "tienda.puedo_pagar"],
+  "speak": [
+    "tienda.una_bolsa",
+    "tienda.puedo_pagar"
+  ],
   "dialog": {
     "lines": [
-      { "who": "npc", "es": "¿Necesita una bolsa?", "ru": "Нужен пакет?" },
+      {
+        "who": "npc",
+        "es": "¿Necesita una bolsa?",
+        "tr": {
+          "ru": "Нужен пакет?",
+          "uk": "Потрібен пакет?",
+          "en": "Do you need a bag?"
+        }
+      },
       {
         "who": "user",
         "target": "tienda.una_bolsa",
-        "options": ["tienda.una_bolsa", "tienda.puedo_pagar", "tienda.el_ticket"]
+        "options": [
+          "tienda.una_bolsa",
+          "tienda.puedo_pagar",
+          "tienda.el_ticket"
+        ]
       },
-      { "who": "npc", "es": "¿Tarjeta o efectivo?", "ru": "Карта или наличные?" },
+      {
+        "who": "npc",
+        "es": "¿Tarjeta o efectivo?",
+        "tr": {
+          "ru": "Карта или наличные?",
+          "uk": "Картка чи готівка?",
+          "en": "Card or cash?"
+        }
+      },
       {
         "who": "user",
         "target": "tienda.con_tarjeta",
-        "options": ["tienda.con_tarjeta", "tienda.en_efectivo", "tienda.puedo_pagar"]
+        "options": [
+          "tienda.con_tarjeta",
+          "tienda.en_efectivo",
+          "tienda.puedo_pagar"
+        ]
       },
-      { "who": "npc", "es": "Perfecto. El ticket.", "ru": "Хорошо. Чек." },
+      {
+        "who": "npc",
+        "es": "Perfecto. El ticket.",
+        "tr": {
+          "ru": "Хорошо. Чек.",
+          "uk": "Добре. Чек.",
+          "en": "All right. The receipt."
+        }
+      },
       {
         "who": "user",
         "target": "tienda.el_ticket",
-        "options": ["tienda.el_ticket", "hola.gracias", "cafe.cuanto_es"]
+        "options": [
+          "tienda.el_ticket",
+          "hola.gracias",
+          "cafe.cuanto_es"
+        ]
       }
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

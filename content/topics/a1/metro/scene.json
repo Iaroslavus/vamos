@@ -1,6 +1,11 @@
 {
   "id": "a1.metro.scene",
   "topic": "a1.metro",
-  "title_ru": "На станции",
-  "draft": true
+  "title": {
+    "ru": "На станции",
+    "uk": "На станції",
+    "en": "At the station"
+  },
+  "draft": true,
+  "draft_i18n": true
 }
