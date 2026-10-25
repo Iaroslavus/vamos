@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
   },
   pressable: {
     minHeight: 44,
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: space.xl,
@@ -183,6 +184,8 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: type.button.fontFamily,
     fontSize: type.button.fontSize,
+    lineHeight: 22,
     textAlign: 'center',
+    flexShrink: 1,
   },
 });
