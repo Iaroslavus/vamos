@@ -11,6 +11,8 @@ type SpeakFeedbackProps = {
   attemptsLeft: number;
   sayRu: string | null;
   parts: readonly { es: string; ru: string }[];
+  /** Practice has no try cap, so the remaining-attempts line stays hidden. */
+  showAttempts?: boolean;
 };
 
 function hintKey(score: SpeechScore): string {
@@ -19,7 +21,13 @@ function hintKey(score: SpeechScore): string {
   return 'speech.hintMiss';
 }
 
-export function SpeakFeedback({ score, attemptsLeft, sayRu, parts }: SpeakFeedbackProps) {
+export function SpeakFeedback({
+  score,
+  attemptsLeft,
+  sayRu,
+  parts,
+  showAttempts = true,
+}: SpeakFeedbackProps) {
   const { t } = useTranslation();
   const problem = score.problem;
   const gloss = problem ? glossForWord(problem.expected, parts) : null;
@@ -44,7 +52,9 @@ export function SpeakFeedback({ score, attemptsLeft, sayRu, parts }: SpeakFeedba
           color={passed ? colors.teal : colors.coral}
           accessibilityLabel={t('speech.scoreA11y', { score: score.score })}
         />
-        <Text variant="bodyBold">{t('speech.attemptsLeft', { count: attemptsLeft })}</Text>
+        {showAttempts ? (
+          <Text variant="bodyBold">{t('speech.attemptsLeft', { count: attemptsLeft })}</Text>
+        ) : null}
       </View>
     </View>
   );

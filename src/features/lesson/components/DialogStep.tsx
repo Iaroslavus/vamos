@@ -4,8 +4,8 @@ import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/Button';
-import { Text } from '@/components/Text';
 import type { Item } from '@/features/content/schema';
+import { SpeakPracticeSheet } from '@/features/speech/components/SpeakPracticeSheet';
 import { AddToVocabSheet } from '@/features/vocab/components/AddToVocabSheet';
 import { colors, space } from '@/theme/tokens';
 
@@ -13,7 +13,7 @@ import type { DialogStepResult, PlayableDialogLine } from '../dialog';
 import { normalizeForCompare } from '../grading';
 import type { DialogStep as DialogStepData } from '../generator';
 import { useDialogController } from '../hooks/useDialogController';
-import { useDialogSpeech } from '../hooks/useDialogSpeech';
+import { useDialogSpeakSheet } from '../hooks/useDialogSpeakSheet';
 import type { AudioPreference } from '../intro';
 import { DialogChoices } from './DialogChoices';
 import { DialogTranscript } from './DialogTranscript';
@@ -73,11 +73,11 @@ export function DialogStep({
 
   const current = state.phase === 'choose' ? state.lines[state.index] : null;
   const userLine = current?.who === 'user' ? current : null;
-  const speech = useDialogSpeech(userLine?.options ?? null, choose);
+  const speak = useDialogSpeakSheet(userLine);
 
   const onSpeak = () => {
     onSpeakAloud?.();
-    speech.toggle();
+    speak.openSheet();
   };
 
   return (
@@ -103,28 +103,30 @@ export function DialogStep({
             hint={state.hint}
             shake={state.shake}
             responseMode={responseMode}
-            listening={speech.listening}
-            speakDisabled={speech.disabled}
+            speakDisabled={speak.disabled}
             onChoose={choose}
             onSpeakAloud={onSpeak}
             longPressHint={t('vocab.longPressAdd')}
             onLongPressOption={setVocabItemId}
           />
         ) : null}
-        {speech.notice === 'miss' ? (
-          <Text variant="body" color={colors.inkMuted}>
-            {t('speech.dialogMiss')}
-          </Text>
-        ) : null}
-        {speech.notice === 'denied' ? (
-          <Text variant="body" color={colors.inkMuted}>
-            {t('speech.permissionBody')}
-          </Text>
-        ) : null}
         {state.phase === 'done' ? (
           <Button title={t('lesson.continue')} variant="primary" onPress={onContinue} />
         ) : null}
       </View>
+      <SpeakPracticeSheet
+        visible={speak.open}
+        mode="dialog"
+        phrase=""
+        options={speak.options}
+        attemptsUsed={speak.used}
+        onAttemptsUsed={speak.onAttemptsUsed}
+        onMatch={(optionId) => {
+          speak.close();
+          choose(optionId);
+        }}
+        onClose={speak.close}
+      />
       <AddToVocabSheet
         visible={vocabItemId !== null}
         itemIds={vocabItemId ? [vocabItemId] : []}
