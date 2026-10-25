@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { ProgressBar } from '@/components/ProgressBar';
 import { Text } from '@/components/Text';
+import { formatNumber } from '@/i18n/format';
 import { colors, radius, space } from '@/theme/tokens';
 
 import { currentLevel, levelRatio, type LevelProgress } from '@/features/path/curriculum';
@@ -12,7 +13,7 @@ type LevelListProps = {
 };
 
 export function LevelList({ levels }: LevelListProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const active = currentLevel(levels);
 
   return (
@@ -22,11 +23,11 @@ export function LevelList({ levels }: LevelListProps) {
       </Text>
       {levels.map((row) => {
         const open = row.total > 0;
-        const count = open
-          ? t('progress.levelCount', { done: row.completed, total: row.total })
-          : t('progress.levelSoon');
+        const done = formatNumber(row.completed, i18n.language);
+        const total = formatNumber(row.total, i18n.language);
+        const count = open ? t('progress.levelCount', { done, total }) : t('progress.levelSoon');
         const label = open
-          ? t('progress.levelLabel', { level: row.level, done: row.completed, total: row.total })
+          ? t('progress.levelLabel', { level: row.level, done, total })
           : t('progress.levelSoonLabel', { level: row.level });
 
         return (

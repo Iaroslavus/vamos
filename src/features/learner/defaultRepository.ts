@@ -1,15 +1,23 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getLocales } from 'expo-localization';
 
+import { languageFromDevice } from '@/i18n/language';
+import { readStoredUiLanguage, writeStoredUiLanguage } from '@/i18n/preference';
 import { supabase } from '@/lib/supabase';
 
-import { createLearnerRepository, profileFromRemote, type LearnerRemote } from './repository';
+import {
+  createLearnerRepository,
+  profileFromRemote,
+  profileToRemote,
+  type LearnerRemote,
+} from './repository';
 
 function supabaseLearnerRemote(): LearnerRemote {
   return {
     async fetch(userId) {
       const { data, error } = await supabase
         .from('profiles')
-        .select('display_name, goal, daily_minutes')
+        .select('display_name, goal, daily_minutes, ui_language')
         .eq('id', userId)
         .maybeSingle();
       if (error) throw error;
@@ -19,11 +27,7 @@ function supabaseLearnerRemote(): LearnerRemote {
     async update(userId, profile) {
       const { error } = await supabase
         .from('profiles')
-        .update({
-          display_name: profile.name,
-          goal: profile.goal,
-          daily_minutes: profile.dailyMinutes,
-        })
+        .update(profileToRemote(profile))
         .eq('id', userId);
       if (error) throw error;
     },
@@ -33,4 +37,9 @@ function supabaseLearnerRemote(): LearnerRemote {
 export const learnerRepository = createLearnerRepository({
   storage: AsyncStorage,
   remote: supabaseLearnerRemote(),
+  deviceLanguage: () => languageFromDevice(getLocales()),
+  languageStorage: {
+    read: readStoredUiLanguage,
+    write: writeStoredUiLanguage,
+  },
 });

@@ -1,4 +1,5 @@
 import { DAILY_GOAL_MINUTES, type DailyGoalMinutes } from '@/features/progress/streak';
+import { isUiLanguage, type UiLanguage } from '@/i18n/language';
 
 export type LearningGoal = 'travel' | 'work' | 'relocation' | 'dele';
 
@@ -9,6 +10,7 @@ export type LearnerProfile = {
   goal: LearningGoal | null;
   dailyMinutes: DailyGoalMinutes;
   preferencesAsked: boolean;
+  uiLanguage: UiLanguage | null;
 };
 
 export const EMPTY_PROFILE: LearnerProfile = {
@@ -16,6 +18,7 @@ export const EMPTY_PROFILE: LearnerProfile = {
   goal: null,
   dailyMinutes: 10,
   preferencesAsked: false,
+  uiLanguage: null,
 };
 
 const NAME_MAX = 60;
@@ -48,6 +51,13 @@ export function applyPatch(
   if (patch.goal !== undefined && patch.goal !== null && !isLearningGoal(patch.goal)) {
     next.goal = profile.goal;
   }
+  if (
+    patch.uiLanguage !== undefined &&
+    patch.uiLanguage !== null &&
+    !isUiLanguage(patch.uiLanguage)
+  ) {
+    next.uiLanguage = profile.uiLanguage;
+  }
   return next;
 }
 
@@ -66,6 +76,7 @@ export function mergeProfiles(
     goal: local.preferencesAsked ? local.goal : (remote.goal ?? local.goal),
     dailyMinutes: local.preferencesAsked ? local.dailyMinutes : remote.dailyMinutes,
     preferencesAsked,
+    uiLanguage: local.uiLanguage ?? remote.uiLanguage,
   };
 }
 
@@ -74,6 +85,7 @@ export function profilesEqual(a: LearnerProfile, b: LearnerProfile): boolean {
     a.name === b.name &&
     a.goal === b.goal &&
     a.dailyMinutes === b.dailyMinutes &&
-    a.preferencesAsked === b.preferencesAsked
+    a.preferencesAsked === b.preferencesAsked &&
+    a.uiLanguage === b.uiLanguage
   );
 }

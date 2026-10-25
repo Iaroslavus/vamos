@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { listTopics } from '@/features/content/loader';
 import { useLearnerProfile } from '@/features/learner/useLearnerProfile';
+import { useApplyProfileLanguage } from '@/features/settings/useUiLanguage';
 import { useProgress } from '@/features/progress/useProgress';
 import { buildTodayPlan, learnerDestination } from '@/features/today/course';
 import { colors } from '@/theme/tokens';
@@ -20,6 +21,7 @@ export function LearnerGate({ children }: { children: ReactNode }) {
   const segments = useSegments();
   const profile = useLearnerProfile();
   const progress = useProgress();
+  useApplyProfileLanguage();
   const parts = segments as readonly string[];
 
   const completed =

@@ -10,6 +10,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { Text } from '@/components/Text';
+import { formatNumber, formatWeekday } from '@/i18n/format';
 import type { ReviewForecastDay } from '@/features/review/forecast';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, fonts, motion, radius, space } from '@/theme/tokens';
@@ -63,8 +64,8 @@ type ForecastColumnProps = {
 };
 
 function ForecastColumn({ day, scale, delay, today, reduceMotion }: ForecastColumnProps) {
-  const { t } = useTranslation();
-  const weekday = t(`progress.weekdays.${day.weekday}`);
+  const { t, i18n } = useTranslation();
+  const weekday = formatWeekday(day.date, i18n.language);
   const grown = useSharedValue(reduceMotion ? scale : 0);
 
   useEffect(() => {
@@ -93,7 +94,7 @@ function ForecastColumn({ day, scale, delay, today, reduceMotion }: ForecastColu
       style={styles.column}
     >
       <Text variant="caption" color={day.count > 0 ? colors.ink : colors.inkMuted}>
-        {day.count}
+        {formatNumber(day.count, i18n.language)}
       </Text>
       <View style={styles.track}>
         <Animated.View style={[styles.fill, fillStyle, { backgroundColor: fillColor }]} />

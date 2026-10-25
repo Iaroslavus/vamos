@@ -7,6 +7,10 @@ import { SessionProvider } from '@/features/auth/SessionProvider';
 import type { AuthGateway, AuthSession, AuthUser } from '@/features/auth/types';
 import i18n from '@/i18n';
 
+jest.mock('expo-router', () => ({
+  useRouter: () => ({ push: jest.fn() }),
+}));
+
 jest.mock('expo-haptics', () => ({
   impactAsync: jest.fn(() => Promise.resolve()),
   ImpactFeedbackStyle: { Light: 'light' },

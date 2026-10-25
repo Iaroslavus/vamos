@@ -11,6 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { Text } from '@/components/Text';
+import { formatNumber } from '@/i18n/format';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, radius, space } from '@/theme/tokens';
 
@@ -23,7 +24,7 @@ type TodayHeaderProps = {
 };
 
 export function TodayHeader({ greeting, streak, xp }: TodayHeaderProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <View style={styles.row}>
@@ -37,13 +38,13 @@ export function TodayHeader({ greeting, streak, xp }: TodayHeaderProps) {
           style={styles.streak}
         >
           <StreakFlame active={streak > 0} />
-          <Text variant="h3">{streak}</Text>
+          <Text variant="h3">{formatNumber(streak, i18n.language)}</Text>
         </View>
         <View accessible accessibilityLabel={t('learn.xpLabel', { xp })} style={styles.xp}>
           <Text variant="label" color={colors.saffronDeep}>
             {t('learn.xpShort')}
           </Text>
-          <Text variant="h3">{xp}</Text>
+          <Text variant="h3">{formatNumber(xp, i18n.language)}</Text>
         </View>
       </View>
     </View>

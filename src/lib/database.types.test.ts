@@ -36,6 +36,7 @@ describe('database.types', () => {
     expect(Constants.public.Enums.folder_kind).toEqual(['system', 'custom']);
     expect(Constants.public.Enums.learning_goal).toEqual(['travel', 'work', 'relocation', 'dele']);
     expect(Constants.public.Enums.spanish_variant).toEqual(['spain', 'latam']);
+    expect(Constants.public.Enums.ui_language).toEqual(['ru', 'uk', 'en']);
     expect(Constants.public.Enums.lesson_status).toEqual(['in_progress', 'completed']);
     expect(Constants.public.Enums.xp_source).toEqual([
       'lesson',
@@ -55,6 +56,7 @@ describe('database.types', () => {
       daily_minutes: 10,
       spanish_variant: 'spain',
       timezone: 'UTC',
+      ui_language: null,
       created_at: '2026-10-19T00:00:00Z',
       updated_at: '2026-10-19T00:00:00Z',
     };

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
 import { Chip, type ChipTone } from '@/components/Chip';
@@ -40,6 +41,7 @@ export function BuildSentenceExercise({
   gradeStatus = null,
   onAnswerChange,
 }: BuildSentenceExerciseProps) {
+  const { t } = useTranslation();
   const [bank, setBank] = useState(() => toSlots(exercise.tiles));
   const [selected, setSelected] = useState<TileSlot[]>([]);
   const revealed = Boolean(gradeStatus);
@@ -67,7 +69,7 @@ export function BuildSentenceExercise({
         {exercise.prompt_ru}
       </Text>
 
-      <View style={styles.answerWell} accessibilityLabel="Собранный ответ">
+      <View style={styles.answerWell} accessibilityLabel={t('lesson.builtAnswer')}>
         {selected.length === 0 ? (
           <Text variant="body" color={colors.inkDisabled}>
             —

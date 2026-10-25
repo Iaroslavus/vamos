@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/Text';
+import { formatNumber } from '@/i18n/format';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, motion, space } from '@/theme/tokens';
 
@@ -15,13 +17,17 @@ function easeOutCubic(t: number): number {
 }
 
 function XpValue({ label, value, xp }: { label: string; value: number; xp: number }) {
+  const { i18n } = useTranslation();
+  const shown = formatNumber(value, i18n.language);
+  const total = formatNumber(xp, i18n.language);
+
   return (
-    <View style={styles.wrap} accessibilityRole="text" accessibilityLabel={`${label} ${xp}`}>
+    <View style={styles.wrap} accessibilityRole="text" accessibilityLabel={`${label} ${total}`}>
       <Text variant="caption" color={colors.inkMuted}>
         {label}
       </Text>
       <Text variant="h1" color={colors.saffron} style={styles.value}>
-        +{value}
+        +{shown}
       </Text>
     </View>
   );
