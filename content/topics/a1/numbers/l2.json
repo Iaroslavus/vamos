@@ -1,0 +1,39 @@
+{
+  "id": "a1.numbers.l2",
+  "topic": "a1.numbers",
+  "title_ru": "Сколько стоит?",
+  "items": [
+    "numbers.cuanto_cuesta",
+    "numbers.cuanto_cuestan",
+    "numbers.un_euro",
+    "numbers.dos_euros",
+    "numbers.diez_euros",
+    "numbers.dos_con_cincuenta",
+    "cafe.esta_bien"
+  ],
+  "speak": ["numbers.cuanto_cuesta", "numbers.dos_euros", "numbers.dos_con_cincuenta"],
+  "dialog": {
+    "lines": [
+      { "who": "npc", "es": "El café cuesta dos euros.", "ru": "Кофе стоит два евро." },
+      {
+        "who": "user",
+        "target": "numbers.dos_euros",
+        "options": ["numbers.dos_euros", "numbers.un_euro", "numbers.diez_euros"]
+      },
+      { "who": "npc", "es": "¿Y dos cafés?", "ru": "А два кофе?" },
+      {
+        "who": "user",
+        "target": "numbers.cuanto_cuestan",
+        "options": ["numbers.cuanto_cuestan", "numbers.cuanto_cuesta", "numbers.dos_con_cincuenta"]
+      },
+      { "who": "npc", "es": "Dos con cincuenta.", "ru": "Два пятьдесят." },
+      {
+        "who": "user",
+        "target": "cafe.esta_bien",
+        "options": ["cafe.esta_bien", "numbers.un_euro", "numbers.diez_euros"]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

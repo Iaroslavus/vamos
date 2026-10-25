@@ -7,11 +7,11 @@
     "hola.como_te_llamas",
     "hola.mucho_gusto",
     "hola.soy",
-    "hola.de",
-    "hola.encantado",
-    "hola.usted"
+    "hola.que_tal",
+    "hola.bien_gracias",
+    "hola.encantado"
   ],
-  "speak": ["hola.me_llamo", "hola.mucho_gusto"],
+  "speak": ["hola.me_llamo", "hola.que_tal", "hola.bien_gracias"],
   "dialog": {
     "lines": [
       { "who": "npc", "es": "¡Hola! ¿Cómo te llamas?", "ru": "Привет! Как тебя зовут?" },
@@ -20,11 +20,17 @@
         "target": "hola.me_llamo",
         "options": ["hola.me_llamo", "hola.como_te_llamas", "hola.soy"]
       },
-      { "who": "npc", "es": "Soy Ana. Mucho gusto.", "ru": "Я Ана. Очень приятно." },
+      { "who": "npc", "es": "Soy Ana. ¿Qué tal?", "ru": "Я Ана. Как дела?" },
+      {
+        "who": "user",
+        "target": "hola.bien_gracias",
+        "options": ["hola.bien_gracias", "hola.que_tal", "hola.mucho_gusto"]
+      },
+      { "who": "npc", "es": "Bien. Mucho gusto.", "ru": "Хорошо. Очень приятно." },
       {
         "who": "user",
         "target": "hola.mucho_gusto",
-        "options": ["hola.mucho_gusto", "hola.encantado", "hola.usted"]
+        "options": ["hola.mucho_gusto", "hola.encantado", "hola.me_llamo"]
       }
     ]
   },

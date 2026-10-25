@@ -18,24 +18,49 @@ import {
  * so a new JSON file has to be added here.
  */
 const ITEM_FILES: readonly unknown[] = [
+  require('../../../content/items/a1/cafe.json') as unknown,
+  require('../../../content/items/a1/camino.json') as unknown,
   require('../../../content/items/a1/hola.json') as unknown,
   require('../../../content/items/a1/numbers.json') as unknown,
+  require('../../../content/items/a1/restaurante.json') as unknown,
+  require('../../../content/items/a1/tienda.json') as unknown,
 ];
 
 const TOPIC_FILES: readonly unknown[] = [
+  require('../../../content/topics/a1/cafe/topic.json') as unknown,
+  require('../../../content/topics/a1/camino/topic.json') as unknown,
   require('../../../content/topics/a1/hola/topic.json') as unknown,
   require('../../../content/topics/a1/numbers/topic.json') as unknown,
+  require('../../../content/topics/a1/primera/topic.json') as unknown,
+  require('../../../content/topics/a1/restaurante/topic.json') as unknown,
+  require('../../../content/topics/a1/tienda/topic.json') as unknown,
 ];
 
 const LESSON_FILES: readonly unknown[] = [
+  require('../../../content/topics/a1/cafe/l1.json') as unknown,
+  require('../../../content/topics/a1/cafe/l2.json') as unknown,
+  require('../../../content/topics/a1/camino/l1.json') as unknown,
+  require('../../../content/topics/a1/camino/l2.json') as unknown,
   require('../../../content/topics/a1/hola/l1.json') as unknown,
   require('../../../content/topics/a1/hola/l2.json') as unknown,
   require('../../../content/topics/a1/numbers/l1.json') as unknown,
+  require('../../../content/topics/a1/numbers/l2.json') as unknown,
+  require('../../../content/topics/a1/primera/l1.json') as unknown,
+  require('../../../content/topics/a1/primera/l2.json') as unknown,
+  require('../../../content/topics/a1/restaurante/l1.json') as unknown,
+  require('../../../content/topics/a1/restaurante/l2.json') as unknown,
+  require('../../../content/topics/a1/tienda/l1.json') as unknown,
+  require('../../../content/topics/a1/tienda/l2.json') as unknown,
 ];
 
 const SCENE_FILES: readonly unknown[] = [
+  require('../../../content/topics/a1/cafe/scene.json') as unknown,
+  require('../../../content/topics/a1/camino/scene.json') as unknown,
   require('../../../content/topics/a1/hola/scene.json') as unknown,
   require('../../../content/topics/a1/numbers/scene.json') as unknown,
+  require('../../../content/topics/a1/primera/scene.json') as unknown,
+  require('../../../content/topics/a1/restaurante/scene.json') as unknown,
+  require('../../../content/topics/a1/tienda/scene.json') as unknown,
 ];
 
 const items = indexById(

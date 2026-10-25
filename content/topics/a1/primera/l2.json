@@ -1,0 +1,39 @@
+{
+  "id": "a1.primera.l2",
+  "topic": "a1.primera",
+  "title_ru": "По городу",
+  "items": [
+    "camino.donde_esta",
+    "camino.derecha",
+    "camino.recto",
+    "tienda.tiene_pan",
+    "tienda.una_bolsa",
+    "tienda.puedo_pagar",
+    "hola.hasta_luego"
+  ],
+  "speak": ["camino.donde_esta", "tienda.una_bolsa", "hola.hasta_luego"],
+  "dialog": {
+    "lines": [
+      { "who": "npc", "es": "¿Qué desea?", "ru": "Что хотите?" },
+      {
+        "who": "user",
+        "target": "tienda.tiene_pan",
+        "options": ["tienda.tiene_pan", "tienda.una_bolsa", "tienda.puedo_pagar"]
+      },
+      { "who": "npc", "es": "Sí. ¿Una bolsa?", "ru": "Да. Пакет?" },
+      {
+        "who": "user",
+        "target": "tienda.una_bolsa",
+        "options": ["tienda.una_bolsa", "tienda.puedo_pagar", "hola.hasta_luego"]
+      },
+      { "who": "npc", "es": "La estación está todo recto.", "ru": "Вокзал — прямо." },
+      {
+        "who": "user",
+        "target": "hola.hasta_luego",
+        "options": ["hola.hasta_luego", "camino.recto", "camino.derecha"]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

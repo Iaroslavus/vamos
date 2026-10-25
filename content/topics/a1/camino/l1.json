@@ -1,0 +1,39 @@
+{
+  "id": "a1.camino.l1",
+  "topic": "a1.camino",
+  "title_ru": "Как пройти?",
+  "items": [
+    "camino.donde_esta",
+    "camino.como_llego",
+    "camino.la_estacion",
+    "camino.el_metro",
+    "camino.por_aqui",
+    "camino.por_alli",
+    "hola.por_favor"
+  ],
+  "speak": ["camino.donde_esta", "camino.como_llego", "camino.la_estacion"],
+  "dialog": {
+    "lines": [
+      { "who": "npc", "es": "¿Le ayudo?", "ru": "Вам помочь?" },
+      {
+        "who": "user",
+        "target": "camino.donde_esta",
+        "options": ["camino.donde_esta", "camino.como_llego", "camino.el_metro"]
+      },
+      { "who": "npc", "es": "¿La estación o el metro?", "ru": "Вокзал или метро?" },
+      {
+        "who": "user",
+        "target": "camino.la_estacion",
+        "options": ["camino.la_estacion", "camino.el_metro", "camino.por_alli"]
+      },
+      { "who": "npc", "es": "Está por allí.", "ru": "Вон там." },
+      {
+        "who": "user",
+        "target": "camino.por_alli",
+        "options": ["camino.por_alli", "camino.por_aqui", "hola.por_favor"]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

@@ -1,0 +1,236 @@
+[
+  {
+    "id": "camino.donde_esta",
+    "type": "phrase",
+    "es": "¿Dónde está?",
+    "ru": "Где находится?",
+    "parts": [
+      { "es": "¿Dónde", "ru": "где" },
+      { "es": "está?", "ru": "находится" }
+    ],
+    "say_ru": "дОнде эстА",
+    "note_ru": "Дальше место: ¿dónde está el metro?",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["city"],
+    "draft": true
+  },
+  {
+    "id": "camino.como_llego",
+    "type": "phrase",
+    "es": "¿Cómo llego?",
+    "ru": "Как пройти?",
+    "parts": [
+      { "es": "¿Cómo", "ru": "как" },
+      { "es": "llego?", "ru": "мне дойти" }
+    ],
+    "say_ru": "кОмо йЕго",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["city"],
+    "draft": true
+  },
+  {
+    "id": "camino.la_estacion",
+    "type": "phrase",
+    "es": "La estación",
+    "ru": "Вокзал",
+    "parts": [
+      { "es": "La", "ru": "эта" },
+      { "es": "estación", "ru": "станция" }
+    ],
+    "say_ru": "ла эстасьОн",
+    "note_ru": "Вокзал. Метро — отдельно, el metro.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["city"],
+    "draft": true
+  },
+  {
+    "id": "camino.el_metro",
+    "type": "phrase",
+    "es": "El metro",
+    "ru": "Метро",
+    "parts": [
+      { "es": "El", "ru": "этот" },
+      { "es": "metro", "ru": "метро" }
+    ],
+    "say_ru": "эль мЭтро",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["city"],
+    "draft": true
+  },
+  {
+    "id": "camino.por_aqui",
+    "type": "phrase",
+    "es": "Por aquí",
+    "ru": "Сюда",
+    "parts": [
+      { "es": "Por", "ru": "по" },
+      { "es": "aquí", "ru": "здесь" }
+    ],
+    "say_ru": "пор акИ",
+    "note_ru": "Жест в нужную сторону.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["city"],
+    "draft": true
+  },
+  {
+    "id": "camino.por_alli",
+    "type": "phrase",
+    "es": "Por allí",
+    "ru": "Вон там",
+    "parts": [
+      { "es": "Por", "ru": "по" },
+      { "es": "allí", "ru": "там" }
+    ],
+    "say_ru": "пор айИ",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["city"],
+    "draft": true
+  },
+  {
+    "id": "camino.derecha",
+    "type": "phrase",
+    "es": "A la derecha",
+    "ru": "Направо",
+    "parts": [
+      { "es": "A la", "ru": "на" },
+      { "es": "derecha", "ru": "право" }
+    ],
+    "say_ru": "а ла дерЭча",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["city"],
+    "draft": true
+  },
+  {
+    "id": "camino.izquierda",
+    "type": "phrase",
+    "es": "A la izquierda",
+    "ru": "Налево",
+    "parts": [
+      { "es": "A la", "ru": "на" },
+      { "es": "izquierda", "ru": "лево" }
+    ],
+    "say_ru": "а ла искьЭрда",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["city"],
+    "draft": true
+  },
+  {
+    "id": "camino.recto",
+    "type": "phrase",
+    "es": "Todo recto",
+    "ru": "Прямо",
+    "parts": [
+      { "es": "Todo", "ru": "всё" },
+      { "es": "recto", "ru": "прямо" }
+    ],
+    "say_ru": "тОдо ррЭкто",
+    "note_ru": "Так говорят в Испании. В Латинской Америке чаще todo derecho.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "es",
+    "audio": { "es": null, "latam": null },
+    "tags": ["city"],
+    "draft": true
+  },
+  {
+    "id": "camino.derecho",
+    "type": "phrase",
+    "es": "Todo derecho",
+    "ru": "Прямо вперёд",
+    "parts": [
+      { "es": "Todo", "ru": "всё" },
+      { "es": "derecho", "ru": "прямо" }
+    ],
+    "say_ru": "тОдо дерЭчо",
+    "note_ru": "Латинская Америка. Не путать с a la derecha — «направо».",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "latam",
+    "audio": { "es": null, "latam": null },
+    "tags": ["city"],
+    "draft": true
+  },
+  {
+    "id": "camino.cerca",
+    "type": "phrase",
+    "es": "Está cerca",
+    "ru": "Это близко",
+    "parts": [
+      { "es": "Está", "ru": "находится" },
+      { "es": "cerca", "ru": "близко" }
+    ],
+    "say_ru": "эстА сЭрка",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["city"],
+    "draft": true
+  },
+  {
+    "id": "camino.lejos",
+    "type": "phrase",
+    "es": "Está lejos",
+    "ru": "Это далеко",
+    "parts": [
+      { "es": "Está", "ru": "находится" },
+      { "es": "lejos", "ru": "далеко" }
+    ],
+    "say_ru": "эстА лЭхос",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["city"],
+    "draft": true
+  },
+  {
+    "id": "camino.primera",
+    "type": "phrase",
+    "es": "La primera calle",
+    "ru": "Первая улица",
+    "parts": [
+      { "es": "La primera", "ru": "первая" },
+      { "es": "calle", "ru": "улица" }
+    ],
+    "say_ru": "ла примЭра кАйе",
+    "note_ru": "Первый поворот.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["city"],
+    "draft": true
+  }
+]

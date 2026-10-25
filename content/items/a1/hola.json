@@ -245,5 +245,41 @@
     "audio": { "es": "a1/usted.mp3", "latam": null },
     "tags": ["intro", "polite"],
     "draft": true
+  },
+  {
+    "id": "hola.que_tal",
+    "type": "phrase",
+    "es": "¿Qué tal?",
+    "ru": "Как дела?",
+    "parts": [
+      { "es": "¿Qué", "ru": "как" },
+      { "es": "tal?", "ru": "дела" }
+    ],
+    "say_ru": "ке таль",
+    "note_ru": "Короткий вопрос «как дела?» с человеком на «ты».",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["greeting"],
+    "draft": true
+  },
+  {
+    "id": "hola.bien_gracias",
+    "type": "phrase",
+    "es": "Bien, gracias",
+    "ru": "Хорошо, спасибо",
+    "parts": [
+      { "es": "Bien,", "ru": "хорошо" },
+      { "es": "gracias", "ru": "спасибо" }
+    ],
+    "say_ru": "бьен, грАсиас",
+    "note_ru": "Обычный ответ на «¿qué tal?».",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["greeting"],
+    "draft": true
   }
 ]

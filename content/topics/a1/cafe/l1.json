@@ -1,0 +1,33 @@
+{
+  "id": "a1.cafe.l1",
+  "topic": "a1.cafe",
+  "title_ru": "Заказываем напиток",
+  "items": [
+    "cafe.un_cafe",
+    "cafe.cafe_con_leche",
+    "cafe.un_te",
+    "cafe.agua",
+    "cafe.para_llevar",
+    "cafe.para_tomar_aqui",
+    "cafe.quiero"
+  ],
+  "speak": ["cafe.cafe_con_leche", "cafe.para_llevar"],
+  "dialog": {
+    "lines": [
+      { "who": "npc", "es": "¡Hola! ¿Qué le pongo?", "ru": "Здравствуйте! Что вам налить?" },
+      {
+        "who": "user",
+        "target": "cafe.cafe_con_leche",
+        "options": ["cafe.cafe_con_leche", "cafe.un_te", "cafe.agua"]
+      },
+      { "who": "npc", "es": "¿Para tomar aquí o para llevar?", "ru": "Здесь или с собой?" },
+      {
+        "who": "user",
+        "target": "cafe.para_llevar",
+        "options": ["cafe.para_llevar", "cafe.para_tomar_aqui", "cafe.un_cafe"]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

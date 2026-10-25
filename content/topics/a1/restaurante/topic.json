@@ -1,0 +1,12 @@
+{
+  "id": "a1.restaurante",
+  "level": "A1",
+  "category": "food",
+  "title_ru": "В ресторане",
+  "icon": "utensils",
+  "can_do_ru": ["Забронировать стол", "Заказать", "Сказать об аллергии"],
+  "lessons": ["a1.restaurante.l1", "a1.restaurante.l2"],
+  "scene": "a1.restaurante.scene",
+  "starter_day": 6,
+  "draft": true
+}

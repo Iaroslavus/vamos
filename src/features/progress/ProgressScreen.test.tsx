@@ -208,7 +208,7 @@ describe('ProgressScreen', () => {
     expect(screen.getByLabelText('Повторить сегодня: 0')).toBeTruthy();
     expect(screen.getByText('На 7 дней')).toBeTruthy();
     expect(screen.getAllByLabelText(new RegExp(`${WEEKDAY}: 0$`))).toHaveLength(7);
-    expect(screen.getByLabelText('A1, 0 из 3')).toBeTruthy();
+    expect(screen.getByLabelText('A1, 0 из 14')).toBeTruthy();
     expect(screen.getAllByText('Скоро')).toHaveLength(5);
     expect(screen.getByLabelText('Словарь, 0%')).toBeTruthy();
     expect(screen.getByLabelText('Грамматика, 0%')).toBeTruthy();
@@ -259,7 +259,7 @@ describe('ProgressScreen', () => {
     );
 
     expect(await screen.findByLabelText('Время в языке: 1 ч 10 мин')).toBeTruthy();
-    expect(screen.getByLabelText('A1, 3 из 3')).toBeTruthy();
+    expect(screen.getByLabelText('A1, 3 из 14')).toBeTruthy();
     expect(screen.getByLabelText('Повторить сегодня: 0')).toBeTruthy();
     expect(screen.getByLabelText('Словарь, 0%')).toBeTruthy();
     expect(screen.getByText('Ждёт отправки: 2.')).toBeTruthy();
@@ -283,7 +283,7 @@ describe('ProgressScreen', () => {
     });
 
     expect(await screen.findByLabelText('Время в языке: 10 мин')).toBeTruthy();
-    expect(screen.getByLabelText('A1, 1 из 3')).toBeTruthy();
+    expect(screen.getByLabelText('A1, 1 из 14')).toBeTruthy();
     expect(screen.getByLabelText('Повторить сегодня: 0')).toBeTruthy();
     expect(screen.getByText('Ждёт отправки: 2.')).toBeTruthy();
     await flush();

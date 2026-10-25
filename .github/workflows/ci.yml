@@ -26,4 +26,5 @@ jobs:
       - run: npm run typecheck
       - run: npm run lint
       - run: npm test -- --ci --passWithNoTests
+      - run: npm run content:check
       - run: npx expo export --platform android --output-dir dist

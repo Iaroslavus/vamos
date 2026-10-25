@@ -6,6 +6,7 @@ import {
 } from 'expo-audio';
 import * as Speech from 'expo-speech';
 
+import { publicAudioUrl } from '@/features/audio/storage';
 import { BUNDLED_AUDIO_ASSETS } from './assets';
 import { IOS_AV_SPEECH_DEFAULT_RATE, speechEngineRate } from './speechRate';
 
@@ -56,6 +57,13 @@ export function resolveAudioSource(audio?: string | null): AudioSource | null {
     audio.startsWith('content://')
   ) {
     return audio;
+  }
+
+  // Storage object written by scripts/content/tts.ts. No project URL or no file yet → device TTS.
+  if (audio.startsWith('items/')) {
+    const base = process.env.EXPO_PUBLIC_SUPABASE_URL?.trim();
+    if (!base) return null;
+    return publicAudioUrl(audio, base);
   }
 
   return null;

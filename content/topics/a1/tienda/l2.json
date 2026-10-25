@@ -1,0 +1,39 @@
+{
+  "id": "a1.tienda.l2",
+  "topic": "a1.tienda",
+  "title_ru": "Пакет и карта",
+  "items": [
+    "tienda.una_bolsa",
+    "tienda.con_tarjeta",
+    "tienda.en_efectivo",
+    "tienda.puedo_pagar",
+    "tienda.el_ticket",
+    "cafe.cuanto_es",
+    "hola.gracias"
+  ],
+  "speak": ["tienda.una_bolsa", "tienda.puedo_pagar"],
+  "dialog": {
+    "lines": [
+      { "who": "npc", "es": "¿Necesita una bolsa?", "ru": "Нужен пакет?" },
+      {
+        "who": "user",
+        "target": "tienda.una_bolsa",
+        "options": ["tienda.una_bolsa", "tienda.puedo_pagar", "tienda.el_ticket"]
+      },
+      { "who": "npc", "es": "¿Tarjeta o efectivo?", "ru": "Карта или наличные?" },
+      {
+        "who": "user",
+        "target": "tienda.con_tarjeta",
+        "options": ["tienda.con_tarjeta", "tienda.en_efectivo", "tienda.puedo_pagar"]
+      },
+      { "who": "npc", "es": "Perfecto. El ticket.", "ru": "Хорошо. Чек." },
+      {
+        "who": "user",
+        "target": "tienda.el_ticket",
+        "options": ["tienda.el_ticket", "hola.gracias", "cafe.cuanto_es"]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

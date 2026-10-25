@@ -43,7 +43,13 @@ describe('topic catalog', () => {
     expect(initialLevel([])).toBe('A1');
 
     const sections = topicSections(listTopics(), listLessons(), [], 'A1', '');
-    expect(sections.map((section) => section.category)).toEqual(['first_steps']);
+    expect(sections.map((section) => section.category)).toEqual([
+      'first_steps',
+      'food',
+      'shopping',
+      'city',
+      'social',
+    ]);
     expect(sections[0]?.topics.map((item) => item.id)).toEqual(['a1.hola', 'a1.numbers']);
     expect(sections[0]?.topics[0]).toMatchObject({
       lessonCount: 2,
@@ -51,7 +57,11 @@ describe('topic catalog', () => {
       completedLessons: 0,
       progress: 0,
     });
-    expect(sections[0]?.topics[1]).toMatchObject({ lessonCount: 1, phraseCount: 7 });
+    expect(sections[0]?.topics[1]).toMatchObject({ lessonCount: 2, phraseCount: 14 });
+    expect(sections[1]?.topics.map((item) => item.id)).toEqual(['a1.cafe', 'a1.restaurante']);
+    expect(sections[2]?.topics.map((item) => item.id)).toEqual(['a1.tienda']);
+    expect(sections[3]?.topics.map((item) => item.id)).toEqual(['a1.camino']);
+    expect(sections[4]?.topics.map((item) => item.id)).toEqual(['a1.primera']);
     expect(topicSections(listTopics(), listLessons(), [], 'B1', '')).toEqual([]);
   });
 
@@ -143,7 +153,7 @@ describe('topic catalog', () => {
       ['Приветствия', 'completed'],
       ['Знакомство', 'current'],
     ]);
-    expect(detail?.canDos.filter((item) => item.done)).toHaveLength(1);
+    expect(detail?.canDos.filter((item) => item.done)).toHaveLength(2);
     expect(detail?.scene).toMatchObject({ title: 'Знакомство на улице', status: 'locked' });
   });
 });

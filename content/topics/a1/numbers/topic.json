@@ -2,10 +2,11 @@
   "id": "a1.numbers",
   "level": "A1",
   "category": "first_steps",
-  "title_ru": "Числа 1–10",
+  "title_ru": "Числа и цены",
   "icon": "hash",
-  "can_do_ru": ["Понять числа от 1 до 10", "Назвать количество"],
-  "lessons": ["a1.numbers.l1"],
+  "can_do_ru": ["Понять цену на слух", "Назвать количество", "Спросить «сколько стоит?»"],
+  "lessons": ["a1.numbers.l1", "a1.numbers.l2"],
   "scene": "a1.numbers.scene",
+  "starter_day": 3,
   "draft": true
 }

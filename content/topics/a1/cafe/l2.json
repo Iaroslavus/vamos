@@ -1,0 +1,39 @@
+{
+  "id": "a1.cafe.l2",
+  "topic": "a1.cafe",
+  "title_ru": "Цена и счёт",
+  "items": [
+    "cafe.cuanto_es",
+    "cafe.la_cuenta",
+    "cafe.nada_mas",
+    "cafe.esta_bien",
+    "cafe.aqui",
+    "hola.por_favor",
+    "hola.gracias"
+  ],
+  "speak": ["cafe.cuanto_es", "cafe.la_cuenta"],
+  "dialog": {
+    "lines": [
+      { "who": "npc", "es": "Aquí tiene el café.", "ru": "Вот ваш кофе." },
+      {
+        "who": "user",
+        "target": "cafe.cuanto_es",
+        "options": ["cafe.cuanto_es", "cafe.la_cuenta", "cafe.nada_mas"]
+      },
+      { "who": "npc", "es": "Son dos euros.", "ru": "Два евро." },
+      {
+        "who": "user",
+        "target": "cafe.esta_bien",
+        "options": ["cafe.esta_bien", "cafe.cuanto_es", "cafe.la_cuenta"]
+      },
+      { "who": "npc", "es": "¿Algo más?", "ru": "Ещё что-нибудь?" },
+      {
+        "who": "user",
+        "target": "cafe.la_cuenta",
+        "options": ["cafe.la_cuenta", "cafe.nada_mas", "cafe.un_cafe"]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

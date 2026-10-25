@@ -41,6 +41,22 @@ describe('resolveAudioSource', () => {
     expect(resolveAudioSource('a1/hola.mp3')).toBeNull();
   });
 
+  it('uses device TTS for a storage path until the project URL is set', () => {
+    const previous = process.env.EXPO_PUBLIC_SUPABASE_URL;
+    delete process.env.EXPO_PUBLIC_SUPABASE_URL;
+    expect(resolveAudioSource('items/a1/cafe/un_cafe.es.mp3')).toBeNull();
+    process.env.EXPO_PUBLIC_SUPABASE_URL = previous;
+  });
+
+  it('resolves a stored clip to the public audio bucket', () => {
+    const previous = process.env.EXPO_PUBLIC_SUPABASE_URL;
+    process.env.EXPO_PUBLIC_SUPABASE_URL = 'http://127.0.0.1:54321/';
+    expect(resolveAudioSource('items/a1/cafe/un_cafe.es.mp3')).toBe(
+      'http://127.0.0.1:54321/storage/v1/object/public/audio/items/a1/cafe/un_cafe.es.mp3',
+    );
+    process.env.EXPO_PUBLIC_SUPABASE_URL = previous;
+  });
+
   it('returns remote URIs as-is', () => {
     expect(resolveAudioSource('https://cdn.example/a1/hola.mp3')).toBe(
       'https://cdn.example/a1/hola.mp3',

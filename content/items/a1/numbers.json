@@ -115,5 +115,113 @@
     "audio": { "es": "a1/diez.mp3", "latam": null },
     "tags": ["number"],
     "draft": true
+  },
+  {
+    "id": "numbers.cuanto_cuesta",
+    "type": "phrase",
+    "es": "¿Cuánto cuesta?",
+    "ru": "Сколько стоит?",
+    "parts": [
+      { "es": "¿Cuánto", "ru": "сколько" },
+      { "es": "cuesta?", "ru": "стоит" }
+    ],
+    "say_ru": "куАнто куЭста",
+    "note_ru": "Вопрос о цене одной вещи.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["price"],
+    "draft": true
+  },
+  {
+    "id": "numbers.cuanto_cuestan",
+    "type": "phrase",
+    "es": "¿Cuánto cuestan?",
+    "ru": "Сколько стоят?",
+    "parts": [
+      { "es": "¿Cuánto", "ru": "сколько" },
+      { "es": "cuestan?", "ru": "стоят" }
+    ],
+    "say_ru": "куАнто куЭстан",
+    "note_ru": "Когда вещей несколько: dos cafés.",
+    "why_ru": "Несколько предметов — глагол во множественном числе: cuestan.",
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["price"],
+    "draft": true
+  },
+  {
+    "id": "numbers.un_euro",
+    "type": "phrase",
+    "es": "Un euro",
+    "ru": "Один евро",
+    "parts": [
+      { "es": "Un", "ru": "один" },
+      { "es": "euro", "ru": "евро" }
+    ],
+    "say_ru": "ун Эуро",
+    "note_ru": "Перед euro говорят un, не uno.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["price"],
+    "draft": true
+  },
+  {
+    "id": "numbers.dos_euros",
+    "type": "phrase",
+    "es": "Dos euros",
+    "ru": "Два евро",
+    "parts": [
+      { "es": "Dos", "ru": "два" },
+      { "es": "euros", "ru": "евро" }
+    ],
+    "say_ru": "дос Эурос",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["price"],
+    "draft": true
+  },
+  {
+    "id": "numbers.diez_euros",
+    "type": "phrase",
+    "es": "Diez euros",
+    "ru": "Десять евро",
+    "parts": [
+      { "es": "Diez", "ru": "десять" },
+      { "es": "euros", "ru": "евро" }
+    ],
+    "say_ru": "дьес Эурос",
+    "note_ru": "Diez — десять, не путать с dos.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["price"],
+    "draft": true
+  },
+  {
+    "id": "numbers.dos_con_cincuenta",
+    "type": "phrase",
+    "es": "Dos con cincuenta",
+    "ru": "Два пятьдесят",
+    "parts": [
+      { "es": "Dos", "ru": "два" },
+      { "es": "con cincuenta", "ru": "пятьдесят" }
+    ],
+    "say_ru": "дос кон синкуЭнта",
+    "note_ru": "Так называют цену 2,50.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["price"],
+    "draft": true
   }
 ]
