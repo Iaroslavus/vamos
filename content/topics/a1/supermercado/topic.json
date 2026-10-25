@@ -2,12 +2,28 @@
   "id": "a1.supermercado",
   "level": "A1",
   "category": "food",
-  "title_ru": "Супермаркет",
+  "title": {
+    "ru": "Супермаркет",
+    "uk": "Супермаркет",
+    "en": "The supermarket"
+  },
   "icon": "cart",
-  "can_do_ru": [
-    "Найти продукт в зале",
-    "Сказать, сколько нужно",
-    "Оплатить на кассе"
+  "can_do": [
+    {
+      "ru": "Найти продукт в зале",
+      "uk": "Знайти продукт у залі",
+      "en": "Find an item in the aisle"
+    },
+    {
+      "ru": "Сказать, сколько нужно",
+      "uk": "Сказати, скільки потрібно",
+      "en": "Say how much you need"
+    },
+    {
+      "ru": "Оплатить на кассе",
+      "uk": "Оплатити на касі",
+      "en": "Pay at the checkout"
+    }
   ],
   "lessons": [
     "a1.supermercado.l1",
@@ -16,5 +32,6 @@
     "a1.supermercado.l4"
   ],
   "scene": "a1.supermercado.scene",
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

@@ -1,7 +1,11 @@
 {
   "id": "a1.camino.l2",
   "topic": "a1.camino",
-  "title_ru": "Направо и прямо",
+  "title": {
+    "ru": "Направо и прямо",
+    "uk": "Праворуч і прямо",
+    "en": "Right and straight"
+  },
   "items": [
     "camino.derecha",
     "camino.izquierda",
@@ -11,33 +15,70 @@
     "camino.lejos",
     "camino.primera"
   ],
-  "speak": ["camino.derecha", "camino.izquierda", "camino.recto"],
+  "speak": [
+    "camino.derecha",
+    "camino.izquierda",
+    "camino.recto"
+  ],
   "dialog": {
     "lines": [
       {
         "who": "npc",
         "es": "Siga todo recto y luego a la derecha.",
-        "ru": "Прямо, потом направо."
+        "tr": {
+          "ru": "Прямо, потом направо.",
+          "uk": "Прямо, потім праворуч.",
+          "en": "Straight, then right."
+        }
       },
       {
         "who": "user",
         "target": "camino.recto",
-        "options": ["camino.recto", "camino.derecho", "camino.izquierda"]
+        "options": [
+          "camino.recto",
+          "camino.derecho",
+          "camino.izquierda"
+        ]
       },
-      { "who": "npc", "es": "El metro está a la izquierda.", "ru": "Метро — налево." },
+      {
+        "who": "npc",
+        "es": "El metro está a la izquierda.",
+        "tr": {
+          "ru": "Метро — налево.",
+          "uk": "Метро — ліворуч.",
+          "en": "The metro is to the left."
+        }
+      },
       {
         "who": "user",
         "target": "camino.izquierda",
-        "options": ["camino.izquierda", "camino.derecha", "camino.lejos"]
+        "options": [
+          "camino.izquierda",
+          "camino.derecha",
+          "camino.lejos"
+        ]
       },
-      { "who": "npc", "es": "Está cerca.", "ru": "Это близко." },
+      {
+        "who": "npc",
+        "es": "Está cerca.",
+        "tr": {
+          "ru": "Это близко.",
+          "uk": "Це близько.",
+          "en": "It's close."
+        }
+      },
       {
         "who": "user",
         "target": "camino.cerca",
-        "options": ["camino.cerca", "camino.lejos", "camino.primera"]
+        "options": [
+          "camino.cerca",
+          "camino.lejos",
+          "camino.primera"
+        ]
       }
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

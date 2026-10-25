@@ -1,7 +1,11 @@
 {
   "id": "a1.numbers.l2",
   "topic": "a1.numbers",
-  "title_ru": "Сколько стоит?",
+  "title": {
+    "ru": "Сколько стоит?",
+    "uk": "Скільки коштує?",
+    "en": "How much is it?"
+  },
   "items": [
     "numbers.cuanto_cuesta",
     "numbers.cuanto_cuestan",
@@ -11,29 +15,70 @@
     "numbers.dos_con_cincuenta",
     "cafe.esta_bien"
   ],
-  "speak": ["numbers.cuanto_cuesta", "numbers.dos_euros", "numbers.dos_con_cincuenta"],
+  "speak": [
+    "numbers.cuanto_cuesta",
+    "numbers.dos_euros",
+    "numbers.dos_con_cincuenta"
+  ],
   "dialog": {
     "lines": [
-      { "who": "npc", "es": "El café cuesta dos euros.", "ru": "Кофе стоит два евро." },
+      {
+        "who": "npc",
+        "es": "El café cuesta dos euros.",
+        "tr": {
+          "ru": "Кофе стоит два евро.",
+          "uk": "Кава коштує два євро.",
+          "en": "The coffee costs two euros."
+        }
+      },
       {
         "who": "user",
         "target": "numbers.dos_euros",
-        "options": ["numbers.dos_euros", "numbers.un_euro", "numbers.diez_euros"]
+        "options": [
+          "numbers.dos_euros",
+          "numbers.un_euro",
+          "numbers.diez_euros"
+        ]
       },
-      { "who": "npc", "es": "¿Y dos cafés?", "ru": "А два кофе?" },
+      {
+        "who": "npc",
+        "es": "¿Y dos cafés?",
+        "tr": {
+          "ru": "А два кофе?",
+          "uk": "А дві кави?",
+          "en": "And two coffees?"
+        }
+      },
       {
         "who": "user",
         "target": "numbers.cuanto_cuestan",
-        "options": ["numbers.cuanto_cuestan", "numbers.cuanto_cuesta", "numbers.dos_con_cincuenta"]
+        "options": [
+          "numbers.cuanto_cuestan",
+          "numbers.cuanto_cuesta",
+          "numbers.dos_con_cincuenta"
+        ]
       },
-      { "who": "npc", "es": "Dos con cincuenta.", "ru": "Два пятьдесят." },
+      {
+        "who": "npc",
+        "es": "Dos con cincuenta.",
+        "tr": {
+          "ru": "Два пятьдесят.",
+          "uk": "Два п'ятдесят.",
+          "en": "Two fifty."
+        }
+      },
       {
         "who": "user",
         "target": "cafe.esta_bien",
-        "options": ["cafe.esta_bien", "numbers.un_euro", "numbers.diez_euros"]
+        "options": [
+          "cafe.esta_bien",
+          "numbers.un_euro",
+          "numbers.diez_euros"
+        ]
       }
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

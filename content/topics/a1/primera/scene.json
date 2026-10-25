@@ -1,6 +1,11 @@
 {
   "id": "a1.primera.scene",
   "topic": "a1.primera",
-  "title_ru": "День в городе",
-  "draft": true
+  "title": {
+    "ru": "День в городе",
+    "uk": "День у місті",
+    "en": "A day in the city"
+  },
+  "draft": true,
+  "draft_i18n": true
 }

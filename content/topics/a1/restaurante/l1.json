@@ -1,7 +1,11 @@
 {
   "id": "a1.restaurante.l1",
   "topic": "a1.restaurante",
-  "title_ru": "Столик",
+  "title": {
+    "ru": "Столик",
+    "uk": "Столик",
+    "en": "A table"
+  },
   "items": [
     "restaurante.mesa",
     "restaurante.reservar",
@@ -11,29 +15,69 @@
     "restaurante.a_las_ocho",
     "hola.por_favor"
   ],
-  "speak": ["restaurante.mesa", "restaurante.reservar"],
+  "speak": [
+    "restaurante.mesa",
+    "restaurante.reservar"
+  ],
   "dialog": {
     "lines": [
-      { "who": "npc", "es": "Buenas noches. ¿Tiene reserva?", "ru": "Добрый вечер. У вас бронь?" },
+      {
+        "who": "npc",
+        "es": "Buenas noches. ¿Tiene reserva?",
+        "tr": {
+          "ru": "Добрый вечер. У вас бронь?",
+          "uk": "Добрий вечір. У вас бронь?",
+          "en": "Good evening. Do you have a reservation?"
+        }
+      },
       {
         "who": "user",
         "target": "restaurante.reservar",
-        "options": ["restaurante.reservar", "restaurante.mesa", "restaurante.esta_noche"]
+        "options": [
+          "restaurante.reservar",
+          "restaurante.mesa",
+          "restaurante.esta_noche"
+        ]
       },
-      { "who": "npc", "es": "¿Para cuántos?", "ru": "На сколько человек?" },
+      {
+        "who": "npc",
+        "es": "¿Para cuántos?",
+        "tr": {
+          "ru": "На сколько человек?",
+          "uk": "На скільки осіб?",
+          "en": "For how many people?"
+        }
+      },
       {
         "who": "user",
         "target": "restaurante.para_dos",
-        "options": ["restaurante.para_dos", "restaurante.mesa", "restaurante.a_las_ocho"]
+        "options": [
+          "restaurante.para_dos",
+          "restaurante.mesa",
+          "restaurante.a_las_ocho"
+        ]
       },
-      { "who": "npc", "es": "¿A qué nombre?", "ru": "На чьё имя?" },
+      {
+        "who": "npc",
+        "es": "¿A qué nombre?",
+        "tr": {
+          "ru": "На чьё имя?",
+          "uk": "На чиє ім'я?",
+          "en": "Under whose name?"
+        }
+      },
       {
         "who": "user",
         "target": "restaurante.a_mi_nombre",
-        "options": ["restaurante.a_mi_nombre", "restaurante.para_dos", "restaurante.reservar"]
+        "options": [
+          "restaurante.a_mi_nombre",
+          "restaurante.para_dos",
+          "restaurante.reservar"
+        ]
       }
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

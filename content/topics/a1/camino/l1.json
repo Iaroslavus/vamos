@@ -1,7 +1,11 @@
 {
   "id": "a1.camino.l1",
   "topic": "a1.camino",
-  "title_ru": "Как пройти?",
+  "title": {
+    "ru": "Как пройти?",
+    "uk": "Як пройти?",
+    "en": "How do I get there?"
+  },
   "items": [
     "camino.donde_esta",
     "camino.como_llego",
@@ -11,29 +15,70 @@
     "camino.por_alli",
     "hola.por_favor"
   ],
-  "speak": ["camino.donde_esta", "camino.como_llego", "camino.la_estacion"],
+  "speak": [
+    "camino.donde_esta",
+    "camino.como_llego",
+    "camino.la_estacion"
+  ],
   "dialog": {
     "lines": [
-      { "who": "npc", "es": "¿Le ayudo?", "ru": "Вам помочь?" },
+      {
+        "who": "npc",
+        "es": "¿Le ayudo?",
+        "tr": {
+          "ru": "Вам помочь?",
+          "uk": "Вам допомогти?",
+          "en": "Can I help you?"
+        }
+      },
       {
         "who": "user",
         "target": "camino.donde_esta",
-        "options": ["camino.donde_esta", "camino.como_llego", "camino.el_metro"]
+        "options": [
+          "camino.donde_esta",
+          "camino.como_llego",
+          "camino.el_metro"
+        ]
       },
-      { "who": "npc", "es": "¿La estación o el metro?", "ru": "Вокзал или метро?" },
+      {
+        "who": "npc",
+        "es": "¿La estación o el metro?",
+        "tr": {
+          "ru": "Вокзал или метро?",
+          "uk": "Вокзал чи метро?",
+          "en": "The station or the metro?"
+        }
+      },
       {
         "who": "user",
         "target": "camino.la_estacion",
-        "options": ["camino.la_estacion", "camino.el_metro", "camino.por_alli"]
+        "options": [
+          "camino.la_estacion",
+          "camino.el_metro",
+          "camino.por_alli"
+        ]
       },
-      { "who": "npc", "es": "Está por allí.", "ru": "Вон там." },
+      {
+        "who": "npc",
+        "es": "Está por allí.",
+        "tr": {
+          "ru": "Вон там.",
+          "uk": "Он там.",
+          "en": "Over there."
+        }
+      },
       {
         "who": "user",
         "target": "camino.por_alli",
-        "options": ["camino.por_alli", "camino.por_aqui", "hola.por_favor"]
+        "options": [
+          "camino.por_alli",
+          "camino.por_aqui",
+          "hola.por_favor"
+        ]
       }
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

@@ -1,4 +1,5 @@
 import { getLesson, getTopic, listItems, listLessons } from '@/features/content/loader';
+import { fillLocales, textOf } from '@/features/content/text';
 import type { Item, Lesson } from '@/features/content/schema';
 
 import {
@@ -153,7 +154,7 @@ describe('generateLessonSteps', () => {
           expect(step.options.length).toBeGreaterThanOrEqual(2);
           expect(step.options.length).toBeLessThanOrEqual(4);
           const unit = items.get(step.itemIds[0] ?? '');
-          expect(unit?.ru).toBe(step.answer);
+          expect(textOf(unit?.tr, 'ru')).toBe(step.answer);
           if (step.type === 'listen_select') expect(step.speakText).toBe(unit?.es);
           if (step.type === 'select_translation') expect(step.prompt).toBe(unit?.es);
         }
@@ -286,13 +287,13 @@ describe('generateLessonSteps', () => {
           {
             index,
             type: 'speak_repeat',
-            prompt_ru: 'Скажите медленнее',
+            prompt: fillLocales('Скажите медленнее'),
             item: lesson.items[0],
           },
           {
             index: clean.length + 5,
             type: 'roleplay',
-            prompt_ru: 'Сыграйте сцену',
+            prompt: fillLocales('Сыграйте сцену'),
             item: lesson.items[1],
           },
         ],
@@ -313,6 +314,26 @@ describe('generateLessonSteps', () => {
       itemId: lesson.items[1],
     });
     expectIntroducedBeforeUse(overridden, new Set(seen.map((item) => item.id)));
+  });
+
+  it('substitutes English when the learner language has no gloss', () => {
+    const focus = word('a.hola', 'hola', 'привет');
+    focus.tr = { ru: 'привет', en: 'hello' };
+    const other = word('a.adios', 'adiós', 'пока');
+    other.tr = { ru: 'пока', uk: 'бувай', en: 'bye' };
+    const steps = generateLessonSteps({
+      lesson: lessonOf('a1.demo.l1', [focus.id, other.id], []),
+      items: [focus, other],
+      language: 'uk',
+      seed: 'fallback',
+    });
+    const select = steps.find(
+      (step) => step.type === 'select_translation' && step.itemIds.includes(focus.id),
+    );
+    if (select?.type !== 'select_translation') throw new Error('expected select');
+    expect(select.answer).toBe('hello');
+    expect(select.options).toContain('hello');
+    expect(select.options).toContain('бувай');
   });
 });
 
@@ -346,7 +367,7 @@ function phrase(id: string, es: string, ru: string): Item {
     'phrase',
     es,
     ru,
-    tokens.map((token) => ({ es: token, ru: token })),
+    tokens.map((token) => ({ es: token, tr: fillLocales(token) })),
   );
 }
 
@@ -355,16 +376,17 @@ function unit(id: string, type: Item['type'], es: string, ru: string, parts: Ite
     id,
     type,
     es,
-    ru,
+    tr: fillLocales(ru),
     parts,
-    say_ru: 'тест',
-    note_ru: null,
-    why_ru: null,
+    say: fillLocales('тест'),
+    note: null,
+    why: null,
     level: 'A1',
     variant: 'both',
     audio: { es: `${id}.mp3`, latam: null },
     tags: [],
     draft: true,
+    draft_i18n: false,
   };
 }
 
@@ -372,12 +394,12 @@ function lessonOf(id: string, items: string[], speak: string[]): Lesson {
   return {
     id,
     topic: 'a1.demo',
-    title_ru: 'Демо',
+    title: fillLocales('Демо'),
     items,
     speak,
     dialog: {
       lines: [
-        { who: 'npc', es: 'Hola', ru: 'Привет' },
+        { who: 'npc', es: 'Hola', tr: fillLocales('Привет') },
         { who: 'user', target: items[0] ?? id, options: [items[0] ?? id, items[1] ?? id] },
       ],
     },

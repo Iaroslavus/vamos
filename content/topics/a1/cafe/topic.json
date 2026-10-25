@@ -2,11 +2,35 @@
   "id": "a1.cafe",
   "level": "A1",
   "category": "food",
-  "title_ru": "В кафе",
+  "title": {
+    "ru": "В кафе",
+    "uk": "У кафе",
+    "en": "At a café"
+  },
   "icon": "cup",
-  "can_do_ru": ["Заказать напиток", "Спросить цену", "Попросить счёт"],
-  "lessons": ["a1.cafe.l1", "a1.cafe.l2"],
+  "can_do": [
+    {
+      "ru": "Заказать напиток",
+      "uk": "Замовити напій",
+      "en": "Order a drink"
+    },
+    {
+      "ru": "Спросить цену",
+      "uk": "Запитати ціну",
+      "en": "Ask the price"
+    },
+    {
+      "ru": "Попросить счёт",
+      "uk": "Попросити рахунок",
+      "en": "Ask for the bill"
+    }
+  ],
+  "lessons": [
+    "a1.cafe.l1",
+    "a1.cafe.l2"
+  ],
   "scene": "a1.cafe.scene",
   "starter_day": 2,
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

@@ -1,6 +1,11 @@
 {
   "id": "a1.ropa.scene",
   "topic": "a1.ropa",
-  "title_ru": "В примерочной",
-  "draft": true
+  "title": {
+    "ru": "В примерочной",
+    "uk": "У примірочній",
+    "en": "In the fitting room"
+  },
+  "draft": true,
+  "draft_i18n": true
 }

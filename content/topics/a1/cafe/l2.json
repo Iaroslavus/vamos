@@ -1,7 +1,11 @@
 {
   "id": "a1.cafe.l2",
   "topic": "a1.cafe",
-  "title_ru": "Цена и счёт",
+  "title": {
+    "ru": "Цена и счёт",
+    "uk": "Ціна і рахунок",
+    "en": "The price and the bill"
+  },
   "items": [
     "cafe.cuanto_es",
     "cafe.la_cuenta",
@@ -11,29 +15,69 @@
     "hola.por_favor",
     "hola.gracias"
   ],
-  "speak": ["cafe.cuanto_es", "cafe.la_cuenta"],
+  "speak": [
+    "cafe.cuanto_es",
+    "cafe.la_cuenta"
+  ],
   "dialog": {
     "lines": [
-      { "who": "npc", "es": "Aquí tiene el café.", "ru": "Вот ваш кофе." },
+      {
+        "who": "npc",
+        "es": "Aquí tiene el café.",
+        "tr": {
+          "ru": "Вот ваш кофе.",
+          "uk": "Ось ваша кава.",
+          "en": "Here is your coffee."
+        }
+      },
       {
         "who": "user",
         "target": "cafe.cuanto_es",
-        "options": ["cafe.cuanto_es", "cafe.la_cuenta", "cafe.nada_mas"]
+        "options": [
+          "cafe.cuanto_es",
+          "cafe.la_cuenta",
+          "cafe.nada_mas"
+        ]
       },
-      { "who": "npc", "es": "Son dos euros.", "ru": "Два евро." },
+      {
+        "who": "npc",
+        "es": "Son dos euros.",
+        "tr": {
+          "ru": "Два евро.",
+          "uk": "Два євро.",
+          "en": "Two euros."
+        }
+      },
       {
         "who": "user",
         "target": "cafe.esta_bien",
-        "options": ["cafe.esta_bien", "cafe.cuanto_es", "cafe.la_cuenta"]
+        "options": [
+          "cafe.esta_bien",
+          "cafe.cuanto_es",
+          "cafe.la_cuenta"
+        ]
       },
-      { "who": "npc", "es": "¿Algo más?", "ru": "Ещё что-нибудь?" },
+      {
+        "who": "npc",
+        "es": "¿Algo más?",
+        "tr": {
+          "ru": "Ещё что-нибудь?",
+          "uk": "Ще щось?",
+          "en": "Anything else?"
+        }
+      },
       {
         "who": "user",
         "target": "cafe.la_cuenta",
-        "options": ["cafe.la_cuenta", "cafe.nada_mas", "cafe.un_cafe"]
+        "options": [
+          "cafe.la_cuenta",
+          "cafe.nada_mas",
+          "cafe.un_cafe"
+        ]
       }
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

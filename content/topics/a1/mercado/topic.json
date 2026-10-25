@@ -2,12 +2,28 @@
   "id": "a1.mercado",
   "level": "A1",
   "category": "food",
-  "title_ru": "Рынок и продукты",
+  "title": {
+    "ru": "Рынок и продукты",
+    "uk": "Ринок і продукти",
+    "en": "The market and groceries"
+  },
   "icon": "carrot",
-  "can_do_ru": [
-    "Купить фрукты и овощи",
-    "Попросить килограмм",
-    "Спросить, свежее ли"
+  "can_do": [
+    {
+      "ru": "Купить фрукты и овощи",
+      "uk": "Купити фрукти й овочі",
+      "en": "Buy fruit and vegetables"
+    },
+    {
+      "ru": "Попросить килограмм",
+      "uk": "Попросити кілограм",
+      "en": "Ask for a kilogram"
+    },
+    {
+      "ru": "Спросить, свежее ли",
+      "uk": "Запитати, чи свіже",
+      "en": "Ask if it is fresh"
+    }
   ],
   "lessons": [
     "a1.mercado.l1",
@@ -16,5 +32,6 @@
     "a1.mercado.l4"
   ],
   "scene": "a1.mercado.scene",
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

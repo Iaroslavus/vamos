@@ -19,6 +19,7 @@ import { ResultSheet } from '@/components/ResultSheet';
 import { Text } from '@/components/Text';
 import { stopLessonAudio } from '@/features/audio/playback';
 import { playGradeSound } from '@/features/audio/sounds';
+import { contentLocale, textOf, type ContentLocale } from '@/features/content/text';
 import { AccentBar } from '@/features/lesson/components/AccentBar';
 import { type AnswerTextFieldHandle } from '@/features/lesson/components/AnswerTextField';
 import { DialogStep } from '@/features/lesson/components/DialogStep';
@@ -29,6 +30,7 @@ import { MistakesIntro } from '@/features/lesson/components/MistakesIntro';
 import { SpeakRepeatStep } from '@/features/lesson/components/SpeakRepeatStep';
 import { useFinishLesson } from '@/features/lesson/hooks/useFinishLesson';
 import { useRecordLessonMistake } from '@/features/lesson/hooks/useRecordLessonMistake';
+import { showsSayRu } from '@/features/lesson/intro';
 import { countSerializedPairs } from '@/features/lesson/pairs';
 import {
   introPlace,
@@ -42,23 +44,24 @@ import { colors, space } from '@/theme/tokens';
 
 type LoadResult = { ok: true; session: LoadedLesson } | { ok: false };
 
-function loadSession(lessonId: string | undefined): LoadResult {
+function loadSession(lessonId: string | undefined, language: ContentLocale): LoadResult {
   if (!lessonId) return { ok: false };
   try {
-    return { ok: true, session: loadLessonSession(lessonId) };
+    return { ok: true, session: loadLessonSession(lessonId, language) };
   } catch {
     return { ok: false };
   }
 }
 
 export default function LessonScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = contentLocale(i18n.language);
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const answerInputRef = useRef<AnswerTextFieldHandle>(null);
   const { id } = useLocalSearchParams<{ id: string }>();
   const lessonId = typeof id === 'string' ? id : Array.isArray(id) ? (id[0] ?? '') : '';
-  const loaded = useMemo(() => loadSession(lessonId || undefined), [lessonId]);
+  const loaded = useMemo(() => loadSession(lessonId || undefined, language), [language, lessonId]);
 
   const status = useLessonStore((s) => s.status);
   const flow = useLessonStore((s) => s.flow);
@@ -257,8 +260,8 @@ export default function LessonScreen() {
         <SpeakRepeatStep
           promptEs={step.prompt_es}
           audio={step.audio}
-          sayRu={itemById(loaded.session, step.itemIds[0] ?? '')?.say_ru ?? null}
-          parts={itemById(loaded.session, step.itemIds[0] ?? '')?.parts ?? []}
+          sayRu={speakHint(loaded.session, step.itemIds[0] ?? '', language)}
+          parts={speakParts(loaded.session, step.itemIds[0] ?? '', language)}
           onSkip={onSoftContinue}
           onContinue={onSoftContinue}
         />
@@ -340,6 +343,18 @@ export default function LessonScreen() {
 
 function itemById(session: LoadedLesson, itemId: string) {
   return session.items.find((item) => item.id === itemId) ?? null;
+}
+
+function speakHint(session: LoadedLesson, itemId: string, language: ContentLocale): string | null {
+  const item = itemById(session, itemId);
+  if (!item || !showsSayRu(item.level)) return null;
+  return textOf(item.say, language) || null;
+}
+
+function speakParts(session: LoadedLesson, itemId: string, language: ContentLocale) {
+  const item = itemById(session, itemId);
+  if (!item) return [];
+  return item.parts.map((part) => ({ es: part.es, ru: textOf(part.tr, language) }));
 }
 
 const styles = StyleSheet.create({

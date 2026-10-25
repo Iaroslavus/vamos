@@ -1,6 +1,11 @@
 {
   "id": "a1.restaurante.scene",
   "topic": "a1.restaurante",
-  "title_ru": "Ужин",
-  "draft": true
+  "title": {
+    "ru": "Ужин",
+    "uk": "Вечеря",
+    "en": "Dinner"
+  },
+  "draft": true,
+  "draft_i18n": true
 }

@@ -8,6 +8,7 @@ import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
 import { Appear } from '@/features/auth/components/Appear';
 import type { Item } from '@/features/content/schema';
+import { contentLocale, textOf } from '@/features/content/text';
 import { resolveTopicIcon } from '@/features/content/topicIcons';
 import { SpeakPracticeSheet } from '@/features/speech/components/SpeakPracticeSheet';
 import { AddToVocabSheet } from '@/features/vocab/components/AddToVocabSheet';
@@ -43,7 +44,8 @@ export function IntroStep({
   onNext,
   onRepeatAloud,
 }: IntroStepProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = contentLocale(i18n.language);
   const insets = useSafeAreaInsets();
   const saveState = useItemSaveState([item.id]);
   const { playPhrase, playPart } = useIntroPlayback(item, audioVariant);
@@ -56,7 +58,9 @@ export function IntroStep({
       ? t('lesson.introInVocab')
       : t('lesson.introSave');
   const whyOpen = whyItemId === item.id;
-  const sayRu = showsSayRu(item.level) ? item.say_ru : null;
+  const why = textOf(item.why, language);
+  const sayRu = showsSayRu(item.level) ? textOf(item.say, language) : null;
+  const speechParts = item.parts.map((part) => ({ es: part.es, ru: textOf(part.tr, language) }));
   const TopicIcon = resolveTopicIcon(topicIcon);
   const swipe = useCardSwipe(onNext, item.id);
 
@@ -101,8 +105,8 @@ export function IntroStep({
       </View>
 
       <IntroWhySheet
-        visible={whyOpen && Boolean(item.why_ru)}
-        text={item.why_ru ?? ''}
+        visible={whyOpen && Boolean(why)}
+        text={why}
         onClose={() => setWhyItemId(null)}
       />
       <AddToVocabSheet
@@ -117,7 +121,7 @@ export function IntroStep({
         phrase={item.es}
         audio={itemAudioPath(item, audioVariant)}
         sayRu={sayRu}
-        parts={item.parts}
+        parts={speechParts}
         onClose={() => setPracticeItemId(null)}
       />
     </View>

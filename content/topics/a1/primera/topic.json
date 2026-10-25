@@ -2,11 +2,35 @@
   "id": "a1.primera",
   "level": "A1",
   "category": "social",
-  "title_ru": "Первый разговор",
+  "title": {
+    "ru": "Первый разговор",
+    "uk": "Перша розмова",
+    "en": "A first conversation"
+  },
   "icon": "messages",
-  "can_do_ru": ["Поздороваться и заказать", "Спросить дорогу", "Попрощаться"],
-  "lessons": ["a1.primera.l1", "a1.primera.l2"],
+  "can_do": [
+    {
+      "ru": "Поздороваться и заказать",
+      "uk": "Привітатися і замовити",
+      "en": "Say hello and order"
+    },
+    {
+      "ru": "Спросить дорогу",
+      "uk": "Запитати дорогу",
+      "en": "Ask for directions"
+    },
+    {
+      "ru": "Попрощаться",
+      "uk": "Попрощатися",
+      "en": "Say goodbye"
+    }
+  ],
+  "lessons": [
+    "a1.primera.l1",
+    "a1.primera.l2"
+  ],
   "scene": "a1.primera.scene",
   "starter_day": 7,
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

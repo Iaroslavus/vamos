@@ -1,7 +1,11 @@
 {
   "id": "a1.primera.l2",
   "topic": "a1.primera",
-  "title_ru": "По городу",
+  "title": {
+    "ru": "По городу",
+    "uk": "Містом",
+    "en": "Around town"
+  },
   "items": [
     "camino.donde_esta",
     "camino.derecha",
@@ -11,29 +15,70 @@
     "tienda.puedo_pagar",
     "hola.hasta_luego"
   ],
-  "speak": ["camino.donde_esta", "tienda.una_bolsa", "hola.hasta_luego"],
+  "speak": [
+    "camino.donde_esta",
+    "tienda.una_bolsa",
+    "hola.hasta_luego"
+  ],
   "dialog": {
     "lines": [
-      { "who": "npc", "es": "¿Qué desea?", "ru": "Что хотите?" },
+      {
+        "who": "npc",
+        "es": "¿Qué desea?",
+        "tr": {
+          "ru": "Что хотите?",
+          "uk": "Що хочете?",
+          "en": "What would you like?"
+        }
+      },
       {
         "who": "user",
         "target": "tienda.tiene_pan",
-        "options": ["tienda.tiene_pan", "tienda.una_bolsa", "tienda.puedo_pagar"]
+        "options": [
+          "tienda.tiene_pan",
+          "tienda.una_bolsa",
+          "tienda.puedo_pagar"
+        ]
       },
-      { "who": "npc", "es": "Sí. ¿Una bolsa?", "ru": "Да. Пакет?" },
+      {
+        "who": "npc",
+        "es": "Sí. ¿Una bolsa?",
+        "tr": {
+          "ru": "Да. Пакет?",
+          "uk": "Так. Пакет?",
+          "en": "Yes. A bag?"
+        }
+      },
       {
         "who": "user",
         "target": "tienda.una_bolsa",
-        "options": ["tienda.una_bolsa", "tienda.puedo_pagar", "hola.hasta_luego"]
+        "options": [
+          "tienda.una_bolsa",
+          "tienda.puedo_pagar",
+          "hola.hasta_luego"
+        ]
       },
-      { "who": "npc", "es": "La estación está todo recto.", "ru": "Вокзал — прямо." },
+      {
+        "who": "npc",
+        "es": "La estación está todo recto.",
+        "tr": {
+          "ru": "Вокзал — прямо.",
+          "uk": "Вокзал — прямо.",
+          "en": "The station is straight ahead."
+        }
+      },
       {
         "who": "user",
         "target": "hola.hasta_luego",
-        "options": ["hola.hasta_luego", "camino.recto", "camino.derecha"]
+        "options": [
+          "hola.hasta_luego",
+          "camino.recto",
+          "camino.derecha"
+        ]
       }
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

@@ -7,7 +7,8 @@ import { Button } from '@/components/Button';
 import { RetryNote } from '@/components/RetryNote';
 import { Text } from '@/components/Text';
 import { playLessonAudio } from '@/features/audio/playback';
-import { getItem } from '@/features/content/loader';
+import { contentLanguage, getItem } from '@/features/content/loader';
+import { textOf } from '@/features/content/text';
 import { colors, space } from '@/theme/tokens';
 
 import { FolderFormSheet } from './components/FolderFormSheet';
@@ -150,7 +151,7 @@ export function FolderScreen() {
 function lookup(itemId: string): { es: string; ru: string; audio: string | null } {
   try {
     const item = getItem(itemId);
-    return { es: item.es, ru: item.ru, audio: item.audio.es };
+    return { es: item.es, ru: textOf(item.tr, contentLanguage()), audio: item.audio.es };
   } catch {
     return { es: itemId, ru: '', audio: null };
   }

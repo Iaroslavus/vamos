@@ -1,12 +1,15 @@
+import { contentLanguage } from '@/features/content/language';
 import {
   CefrLevelSchema,
   TopicCategorySchema,
   type CefrLevel,
   type Lesson,
+  type LocalizedText,
   type Scene,
   type Topic,
   type TopicCategory,
 } from '@/features/content/schema';
+import { CONTENT_LOCALES, textOf, type ContentLocale } from '@/features/content/text';
 
 export const CEFR_LEVELS: readonly CefrLevel[] = CefrLevelSchema.options;
 export const TOPIC_CATEGORIES: readonly TopicCategory[] = TopicCategorySchema.options;
@@ -70,6 +73,7 @@ export function topicSections(
   completedIds: readonly string[],
   level: CefrLevel,
   query: string,
+  language: ContentLocale = contentLanguage(),
 ): TopicSection[] {
   const lessonMap = indexById(lessons);
   const completed = new Set(completedIds);
@@ -81,7 +85,7 @@ export function topicSections(
     .sort(compareTopics);
 
   for (const topic of ranked) {
-    const card = summarize(topic, lessonMap, completed);
+    const card = summarize(topic, lessonMap, completed, language);
     const bucket = grouped.get(topic.category);
     if (bucket) bucket.push(card);
     else grouped.set(topic.category, [card]);
@@ -100,24 +104,28 @@ export function buildTopicDetail(
   lessons: readonly Lesson[],
   scenes: readonly Scene[],
   completedIds: readonly string[],
+  language: ContentLocale = contentLanguage(),
 ): TopicDetail | null {
   const topic = topics.find((item) => item.id === topicId);
   if (!topic) return null;
 
   const lessonMap = indexById(lessons);
   const completed = new Set(completedIds);
-  const rows = lessonStates(topic, lessonMap, completed);
-  const summary = summarize(topic, lessonMap, completed);
+  const rows = lessonStates(topic, lessonMap, completed, language);
+  const summary = summarize(topic, lessonMap, completed, language);
   const scene = scenes.find((item) => item.id === topic.scene);
-  const doneGoals = checkedGoalCount(topic.can_do_ru.length, summary.completedLessons, rows.length);
+  const doneGoals = checkedGoalCount(topic.can_do.length, summary.completedLessons, rows.length);
 
   return {
     ...summary,
-    canDos: topic.can_do_ru.map((text, index) => ({ text, done: index < doneGoals })),
+    canDos: topic.can_do.map((text, index) => ({
+      text: textOf(text, language),
+      done: index < doneGoals,
+    })),
     lessons: rows,
     scene: {
       id: topic.scene,
-      title: scene?.title_ru ?? topic.scene,
+      title: scene ? textOf(scene.title, language) : topic.scene,
       status: sceneStatus(rows),
     },
   };
@@ -147,13 +155,14 @@ function summarize(
   topic: Topic,
   lessons: ReadonlyMap<string, Lesson>,
   completed: ReadonlySet<string>,
+  language: ContentLocale,
 ): TopicSummary {
-  const rows = lessonStates(topic, lessons, completed);
+  const rows = lessonStates(topic, lessons, completed, language);
   const lessonCount = rows.length;
   const completedLessons = rows.filter((row) => row.status === 'completed').length;
   return {
     id: topic.id,
-    title: topic.title_ru,
+    title: textOf(topic.title, language),
     icon: topic.icon,
     category: topic.category,
     lessonCount,
@@ -167,10 +176,12 @@ function lessonStates(
   topic: Topic,
   lessons: ReadonlyMap<string, Lesson>,
   completed: ReadonlySet<string>,
+  language: ContentLocale,
 ): TopicLessonState[] {
   let opened = false;
   return topic.lessons.map((id) => {
-    const title = lessons.get(id)?.title_ru ?? id;
+    const lesson = lessons.get(id);
+    const title = lesson ? textOf(lesson.title, language) : id;
     if (completed.has(id)) return { id, title, status: 'completed' };
     if (!opened) {
       opened = true;
@@ -191,9 +202,16 @@ function countPhrases(topic: Topic, lessons: ReadonlyMap<string, Lesson>): numbe
 }
 
 function matchesTopic(topic: Topic, query: string): boolean {
-  const needle = query.trim().toLocaleLowerCase('ru');
+  const needle = query.trim().toLocaleLowerCase();
   if (needle === '') return true;
-  return [topic.title_ru, ...topic.can_do_ru].join('\n').toLocaleLowerCase('ru').includes(needle);
+  const haystack = [everyLocale(topic.title), ...topic.can_do.map(everyLocale)]
+    .join('\n')
+    .toLocaleLowerCase();
+  return haystack.includes(needle);
+}
+
+function everyLocale(text: LocalizedText): string {
+  return CONTENT_LOCALES.map((locale) => text[locale] ?? '').join('\n');
 }
 
 function compareTopics(left: Topic, right: Topic): number {

@@ -54,9 +54,25 @@ const ContentIdSchema = z
   .regex(/^[a-z0-9]+(?:[._][a-z0-9]+)*$/)
   .max(100);
 
+/**
+ * Learner-facing copy in Russian, Ukrainian, and English.
+ * A missing language is allowed here; the loader falls back to English,
+ * and the content report lists the gap.
+ */
+export const LocalizedTextSchema = z
+  .object({
+    ru: z.string().min(1).optional(),
+    uk: z.string().min(1).optional(),
+    en: z.string().min(1).optional(),
+  })
+  .refine((value) => Boolean(value.ru || value.uk || value.en), {
+    message: 'at least one language is required',
+  });
+export type LocalizedText = z.infer<typeof LocalizedTextSchema>;
+
 const PartSchema = z.object({
   es: z.string().min(1),
-  ru: z.string().min(1),
+  tr: LocalizedTextSchema,
 });
 
 const AudioSchema = z.object({
@@ -66,31 +82,34 @@ const AudioSchema = z.object({
 
 /**
  * One teachable unit in the shared library (`content/items/<level>/*.json`).
- * `say_ru` is the Cyrillic pronunciation hint and is required on A1–A2.
+ * `say` is the pronunciation hint in the learner's own letters and is required on A1–A2.
+ * `draft_i18n` marks Ukrainian and English that a native speaker has not checked yet.
  */
 export const ItemSchema = z
   .object({
     id: ContentIdSchema,
     type: ItemTypeSchema,
     es: z.string().min(1),
-    ru: z.string().min(1),
+    tr: LocalizedTextSchema,
     parts: z.array(PartSchema).default([]),
-    say_ru: z.string().min(1).nullable().default(null),
-    note_ru: z.string().min(1).nullable().default(null),
-    why_ru: z.string().min(1).nullable().default(null),
+    say: LocalizedTextSchema.nullable().default(null),
+    note: LocalizedTextSchema.nullable().default(null),
+    why: LocalizedTextSchema.nullable().default(null),
     level: CefrLevelSchema,
     variant: VariantSchema.default('both'),
     audio: AudioSchema.default({ es: null, latam: null }),
     tags: z.array(z.string().min(1)).default([]),
     /** Draft units are not shown as published course material. */
     draft: z.boolean().default(false),
+    /** Ukrainian and English glosses are an unreviewed draft. */
+    draft_i18n: z.boolean().default(false),
   })
   .superRefine((item, ctx) => {
-    if ((item.level === 'A1' || item.level === 'A2') && !item.say_ru) {
+    if ((item.level === 'A1' || item.level === 'A2') && !item.say) {
       ctx.addIssue({
         code: 'custom',
-        path: ['say_ru'],
-        message: 'say_ru is required for A1–A2',
+        path: ['say'],
+        message: 'say is required for A1–A2',
       });
     }
   });
@@ -99,7 +118,7 @@ export type Item = z.infer<typeof ItemSchema>;
 const NpcLineSchema = z.object({
   who: z.literal('npc'),
   es: z.string().min(1),
-  ru: z.string().min(1),
+  tr: LocalizedTextSchema,
 });
 
 const UserLineSchema = z.object({
@@ -123,7 +142,7 @@ export type Dialog = z.infer<typeof DialogSchema>;
 export const LessonOverrideSchema = z.object({
   index: z.number().int().nonnegative(),
   type: ExerciseTypeSchema,
-  prompt_ru: z.string().min(1),
+  prompt: LocalizedTextSchema,
   item: ContentIdSchema.optional(),
 });
 export type LessonOverride = z.infer<typeof LessonOverrideSchema>;
@@ -132,12 +151,13 @@ export type LessonOverride = z.infer<typeof LessonOverrideSchema>;
 export const LessonSchema = z.object({
   id: ContentIdSchema,
   topic: ContentIdSchema,
-  title_ru: z.string().min(1),
+  title: LocalizedTextSchema,
   items: z.array(ContentIdSchema).min(6).max(8),
   speak: z.array(ContentIdSchema).default([]),
   dialog: DialogSchema,
   overrides: z.array(LessonOverrideSchema).default([]),
   draft: z.boolean().default(false),
+  draft_i18n: z.boolean().default(false),
 });
 export type Lesson = z.infer<typeof LessonSchema>;
 
@@ -146,14 +166,15 @@ export const TopicSchema = z.object({
   id: ContentIdSchema,
   level: CefrLevelSchema,
   category: TopicCategorySchema,
-  title_ru: z.string().min(1),
+  title: LocalizedTextSchema,
   icon: z.string().min(1),
-  can_do_ru: z.array(z.string().min(1)).min(1),
+  can_do: z.array(LocalizedTextSchema).min(1),
   lessons: z.array(ContentIdSchema).min(1),
   scene: ContentIdSchema,
   /** Day 1–7 of the starter course. Omitted when the topic is not in that week. */
   starter_day: z.number().int().min(1).max(7).optional(),
   draft: z.boolean().default(false),
+  draft_i18n: z.boolean().default(false),
 });
 export type Topic = z.infer<typeof TopicSchema>;
 
@@ -161,7 +182,8 @@ export type Topic = z.infer<typeof TopicSchema>;
 export const SceneSchema = z.object({
   id: ContentIdSchema,
   topic: ContentIdSchema,
-  title_ru: z.string().min(1),
+  title: LocalizedTextSchema,
   draft: z.boolean().default(false),
+  draft_i18n: z.boolean().default(false),
 });
 export type Scene = z.infer<typeof SceneSchema>;

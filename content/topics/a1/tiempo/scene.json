@@ -1,6 +1,11 @@
 {
   "id": "a1.tiempo.scene",
   "topic": "a1.tiempo",
-  "title_ru": "В субботу в десять",
-  "draft": true
+  "title": {
+    "ru": "В субботу в десять",
+    "uk": "У суботу о десятій",
+    "en": "Saturday at ten"
+  },
+  "draft": true,
+  "draft_i18n": true
 }

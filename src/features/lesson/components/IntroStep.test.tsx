@@ -12,6 +12,7 @@ import {
   stopLessonAudio,
 } from '@/features/audio/playback';
 import type { Item } from '@/features/content/schema';
+import { fillLocales } from '@/features/content/text';
 import i18n from '@/i18n';
 
 import { DEFAULT_MAX_HEARTS, useLessonStore } from '../store';
@@ -75,19 +76,20 @@ const phrase: Item = {
   id: 'hola.buenos_dias',
   type: 'phrase',
   es: 'buenos días',
-  ru: 'доброе утро',
+  tr: fillLocales('доброе утро'),
   parts: [
-    { es: 'buenos', ru: 'добрые' },
-    { es: 'días', ru: 'утро' },
+    { es: 'buenos', tr: fillLocales('добрые') },
+    { es: 'días', tr: fillLocales('утро') },
   ],
-  say_ru: 'буЭнос дИас',
-  note_ru: 'Так говорят утром, примерно до обеда.',
-  why_ru: 'Día мужского рода, поэтому buenos, а не buenas.',
+  say: fillLocales('буЭнос дИас'),
+  note: fillLocales('Так говорят утром, примерно до обеда.'),
+  why: fillLocales('Día мужского рода, поэтому buenos, а не buenas.'),
   level: 'A1',
   variant: 'both',
   audio: { es: 'a1/buenos-dias.mp3', latam: 'a1/buenos-dias-latam.mp3' },
   tags: ['greeting'],
   draft: false,
+  draft_i18n: false,
 };
 
 function renderStep(item: Item, props: Partial<ComponentProps<typeof IntroStep>> = {}) {
@@ -193,9 +195,9 @@ describe('IntroStep', () => {
     await renderStep({
       ...phrase,
       level: 'B1',
-      say_ru: 'буЭнос дИас',
-      why_ru: null,
-      note_ru: null,
+      say: fillLocales('буЭнос дИас'),
+      why: null,
+      note: null,
       parts: [],
     });
 
@@ -207,12 +209,12 @@ describe('IntroStep', () => {
   it('opens the why sheet when why_ru is set', async () => {
     await renderStep(phrase);
 
-    expect(screen.queryByText(phrase.why_ru ?? '')).toBeNull();
+    expect(screen.queryByText(phrase.why?.ru ?? '')).toBeNull();
     await fireEvent.press(screen.getByText('Почему так?'));
-    expect(screen.getByText(phrase.why_ru ?? '')).toBeTruthy();
+    expect(screen.getByText(phrase.why?.ru ?? '')).toBeTruthy();
 
     await fireEvent.press(screen.getByText('Понятно'));
-    expect(screen.queryByText(phrase.why_ru ?? '')).toBeNull();
+    expect(screen.queryByText(phrase.why?.ru ?? '')).toBeNull();
   });
 
   it('opens the folder sheet and saves the unit into favorites', async () => {

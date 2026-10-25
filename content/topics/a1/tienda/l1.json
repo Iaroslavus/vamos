@@ -1,7 +1,11 @@
 {
   "id": "a1.tienda.l1",
   "topic": "a1.tienda",
-  "title_ru": "Есть ли?",
+  "title": {
+    "ru": "Есть ли?",
+    "uk": "Чи є?",
+    "en": "Do you have it?"
+  },
   "items": [
     "tienda.tiene_pan",
     "tienda.hay_leche",
@@ -11,29 +15,69 @@
     "tienda.eso",
     "tienda.quiero_esto"
   ],
-  "speak": ["tienda.tiene_pan", "tienda.quiero_esto"],
+  "speak": [
+    "tienda.tiene_pan",
+    "tienda.quiero_esto"
+  ],
   "dialog": {
     "lines": [
-      { "who": "npc", "es": "¿Qué desea?", "ru": "Что хотите?" },
+      {
+        "who": "npc",
+        "es": "¿Qué desea?",
+        "tr": {
+          "ru": "Что хотите?",
+          "uk": "Що хочете?",
+          "en": "What would you like?"
+        }
+      },
       {
         "who": "user",
         "target": "tienda.quiero_esto",
-        "options": ["tienda.quiero_esto", "tienda.tiene_pan", "tienda.hay_leche"]
+        "options": [
+          "tienda.quiero_esto",
+          "tienda.tiene_pan",
+          "tienda.hay_leche"
+        ]
       },
-      { "who": "npc", "es": "¿Pan?", "ru": "Хлеб?" },
+      {
+        "who": "npc",
+        "es": "¿Pan?",
+        "tr": {
+          "ru": "Хлеб?",
+          "uk": "Хліб?",
+          "en": "Bread?"
+        }
+      },
       {
         "who": "user",
         "target": "tienda.tiene_pan",
-        "options": ["tienda.tiene_pan", "tienda.no_hay", "tienda.si_hay"]
+        "options": [
+          "tienda.tiene_pan",
+          "tienda.no_hay",
+          "tienda.si_hay"
+        ]
       },
-      { "who": "npc", "es": "Sí, hay.", "ru": "Да, есть." },
+      {
+        "who": "npc",
+        "es": "Sí, hay.",
+        "tr": {
+          "ru": "Да, есть.",
+          "uk": "Так, є.",
+          "en": "Yes, we do."
+        }
+      },
       {
         "who": "user",
         "target": "tienda.si_hay",
-        "options": ["tienda.si_hay", "tienda.no_hay", "tienda.eso"]
+        "options": [
+          "tienda.si_hay",
+          "tienda.no_hay",
+          "tienda.eso"
+        ]
       }
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

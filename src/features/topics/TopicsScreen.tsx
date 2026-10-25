@@ -5,6 +5,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { RetryNote } from '@/components/RetryNote';
 import { listLessons, listTopics } from '@/features/content/loader';
+import { contentLocale } from '@/features/content/text';
 import type { CefrLevel } from '@/features/content/schema';
 import { initialLevel, levelHasContent, topicSections } from '@/features/topics/catalog';
 import { LevelSwitcher } from '@/features/topics/components/LevelSwitcher';
@@ -15,7 +16,8 @@ import { useCompletedLessons } from '@/features/topics/useCompletedLessons';
 import { colors, space } from '@/theme/tokens';
 
 export function TopicsScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = contentLocale(i18n.language);
   const router = useRouter();
   const topics = useMemo(() => listTopics(), []);
   const lessons = useMemo(() => listLessons(), []);
@@ -23,8 +25,8 @@ export function TopicsScreen() {
   const [query, setQuery] = useState('');
   const progress = useCompletedLessons();
   const sections = useMemo(
-    () => topicSections(topics, lessons, progress.completedIds, level, query),
-    [lessons, level, progress.completedIds, query, topics],
+    () => topicSections(topics, lessons, progress.completedIds, level, query, language),
+    [language, lessons, level, progress.completedIds, query, topics],
   );
 
   const openTopic = (id: string) => {

@@ -1,7 +1,11 @@
 {
   "id": "a1.metro.l3",
   "topic": "a1.metro",
-  "title_ru": "Автобус",
+  "title": {
+    "ru": "Автобус",
+    "uk": "Автобус",
+    "en": "The bus"
+  },
   "items": [
     "metro.el_autobus",
     "metro.el_bus",
@@ -20,7 +24,11 @@
       {
         "who": "npc",
         "es": "¿Esta parada le sirve?",
-        "ru": "Вам эта остановка?"
+        "tr": {
+          "ru": "Вам эта остановка?",
+          "uk": "Вам ця зупинка?",
+          "en": "Is this your stop?"
+        }
       },
       {
         "who": "user",
@@ -34,7 +42,11 @@
       {
         "who": "npc",
         "es": "Sí. Es el número cinco.",
-        "ru": "Да. Это пятый номер."
+        "tr": {
+          "ru": "Да. Это пятый номер.",
+          "uk": "Так. Це п'ятий номер.",
+          "en": "Yes. It's number five."
+        }
       },
       {
         "who": "user",
@@ -48,5 +60,6 @@
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

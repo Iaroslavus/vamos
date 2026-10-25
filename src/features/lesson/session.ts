@@ -1,5 +1,6 @@
-import { getLesson, getTopic, listItems } from '@/features/content/loader';
+import { contentLanguage, getLesson, getTopic, listItems } from '@/features/content/loader';
 import type { Item } from '@/features/content/schema';
+import { contentLocale, textOf, type ContentLocale } from '@/features/content/text';
 
 import { generateLessonSteps, seenItemsBeforeLesson, type LessonStep } from './generator';
 import { serializePairs } from './pairs';
@@ -74,13 +75,17 @@ export function isTypingExercise(
  * Turn a v2 lesson into the steps the player renders.
  * Distractors may come from earlier lessons of the same topic.
  */
-export function loadLessonSession(lessonId: string): LoadedLesson {
+export function loadLessonSession(
+  lessonId: string,
+  language: ContentLocale = contentLanguage(),
+): LoadedLesson {
   const lesson = getLesson(lessonId);
   const topic = getTopic(lesson.topic);
   const catalog = listItems();
   const ordered = topic.lessons.map((id) => getLesson(id));
   const seen = seenItemsBeforeLesson(ordered, catalog, lesson.id);
-  const steps = generateLessonSteps({ lesson, items: catalog, seen });
+  const gloss = contentLocale(language);
+  const steps = generateLessonSteps({ lesson, items: catalog, seen, language: gloss });
   const byId = new Map(catalog.map((item) => [item.id, item]));
   const exercises = steps.flatMap((step) => {
     const exercise = exerciseFromStep(step);
@@ -93,7 +98,7 @@ export function loadLessonSession(lessonId: string): LoadedLesson {
     steps,
     script: steps.map((step) => ({ id: step.id, kind: scriptKind(step) })),
     exercises,
-    newItems: lesson.items.map((id) => toVocabulary(requiredItem(byId, id))),
+    newItems: lesson.items.map((id) => toVocabulary(requiredItem(byId, id), gloss)),
     items: catalog,
   };
 }
@@ -168,12 +173,12 @@ function exerciseFromStep(step: LessonStep): LessonExerciseItem | null {
   }
 }
 
-function toVocabulary(item: Item): VocabularyItem {
+function toVocabulary(item: Item, language: ContentLocale): VocabularyItem {
   const audio = item.audio.es ?? item.audio.latam;
   return {
     id: item.id,
     es: item.es,
-    ru: item.ru,
+    ru: textOf(item.tr, language),
     pos: item.type === 'phrase' ? 'phrase' : 'other',
     variant: item.variant,
     ...(audio ? { audio } : {}),

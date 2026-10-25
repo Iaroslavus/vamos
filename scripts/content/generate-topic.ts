@@ -9,6 +9,8 @@
  *     --level A1 --category food --slug cafe --icon cup \
  *     --title-ru "В кафе" --starter-day 2 \
  *     --can-do "Заказать напиток" --can-do "Спросить цену"
+ *
+ * The model writes ru, uk, and en together. --title-ru and --can-do are the Russian source.
  */
 import fs from 'fs';
 import path from 'path';

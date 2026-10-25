@@ -6,6 +6,7 @@ import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
 import { Text } from '@/components/Text';
 import type { Item } from '@/features/content/schema';
+import { contentLocale, textOf } from '@/features/content/text';
 import { colors, depth, radius, space } from '@/theme/tokens';
 
 import { IntroAudioButtons } from './IntroAudioButtons';
@@ -36,7 +37,10 @@ export function IntroCard({
   onSave,
   onWhy,
 }: IntroCardProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = contentLocale(i18n.language);
+  const translation = textOf(item.tr, language);
+  const note = textOf(item.note, language);
 
   return (
     <View style={styles.wrap}>
@@ -62,13 +66,13 @@ export function IntroCard({
         ) : null}
 
         <Text variant="bodyBold" style={styles.center}>
-          {item.ru}
+          {translation}
         </Text>
 
         {item.parts.length > 0 ? (
           <View style={styles.parts}>
             {item.parts.map((part, index) => {
-              const label = t('lesson.introPart', { es: part.es, ru: part.ru });
+              const label = t('lesson.introPart', { es: part.es, ru: textOf(part.tr, language) });
               return (
                 <Chip
                   key={`${part.es}-${index}`}
@@ -81,13 +85,13 @@ export function IntroCard({
           </View>
         ) : null}
 
-        {item.note_ru ? (
+        {note ? (
           <Text variant="caption" color={colors.inkMuted} style={styles.center}>
-            {item.note_ru}
+            {note}
           </Text>
         ) : null}
 
-        {item.why_ru ? (
+        {textOf(item.why, language) ? (
           <Button title={t('lesson.introWhy')} variant="secondary" onPress={onWhy} />
         ) : null}
       </View>

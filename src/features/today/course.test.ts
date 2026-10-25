@@ -1,5 +1,6 @@
 import { listLessons, listTopics } from '@/features/content/loader';
 import type { Topic } from '@/features/content/schema';
+import { fillLocales } from '@/features/content/text';
 
 import {
   buildTodayPlan,
@@ -13,9 +14,9 @@ function topic(partial: Pick<Topic, 'id' | 'lessons'> & Partial<Topic>): Topic {
   return {
     level: 'A1',
     category: 'first_steps',
-    title_ru: partial.id,
+    title: fillLocales(partial.id),
     icon: 'wave',
-    can_do_ru: ['поздороваться'],
+    can_do: [fillLocales('поздороваться')],
     scene: `${partial.id}.scene`,
     draft: false,
     ...partial,
@@ -81,8 +82,8 @@ describe('buildTodayPlan', () => {
 
   it('unlocks the next day as soon as the previous day is finished', () => {
     const topics = [
-      topic({ id: 'day.one', lessons: ['l1'], starter_day: 1, title_ru: 'День 1' }),
-      topic({ id: 'day.two', lessons: ['l2'], starter_day: 2, title_ru: 'День 2' }),
+      topic({ id: 'day.one', lessons: ['l1'], starter_day: 1, title: fillLocales('День 1') }),
+      topic({ id: 'day.two', lessons: ['l2'], starter_day: 2, title: fillLocales('День 2') }),
     ];
 
     const before = buildTodayPlan(topics, []);
@@ -103,13 +104,13 @@ describe('buildTodayPlan', () => {
         id: `week.d${day}`,
         lessons: [`week.l${day}`],
         starter_day: day,
-        title_ru: `День ${day}`,
+        title: fillLocales(`День ${day}`),
       });
     });
     const numbers = topic({
       id: 'a1.numbers',
       lessons: ['a1.numbers.l1'],
-      title_ru: 'Числа 1–10',
+      title: fillLocales('Числа 1–10'),
     });
     const rows = days.map((day) => done(day.lessons[0] ?? ''));
 
@@ -125,9 +126,9 @@ describe('buildTodayPlan', () => {
 
   it('lists started topics with an open one ahead of the latest completion', () => {
     const topics = [
-      topic({ id: 'older', lessons: ['older.l1'], title_ru: 'Старая' }),
-      topic({ id: 'newer', lessons: ['newer.l1'], title_ru: 'Новая' }),
-      topic({ id: 'open', lessons: ['open.l1'], title_ru: 'Открытая' }),
+      topic({ id: 'older', lessons: ['older.l1'], title: fillLocales('Старая') }),
+      topic({ id: 'newer', lessons: ['newer.l1'], title: fillLocales('Новая') }),
+      topic({ id: 'open', lessons: ['open.l1'], title: fillLocales('Открытая') }),
     ];
     const plan = buildTodayPlan(topics, [
       done('older.l1', '2026-10-01T00:00:00.000Z'),

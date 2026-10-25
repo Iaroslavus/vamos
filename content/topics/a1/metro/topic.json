@@ -2,12 +2,28 @@
   "id": "a1.metro",
   "level": "A1",
   "category": "city",
-  "title_ru": "Метро и автобус",
+  "title": {
+    "ru": "Метро и автобус",
+    "uk": "Метро й автобус",
+    "en": "Metro and bus"
+  },
   "icon": "bus",
-  "can_do_ru": [
-    "Купить билет",
-    "Спросить, где выйти",
-    "Понять номер автобуса"
+  "can_do": [
+    {
+      "ru": "Купить билет",
+      "uk": "Купити квиток",
+      "en": "Buy a ticket"
+    },
+    {
+      "ru": "Спросить, где выйти",
+      "uk": "Запитати, де вийти",
+      "en": "Ask where to get off"
+    },
+    {
+      "ru": "Понять номер автобуса",
+      "uk": "Зрозуміти номер автобуса",
+      "en": "Understand a bus number"
+    }
   ],
   "lessons": [
     "a1.metro.l1",
@@ -16,5 +32,6 @@
     "a1.metro.l4"
   ],
   "scene": "a1.metro.scene",
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

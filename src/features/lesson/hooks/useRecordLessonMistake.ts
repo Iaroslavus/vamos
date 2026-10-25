@@ -1,4 +1,7 @@
 import { useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { contentLocale } from '@/features/content/text';
 
 import { useSession } from '@/features/auth/useSession';
 import { reviewRepository } from '@/features/review/defaultRepository';
@@ -10,9 +13,11 @@ import type { LessonExerciseItem } from '../store';
 
 /** Records Again for a wrong answer on a word that already has a card. */
 export function useRecordLessonMistake() {
+  const { i18n } = useTranslation();
   const { session } = useSession();
   const userId = session?.user.id;
-  const lexicon = useMemo(() => courseLexicon(), []);
+  const language = contentLocale(i18n.language);
+  const lexicon = useMemo(() => courseLexicon(language), [language]);
 
   return useCallback(
     (exercise: LessonExerciseItem, status: GradeStatus) => {

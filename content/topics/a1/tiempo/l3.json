@@ -1,7 +1,11 @@
 {
   "id": "a1.tiempo.l3",
   "topic": "a1.tiempo",
-  "title_ru": "Сегодня и завтра",
+  "title": {
+    "ru": "Сегодня и завтра",
+    "uk": "Сьогодні і завтра",
+    "en": "Today and tomorrow"
+  },
   "items": [
     "tiempo.hoy",
     "tiempo.manana",
@@ -20,7 +24,11 @@
       {
         "who": "npc",
         "es": "¿Qué día es hoy?",
-        "ru": "Какой сегодня день?"
+        "tr": {
+          "ru": "Какой сегодня день?",
+          "uk": "Який сьогодні день?",
+          "en": "What day is it today?"
+        }
       },
       {
         "who": "user",
@@ -34,7 +42,11 @@
       {
         "who": "npc",
         "es": "¿Quedamos por la mañana?",
-        "ru": "Встретимся утром?"
+        "tr": {
+          "ru": "Встретимся утром?",
+          "uk": "Зустрінемось вранці?",
+          "en": "Shall we meet in the morning?"
+        }
       },
       {
         "who": "user",
@@ -48,5 +60,6 @@
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

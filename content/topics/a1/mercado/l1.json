@@ -1,7 +1,11 @@
 {
   "id": "a1.mercado.l1",
   "topic": "a1.mercado",
-  "title_ru": "Фрукты",
+  "title": {
+    "ru": "Фрукты",
+    "uk": "Фрукти",
+    "en": "Fruit"
+  },
   "items": [
     "mercado.las_manzanas",
     "mercado.las_naranjas",
@@ -20,7 +24,11 @@
       {
         "who": "npc",
         "es": "¿Qué le pongo?",
-        "ru": "Что вам положить?"
+        "tr": {
+          "ru": "Что вам положить?",
+          "uk": "Що вам покласти?",
+          "en": "What can I get you?"
+        }
       },
       {
         "who": "user",
@@ -34,7 +42,11 @@
       {
         "who": "npc",
         "es": "¿Manzanas o naranjas?",
-        "ru": "Яблоки или апельсины?"
+        "tr": {
+          "ru": "Яблоки или апельсины?",
+          "uk": "Яблука чи апельсини?",
+          "en": "Apples or oranges?"
+        }
       },
       {
         "who": "user",
@@ -48,5 +60,6 @@
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

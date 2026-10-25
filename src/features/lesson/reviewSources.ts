@@ -1,4 +1,5 @@
-import { listItems } from '@/features/content/loader';
+import { contentLanguage, listItems } from '@/features/content/loader';
+import { textOf, type ContentLocale } from '@/features/content/text';
 import type { ExerciseReference, VocabularyRef } from '@/features/review/sources';
 
 import type { LessonExerciseItem } from './store';
@@ -10,26 +11,34 @@ export type CourseWord = {
   audio?: string;
 };
 
-let cachedLexicon: VocabularyRef[] | null = null;
-let cachedWords: CourseWord[] | null = null;
+const cachedLexicon = new Map<ContentLocale, VocabularyRef[]>();
+const cachedWords = new Map<ContentLocale, CourseWord[]>();
 
 /** Spanish form, translation, and bundled audio for every vocabulary id. */
-export function courseVocabulary(): CourseWord[] {
-  if (cachedWords) return cachedWords;
-  cachedWords = listItems().map((item) => ({
+export function courseVocabulary(language: ContentLocale = contentLanguage()): CourseWord[] {
+  const cached = cachedWords.get(language);
+  if (cached) return cached;
+  const words = listItems().map((item) => ({
     id: item.id,
     es: item.es,
-    ru: item.ru,
+    ru: textOf(item.tr, language),
     audio: item.audio.es ?? undefined,
   }));
-  return cachedWords;
+  cachedWords.set(language, words);
+  return words;
 }
 
-/** Spanish and Russian forms from every bundled lesson, keyed by vocabulary id. */
-export function courseLexicon(): VocabularyRef[] {
-  if (cachedLexicon) return cachedLexicon;
-  cachedLexicon = listItems().map((item) => ({ id: item.id, es: item.es, ru: item.ru }));
-  return cachedLexicon;
+/** Spanish form and the learner's gloss for every bundled unit. */
+export function courseLexicon(language: ContentLocale = contentLanguage()): VocabularyRef[] {
+  const cached = cachedLexicon.get(language);
+  if (cached) return cached;
+  const lexicon = listItems().map((item) => ({
+    id: item.id,
+    es: item.es,
+    ru: textOf(item.tr, language),
+  }));
+  cachedLexicon.set(language, lexicon);
+  return lexicon;
 }
 
 /** Surface forms a playable exercise can be matched to a vocabulary card. */

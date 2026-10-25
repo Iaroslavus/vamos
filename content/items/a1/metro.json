@@ -3,20 +3,40 @@
     "id": "metro.un_billete",
     "type": "phrase",
     "es": "Un billete",
-    "ru": "билет в Испании",
+    "tr": {
+      "ru": "билет в Испании",
+      "uk": "квиток в Іспанії",
+      "en": "a ticket in Spain"
+    },
     "parts": [
       {
         "es": "Un",
-        "ru": "один"
+        "tr": {
+          "ru": "один",
+          "uk": "один",
+          "en": "one"
+        }
       },
       {
         "es": "billete",
-        "ru": "билет"
+        "tr": {
+          "ru": "билет",
+          "uk": "квиток",
+          "en": "ticket"
+        }
       }
     ],
-    "say_ru": "ун бильЕте",
-    "note_ru": "В Испании билет на транспорт — un billete.",
-    "why_ru": null,
+    "say": {
+      "ru": "ун бильЕте",
+      "uk": "ун більЕте",
+      "en": "un bilEte"
+    },
+    "note": {
+      "ru": "В Испании билет на транспорт — un billete.",
+      "uk": "В Іспанії квиток на транспорт — un billete.",
+      "en": "In Spain a transport ticket is un billete."
+    },
+    "why": null,
     "level": "A1",
     "variant": "es",
     "audio": {
@@ -26,26 +46,47 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.un_boleto",
     "type": "phrase",
     "es": "Un boleto",
-    "ru": "билет в Латинской Америке",
+    "tr": {
+      "ru": "билет в Латинской Америке",
+      "uk": "квиток у Латинській Америці",
+      "en": "a ticket in Latin America"
+    },
     "parts": [
       {
         "es": "Un",
-        "ru": "один"
+        "tr": {
+          "ru": "один",
+          "uk": "один",
+          "en": "one"
+        }
       },
       {
         "es": "boleto",
-        "ru": "билет"
+        "tr": {
+          "ru": "билет",
+          "uk": "квиток",
+          "en": "ticket"
+        }
       }
     ],
-    "say_ru": "ун болЭто",
-    "note_ru": "В Латинской Америке билет чаще un boleto.",
-    "why_ru": null,
+    "say": {
+      "ru": "ун болЭто",
+      "uk": "ун болЕто",
+      "en": "un bolEto"
+    },
+    "note": {
+      "ru": "В Латинской Америке билет чаще un boleto.",
+      "uk": "У Латинській Америці квиток частіше un boleto.",
+      "en": "In Latin America a ticket is more often un boleto."
+    },
+    "why": null,
     "level": "A1",
     "variant": "latam",
     "audio": {
@@ -55,30 +96,51 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.ida_y_vuelta",
     "type": "phrase",
     "es": "Ida y vuelta",
-    "ru": "туда и обратно",
+    "tr": {
+      "ru": "туда и обратно",
+      "uk": "туди й назад",
+      "en": "round trip"
+    },
     "parts": [
       {
         "es": "Ida",
-        "ru": "туда"
+        "tr": {
+          "ru": "туда",
+          "uk": "туди",
+          "en": "there"
+        }
       },
       {
         "es": "y",
-        "ru": "и"
+        "tr": {
+          "ru": "и",
+          "uk": "і",
+          "en": "and"
+        }
       },
       {
         "es": "vuelta",
-        "ru": "обратно"
+        "tr": {
+          "ru": "обратно",
+          "uk": "назад",
+          "en": "back"
+        }
       }
     ],
-    "say_ru": "Ида и вуЭльта",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "Ида и вуЭльта",
+      "uk": "Іда і вуЕльта",
+      "en": "Ida i vuElta"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -88,26 +150,43 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.solo_ida",
     "type": "phrase",
     "es": "Solo ida",
-    "ru": "в одну сторону",
+    "tr": {
+      "ru": "в одну сторону",
+      "uk": "в один бік",
+      "en": "one way"
+    },
     "parts": [
       {
         "es": "Solo",
-        "ru": "только"
+        "tr": {
+          "ru": "только",
+          "uk": "тільки",
+          "en": "only"
+        }
       },
       {
         "es": "ida",
-        "ru": "туда"
+        "tr": {
+          "ru": "туда",
+          "uk": "туди",
+          "en": "there"
+        }
       }
     ],
-    "say_ru": "сОло Ида",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "сОло Ида",
+      "uk": "сОло Іда",
+      "en": "sOlo Ida"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -117,26 +196,43 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.cuanto_cuesta",
     "type": "phrase",
     "es": "¿Cuánto cuesta?",
-    "ru": "Сколько стоит?",
+    "tr": {
+      "ru": "Сколько стоит?",
+      "uk": "Скільки коштує?",
+      "en": "How much is it?"
+    },
     "parts": [
       {
         "es": "¿Cuánto",
-        "ru": "сколько"
+        "tr": {
+          "ru": "сколько",
+          "uk": "скільки",
+          "en": "how much"
+        }
       },
       {
         "es": "cuesta?",
-        "ru": "стоит"
+        "tr": {
+          "ru": "стоит",
+          "uk": "коштує",
+          "en": "costs"
+        }
       }
     ],
-    "say_ru": "куАнто куЭста",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "куАнто куЭста",
+      "uk": "куАнто куЕста",
+      "en": "kuAnto kuEsta"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -146,26 +242,43 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.el_metro",
     "type": "phrase",
     "es": "El metro",
-    "ru": "метро",
+    "tr": {
+      "ru": "метро",
+      "uk": "метро",
+      "en": "metro"
+    },
     "parts": [
       {
         "es": "El",
-        "ru": "м.р."
+        "tr": {
+          "ru": "м.р.",
+          "uk": "ч.р.",
+          "en": "m."
+        }
       },
       {
         "es": "metro",
-        "ru": "метро"
+        "tr": {
+          "ru": "метро",
+          "uk": "метро",
+          "en": "metro"
+        }
       }
     ],
-    "say_ru": "эль мЭтро",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "эль мЭтро",
+      "uk": "ель мЕтро",
+      "en": "el mEtro"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -175,26 +288,47 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.el_subte",
     "type": "phrase",
     "es": "El subte",
-    "ru": "метро в Буэнос-Айресе",
+    "tr": {
+      "ru": "метро в Буэнос-Айресе",
+      "uk": "метро в Буенос-Айресі",
+      "en": "the metro in Buenos Aires"
+    },
     "parts": [
       {
         "es": "El",
-        "ru": "м.р."
+        "tr": {
+          "ru": "м.р.",
+          "uk": "ч.р.",
+          "en": "m."
+        }
       },
       {
         "es": "subte",
-        "ru": "метро"
+        "tr": {
+          "ru": "метро",
+          "uk": "метро",
+          "en": "metro"
+        }
       }
     ],
-    "say_ru": "эль сУбте",
-    "note_ru": "В Буэнос-Айресе метро — el subte. В остальной Латинской Америке чаще el metro.",
-    "why_ru": null,
+    "say": {
+      "ru": "эль сУбте",
+      "uk": "ель сУбте",
+      "en": "el sUbte"
+    },
+    "note": {
+      "ru": "В Буэнос-Айресе метро — el subte. В остальной Латинской Америке чаще el metro.",
+      "uk": "У Буенос-Айресі метро — el subte. У решті Латинської Америки частіше el metro.",
+      "en": "In Buenos Aires the metro is el subte. Elsewhere in Latin America it is usually el metro."
+    },
+    "why": null,
     "level": "A1",
     "variant": "latam",
     "audio": {
@@ -204,30 +338,51 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.a_que_linea",
     "type": "phrase",
     "es": "¿A qué línea?",
-    "ru": "На какую линию?",
+    "tr": {
+      "ru": "На какую линию?",
+      "uk": "На яку лінію?",
+      "en": "Which line?"
+    },
     "parts": [
       {
         "es": "¿A",
-        "ru": "на"
+        "tr": {
+          "ru": "на",
+          "uk": "на",
+          "en": "on"
+        }
       },
       {
         "es": "qué",
-        "ru": "какую"
+        "tr": {
+          "ru": "какую",
+          "uk": "яку",
+          "en": "which"
+        }
       },
       {
         "es": "línea?",
-        "ru": "линию"
+        "tr": {
+          "ru": "линию",
+          "uk": "лінію",
+          "en": "line"
+        }
       }
     ],
-    "say_ru": "а кэ лИнеа",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "а кэ лИнеа",
+      "uk": "а ке лІнеа",
+      "en": "a ke lInea"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -237,26 +392,47 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.linea_dos",
     "type": "phrase",
     "es": "La línea dos",
-    "ru": "вторая линия",
+    "tr": {
+      "ru": "вторая линия",
+      "uk": "друга лінія",
+      "en": "line two"
+    },
     "parts": [
       {
         "es": "La línea",
-        "ru": "линия"
+        "tr": {
+          "ru": "линия",
+          "uk": "лінія",
+          "en": "line"
+        }
       },
       {
         "es": "dos",
-        "ru": "два"
+        "tr": {
+          "ru": "два",
+          "uk": "два",
+          "en": "two"
+        }
       }
     ],
-    "say_ru": "ла лИнеа дос",
-    "note_ru": "Линии часто называют номером или цветом: línea dos.",
-    "why_ru": null,
+    "say": {
+      "ru": "ла лИнеа дос",
+      "uk": "ла лІнеа дос",
+      "en": "la lInea dos"
+    },
+    "note": {
+      "ru": "Линии часто называют номером или цветом: línea dos.",
+      "uk": "Лінії часто називають номером або кольором: línea dos.",
+      "en": "Lines are often named by number or colour: línea dos."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -266,26 +442,43 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.direccion_centro",
     "type": "phrase",
     "es": "Dirección centro",
-    "ru": "в сторону центра",
+    "tr": {
+      "ru": "в сторону центра",
+      "uk": "у бік центру",
+      "en": "toward the centre"
+    },
     "parts": [
       {
         "es": "Dirección",
-        "ru": "направление"
+        "tr": {
+          "ru": "направление",
+          "uk": "напрямок",
+          "en": "direction"
+        }
       },
       {
         "es": "centro",
-        "ru": "центр"
+        "tr": {
+          "ru": "центр",
+          "uk": "центр",
+          "en": "centre"
+        }
       }
     ],
-    "say_ru": "дирексьОн сЭнтро",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "дирексьОн сЭнтро",
+      "uk": "дірексьОн сЕнтро",
+      "en": "direksOn sEntro"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -295,26 +488,47 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.donde_bajo",
     "type": "phrase",
     "es": "¿Dónde bajo?",
-    "ru": "Где выходить?",
+    "tr": {
+      "ru": "Где выходить?",
+      "uk": "Де виходити?",
+      "en": "Where do I get off?"
+    },
     "parts": [
       {
         "es": "¿Dónde",
-        "ru": "где"
+        "tr": {
+          "ru": "где",
+          "uk": "де",
+          "en": "where"
+        }
       },
       {
         "es": "bajo?",
-        "ru": "я выхожу"
+        "tr": {
+          "ru": "я выхожу",
+          "uk": "я виходжу",
+          "en": "I get off"
+        }
       }
     ],
-    "say_ru": "дОнде бАхо",
-    "note_ru": null,
-    "why_ru": "Bajar — выходить из транспорта. ¿Dónde bajo? — где мне выйти.",
+    "say": {
+      "ru": "дОнде бАхо",
+      "uk": "дОнде бАхо",
+      "en": "dOnde bAkho"
+    },
+    "note": null,
+    "why": {
+      "ru": "Bajar — выходить из транспорта. ¿Dónde bajo? — где мне выйти.",
+      "uk": "Bajar — виходити з транспорту. ¿Dónde bajo? — де мені вийти.",
+      "en": "Bajar means to get off. ¿Dónde bajo? is where do I get off."
+    },
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -324,26 +538,43 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.la_proxima",
     "type": "phrase",
     "es": "La próxima",
-    "ru": "следующая остановка",
+    "tr": {
+      "ru": "следующая остановка",
+      "uk": "наступна зупинка",
+      "en": "the next stop"
+    },
     "parts": [
       {
         "es": "La",
-        "ru": "ж.р."
+        "tr": {
+          "ru": "ж.р.",
+          "uk": "ж.р.",
+          "en": "f."
+        }
       },
       {
         "es": "próxima",
-        "ru": "следующая"
+        "tr": {
+          "ru": "следующая",
+          "uk": "наступна",
+          "en": "next"
+        }
       }
     ],
-    "say_ru": "ла прОксима",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "ла прОксима",
+      "uk": "ла прОксіма",
+      "en": "la prOksima"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -353,17 +584,25 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.transbordo",
     "type": "word",
     "es": "transbordo",
-    "ru": "пересадка",
-    "parts": [],
-    "say_ru": "трансбОрдо",
-    "note_ru": null,
-    "why_ru": null,
+    "tr": {
+      "ru": "пересадка",
+      "uk": "пересадка",
+      "en": "a transfer"
+    },
+    "say": {
+      "ru": "трансбОрдо",
+      "uk": "трансбОрдо",
+      "en": "transbOrdo"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -373,17 +612,25 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.salida",
     "type": "word",
     "es": "salida",
-    "ru": "выход",
-    "parts": [],
-    "say_ru": "салИда",
-    "note_ru": null,
-    "why_ru": null,
+    "tr": {
+      "ru": "выход",
+      "uk": "вихід",
+      "en": "the exit"
+    },
+    "say": {
+      "ru": "салИда",
+      "uk": "салІда",
+      "en": "salIda"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -393,26 +640,47 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.el_autobus",
     "type": "phrase",
     "es": "El autobús",
-    "ru": "автобус в Испании",
+    "tr": {
+      "ru": "автобус в Испании",
+      "uk": "автобус в Іспанії",
+      "en": "a bus in Spain"
+    },
     "parts": [
       {
         "es": "El",
-        "ru": "м.р."
+        "tr": {
+          "ru": "м.р.",
+          "uk": "ч.р.",
+          "en": "m."
+        }
       },
       {
         "es": "autobús",
-        "ru": "автобус"
+        "tr": {
+          "ru": "автобус",
+          "uk": "автобус",
+          "en": "bus"
+        }
       }
     ],
-    "say_ru": "эль аутобУс",
-    "note_ru": "В Испании — el autobús. В Мексике часто el camión, в Аргентине el colectivo.",
-    "why_ru": null,
+    "say": {
+      "ru": "эль аутобУс",
+      "uk": "ель аутобУс",
+      "en": "el autobUs"
+    },
+    "note": {
+      "ru": "В Испании — el autobús. В Мексике часто el camión, в Аргентине el colectivo.",
+      "uk": "В Іспанії — el autobús. У Мексиці часто el camión, в Аргентині el colectivo.",
+      "en": "In Spain it is el autobús. In Mexico it is often el camión, in Argentina el colectivo."
+    },
+    "why": null,
     "level": "A1",
     "variant": "es",
     "audio": {
@@ -422,26 +690,47 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.el_bus",
     "type": "phrase",
     "es": "El bus",
-    "ru": "автобус в Латинской Америке",
+    "tr": {
+      "ru": "автобус в Латинской Америке",
+      "uk": "автобус у Латинській Америці",
+      "en": "a bus in Latin America"
+    },
     "parts": [
       {
         "es": "El",
-        "ru": "м.р."
+        "tr": {
+          "ru": "м.р.",
+          "uk": "ч.р.",
+          "en": "m."
+        }
       },
       {
         "es": "bus",
-        "ru": "автобус"
+        "tr": {
+          "ru": "автобус",
+          "uk": "автобус",
+          "en": "bus"
+        }
       }
     ],
-    "say_ru": "эль бус",
-    "note_ru": "El bus понимают почти везде. Местное слово может быть другим.",
-    "why_ru": null,
+    "say": {
+      "ru": "эль бус",
+      "uk": "ель бус",
+      "en": "el bus"
+    },
+    "note": {
+      "ru": "El bus понимают почти везде. Местное слово может быть другим.",
+      "uk": "El bus розуміють майже скрізь. Місцеве слово може бути іншим.",
+      "en": "El bus is understood almost everywhere. The local word may differ."
+    },
+    "why": null,
     "level": "A1",
     "variant": "latam",
     "audio": {
@@ -451,26 +740,43 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.numero_cinco",
     "type": "phrase",
     "es": "El número cinco",
-    "ru": "пятый номер",
+    "tr": {
+      "ru": "пятый номер",
+      "uk": "п'ятий номер",
+      "en": "number five"
+    },
     "parts": [
       {
         "es": "El número",
-        "ru": "номер"
+        "tr": {
+          "ru": "номер",
+          "uk": "номер",
+          "en": "number"
+        }
       },
       {
         "es": "cinco",
-        "ru": "пять"
+        "tr": {
+          "ru": "пять",
+          "uk": "п'ять",
+          "en": "five"
+        }
       }
     ],
-    "say_ru": "эль нУмеро сИнко",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "эль нУмеро сИнко",
+      "uk": "ель нУмеро сІнко",
+      "en": "el nUmero sInko"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -480,26 +786,43 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.esta_parada",
     "type": "phrase",
     "es": "Esta parada",
-    "ru": "эта остановка",
+    "tr": {
+      "ru": "эта остановка",
+      "uk": "ця зупинка",
+      "en": "this stop"
+    },
     "parts": [
       {
         "es": "Esta",
-        "ru": "эта"
+        "tr": {
+          "ru": "эта",
+          "uk": "ця",
+          "en": "this"
+        }
       },
       {
         "es": "parada",
-        "ru": "остановка"
+        "tr": {
+          "ru": "остановка",
+          "uk": "зупинка",
+          "en": "stop"
+        }
       }
     ],
-    "say_ru": "Эста парАда",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "Эста парАда",
+      "uk": "Еста парАда",
+      "en": "Esta parAda"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -509,26 +832,43 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.la_parada",
     "type": "phrase",
     "es": "La parada",
-    "ru": "остановка",
+    "tr": {
+      "ru": "остановка",
+      "uk": "зупинка",
+      "en": "stop"
+    },
     "parts": [
       {
         "es": "La",
-        "ru": "ж.р."
+        "tr": {
+          "ru": "ж.р.",
+          "uk": "ж.р.",
+          "en": "f."
+        }
       },
       {
         "es": "parada",
-        "ru": "остановка"
+        "tr": {
+          "ru": "остановка",
+          "uk": "зупинка",
+          "en": "stop"
+        }
       }
     ],
-    "say_ru": "ла парАда",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "ла парАда",
+      "uk": "ла парАда",
+      "en": "la parAda"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -538,30 +878,51 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.va_al_centro",
     "type": "phrase",
     "es": "¿Va al centro?",
-    "ru": "Он идёт в центр?",
+    "tr": {
+      "ru": "Он идёт в центр?",
+      "uk": "Він іде в центр?",
+      "en": "Does it go to the centre?"
+    },
     "parts": [
       {
         "es": "¿Va",
-        "ru": "идёт"
+        "tr": {
+          "ru": "идёт",
+          "uk": "іде",
+          "en": "goes"
+        }
       },
       {
         "es": "al",
-        "ru": "в"
+        "tr": {
+          "ru": "в",
+          "uk": "у",
+          "en": "in"
+        }
       },
       {
         "es": "centro?",
-        "ru": "центр"
+        "tr": {
+          "ru": "центр",
+          "uk": "центр",
+          "en": "centre"
+        }
       }
     ],
-    "say_ru": "ба аль сЭнтро",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "ба аль сЭнтро",
+      "uk": "ба аль сЕнтро",
+      "en": "ba al sEntro"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -571,26 +932,43 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.si_al_centro",
     "type": "phrase",
     "es": "Sí, al centro",
-    "ru": "Да, в центр",
+    "tr": {
+      "ru": "Да, в центр",
+      "uk": "Так, у центр",
+      "en": "Yes, to the centre"
+    },
     "parts": [
       {
         "es": "Sí,",
-        "ru": "да"
+        "tr": {
+          "ru": "да",
+          "uk": "так",
+          "en": "yes"
+        }
       },
       {
         "es": "al centro",
-        "ru": "в центр"
+        "tr": {
+          "ru": "в центр",
+          "uk": "у центр",
+          "en": "to the centre"
+        }
       }
     ],
-    "say_ru": "си, аль сЭнтро",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "си, аль сЭнтро",
+      "uk": "сі, аль сЕнтро",
+      "en": "si, al sEntro"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -600,26 +978,43 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.una_tarjeta",
     "type": "phrase",
     "es": "Una tarjeta de transporte",
-    "ru": "проездная карта",
+    "tr": {
+      "ru": "проездная карта",
+      "uk": "проїзний",
+      "en": "a travel card"
+    },
     "parts": [
       {
         "es": "Una tarjeta",
-        "ru": "карта"
+        "tr": {
+          "ru": "карта",
+          "uk": "картка",
+          "en": "card"
+        }
       },
       {
         "es": "de transporte",
-        "ru": "проездная"
+        "tr": {
+          "ru": "проездная",
+          "uk": "проїзна",
+          "en": "travel"
+        }
       }
     ],
-    "say_ru": "уна тархЭта де транспОрте",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "уна тархЭта де транспОрте",
+      "uk": "уна тархЕта де транспОрте",
+      "en": "una tarkhEta de transpOrte"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -629,30 +1024,51 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.donde_esta_la_salida",
     "type": "phrase",
     "es": "¿Dónde está la salida?",
-    "ru": "Где выход?",
+    "tr": {
+      "ru": "Где выход?",
+      "uk": "Де вихід?",
+      "en": "Where is the exit?"
+    },
     "parts": [
       {
         "es": "¿Dónde",
-        "ru": "где"
+        "tr": {
+          "ru": "где",
+          "uk": "де",
+          "en": "where"
+        }
       },
       {
         "es": "está",
-        "ru": "находится"
+        "tr": {
+          "ru": "находится",
+          "uk": "знаходиться",
+          "en": "is located"
+        }
       },
       {
         "es": "la salida?",
-        "ru": "выход"
+        "tr": {
+          "ru": "выход",
+          "uk": "вихід",
+          "en": "the exit"
+        }
       }
     ],
-    "say_ru": "дОнде эстА ла салИда",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "дОнде эстА ла салИда",
+      "uk": "дОнде естА ла салІда",
+      "en": "dOnde estA la salIda"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -662,26 +1078,47 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.el_anden",
     "type": "phrase",
     "es": "El andén",
-    "ru": "платформа",
+    "tr": {
+      "ru": "платформа",
+      "uk": "платформа",
+      "en": "platform"
+    },
     "parts": [
       {
         "es": "El",
-        "ru": "м.р."
+        "tr": {
+          "ru": "м.р.",
+          "uk": "ч.р.",
+          "en": "m."
+        }
       },
       {
         "es": "andén",
-        "ru": "платформа"
+        "tr": {
+          "ru": "платформа",
+          "uk": "платформа",
+          "en": "platform"
+        }
       }
     ],
-    "say_ru": "эль андЭн",
-    "note_ru": "Платформу объявляют так: andén uno, andén dos.",
-    "why_ru": null,
+    "say": {
+      "ru": "эль андЭн",
+      "uk": "ель андЕн",
+      "en": "el andEn"
+    },
+    "note": {
+      "ru": "Платформу объявляют так: andén uno, andén dos.",
+      "uk": "Платформу оголошують так: andén uno, andén dos.",
+      "en": "Platforms are announced as andén uno, andén dos."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -691,26 +1128,43 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.anden_dos",
     "type": "phrase",
     "es": "Andén dos",
-    "ru": "вторая платформа",
+    "tr": {
+      "ru": "вторая платформа",
+      "uk": "друга платформа",
+      "en": "platform two"
+    },
     "parts": [
       {
         "es": "Andén",
-        "ru": "платформа"
+        "tr": {
+          "ru": "платформа",
+          "uk": "платформа",
+          "en": "platform"
+        }
       },
       {
         "es": "dos",
-        "ru": "два"
+        "tr": {
+          "ru": "два",
+          "uk": "два",
+          "en": "two"
+        }
       }
     ],
-    "say_ru": "андЭн дос",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "андЭн дос",
+      "uk": "андЕн дос",
+      "en": "andEn dos"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -720,30 +1174,55 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.se_puede_bajar",
     "type": "phrase",
     "es": "¿Se puede bajar aquí?",
-    "ru": "Здесь можно выйти?",
+    "tr": {
+      "ru": "Здесь можно выйти?",
+      "uk": "Тут можна вийти?",
+      "en": "Can I get off here?"
+    },
     "parts": [
       {
         "es": "¿Se puede",
-        "ru": "можно ли"
+        "tr": {
+          "ru": "можно ли",
+          "uk": "чи можна",
+          "en": "is it possible"
+        }
       },
       {
         "es": "bajar",
-        "ru": "выйти"
+        "tr": {
+          "ru": "выйти",
+          "uk": "вийти",
+          "en": "to get off"
+        }
       },
       {
         "es": "aquí?",
-        "ru": "здесь"
+        "tr": {
+          "ru": "здесь",
+          "uk": "тут",
+          "en": "here"
+        }
       }
     ],
-    "say_ru": "се пуЭде бахАр акИ",
-    "note_ru": "¿Se puede...? — вежливое «можно ли».",
-    "why_ru": null,
+    "say": {
+      "ru": "се пуЭде бахАр акИ",
+      "uk": "се пуЕде бахАр акІ",
+      "en": "se puEde bakhAr akI"
+    },
+    "note": {
+      "ru": "¿Se puede...? — вежливое «можно ли».",
+      "uk": "¿Se puede...? — ввічливе «чи можна».",
+      "en": "¿Se puede...? is a polite «may I?»."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -753,26 +1232,47 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.estoy_perdido",
     "type": "phrase",
     "es": "Estoy perdido",
-    "ru": "Я заблудился",
+    "tr": {
+      "ru": "Я заблудился",
+      "uk": "Я заблукав",
+      "en": "I'm lost"
+    },
     "parts": [
       {
         "es": "Estoy",
-        "ru": "я"
+        "tr": {
+          "ru": "я",
+          "uk": "я",
+          "en": "I"
+        }
       },
       {
         "es": "perdido",
-        "ru": "заблудился"
+        "tr": {
+          "ru": "заблудился",
+          "uk": "заблукав",
+          "en": "lost"
+        }
       }
     ],
-    "say_ru": "эстОй пердИдо",
-    "note_ru": null,
-    "why_ru": "Состояние «я потерялся» — estar: estoy perdido.",
+    "say": {
+      "ru": "эстОй пердИдо",
+      "uk": "естОй пердІдо",
+      "en": "estOy perdIdo"
+    },
+    "note": null,
+    "why": {
+      "ru": "Состояние «я потерялся» — estar: estoy perdido.",
+      "uk": "Стан «я загубився» — estar: estoy perdido.",
+      "en": "Being lost is a state, so estar: estoy perdido."
+    },
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -782,26 +1282,43 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "metro.me_ayuda",
     "type": "phrase",
     "es": "¿Me ayuda?",
-    "ru": "Вы мне поможете?",
+    "tr": {
+      "ru": "Вы мне поможете?",
+      "uk": "Ви мені допоможете?",
+      "en": "Can you help me?"
+    },
     "parts": [
       {
         "es": "¿Me",
-        "ru": "мне"
+        "tr": {
+          "ru": "мне",
+          "uk": "мені",
+          "en": "to me"
+        }
       },
       {
         "es": "ayuda?",
-        "ru": "вы помогаете"
+        "tr": {
+          "ru": "вы помогаете",
+          "uk": "ви допомагаєте",
+          "en": "you help"
+        }
       }
     ],
-    "say_ru": "ме аЙуда",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "ме аЙуда",
+      "uk": "ме аЙуда",
+      "en": "me aYuda"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -811,6 +1328,7 @@
     "tags": [
       "metro"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   }
 ]

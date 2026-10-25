@@ -1,4 +1,6 @@
+import { contentLanguage } from '@/features/content/language';
 import type { Lesson, Topic } from '@/features/content/schema';
+import { textOf, type ContentLocale } from '@/features/content/text';
 
 /** The starter course is always a week, even when some days have no topic yet. */
 export const STARTER_DAYS = 7;
@@ -56,18 +58,22 @@ export type TodayPlan = {
   speakLessonId: string | null;
 };
 
-export function buildTodayPlan(topics: readonly Topic[], rows: readonly LessonRow[]): TodayPlan {
+export function buildTodayPlan(
+  topics: readonly Topic[],
+  rows: readonly LessonRow[],
+  language: ContentLocale = contentLanguage(),
+): TodayPlan {
   const completed = new Set(
     rows.filter((row) => row.status === 'completed').map((row) => row.lessonId),
   );
-  const days = courseDays(topics, completed);
+  const days = courseDays(topics, completed, language);
   const finished = days.every((day) => day.status === 'completed');
   const open = days.find((day) => day.status === 'current' || day.status === 'empty') ?? null;
   const continueLessonId =
     open?.status === 'current' ? (open.lessonIds.find((id) => !completed.has(id)) ?? null) : null;
   const next = finished ? nextTopic(topics, completed) : null;
   const nextTopicLessonId = next?.lessons.find((id) => !completed.has(id)) ?? null;
-  const started = startedTopics(topics, rows, completed);
+  const started = startedTopics(topics, rows, completed, language);
 
   return {
     days,
@@ -75,7 +81,7 @@ export function buildTodayPlan(topics: readonly Topic[], rows: readonly LessonRo
     finished,
     continueLessonId,
     nextTopicId: next?.id ?? null,
-    nextTopicTitle: next?.title_ru ?? null,
+    nextTopicTitle: next ? textOf(next.title, language) : null,
     nextTopicLessonId,
     started,
     dayOneLessonId: days[0]?.lessonIds[0] ?? null,
@@ -89,7 +95,11 @@ export function buildTodayPlan(topics: readonly Topic[], rows: readonly LessonRo
  * A calendar date is not part of the rule. A day with no topic stays closed
  * and holds the rest of the week.
  */
-function courseDays(topics: readonly Topic[], completed: ReadonlySet<string>): CourseDay[] {
+function courseDays(
+  topics: readonly Topic[],
+  completed: ReadonlySet<string>,
+  language: ContentLocale,
+): CourseDay[] {
   let opened = false;
 
   return Array.from({ length: STARTER_DAYS }, (_, index) => {
@@ -112,7 +122,7 @@ function courseDays(topics: readonly Topic[], completed: ReadonlySet<string>): C
     return {
       day,
       topicId: group[0]?.id ?? null,
-      title: group[0]?.title_ru ?? null,
+      title: group[0] ? textOf(group[0].title, language) : null,
       icon: group[0]?.icon ?? null,
       lessonIds,
       status,
@@ -135,6 +145,7 @@ function startedTopics(
   topics: readonly Topic[],
   rows: readonly LessonRow[],
   completed: ReadonlySet<string>,
+  language: ContentLocale,
 ): StartedTopicCard[] {
   const byLesson = new Map(rows.map((row) => [row.lessonId, row]));
 
@@ -155,7 +166,7 @@ function startedTopics(
     return [
       {
         id: topic.id,
-        title: topic.title_ru,
+        title: textOf(topic.title, language),
         icon: topic.icon,
         completedLessons,
         lessonCount: topic.lessons.length,

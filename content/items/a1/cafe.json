@@ -3,208 +3,574 @@
     "id": "cafe.un_cafe",
     "type": "phrase",
     "es": "Un café, por favor",
-    "ru": "Кофе, пожалуйста",
+    "tr": {
+      "ru": "Кофе, пожалуйста",
+      "uk": "Кава, будь ласка",
+      "en": "A coffee, please"
+    },
     "parts": [
-      { "es": "Un café,", "ru": "кофе" },
-      { "es": "por favor", "ru": "пожалуйста" }
+      {
+        "es": "Un café,",
+        "tr": {
+          "ru": "кофе",
+          "uk": "кава",
+          "en": "coffee"
+        }
+      },
+      {
+        "es": "por favor",
+        "tr": {
+          "ru": "пожалуйста",
+          "uk": "будь ласка",
+          "en": "please"
+        }
+      }
     ],
-    "say_ru": "ун кафЭ, пор фавОр",
-    "note_ru": "Так заказывают у стойки.",
-    "why_ru": null,
+    "say": {
+      "ru": "ун кафЭ, пор фавОр",
+      "uk": "ун кафЕ, пор фавОр",
+      "en": "un kafE, por favOr"
+    },
+    "note": {
+      "ru": "Так заказывают у стойки.",
+      "uk": "Так замовляють біля стійки.",
+      "en": "This is how you order at the counter."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["cafe", "pedir"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "cafe",
+      "pedir"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "cafe.cafe_con_leche",
     "type": "phrase",
     "es": "Un café con leche, por favor",
-    "ru": "Кофе с молоком, пожалуйста",
+    "tr": {
+      "ru": "Кофе с молоком, пожалуйста",
+      "uk": "Кава з молоком, будь ласка",
+      "en": "A coffee with milk, please"
+    },
     "parts": [
-      { "es": "Un café con leche,", "ru": "кофе с молоком" },
-      { "es": "por favor", "ru": "пожалуйста" }
+      {
+        "es": "Un café con leche,",
+        "tr": {
+          "ru": "кофе с молоком",
+          "uk": "кава з молоком",
+          "en": "coffee with milk"
+        }
+      },
+      {
+        "es": "por favor",
+        "tr": {
+          "ru": "пожалуйста",
+          "uk": "будь ласка",
+          "en": "please"
+        }
+      }
     ],
-    "say_ru": "ун кафЭ кон лЕче, пор фавОр",
-    "note_ru": "В Испании так заказывают кофе у стойки.",
-    "why_ru": null,
+    "say": {
+      "ru": "ун кафЭ кон лЕче, пор фавОр",
+      "uk": "ун кафЕ кон лЕче, пор фавОр",
+      "en": "un kafE kon lEche, por favOr"
+    },
+    "note": {
+      "ru": "В Испании так заказывают кофе у стойки.",
+      "uk": "В Іспанії так замовляють каву біля стійки.",
+      "en": "In Spain this is how you order coffee at the counter."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["cafe", "pedir"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "cafe",
+      "pedir"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "cafe.un_te",
     "type": "phrase",
     "es": "Un té, por favor",
-    "ru": "Чай, пожалуйста",
+    "tr": {
+      "ru": "Чай, пожалуйста",
+      "uk": "Чай, будь ласка",
+      "en": "A tea, please"
+    },
     "parts": [
-      { "es": "Un té,", "ru": "чай" },
-      { "es": "por favor", "ru": "пожалуйста" }
+      {
+        "es": "Un té,",
+        "tr": {
+          "ru": "чай",
+          "uk": "чай",
+          "en": "tea"
+        }
+      },
+      {
+        "es": "por favor",
+        "tr": {
+          "ru": "пожалуйста",
+          "uk": "будь ласка",
+          "en": "please"
+        }
+      }
     ],
-    "say_ru": "ун тЭ, пор фавОр",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "ун тЭ, пор фавОр",
+      "uk": "ун тЕ, пор фавОр",
+      "en": "un tE, por favOr"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["cafe", "pedir"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "cafe",
+      "pedir"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "cafe.agua",
     "type": "phrase",
     "es": "Un agua, por favor",
-    "ru": "Воду, пожалуйста",
+    "tr": {
+      "ru": "Воду, пожалуйста",
+      "uk": "Воду, будь ласка",
+      "en": "Some water, please"
+    },
     "parts": [
-      { "es": "Un agua,", "ru": "воду" },
-      { "es": "por favor", "ru": "пожалуйста" }
+      {
+        "es": "Un agua,",
+        "tr": {
+          "ru": "воду",
+          "uk": "воду",
+          "en": "water"
+        }
+      },
+      {
+        "es": "por favor",
+        "tr": {
+          "ru": "пожалуйста",
+          "uk": "будь ласка",
+          "en": "please"
+        }
+      }
     ],
-    "say_ru": "ун Агуа, пор фавОр",
-    "note_ru": "Agua женского рода, но говорят un agua: ударение на a.",
-    "why_ru": "Слово женского рода на ударную a берёт un, а не una.",
+    "say": {
+      "ru": "ун Агуа, пор фавОр",
+      "uk": "ун Агуа, пор фавОр",
+      "en": "un Agua, por favOr"
+    },
+    "note": {
+      "ru": "Agua женского рода, но говорят un agua: ударение на a.",
+      "uk": "Agua жіночого роду, але кажуть un agua: наголос на a.",
+      "en": "Agua is feminine, but people say un agua: the stress is on a."
+    },
+    "why": {
+      "ru": "Слово женского рода на ударную a берёт un, а не una.",
+      "uk": "Слово жіночого роду з наголошеним a бере un, а не una.",
+      "en": "A feminine word stressed on a takes un, not una."
+    },
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["cafe", "pedir"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "cafe",
+      "pedir"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "cafe.para_llevar",
     "type": "phrase",
     "es": "Para llevar",
-    "ru": "С собой",
+    "tr": {
+      "ru": "С собой",
+      "uk": "Із собою",
+      "en": "To go"
+    },
     "parts": [
-      { "es": "Para", "ru": "для" },
-      { "es": "llevar", "ru": "того чтобы унести" }
+      {
+        "es": "Para",
+        "tr": {
+          "ru": "для",
+          "uk": "для",
+          "en": "for"
+        }
+      },
+      {
+        "es": "llevar",
+        "tr": {
+          "ru": "того чтобы унести",
+          "uk": "щоб забрати з собою",
+          "en": "to take away"
+        }
+      }
     ],
-    "say_ru": "пАра йевАр",
-    "note_ru": "Кофе навынос.",
-    "why_ru": null,
+    "say": {
+      "ru": "пАра йевАр",
+      "uk": "пАра йевАр",
+      "en": "pAra yevAr"
+    },
+    "note": {
+      "ru": "Кофе навынос.",
+      "uk": "Кава із собою.",
+      "en": "Coffee to go."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["cafe"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "cafe"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "cafe.para_tomar_aqui",
     "type": "phrase",
     "es": "Para tomar aquí",
-    "ru": "Здесь, в кафе",
+    "tr": {
+      "ru": "Здесь, в кафе",
+      "uk": "Тут, у кафе",
+      "en": "Here, in the café"
+    },
     "parts": [
-      { "es": "Para tomar", "ru": "чтобы выпить" },
-      { "es": "aquí", "ru": "здесь" }
+      {
+        "es": "Para tomar",
+        "tr": {
+          "ru": "чтобы выпить",
+          "uk": "щоб випити",
+          "en": "to drink"
+        }
+      },
+      {
+        "es": "aquí",
+        "tr": {
+          "ru": "здесь",
+          "uk": "тут",
+          "en": "here"
+        }
+      }
     ],
-    "say_ru": "пАра томАр акИ",
-    "note_ru": "Ответ, если остаётесь за столиком.",
-    "why_ru": null,
+    "say": {
+      "ru": "пАра томАр акИ",
+      "uk": "пАра томАр акІ",
+      "en": "pAra tomAr akI"
+    },
+    "note": {
+      "ru": "Ответ, если остаётесь за столиком.",
+      "uk": "Відповідь, якщо лишаєтесь за столиком.",
+      "en": "The answer if you are staying at a table."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["cafe"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "cafe"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "cafe.quiero",
     "type": "word",
     "es": "quiero",
-    "ru": "хочу",
-    "say_ru": "кьЕро",
-    "note_ru": "Дальше сразу напиток: quiero un café.",
-    "why_ru": "Форма глагола querer для «я».",
+    "tr": {
+      "ru": "хочу",
+      "uk": "хочу",
+      "en": "I want"
+    },
+    "say": {
+      "ru": "кьЕро",
+      "uk": "кьЕро",
+      "en": "kEro"
+    },
+    "note": {
+      "ru": "Дальше сразу напиток: quiero un café.",
+      "uk": "Далі одразу напій: quiero un café.",
+      "en": "The drink comes right after: quiero un café."
+    },
+    "why": {
+      "ru": "Форма глагола querer для «я».",
+      "uk": "Форма дієслова querer для «я».",
+      "en": "The yo form of querer."
+    },
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["cafe"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "cafe"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "cafe.cuanto_es",
     "type": "phrase",
     "es": "¿Cuánto es?",
-    "ru": "Сколько с меня?",
+    "tr": {
+      "ru": "Сколько с меня?",
+      "uk": "Скільки з мене?",
+      "en": "How much do I owe?"
+    },
     "parts": [
-      { "es": "¿Cuánto", "ru": "сколько" },
-      { "es": "es?", "ru": "это" }
+      {
+        "es": "¿Cuánto",
+        "tr": {
+          "ru": "сколько",
+          "uk": "скільки",
+          "en": "how much"
+        }
+      },
+      {
+        "es": "es?",
+        "tr": {
+          "ru": "это",
+          "uk": "це",
+          "en": "this"
+        }
+      }
     ],
-    "say_ru": "куАнто эс",
-    "note_ru": "Вопрос о сумме всего заказа.",
-    "why_ru": null,
+    "say": {
+      "ru": "куАнто эс",
+      "uk": "куАнто ес",
+      "en": "kuAnto es"
+    },
+    "note": {
+      "ru": "Вопрос о сумме всего заказа.",
+      "uk": "Питання про суму всього замовлення.",
+      "en": "A question about the total of the order."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["cafe", "price"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "cafe",
+      "price"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "cafe.la_cuenta",
     "type": "phrase",
     "es": "La cuenta, por favor",
-    "ru": "Счёт, пожалуйста",
+    "tr": {
+      "ru": "Счёт, пожалуйста",
+      "uk": "Рахунок, будь ласка",
+      "en": "The bill, please"
+    },
     "parts": [
-      { "es": "La cuenta,", "ru": "счёт" },
-      { "es": "por favor", "ru": "пожалуйста" }
+      {
+        "es": "La cuenta,",
+        "tr": {
+          "ru": "счёт",
+          "uk": "рахунок",
+          "en": "the bill"
+        }
+      },
+      {
+        "es": "por favor",
+        "tr": {
+          "ru": "пожалуйста",
+          "uk": "будь ласка",
+          "en": "please"
+        }
+      }
     ],
-    "say_ru": "ла куЭнта, пор фавОр",
-    "note_ru": "Так просят счёт в кафе и в ресторане.",
-    "why_ru": null,
+    "say": {
+      "ru": "ла куЭнта, пор фавОр",
+      "uk": "ла куЕнта, пор фавОр",
+      "en": "la kuEnta, por favOr"
+    },
+    "note": {
+      "ru": "Так просят счёт в кафе и в ресторане.",
+      "uk": "Так просять рахунок у кафе і в ресторані.",
+      "en": "This is how you ask for the bill in a café or a restaurant."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["cafe", "bill"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "cafe",
+      "bill"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "cafe.nada_mas",
     "type": "phrase",
     "es": "Nada más, gracias",
-    "ru": "Больше ничего, спасибо",
+    "tr": {
+      "ru": "Больше ничего, спасибо",
+      "uk": "Більше нічого, дякую",
+      "en": "Nothing else, thanks"
+    },
     "parts": [
-      { "es": "Nada más,", "ru": "больше ничего" },
-      { "es": "gracias", "ru": "спасибо" }
+      {
+        "es": "Nada más,",
+        "tr": {
+          "ru": "больше ничего",
+          "uk": "більше нічого",
+          "en": "nothing else"
+        }
+      },
+      {
+        "es": "gracias",
+        "tr": {
+          "ru": "спасибо",
+          "uk": "дякую",
+          "en": "thanks"
+        }
+      }
     ],
-    "say_ru": "нАда мас, грАсиас",
-    "note_ru": "Ответ на «¿algo más?».",
-    "why_ru": null,
+    "say": {
+      "ru": "нАда мас, грАсиас",
+      "uk": "нАда мас, грАсіас",
+      "en": "nAda mas, grAsias"
+    },
+    "note": {
+      "ru": "Ответ на «¿algo más?».",
+      "uk": "Відповідь на «¿algo más?».",
+      "en": "The answer to «¿algo más?»."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["cafe"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "cafe"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "cafe.esta_bien",
     "type": "phrase",
     "es": "Está bien",
-    "ru": "Хорошо",
+    "tr": {
+      "ru": "Хорошо",
+      "uk": "Добре",
+      "en": "All right"
+    },
     "parts": [
-      { "es": "Está", "ru": "есть" },
-      { "es": "bien", "ru": "хорошо" }
+      {
+        "es": "Está",
+        "tr": {
+          "ru": "есть",
+          "uk": "є",
+          "en": "there is"
+        }
+      },
+      {
+        "es": "bien",
+        "tr": {
+          "ru": "хорошо",
+          "uk": "добре",
+          "en": "good"
+        }
+      }
     ],
-    "say_ru": "эстА бьен",
-    "note_ru": "Так соглашаются с ценой.",
-    "why_ru": null,
+    "say": {
+      "ru": "эстА бьен",
+      "uk": "естА бьен",
+      "en": "estA ben"
+    },
+    "note": {
+      "ru": "Так соглашаются с ценой.",
+      "uk": "Так погоджуються з ціною.",
+      "en": "This is how you agree to the price."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["cafe"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "cafe"
+    ],
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "cafe.aqui",
     "type": "word",
     "es": "aquí",
-    "ru": "здесь",
-    "say_ru": "акИ",
-    "note_ru": "Показать на стол или на себя.",
-    "why_ru": null,
+    "tr": {
+      "ru": "здесь",
+      "uk": "тут",
+      "en": "here"
+    },
+    "say": {
+      "ru": "акИ",
+      "uk": "акІ",
+      "en": "akI"
+    },
+    "note": {
+      "ru": "Показать на стол или на себя.",
+      "uk": "Показати на стіл або на себе.",
+      "en": "Point at the table or at yourself."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
-    "audio": { "es": null, "latam": null },
-    "tags": ["cafe"],
-    "draft": true
+    "audio": {
+      "es": null,
+      "latam": null
+    },
+    "tags": [
+      "cafe"
+    ],
+    "draft": true,
+    "draft_i18n": true
   }
 ]

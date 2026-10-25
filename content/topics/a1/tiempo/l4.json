@@ -1,7 +1,11 @@
 {
   "id": "a1.tiempo.l4",
   "topic": "a1.tiempo",
-  "title_ru": "Во сколько встречаемся",
+  "title": {
+    "ru": "Во сколько встречаемся",
+    "uk": "О котрій зустрічаємось",
+    "en": "What time we meet"
+  },
   "items": [
     "tiempo.a_que_hora",
     "tiempo.a_las_diez",
@@ -20,7 +24,11 @@
       {
         "who": "npc",
         "es": "¿A qué hora quedamos?",
-        "ru": "Во сколько встречаемся?"
+        "tr": {
+          "ru": "Во сколько встречаемся?",
+          "uk": "О котрій зустрічаємось?",
+          "en": "What time shall we meet?"
+        }
       },
       {
         "who": "user",
@@ -34,7 +42,11 @@
       {
         "who": "npc",
         "es": "Vale. ¿Hasta mañana?",
-        "ru": "Ладно. До завтра?"
+        "tr": {
+          "ru": "Ладно. До завтра?",
+          "uk": "Гаразд. До завтра?",
+          "en": "All right. See you tomorrow?"
+        }
       },
       {
         "who": "user",
@@ -48,5 +60,6 @@
     ]
   },
   "overrides": [],
-  "draft": true
+  "draft": true,
+  "draft_i18n": true
 }

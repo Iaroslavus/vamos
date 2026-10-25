@@ -1,4 +1,5 @@
 import type { Item } from '@/features/content/schema';
+import { fillLocales } from '@/features/content/text';
 
 import {
   advanceNpc,
@@ -16,16 +17,17 @@ function item(id: string, es: string, ru: string): Item {
     id,
     type: 'phrase',
     es,
-    ru,
+    tr: fillLocales(ru),
     parts: [],
-    say_ru: 'sa',
-    note_ru: null,
-    why_ru: null,
+    say: fillLocales('sa'),
+    note: null,
+    why: null,
     level: 'A1',
     variant: 'both',
     audio: { es: `${id}.mp3`, latam: null },
     tags: [],
     draft: false,
+    draft_i18n: false,
   };
 }
 
@@ -37,13 +39,13 @@ const items = new Map<string, Item>([
 
 const lines: PlayableDialogLine[] = resolveDialogLines(
   [
-    { who: 'npc', es: '¡Hola!', ru: 'Привет!' },
+    { who: 'npc', es: '¡Hola!', tr: fillLocales('Привет!') },
     {
       who: 'user',
       target: 'hola.buenos_dias',
       options: ['hola.buenos_dias', 'hola.gracias', 'hola.adios'],
     },
-    { who: 'npc', es: '¿Un café?', ru: 'Кофе?' },
+    { who: 'npc', es: '¿Un café?', tr: fillLocales('Кофе?') },
   ],
   items,
 );

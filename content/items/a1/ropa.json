@@ -3,20 +3,40 @@
     "id": "ropa.la_talla",
     "type": "phrase",
     "es": "La talla",
-    "ru": "размер в Испании",
+    "tr": {
+      "ru": "размер в Испании",
+      "uk": "розмір в Іспанії",
+      "en": "a size in Spain"
+    },
     "parts": [
       {
         "es": "La",
-        "ru": "ж.р."
+        "tr": {
+          "ru": "ж.р.",
+          "uk": "ж.р.",
+          "en": "f."
+        }
       },
       {
         "es": "talla",
-        "ru": "размер"
+        "tr": {
+          "ru": "размер",
+          "uk": "розмір",
+          "en": "size"
+        }
       }
     ],
-    "say_ru": "ла тАлья",
-    "note_ru": "В Испании размер одежды — la talla.",
-    "why_ru": null,
+    "say": {
+      "ru": "ла тАлья",
+      "uk": "ла тАлья",
+      "en": "la tAlya"
+    },
+    "note": {
+      "ru": "В Испании размер одежды — la talla.",
+      "uk": "В Іспанії розмір одягу — la talla.",
+      "en": "In Spain a clothing size is la talla."
+    },
+    "why": null,
     "level": "A1",
     "variant": "es",
     "audio": {
@@ -26,26 +46,47 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.el_talle",
     "type": "phrase",
     "es": "El talle",
-    "ru": "размер в Латинской Америке",
+    "tr": {
+      "ru": "размер в Латинской Америке",
+      "uk": "розмір у Латинській Америці",
+      "en": "a size in Latin America"
+    },
     "parts": [
       {
         "es": "El",
-        "ru": "м.р."
+        "tr": {
+          "ru": "м.р.",
+          "uk": "ч.р.",
+          "en": "m."
+        }
       },
       {
         "es": "talle",
-        "ru": "размер"
+        "tr": {
+          "ru": "размер",
+          "uk": "розмір",
+          "en": "size"
+        }
       }
     ],
-    "say_ru": "эль тАлье",
-    "note_ru": "В Аргентине и Уругвае размер — el talle. Talla тоже поймут.",
-    "why_ru": null,
+    "say": {
+      "ru": "эль тАлье",
+      "uk": "ель тАлье",
+      "en": "el tAle"
+    },
+    "note": {
+      "ru": "В Аргентине и Уругвае размер — el talle. Talla тоже поймут.",
+      "uk": "В Аргентині та Уругваї розмір — el talle. Talla теж зрозуміють.",
+      "en": "In Argentina and Uruguay a size is el talle. Talla is understood too."
+    },
+    "why": null,
     "level": "A1",
     "variant": "latam",
     "audio": {
@@ -55,26 +96,43 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.una_talla_mas",
     "type": "phrase",
     "es": "Una talla más",
-    "ru": "на размер больше",
+    "tr": {
+      "ru": "на размер больше",
+      "uk": "на розмір більше",
+      "en": "one size up"
+    },
     "parts": [
       {
         "es": "Una talla",
-        "ru": "один размер"
+        "tr": {
+          "ru": "один размер",
+          "uk": "один розмір",
+          "en": "one size"
+        }
       },
       {
         "es": "más",
-        "ru": "больше"
+        "tr": {
+          "ru": "больше",
+          "uk": "більше",
+          "en": "bigger"
+        }
       }
     ],
-    "say_ru": "уна тАлья мас",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "уна тАлья мас",
+      "uk": "уна тАлья мас",
+      "en": "una tAlya mas"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -84,26 +142,43 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.una_talla_menos",
     "type": "phrase",
     "es": "Una talla menos",
-    "ru": "на размер меньше",
+    "tr": {
+      "ru": "на размер меньше",
+      "uk": "на розмір менше",
+      "en": "one size down"
+    },
     "parts": [
       {
         "es": "Una talla",
-        "ru": "один размер"
+        "tr": {
+          "ru": "один размер",
+          "uk": "один розмір",
+          "en": "one size"
+        }
       },
       {
         "es": "menos",
-        "ru": "меньше"
+        "tr": {
+          "ru": "меньше",
+          "uk": "менше",
+          "en": "smaller"
+        }
       }
     ],
-    "say_ru": "уна тАлья мЕнос",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "уна тАлья мЕнос",
+      "uk": "уна тАлья мЕнос",
+      "en": "una tAlya mEnos"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -113,30 +188,51 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.que_talla_usa",
     "type": "phrase",
     "es": "¿Qué talla usa?",
-    "ru": "Какой у вас размер?",
+    "tr": {
+      "ru": "Какой у вас размер?",
+      "uk": "Який у вас розмір?",
+      "en": "What size do you take?"
+    },
     "parts": [
       {
         "es": "¿Qué",
-        "ru": "какой"
+        "tr": {
+          "ru": "какой",
+          "uk": "який",
+          "en": "which"
+        }
       },
       {
         "es": "talla",
-        "ru": "размер"
+        "tr": {
+          "ru": "размер",
+          "uk": "розмір",
+          "en": "size"
+        }
       },
       {
         "es": "usa?",
-        "ru": "вы носите"
+        "tr": {
+          "ru": "вы носите",
+          "uk": "ви носите",
+          "en": "you wear"
+        }
       }
     ],
-    "say_ru": "кэ тАлья Уса",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "кэ тАлья Уса",
+      "uk": "ке тАлья Уса",
+      "en": "ke tAlya Usa"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -146,26 +242,47 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.me_queda",
     "type": "phrase",
     "es": "Me queda",
-    "ru": "мне впору",
+    "tr": {
+      "ru": "мне впору",
+      "uk": "мені якраз",
+      "en": "it fits me"
+    },
     "parts": [
       {
         "es": "Me",
-        "ru": "мне"
+        "tr": {
+          "ru": "мне",
+          "uk": "мені",
+          "en": "to me"
+        }
       },
       {
         "es": "queda",
-        "ru": "подходит"
+        "tr": {
+          "ru": "подходит",
+          "uk": "підходить",
+          "en": "fits"
+        }
       }
     ],
-    "say_ru": "ме кЭда",
-    "note_ru": null,
-    "why_ru": "Quedar здесь значит «подходить по размеру»: me queda bien.",
+    "say": {
+      "ru": "ме кЭда",
+      "uk": "ме кЕда",
+      "en": "me kEda"
+    },
+    "note": null,
+    "why": {
+      "ru": "Quedar здесь значит «подходить по размеру»: me queda bien.",
+      "uk": "Quedar тут означає «підходити за розміром»: me queda bien.",
+      "en": "Quedar here means to fit: me queda bien."
+    },
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -175,17 +292,25 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.grande",
     "type": "word",
     "es": "grande",
-    "ru": "большой",
-    "parts": [],
-    "say_ru": "грАнде",
-    "note_ru": null,
-    "why_ru": null,
+    "tr": {
+      "ru": "большой",
+      "uk": "великий",
+      "en": "big"
+    },
+    "say": {
+      "ru": "грАнде",
+      "uk": "грАнде",
+      "en": "grAnde"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -195,17 +320,25 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.negro",
     "type": "word",
     "es": "negro",
-    "ru": "чёрный",
-    "parts": [],
-    "say_ru": "нЭгро",
-    "note_ru": null,
-    "why_ru": null,
+    "tr": {
+      "ru": "чёрный",
+      "uk": "чорний",
+      "en": "black"
+    },
+    "say": {
+      "ru": "нЭгро",
+      "uk": "нЕгро",
+      "en": "nEgro"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -215,17 +348,25 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.blanco",
     "type": "word",
     "es": "blanco",
-    "ru": "белый",
-    "parts": [],
-    "say_ru": "блАнко",
-    "note_ru": null,
-    "why_ru": null,
+    "tr": {
+      "ru": "белый",
+      "uk": "білий",
+      "en": "white"
+    },
+    "say": {
+      "ru": "блАнко",
+      "uk": "блАнко",
+      "en": "blAnko"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -235,17 +376,25 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.azul",
     "type": "word",
     "es": "azul",
-    "ru": "синий",
-    "parts": [],
-    "say_ru": "асУль",
-    "note_ru": null,
-    "why_ru": null,
+    "tr": {
+      "ru": "синий",
+      "uk": "синій",
+      "en": "blue"
+    },
+    "say": {
+      "ru": "асУль",
+      "uk": "асУль",
+      "en": "asUl"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -255,26 +404,43 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.la_camiseta",
     "type": "phrase",
     "es": "La camiseta",
-    "ru": "футболка",
+    "tr": {
+      "ru": "футболка",
+      "uk": "футболка",
+      "en": "T-shirt"
+    },
     "parts": [
       {
         "es": "La",
-        "ru": "ж.р."
+        "tr": {
+          "ru": "ж.р.",
+          "uk": "ж.р.",
+          "en": "f."
+        }
       },
       {
         "es": "camiseta",
-        "ru": "футболка"
+        "tr": {
+          "ru": "футболка",
+          "uk": "футболка",
+          "en": "T-shirt"
+        }
       }
     ],
-    "say_ru": "ла камисЭта",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "ла камисЭта",
+      "uk": "ла камісЕта",
+      "en": "la kamisEta"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -284,26 +450,47 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.los_pantalones",
     "type": "phrase",
     "es": "Los pantalones",
-    "ru": "брюки",
+    "tr": {
+      "ru": "брюки",
+      "uk": "штани",
+      "en": "trousers"
+    },
     "parts": [
       {
         "es": "Los",
-        "ru": "мн.ч."
+        "tr": {
+          "ru": "мн.ч.",
+          "uk": "мн.",
+          "en": "pl."
+        }
       },
       {
         "es": "pantalones",
-        "ru": "брюки"
+        "tr": {
+          "ru": "брюки",
+          "uk": "штани",
+          "en": "trousers"
+        }
       }
     ],
-    "say_ru": "лос панталОнес",
-    "note_ru": "Брюки обычно во множественном числе: los pantalones.",
-    "why_ru": null,
+    "say": {
+      "ru": "лос панталОнес",
+      "uk": "лос панталОнес",
+      "en": "los pantalOnes"
+    },
+    "note": {
+      "ru": "Брюки обычно во множественном числе: los pantalones.",
+      "uk": "Штани зазвичай у множині: los pantalones.",
+      "en": "Trousers are usually plural: los pantalones."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -313,26 +500,43 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.la_camisa",
     "type": "phrase",
     "es": "La camisa",
-    "ru": "рубашка",
+    "tr": {
+      "ru": "рубашка",
+      "uk": "сорочка",
+      "en": "shirt"
+    },
     "parts": [
       {
         "es": "La",
-        "ru": "ж.р."
+        "tr": {
+          "ru": "ж.р.",
+          "uk": "ж.р.",
+          "en": "f."
+        }
       },
       {
         "es": "camisa",
-        "ru": "рубашка"
+        "tr": {
+          "ru": "рубашка",
+          "uk": "сорочка",
+          "en": "shirt"
+        }
       }
     ],
-    "say_ru": "ла камИса",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "ла камИса",
+      "uk": "ла камІса",
+      "en": "la kamIsa"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -342,26 +546,47 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.camiseta_negra",
     "type": "phrase",
     "es": "La camiseta negra",
-    "ru": "чёрная футболка",
+    "tr": {
+      "ru": "чёрная футболка",
+      "uk": "чорна футболка",
+      "en": "a black T-shirt"
+    },
     "parts": [
       {
         "es": "La camiseta",
-        "ru": "футболка"
+        "tr": {
+          "ru": "футболка",
+          "uk": "футболка",
+          "en": "T-shirt"
+        }
       },
       {
         "es": "negra",
-        "ru": "чёрная"
+        "tr": {
+          "ru": "чёрная",
+          "uk": "чорна",
+          "en": "black"
+        }
       }
     ],
-    "say_ru": "ла камисЭта нЭгра",
-    "note_ru": null,
-    "why_ru": "Цвет стоит после вещи и совпадает с ней в роде: la camiseta negra, el pantalón negro.",
+    "say": {
+      "ru": "ла камисЭта нЭгра",
+      "uk": "ла камісЕта нЕгра",
+      "en": "la kamisEta nEgra"
+    },
+    "note": null,
+    "why": {
+      "ru": "Цвет стоит после вещи и совпадает с ней в роде: la camiseta negra, el pantalón negro.",
+      "uk": "Колір стоїть після речі і збігається з нею в роді: la camiseta negra, el pantalón negro.",
+      "en": "The colour comes after the item and matches its gender: la camiseta negra, el pantalón negro."
+    },
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -371,30 +596,51 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.puedo_probarme",
     "type": "phrase",
     "es": "¿Puedo probarme esto?",
-    "ru": "Можно это примерить?",
+    "tr": {
+      "ru": "Можно это примерить?",
+      "uk": "Можна це приміряти?",
+      "en": "Can I try this on?"
+    },
     "parts": [
       {
         "es": "¿Puedo",
-        "ru": "могу ли я"
+        "tr": {
+          "ru": "могу ли я",
+          "uk": "чи можу я",
+          "en": "may I"
+        }
       },
       {
         "es": "probarme",
-        "ru": "примерить"
+        "tr": {
+          "ru": "примерить",
+          "uk": "приміряти",
+          "en": "to try on"
+        }
       },
       {
         "es": "esto?",
-        "ru": "это"
+        "tr": {
+          "ru": "это",
+          "uk": "це",
+          "en": "this"
+        }
       }
     ],
-    "say_ru": "пуЭдо пробАрме Эсто",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "пуЭдо пробАрме Эсто",
+      "uk": "пуЕдо пробАрме Есто",
+      "en": "puEdo probArme Esto"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -404,26 +650,47 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.el_probador",
     "type": "phrase",
     "es": "El probador",
-    "ru": "примерочная",
+    "tr": {
+      "ru": "примерочная",
+      "uk": "примірочна",
+      "en": "fitting room"
+    },
     "parts": [
       {
         "es": "El",
-        "ru": "м.р."
+        "tr": {
+          "ru": "м.р.",
+          "uk": "ч.р.",
+          "en": "m."
+        }
       },
       {
         "es": "probador",
-        "ru": "примерочная"
+        "tr": {
+          "ru": "примерочная",
+          "uk": "примірочна",
+          "en": "fitting room"
+        }
       }
     ],
-    "say_ru": "эль пробадОр",
-    "note_ru": "В некоторых странах примерочная — el vestidor. Probador в магазине понимают.",
-    "why_ru": null,
+    "say": {
+      "ru": "эль пробадОр",
+      "uk": "ель пробадОр",
+      "en": "el probadOr"
+    },
+    "note": {
+      "ru": "В некоторых странах примерочная — el vestidor. Probador в магазине понимают.",
+      "uk": "У деяких країнах примірочна — el vestidor. Probador у магазині розуміють.",
+      "en": "In some countries the fitting room is el vestidor. Probador is understood in a shop."
+    },
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -433,26 +700,43 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.me_queda_bien",
     "type": "phrase",
     "es": "Me queda bien",
-    "ru": "Мне хорошо сидит",
+    "tr": {
+      "ru": "Мне хорошо сидит",
+      "uk": "На мені добре сидить",
+      "en": "It fits me well"
+    },
     "parts": [
       {
         "es": "Me queda",
-        "ru": "мне подходит"
+        "tr": {
+          "ru": "мне подходит",
+          "uk": "мені підходить",
+          "en": "it suits me"
+        }
       },
       {
         "es": "bien",
-        "ru": "хорошо"
+        "tr": {
+          "ru": "хорошо",
+          "uk": "добре",
+          "en": "good"
+        }
       }
     ],
-    "say_ru": "ме кЭда бьен",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "ме кЭда бьен",
+      "uk": "ме кЕда бьен",
+      "en": "me kEda ben"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -462,26 +746,43 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.me_queda_grande",
     "type": "phrase",
     "es": "Me queda grande",
-    "ru": "Мне велико",
+    "tr": {
+      "ru": "Мне велико",
+      "uk": "Мені завелике",
+      "en": "It's too big"
+    },
     "parts": [
       {
         "es": "Me queda",
-        "ru": "мне"
+        "tr": {
+          "ru": "мне",
+          "uk": "мені",
+          "en": "to me"
+        }
       },
       {
         "es": "grande",
-        "ru": "велико"
+        "tr": {
+          "ru": "велико",
+          "uk": "завелике",
+          "en": "too big"
+        }
       }
     ],
-    "say_ru": "ме кЭда грАнде",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "ме кЭда грАнде",
+      "uk": "ме кЕда грАнде",
+      "en": "me kEda grAnde"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -491,26 +792,43 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.me_queda_pequena",
     "type": "phrase",
     "es": "Me queda pequeña",
-    "ru": "Мне мало",
+    "tr": {
+      "ru": "Мне мало",
+      "uk": "Мені замале",
+      "en": "It's too small"
+    },
     "parts": [
       {
         "es": "Me queda",
-        "ru": "мне"
+        "tr": {
+          "ru": "мне",
+          "uk": "мені",
+          "en": "to me"
+        }
       },
       {
         "es": "pequeña",
-        "ru": "мало"
+        "tr": {
+          "ru": "мало",
+          "uk": "замало",
+          "en": "too small"
+        }
       }
     ],
-    "say_ru": "ме кЭда пекЕнья",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "ме кЭда пекЕнья",
+      "uk": "ме кЕда пекЕнья",
+      "en": "me kEda pekEnya"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -520,26 +838,43 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.esta_camisa",
     "type": "phrase",
     "es": "Esta camisa",
-    "ru": "эта рубашка",
+    "tr": {
+      "ru": "эта рубашка",
+      "uk": "ця сорочка",
+      "en": "this shirt"
+    },
     "parts": [
       {
         "es": "Esta",
-        "ru": "эта"
+        "tr": {
+          "ru": "эта",
+          "uk": "ця",
+          "en": "this"
+        }
       },
       {
         "es": "camisa",
-        "ru": "рубашка"
+        "tr": {
+          "ru": "рубашка",
+          "uk": "сорочка",
+          "en": "shirt"
+        }
       }
     ],
-    "say_ru": "Эста камИса",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "Эста камИса",
+      "uk": "Еста камІса",
+      "en": "Esta kamIsa"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -549,26 +884,47 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.me_gusta",
     "type": "phrase",
     "es": "Me gusta",
-    "ru": "мне нравится",
+    "tr": {
+      "ru": "мне нравится",
+      "uk": "мені подобається",
+      "en": "I like it"
+    },
     "parts": [
       {
         "es": "Me",
-        "ru": "мне"
+        "tr": {
+          "ru": "мне",
+          "uk": "мені",
+          "en": "to me"
+        }
       },
       {
         "es": "gusta",
-        "ru": "нравится"
+        "tr": {
+          "ru": "нравится",
+          "uk": "подобається",
+          "en": "is pleasing"
+        }
       }
     ],
-    "say_ru": "ме гУста",
-    "note_ru": null,
-    "why_ru": "Gustar устроен наоборот: me gusta la camisa — буквально «рубашка мне нравится».",
+    "say": {
+      "ru": "ме гУста",
+      "uk": "ме гУста",
+      "en": "me gUsta"
+    },
+    "note": null,
+    "why": {
+      "ru": "Gustar устроен наоборот: me gusta la camisa — буквально «рубашка мне нравится».",
+      "uk": "Gustar влаштований навпаки: me gusta la camisa — буквально «сорочка мені подобається».",
+      "en": "Gustar works the other way round: me gusta la camisa literally means the shirt pleases me."
+    },
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -578,26 +934,43 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.no_me_queda",
     "type": "phrase",
     "es": "No me queda",
-    "ru": "Мне не подходит",
+    "tr": {
+      "ru": "Мне не подходит",
+      "uk": "Мені не підходить",
+      "en": "It doesn't suit me"
+    },
     "parts": [
       {
         "es": "No",
-        "ru": "не"
+        "tr": {
+          "ru": "не",
+          "uk": "не",
+          "en": "not"
+        }
       },
       {
         "es": "me queda",
-        "ru": "мне подходит"
+        "tr": {
+          "ru": "мне подходит",
+          "uk": "мені підходить",
+          "en": "it suits me"
+        }
       }
     ],
-    "say_ru": "но ме кЭда",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "но ме кЭда",
+      "uk": "но ме кЕда",
+      "en": "no me kEda"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -607,26 +980,47 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.muy_caro",
     "type": "phrase",
     "es": "Es muy caro",
-    "ru": "Слишком дорого",
+    "tr": {
+      "ru": "Слишком дорого",
+      "uk": "Надто дорого",
+      "en": "Too expensive"
+    },
     "parts": [
       {
         "es": "Es",
-        "ru": "это"
+        "tr": {
+          "ru": "это",
+          "uk": "це",
+          "en": "this"
+        }
       },
       {
         "es": "muy caro",
-        "ru": "очень дорого"
+        "tr": {
+          "ru": "очень дорого",
+          "uk": "дуже дорого",
+          "en": "very expensive"
+        }
       }
     ],
-    "say_ru": "эс муй кАро",
-    "note_ru": null,
-    "why_ru": "Caro согласуется с вещью: el pantalón es caro, la camisa es cara.",
+    "say": {
+      "ru": "эс муй кАро",
+      "uk": "ес муй кАро",
+      "en": "es muy kAro"
+    },
+    "note": null,
+    "why": {
+      "ru": "Caro согласуется с вещью: el pantalón es caro, la camisa es cara.",
+      "uk": "Caro узгоджується з річчю: el pantalón es caro, la camisa es cara.",
+      "en": "Caro agrees with the item: el pantalón es caro, la camisa es cara."
+    },
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -636,26 +1030,43 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.muy_cara",
     "type": "phrase",
     "es": "Es muy cara",
-    "ru": "Слишком дорогая",
+    "tr": {
+      "ru": "Слишком дорогая",
+      "uk": "Надто дорога",
+      "en": "Too expensive"
+    },
     "parts": [
       {
         "es": "Es",
-        "ru": "это"
+        "tr": {
+          "ru": "это",
+          "uk": "це",
+          "en": "this"
+        }
       },
       {
         "es": "muy cara",
-        "ru": "очень дорогая"
+        "tr": {
+          "ru": "очень дорогая",
+          "uk": "дуже дорога",
+          "en": "very expensive"
+        }
       }
     ],
-    "say_ru": "эс муй кАра",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "эс муй кАра",
+      "uk": "ес муй кАра",
+      "en": "es muy kAra"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -665,30 +1076,51 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.me_lo_llevo",
     "type": "phrase",
     "es": "Me lo llevo",
-    "ru": "Я это беру",
+    "tr": {
+      "ru": "Я это беру",
+      "uk": "Я це беру",
+      "en": "I'll take it"
+    },
     "parts": [
       {
         "es": "Me",
-        "ru": "себе"
+        "tr": {
+          "ru": "себе",
+          "uk": "собі",
+          "en": "for myself"
+        }
       },
       {
         "es": "lo",
-        "ru": "это"
+        "tr": {
+          "ru": "это",
+          "uk": "це",
+          "en": "this"
+        }
       },
       {
         "es": "llevo",
-        "ru": "беру"
+        "tr": {
+          "ru": "беру",
+          "uk": "беру",
+          "en": "I'm taking"
+        }
       }
     ],
-    "say_ru": "ме ло льЕво",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "ме ло льЕво",
+      "uk": "ме ло льЕво",
+      "en": "me lo lEvo"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -698,26 +1130,43 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.solo_miro",
     "type": "phrase",
     "es": "Solo miro",
-    "ru": "Я только смотрю",
+    "tr": {
+      "ru": "Я только смотрю",
+      "uk": "Я тільки дивлюся",
+      "en": "I'm just looking"
+    },
     "parts": [
       {
         "es": "Solo",
-        "ru": "только"
+        "tr": {
+          "ru": "только",
+          "uk": "тільки",
+          "en": "only"
+        }
       },
       {
         "es": "miro",
-        "ru": "смотрю"
+        "tr": {
+          "ru": "смотрю",
+          "uk": "дивлюся",
+          "en": "I'm looking"
+        }
       }
     ],
-    "say_ru": "сОло мИро",
-    "note_ru": null,
-    "why_ru": null,
+    "say": {
+      "ru": "сОло мИро",
+      "uk": "сОло мІро",
+      "en": "sOlo mIro"
+    },
+    "note": null,
+    "why": null,
     "level": "A1",
     "variant": "both",
     "audio": {
@@ -727,26 +1176,47 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.hay_rebaja",
     "type": "phrase",
     "es": "¿Hay rebaja?",
-    "ru": "Есть уценка?",
+    "tr": {
+      "ru": "Есть уценка?",
+      "uk": "Є знижка?",
+      "en": "Is there a sale?"
+    },
     "parts": [
       {
         "es": "¿Hay",
-        "ru": "есть"
+        "tr": {
+          "ru": "есть",
+          "uk": "є",
+          "en": "there is"
+        }
       },
       {
         "es": "rebaja?",
-        "ru": "уценка"
+        "tr": {
+          "ru": "уценка",
+          "uk": "уцінка",
+          "en": "a sale"
+        }
       }
     ],
-    "say_ru": "ай ребАха",
-    "note_ru": "В Испании сезонные скидки — las rebajas.",
-    "why_ru": null,
+    "say": {
+      "ru": "ай ребАха",
+      "uk": "ай ребАха",
+      "en": "ay rebAkha"
+    },
+    "note": {
+      "ru": "В Испании сезонные скидки — las rebajas.",
+      "uk": "В Іспанії сезонні знижки — las rebajas.",
+      "en": "In Spain the seasonal sales are las rebajas."
+    },
+    "why": null,
     "level": "A1",
     "variant": "es",
     "audio": {
@@ -756,26 +1226,47 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   },
   {
     "id": "ropa.hay_descuento",
     "type": "phrase",
     "es": "¿Hay descuento?",
-    "ru": "Есть скидка?",
+    "tr": {
+      "ru": "Есть скидка?",
+      "uk": "Є знижка?",
+      "en": "Is there a discount?"
+    },
     "parts": [
       {
         "es": "¿Hay",
-        "ru": "есть"
+        "tr": {
+          "ru": "есть",
+          "uk": "є",
+          "en": "there is"
+        }
       },
       {
         "es": "descuento?",
-        "ru": "скидка"
+        "tr": {
+          "ru": "скидка",
+          "uk": "знижка",
+          "en": "a discount"
+        }
       }
     ],
-    "say_ru": "ай дескуЭнто",
-    "note_ru": "В Латинской Америке чаще говорят descuento, не rebaja.",
-    "why_ru": null,
+    "say": {
+      "ru": "ай дескуЭнто",
+      "uk": "ай дескуЕнто",
+      "en": "ay deskuEnto"
+    },
+    "note": {
+      "ru": "В Латинской Америке чаще говорят descuento, не rebaja.",
+      "uk": "У Латинській Америці частіше кажуть descuento, не rebaja.",
+      "en": "In Latin America people more often say descuento, not rebaja."
+    },
+    "why": null,
     "level": "A1",
     "variant": "latam",
     "audio": {
@@ -785,6 +1276,7 @@
     "tags": [
       "ropa"
     ],
-    "draft": true
+    "draft": true,
+    "draft_i18n": true
   }
 ]
