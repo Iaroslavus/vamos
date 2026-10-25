@@ -55,13 +55,26 @@ describe('buildTodayPlan', () => {
     expect(plan.days[0]?.status).toBe('current');
   });
 
-  it('stops on the first day that has no topic yet', () => {
+  it('opens day 2 when day 1 of the starter week is finished', () => {
     const plan = buildTodayPlan(listTopics(), [done('a1.hola.l1'), done('a1.hola.l2')]);
+
+    expect(plan.days[0]?.status).toBe('completed');
+    expect(plan.days[1]?.status).toBe('current');
+    expect(plan.days[1]?.topicId).toBe('a1.cafe');
+    expect(plan.continueLessonId).toBe('a1.cafe.l1');
+    expect(plan.days[2]?.status).toBe('locked');
+    expect(plan.finished).toBe(false);
+  });
+
+  it('stops on a day that has no topic yet', () => {
+    const plan = buildTodayPlan(
+      [topic({ id: 'day.one', lessons: ['l1'], starter_day: 1 })],
+      [done('l1')],
+    );
 
     expect(plan.days[0]?.status).toBe('completed');
     expect(plan.days[1]?.status).toBe('empty');
     expect(plan.days[2]?.status).toBe('locked');
-    expect(plan.currentDay).toBe(2);
     expect(plan.continueLessonId).toBeNull();
     expect(plan.finished).toBe(false);
   });

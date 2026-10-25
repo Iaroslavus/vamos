@@ -27,7 +27,18 @@ export type LevelProgress = {
 const CURRICULUM: readonly CurriculumLesson[] = [
   { id: 'a1.hola.l1', level: 'A1', unit: 1, titleKey: 'learn.lessons.a1-u01-l01' },
   { id: 'a1.hola.l2', level: 'A1', unit: 1, titleKey: 'learn.lessons.a1-u01-l02' },
-  { id: 'a1.numbers.l1', level: 'A1', unit: 1, titleKey: 'learn.lessons.a1-u01-l03' },
+  { id: 'a1.cafe.l1', level: 'A1', unit: 2, titleKey: 'learn.lessons.a1-cafe-l1' },
+  { id: 'a1.cafe.l2', level: 'A1', unit: 2, titleKey: 'learn.lessons.a1-cafe-l2' },
+  { id: 'a1.numbers.l1', level: 'A1', unit: 3, titleKey: 'learn.lessons.a1-u01-l03' },
+  { id: 'a1.numbers.l2', level: 'A1', unit: 3, titleKey: 'learn.lessons.a1-numbers-l2' },
+  { id: 'a1.tienda.l1', level: 'A1', unit: 4, titleKey: 'learn.lessons.a1-tienda-l1' },
+  { id: 'a1.tienda.l2', level: 'A1', unit: 4, titleKey: 'learn.lessons.a1-tienda-l2' },
+  { id: 'a1.camino.l1', level: 'A1', unit: 5, titleKey: 'learn.lessons.a1-camino-l1' },
+  { id: 'a1.camino.l2', level: 'A1', unit: 5, titleKey: 'learn.lessons.a1-camino-l2' },
+  { id: 'a1.restaurante.l1', level: 'A1', unit: 6, titleKey: 'learn.lessons.a1-restaurante-l1' },
+  { id: 'a1.restaurante.l2', level: 'A1', unit: 6, titleKey: 'learn.lessons.a1-restaurante-l2' },
+  { id: 'a1.primera.l1', level: 'A1', unit: 7, titleKey: 'learn.lessons.a1-primera-l1' },
+  { id: 'a1.primera.l2', level: 'A1', unit: 7, titleKey: 'learn.lessons.a1-primera-l2' },
 ];
 
 export function getCurriculumLessons(): CurriculumLesson[] {

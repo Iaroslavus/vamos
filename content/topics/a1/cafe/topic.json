@@ -1,0 +1,12 @@
+{
+  "id": "a1.cafe",
+  "level": "A1",
+  "category": "food",
+  "title_ru": "В кафе",
+  "icon": "cup",
+  "can_do_ru": ["Заказать напиток", "Спросить цену", "Попросить счёт"],
+  "lessons": ["a1.cafe.l1", "a1.cafe.l2"],
+  "scene": "a1.cafe.scene",
+  "starter_day": 2,
+  "draft": true
+}

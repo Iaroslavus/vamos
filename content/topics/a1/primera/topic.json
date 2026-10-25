@@ -1,0 +1,12 @@
+{
+  "id": "a1.primera",
+  "level": "A1",
+  "category": "social",
+  "title_ru": "Первый разговор",
+  "icon": "messages",
+  "can_do_ru": ["Поздороваться и заказать", "Спросить дорогу", "Попрощаться"],
+  "lessons": ["a1.primera.l1", "a1.primera.l2"],
+  "scene": "a1.primera.scene",
+  "starter_day": 7,
+  "draft": true
+}

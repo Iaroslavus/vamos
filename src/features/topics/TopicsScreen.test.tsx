@@ -142,7 +142,7 @@ describe('TopicsScreen', () => {
       await screen.findByLabelText('¡Hola! Знакомство, 2 урока, 15 фраз, пройдено 0 из 2'),
     ).toBeTruthy();
     expect(screen.getByText('2 урока · 15 фраз')).toBeTruthy();
-    expect(screen.getByLabelText('Числа 1–10, 1 урок, 7 фраз, пройдено 0 из 1')).toBeTruthy();
+    expect(screen.getByLabelText('Числа и цены, 2 урока, 14 фраз, пройдено 0 из 2')).toBeTruthy();
     expect(screen.getByLabelText('Уровень A1')).toBeSelected();
     expect(screen.queryByText('Темы этого уровня ещё готовятся.')).toBeNull();
 
@@ -159,7 +159,7 @@ describe('TopicsScreen', () => {
 
     await fireEvent.changeText(screen.getByLabelText('Поиск темы'), 'числа');
     expect(screen.queryByText('¡Hola! Знакомство')).toBeNull();
-    expect(screen.getByText('Числа 1–10')).toBeTruthy();
+    expect(screen.getByText('Числа и цены')).toBeTruthy();
 
     await fireEvent.changeText(screen.getByLabelText('Поиск темы'), 'zzzz');
     expect(screen.getByText('Ничего не нашли')).toBeTruthy();
@@ -198,7 +198,7 @@ describe('TopicsScreen', () => {
     expect(
       await screen.findByLabelText('¡Hola! Знакомство, 2 урока, 15 фраз, пройдено 1 из 2'),
     ).toBeTruthy();
-    expect(screen.getByLabelText('Числа 1–10, 1 урок, 7 фраз, пройдено 0 из 1')).toBeTruthy();
+    expect(screen.getByLabelText('Числа и цены, 2 урока, 14 фраз, пройдено 0 из 2')).toBeTruthy();
     await flush();
   });
 });
@@ -217,7 +217,7 @@ describe('TopicScreen', () => {
     await renderWith(<TopicScreen />, repository());
 
     expect(await screen.findByText('Смогу…')).toBeTruthy();
-    expect(screen.getByLabelText('Поздороваться и попрощаться, ещё впереди')).toBeTruthy();
+    expect(screen.getByLabelText('Поздороваться, ещё впереди')).toBeTruthy();
     expect(screen.getByLabelText('Приветствия, текущий')).toBeTruthy();
     expect(screen.getByLabelText('Знакомство, закрыт')).toBeDisabled();
     expect(screen.getByLabelText('Знакомство на улице, сценка, закрыта')).toBeTruthy();
@@ -241,10 +241,9 @@ describe('TopicScreen', () => {
       repository({ readProgress: async () => snapshot(['a1.hola.l1']) }),
     );
 
-    expect(
-      await screen.findByLabelText('Поздороваться и попрощаться, уже получается'),
-    ).toBeTruthy();
-    expect(screen.getByLabelText('Сказать «спасибо» и «пожалуйста», ещё впереди')).toBeTruthy();
+    expect(await screen.findByLabelText('Поздороваться, уже получается')).toBeTruthy();
+    expect(screen.getByLabelText('Поблагодарить, уже получается')).toBeTruthy();
+    expect(screen.getByLabelText('Назвать имя, ещё впереди')).toBeTruthy();
     expect(screen.getByLabelText('Приветствия, пройден')).not.toBeDisabled();
     expect(screen.getByLabelText('Знакомство, текущий')).toBeTruthy();
     expect(screen.getByLabelText('Знакомство на улице, сценка, закрыта')).toBeTruthy();
@@ -261,13 +260,14 @@ describe('TopicScreen', () => {
     mockParams.id = 'a1.numbers';
     await renderWith(
       <TopicScreen />,
-      repository({ readProgress: async () => snapshot(['a1.numbers.l1']) }),
+      repository({ readProgress: async () => snapshot(['a1.numbers.l1', 'a1.numbers.l2']) }),
     );
 
-    expect(await screen.findByLabelText('Понять числа от 1 до 10, уже получается')).toBeTruthy();
+    expect(await screen.findByLabelText('Понять цену на слух, уже получается')).toBeTruthy();
     expect(screen.getByLabelText('Назвать количество, уже получается')).toBeTruthy();
+    expect(screen.getByLabelText('Спросить «сколько стоит?», уже получается')).toBeTruthy();
     expect(screen.getByLabelText('Числа 1–10, пройден')).toBeTruthy();
-    expect(screen.getByLabelText('Сколько штук?, сценка')).toBeTruthy();
+    expect(screen.getByLabelText('Сколько это стоит?, сценка')).toBeTruthy();
     expect(screen.queryByText('Сценка · закрыта')).toBeNull();
     await flush();
   });

@@ -1,0 +1,39 @@
+{
+  "id": "a1.restaurante.l1",
+  "topic": "a1.restaurante",
+  "title_ru": "Столик",
+  "items": [
+    "restaurante.mesa",
+    "restaurante.reservar",
+    "restaurante.esta_noche",
+    "restaurante.para_dos",
+    "restaurante.a_mi_nombre",
+    "restaurante.a_las_ocho",
+    "hola.por_favor"
+  ],
+  "speak": ["restaurante.mesa", "restaurante.reservar"],
+  "dialog": {
+    "lines": [
+      { "who": "npc", "es": "Buenas noches. ¿Tiene reserva?", "ru": "Добрый вечер. У вас бронь?" },
+      {
+        "who": "user",
+        "target": "restaurante.reservar",
+        "options": ["restaurante.reservar", "restaurante.mesa", "restaurante.esta_noche"]
+      },
+      { "who": "npc", "es": "¿Para cuántos?", "ru": "На сколько человек?" },
+      {
+        "who": "user",
+        "target": "restaurante.para_dos",
+        "options": ["restaurante.para_dos", "restaurante.mesa", "restaurante.a_las_ocho"]
+      },
+      { "who": "npc", "es": "¿A qué nombre?", "ru": "На чьё имя?" },
+      {
+        "who": "user",
+        "target": "restaurante.a_mi_nombre",
+        "options": ["restaurante.a_mi_nombre", "restaurante.para_dos", "restaurante.reservar"]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

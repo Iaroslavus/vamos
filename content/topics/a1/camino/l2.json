@@ -1,0 +1,43 @@
+{
+  "id": "a1.camino.l2",
+  "topic": "a1.camino",
+  "title_ru": "Направо и прямо",
+  "items": [
+    "camino.derecha",
+    "camino.izquierda",
+    "camino.recto",
+    "camino.derecho",
+    "camino.cerca",
+    "camino.lejos",
+    "camino.primera"
+  ],
+  "speak": ["camino.derecha", "camino.izquierda", "camino.recto"],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "Siga todo recto y luego a la derecha.",
+        "ru": "Прямо, потом направо."
+      },
+      {
+        "who": "user",
+        "target": "camino.recto",
+        "options": ["camino.recto", "camino.derecho", "camino.izquierda"]
+      },
+      { "who": "npc", "es": "El metro está a la izquierda.", "ru": "Метро — налево." },
+      {
+        "who": "user",
+        "target": "camino.izquierda",
+        "options": ["camino.izquierda", "camino.derecha", "camino.lejos"]
+      },
+      { "who": "npc", "es": "Está cerca.", "ru": "Это близко." },
+      {
+        "who": "user",
+        "target": "camino.cerca",
+        "options": ["camino.cerca", "camino.lejos", "camino.primera"]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

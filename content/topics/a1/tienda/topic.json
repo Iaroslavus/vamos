@@ -1,0 +1,12 @@
+{
+  "id": "a1.tienda",
+  "level": "A1",
+  "category": "shopping",
+  "title_ru": "В магазине",
+  "icon": "bag",
+  "can_do_ru": ["Спросить, есть ли товар", "Попросить пакет", "Оплатить картой"],
+  "lessons": ["a1.tienda.l1", "a1.tienda.l2"],
+  "scene": "a1.tienda.scene",
+  "starter_day": 4,
+  "draft": true
+}

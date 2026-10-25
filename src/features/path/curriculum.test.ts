@@ -8,19 +8,33 @@ import {
 } from './curriculum';
 
 describe('curriculum path', () => {
-  it('lists A1 unit 1 in lesson order', () => {
+  it('lists the starter week in day order', () => {
     expect(getCurriculumLessons().map((lesson) => lesson.id)).toEqual([
       'a1.hola.l1',
       'a1.hola.l2',
+      'a1.cafe.l1',
+      'a1.cafe.l2',
       'a1.numbers.l1',
+      'a1.numbers.l2',
+      'a1.tienda.l1',
+      'a1.tienda.l2',
+      'a1.camino.l1',
+      'a1.camino.l2',
+      'a1.restaurante.l1',
+      'a1.restaurante.l2',
+      'a1.primera.l1',
+      'a1.primera.l2',
     ]);
   });
 
   it('opens the first lesson and locks the rest', () => {
     const nodes = buildPathNodes(getCurriculumLessons(), []);
 
-    expect(nodes.map((node) => node.status)).toEqual(['current', 'locked', 'locked']);
-    expect(nodes.map((node) => node.side)).toEqual(['left', 'right', 'left']);
+    expect(nodes[0]?.status).toBe('current');
+    expect(nodes.slice(1).every((node) => node.status === 'locked')).toBe(true);
+    expect(nodes.map((node) => node.side)).toEqual(
+      nodes.map((_, index) => (index % 2 === 0 ? 'left' : 'right')),
+    );
     expect(pathUnit(getCurriculumLessons(), [])?.id).toBe('a1.hola.l1');
   });
 
@@ -28,7 +42,9 @@ describe('curriculum path', () => {
     const lessons = getCurriculumLessons();
     const nodes = buildPathNodes(lessons, ['a1.hola.l1']);
 
-    expect(nodes.map((node) => node.status)).toEqual(['completed', 'current', 'locked']);
+    expect(nodes[0]?.status).toBe('completed');
+    expect(nodes[1]?.status).toBe('current');
+    expect(nodes.slice(2).every((node) => node.status === 'locked')).toBe(true);
     expect(pathUnit(lessons, ['a1.hola.l1'])?.id).toBe('a1.hola.l2');
   });
 
@@ -37,7 +53,7 @@ describe('curriculum path', () => {
     const done = lessons.map((lesson) => lesson.id);
 
     expect(buildPathNodes(lessons, done).every((node) => node.status === 'completed')).toBe(true);
-    expect(pathUnit(lessons, done)?.id).toBe('a1.numbers.l1');
+    expect(pathUnit(lessons, done)?.id).toBe('a1.primera.l2');
   });
 
   it('returns no unit for an empty path', () => {
@@ -52,7 +68,7 @@ describe('level progress', () => {
     expect(rows.find((row) => row.level === 'A1')).toEqual({
       level: 'A1',
       completed: 0,
-      total: 3,
+      total: 14,
     });
     expect(rows.filter((row) => row.level !== 'A1').every((row) => row.total === 0)).toBe(true);
     expect(currentLevel(rows)).toBe('A1');

@@ -1,0 +1,12 @@
+{
+  "id": "a1.camino",
+  "level": "A1",
+  "category": "city",
+  "title_ru": "Как пройти?",
+  "icon": "pin",
+  "can_do_ru": ["Спросить дорогу", "Понять «направо»", "Понять «налево» и «прямо»"],
+  "lessons": ["a1.camino.l1", "a1.camino.l2"],
+  "scene": "a1.camino.scene",
+  "starter_day": 5,
+  "draft": true
+}

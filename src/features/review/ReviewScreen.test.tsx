@@ -273,7 +273,7 @@ describe('ReviewScreen', () => {
     await renderReview();
 
     await fireEvent.press(await screen.findByText('Быстрое повторение'));
-    await fireEvent.press(await screen.findByRole('button', { name: 'до свидания' }));
+    await fireEvent.press(await screen.findByRole('button', { name: 'здесь' }));
     await fireEvent.press(screen.getByRole('button', { name: 'Проверить' }));
     await pressContinue();
 

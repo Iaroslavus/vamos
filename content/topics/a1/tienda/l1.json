@@ -1,0 +1,39 @@
+{
+  "id": "a1.tienda.l1",
+  "topic": "a1.tienda",
+  "title_ru": "Есть ли?",
+  "items": [
+    "tienda.tiene_pan",
+    "tienda.hay_leche",
+    "tienda.si_hay",
+    "tienda.no_hay",
+    "tienda.esto",
+    "tienda.eso",
+    "tienda.quiero_esto"
+  ],
+  "speak": ["tienda.tiene_pan", "tienda.quiero_esto"],
+  "dialog": {
+    "lines": [
+      { "who": "npc", "es": "¿Qué desea?", "ru": "Что хотите?" },
+      {
+        "who": "user",
+        "target": "tienda.quiero_esto",
+        "options": ["tienda.quiero_esto", "tienda.tiene_pan", "tienda.hay_leche"]
+      },
+      { "who": "npc", "es": "¿Pan?", "ru": "Хлеб?" },
+      {
+        "who": "user",
+        "target": "tienda.tiene_pan",
+        "options": ["tienda.tiene_pan", "tienda.no_hay", "tienda.si_hay"]
+      },
+      { "who": "npc", "es": "Sí, hay.", "ru": "Да, есть." },
+      {
+        "who": "user",
+        "target": "tienda.si_hay",
+        "options": ["tienda.si_hay", "tienda.no_hay", "tienda.eso"]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

@@ -1,0 +1,219 @@
+[
+  {
+    "id": "restaurante.mesa",
+    "type": "phrase",
+    "es": "Una mesa para dos, por favor",
+    "ru": "Столик на двоих, пожалуйста",
+    "parts": [
+      { "es": "Una mesa", "ru": "столик" },
+      { "es": "para dos,", "ru": "на двоих" },
+      { "es": "por favor", "ru": "пожалуйста" }
+    ],
+    "say_ru": "уна мЭса пАра дос, пор фавОр",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["restaurant"],
+    "draft": true
+  },
+  {
+    "id": "restaurante.reservar",
+    "type": "phrase",
+    "es": "Quisiera reservar",
+    "ru": "Я бы хотел забронировать",
+    "parts": [
+      { "es": "Quisiera", "ru": "я бы хотел" },
+      { "es": "reservar", "ru": "забронировать" }
+    ],
+    "say_ru": "кисьЕра рресервАр",
+    "note_ru": "Вежливая готовая фраза. Женщина говорит так же.",
+    "why_ru": "Quisiera не спрягают на A1: это целая формула вежливости.",
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["restaurant"],
+    "draft": true
+  },
+  {
+    "id": "restaurante.esta_noche",
+    "type": "phrase",
+    "es": "Esta noche",
+    "ru": "Сегодня вечером",
+    "parts": [
+      { "es": "Esta", "ru": "этот" },
+      { "es": "noche", "ru": "вечер" }
+    ],
+    "say_ru": "Эста нОче",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["restaurant"],
+    "draft": true
+  },
+  {
+    "id": "restaurante.para_dos",
+    "type": "phrase",
+    "es": "Para dos",
+    "ru": "На двоих",
+    "parts": [
+      { "es": "Para", "ru": "для" },
+      { "es": "dos", "ru": "двоих" }
+    ],
+    "say_ru": "пАра дос",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["restaurant"],
+    "draft": true
+  },
+  {
+    "id": "restaurante.a_mi_nombre",
+    "type": "phrase",
+    "es": "A mi nombre",
+    "ru": "На моё имя",
+    "parts": [
+      { "es": "A mi", "ru": "на моё" },
+      { "es": "nombre", "ru": "имя" }
+    ],
+    "say_ru": "а ми нОмбре",
+    "note_ru": "Ответ на «¿a qué nombre?».",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["restaurant"],
+    "draft": true
+  },
+  {
+    "id": "restaurante.a_las_ocho",
+    "type": "phrase",
+    "es": "A las ocho",
+    "ru": "В восемь",
+    "parts": [
+      { "es": "A las", "ru": "в" },
+      { "es": "ocho", "ru": "восемь" }
+    ],
+    "say_ru": "а лас Очо",
+    "note_ru": "Час называют после a las.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["restaurant"],
+    "draft": true
+  },
+  {
+    "id": "restaurante.la_carta",
+    "type": "phrase",
+    "es": "La carta, por favor",
+    "ru": "Меню, пожалуйста",
+    "parts": [
+      { "es": "La carta,", "ru": "меню" },
+      { "es": "por favor", "ru": "пожалуйста" }
+    ],
+    "say_ru": "ла кАрта, пор фавОр",
+    "note_ru": "В Испании меню — la carta.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "es",
+    "audio": { "es": null, "latam": null },
+    "tags": ["restaurant"],
+    "draft": true
+  },
+  {
+    "id": "restaurante.el_menu",
+    "type": "phrase",
+    "es": "El menú, por favor",
+    "ru": "Принесите меню",
+    "parts": [
+      { "es": "El menú,", "ru": "меню" },
+      { "es": "por favor", "ru": "пожалуйста" }
+    ],
+    "say_ru": "эль менУ, пор фавОр",
+    "note_ru": "В Латинской Америке чаще el menú.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "latam",
+    "audio": { "es": null, "latam": null },
+    "tags": ["restaurant"],
+    "draft": true
+  },
+  {
+    "id": "restaurante.para_mi",
+    "type": "phrase",
+    "es": "Para mí",
+    "ru": "Мне",
+    "parts": [
+      { "es": "Para", "ru": "для" },
+      { "es": "mí", "ru": "меня" }
+    ],
+    "say_ru": "пАра ми",
+    "note_ru": "После этого называют блюдо.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["restaurant"],
+    "draft": true
+  },
+  {
+    "id": "restaurante.sin_gluten",
+    "type": "phrase",
+    "es": "Sin gluten, por favor",
+    "ru": "Без глютена, пожалуйста",
+    "parts": [
+      { "es": "Sin gluten,", "ru": "без глютена" },
+      { "es": "por favor", "ru": "пожалуйста" }
+    ],
+    "say_ru": "син глУтен, пор фавОр",
+    "note_ru": null,
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["restaurant", "allergy"],
+    "draft": true
+  },
+  {
+    "id": "restaurante.alergia",
+    "type": "phrase",
+    "es": "Tengo alergia",
+    "ru": "У меня аллергия",
+    "parts": [
+      { "es": "Tengo", "ru": "у меня есть" },
+      { "es": "alergia", "ru": "аллергия" }
+    ],
+    "say_ru": "тЭнго алЭрхиа",
+    "note_ru": "Дальше называют продукт: al gluten, a los frutos secos.",
+    "why_ru": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["restaurant", "allergy"],
+    "draft": true
+  },
+  {
+    "id": "restaurante.fructos",
+    "type": "phrase",
+    "es": "Soy alérgico a los frutos secos",
+    "ru": "У меня аллергия на орехи",
+    "parts": [
+      { "es": "Soy alérgico", "ru": "я аллергик" },
+      { "es": "a los frutos secos", "ru": "на орехи" }
+    ],
+    "say_ru": "сой алЭрхико а лос фрУтос сЭкос",
+    "note_ru": "Говорящая женщина: soy alérgica.",
+    "why_ru": "Окончание зависит от того, кто говорит: alérgico или alérgica.",
+    "level": "A1",
+    "variant": "both",
+    "audio": { "es": null, "latam": null },
+    "tags": ["restaurant", "allergy"],
+    "draft": true
+  }
+]

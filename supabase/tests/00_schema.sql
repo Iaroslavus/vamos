@@ -64,7 +64,10 @@ select is_empty(
   $$
     select p.polname
     from pg_policy p
-    where p.polroles = '{0}'::oid[] or 'anon'::regrole::oid = any (p.polroles)
+    join pg_class c on c.oid = p.polrelid
+    join pg_namespace n on n.oid = c.relnamespace
+    where n.nspname = 'public'
+      and (p.polroles = '{0}'::oid[] or 'anon'::regrole::oid = any (p.polroles))
   $$,
   'no policy is granted to anon or PUBLIC'
 );
