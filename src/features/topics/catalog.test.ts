@@ -50,7 +50,11 @@ describe('topic catalog', () => {
       'city',
       'social',
     ]);
-    expect(sections[0]?.topics.map((item) => item.id)).toEqual(['a1.hola', 'a1.numbers']);
+    expect(sections[0]?.topics.map((item) => item.id)).toEqual([
+      'a1.hola',
+      'a1.numbers',
+      'a1.tiempo',
+    ]);
     expect(sections[0]?.topics[0]).toMatchObject({
       lessonCount: 2,
       phraseCount: 15,
@@ -58,9 +62,14 @@ describe('topic catalog', () => {
       progress: 0,
     });
     expect(sections[0]?.topics[1]).toMatchObject({ lessonCount: 2, phraseCount: 14 });
-    expect(sections[1]?.topics.map((item) => item.id)).toEqual(['a1.cafe', 'a1.restaurante']);
-    expect(sections[2]?.topics.map((item) => item.id)).toEqual(['a1.tienda']);
-    expect(sections[3]?.topics.map((item) => item.id)).toEqual(['a1.camino']);
+    expect(sections[1]?.topics.map((item) => item.id)).toEqual([
+      'a1.cafe',
+      'a1.restaurante',
+      'a1.mercado',
+      'a1.supermercado',
+    ]);
+    expect(sections[2]?.topics.map((item) => item.id)).toEqual(['a1.tienda', 'a1.ropa']);
+    expect(sections[3]?.topics.map((item) => item.id)).toEqual(['a1.camino', 'a1.metro']);
     expect(sections[4]?.topics.map((item) => item.id)).toEqual(['a1.primera']);
     expect(topicSections(listTopics(), listLessons(), [], 'B1', '')).toEqual([]);
   });

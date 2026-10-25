@@ -1,0 +1,52 @@
+{
+  "id": "a1.supermercado.l4",
+  "topic": "a1.supermercado",
+  "title_ru": "На кассе",
+  "items": [
+    "supermercado.la_tarjeta",
+    "supermercado.en_efectivo",
+    "supermercado.una_bolsa",
+    "supermercado.el_ticket",
+    "supermercado.el_recibo",
+    "supermercado.puede_pasar",
+    "supermercado.aqui_tiene"
+  ],
+  "speak": [
+    "supermercado.la_tarjeta",
+    "supermercado.una_bolsa"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿Tarjeta o efectivo?",
+        "ru": "Картой или наличными?"
+      },
+      {
+        "who": "user",
+        "target": "supermercado.la_tarjeta",
+        "options": [
+          "supermercado.la_tarjeta",
+          "supermercado.en_efectivo",
+          "supermercado.una_bolsa"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "Puede pasar. Aquí tiene.",
+        "ru": "Проходите. Вот."
+      },
+      {
+        "who": "user",
+        "target": "supermercado.el_ticket",
+        "options": [
+          "supermercado.el_ticket",
+          "supermercado.el_recibo",
+          "supermercado.aqui_tiene"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

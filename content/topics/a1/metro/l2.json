@@ -1,0 +1,52 @@
+{
+  "id": "a1.metro.l2",
+  "topic": "a1.metro",
+  "title_ru": "Куда ехать",
+  "items": [
+    "metro.a_que_linea",
+    "metro.linea_dos",
+    "metro.direccion_centro",
+    "metro.donde_bajo",
+    "metro.la_proxima",
+    "metro.transbordo",
+    "metro.salida"
+  ],
+  "speak": [
+    "metro.linea_dos",
+    "metro.donde_bajo"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿A qué línea va?",
+        "ru": "На какую линию вам?"
+      },
+      {
+        "who": "user",
+        "target": "metro.linea_dos",
+        "options": [
+          "metro.linea_dos",
+          "metro.a_que_linea",
+          "metro.direccion_centro"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "Dirección centro.",
+        "ru": "В сторону центра."
+      },
+      {
+        "who": "user",
+        "target": "metro.donde_bajo",
+        "options": [
+          "metro.donde_bajo",
+          "metro.la_proxima",
+          "metro.salida"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

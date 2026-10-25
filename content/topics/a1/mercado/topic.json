@@ -1,0 +1,20 @@
+{
+  "id": "a1.mercado",
+  "level": "A1",
+  "category": "food",
+  "title_ru": "Рынок и продукты",
+  "icon": "carrot",
+  "can_do_ru": [
+    "Купить фрукты и овощи",
+    "Попросить килограмм",
+    "Спросить, свежее ли"
+  ],
+  "lessons": [
+    "a1.mercado.l1",
+    "a1.mercado.l2",
+    "a1.mercado.l3",
+    "a1.mercado.l4"
+  ],
+  "scene": "a1.mercado.scene",
+  "draft": true
+}

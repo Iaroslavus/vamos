@@ -1,0 +1,52 @@
+{
+  "id": "a1.supermercado.l3",
+  "topic": "a1.supermercado",
+  "title_ru": "Сколько взять",
+  "items": [
+    "supermercado.una_botella",
+    "supermercado.un_paquete",
+    "supermercado.dos_litros",
+    "supermercado.una_barra_de_pan",
+    "supermercado.necesito",
+    "supermercado.tambien",
+    "supermercado.hay_oferta"
+  ],
+  "speak": [
+    "supermercado.una_botella",
+    "supermercado.dos_litros"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿Una botella o un paquete?",
+        "ru": "Бутылку или пачку?"
+      },
+      {
+        "who": "user",
+        "target": "supermercado.una_botella",
+        "options": [
+          "supermercado.una_botella",
+          "supermercado.un_paquete",
+          "supermercado.una_barra_de_pan"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "¿Dos litros?",
+        "ru": "Два литра?"
+      },
+      {
+        "who": "user",
+        "target": "supermercado.dos_litros",
+        "options": [
+          "supermercado.dos_litros",
+          "supermercado.necesito",
+          "supermercado.hay_oferta"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

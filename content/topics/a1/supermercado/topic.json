@@ -1,0 +1,20 @@
+{
+  "id": "a1.supermercado",
+  "level": "A1",
+  "category": "food",
+  "title_ru": "Супермаркет",
+  "icon": "cart",
+  "can_do_ru": [
+    "Найти продукт в зале",
+    "Сказать, сколько нужно",
+    "Оплатить на кассе"
+  ],
+  "lessons": [
+    "a1.supermercado.l1",
+    "a1.supermercado.l2",
+    "a1.supermercado.l3",
+    "a1.supermercado.l4"
+  ],
+  "scene": "a1.supermercado.scene",
+  "draft": true
+}

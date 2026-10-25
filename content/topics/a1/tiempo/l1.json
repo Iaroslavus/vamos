@@ -1,0 +1,52 @@
+{
+  "id": "a1.tiempo.l1",
+  "topic": "a1.tiempo",
+  "title_ru": "Дни недели",
+  "items": [
+    "tiempo.el_lunes",
+    "tiempo.el_martes",
+    "tiempo.el_miercoles",
+    "tiempo.el_jueves",
+    "tiempo.el_viernes",
+    "tiempo.el_sabado",
+    "tiempo.el_domingo"
+  ],
+  "speak": [
+    "tiempo.el_lunes",
+    "tiempo.el_viernes"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿Qué día es hoy?",
+        "ru": "Какой сегодня день?"
+      },
+      {
+        "who": "user",
+        "target": "tiempo.el_lunes",
+        "options": [
+          "tiempo.el_lunes",
+          "tiempo.el_martes",
+          "tiempo.el_miercoles"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "¿Y mañana?",
+        "ru": "А завтра?"
+      },
+      {
+        "who": "user",
+        "target": "tiempo.el_martes",
+        "options": [
+          "tiempo.el_martes",
+          "tiempo.el_viernes",
+          "tiempo.el_domingo"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

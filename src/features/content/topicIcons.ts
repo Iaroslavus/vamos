@@ -1,10 +1,15 @@
 import {
+  Bus,
+  Carrot,
+  Clock,
   Coffee,
   Hand,
   Hash,
   MapPin,
   MessageCircle,
+  Shirt,
   ShoppingBag,
+  ShoppingCart,
   Sparkles,
   UtensilsCrossed,
   type LucideIcon,
@@ -18,6 +23,11 @@ const TOPIC_ICONS: Record<string, LucideIcon> = {
   pin: MapPin,
   utensils: UtensilsCrossed,
   messages: MessageCircle,
+  clock: Clock,
+  carrot: Carrot,
+  cart: ShoppingCart,
+  shirt: Shirt,
+  bus: Bus,
 };
 
 /** Topic `icon` slug → line icon. Unknown slugs fall back to a spark. */

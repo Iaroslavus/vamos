@@ -1,0 +1,52 @@
+{
+  "id": "a1.ropa.l3",
+  "topic": "a1.ropa",
+  "title_ru": "Примерка",
+  "items": [
+    "ropa.puedo_probarme",
+    "ropa.el_probador",
+    "ropa.me_queda_bien",
+    "ropa.me_queda_grande",
+    "ropa.me_queda_pequena",
+    "ropa.esta_camisa",
+    "ropa.me_gusta"
+  ],
+  "speak": [
+    "ropa.puedo_probarme",
+    "ropa.me_queda_bien"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "El probador está libre.",
+        "ru": "Примерочная свободна."
+      },
+      {
+        "who": "user",
+        "target": "ropa.puedo_probarme",
+        "options": [
+          "ropa.puedo_probarme",
+          "ropa.el_probador",
+          "ropa.esta_camisa"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "¿Qué tal?",
+        "ru": "Ну как?"
+      },
+      {
+        "who": "user",
+        "target": "ropa.me_queda_bien",
+        "options": [
+          "ropa.me_queda_bien",
+          "ropa.me_queda_grande",
+          "ropa.me_queda_pequena"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

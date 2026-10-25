@@ -1,0 +1,52 @@
+{
+  "id": "a1.tiempo.l4",
+  "topic": "a1.tiempo",
+  "title_ru": "Во сколько встречаемся",
+  "items": [
+    "tiempo.a_que_hora",
+    "tiempo.a_las_diez",
+    "tiempo.a_la_una",
+    "tiempo.el_sabado_por_la_manana",
+    "tiempo.quedamos_a_las_cinco",
+    "tiempo.vale",
+    "tiempo.hasta_manana"
+  ],
+  "speak": [
+    "tiempo.a_las_diez",
+    "tiempo.quedamos_a_las_cinco"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿A qué hora quedamos?",
+        "ru": "Во сколько встречаемся?"
+      },
+      {
+        "who": "user",
+        "target": "tiempo.a_las_diez",
+        "options": [
+          "tiempo.a_las_diez",
+          "tiempo.a_la_una",
+          "tiempo.quedamos_a_las_cinco"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "Vale. ¿Hasta mañana?",
+        "ru": "Ладно. До завтра?"
+      },
+      {
+        "who": "user",
+        "target": "tiempo.hasta_manana",
+        "options": [
+          "tiempo.hasta_manana",
+          "tiempo.vale",
+          "tiempo.el_sabado_por_la_manana"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

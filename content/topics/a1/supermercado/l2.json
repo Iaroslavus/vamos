@@ -1,0 +1,52 @@
+{
+  "id": "a1.supermercado.l2",
+  "topic": "a1.supermercado",
+  "title_ru": "Где это лежит",
+  "items": [
+    "supermercado.donde_esta",
+    "supermercado.al_fondo",
+    "supermercado.a_la_derecha",
+    "supermercado.a_la_izquierda",
+    "supermercado.en_el_pasillo",
+    "supermercado.la_caja",
+    "supermercado.busco"
+  ],
+  "speak": [
+    "supermercado.donde_esta",
+    "supermercado.al_fondo"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿Qué busca?",
+        "ru": "Что вы ищете?"
+      },
+      {
+        "who": "user",
+        "target": "supermercado.busco",
+        "options": [
+          "supermercado.busco",
+          "supermercado.donde_esta",
+          "supermercado.la_caja"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "La leche está al fondo, a la derecha.",
+        "ru": "Молоко в конце зала, направо."
+      },
+      {
+        "who": "user",
+        "target": "supermercado.al_fondo",
+        "options": [
+          "supermercado.al_fondo",
+          "supermercado.a_la_derecha",
+          "supermercado.a_la_izquierda"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}
