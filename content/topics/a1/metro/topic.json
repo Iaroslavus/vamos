@@ -1,0 +1,20 @@
+{
+  "id": "a1.metro",
+  "level": "A1",
+  "category": "city",
+  "title_ru": "Метро и автобус",
+  "icon": "bus",
+  "can_do_ru": [
+    "Купить билет",
+    "Спросить, где выйти",
+    "Понять номер автобуса"
+  ],
+  "lessons": [
+    "a1.metro.l1",
+    "a1.metro.l2",
+    "a1.metro.l3",
+    "a1.metro.l4"
+  ],
+  "scene": "a1.metro.scene",
+  "draft": true
+}

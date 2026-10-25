@@ -1,0 +1,52 @@
+{
+  "id": "a1.supermercado.l1",
+  "topic": "a1.supermercado",
+  "title_ru": "Продукты",
+  "items": [
+    "supermercado.la_leche",
+    "supermercado.el_pan",
+    "supermercado.el_agua",
+    "supermercado.el_queso",
+    "supermercado.el_pollo",
+    "supermercado.el_arroz",
+    "supermercado.los_huevos"
+  ],
+  "speak": [
+    "supermercado.la_leche",
+    "supermercado.el_pan"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿Qué necesita?",
+        "ru": "Что вам нужно?"
+      },
+      {
+        "who": "user",
+        "target": "supermercado.la_leche",
+        "options": [
+          "supermercado.la_leche",
+          "supermercado.el_pan",
+          "supermercado.el_agua"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "¿Y pan?",
+        "ru": "А хлеб?"
+      },
+      {
+        "who": "user",
+        "target": "supermercado.el_pan",
+        "options": [
+          "supermercado.el_pan",
+          "supermercado.el_queso",
+          "supermercado.los_huevos"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

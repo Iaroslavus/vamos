@@ -1,0 +1,52 @@
+{
+  "id": "a1.ropa.l2",
+  "topic": "a1.ropa",
+  "title_ru": "Цвет",
+  "items": [
+    "ropa.negro",
+    "ropa.blanco",
+    "ropa.azul",
+    "ropa.la_camiseta",
+    "ropa.los_pantalones",
+    "ropa.la_camisa",
+    "ropa.camiseta_negra"
+  ],
+  "speak": [
+    "ropa.la_camiseta",
+    "ropa.camiseta_negra"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿De qué color?",
+        "ru": "Какого цвета?"
+      },
+      {
+        "who": "user",
+        "target": "ropa.camiseta_negra",
+        "options": [
+          "ropa.camiseta_negra",
+          "ropa.negro",
+          "ropa.azul"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "¿Camiseta o camisa?",
+        "ru": "Футболка или рубашка?"
+      },
+      {
+        "who": "user",
+        "target": "ropa.la_camiseta",
+        "options": [
+          "ropa.la_camiseta",
+          "ropa.la_camisa",
+          "ropa.los_pantalones"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

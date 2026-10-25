@@ -1,0 +1,52 @@
+{
+  "id": "a1.metro.l3",
+  "topic": "a1.metro",
+  "title_ru": "Автобус",
+  "items": [
+    "metro.el_autobus",
+    "metro.el_bus",
+    "metro.numero_cinco",
+    "metro.esta_parada",
+    "metro.la_parada",
+    "metro.va_al_centro",
+    "metro.si_al_centro"
+  ],
+  "speak": [
+    "metro.va_al_centro",
+    "metro.numero_cinco"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿Esta parada le sirve?",
+        "ru": "Вам эта остановка?"
+      },
+      {
+        "who": "user",
+        "target": "metro.va_al_centro",
+        "options": [
+          "metro.va_al_centro",
+          "metro.esta_parada",
+          "metro.la_parada"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "Sí. Es el número cinco.",
+        "ru": "Да. Это пятый номер."
+      },
+      {
+        "who": "user",
+        "target": "metro.numero_cinco",
+        "options": [
+          "metro.numero_cinco",
+          "metro.el_autobus",
+          "metro.el_bus"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

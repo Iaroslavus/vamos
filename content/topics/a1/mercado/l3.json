@@ -1,0 +1,52 @@
+{
+  "id": "a1.mercado.l3",
+  "topic": "a1.mercado",
+  "title_ru": "Свежее ли",
+  "items": [
+    "mercado.estan_frescos",
+    "mercado.esta_fresca",
+    "mercado.esta_muy_rico",
+    "mercado.quiero",
+    "mercado.quisiera",
+    "mercado.algo_mas",
+    "mercado.eso_es_todo"
+  ],
+  "speak": [
+    "mercado.estan_frescos",
+    "mercado.quisiera"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "Los tomates están muy ricos.",
+        "ru": "Помидоры очень вкусные."
+      },
+      {
+        "who": "user",
+        "target": "mercado.estan_frescos",
+        "options": [
+          "mercado.estan_frescos",
+          "mercado.esta_fresca",
+          "mercado.esta_muy_rico"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "Sí, de hoy. ¿Algo más?",
+        "ru": "Да, сегодняшние. Ещё что-нибудь?"
+      },
+      {
+        "who": "user",
+        "target": "mercado.eso_es_todo",
+        "options": [
+          "mercado.eso_es_todo",
+          "mercado.algo_mas",
+          "mercado.quisiera"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

@@ -1,0 +1,52 @@
+{
+  "id": "a1.ropa.l4",
+  "topic": "a1.ropa",
+  "title_ru": "Не подходит",
+  "items": [
+    "ropa.no_me_queda",
+    "ropa.muy_caro",
+    "ropa.muy_cara",
+    "ropa.me_lo_llevo",
+    "ropa.solo_miro",
+    "ropa.hay_rebaja",
+    "ropa.hay_descuento"
+  ],
+  "speak": [
+    "ropa.no_me_queda",
+    "ropa.solo_miro"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿Se lo lleva?",
+        "ru": "Берёте?"
+      },
+      {
+        "who": "user",
+        "target": "ropa.muy_caro",
+        "options": [
+          "ropa.muy_caro",
+          "ropa.muy_cara",
+          "ropa.me_lo_llevo"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "Hay rebaja esta semana.",
+        "ru": "На этой неделе скидка."
+      },
+      {
+        "who": "user",
+        "target": "ropa.solo_miro",
+        "options": [
+          "ropa.solo_miro",
+          "ropa.no_me_queda",
+          "ropa.hay_rebaja"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

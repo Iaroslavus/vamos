@@ -1,0 +1,52 @@
+{
+  "id": "a1.mercado.l4",
+  "topic": "a1.mercado",
+  "title_ru": "У прилавка",
+  "items": [
+    "mercado.me_da_un_kilo",
+    "mercado.medio_kilo_de_fresas",
+    "mercado.hay_fresas",
+    "mercado.no_hay",
+    "mercado.cuanto_es_todo",
+    "mercado.aqui_tiene",
+    "mercado.muchas_gracias"
+  ],
+  "speak": [
+    "mercado.me_da_un_kilo",
+    "mercado.hay_fresas"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "Buenos días. ¿Qué desea?",
+        "ru": "Доброе утро. Что хотите?"
+      },
+      {
+        "who": "user",
+        "target": "mercado.me_da_un_kilo",
+        "options": [
+          "mercado.me_da_un_kilo",
+          "mercado.medio_kilo_de_fresas",
+          "mercado.hay_fresas"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "Aquí tiene.",
+        "ru": "Вот, держите."
+      },
+      {
+        "who": "user",
+        "target": "mercado.cuanto_es_todo",
+        "options": [
+          "mercado.cuanto_es_todo",
+          "mercado.no_hay",
+          "mercado.muchas_gracias"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true
+}

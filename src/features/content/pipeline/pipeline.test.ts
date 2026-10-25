@@ -49,6 +49,12 @@ describe('parseModelDraft', () => {
 });
 
 describe('draftIssues', () => {
+  it('asks a full topic for four lessons and 25–30 units', () => {
+    const issues = draftIssues(forceDraft(validDraft()), { ...spec, starterDay: undefined });
+    expect(issues.join('\n')).toContain('expected 4 lessons');
+    expect(issues.join('\n')).toContain('expected 25–30 units');
+  });
+
   it('names a lesson list that does not match the files', () => {
     const draft = forceDraft(validDraft());
     draft.topic = { ...draft.topic, lessons: ['a1.cafe.l9'] };
@@ -61,6 +67,9 @@ describe('draftIssues', () => {
     expect(prompt.user).toContain('A1');
     expect(prompt.user).toContain('Заказать напиток');
     expect(prompt.user).toContain('exactly 2 lessons');
+    const full = topicPrompt({ ...spec, starterDay: undefined });
+    expect(full.user).toContain('exactly 4 lessons');
+    expect(full.user).toContain('25–30');
     const body = JSON.parse(chatCompletionBody('gpt-4o-mini', prompt.system, prompt.user)) as {
       messages: { content: string }[];
     };
