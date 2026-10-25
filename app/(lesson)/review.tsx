@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { X } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
@@ -19,7 +19,10 @@ export default function ReviewScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { phase, reload, reveal, rate, begin, noteChecked, advancePractice } = useReviewSession();
+  const params = useLocalSearchParams<{ folder?: string | string[] }>();
+  const folderId = typeof params.folder === 'string' ? params.folder : undefined;
+  const { phase, reload, reveal, rate, begin, noteChecked, advancePractice } =
+    useReviewSession(folderId);
   const card = phase.status === 'study' ? phase.queue[phase.index] : undefined;
 
   const leave = () => {

@@ -22,6 +22,8 @@ type DialogBubbleProps = {
   revealed: boolean;
   onToggleTranslation?: () => void;
   onReplay?: () => void;
+  onLongPress?: () => void;
+  longPressHint?: string;
 };
 
 export function DialogBubble({
@@ -31,6 +33,8 @@ export function DialogBubble({
   revealed,
   onToggleTranslation,
   onReplay,
+  onLongPress,
+  longPressHint,
 }: DialogBubbleProps) {
   const { t } = useTranslation();
   const reduceMotion = useReduceMotion();
@@ -85,14 +89,18 @@ export function DialogBubble({
             <Volume2 color={colors.blue} size={22} strokeWidth={2.2} />
           </IconButton>
         ) : null}
-        {onToggleTranslation ? (
+        {onToggleTranslation || onLongPress ? (
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel={translationLabel}
+            accessibilityLabel={
+              onToggleTranslation ? translationLabel : t('lesson.dialogYou', { line: es })
+            }
+            accessibilityHint={longPressHint}
             onPress={onToggleTranslation}
+            onLongPress={onLongPress}
             style={styles.textHit}
           >
-            <LineText es={es} ru={revealed ? ru : null} user={user} />
+            <LineText es={es} ru={revealed && onToggleTranslation ? ru : null} user={user} />
           </Pressable>
         ) : (
           <View

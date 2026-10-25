@@ -1,7 +1,7 @@
 -- handle_new_user(): every new auth user (email or anonymous) gets a profile and a streak row.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(8);
+select plan(10);
 
 insert into auth.users (id, email, raw_user_meta_data, is_anonymous) values
   ('11111111-1111-1111-1111-111111111111', 'alice@example.com', '{"display_name": "  Alice  "}', false),
@@ -51,6 +51,17 @@ select results_eq(
   'streak starts at zero'
 );
 
+select results_eq(
+  $$
+    select system_key, name, color, kind::text
+    from public.folders
+    where user_id = '11111111-1111-1111-1111-111111111111'
+    order by system_key
+  $$,
+  $$ values ('difficult', 'Сложные', 'coral', 'system'), ('favorites', 'Избранное', 'saffron', 'system') $$,
+  'signup creates the favorites and difficult folders'
+);
+
 -- Overly long names must not break signup.
 insert into auth.users (id, email, raw_user_meta_data)
 values ('44444444-4444-4444-4444-444444444444', 'carol@example.com', jsonb_build_object('display_name', repeat('x', 100)));
@@ -71,6 +82,10 @@ select is_empty(
 select is_empty(
   $$ select 1 from public.streaks where user_id = '11111111-1111-1111-1111-111111111111' $$,
   'streak is removed together with the auth user'
+);
+select is_empty(
+  $$ select 1 from public.folders where user_id = '11111111-1111-1111-1111-111111111111' $$,
+  'folders are removed together with the auth user'
 );
 
 select * from finish();

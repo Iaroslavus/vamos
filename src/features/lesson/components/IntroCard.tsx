@@ -18,6 +18,7 @@ type IntroCardProps = {
   TopicIcon: LucideIcon;
   sayRu: string | null;
   saved: boolean;
+  saveLabel: string;
   onPlay: (rate: number) => void;
   onPlayPart: (part: Part) => void;
   onSave: () => void;
@@ -29,6 +30,7 @@ export function IntroCard({
   TopicIcon,
   sayRu,
   saved,
+  saveLabel,
   onPlay,
   onPlayPart,
   onSave,
@@ -40,7 +42,12 @@ export function IntroCard({
     <View style={styles.wrap}>
       <View style={styles.sole} />
       <View style={styles.face}>
-        <IntroCardHeader TopicIcon={TopicIcon} saved={saved} onSave={onSave} />
+        <IntroCardHeader
+          TopicIcon={TopicIcon}
+          saved={saved}
+          saveLabel={saveLabel}
+          onSave={onSave}
+        />
 
         <Text variant="h1" style={styles.center}>
           {item.es}

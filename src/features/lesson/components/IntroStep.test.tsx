@@ -11,7 +11,6 @@ import {
   stopLessonAudio,
 } from '@/features/audio/playback';
 import type { Item } from '@/features/content/schema';
-import { useFavoritesStore } from '@/features/vocab/favoritesStore';
 import i18n from '@/i18n';
 
 import { IntroStep } from './IntroStep';
@@ -29,6 +28,46 @@ jest.mock('@/features/audio/playback', () => ({
   playLessonAudio: jest.fn(),
   stopLessonAudio: jest.fn(),
 }));
+
+const mockVocabMemory = new Map<string, string>();
+
+jest.mock('@/features/auth/useSession', () => ({
+  useSession: () => ({
+    status: 'ready',
+    session: { user: { id: 'user-1', is_anonymous: true } },
+  }),
+}));
+
+jest.mock('@/features/vocab/defaultRepository', () => {
+  const { createVocabRepository } = jest.requireActual(
+    '@/features/vocab/repository',
+  ) as typeof import('@/features/vocab/repository');
+  return {
+    vocabRepository: createVocabRepository({
+      storage: {
+        getItem: async (key: string) => mockVocabMemory.get(key) ?? null,
+        setItem: async (key: string, value: string) => {
+          mockVocabMemory.set(key, value);
+        },
+        removeItem: async (key: string) => {
+          mockVocabMemory.delete(key);
+        },
+      },
+      network: {
+        isOnline: async () => false,
+        subscribe: () => () => undefined,
+      },
+      remote: {
+        fetchFolders: async () => [],
+        fetchItems: async () => [],
+        upsertFolder: async (_userId: string, folder: never) => folder,
+        insertItem: async () => undefined,
+        deleteItem: async () => undefined,
+      },
+      schedule: () => () => undefined,
+    }),
+  };
+});
 
 const phrase: Item = {
   id: 'hola.buenos_dias',
@@ -74,7 +113,7 @@ function renderStep(item: Item, props: Partial<ComponentProps<typeof IntroStep>>
 describe('IntroStep', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    useFavoritesStore.getState().reset();
+    mockVocabMemory.clear();
   });
 
   it('shows the new-phrase label, translation, hint, note, and equal audio buttons', async () => {
@@ -152,14 +191,15 @@ describe('IntroStep', () => {
     expect(screen.queryByText(phrase.why_ru ?? '')).toBeNull();
   });
 
-  it('saves the unit into local favorites', async () => {
+  it('opens the folder sheet and saves the unit into favorites', async () => {
     await renderStep(phrase);
 
     await fireEvent.press(screen.getByRole('button', { name: '+ В словник' }));
-    await fireEvent.press(screen.getByRole('button', { name: 'В избранном' }));
+    await fireEvent.press(await screen.findByRole('button', { name: 'Добавить в «Избранное»' }));
 
-    expect(useFavoritesStore.getState().itemIds).toEqual(['hola.buenos_dias']);
-    expect(screen.getByRole('button', { name: 'В избранном' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Убрать из «Избранное»' })).toBeTruthy();
+    await fireEvent.press(screen.getByText('Готово'));
+    expect(await screen.findByRole('button', { name: 'В избранном' })).toBeTruthy();
   });
 
   it('goes on from Дальше and lets the learner repeat aloud without grading', async () => {

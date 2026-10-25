@@ -18,7 +18,8 @@ import type { VocabularyItem } from '@/features/lesson/schema';
 import { useLessonStore } from '@/features/lesson/store';
 import { useProgress } from '@/features/progress/useProgress';
 import { buildTodayPlan, learnerDestination } from '@/features/today/course';
-import { useFavoritesStore } from '@/features/vocab/favoritesStore';
+import { AddToVocabSheet } from '@/features/vocab/components/AddToVocabSheet';
+import { useItemSaveState } from '@/features/vocab/hooks/useItemSaveState';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, space } from '@/theme/tokens';
 
@@ -36,13 +37,14 @@ export default function LessonSummaryScreen() {
   const accuracy = useLessonStore((s) => s.summary?.accuracy ?? 0);
   const elapsedMs = useLessonStore((s) => s.summary?.elapsedMs ?? 0);
   const newItems = useLessonStore((s) => s.summary?.newItems ?? EMPTY_NEW_ITEMS);
-  const savedIds = useFavoritesStore((s) => s.itemIds);
-  const addAll = useFavoritesStore((s) => s.addAll);
+  const newItemIds = newItems.map((item) => item.id);
+  const saveState = useItemSaveState(newItemIds);
+  const [vocabOpen, setVocabOpen] = useState(false);
   const reset = useLessonStore((s) => s.reset);
   const profile = useLearnerProfile();
   const progress = useProgress();
   const [leaving, setLeaving] = useState(false);
-  const allSaved = newItems.length > 0 && newItems.every((item) => savedIds.includes(item.id));
+  const allSaved = newItems.length > 0 && saveState.inFavorites;
 
   const finished = status === 'completed' || status === 'failed';
 
@@ -146,10 +148,10 @@ export default function LessonSummaryScreen() {
           <Button
             title={allSaved ? t('lesson.introSaved') : t('lesson.summaryToVocab')}
             variant="secondary"
-            disabled={allSaved || leaving}
+            disabled={leaving}
             onPress={() => {
               void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-              addAll(newItems.map((item) => item.id));
+              setVocabOpen(true);
             }}
           />
         ) : null}
@@ -160,6 +162,12 @@ export default function LessonSummaryScreen() {
           onPress={goHome}
         />
       </View>
+      <AddToVocabSheet
+        visible={vocabOpen}
+        itemIds={newItemIds}
+        onClose={() => setVocabOpen(false)}
+        onChanged={saveState.reload}
+      />
     </View>
   );
 }

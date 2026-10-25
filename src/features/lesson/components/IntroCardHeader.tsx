@@ -1,5 +1,4 @@
 import { BookmarkCheck, BookmarkPlus, type LucideIcon } from 'lucide-react-native';
-import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { colors, radius } from '@/theme/tokens';
@@ -7,12 +6,11 @@ import { colors, radius } from '@/theme/tokens';
 type IntroCardHeaderProps = {
   TopicIcon: LucideIcon;
   saved: boolean;
+  saveLabel: string;
   onSave: () => void;
 };
 
-export function IntroCardHeader({ TopicIcon, saved, onSave }: IntroCardHeaderProps) {
-  const { t } = useTranslation();
-
+export function IntroCardHeader({ TopicIcon, saved, saveLabel, onSave }: IntroCardHeaderProps) {
   return (
     <View style={styles.top}>
       <View style={styles.balance} />
@@ -25,7 +23,7 @@ export function IntroCardHeader({ TopicIcon, saved, onSave }: IntroCardHeaderPro
       </View>
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel={saved ? t('lesson.introSaved') : t('lesson.introSave')}
+        accessibilityLabel={saveLabel}
         accessibilityState={{ selected: saved }}
         onPress={onSave}
         style={[styles.save, saved && styles.saveOn]}

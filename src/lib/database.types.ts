@@ -275,11 +275,87 @@ export type Database = {
           },
         ];
       };
+      folders: {
+        Row: {
+          color: string;
+          created_at: string;
+          id: string;
+          kind: Database['public']['Enums']['folder_kind'];
+          name: string;
+          system_key: string | null;
+          topic_id: string | null;
+          updated_at: string;
+          user_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          color: string;
+          created_at?: string;
+          id?: string;
+          kind: Database['public']['Enums']['folder_kind'];
+          name: string;
+          system_key?: string | null;
+          topic_id?: string | null;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          color?: string;
+          created_at?: string;
+          id?: string;
+          kind?: Database['public']['Enums']['folder_kind'];
+          name?: string;
+          system_key?: string | null;
+          topic_id?: string | null;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'folders_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      folder_items: {
+        Row: {
+          added_at: string;
+          folder_id: string;
+          item_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          added_at?: string;
+          folder_id: string;
+          item_id: string;
+        };
+        Update: {
+          added_at?: string;
+          folder_id?: string;
+          item_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'folder_items_folder_id_fkey';
+            columns: ['folder_id'];
+            isOneToOne: false;
+            referencedRelation: 'folders';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
     };
     Views: {
       [_ in never]: never;
     };
     Functions: {
+      difficult_item_ids: {
+        Args: { p_now?: string; p_user_id: string };
+        Returns: { item_id: string }[];
+      };
       remap_content_v2_ids: { Args: Record<PropertyKey, never>; Returns: undefined };
       save_lesson_progress: {
         Args: { p_best_accuracy: number; p_completed_at: string; p_lesson_id: string };
@@ -302,6 +378,7 @@ export type Database = {
     };
     Enums: {
       cefr_level: 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
+      folder_kind: 'system' | 'custom';
       learning_goal: 'travel' | 'work' | 'relocation' | 'dele';
       lesson_status: 'in_progress' | 'completed';
       spanish_variant: 'spain' | 'latam';
@@ -418,6 +495,7 @@ export const Constants = {
   public: {
     Enums: {
       cefr_level: ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'],
+      folder_kind: ['system', 'custom'],
       learning_goal: ['travel', 'work', 'relocation', 'dele'],
       lesson_status: ['in_progress', 'completed'],
       spanish_variant: ['spain', 'latam'],

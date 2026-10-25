@@ -13,6 +13,9 @@ type DialogTranscriptProps = {
   openTranslations: ReadonlySet<number>;
   onToggleTranslation: (index: number) => void;
   onReplay: (index: number) => void;
+  onLongPress?: (index: number) => void;
+  canLongPress?: (index: number) => boolean;
+  longPressHint?: string;
 };
 
 export function DialogTranscript({
@@ -21,6 +24,9 @@ export function DialogTranscript({
   openTranslations,
   onToggleTranslation,
   onReplay,
+  onLongPress,
+  canLongPress,
+  longPressHint,
 }: DialogTranscriptProps) {
   const scrollRef = useRef<ScrollViewInstance>(null);
 
@@ -43,6 +49,7 @@ export function DialogTranscript({
           const canReplay =
             (state.phase === 'listen' && state.index === index) ||
             (state.phase === 'choose' && index < state.index);
+          const hold = Boolean(onLongPress && canLongPress?.(index));
           return (
             <DialogBubble
               key={`npc-${index}`}
@@ -52,9 +59,12 @@ export function DialogTranscript({
               revealed={openTranslations.has(index)}
               onToggleTranslation={() => onToggleTranslation(index)}
               onReplay={canReplay ? () => onReplay(index) : undefined}
+              onLongPress={hold ? () => onLongPress?.(index) : undefined}
+              longPressHint={hold ? longPressHint : undefined}
             />
           );
         }
+        const holdUser = Boolean(onLongPress && canLongPress?.(index));
         return (
           <DialogBubble
             key={`user-${index}`}
@@ -62,6 +72,8 @@ export function DialogTranscript({
             es={line.es}
             ru={line.ru}
             revealed={false}
+            onLongPress={holdUser ? () => onLongPress?.(index) : undefined}
+            longPressHint={holdUser ? longPressHint : undefined}
           />
         );
       })}

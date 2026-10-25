@@ -12,7 +12,6 @@ import { useLessonStore, type LessonExerciseItem } from '@/features/lesson/store
 import { ProgressProvider } from '@/features/progress/ProgressProvider';
 import type { ProgressRepository } from '@/features/progress/types';
 import { reviewRepository } from '@/features/review/defaultRepository';
-import { useFavoritesStore } from '@/features/vocab/favoritesStore';
 import i18n from '@/i18n';
 
 jest.mock('expo-haptics', () => ({
@@ -72,6 +71,39 @@ jest.mock('@/features/review/defaultRepository', () => ({
     introduceItems: jest.fn(async () => ({ cards: [], dueCount: 0, pending: 0 })),
   },
 }));
+
+const mockVocabMemory = new Map<string, string>();
+
+jest.mock('@/features/vocab/defaultRepository', () => {
+  const { createVocabRepository } = jest.requireActual(
+    '@/features/vocab/repository',
+  ) as typeof import('@/features/vocab/repository');
+  return {
+    vocabRepository: createVocabRepository({
+      storage: {
+        getItem: async (key: string) => mockVocabMemory.get(key) ?? null,
+        setItem: async (key: string, value: string) => {
+          mockVocabMemory.set(key, value);
+        },
+        removeItem: async (key: string) => {
+          mockVocabMemory.delete(key);
+        },
+      },
+      network: {
+        isOnline: async () => false,
+        subscribe: () => () => undefined,
+      },
+      remote: {
+        fetchFolders: async () => [],
+        fetchItems: async () => [],
+        upsertFolder: async (_userId: string, folder: never) => folder,
+        insertItem: async () => undefined,
+        deleteItem: async () => undefined,
+      },
+      schedule: () => () => undefined,
+    }),
+  };
+});
 
 function repository(recordCompletion: jest.Mock): ProgressRepository {
   return {
@@ -170,7 +202,7 @@ async function flush(): Promise<void> {
 describe('LessonSummaryScreen', () => {
   beforeEach(() => {
     jest.mocked(reviewRepository.introduceItems).mockClear();
-    useFavoritesStore.setState({ itemIds: [] });
+    mockVocabMemory.clear();
     finishLessonInStore();
   });
 
@@ -224,16 +256,17 @@ describe('LessonSummaryScreen', () => {
     expect(reviewRepository.introduceItems).toHaveBeenCalledTimes(1);
   });
 
-  it('saves every phrase from the lesson into the vocabulary list', async () => {
+  it('saves every phrase from the lesson into favorites', async () => {
     const recordCompletion = jest.fn().mockResolvedValue({ lessons: [], totalXp: 10, pending: 0 });
 
     await renderSummary(recordCompletion);
     await flush();
 
     await fireEvent.press(screen.getByText('В словник'));
+    await fireEvent.press(await screen.findByRole('button', { name: 'Добавить в «Избранное»' }));
+    await fireEvent.press(screen.getByText('Готово'));
 
-    expect(useFavoritesStore.getState().itemIds).toEqual(['hola']);
-    expect(screen.getByText('В избранном')).toBeOnTheScreen();
+    expect(await screen.findByText('В избранном')).toBeOnTheScreen();
     expect(screen.queryByText('В словник')).toBeNull();
   });
 
