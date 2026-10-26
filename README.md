@@ -69,11 +69,11 @@ npm run start:dev
 
 Профили в `eas.json`:
 
-| Профиль       | Назначение                                                    |
-| ------------- | ------------------------------------------------------------- |
-| `development` | Dev client для iOS-симулятора (`ios.simulator: true`)         |
-| `preview`     | Внутренняя сборка для проверки на устройстве                 |
-| `production`  | Сборка для App Store и Google Play                           |
+| Профиль       | Назначение                                            |
+| ------------- | ----------------------------------------------------- |
+| `development` | Dev client для iOS-симулятора (`ios.simulator: true`) |
+| `preview`     | Внутренняя сборка для проверки на устройстве          |
+| `production`  | Сборка для App Store и Google Play                    |
 
 ```bash
 npx eas-cli build --profile development --platform ios
@@ -157,6 +157,194 @@ CI (`.github/workflows/db.yml`) гоняет миграции и pgTAP на ка
 ```bash
 supabase stop            # остановить контейнеры, данные сохраняются
 supabase stop --no-backup  # остановить и удалить локальные данные
+```
+
+## Шаблоны писем в облаке
+
+Локально письма собирает `supabase/config.toml`: код из 6 цифр (`otp_length = 6`), срок 1 час
+(`otp_expiry = 3600`), тексты в `supabase/templates/`. Язык берётся из `user_metadata.ui_language`
+(`ru`, `uk`, иначе английский). В облаке `config.toml` не действует — те же три шаблона нужно
+вставить вручную.
+
+Authentication → Providers → Email: длина OTP **6**, срок **3600** секунд. **Secure email change**
+выключен: у анонимного аккаунта нет старого ящика, иначе «Сохранить прогресс» будет ждать письмо,
+которого не существует.
+
+Authentication → Email Templates. В каждое письмо вставьте тему и HTML ниже. `{{ .Token }}` — код,
+который вводят в приложении. Ссылка `{{ .ConfirmationURL }}` — второй способ, если код не подошёл.
+
+### Change Email Address
+
+Привязка email к анонимному аккаунту (`updateUser`). В приложении код подтверждают как
+`verifyOtp({ type: 'email_change' })`.
+
+Тема:
+
+```
+{{ if eq .Data.ui_language "ru" }}Код для сохранения прогресса{{ else if eq .Data.ui_language "uk" }}Код для збереження прогресу{{ else }}Code to save your progress{{ end }}
+```
+
+HTML — содержимое `supabase/templates/email_change.html`:
+
+```html
+{{ if eq .Data.ui_language "ru" }}
+<div
+  style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1c1917; line-height: 1.5;"
+>
+  <h2>Код для сохранения прогресса</h2>
+  <p>Введите этот код в приложении Vamos:</p>
+  <p style="font-size: 32px; font-weight: 700; letter-spacing: 8px; margin: 24px 0;">
+    {{ .Token }}
+  </p>
+  <p>Код действует 1 час.</p>
+  <p>Или подтвердите по ссылке:</p>
+  <p><a href="{{ .ConfirmationURL }}">{{ .ConfirmationURL }}</a></p>
+  <p>Если вы не запрашивали письмо, просто проигнорируйте его.</p>
+</div>
+{{ else if eq .Data.ui_language "uk" }}
+<div
+  style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1c1917; line-height: 1.5;"
+>
+  <h2>Код для збереження прогресу</h2>
+  <p>Введіть цей код у застосунку Vamos:</p>
+  <p style="font-size: 32px; font-weight: 700; letter-spacing: 8px; margin: 24px 0;">
+    {{ .Token }}
+  </p>
+  <p>Код діє 1 годину.</p>
+  <p>Або підтвердьте за посиланням:</p>
+  <p><a href="{{ .ConfirmationURL }}">{{ .ConfirmationURL }}</a></p>
+  <p>Якщо ви не запитували лист, просто проігноруйте його.</p>
+</div>
+{{ else }}
+<div
+  style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1c1917; line-height: 1.5;"
+>
+  <h2>Code to save your progress</h2>
+  <p>Enter this code in the Vamos app:</p>
+  <p style="font-size: 32px; font-weight: 700; letter-spacing: 8px; margin: 24px 0;">
+    {{ .Token }}
+  </p>
+  <p>This code is valid for 1 hour.</p>
+  <p>Or confirm with this link:</p>
+  <p><a href="{{ .ConfirmationURL }}">{{ .ConfirmationURL }}</a></p>
+  <p>If you didn't ask for this email, you can ignore it.</p>
+</div>
+{{ end }}
+```
+
+### Magic Link
+
+Вход по коду на новом устройстве (`signInWithOtp`). Код подтверждают как
+`verifyOtp({ type: 'email' })`, не `magiclink`.
+
+Тема:
+
+```
+{{ if eq .Data.ui_language "ru" }}Код для входа в Vamos{{ else if eq .Data.ui_language "uk" }}Код для входу у Vamos{{ else }}Your Vamos sign-in code{{ end }}
+```
+
+HTML — содержимое `supabase/templates/magic_link.html`:
+
+```html
+{{ if eq .Data.ui_language "ru" }}
+<div
+  style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1c1917; line-height: 1.5;"
+>
+  <h2>Код для входа в Vamos</h2>
+  <p>Введите этот код, чтобы открыть сохранённый аккаунт:</p>
+  <p style="font-size: 32px; font-weight: 700; letter-spacing: 8px; margin: 24px 0;">
+    {{ .Token }}
+  </p>
+  <p>Код действует 1 час.</p>
+  <p>Или войдите по ссылке:</p>
+  <p><a href="{{ .ConfirmationURL }}">{{ .ConfirmationURL }}</a></p>
+  <p>Если вы не запрашивали письмо, просто проигнорируйте его.</p>
+</div>
+{{ else if eq .Data.ui_language "uk" }}
+<div
+  style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1c1917; line-height: 1.5;"
+>
+  <h2>Код для входу у Vamos</h2>
+  <p>Введіть цей код, щоб відкрити збережений акаунт:</p>
+  <p style="font-size: 32px; font-weight: 700; letter-spacing: 8px; margin: 24px 0;">
+    {{ .Token }}
+  </p>
+  <p>Код діє 1 годину.</p>
+  <p>Або увійдіть за посиланням:</p>
+  <p><a href="{{ .ConfirmationURL }}">{{ .ConfirmationURL }}</a></p>
+  <p>Якщо ви не запитували лист, просто проігноруйте його.</p>
+</div>
+{{ else }}
+<div
+  style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1c1917; line-height: 1.5;"
+>
+  <h2>Your Vamos sign-in code</h2>
+  <p>Enter this code to open your saved account:</p>
+  <p style="font-size: 32px; font-weight: 700; letter-spacing: 8px; margin: 24px 0;">
+    {{ .Token }}
+  </p>
+  <p>This code is valid for 1 hour.</p>
+  <p>Or sign in with this link:</p>
+  <p><a href="{{ .ConfirmationURL }}">{{ .ConfirmationURL }}</a></p>
+  <p>If you didn't ask for this email, you can ignore it.</p>
+</div>
+{{ end }}
+```
+
+### Confirm signup
+
+Тема:
+
+```
+{{ if eq .Data.ui_language "ru" }}Подтвердите email в Vamos{{ else if eq .Data.ui_language "uk" }}Підтвердьте email у Vamos{{ else }}Confirm your email in Vamos{{ end }}
+```
+
+HTML — содержимое `supabase/templates/confirmation.html`:
+
+```html
+{{ if eq .Data.ui_language "ru" }}
+<div
+  style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1c1917; line-height: 1.5;"
+>
+  <h2>Подтвердите email</h2>
+  <p>Введите этот код в приложении Vamos:</p>
+  <p style="font-size: 32px; font-weight: 700; letter-spacing: 8px; margin: 24px 0;">
+    {{ .Token }}
+  </p>
+  <p>Код действует 1 час.</p>
+  <p>Или подтвердите по ссылке:</p>
+  <p><a href="{{ .ConfirmationURL }}">{{ .ConfirmationURL }}</a></p>
+  <p>Если вы не запрашивали письмо, просто проигнорируйте его.</p>
+</div>
+{{ else if eq .Data.ui_language "uk" }}
+<div
+  style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1c1917; line-height: 1.5;"
+>
+  <h2>Підтвердьте email</h2>
+  <p>Введіть цей код у застосунку Vamos:</p>
+  <p style="font-size: 32px; font-weight: 700; letter-spacing: 8px; margin: 24px 0;">
+    {{ .Token }}
+  </p>
+  <p>Код діє 1 годину.</p>
+  <p>Або підтвердьте за посиланням:</p>
+  <p><a href="{{ .ConfirmationURL }}">{{ .ConfirmationURL }}</a></p>
+  <p>Якщо ви не запитували лист, просто проігноруйте його.</p>
+</div>
+{{ else }}
+<div
+  style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1c1917; line-height: 1.5;"
+>
+  <h2>Confirm your email</h2>
+  <p>Enter this code in the Vamos app:</p>
+  <p style="font-size: 32px; font-weight: 700; letter-spacing: 8px; margin: 24px 0;">
+    {{ .Token }}
+  </p>
+  <p>This code is valid for 1 hour.</p>
+  <p>Or confirm with this link:</p>
+  <p><a href="{{ .ConfirmationURL }}">{{ .ConfirmationURL }}</a></p>
+  <p>If you didn't ask for this email, you can ignore it.</p>
+</div>
+{{ end }}
 ```
 
 ## Как работать с Cursor эффективно

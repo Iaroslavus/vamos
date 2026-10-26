@@ -1,8 +1,10 @@
 import {
   confirmEmailLink,
+  confirmEmailSignIn,
   ensureAnonymousSession,
   isProgressSaved,
   requestEmailLink,
+  requestEmailSignIn,
   signOutAndRestart,
   signOutWarningKind,
 } from './account';
@@ -18,6 +20,10 @@ function gateway(overrides: Partial<AuthGateway> = {}): AuthGateway {
     signInAnonymously: jest.fn(async () => ({ session: session('anon'), error: null })),
     updateUserEmail: jest.fn(async () => ({ user: null, error: null })),
     verifyEmailChange: jest.fn(async () => ({ session: null, error: null })),
+    requestEmailSignIn: jest.fn(async () => ({ error: null })),
+    verifyEmailSignIn: jest.fn(async () => ({ session: null, error: null })),
+    reloadUser: jest.fn(async () => ({ session: null, error: null })),
+    completeAuthRedirect: jest.fn(async () => ({ session: null, type: null, error: null })),
     signOut: jest.fn(async () => ({ error: null })),
     onAuthStateChange: jest.fn(() => () => undefined),
     ...overrides,
@@ -106,7 +112,7 @@ describe('requestEmailLink', () => {
   it('rejects an invalid email before calling updateUser', async () => {
     const auth = gateway();
 
-    await expect(requestEmailLink(auth, 'not-an-email')).resolves.toEqual({
+    await expect(requestEmailLink(auth, 'not-an-email', 'ru')).resolves.toEqual({
       ok: false,
       error: 'invalid_email',
     });
@@ -119,9 +125,9 @@ describe('requestEmailLink', () => {
       updateUserEmail: jest.fn(async () => ({ user, error: null })),
     });
 
-    const result = await requestEmailLink(auth, '  Ada@Example.com ');
+    const result = await requestEmailLink(auth, '  Ada@Example.com ', 'uk');
 
-    expect(auth.updateUserEmail).toHaveBeenCalledWith('ada@example.com');
+    expect(auth.updateUserEmail).toHaveBeenCalledWith('ada@example.com', 'uk');
     expect(result).toEqual({ ok: true, step: 'code_sent', email: 'ada@example.com', user });
   });
 
@@ -131,7 +137,7 @@ describe('requestEmailLink', () => {
       updateUserEmail: jest.fn(async () => ({ user, error: null })),
     });
 
-    await expect(requestEmailLink(auth, 'ada@example.com')).resolves.toEqual({
+    await expect(requestEmailLink(auth, 'ada@example.com', 'en')).resolves.toEqual({
       ok: true,
       step: 'saved',
       user,
@@ -146,7 +152,7 @@ describe('requestEmailLink', () => {
       })),
     });
 
-    await expect(requestEmailLink(auth, 'ada@example.com')).resolves.toEqual({
+    await expect(requestEmailLink(auth, 'ada@example.com', 'ru')).resolves.toEqual({
       ok: false,
       error: 'email_taken',
     });
@@ -203,6 +209,45 @@ describe('confirmEmailLink', () => {
       ok: false,
       error: 'code_expired',
     });
+  });
+});
+
+describe('confirmEmailSignIn', () => {
+  it('rejects a short code before verify', async () => {
+    const auth = gateway();
+
+    await expect(confirmEmailSignIn(auth, 'ada@example.com', '123')).resolves.toEqual({
+      ok: false,
+      error: 'invalid_code',
+    });
+    expect(auth.verifyEmailSignIn).not.toHaveBeenCalled();
+  });
+
+  it('opens the saved account on a new device', async () => {
+    const saved = session('saved-user', { email: 'ada@example.com', is_anonymous: false });
+    const auth = gateway({
+      verifyEmailSignIn: jest.fn(async () => ({ session: saved, error: null })),
+    });
+
+    const result = await confirmEmailSignIn(auth, 'ada@example.com', '123456');
+
+    expect(auth.verifyEmailSignIn).toHaveBeenCalledWith('ada@example.com', '123456');
+    expect(result).toEqual({ ok: true, session: saved });
+    if (result.ok) expect(result.session.user.id).toBe('saved-user');
+  });
+
+  it('does not create an account when the email is unknown', async () => {
+    const auth = gateway({
+      requestEmailSignIn: jest.fn(async () => ({
+        error: { message: 'Signups not allowed for otp' },
+      })),
+    });
+
+    await expect(requestEmailSignIn(auth, 'missing@example.com', 'en')).resolves.toEqual({
+      ok: false,
+      error: 'email_not_found',
+    });
+    expect(auth.requestEmailSignIn).toHaveBeenCalledWith('missing@example.com', 'en');
   });
 });
 

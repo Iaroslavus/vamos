@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase';
 
-import { supabaseAuth } from './supabaseAuth';
+import { supabaseAuth, syncUiLanguage } from './supabaseAuth';
 
 jest.mock('@/lib/supabase', () => ({
   supabase: {
@@ -9,6 +9,10 @@ jest.mock('@/lib/supabase', () => ({
       signInAnonymously: jest.fn(),
       updateUser: jest.fn(),
       verifyOtp: jest.fn(),
+      signInWithOtp: jest.fn(),
+      getUser: jest.fn(),
+      refreshSession: jest.fn(),
+      setSession: jest.fn(),
       signOut: jest.fn(),
       onAuthStateChange: jest.fn(),
     },
@@ -49,9 +53,12 @@ describe('supabaseAuth', () => {
       error: null,
     } as never);
 
-    const result = await supabaseAuth.updateUserEmail('ada@example.com');
+    const result = await supabaseAuth.updateUserEmail('ada@example.com', 'ru');
 
-    expect(auth.updateUser).toHaveBeenCalledWith({ email: 'ada@example.com' });
+    expect(auth.updateUser).toHaveBeenCalledWith(
+      { email: 'ada@example.com', data: { ui_language: 'ru' } },
+      { emailRedirectTo: 'vamos://profile' },
+    );
     expect(result.user).toEqual(
       expect.objectContaining({ id: 'user-1', new_email: 'ada@example.com', is_anonymous: true }),
     );
@@ -74,8 +81,86 @@ describe('supabaseAuth', () => {
       token: '123456',
       type: 'email_change',
     });
+    expect(auth.verifyOtp).not.toHaveBeenCalledWith(expect.objectContaining({ type: 'email' }));
+    expect(auth.verifyOtp).not.toHaveBeenCalledWith(expect.objectContaining({ type: 'magiclink' }));
     expect(result.session?.user.id).toBe('user-1');
     expect(result.session?.user.is_anonymous).toBe(false);
+  });
+
+  it('signs in with an email code and returns the account that owns the address', async () => {
+    jest.mocked(auth.signInWithOtp).mockResolvedValue({ data: {}, error: null } as never);
+    jest.mocked(auth.verifyOtp).mockResolvedValue({
+      data: {
+        session: {
+          user: { id: 'saved-user', email: 'ada@example.com', is_anonymous: false },
+        },
+      },
+      error: null,
+    } as never);
+
+    await supabaseAuth.requestEmailSignIn('ada@example.com', 'uk');
+    const result = await supabaseAuth.verifyEmailSignIn('ada@example.com', '123456');
+
+    expect(auth.signInWithOtp).toHaveBeenCalledWith({
+      email: 'ada@example.com',
+      options: {
+        shouldCreateUser: false,
+        emailRedirectTo: 'vamos://profile',
+        data: { ui_language: 'uk' },
+      },
+    });
+    expect(auth.verifyOtp).toHaveBeenCalledWith({
+      email: 'ada@example.com',
+      token: '123456',
+      type: 'email',
+    });
+    expect(result.session?.user.id).toBe('saved-user');
+    expect(result.error).toBeNull();
+  });
+
+  it('refreshes the same user after the email link is confirmed in the browser', async () => {
+    jest.mocked(auth.getUser).mockResolvedValue({
+      data: {
+        user: { id: 'user-1', email: 'ada@example.com', is_anonymous: false },
+      },
+      error: null,
+    } as never);
+    jest.mocked(auth.getSession).mockResolvedValue({
+      data: {
+        session: {
+          user: { id: 'user-1', email: '', is_anonymous: true },
+          refresh_token: 'refresh',
+        },
+      },
+      error: null,
+    } as never);
+    jest.mocked(auth.refreshSession).mockResolvedValue({
+      data: {
+        session: {
+          user: { id: 'user-1', email: 'ada@example.com', is_anonymous: false },
+        },
+      },
+      error: null,
+    } as never);
+
+    const result = await supabaseAuth.reloadUser();
+
+    expect(result.session?.user).toEqual(
+      expect.objectContaining({ id: 'user-1', email: 'ada@example.com', is_anonymous: false }),
+    );
+    expect(result.error).toBeNull();
+  });
+
+  it('stores the interface language on the signed-in user', async () => {
+    jest.mocked(auth.getSession).mockResolvedValue({
+      data: { session: { user: { id: 'user-1' } } },
+      error: null,
+    } as never);
+    jest.mocked(auth.updateUser).mockResolvedValue({ data: { user: null }, error: null } as never);
+
+    await syncUiLanguage('uk');
+
+    expect(auth.updateUser).toHaveBeenCalledWith({ data: { ui_language: 'uk' } });
   });
 
   it('forwards auth state changes and unsubscribes', () => {

@@ -1,3 +1,5 @@
+import type { UiLanguage } from '@/i18n/language';
+
 import { isValidEmail, isValidOtp, normalizeEmail, normalizeOtp } from './email';
 import { mapAuthError, type AuthErrorCode } from './errors';
 import type { AuthGateway, AuthSession, AuthUser } from './types';
@@ -7,7 +9,7 @@ export type AuthFailure = { ok: false; error: AuthErrorCode };
 export type EnsureResult = { ok: true; session: AuthSession; created: boolean } | AuthFailure;
 
 export type LinkRequestResult =
-  | { ok: true; step: 'code_sent'; email: string; user: AuthUser }
+  | { ok: true; step: 'code_sent'; email: string; user?: AuthUser }
   | { ok: true; step: 'saved'; user: AuthUser }
   | AuthFailure;
 
@@ -63,12 +65,13 @@ export function ensureAnonymousSession(auth: AuthGateway): Promise<EnsureResult>
 export async function requestEmailLink(
   auth: AuthGateway,
   email: string,
+  uiLanguage: UiLanguage,
 ): Promise<LinkRequestResult> {
   const normalized = normalizeEmail(email);
   if (!isValidEmail(normalized)) return { ok: false, error: 'invalid_email' };
 
   try {
-    const result = await auth.updateUserEmail(normalized);
+    const result = await auth.updateUserEmail(normalized, uiLanguage);
     if (result.error || !result.user) {
       return { ok: false, error: result.error ? mapAuthError(result.error) : 'unknown' };
     }
@@ -104,6 +107,53 @@ export async function confirmEmailLink(
     if (result.session.user.id !== expectedUserId || !isProgressSaved(result.session.user)) {
       return { ok: false, error: 'unknown' };
     }
+    return { ok: true, session: result.session };
+  } catch {
+    return { ok: false, error: 'network' };
+  }
+}
+
+/**
+ * Sends a sign-in code to an email that already has a saved account.
+ * `shouldCreateUser` stays off so a typo does not start a second empty user.
+ */
+export async function requestEmailSignIn(
+  auth: AuthGateway,
+  email: string,
+  uiLanguage: UiLanguage,
+): Promise<LinkRequestResult> {
+  const normalized = normalizeEmail(email);
+  if (!isValidEmail(normalized)) return { ok: false, error: 'invalid_email' };
+
+  try {
+    const result = await auth.requestEmailSignIn(normalized, uiLanguage);
+    if (result.error) return { ok: false, error: mapAuthError(result.error) };
+    return { ok: true, step: 'code_sent', email: normalized };
+  } catch {
+    return { ok: false, error: 'network' };
+  }
+}
+
+/**
+ * Confirms a sign-in code (`verifyOtp` type `email`). The session is the account that
+ * already owns the address. On a new device that id replaces the empty anonymous one.
+ */
+export async function confirmEmailSignIn(
+  auth: AuthGateway,
+  email: string,
+  code: string,
+): Promise<LinkConfirmResult> {
+  const normalizedEmail = normalizeEmail(email);
+  const token = normalizeOtp(code);
+  if (!isValidEmail(normalizedEmail)) return { ok: false, error: 'invalid_email' };
+  if (!isValidOtp(token)) return { ok: false, error: 'invalid_code' };
+
+  try {
+    const result = await auth.verifyEmailSignIn(normalizedEmail, token);
+    if (result.error || !result.session) {
+      return { ok: false, error: result.error ? mapAuthError(result.error) : 'unknown' };
+    }
+    if (!isProgressSaved(result.session.user)) return { ok: false, error: 'unknown' };
     return { ok: true, session: result.session };
   } catch {
     return { ok: false, error: 'network' };

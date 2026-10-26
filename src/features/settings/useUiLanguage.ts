@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { syncUiLanguage } from '@/features/auth/supabaseAuth';
 import { useLearnerProfile, useSaveLearner } from '@/features/learner/useLearnerProfile';
 import { activeUiLanguage, type UiLanguage } from '@/i18n/language';
 import { claimedUiLanguage, claimUiLanguage, writeStoredUiLanguage } from '@/i18n/preference';
@@ -14,6 +15,7 @@ export function useUiLanguage() {
     claimUiLanguage(next);
     void i18n.changeLanguage(next);
     void writeStoredUiLanguage(next);
+    void syncUiLanguage(next);
     void save({ uiLanguage: next }).catch(() => {
       // The device copy is already stored. The next profile read uploads it.
     });

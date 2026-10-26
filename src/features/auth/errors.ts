@@ -4,6 +4,7 @@ export type AuthErrorCode =
   | 'invalid_email'
   | 'invalid_code'
   | 'email_taken'
+  | 'email_not_found'
   | 'code_expired'
   | 'rate_limit'
   | 'anonymous_disabled'
@@ -29,11 +30,14 @@ export function mapAuthError(error: GatewayError | null | undefined): AuthErrorC
     case 'email_address_invalid':
     case 'validation_failed':
       return 'invalid_email';
+    case 'user_not_found':
+      return 'email_not_found';
     default:
       break;
   }
 
   const message = error.message.toLowerCase();
+  if (message.includes('signups not allowed')) return 'email_not_found';
   if (
     message.includes('network request failed') ||
     message.includes('failed to fetch') ||

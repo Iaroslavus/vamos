@@ -5,8 +5,13 @@ import { I18nextProvider } from 'react-i18next';
 import WelcomeScreen from '../../../app/(onboarding)/onboarding/index';
 import NameScreen from '../../../app/(onboarding)/onboarding/name';
 import SettingsScreen from '../../../app/settings';
+import { syncUiLanguage } from '@/features/auth/supabaseAuth';
 import i18n from '@/i18n';
 import { resetClaimedUiLanguage } from '@/i18n/preference';
+
+jest.mock('@/features/auth/supabaseAuth', () => ({
+  syncUiLanguage: jest.fn(async () => ({ error: null })),
+}));
 
 jest.mock('expo-haptics', () => ({
   impactAsync: jest.fn(() => Promise.resolve()),
@@ -47,6 +52,7 @@ describe('interface language', () => {
     expect(await screen.findByRole('radio', { name: 'Українська, вибрано' })).toBeOnTheScreen();
     expect(screen.getByRole('header', { name: 'Мова інтерфейсу' })).toBeOnTheScreen();
     expect(i18n.language).toBe('uk');
+    expect(syncUiLanguage).toHaveBeenCalledWith('uk');
     expect(i18n.t('topics.phraseCount', { count: 2 })).toBe('2 фрази');
 
     fireEvent.press(screen.getByRole('radio', { name: 'English' }));
