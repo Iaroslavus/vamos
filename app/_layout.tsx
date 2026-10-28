@@ -15,6 +15,9 @@ import 'react-native-reanimated';
 import { SessionError, SessionLoading } from '@/features/auth/components/SessionStatus';
 import { SessionProvider } from '@/features/auth/SessionProvider';
 import { useSession } from '@/features/auth/useSession';
+import { registerAudioCache } from '@/features/audio/cache';
+import { createExpoAudioCache } from '@/features/audio/expoCache';
+import { AudioPreferenceProvider } from '@/features/audio/preferenceProvider';
 import { LearnerGate } from '@/features/learner/LearnerGate';
 import { LearnerProvider } from '@/features/learner/context';
 import { ProgressProvider } from '@/features/progress/ProgressProvider';
@@ -77,7 +80,9 @@ export default function RootLayout() {
         <SessionProvider>
           <ProgressProvider>
             <LearnerProvider>
-              <AppShell fontsLoaded={loaded && languageReady} />
+              <AudioPreferenceProvider>
+                <AppShell fontsLoaded={loaded && languageReady} />
+              </AudioPreferenceProvider>
             </LearnerProvider>
           </ProgressProvider>
         </SessionProvider>
@@ -88,6 +93,11 @@ export default function RootLayout() {
 
 function AppShell({ fontsLoaded }: { fontsLoaded: boolean }) {
   const { status } = useSession();
+
+  useEffect(() => {
+    registerAudioCache(createExpoAudioCache());
+    return () => registerAudioCache(null);
+  }, []);
 
   useEffect(() => {
     if (fontsLoaded) {

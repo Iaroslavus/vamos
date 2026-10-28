@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { contentIssues, type ContentBundle } from '../integrity';
 import { translationGaps } from '../translations';
 import {
+  blankAudio,
   CefrLevelSchema,
   ItemSchema,
   LessonSchema,
@@ -266,7 +267,7 @@ function canonicalItem(item: Item): Item {
     why: item.why,
     level: item.level,
     variant: item.variant,
-    audio: { es: null, latam: null },
+    audio: blankAudio(),
     tags: item.tags,
     draft: true,
     draft_i18n: true,

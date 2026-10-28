@@ -5,6 +5,9 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/Text';
 import { playLessonAudio } from '@/features/audio/playback';
+import { useAudioPreference } from '@/features/audio/preference';
+import { selectClip, type AudioPreference } from '@/features/audio/select';
+import { getItem } from '@/features/content/loader';
 import { colors, radius, space } from '@/theme/tokens';
 
 import type { VocabularyItem } from '../schema';
@@ -25,6 +28,7 @@ export function NewWordsList({
   onLongPressItem,
 }: NewWordsListProps) {
   const { t } = useTranslation();
+  const preference = useAudioPreference();
   const allSelected = items.every((item) => selectedIds.has(item.id));
 
   if (items.length === 0) {
@@ -67,7 +71,7 @@ export function NewWordsList({
                 accessibilityLabel={label}
                 accessibilityHint={t('vocab.longPressAdd')}
                 onPress={() => {
-                  void playLessonAudio({ audio: item.audio, text: item.es });
+                  void playLessonAudio({ audio: wordAudio(item, preference), text: item.es });
                 }}
                 onLongPress={() => holdItem(item.id)}
                 style={styles.main}
@@ -86,6 +90,14 @@ export function NewWordsList({
       </View>
     </View>
   );
+}
+
+function wordAudio(item: VocabularyItem, preference: AudioPreference): string | null {
+  try {
+    return selectClip(getItem(item.id).audio, preference, 'normal') ?? item.audio ?? null;
+  } catch {
+    return item.audio ?? null;
+  }
 }
 
 const styles = StyleSheet.create({

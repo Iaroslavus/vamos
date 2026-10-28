@@ -22,7 +22,27 @@ const cafeItem = {
 
 describe('content v2 schema', () => {
   it('parses the documented item, topic, and lesson', () => {
-    expect(ItemSchema.parse(cafeItem).id).toBe('cafe.cafe_con_leche');
+    const parsed = ItemSchema.parse(cafeItem);
+    expect(parsed.id).toBe('cafe.cafe_con_leche');
+    expect(parsed.audio).toMatchObject({
+      source: 'tts',
+      es: 'items/a1/cafe/cafe_con_leche.es.mp3',
+      latam: null,
+      slow: { es: null, latam: null },
+      parts: [],
+    });
+    expect(
+      ItemSchema.parse({
+        ...cafeItem,
+        audio: {
+          source: 'human',
+          es: 'items/a1/cafe/cafe_con_leche.es.normal.m4a',
+          latam: null,
+          slow: { es: 'items/a1/cafe/cafe_con_leche.es.slow.m4a', latam: null },
+          parts: [],
+        },
+      }).audio.source,
+    ).toBe('human');
 
     const topic = TopicSchema.parse({
       id: 'a1.cafe',

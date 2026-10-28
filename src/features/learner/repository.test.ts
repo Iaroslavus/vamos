@@ -51,6 +51,7 @@ const named: LearnerProfile = {
   dailyMinutes: 10,
   preferencesAsked: false,
   uiLanguage: null,
+  spanishVariant: 'spain',
 };
 
 function languageMemory(initial: UiLanguage | null = null): UiLanguageStorage & {
@@ -112,6 +113,7 @@ describe('createLearnerRepository', () => {
       dailyMinutes: 20,
       preferencesAsked: true,
       uiLanguage: 'uk',
+      spanishVariant: 'spain',
     });
     expect(profileFromRemote(null)).toBeNull();
     expect(
@@ -127,7 +129,17 @@ describe('createLearnerRepository', () => {
       dailyMinutes: 10,
       preferencesAsked: false,
       uiLanguage: null,
+      spanishVariant: 'spain',
     });
+    expect(
+      profileFromRemote({
+        display_name: null,
+        goal: null,
+        daily_minutes: 10,
+        ui_language: null,
+        spanish_variant: 'latam',
+      })?.spanishVariant,
+    ).toBe('latam');
   });
 
   it('stores the device language when the account has none and uploads it', async () => {

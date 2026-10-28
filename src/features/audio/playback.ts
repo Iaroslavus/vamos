@@ -6,6 +6,7 @@ import {
 } from 'expo-audio';
 import * as Speech from 'expo-speech';
 
+import { cachedAudioUri } from '@/features/audio/cache';
 import { publicAudioUrl } from '@/features/audio/storage';
 import { BUNDLED_AUDIO_ASSETS } from './assets';
 import { IOS_AV_SPEECH_DEFAULT_RATE, speechEngineRate } from './speechRate';
@@ -97,8 +98,8 @@ export function applyPlayerRate(player: AudioPlayer, rate: number): void {
 }
 
 /**
- * Play exercise audio: prefer a resolved file via expo-audio, otherwise expo-speech (es-ES).
- * Always stops any in-flight playback first so a re-press restarts instead of stacking.
+ * Play a clip with expo-audio. The file is already normal or slow, so it plays at 1×.
+ * expo-speech (es-ES) runs only when that file is missing or cannot be opened.
  */
 export async function playLessonAudio({
   audio,
@@ -116,7 +117,8 @@ export async function playLessonAudio({
   await stopLessonAudio();
   const generation = playGeneration;
 
-  const source = resolveAudioSource(audio);
+  const cached = audio && audio.startsWith('items/') ? await cachedAudioUri(audio) : null;
+  const source = cached ?? resolveAudioSource(audio);
   if (source) {
     try {
       await setAudioModeAsync({
@@ -130,19 +132,20 @@ export async function playLessonAudio({
       const player = createAudioPlayer(source);
       activePlayer = player;
       player.shouldCorrectPitch = true;
-      // AVPlayer.rate is linear (0.7 = 0.7×). Apply after play so iOS writes
-      // the live rate with pitch correction. This path is unused for lessons
-      // until a bundled/remote file exists.
+      // The file is already the right speed (normal, or slow via SSML).
+      // Playing it at 1× keeps pitch and duration. Speech uses `rate` only
+      // when no file could be opened.
       const startedAt = Date.now();
       logPlayback('start', {
         source: 'file',
-        playbackRate: rate,
-        setPlaybackRate: rate,
+        playbackRate: NORMAL_RATE,
+        requestedRate: rate,
+        setPlaybackRate: NORMAL_RATE,
         pitchCorrection: 'high',
         text: JSON.stringify(trimmed),
       });
       player.play();
-      applyPlayerRate(player, rate);
+      applyPlayerRate(player, NORMAL_RATE);
       if (typeof player.addListener === 'function') {
         const subscription = player.addListener('playbackStatusUpdate', (status) => {
           if (!status.didJustFinish || generation !== playGeneration) return;
@@ -150,7 +153,8 @@ export async function playLessonAudio({
           if (__DEV__) {
             logPlayback('done', {
               source: 'file',
-              playbackRate: rate,
+              playbackRate: NORMAL_RATE,
+              requestedRate: rate,
               durationMs: Date.now() - startedAt,
               text: JSON.stringify(trimmed),
             });

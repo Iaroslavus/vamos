@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
 import { Appear } from '@/features/auth/components/Appear';
+import { useAudioPreference } from '@/features/audio/preference';
 import type { Item } from '@/features/content/schema';
 import { contentLocale, textOf } from '@/features/content/text';
 import { resolveTopicIcon } from '@/features/content/topicIcons';
@@ -28,7 +29,7 @@ type IntroStepProps = {
   total: number;
   /** Topic icon slug, for example `wave`. */
   topicIcon?: string;
-  /** Which recording to prefer. Falls back to the other region. */
+  /** Which recording to prefer. Defaults to the profile variant. */
   audioVariant?: AudioPreference;
   onNext: () => void;
   /** Optional notice when practice opens. The sheet itself does not grade the lesson. */
@@ -40,11 +41,13 @@ export function IntroStep({
   position,
   total,
   topicIcon,
-  audioVariant = 'es',
+  audioVariant: audioVariantProp,
   onNext,
   onRepeatAloud,
 }: IntroStepProps) {
   const { t, i18n } = useTranslation();
+  const profilePreference = useAudioPreference();
+  const audioVariant = audioVariantProp ?? profilePreference;
   const language = contentLocale(i18n.language);
   const insets = useSafeAreaInsets();
   const saveState = useItemSaveState([item.id]);

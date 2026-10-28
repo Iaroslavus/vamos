@@ -21,7 +21,7 @@ type IntroCardProps = {
   saved: boolean;
   saveLabel: string;
   onPlay: (rate: number) => void;
-  onPlayPart: (part: Part) => void;
+  onPlayPart: (part: Part, index: number) => void;
   onSave: () => void;
   onWhy: () => void;
 };
@@ -78,7 +78,7 @@ export function IntroCard({
                   key={`${part.es}-${index}`}
                   label={label}
                   accessibilityLabel={label}
-                  onPress={() => onPlayPart(part)}
+                  onPress={() => onPlayPart(part, index)}
                 />
               );
             })}

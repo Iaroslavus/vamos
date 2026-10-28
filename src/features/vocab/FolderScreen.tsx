@@ -7,8 +7,11 @@ import { Button } from '@/components/Button';
 import { RetryNote } from '@/components/RetryNote';
 import { Text } from '@/components/Text';
 import { playLessonAudio } from '@/features/audio/playback';
+import { useAudioPreference } from '@/features/audio/preference';
+import type { AudioPreference } from '@/features/audio/select';
 import { contentLanguage, getItem } from '@/features/content/loader';
 import { textOf } from '@/features/content/text';
+import { itemAudioPath } from '@/features/lesson/intro';
 import { colors, space } from '@/theme/tokens';
 
 import { FolderFormSheet } from './components/FolderFormSheet';
@@ -33,6 +36,7 @@ export function FolderScreen() {
     vocab.snapshot?.items.filter((item) => item.folderId === folderId).map((item) => item.itemId) ??
     [];
   const due = vocab.rows.find((row) => row.folder.id === folderId)?.due ?? 0;
+  const preference = useAudioPreference();
 
   const change = async (task: () => Promise<unknown>) => {
     await task();
@@ -79,7 +83,7 @@ export function FolderScreen() {
           </Text>
         ) : (
           itemIds.map((itemId) => {
-            const word = lookup(itemId);
+            const word = lookup(itemId, preference);
             return (
               <FolderItemRow
                 key={itemId}
@@ -148,10 +152,17 @@ export function FolderScreen() {
   );
 }
 
-function lookup(itemId: string): { es: string; ru: string; audio: string | null } {
+function lookup(
+  itemId: string,
+  preference: AudioPreference,
+): { es: string; ru: string; audio: string | null } {
   try {
     const item = getItem(itemId);
-    return { es: item.es, ru: textOf(item.tr, contentLanguage()), audio: item.audio.es };
+    return {
+      es: item.es,
+      ru: textOf(item.tr, contentLanguage()),
+      audio: itemAudioPath(item, preference),
+    };
   } catch {
     return { es: itemId, ru: '', audio: null };
   }

@@ -4,8 +4,11 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/Text';
 import { playLessonAudio } from '@/features/audio/playback';
+import { useAudioPreference } from '@/features/audio/preference';
+import type { AudioPreference } from '@/features/audio/select';
 import { getItem, getLesson } from '@/features/content/loader';
 import { contentLocale, textOf } from '@/features/content/text';
+import { itemAudioPath } from '@/features/lesson/intro';
 import { colors, radius, space } from '@/theme/tokens';
 
 export default function SpeakScreen() {
@@ -13,7 +16,8 @@ export default function SpeakScreen() {
   const router = useRouter();
   const params = useLocalSearchParams<{ lessonId?: string | string[] }>();
   const lessonId = firstParam(params.lessonId);
-  const lines = speakLines(lessonId, i18n.language);
+  const preference = useAudioPreference();
+  const lines = speakLines(lessonId, i18n.language, preference);
 
   return (
     <ScrollView contentContainerStyle={styles.content}>
@@ -55,6 +59,7 @@ export default function SpeakScreen() {
 function speakLines(
   lessonId: string | null,
   language: string,
+  preference: AudioPreference,
 ): { id: string; es: string; ru: string; audio: string | null }[] {
   if (!lessonId) return [];
   const locale = contentLocale(language);
@@ -63,7 +68,14 @@ function speakLines(
     return lesson.speak.flatMap((id) => {
       try {
         const item = getItem(id);
-        return [{ id: item.id, es: item.es, ru: textOf(item.tr, locale), audio: item.audio.es }];
+        return [
+          {
+            id: item.id,
+            es: item.es,
+            ru: textOf(item.tr, locale),
+            audio: itemAudioPath(item, preference),
+          },
+        ];
       } catch {
         return [];
       }

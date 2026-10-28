@@ -10,6 +10,7 @@ import type {
 } from '@/features/content/schema';
 import { contentLocale, textOf, type ContentLocale } from '@/features/content/text';
 import { normalizeForCompare } from '@/features/lesson/grading';
+import { itemAudioPath } from '@/features/lesson/intro';
 
 /** Screen count for a generated lesson, including one intro card per new unit. */
 export const LESSON_STEP_MIN = 18;
@@ -819,7 +820,7 @@ function placeAnswer(answer: string, extras: readonly string[], rng: Rng): strin
 }
 
 function audioOf(item: Item): string | null {
-  return item.audio.es ?? item.audio.latam;
+  return itemAudioPath(item);
 }
 
 function cloneLine(line: DialogLine): DialogLine {

@@ -126,6 +126,7 @@ const LEARNER: LearnerProfile = {
   dailyMinutes: 10,
   preferencesAsked: true,
   uiLanguage: null,
+  spanishVariant: 'spain',
 };
 
 function learnerRepository(profile: LearnerProfile = LEARNER): LearnerRepository {

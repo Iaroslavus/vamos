@@ -43,3 +43,6 @@ node_modules
 .expo
 dist
 .env
+
+# Local TTS comparison clips. Listen here; do not commit them.
+tmp/

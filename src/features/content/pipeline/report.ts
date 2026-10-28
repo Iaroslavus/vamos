@@ -1,3 +1,5 @@
+import { audioGaps } from '@/features/audio/select';
+
 import type { Item, Lesson } from '../schema';
 import { contentIssues, type ContentBundle } from '../integrity';
 import { gapsByLocale, translationGaps } from '../translations';
@@ -27,11 +29,9 @@ export type ContentReport = {
   ok: boolean;
 };
 
-/** A stored or remote clip. Anything else is still device TTS. */
+/** Every required voice, speed, and part has a storage clip. Otherwise the device speaks. */
 export function hasPlayableAudio(item: Item): boolean {
-  const clip = item.audio.es;
-  if (!clip) return false;
-  return clip.startsWith('items/') || clip.startsWith('http://') || clip.startsWith('https://');
+  return audioGaps(item).length === 0;
 }
 
 export function buildReport(
@@ -52,9 +52,10 @@ export function buildReport(
     draftItems: bundle.items.filter((item) => item.draft).length,
     draftLessons: bundle.lessons.filter((lesson) => lesson.draft).length,
     missingAudio: bundle.items
-      .filter((item) => !hasPlayableAudio(item))
-      .map((item) => item.id)
-      .sort(),
+      .map((item) => ({ id: item.id, missing: audioGaps(item).length }))
+      .filter((row) => row.missing > 0)
+      .sort((a, b) => a.id.localeCompare(b.id))
+      .map((row) => `${row.id} — нет ${row.missing}`),
     missingTranslations: gapsByLocale(translationGaps(bundle)),
     issues,
     ok: issues.length === 0,

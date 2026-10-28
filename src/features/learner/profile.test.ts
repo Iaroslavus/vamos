@@ -50,6 +50,7 @@ describe('mergeProfiles', () => {
       dailyMinutes: 10,
       preferencesAsked: true,
       uiLanguage: null,
+      spanishVariant: 'spain',
     });
   });
 
@@ -60,6 +61,7 @@ describe('mergeProfiles', () => {
       dailyMinutes: 20 as const,
       preferencesAsked: true,
       uiLanguage: null,
+      spanishVariant: 'spain' as const,
     };
     const merged = mergeProfiles(local, {
       ...EMPTY_PROFILE,
@@ -84,6 +86,15 @@ describe('mergeProfiles', () => {
     ).toBe('uk');
     expect(mergeProfiles(EMPTY_PROFILE, { ...EMPTY_PROFILE, uiLanguage: 'en' }).uiLanguage).toBe(
       'en',
+    );
+  });
+
+  it('keeps the account Spanish variant for audio', () => {
+    expect(
+      mergeProfiles(EMPTY_PROFILE, { ...EMPTY_PROFILE, spanishVariant: 'latam' }).spanishVariant,
+    ).toBe('latam');
+    expect(mergeProfiles({ ...EMPTY_PROFILE, spanishVariant: 'latam' }, null).spanishVariant).toBe(
+      'latam',
     );
   });
 });
