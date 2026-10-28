@@ -18,7 +18,9 @@ import { buildReport, formatReport, hasPlayableAudio } from './report';
 import { normalizeAudioArgs, SLOW_PROSODY, spanishSsml } from './ssml';
 import {
   applyAudioPaths,
+  AUDIO_BUCKET_MIME_TYPES,
   audioObjectPath,
+  audioUploadContentType,
   needsGeneratedAudio,
   planItemClips,
   storageUploadRequest,
@@ -239,6 +241,16 @@ describe('tts plan', () => {
       'http://127.0.0.1:54321/storage/v1/object/audio/items/a1/cafe/un_cafe.es.normal.m4a',
     );
     expect(upload.headers['Content-Type']).toBe('audio/mp4');
+    expect(audioUploadContentType('items/a1/hola/hola.es.normal.mp3')).toBe('audio/mpeg');
+    expect(AUDIO_BUCKET_MIME_TYPES).toContain(upload.headers['Content-Type']);
+    expect(AUDIO_BUCKET_MIME_TYPES).toContain(audioUploadContentType('clip.mp3'));
+    expect(AUDIO_BUCKET_MIME_TYPES).toEqual([
+      'audio/mp4',
+      'audio/x-m4a',
+      'audio/aac',
+      'audio/mpeg',
+    ]);
+    expect(() => audioUploadContentType('clip.wav')).toThrow(/\.m4a/);
   });
 
   it('writes clip paths and does not replace a human recording', () => {

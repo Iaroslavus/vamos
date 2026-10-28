@@ -22,8 +22,8 @@ jobs:
       - uses: actions/checkout@v5
 
       # Required on every PR, so the job always runs and succeeds. The local stack
-      # (and the type drift check, which needs that stack) runs only when supabase/**
-      # changed — or the generated types / this workflow, which are validated by that stack.
+      # (and the type drift check, which needs that stack) runs when migrations,
+      # generated types, the audio upload scripts, or this workflow change.
       - name: Detect supabase changes
         id: changes
         uses: dorny/paths-filter@v3
@@ -32,6 +32,11 @@ jobs:
             supabase:
               - 'supabase/**'
               - 'src/lib/database.types.ts'
+              - 'src/features/content/pipeline/tts.ts'
+              - 'scripts/content/verify-audio-upload.ts'
+              - 'scripts/content/put-storage.ts'
+              - 'scripts/content/import-human.ts'
+              - 'scripts/content/tts.ts'
               - '.github/workflows/db.yml'
 
       - uses: actions/setup-node@v5
@@ -46,11 +51,12 @@ jobs:
         with:
           version: 2.121.0
 
-      # Local stack only (Docker). Services that are not needed to run migrations and
-      # pgTAP are excluded to keep the job fast.
+      # Local stack only (Docker). Services that are not needed to run migrations,
+      # pgTAP, and the m4a upload check are excluded to keep the job fast.
+      # storage-api stays up so a real .m4a can be posted to the audio bucket.
       - name: supabase start
         if: steps.changes.outputs.supabase == 'true'
-        run: supabase start -x studio,imgproxy,mailpit,edge-runtime,logflare,vector,supavisor,realtime,storage-api
+        run: supabase start -x studio,imgproxy,mailpit,edge-runtime,logflare,vector,supavisor,realtime
 
       - name: supabase db reset
         if: steps.changes.outputs.supabase == 'true'
@@ -63,6 +69,9 @@ jobs:
       # src/lib/database.types.ts must match the migrations. Regenerate with `npm run db:types`.
       - run: npm ci
         if: steps.changes.outputs.supabase == 'true'
+      - name: Local storage accepts an m4a upload
+        if: steps.changes.outputs.supabase == 'true'
+        run: npx tsx scripts/content/verify-audio-upload.ts
       - name: Check generated types are up to date
         if: steps.changes.outputs.supabase == 'true'
         run: |

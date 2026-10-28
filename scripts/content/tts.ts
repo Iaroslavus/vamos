@@ -27,6 +27,7 @@ import {
 import { ttsAdapter } from '../../src/features/content/pipeline/ttsProviders';
 
 import { normalizeToM4a } from './ffmpeg';
+import { putStorageBytes } from './put-storage';
 
 async function main(): Promise<void> {
   const provider = ttsAdapter(process.env.TTS_PROVIDER?.trim() || 'azure');
@@ -58,12 +59,13 @@ async function main(): Promise<void> {
         const encoded = await postBytes(request, apiKey);
         const audio = decodeTtsPayload(encoded, provider.encoding);
         const m4a = await normalizeToM4a(audio);
+        // .m4a is sent as audio/mp4. That type is on the audio bucket allow-list.
         const upload = storageUploadRequest({
           supabaseUrl,
           apiKey: storageKey,
           objectPath: clip.objectPath,
         });
-        await putBytes(upload, m4a, storageKey);
+        await putStorageBytes(upload, m4a, storageKey);
         updates.push({
           id: item.id,
           partIndex: clip.partIndex,
@@ -107,24 +109,6 @@ async function postBytes(
     throw new Error(`TTS API ${response.status}: ${redact(text, secret).slice(0, 300)}`);
   }
   return new Uint8Array(await response.arrayBuffer());
-}
-
-async function putBytes(
-  request: { url: string; headers: Record<string, string> },
-  body: Uint8Array,
-  secret: string,
-): Promise<void> {
-  const payload = new ArrayBuffer(body.byteLength);
-  new Uint8Array(payload).set(body);
-  const response = await fetch(request.url, {
-    method: 'POST',
-    headers: request.headers,
-    body: payload,
-  });
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`Storage ${response.status}: ${redact(text, secret).slice(0, 300)}`);
-  }
 }
 
 function redact(text: string, secret: string): string {
