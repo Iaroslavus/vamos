@@ -91,6 +91,26 @@ function existingPath(
   return pair[voice] ?? null;
 }
 
+/**
+ * MIME types stored on the `audio` bucket.
+ * Keep this list identical to `allowed_mime_types` in
+ * `supabase/migrations/20261028180000_audio_bucket_mime.sql`.
+ */
+export const AUDIO_BUCKET_MIME_TYPES = [
+  'audio/mp4',
+  'audio/x-m4a',
+  'audio/aac',
+  'audio/mpeg',
+] as const;
+
+/** `.m4a` is audio/mp4, `.mp3` is audio/mpeg. Both are on the bucket allow-list. */
+export function audioUploadContentType(objectPath: string): 'audio/mp4' | 'audio/mpeg' {
+  const normalized = objectPath.toLowerCase();
+  if (normalized.endsWith('.m4a')) return 'audio/mp4';
+  if (normalized.endsWith('.mp3')) return 'audio/mpeg';
+  throw new Error(`Для загрузки нужен файл .m4a или .mp3: ${objectPath}`);
+}
+
 export function storageUploadRequest(input: {
   supabaseUrl: string;
   apiKey: string;
@@ -101,11 +121,12 @@ export function storageUploadRequest(input: {
     .split('/')
     .map((segment) => encodeURIComponent(segment))
     .join('/');
+  const contentType = audioUploadContentType(input.objectPath);
   return {
     url: `${base}/storage/v1/object/${AUDIO_BUCKET}/${encoded}`,
     headers: {
       Authorization: `Bearer ${input.apiKey}`,
-      'Content-Type': 'audio/mp4',
+      'Content-Type': contentType,
       'x-upsert': 'true',
     },
   };

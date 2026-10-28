@@ -10,13 +10,14 @@ select ok(
 
 select results_eq(
   $$ select file_size_limit from storage.buckets where id = 'audio' $$,
-  $$ values (5242880::bigint) $$,
-  'audio clips stay within 5 MB'
+  $$ values (2097152::bigint) $$,
+  'audio clips stay within 2 MiB'
 );
 
-select ok(
-  (select 'audio/mp4' = any (allowed_mime_types) from storage.buckets where id = 'audio'),
-  'm4a clips are stored as audio/mp4'
+select is(
+  (select allowed_mime_types::text[] from storage.buckets where id = 'audio'),
+  array['audio/mp4', 'audio/x-m4a', 'audio/aac', 'audio/mpeg']::text[],
+  'audio bucket allows m4a containers and narrator mp3'
 );
 
 reset role;
