@@ -1,8 +1,16 @@
 import type { AudioSpeed } from '@/features/audio/select';
 
-/** Slow speech is about three quarters of normal. The file is synthesized at this rate. */
+/**
+ * Multiplier for Google `speakingRate` and OpenAI `speed`.
+ * 1 is the provider default; a value below 1 is slower.
+ */
 export const SLOW_SPEAKING_RATE = 0.75;
-export const SLOW_PROSODY = '75%';
+
+/**
+ * Azure SSML relative rate. A percentage with no sign speeds the voice up
+ * (`75%` is 75% faster). `-25%` is 25% slower than the neural default.
+ */
+export const SLOW_PROSODY = '-25%';
 
 export type TtsLocale = 'es-ES' | 'es-MX';
 

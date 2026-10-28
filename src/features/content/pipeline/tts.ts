@@ -30,8 +30,55 @@ export type AudioPathUpdate = {
 
 const SPEEDS: readonly AudioSpeed[] = ['normal', 'slow'];
 
+/** Slow clip must be at least this many times the normal clip of the same unit. */
+export const SLOW_MIN_DURATION_RATIO = 1.2;
+
+export type PlanClipOptions = {
+  /** Plan slow clips only. Normal files already on the unit stay as they are. */
+  onlySlow?: boolean;
+  /** Plan a clip even when a stored path is already written. */
+  force?: boolean;
+};
+
+export type TtsCliOptions = {
+  onlySlow: boolean;
+  force: boolean;
+};
+
+/** `--only-slow` regenerates slow clips. `--force` replaces paths that already exist. */
+export function parseTtsArgs(argv: readonly string[]): TtsCliOptions {
+  const options: TtsCliOptions = { onlySlow: false, force: false };
+  for (const arg of argv) {
+    if (arg === '--only-slow') options.onlySlow = true;
+    else if (arg === '--force') options.force = true;
+    else throw new Error(`Неизвестный аргумент ${arg}`);
+  }
+  return options;
+}
+
 export function needsGeneratedAudio(item: Item): boolean {
   return planItemClips(item).length > 0;
+}
+
+/**
+ * Slow must be at least {@link SLOW_MIN_DURATION_RATIO} times the normal clip.
+ * The error names the unit so a bad synthesis can be found in the log.
+ */
+export function assertSlowLongerThanNormal(
+  itemId: string,
+  normalSeconds: number,
+  slowSeconds: number,
+): void {
+  const ratio =
+    normalSeconds > 0 && Number.isFinite(normalSeconds) && Number.isFinite(slowSeconds)
+      ? slowSeconds / normalSeconds
+      : 0;
+  if (ratio + 1e-6 >= SLOW_MIN_DURATION_RATIO) return;
+  const normalLabel = Number.isFinite(normalSeconds) ? normalSeconds.toFixed(2) : '?';
+  const slowLabel = Number.isFinite(slowSeconds) ? slowSeconds.toFixed(2) : '?';
+  throw new Error(
+    `Единица ${itemId}: медленная запись (${slowLabel} с) короче, чем ${SLOW_MIN_DURATION_RATIO}× обычной (${normalLabel} с).`,
+  );
 }
 
 /** `items/<level>/<slug>/<name>[.pN].<es|mx>.<normal|slow>.m4a` */
@@ -51,7 +98,7 @@ export function audioObjectPath(
  * Clips still missing for this unit.
  * A narrator recording (`source: "human"`) is left untouched, even when a slot is empty.
  */
-export function planItemClips(item: Item): PlannedClip[] {
+export function planItemClips(item: Item, options: PlanClipOptions = {}): PlannedClip[] {
   if (item.audio.source === 'human') return [];
   const planned: PlannedClip[] = [];
   const voices = voicesForVariant(item.variant);
@@ -59,11 +106,12 @@ export function planItemClips(item: Item): PlannedClip[] {
     { partIndex: null, text: item.es },
     ...item.parts.map((part, index) => ({ partIndex: index, text: part.es })),
   ];
+  const speeds = options.onlySlow ? (['slow'] as const) : SPEEDS;
   for (const slot of slots) {
     for (const voice of voices) {
-      for (const speed of SPEEDS) {
+      for (const speed of speeds) {
         const existing = existingPath(item, slot.partIndex, voice, speed);
-        if (isStoredAudioPath(existing)) continue;
+        if (!options.force && isStoredAudioPath(existing)) continue;
         planned.push({
           itemId: item.id,
           text: slot.text,
@@ -77,6 +125,16 @@ export function planItemClips(item: Item): PlannedClip[] {
     }
   }
   return planned;
+}
+
+/** Path already stored for this slot, if any. */
+export function clipPath(
+  item: Item,
+  partIndex: number | null,
+  voice: AudioPreference,
+  speed: AudioSpeed,
+): string | null {
+  return existingPath(item, partIndex, voice, speed);
 }
 
 function existingPath(

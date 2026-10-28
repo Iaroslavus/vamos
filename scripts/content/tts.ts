@@ -2,9 +2,15 @@
  * Neural TTS for every unit and every part.
  *
  * For variant both / es / latam: es-ES and es-MX as required, normal speed and
- * slow speed (SSML rate 75%, not a stretched file). Loudness and silence are
- * normalized to m4a/aac 64 kbps, then uploaded. Paths land in items.audio.
+ * slow speed (Azure SSML rate -25%, not a stretched file). Loudness and silence
+ * are normalized to m4a/aac 64 kbps, then uploaded. Paths land in items.audio.
  * `audio.source = "human"` is left alone.
+ *
+ * Flags: `--only-slow` plans slow clips only. `--force` replaces a path that
+ * already exists. Together they regenerate slow files and skip narrator audio.
+ *
+ * After each unit, ffprobe checks that every slow clip is at least 1.2× the
+ * matching normal clip. A short slow file stops the run and names the unit id.
  *
  * Keys stay in the environment:
  *   TTS_API_KEY, CONTENT_SUPABASE_URL, CONTENT_SUPABASE_KEY
@@ -16,20 +22,33 @@ import path from 'path';
 
 import { z } from 'zod';
 
-import { ItemSchema } from '../../src/features/content/schema';
+import { publicAudioUrl } from '../../src/features/audio/storage';
+import {
+  isStoredAudioPath,
+  type AudioPreference,
+  type AudioSpeed,
+} from '../../src/features/audio/select';
+import { ItemSchema, type Item } from '../../src/features/content/schema';
 import { decodeTtsPayload } from '../../src/features/content/pipeline/ssml';
 import {
   applyAudioPaths,
+  assertSlowLongerThanNormal,
+  clipPath,
+  parseTtsArgs,
   planItemClips,
   storageUploadRequest,
   type AudioPathUpdate,
+  type PlannedClip,
 } from '../../src/features/content/pipeline/tts';
 import { ttsAdapter } from '../../src/features/content/pipeline/ttsProviders';
 
-import { normalizeToM4a } from './ffmpeg';
+import { normalizeToM4a, probeDurationSeconds } from './ffmpeg';
 import { putStorageBytes } from './put-storage';
 
+type RenderedClip = { clip: PlannedClip; audio: Uint8Array };
+
 async function main(): Promise<void> {
+  const cli = parseTtsArgs(process.argv.slice(2));
   const provider = ttsAdapter(process.env.TTS_PROVIDER?.trim() || 'azure');
   const apiKey = requiredEnv('TTS_API_KEY');
   const supabaseUrl = requiredEnv('CONTENT_SUPABASE_URL');
@@ -47,7 +66,8 @@ async function main(): Promise<void> {
     const updates: AudioPathUpdate[] = [];
 
     for (const item of items) {
-      for (const clip of planItemClips(item)) {
+      const rendered = new Map<string, RenderedClip>();
+      for (const clip of planItemClips(item, cli)) {
         const request = provider.request({
           apiKey,
           apiUrl,
@@ -59,13 +79,19 @@ async function main(): Promise<void> {
         const encoded = await postBytes(request, apiKey);
         const audio = decodeTtsPayload(encoded, provider.encoding);
         const m4a = await normalizeToM4a(audio);
+        rendered.set(slotKey(clip.partIndex, clip.voice, clip.speed), { clip, audio: m4a });
+      }
+
+      await ensureSlowLonger(item, rendered, supabaseUrl);
+
+      for (const { clip, audio } of rendered.values()) {
         // .m4a is sent as audio/mp4. That type is on the audio bucket allow-list.
         const upload = storageUploadRequest({
           supabaseUrl,
           apiKey: storageKey,
           objectPath: clip.objectPath,
         });
-        await putStorageBytes(upload, m4a, storageKey);
+        await putStorageBytes(upload, audio, storageKey);
         updates.push({
           id: item.id,
           partIndex: clip.partIndex,
@@ -87,6 +113,65 @@ async function main(): Promise<void> {
       ? 'Нечего генерировать: клипы уже есть, либо запись диктора (source human).'
       : `Записано клипов: ${written}. Провайдер: ${provider.id}.`,
   );
+}
+
+function slotKey(
+  partIndex: number | null,
+  voice: AudioPreference,
+  speed: AudioSpeed,
+): string {
+  return `${partIndex ?? 'phrase'}:${voice}:${speed}`;
+}
+
+/**
+ * Each slow clip of this unit must be at least 1.2× its normal sibling.
+ * A normal file synthesized in this run is probed from memory. Otherwise the
+ * stored normal object is downloaded. The error includes the unit id.
+ */
+async function ensureSlowLonger(
+  item: Item,
+  rendered: ReadonlyMap<string, RenderedClip>,
+  supabaseUrl: string,
+): Promise<void> {
+  for (const { clip, audio } of rendered.values()) {
+    if (clip.speed !== 'slow') continue;
+    const normal = await normalAudio(item, clip, rendered, supabaseUrl);
+    let normalSeconds: number;
+    let slowSeconds: number;
+    try {
+      normalSeconds = await probeDurationSeconds(normal);
+      slowSeconds = await probeDurationSeconds(audio);
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : 'ffprobe';
+      throw new Error(`Единица ${item.id}: ${detail}`);
+    }
+    assertSlowLongerThanNormal(item.id, normalSeconds, slowSeconds);
+  }
+}
+
+async function normalAudio(
+  item: Item,
+  slow: PlannedClip,
+  rendered: ReadonlyMap<string, RenderedClip>,
+  supabaseUrl: string,
+): Promise<Uint8Array> {
+  const fresh = rendered.get(slotKey(slow.partIndex, slow.voice, 'normal'));
+  if (fresh) return fresh.audio;
+  const stored = clipPath(item, slow.partIndex, slow.voice, 'normal');
+  if (!stored || !isStoredAudioPath(stored)) {
+    throw new Error(`Единица ${item.id}: нет обычной записи, чтобы сравнить медленную.`);
+  }
+  const url =
+    stored.startsWith('http://') || stored.startsWith('https://')
+      ? stored
+      : publicAudioUrl(stored, supabaseUrl);
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(
+      `Единица ${item.id}: не удалось прочитать обычную запись (${response.status}).`,
+    );
+  }
+  return new Uint8Array(await response.arrayBuffer());
 }
 
 function requiredEnv(name: string): string {
