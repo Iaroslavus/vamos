@@ -15,14 +15,17 @@ import { draftFilePlan, registerRequires } from './files';
 import { loadContent, loaderLinkIssues } from './load';
 import { compareClipName, comparePhrases } from './compare';
 import { buildReport, formatReport, hasPlayableAudio } from './report';
-import { normalizeAudioArgs, SLOW_PROSODY, spanishSsml } from './ssml';
+import { normalizeAudioArgs, SLOW_PROSODY, SLOW_SPEAKING_RATE, spanishSsml } from './ssml';
 import {
   applyAudioPaths,
+  assertSlowLongerThanNormal,
   AUDIO_BUCKET_MIME_TYPES,
   audioObjectPath,
   audioUploadContentType,
   needsGeneratedAudio,
+  parseTtsArgs,
   planItemClips,
+  SLOW_MIN_DURATION_RATIO,
   storageUploadRequest,
 } from './tts';
 import { ttsAdapter } from './ttsProviders';
@@ -198,7 +201,7 @@ describe('tts plan', () => {
     ).toBe(true);
   });
 
-  it('asks the neural voice for SSML rate 75% and encodes aac 64k without stretching', () => {
+  it('asks the neural voice for SSML rate -25% and encodes aac 64k without stretching', () => {
     const slow = spanishSsml('café & té', 'es-MX', 'es-MX-DaliaNeural', 'slow');
     expect(slow).toContain(`rate="${SLOW_PROSODY}"`);
     expect(slow).toContain('es-MX-DaliaNeural');
@@ -213,8 +216,21 @@ describe('tts plan', () => {
       region: 'westeurope',
     });
     expect(azure.headers['Ocp-Apim-Subscription-Key']).toBe('secret');
-    expect(azure.body).toContain('rate="75%"');
+    expect(azure.body).toContain('rate="-25%"');
     expect(azure.body).toContain('es-ES-ElviraNeural');
+    expect(SLOW_PROSODY.startsWith('-')).toBe(true);
+
+    const google = JSON.parse(
+      ttsAdapter('google').request({
+        apiKey: 'secret',
+        text: 'Hola',
+        locale: 'es-ES',
+        speed: 'slow',
+      }).body ?? '{}',
+    ) as { audioConfig: { speakingRate: number }; input: { ssml: string } };
+    expect(google.audioConfig.speakingRate).toBe(SLOW_SPEAKING_RATE);
+    expect(google.audioConfig.speakingRate).toBeLessThan(1);
+    expect(google.input.ssml).not.toContain('prosody');
 
     const openai = JSON.parse(
       ttsAdapter('openai').request({
@@ -225,6 +241,8 @@ describe('tts plan', () => {
       }).body ?? '{}',
     ) as { speed: number };
     expect(openai.speed).toBe(0.75);
+    expect(openai.speed).toBeLessThan(1);
+    expect(SLOW_SPEAKING_RATE).toBeLessThan(1);
 
     const args = normalizeAudioArgs('in.mp3', 'out.m4a');
     expect(args).toEqual(expect.arrayContaining(['-c:a', 'aac', '-b:a', '64k']));
@@ -305,6 +323,42 @@ describe('tts plan', () => {
       { id: 'human.hola', audio: { source: 'human', es: 'items/a1/hola/human.m4a' } },
       { id: 'other' },
     ]);
+  });
+
+  it('regenerates only slow clips when --only-slow --force is set, and skips a narrator', () => {
+    expect(parseTtsArgs(['--only-slow', '--force'])).toEqual({ onlySlow: true, force: true });
+    expect(() => parseTtsArgs(['--all'])).toThrow('--all');
+
+    const recorded = word('cafe.aqui');
+    recorded.variant = 'es';
+    recorded.audio = {
+      source: 'tts',
+      es: 'items/a1/cafe/aqui.es.normal.m4a',
+      latam: null,
+      slow: { es: 'items/a1/cafe/aqui.es.slow.m4a', latam: null },
+      parts: [],
+    };
+    expect(planItemClips(recorded)).toEqual([]);
+    const forced = planItemClips(recorded, { onlySlow: true, force: true });
+    expect(forced.map((clip) => clip.speed)).toEqual(['slow']);
+    expect(forced.every((clip) => clip.voice === 'es')).toBe(true);
+    expect(
+      planItemClips(
+        { ...recorded, audio: { ...recorded.audio, source: 'human' } },
+        { onlySlow: true, force: true },
+      ),
+    ).toEqual([]);
+
+    recorded.audio.slow.es = null;
+    expect(planItemClips(recorded, { onlySlow: true }).map((clip) => clip.speed)).toEqual(['slow']);
+  });
+
+  it('rejects a slow clip that is not at least 1.2× the normal one and names the unit', () => {
+    expect(SLOW_MIN_DURATION_RATIO).toBe(1.2);
+    expect(() => assertSlowLongerThanNormal('cafe.aqui', 2, 2.4)).not.toThrow();
+    expect(() => assertSlowLongerThanNormal('cafe.aqui', 2, 2)).toThrow('cafe.aqui');
+    expect(() => assertSlowLongerThanNormal('cafe.aqui', 2, 2.39)).toThrow(/cafe\.aqui/);
+    expect(() => assertSlowLongerThanNormal('cafe.gracias', 0, 3)).toThrow('cafe.gracias');
   });
 
   it('counts a unit as playable only when every required clip is stored', () => {

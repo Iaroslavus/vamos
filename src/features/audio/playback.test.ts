@@ -153,6 +153,38 @@ describe('playLessonAudio', () => {
     now.mockRestore();
   });
 
+  it('plays a slow file at playbackRate 1 and slows only speech when the file is missing', async () => {
+    const previous = process.env.EXPO_PUBLIC_SUPABASE_URL;
+    process.env.EXPO_PUBLIC_SUPABASE_URL = 'http://127.0.0.1:54321/';
+    registerAudioCache(null);
+
+    const file = await playLessonAudio({
+      audio: 'items/a1/hola/hola.es.slow.m4a',
+      text: 'Hola',
+      rate: SLOW_RATE,
+    });
+
+    expect(file).toBe('file');
+    expect(mockSetPlaybackRate).toHaveBeenCalledWith(1, 'high');
+    expect(mockSetPlaybackRate).not.toHaveBeenCalledWith(SLOW_RATE, expect.anything());
+    expect(Speech.speak).not.toHaveBeenCalled();
+
+    jest.clearAllMocks();
+    const spoken = await playLessonAudio({ text: 'Hola', rate: SLOW_RATE });
+
+    expect(spoken).toBe('speech');
+    expect(createAudioPlayer).not.toHaveBeenCalled();
+    expect(Speech.speak).toHaveBeenCalledWith(
+      'Hola',
+      expect.objectContaining({
+        language: SPEECH_LANGUAGE,
+        rate: speechEngineRate(SLOW_RATE),
+        pitch: SPEECH_PITCH,
+      }),
+    );
+    process.env.EXPO_PUBLIC_SUPABASE_URL = previous;
+  });
+
   it('plays a file at 1× even when the button asked for slow', async () => {
     const source = await playLessonAudio({
       audio: 'https://cdn.example/clip.mp3',

@@ -69,6 +69,9 @@ const googleAdapter: TtsAdapter = {
   encoding: 'google-json',
   request(input) {
     const voice = GOOGLE_VOICES[input.locale];
+    // speakingRate is a multiplier: 1 is normal, below 1 is slower.
+    // The SSML stays at the default rate so the two controls are not stacked.
+    const speakingRate = input.speed === 'slow' ? SLOW_SPEAKING_RATE : 1;
     return {
       url: input.apiUrl?.trim() || DEFAULT_GOOGLE_URL,
       headers: {
@@ -76,9 +79,9 @@ const googleAdapter: TtsAdapter = {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        input: { ssml: spanishSsml(input.text, input.locale, voice, input.speed) },
+        input: { ssml: spanishSsml(input.text, input.locale, voice, 'normal') },
         voice: { languageCode: input.locale, name: voice },
-        audioConfig: { audioEncoding: 'MP3' },
+        audioConfig: { audioEncoding: 'MP3', speakingRate },
       }),
     };
   },
