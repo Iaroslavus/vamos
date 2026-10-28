@@ -6,7 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { playLessonAudio } from '@/features/audio/playback';
 import { playGradeSound } from '@/features/audio/sounds';
-import type { Item } from '@/features/content/schema';
+import { blankAudio, type Item } from '@/features/content/schema';
 import { fillLocales } from '@/features/content/text';
 import i18n from '@/i18n';
 
@@ -82,7 +82,7 @@ function item(id: string, es: string, ru: string): Item {
     why: null,
     level: 'A1',
     variant: 'both',
-    audio: { es: `${id}.mp3`, latam: null },
+    audio: blankAudio({ es: `${id}.mp3` }),
     tags: [],
     draft: false,
     draft_i18n: false,

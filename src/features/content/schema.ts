@@ -75,10 +75,75 @@ const PartSchema = z.object({
   tr: LocalizedTextSchema,
 });
 
-const AudioSchema = z.object({
-  es: z.string().min(1).nullable(),
-  latam: z.string().min(1).nullable(),
+const nullablePath = z.string().min(1).nullable();
+
+const SpeedPairSchema = z.object({
+  es: nullablePath.default(null),
+  latam: nullablePath.default(null),
 });
+
+/** One phrase or one part: Spain and Latin America, each at normal and slow speed. */
+export const AudioTrackSchema = z.object({
+  es: nullablePath.default(null),
+  latam: nullablePath.default(null),
+  slow: SpeedPairSchema.default({ es: null, latam: null }),
+});
+export type AudioTrack = z.infer<typeof AudioTrackSchema>;
+
+/**
+ * Recordings for a unit.
+ * `source: "human"` is a narrator file and is never replaced by TTS.
+ * A string in `es` / `latam` is the normal-speed clip (older content stays valid).
+ */
+export const AudioSchema = z.object({
+  source: z.enum(['tts', 'human']).default('tts'),
+  es: nullablePath.default(null),
+  latam: nullablePath.default(null),
+  slow: SpeedPairSchema.default({ es: null, latam: null }),
+  parts: z.array(AudioTrackSchema).default([]),
+});
+export type Audio = z.infer<typeof AudioSchema>;
+
+const EMPTY_SPEED = { es: null, latam: null } as const;
+
+/** A fresh audio object. Use this in fixtures so every clip slot exists. */
+export function blankAudio(
+  overrides: {
+    source?: Audio['source'];
+    es?: string | null;
+    latam?: string | null;
+    slow?: { es?: string | null; latam?: string | null };
+    parts?: Audio['parts'];
+  } = {},
+): Audio {
+  return {
+    source: overrides.source ?? 'tts',
+    es: overrides.es ?? null,
+    latam: overrides.latam ?? null,
+    slow: {
+      es: overrides.slow?.es ?? null,
+      latam: overrides.slow?.latam ?? null,
+    },
+    parts: overrides.parts ?? [],
+  };
+}
+
+export function blankTrack(
+  overrides: {
+    es?: string | null;
+    latam?: string | null;
+    slow?: { es?: string | null; latam?: string | null };
+  } = {},
+): AudioTrack {
+  return {
+    es: overrides.es ?? null,
+    latam: overrides.latam ?? null,
+    slow: {
+      es: overrides.slow?.es ?? EMPTY_SPEED.es,
+      latam: overrides.slow?.latam ?? EMPTY_SPEED.latam,
+    },
+  };
+}
 
 /**
  * One teachable unit in the shared library (`content/items/<level>/*.json`).
@@ -97,7 +162,13 @@ export const ItemSchema = z
     why: LocalizedTextSchema.nullable().default(null),
     level: CefrLevelSchema,
     variant: VariantSchema.default('both'),
-    audio: AudioSchema.default({ es: null, latam: null }),
+    audio: AudioSchema.default({
+      source: 'tts',
+      es: null,
+      latam: null,
+      slow: { es: null, latam: null },
+      parts: [],
+    }),
     tags: z.array(z.string().min(1)).default([]),
     /** Draft units are not shown as published course material. */
     draft: z.boolean().default(false),

@@ -6,6 +6,9 @@ import { Button } from '@/components/Button';
 import { ProgressBar } from '@/components/ProgressBar';
 import { Text } from '@/components/Text';
 import { playLessonAudio, stopLessonAudio } from '@/features/audio/playback';
+import { useAudioPreference } from '@/features/audio/preference';
+import { selectClip, type AudioPreference } from '@/features/audio/select';
+import { getItem } from '@/features/content/loader';
 import type { ReviewRating } from '@/features/review/fsrs';
 import { colors, space } from '@/theme/tokens';
 
@@ -35,6 +38,8 @@ export function ReviewStudy({
   onRate,
 }: ReviewStudyProps) {
   const { t } = useTranslation();
+  const preference = useAudioPreference();
+  const audio = reviewClip(card.itemId, card.audio, preference);
   const spanishVisible = card.direction === 'es_to_ru' ? !revealed : revealed;
 
   useEffect(() => {
@@ -42,14 +47,14 @@ export function ReviewStudy({
       void stopLessonAudio();
       return;
     }
-    void playLessonAudio({ text: card.es, audio: card.audio });
+    void playLessonAudio({ text: card.es, audio });
     return () => {
       void stopLessonAudio();
     };
-  }, [card.audio, card.es, card.key, spanishVisible]);
+  }, [audio, card.es, card.key, spanishVisible]);
 
   const replay = () => {
-    void playLessonAudio({ text: card.es, audio: card.audio });
+    void playLessonAudio({ text: card.es, audio });
   };
 
   const speak = spanishVisible ? { speakLabel: t('review.playWord'), onSpeak: replay } : undefined;
@@ -80,6 +85,18 @@ export function ReviewStudy({
       )}
     </View>
   );
+}
+
+function reviewClip(
+  itemId: string,
+  fallback: string | undefined,
+  preference: AudioPreference,
+): string | null {
+  try {
+    return selectClip(getItem(itemId).audio, preference, 'normal') ?? fallback ?? null;
+  } catch {
+    return fallback ?? null;
+  }
 }
 
 const styles = StyleSheet.create({

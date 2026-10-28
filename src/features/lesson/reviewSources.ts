@@ -1,4 +1,5 @@
 import { contentLanguage, listItems } from '@/features/content/loader';
+import { itemAudioPath } from '@/features/lesson/intro';
 import { textOf, type ContentLocale } from '@/features/content/text';
 import type { ExerciseReference, VocabularyRef } from '@/features/review/sources';
 
@@ -22,7 +23,7 @@ export function courseVocabulary(language: ContentLocale = contentLanguage()): C
     id: item.id,
     es: item.es,
     ru: textOf(item.tr, language),
-    audio: item.audio.es ?? undefined,
+    audio: itemAudioPath(item) ?? undefined,
   }));
   cachedWords.set(language, words);
   return words;

@@ -1,7 +1,7 @@
 -- Bucket audio is world-readable. Clients cannot upload.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(5);
+select plan(6);
 
 select ok(
   (select buckets.public from storage.buckets as buckets where buckets.id = 'audio'),
@@ -12,6 +12,11 @@ select results_eq(
   $$ select file_size_limit from storage.buckets where id = 'audio' $$,
   $$ values (5242880::bigint) $$,
   'audio clips stay within 5 MB'
+);
+
+select ok(
+  (select 'audio/mp4' = any (allowed_mime_types) from storage.buckets where id = 'audio'),
+  'm4a clips are stored as audio/mp4'
 );
 
 reset role;

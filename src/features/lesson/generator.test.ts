@@ -1,6 +1,6 @@
 import { getLesson, getTopic, listItems, listLessons } from '@/features/content/loader';
 import { fillLocales, textOf } from '@/features/content/text';
-import type { Item, Lesson } from '@/features/content/schema';
+import { blankAudio, type Item, type Lesson } from '@/features/content/schema';
 
 import {
   generateLessonSteps,
@@ -383,7 +383,7 @@ function unit(id: string, type: Item['type'], es: string, ru: string, parts: Ite
     why: null,
     level: 'A1',
     variant: 'both',
-    audio: { es: `${id}.mp3`, latam: null },
+    audio: blankAudio({ es: `${id}.mp3` }),
     tags: [],
     draft: true,
     draft_i18n: false,

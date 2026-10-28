@@ -32,6 +32,10 @@ export type ListenSelectItem = LessonExerciseBase & {
   options: readonly string[];
   /** Content audio path; playback falls back to TTS of `speakText`. */
   audio?: string;
+  /** Pre-rendered slow clip. Missing → device speech, not a stretched normal file. */
+  slowAudio?: string;
+  /** Catalog id used to pick the profile's Spanish variant at play time. */
+  itemId?: string;
   speakText: string;
 };
 

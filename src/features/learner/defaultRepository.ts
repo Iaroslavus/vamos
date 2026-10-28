@@ -17,7 +17,7 @@ function supabaseLearnerRemote(): LearnerRemote {
     async fetch(userId) {
       const { data, error } = await supabase
         .from('profiles')
-        .select('display_name, goal, daily_minutes, ui_language')
+        .select('display_name, goal, daily_minutes, ui_language, spanish_variant')
         .eq('id', userId)
         .maybeSingle();
       if (error) throw error;

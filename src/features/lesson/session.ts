@@ -3,6 +3,7 @@ import type { Item } from '@/features/content/schema';
 import { contentLocale, textOf, type ContentLocale } from '@/features/content/text';
 
 import { generateLessonSteps, seenItemsBeforeLesson, type LessonStep } from './generator';
+import { itemAudioPath } from './intro';
 import { serializePairs } from './pairs';
 import type { VocabularyItem } from './schema';
 import type { LessonExerciseItem, ScriptEntry, ScriptKind } from './store';
@@ -140,6 +141,7 @@ function exerciseFromStep(step: LessonStep): LessonExerciseItem | null {
         options: step.options,
         answer: step.answer,
         speakText: step.speakText,
+        ...(step.itemIds[0] ? { itemId: step.itemIds[0] } : {}),
         ...(step.audio ? { audio: step.audio } : {}),
       };
     case 'match_pairs':
@@ -174,7 +176,7 @@ function exerciseFromStep(step: LessonStep): LessonExerciseItem | null {
 }
 
 function toVocabulary(item: Item, language: ContentLocale): VocabularyItem {
-  const audio = item.audio.es ?? item.audio.latam;
+  const audio = itemAudioPath(item);
   return {
     id: item.id,
     es: item.es,

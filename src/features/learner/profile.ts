@@ -5,12 +5,16 @@ export type LearningGoal = 'travel' | 'work' | 'relocation' | 'dele';
 
 export const LEARNING_GOALS: readonly LearningGoal[] = ['travel', 'work', 'relocation', 'dele'];
 
+export type SpanishVariant = 'spain' | 'latam';
+
 export type LearnerProfile = {
   name: string | null;
   goal: LearningGoal | null;
   dailyMinutes: DailyGoalMinutes;
   preferencesAsked: boolean;
   uiLanguage: UiLanguage | null;
+  /** Spain is es-ES audio. Latin America is es-MX. */
+  spanishVariant: SpanishVariant;
 };
 
 export const EMPTY_PROFILE: LearnerProfile = {
@@ -19,6 +23,7 @@ export const EMPTY_PROFILE: LearnerProfile = {
   dailyMinutes: 10,
   preferencesAsked: false,
   uiLanguage: null,
+  spanishVariant: 'spain',
 };
 
 const NAME_MAX = 60;
@@ -58,6 +63,13 @@ export function applyPatch(
   ) {
     next.uiLanguage = profile.uiLanguage;
   }
+  if (
+    patch.spanishVariant !== undefined &&
+    patch.spanishVariant !== 'spain' &&
+    patch.spanishVariant !== 'latam'
+  ) {
+    next.spanishVariant = profile.spanishVariant;
+  }
   return next;
 }
 
@@ -77,6 +89,7 @@ export function mergeProfiles(
     dailyMinutes: local.preferencesAsked ? local.dailyMinutes : remote.dailyMinutes,
     preferencesAsked,
     uiLanguage: local.uiLanguage ?? remote.uiLanguage,
+    spanishVariant: remote.spanishVariant,
   };
 }
 
@@ -86,6 +99,7 @@ export function profilesEqual(a: LearnerProfile, b: LearnerProfile): boolean {
     a.goal === b.goal &&
     a.dailyMinutes === b.dailyMinutes &&
     a.preferencesAsked === b.preferencesAsked &&
-    a.uiLanguage === b.uiLanguage
+    a.uiLanguage === b.uiLanguage &&
+    a.spanishVariant === b.spanishVariant
   );
 }

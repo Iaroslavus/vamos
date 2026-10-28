@@ -76,13 +76,23 @@
   "why": null,
   "level": "A1",
   "variant": "both",
-  "audio": { "es": "items/a1/cafe/cafe_con_leche.es.mp3", "latam": null },
+  "audio": {
+    "source": "tts",
+    "es": "items/a1/cafe/cafe_con_leche.es.normal.m4a",
+    "latam": "items/a1/cafe/cafe_con_leche.mx.normal.m4a",
+    "slow": {
+      "es": "items/a1/cafe/cafe_con_leche.es.slow.m4a",
+      "latam": "items/a1/cafe/cafe_con_leche.mx.slow.m4a"
+    },
+    "parts": []
+  },
   "tags": ["cafe", "pedir"],
   "draft_i18n": false
 }
 ```
 - `type`: `word` | `phrase`. `say` — подсказка произношения буквами языка ученика, только A1–A2. Для ru и uk это кириллица, для en — латинская запись. Выше A2 поле `say` равно `null`.
 - `variant`: `es` | `latam` | `both`. Если различается — две единицы с пометкой.
+- `audio.source`: `tts` или `human`. Запись диктора (`human`) не заменяется генерацией. `es` и `latam` — обычная скорость (es-ES и es-MX), `slow` — та же пара, уже произнесённая медленно. Старый вид `{ "es": "путь", "latam": null }` по-прежнему читается как обычная скорость.
 - Одна единица может использоваться в нескольких темах (без дублей).
 
 ### Тема (content/topics/a1/cafe/topic.json)

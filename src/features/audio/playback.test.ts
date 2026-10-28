@@ -12,6 +12,7 @@ import {
   resolveAudioSource,
   stopLessonAudio,
 } from './playback';
+import { registerAudioCache, type AudioCacheStore } from './cache';
 import { speechEngineRate } from './speechRate';
 
 jest.mock('expo-speech', () => ({
@@ -152,7 +153,7 @@ describe('playLessonAudio', () => {
     now.mockRestore();
   });
 
-  it('plays via expo-audio and applies rate after play (pitch preserved)', async () => {
+  it('plays a file at 1× even when the button asked for slow', async () => {
     const source = await playLessonAudio({
       audio: 'https://cdn.example/clip.mp3',
       text: 'Hola',
@@ -164,7 +165,7 @@ describe('playLessonAudio', () => {
     expect(createAudioPlayer).toHaveBeenCalledWith('https://cdn.example/clip.mp3');
     expect(mockPlay).toHaveBeenCalled();
     expect(mockPlayer.shouldCorrectPitch).toBe(true);
-    expect(mockSetPlaybackRate).toHaveBeenCalledWith(SLOW_RATE, 'high');
+    expect(mockSetPlaybackRate).toHaveBeenCalledWith(NORMAL_RATE, 'high');
     expect(Speech.speak).not.toHaveBeenCalled();
 
     // Rate must be applied after play so iOS updates live AVPlayer.rate.
@@ -188,7 +189,45 @@ describe('playLessonAudio', () => {
     expect(Speech.stop).toHaveBeenCalled();
     expect(mockPause).toHaveBeenCalled();
     expect(mockRemove).toHaveBeenCalled();
-    expect(mockSetPlaybackRate).toHaveBeenLastCalledWith(SLOW_RATE, 'high');
+    expect(mockSetPlaybackRate).toHaveBeenLastCalledWith(NORMAL_RATE, 'high');
+  });
+
+  it('speaks when the file cannot be opened', async () => {
+    jest.mocked(createAudioPlayer).mockImplementationOnce(() => {
+      throw new Error('decode');
+    });
+
+    const source = await playLessonAudio({
+      audio: 'https://cdn.example/missing.mp3',
+      text: 'Hola',
+      rate: SLOW_RATE,
+    });
+
+    expect(source).toBe('speech');
+    expect(Speech.speak).toHaveBeenCalledWith(
+      'Hola',
+      expect.objectContaining({ language: SPEECH_LANGUAGE, rate: speechEngineRate(SLOW_RATE) }),
+    );
+  });
+
+  it('plays a cached topic clip without asking the network', async () => {
+    const memory: AudioCacheStore = {
+      localUri: async () => 'file:///cache/hola.m4a',
+      download: async () => undefined,
+    };
+    registerAudioCache(memory);
+
+    const source = await playLessonAudio({
+      audio: 'items/a1/hola/hola.es.slow.m4a',
+      text: 'Hola',
+      rate: SLOW_RATE,
+    });
+
+    expect(source).toBe('file');
+    expect(createAudioPlayer).toHaveBeenCalledWith('file:///cache/hola.m4a');
+    expect(mockSetPlaybackRate).toHaveBeenCalledWith(NORMAL_RATE, 'high');
+    expect(Speech.speak).not.toHaveBeenCalled();
+    registerAudioCache(null);
   });
 
   it('stops speech and file playback', async () => {

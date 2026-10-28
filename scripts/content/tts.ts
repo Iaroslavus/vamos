@@ -1,12 +1,15 @@
 /**
- * Synthesize normal-speed Spanish audio for units that do not have a clip yet,
- * upload it to the public Supabase Storage bucket `audio`, and store the object path.
+ * Neural TTS for every unit and every part.
  *
- * Keys stay in the environment and are never written to the repo:
+ * For variant both / es / latam: es-ES and es-MX as required, normal speed and
+ * slow speed (SSML rate 75%, not a stretched file). Loudness and silence are
+ * normalized to m4a/aac 64 kbps, then uploaded. Paths land in items.audio.
+ * `audio.source = "human"` is left alone.
+ *
+ * Keys stay in the environment:
  *   TTS_API_KEY, CONTENT_SUPABASE_URL, CONTENT_SUPABASE_KEY
- * Optional: TTS_API_URL, TTS_MODEL, TTS_VOICE
- *
- * Until a path is stored, the app speaks with the device TTS.
+ * Optional: TTS_PROVIDER (azure | google | openai, default azure),
+ *   TTS_API_URL, TTS_AZURE_REGION
  */
 import fs from 'fs';
 import path from 'path';
@@ -14,24 +17,24 @@ import path from 'path';
 import { z } from 'zod';
 
 import { ItemSchema } from '../../src/features/content/schema';
+import { decodeTtsPayload } from '../../src/features/content/pipeline/ssml';
 import {
-  DEFAULT_TTS_MODEL,
-  DEFAULT_TTS_URL,
-  DEFAULT_TTS_VOICE,
   applyAudioPaths,
-  audioObjectPath,
-  needsGeneratedAudio,
-  speechRequest,
+  planItemClips,
   storageUploadRequest,
+  type AudioPathUpdate,
 } from '../../src/features/content/pipeline/tts';
+import { ttsAdapter } from '../../src/features/content/pipeline/ttsProviders';
+
+import { normalizeToM4a } from './ffmpeg';
 
 async function main(): Promise<void> {
+  const provider = ttsAdapter(process.env.TTS_PROVIDER?.trim() || 'azure');
   const apiKey = requiredEnv('TTS_API_KEY');
   const supabaseUrl = requiredEnv('CONTENT_SUPABASE_URL');
   const storageKey = requiredEnv('CONTENT_SUPABASE_KEY');
-  const apiUrl = process.env.TTS_API_URL?.trim() || DEFAULT_TTS_URL;
-  const model = process.env.TTS_MODEL?.trim() || DEFAULT_TTS_MODEL;
-  const voice = process.env.TTS_VOICE?.trim() || DEFAULT_TTS_VOICE;
+  const region = process.env.TTS_AZURE_REGION?.trim() || undefined;
+  const apiUrl = process.env.TTS_API_URL?.trim() || undefined;
 
   const root = process.cwd();
   const files = walkItemFiles(path.join(root, 'content/items'));
@@ -40,30 +43,47 @@ async function main(): Promise<void> {
   for (const file of files) {
     const raw: unknown = JSON.parse(fs.readFileSync(file, 'utf8')) as unknown;
     const items = z.array(ItemSchema).parse(raw);
-    const updates = new Map<string, string>();
+    const updates: AudioPathUpdate[] = [];
 
     for (const item of items) {
-      if (!needsGeneratedAudio(item)) continue;
-      const objectPath = audioObjectPath(item);
-      const audio = await postBytes(
-        speechRequest({ apiUrl, apiKey, model, voice, text: item.es }),
-        apiKey,
-      );
-      const upload = storageUploadRequest({ supabaseUrl, apiKey: storageKey, objectPath });
-      await putBytes(upload, audio, storageKey);
-      updates.set(item.id, objectPath);
+      for (const clip of planItemClips(item)) {
+        const request = provider.request({
+          apiKey,
+          apiUrl,
+          region,
+          text: clip.text,
+          locale: clip.locale,
+          speed: clip.speed,
+        });
+        const encoded = await postBytes(request, apiKey);
+        const audio = decodeTtsPayload(encoded, provider.encoding);
+        const m4a = await normalizeToM4a(audio);
+        const upload = storageUploadRequest({
+          supabaseUrl,
+          apiKey: storageKey,
+          objectPath: clip.objectPath,
+        });
+        await putBytes(upload, m4a, storageKey);
+        updates.push({
+          id: item.id,
+          partIndex: clip.partIndex,
+          voice: clip.voice,
+          speed: clip.speed,
+          path: clip.objectPath,
+        });
+      }
     }
 
-    if (updates.size === 0) continue;
+    if (updates.length === 0) continue;
     fs.writeFileSync(file, `${JSON.stringify(applyAudioPaths(raw, updates), null, 2)}\n`);
-    written += updates.size;
-    console.log(`${path.relative(root, file)}: ${updates.size}`);
+    written += updates.length;
+    console.log(`${path.relative(root, file)}: ${updates.length}`);
   }
 
   console.log(
     written === 0
-      ? 'Нет единиц без аудио.'
-      : `Записано путей: ${written}. Пока файла нет в Storage, приложение говорит TTS устройства.`,
+      ? 'Нечего генерировать: клипы уже есть, либо запись диктора (source human).'
+      : `Записано клипов: ${written}. Провайдер: ${provider.id}.`,
   );
 }
 

@@ -17,8 +17,13 @@ import { Button } from '@/components/Button';
 import { ProgressBar } from '@/components/ProgressBar';
 import { ResultSheet } from '@/components/ResultSheet';
 import { Text } from '@/components/Text';
+import { prefetchTopicAudio } from '@/features/audio/cache';
 import { stopLessonAudio } from '@/features/audio/playback';
+import { useAudioPreference } from '@/features/audio/preference';
+import { selectClip, type AudioPreference } from '@/features/audio/select';
+import { itemsForTopic } from '@/features/audio/topicAudio';
 import { playGradeSound } from '@/features/audio/sounds';
+import { getItem, getLesson } from '@/features/content/loader';
 import { contentLocale, textOf, type ContentLocale } from '@/features/content/text';
 import { AccentBar } from '@/features/lesson/components/AccentBar';
 import { type AnswerTextFieldHandle } from '@/features/lesson/components/AnswerTextField';
@@ -56,6 +61,7 @@ function loadSession(lessonId: string | undefined, language: ContentLocale): Loa
 export default function LessonScreen() {
   const { t, i18n } = useTranslation();
   const language = contentLocale(i18n.language);
+  const audioPreference = useAudioPreference();
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const answerInputRef = useRef<AnswerTextFieldHandle>(null);
@@ -110,6 +116,11 @@ export default function LessonScreen() {
       exercises: loaded.session.exercises,
       newItems: loaded.session.newItems,
     });
+    try {
+      prefetchTopicAudio(itemsForTopic(getLessonTopicId(loaded.session.lessonId)));
+    } catch {
+      prefetchTopicAudio(loaded.session.items);
+    }
     return () => {
       void stopLessonAudio();
     };
@@ -248,18 +259,24 @@ export default function LessonScreen() {
           position={intro.position}
           total={intro.total}
           topicIcon={loaded.session.topicIcon}
+          audioVariant={audioPreference}
           onNext={onSoftContinue}
         />
       ) : null}
 
       {surface === 'dialog' && step?.type === 'dialog' ? (
-        <DialogStep step={step} items={loaded.session.items} onContinue={onSoftContinue} />
+        <DialogStep
+          step={step}
+          items={loaded.session.items}
+          audioVariant={audioPreference}
+          onContinue={onSoftContinue}
+        />
       ) : null}
 
       {surface === 'speak' && step?.type === 'speak_repeat' ? (
         <SpeakRepeatStep
           promptEs={step.prompt_es}
-          audio={step.audio}
+          audio={clipForItem(step.itemIds[0], audioPreference) ?? step.audio}
           sayRu={speakHint(loaded.session, step.itemIds[0] ?? '', language)}
           parts={speakParts(loaded.session, step.itemIds[0] ?? '', language)}
           onSkip={onSoftContinue}
@@ -339,6 +356,19 @@ export default function LessonScreen() {
       />
     </KeyboardAvoidingView>
   );
+}
+
+function getLessonTopicId(lessonId: string): string {
+  return getLesson(lessonId).topic;
+}
+
+function clipForItem(itemId: string | undefined, preference: AudioPreference): string | null {
+  if (!itemId) return null;
+  try {
+    return selectClip(getItem(itemId).audio, preference, 'normal');
+  } catch {
+    return null;
+  }
 }
 
 function itemById(session: LoadedLesson, itemId: string) {

@@ -11,7 +11,7 @@ import {
   SLOW_RATE,
   stopLessonAudio,
 } from '@/features/audio/playback';
-import type { Item } from '@/features/content/schema';
+import { blankAudio, type Item } from '@/features/content/schema';
 import { fillLocales } from '@/features/content/text';
 import i18n from '@/i18n';
 
@@ -86,7 +86,11 @@ const phrase: Item = {
   why: fillLocales('Día мужского рода, поэтому buenos, а не buenas.'),
   level: 'A1',
   variant: 'both',
-  audio: { es: 'a1/buenos-dias.mp3', latam: 'a1/buenos-dias-latam.mp3' },
+  audio: blankAudio({
+    es: 'a1/buenos-dias.mp3',
+    latam: 'a1/buenos-dias-latam.mp3',
+    slow: { latam: 'a1/buenos-dias-latam-slow.mp3' },
+  }),
   tags: ['greeting'],
   draft: false,
   draft_i18n: false,
@@ -177,7 +181,7 @@ describe('IntroStep', () => {
       rate: NORMAL_RATE,
     });
     expect(playLessonAudio).toHaveBeenCalledWith({
-      audio: 'a1/buenos-dias-latam.mp3',
+      audio: 'a1/buenos-dias-latam-slow.mp3',
       text: 'buenos días',
       rate: SLOW_RATE,
     });
@@ -188,7 +192,11 @@ describe('IntroStep', () => {
 
     await fireEvent.press(screen.getByText('buenos · добрые'));
 
-    expect(playLessonAudio).toHaveBeenCalledWith({ text: 'buenos', rate: NORMAL_RATE });
+    expect(playLessonAudio).toHaveBeenCalledWith({
+      audio: null,
+      text: 'buenos',
+      rate: NORMAL_RATE,
+    });
   });
 
   it('hides the pronunciation hint above A2 and skips an empty why', async () => {

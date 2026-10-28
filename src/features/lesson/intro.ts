@@ -1,6 +1,7 @@
+import { selectClip, type AudioPreference, type AudioSpeed } from '@/features/audio/select';
 import type { CefrLevel, Item } from '@/features/content/schema';
 
-export type AudioPreference = 'es' | 'latam';
+export type { AudioPreference, AudioSpeed };
 
 const BEGINNER_LEVELS: ReadonlySet<CefrLevel> = new Set(['A1', 'A2']);
 
@@ -9,11 +10,26 @@ export function showsSayRu(level: CefrLevel): boolean {
   return BEGINNER_LEVELS.has(level);
 }
 
-/** Recording for the preferred region, then the other track, then none. */
-export function itemAudioPath(item: Item, preference: AudioPreference = 'es'): string | null {
-  const primary = preference === 'latam' ? item.audio.latam : item.audio.es;
-  const fallback = preference === 'latam' ? item.audio.es : item.audio.latam;
-  return primary ?? fallback;
+/**
+ * Recording for the preferred region and speed, then the other region at that speed.
+ * A missing slow file is null: the player uses speech instead of stretching the normal file.
+ */
+export function itemAudioPath(
+  item: Item,
+  preference: AudioPreference = 'es',
+  speed: AudioSpeed = 'normal',
+): string | null {
+  return selectClip(item.audio, preference, speed);
+}
+
+/** One `parts` chip. Index matches `item.parts` and `item.audio.parts`. */
+export function partAudioPath(
+  item: Item,
+  partIndex: number,
+  preference: AudioPreference = 'es',
+  speed: AudioSpeed = 'normal',
+): string | null {
+  return selectClip(item.audio, preference, speed, partIndex);
 }
 
 /** Leftward distance that counts as «Дальше» even without a flick. */

@@ -1,7 +1,13 @@
-import type { CefrLevel, Item } from '@/features/content/schema';
+import { blankAudio, type CefrLevel, type Item } from '@/features/content/schema';
 import { fillLocales } from '@/features/content/text';
 
-import { itemAudioPath, shouldAdvanceOnSwipe, showsSayRu, SWIPE_NEXT_DISTANCE } from './intro';
+import {
+  itemAudioPath,
+  partAudioPath,
+  shouldAdvanceOnSwipe,
+  showsSayRu,
+  SWIPE_NEXT_DISTANCE,
+} from './intro';
 
 function item(overrides: Partial<Item> = {}): Item {
   return {
@@ -15,7 +21,11 @@ function item(overrides: Partial<Item> = {}): Item {
     why: null,
     level: 'A1',
     variant: 'both',
-    audio: { es: 'a1/buenos-dias.mp3', latam: 'a1/buenos-dias-latam.mp3' },
+    audio: blankAudio({
+      es: 'a1/buenos-dias.mp3',
+      latam: 'a1/buenos-dias-latam.mp3',
+      slow: { es: 'a1/buenos-dias-slow.mp3', latam: 'a1/buenos-dias-latam-slow.mp3' },
+    }),
     tags: [],
     draft: false,
     draft_i18n: false,
@@ -46,12 +56,35 @@ describe('itemAudioPath', () => {
   });
 
   it('falls back to the other region when the preferred track is missing', () => {
-    const spainOnly = item({ audio: { es: 'a1/hola.mp3', latam: null } });
-    const latamOnly = item({ audio: { es: null, latam: 'a1/hola-latam.mp3' } });
+    const spainOnly = item({ audio: blankAudio({ es: 'a1/hola.mp3' }) });
+    const latamOnly = item({ audio: blankAudio({ latam: 'a1/hola-latam.mp3' }) });
 
     expect(itemAudioPath(spainOnly, 'latam')).toBe('a1/hola.mp3');
     expect(itemAudioPath(latamOnly)).toBe('a1/hola-latam.mp3');
-    expect(itemAudioPath(item({ audio: { es: null, latam: null } }))).toBeNull();
+    expect(itemAudioPath(item({ audio: blankAudio() }))).toBeNull();
+  });
+
+  it('uses the slow file and leaves a missing slow file for speech', () => {
+    expect(itemAudioPath(item(), 'latam', 'slow')).toBe('a1/buenos-dias-latam-slow.mp3');
+    expect(
+      itemAudioPath(item({ audio: blankAudio({ es: 'a1/hola.mp3' }) }), 'es', 'slow'),
+    ).toBeNull();
+  });
+
+  it('plays a part file when that clip exists', () => {
+    const withPart = item({
+      audio: blankAudio({
+        parts: [
+          {
+            es: 'items/a1/hola/buenos.p0.es.normal.m4a',
+            latam: null,
+            slow: { es: null, latam: null },
+          },
+        ],
+      }),
+    });
+    expect(partAudioPath(withPart, 0)).toBe('items/a1/hola/buenos.p0.es.normal.m4a');
+    expect(partAudioPath(item(), 0)).toBeNull();
   });
 });
 

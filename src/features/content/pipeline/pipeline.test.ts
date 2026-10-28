@@ -13,15 +13,17 @@ import {
 } from './draft';
 import { draftFilePlan, registerRequires } from './files';
 import { loadContent, loaderLinkIssues } from './load';
+import { compareClipName, comparePhrases } from './compare';
 import { buildReport, formatReport, hasPlayableAudio } from './report';
+import { normalizeAudioArgs, SLOW_PROSODY, spanishSsml } from './ssml';
 import {
-  TTS_SPEED,
   applyAudioPaths,
   audioObjectPath,
   needsGeneratedAudio,
-  speechRequest,
+  planItemClips,
   storageUploadRequest,
 } from './tts';
+import { ttsAdapter } from './ttsProviders';
 
 const spec: TopicSpec = {
   level: 'A1',
@@ -171,55 +173,142 @@ describe('content report', () => {
 });
 
 describe('tts plan', () => {
-  it('asks for normal speed and stores a bucket path', () => {
-    const item = phrase('cafe.un_cafe', 'Un café, por favor', 'Кофе, пожалуйста');
-    expect(needsGeneratedAudio(item)).toBe(true);
-    expect(needsGeneratedAudio({ ...item, audio: { es: 'a1/hola.mp3', latam: null } })).toBe(true);
+  it('plans both voices and both speeds, and skips a narrator recording', () => {
+    const spain = { ...word('cafe.aqui'), variant: 'es' as const };
+    const clips = planItemClips(spain);
+    expect(needsGeneratedAudio(spain)).toBe(true);
+    expect(clips.map((clip) => `${clip.locale} ${clip.speed}`)).toEqual([
+      'es-ES normal',
+      'es-ES slow',
+    ]);
+    expect(audioObjectPath(spain, { partIndex: null, voice: 'es', speed: 'slow' })).toBe(
+      'items/a1/cafe/aqui.es.slow.m4a',
+    );
+    expect(planItemClips({ ...spain, audio: { ...spain.audio, source: 'human' } })).toEqual([]);
+
+    const phraseItem = phrase('cafe.un_cafe', 'Un café', 'Кофе');
+    const part = planItemClips(phraseItem).find((clip) => clip.partIndex === 0);
+    expect(part?.objectPath).toBe('items/a1/cafe/un_cafe.p0.es.normal.m4a');
     expect(
-      needsGeneratedAudio({ ...item, audio: { es: 'items/a1/cafe/un_cafe.es.mp3', latam: null } }),
-    ).toBe(false);
-    expect(
-      hasPlayableAudio({ ...item, audio: { es: 'https://cdn.example/a.mp3', latam: null } }),
+      planItemClips({ ...word('cafe.gracias'), variant: 'latam' }).every(
+        (clip) => clip.voice === 'latam',
+      ),
     ).toBe(true);
-    expect(audioObjectPath(item)).toBe('items/a1/cafe/un_cafe.es.mp3');
-
-    const request = speechRequest({
-      apiUrl: 'https://example.test/speech',
-      apiKey: 'secret',
-      model: 'gpt-4o-mini-tts',
-      voice: 'coral',
-      text: item.es,
-    });
-    expect(request.headers.Authorization).toBe('Bearer secret');
-    expect(JSON.parse(request.body ?? '{}')).toMatchObject({
-      input: item.es,
-      speed: TTS_SPEED,
-      response_format: 'mp3',
-    });
-    expect(TTS_SPEED).toBe(1);
-
-    expect(
-      storageUploadRequest({
-        supabaseUrl: 'http://127.0.0.1:54321/',
-        apiKey: 'storage',
-        objectPath: 'items/a1/cafe/un_cafe.es.mp3',
-      }).url,
-    ).toBe('http://127.0.0.1:54321/storage/v1/object/audio/items/a1/cafe/un_cafe.es.mp3');
   });
 
-  it('writes the object path back and leaves the other fields', () => {
+  it('asks the neural voice for SSML rate 75% and encodes aac 64k without stretching', () => {
+    const slow = spanishSsml('café & té', 'es-MX', 'es-MX-DaliaNeural', 'slow');
+    expect(slow).toContain(`rate="${SLOW_PROSODY}"`);
+    expect(slow).toContain('es-MX-DaliaNeural');
+    expect(slow).toContain('café &amp; té');
+    expect(spanishSsml('hola', 'es-ES', 'es-ES-ElviraNeural', 'normal')).not.toContain('prosody');
+
+    const azure = ttsAdapter('azure').request({
+      apiKey: 'secret',
+      text: 'Hola',
+      locale: 'es-ES',
+      speed: 'slow',
+      region: 'westeurope',
+    });
+    expect(azure.headers['Ocp-Apim-Subscription-Key']).toBe('secret');
+    expect(azure.body).toContain('rate="75%"');
+    expect(azure.body).toContain('es-ES-ElviraNeural');
+
+    const openai = JSON.parse(
+      ttsAdapter('openai').request({
+        apiKey: 'secret',
+        text: 'Hola',
+        locale: 'es-ES',
+        speed: 'slow',
+      }).body ?? '{}',
+    ) as { speed: number };
+    expect(openai.speed).toBe(0.75);
+
+    const args = normalizeAudioArgs('in.mp3', 'out.m4a');
+    expect(args).toEqual(expect.arrayContaining(['-c:a', 'aac', '-b:a', '64k']));
+    expect(args.join(' ')).toContain('loudnorm');
+    expect(args.join(' ')).toContain('silenceremove');
+    expect(args.join(' ')).not.toContain('atempo');
+
+    const upload = storageUploadRequest({
+      supabaseUrl: 'http://127.0.0.1:54321/',
+      apiKey: 'storage',
+      objectPath: 'items/a1/cafe/un_cafe.es.normal.m4a',
+    });
+    expect(upload.url).toBe(
+      'http://127.0.0.1:54321/storage/v1/object/audio/items/a1/cafe/un_cafe.es.normal.m4a',
+    );
+    expect(upload.headers['Content-Type']).toBe('audio/mp4');
+  });
+
+  it('writes clip paths and does not replace a human recording', () => {
     const next = applyAudioPaths(
-      [{ id: 'cafe.un_cafe', ru: 'Кофе', audio: { es: null, latam: null } }, { id: 'other' }],
-      new Map([['cafe.un_cafe', 'items/a1/cafe/un_cafe.es.mp3']]),
+      [
+        { id: 'cafe.un_cafe', ru: 'Кофе', audio: { es: null, latam: null } },
+        { id: 'human.hola', audio: { source: 'human', es: 'items/a1/hola/human.m4a' } },
+        { id: 'other' },
+      ],
+      [
+        {
+          id: 'cafe.un_cafe',
+          partIndex: null,
+          voice: 'es',
+          speed: 'normal',
+          path: 'items/a1/cafe/un_cafe.es.normal.m4a',
+        },
+        {
+          id: 'cafe.un_cafe',
+          partIndex: 0,
+          voice: 'latam',
+          speed: 'slow',
+          path: 'items/a1/cafe/un_cafe.p0.mx.slow.m4a',
+        },
+        {
+          id: 'human.hola',
+          partIndex: null,
+          voice: 'es',
+          speed: 'normal',
+          path: 'items/a1/hola/tts.m4a',
+        },
+      ],
     );
     expect(next).toEqual([
       {
         id: 'cafe.un_cafe',
         ru: 'Кофе',
-        audio: { es: 'items/a1/cafe/un_cafe.es.mp3', latam: null },
+        audio: {
+          source: 'tts',
+          es: 'items/a1/cafe/un_cafe.es.normal.m4a',
+          latam: null,
+          slow: { es: null, latam: null },
+          parts: [
+            {
+              es: null,
+              latam: null,
+              slow: { es: null, latam: 'items/a1/cafe/un_cafe.p0.mx.slow.m4a' },
+            },
+          ],
+        },
       },
+      { id: 'human.hola', audio: { source: 'human', es: 'items/a1/hola/human.m4a' } },
       { id: 'other' },
     ]);
+  });
+
+  it('counts a unit as playable only when every required clip is stored', () => {
+    const ready = {
+      ...word('cafe.aqui'),
+      variant: 'es' as const,
+      parts: [],
+      audio: {
+        ...word('cafe.aqui').audio,
+        es: 'https://cdn.example/a.m4a',
+        slow: { es: 'items/a1/cafe/aqui.es.slow.m4a', latam: null },
+      },
+    };
+    expect(hasPlayableAudio(ready)).toBe(true);
+    expect(hasPlayableAudio(word('cafe.aqui'))).toBe(false);
+    expect(needsGeneratedAudio(ready)).toBe(false);
   });
 });
 
@@ -274,6 +363,10 @@ describe('starter week on disk', () => {
     expect(report.missingTranslations).toEqual({ ru: [], uk: [], en: [] });
     expect(report.draftTopics).toBe(report.topics);
     expect(report.phraseShare).toBeGreaterThanOrEqual(0.6);
+    const sample = comparePhrases(loaded.bundle);
+    expect(sample).toHaveLength(10);
+    expect(sample.every((item) => item.type === 'phrase')).toBe(true);
+    expect(compareClipName(0, sample[0]!.id, 'azure')).toMatch(/^01-.+-azure\.m4a$/);
   });
 });
 

@@ -59,7 +59,7 @@ describe('ListenSelectExercise slow button', () => {
     fireEvent.press(screen.getByLabelText('Медленно'));
 
     expect(playLessonAudio).toHaveBeenCalledWith({
-      audio: listen.audio,
+      audio: null,
       text: listen.speakText,
       rate: SLOW_RATE,
     });
@@ -85,7 +85,19 @@ describe('ListenSelectExercise slow button', () => {
     fireEvent.press(screen.getByLabelText('Медленно'));
 
     expect(playLessonAudio).toHaveBeenCalledWith({
-      audio: 'a1/u01/l01-e04.mp3',
+      audio: null,
+      text: 'Hola',
+      rate: SLOW_RATE,
+    });
+  });
+
+  it('plays the slow file when that clip exists', async () => {
+    await renderExercise({ ...listen, slowAudio: 'a1/u01/l01-e04-slow.m4a' });
+
+    fireEvent.press(screen.getByLabelText('Медленно'));
+
+    expect(playLessonAudio).toHaveBeenCalledWith({
+      audio: 'a1/u01/l01-e04-slow.m4a',
       text: 'Hola',
       rate: SLOW_RATE,
     });

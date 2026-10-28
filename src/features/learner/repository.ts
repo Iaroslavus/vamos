@@ -114,6 +114,7 @@ export function profileFromRemote(
     goal: string | null;
     daily_minutes: number;
     ui_language: string | null;
+    spanish_variant?: string | null;
   } | null,
 ): LearnerProfile | null {
   if (!row) return null;
@@ -125,10 +126,14 @@ export function profileFromRemote(
     dailyMinutes,
     preferencesAsked: goal != null,
     uiLanguage: isUiLanguage(row.ui_language) ? row.ui_language : null,
+    spanishVariant: row.spanish_variant === 'latam' ? 'latam' : 'spain',
   };
 }
 
-/** Column patch for `profiles`. A null language is omitted so a name save cannot clear it. */
+/**
+ * Column patch for `profiles`. A null language is omitted so a name save cannot clear it.
+ * `spanish_variant` is omitted too: audio follows the account value and a name save must not reset it.
+ */
 export function profileToRemote(profile: LearnerProfile): {
   display_name: string | null;
   goal: LearnerProfile['goal'];

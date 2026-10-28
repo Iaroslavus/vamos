@@ -3,6 +3,9 @@ import { StyleSheet, View } from 'react-native';
 import { Chip, type ChipTone } from '@/components/Chip';
 import { Text } from '@/components/Text';
 import { AudioControls } from '@/features/audio/AudioControls';
+import { useAudioPreference } from '@/features/audio/preference';
+import { selectClip, type AudioPreference } from '@/features/audio/select';
+import { getItem } from '@/features/content/loader';
 import { colors, space } from '@/theme/tokens';
 
 import type { GradeStatus } from '../grading';
@@ -15,6 +18,27 @@ type ListenSelectExerciseProps = {
   gradeStatus?: GradeStatus | null;
   onSelect: (option: string) => void;
 };
+
+function clipsFor(
+  exercise: ListenSelectItem,
+  preference: AudioPreference,
+): { normal: string | null; slow: string | null } {
+  if (exercise.itemId) {
+    try {
+      const audio = getItem(exercise.itemId).audio;
+      return {
+        normal: selectClip(audio, preference, 'normal') ?? exercise.audio ?? null,
+        slow: selectClip(audio, preference, 'slow') ?? exercise.slowAudio ?? null,
+      };
+    } catch {
+      // Unknown id: use the paths stored on the exercise.
+    }
+  }
+  return {
+    normal: exercise.audio ?? null,
+    slow: exercise.slowAudio ?? null,
+  };
+}
 
 function optionTone(
   option: string,
@@ -40,6 +64,8 @@ export function ListenSelectExercise({
   onSelect,
 }: ListenSelectExerciseProps) {
   const revealed = Boolean(gradeStatus);
+  const preference = useAudioPreference();
+  const clips = clipsFor(exercise, preference);
 
   return (
     <View style={styles.root}>
@@ -47,7 +73,12 @@ export function ListenSelectExercise({
         {exercise.prompt_ru}
       </Text>
 
-      <AudioControls text={exercise.speakText} audio={exercise.audio} disabled={disabled} />
+      <AudioControls
+        text={exercise.speakText}
+        audio={clips.normal}
+        slowAudio={clips.slow}
+        disabled={disabled}
+      />
 
       <View style={styles.options}>
         {exercise.options.map((option) => {

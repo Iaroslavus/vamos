@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/Button';
+import { useAudioPreference } from '@/features/audio/preference';
 import type { Item } from '@/features/content/schema';
 import { SpeakPracticeSheet } from '@/features/speech/components/SpeakPracticeSheet';
 import { AddToVocabSheet } from '@/features/vocab/components/AddToVocabSheet';
@@ -44,9 +45,11 @@ export function DialogStep({
   onComplete,
   responseMode = 'choose',
   onSpeakAloud,
-  audioVariant = 'es',
+  audioVariant: audioVariantProp,
 }: DialogStepProps) {
   const { t } = useTranslation();
+  const profilePreference = useAudioPreference();
+  const audioVariant = audioVariantProp ?? profilePreference;
   const insets = useSafeAreaInsets();
   const { state, choose, replay } = useDialogController({
     step,

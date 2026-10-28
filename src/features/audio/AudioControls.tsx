@@ -11,20 +11,28 @@ import { NORMAL_RATE, SLOW_RATE, playLessonAudio, stopLessonAudio } from './play
 
 type AudioControlsProps = {
   text: string;
+  /** Normal-speed file. Missing → device speech. */
   audio?: string | null;
+  /** Slow file synthesized at SSML rate. Missing → device speech, not a stretched normal file. */
+  slowAudio?: string | null;
   disabled?: boolean;
 };
 
-export function AudioControls({ text, audio, disabled = false }: AudioControlsProps) {
+export function AudioControls({ text, audio, slowAudio, disabled = false }: AudioControlsProps) {
   const { t } = useTranslation();
 
   const play = useCallback(
     (rate: number) => {
       if (disabled) return;
+      const slow = rate < 1;
       // Always restart: playLessonAudio stops any current file/speech first.
-      void playLessonAudio({ audio, text, rate });
+      void playLessonAudio({
+        audio: slow ? (slowAudio ?? null) : (audio ?? null),
+        text,
+        rate,
+      });
     },
-    [audio, disabled, text],
+    [audio, disabled, slowAudio, text],
   );
 
   return (
