@@ -99,6 +99,21 @@ describe('content v2 schema', () => {
     expect(lesson.dialog.lines[1]).toMatchObject({ target: 'cafe.cafe_con_leche' });
   });
 
+  it('defaults literal to null and keeps a word-for-word gloss', () => {
+    expect(ItemSchema.parse(cafeItem).literal).toBeNull();
+    const parsed = ItemSchema.parse({
+      ...cafeItem,
+      es: 'buenos días',
+      tr: { ru: 'доброе утро', uk: 'добрий ранок', en: 'good morning' },
+      literal: { ru: 'добрые дни', uk: 'добрі дні', en: 'good days' },
+      parts: [
+        { es: 'buenos', tr: { ru: 'добрые', uk: 'добрі', en: 'good' } },
+        { es: 'días', tr: { ru: 'дни', uk: 'дні', en: 'days' } },
+      ],
+    });
+    expect(parsed.literal).toEqual({ ru: 'добрые дни', uk: 'добрі дні', en: 'good days' });
+  });
+
   it('requires a pronunciation hint on A1', () => {
     const result = ItemSchema.safeParse({ ...cafeItem, say: null });
     expect(result.success).toBe(false);

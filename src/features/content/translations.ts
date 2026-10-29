@@ -14,6 +14,7 @@ export function translationGaps(bundle: ContentBundle): TranslationGap[] {
 
   for (const item of bundle.items) {
     missing(item.tr, `item ${item.id} tr`, gaps);
+    missing(item.literal, `item ${item.id} literal`, gaps);
     missing(item.say, `item ${item.id} say`, gaps);
     missing(item.note, `item ${item.id} note`, gaps);
     missing(item.why, `item ${item.id} why`, gaps);

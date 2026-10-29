@@ -70,6 +70,11 @@ export const LocalizedTextSchema = z
   });
 export type LocalizedText = z.infer<typeof LocalizedTextSchema>;
 
+/**
+ * One Spanish piece.
+ * `tr` is the literal gloss of that piece (its gender, number, and case),
+ * not the meaning of the whole phrase.
+ */
 const PartSchema = z.object({
   es: z.string().min(1),
   tr: LocalizedTextSchema,
@@ -148,6 +153,8 @@ export function blankTrack(
 /**
  * One teachable unit in the shared library (`content/items/<level>/*.json`).
  * `say` is the pronunciation hint in the learner's own letters and is required on A1–A2.
+ * `tr` is the natural translation. `literal` is the word-for-word reading of the
+ * whole phrase, and only when that reading differs from `tr`.
  * `draft_i18n` marks Ukrainian and English that a native speaker has not checked yet.
  */
 export const ItemSchema = z
@@ -156,6 +163,8 @@ export const ItemSchema = z
     type: ItemTypeSchema,
     es: z.string().min(1),
     tr: LocalizedTextSchema,
+    /** Word-for-word gloss of the whole phrase. Null when it would repeat `tr`. */
+    literal: LocalizedTextSchema.nullable().default(null),
     parts: z.array(PartSchema).default([]),
     say: LocalizedTextSchema.nullable().default(null),
     note: LocalizedTextSchema.nullable().default(null),

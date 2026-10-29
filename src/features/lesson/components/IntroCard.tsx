@@ -40,6 +40,7 @@ export function IntroCard({
   const { t, i18n } = useTranslation();
   const language = contentLocale(i18n.language);
   const translation = textOf(item.tr, language);
+  const literal = textOf(item.literal, language);
   const note = textOf(item.note, language);
 
   return (
@@ -83,6 +84,12 @@ export function IntroCard({
               );
             })}
           </View>
+        ) : null}
+
+        {literal ? (
+          <Text variant="caption" color={colors.inkMuted} style={styles.center}>
+            {t('lesson.introLiteral', { text: literal })}
+          </Text>
         ) : null}
 
         {note ? (

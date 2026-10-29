@@ -8,6 +8,11 @@
       "uk": "У вас є хліб?",
       "en": "Do you have bread?"
     },
+    "literal": {
+      "ru": "Есть у вас хлеб?",
+      "uk": "Є у вас хліб?",
+      "en": "Do you have bread?"
+    },
     "parts": [
       {
         "es": "¿Tiene",
@@ -80,6 +85,11 @@
       "ru": "Есть молоко?",
       "uk": "Є молоко?",
       "en": "Is there milk?"
+    },
+    "literal": {
+      "ru": "Есть молоко?",
+      "uk": "Є молоко?",
+      "en": "There is milk?"
     },
     "parts": [
       {
@@ -227,6 +237,11 @@
       "uk": "Немає в наявності",
       "en": "Out of stock"
     },
+    "literal": {
+      "ru": "Не есть",
+      "uk": "Не є",
+      "en": "Not there is"
+    },
     "parts": [
       {
         "es": "No",
@@ -372,6 +387,11 @@
       "uk": "Я хочу це",
       "en": "I want this"
     },
+    "literal": {
+      "ru": "Хочу это",
+      "uk": "Хочу це",
+      "en": "I want this"
+    },
     "parts": [
       {
         "es": "Quiero",
@@ -514,13 +534,18 @@
       "uk": "Карткою, будь ласка",
       "en": "By card, please"
     },
+    "literal": {
+      "ru": "С картой, пожалуйста",
+      "uk": "З карткою, будь ласка",
+      "en": "With a card, please"
+    },
     "parts": [
       {
         "es": "Con tarjeta,",
         "tr": {
-          "ru": "картой",
-          "uk": "карткою",
-          "en": "by card"
+          "ru": "с картой",
+          "uk": "з карткою",
+          "en": "with a card"
         }
       },
       {
@@ -584,6 +609,11 @@
       "uk": "Готівкою",
       "en": "In cash"
     },
+    "literal": {
+      "ru": "В наличных",
+      "uk": "У готівці",
+      "en": "In cash"
+    },
     "parts": [
       {
         "es": "En",
@@ -597,7 +627,7 @@
         "es": "efectivo",
         "tr": {
           "ru": "наличных",
-          "uk": "готівки",
+          "uk": "готівці",
           "en": "cash"
         }
       }
@@ -654,6 +684,11 @@
       "uk": "Можна оплатити карткою?",
       "en": "Can I pay by card?"
     },
+    "literal": {
+      "ru": "Могу оплатить с картой?",
+      "uk": "Можу оплатити з карткою?",
+      "en": "I can pay with a card?"
+    },
     "parts": [
       {
         "es": "¿Puedo pagar",
@@ -666,9 +701,9 @@
       {
         "es": "con tarjeta?",
         "tr": {
-          "ru": "картой",
-          "uk": "карткою",
-          "en": "by card"
+          "ru": "с картой",
+          "uk": "з карткою",
+          "en": "with a card"
         }
       }
     ],

@@ -1,9 +1,10 @@
 import { audioGaps } from '@/features/audio/select';
 
-import type { Item, Lesson } from '../schema';
 import { contentIssues, type ContentBundle } from '../integrity';
-import { gapsByLocale, translationGaps } from '../translations';
+import { literalPartWarnings } from '../literal';
+import type { Item, Lesson } from '../schema';
 import { CONTENT_LOCALES, type ContentLocale } from '../text';
+import { gapsByLocale, translationGaps } from '../translations';
 
 export type LessonStat = {
   id: string;
@@ -25,6 +26,11 @@ export type ContentReport = {
   missingAudio: string[];
   /** Refs with no wording in that language. Does not fail the link check. */
   missingTranslations: Record<ContentLocale, string[]>;
+  /**
+   * Part glosses that rebuild `tr` on a phrase whose word-for-word reading differs.
+   * Printed by the content check. Does not fail the link check.
+   */
+  literalWarnings: string[];
   issues: string[];
   ok: boolean;
 };
@@ -57,6 +63,7 @@ export function buildReport(
       .sort((a, b) => a.id.localeCompare(b.id))
       .map((row) => `${row.id} — нет ${row.missing}`),
     missingTranslations: gapsByLocale(translationGaps(bundle)),
+    literalWarnings: bundle.items.flatMap((item) => literalPartWarnings(item)),
     issues,
     ok: issues.length === 0,
   };
@@ -84,6 +91,11 @@ export function formatReport(report: ContentReport): string {
       const refs = report.missingTranslations[locale];
       return [`  ${locale}: ${refs.length}`, ...refs.map((ref) => `    ${ref}`)];
     }),
+    '',
+    report.literalWarnings.length === 0
+      ? 'Дословный разбор: ок'
+      : `Дословный разбор: предупреждения (${report.literalWarnings.length})`,
+    ...report.literalWarnings.map((warning) => `  ${warning}`),
     '',
     report.ok ? 'Ссылки: ок' : 'Ссылки: сломаны',
     ...report.issues.map((issue) => `  ${issue}`),

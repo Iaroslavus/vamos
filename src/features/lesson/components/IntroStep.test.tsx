@@ -77,9 +77,10 @@ const phrase: Item = {
   type: 'phrase',
   es: 'buenos días',
   tr: fillLocales('доброе утро'),
+  literal: fillLocales('добрые дни'),
   parts: [
     { es: 'buenos', tr: fillLocales('добрые') },
-    { es: 'días', tr: fillLocales('утро') },
+    { es: 'días', tr: fillLocales('дни') },
   ],
   say: fillLocales('буЭнос дИас'),
   note: fillLocales('Так говорят утром, примерно до обеда.'),
@@ -155,7 +156,8 @@ describe('IntroStep', () => {
     expect(screen.getByText('доброе утро')).toBeTruthy();
     expect(screen.getByText('Так говорят утром, примерно до обеда.')).toBeTruthy();
     expect(screen.getByText('buenos · добрые')).toBeTruthy();
-    expect(screen.getByText('días · утро')).toBeTruthy();
+    expect(screen.getByText('días · дни')).toBeTruthy();
+    expect(screen.getByText('буквально: добрые дни')).toBeTruthy();
 
     const listen = StyleSheet.flatten(screen.getByTestId('intro-listen').props.style);
     const slow = StyleSheet.flatten(screen.getByTestId('intro-slow').props.style);
@@ -207,9 +209,11 @@ describe('IntroStep', () => {
       why: null,
       note: null,
       parts: [],
+      literal: null,
     });
 
     expect(screen.queryByText('буЭнос дИас')).toBeNull();
+    expect(screen.queryByText(/буквально/)).toBeNull();
     expect(screen.queryByText('Почему так?')).toBeNull();
     expect(screen.queryByText('Так говорят утром, примерно до обеда.')).toBeNull();
   });

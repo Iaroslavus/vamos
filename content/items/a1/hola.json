@@ -46,6 +46,11 @@
       "uk": "добрий ранок",
       "en": "good morning"
     },
+    "literal": {
+      "ru": "добрые дни",
+      "uk": "добрі дні",
+      "en": "good days"
+    },
     "parts": [
       {
         "es": "buenos",
@@ -58,9 +63,9 @@
       {
         "es": "días",
         "tr": {
-          "ru": "утро",
-          "uk": "ранок",
-          "en": "morning"
+          "ru": "дни",
+          "uk": "дні",
+          "en": "days"
         }
       }
     ],
@@ -123,6 +128,11 @@
       "uk": "добрий день",
       "en": "good afternoon"
     },
+    "literal": {
+      "ru": "добрые после полудня",
+      "uk": "добрі пополудні",
+      "en": "good afternoons"
+    },
     "parts": [
       {
         "es": "buenas",
@@ -135,9 +145,9 @@
       {
         "es": "tardes",
         "tr": {
-          "ru": "день",
-          "uk": "день",
-          "en": "day"
+          "ru": "после полудня",
+          "uk": "пополудні",
+          "en": "afternoons"
         }
       }
     ],
@@ -196,6 +206,11 @@
       "uk": "на добраніч",
       "en": "good night"
     },
+    "literal": {
+      "ru": "добрые ночи",
+      "uk": "добрі ночі",
+      "en": "good nights"
+    },
     "parts": [
       {
         "es": "buenas",
@@ -208,9 +223,9 @@
       {
         "es": "noches",
         "tr": {
-          "ru": "вечер",
-          "uk": "вечір",
-          "en": "evening"
+          "ru": "ночи",
+          "uk": "ночі",
+          "en": "nights"
         }
       }
     ],
@@ -307,6 +322,11 @@
       "uk": "до зустрічі",
       "en": "see you soon"
     },
+    "literal": {
+      "ru": "до потом",
+      "uk": "до потім",
+      "en": "until later"
+    },
     "parts": [
       {
         "es": "hasta",
@@ -319,9 +339,9 @@
       {
         "es": "luego",
         "tr": {
-          "ru": "скоро",
-          "uk": "скоро",
-          "en": "soon"
+          "ru": "потом",
+          "uk": "потім",
+          "en": "later"
         }
       }
     ],
@@ -379,6 +399,11 @@
       "ru": "пожалуйста",
       "uk": "будь ласка",
       "en": "please"
+    },
+    "literal": {
+      "ru": "из любезности",
+      "uk": "з ввічливості",
+      "en": "from courtesy"
     },
     "parts": [
       {
@@ -491,21 +516,26 @@
       "uk": "мене звати",
       "en": "my name is"
     },
+    "literal": {
+      "ru": "себя зову",
+      "uk": "себе зву",
+      "en": "myself I call"
+    },
     "parts": [
       {
         "es": "me",
         "tr": {
-          "ru": "меня",
-          "uk": "мене",
-          "en": "me"
+          "ru": "себя",
+          "uk": "себе",
+          "en": "myself"
         }
       },
       {
         "es": "llamo",
         "tr": {
-          "ru": "зовут",
-          "uk": "звати",
-          "en": "is called"
+          "ru": "зову",
+          "uk": "зву",
+          "en": "I call"
         }
       }
     ],
@@ -564,6 +594,11 @@
       "uk": "як тебе звати?",
       "en": "what's your name?"
     },
+    "literal": {
+      "ru": "как себя зовёшь?",
+      "uk": "як себе звеш?",
+      "en": "how yourself you call?"
+    },
     "parts": [
       {
         "es": "cómo",
@@ -576,17 +611,17 @@
       {
         "es": "te",
         "tr": {
-          "ru": "тебя",
-          "uk": "тебе",
-          "en": "you"
+          "ru": "себя",
+          "uk": "себе",
+          "en": "yourself"
         }
       },
       {
         "es": "llamas",
         "tr": {
-          "ru": "зовут",
-          "uk": "звати",
-          "en": "is called"
+          "ru": "зовёшь",
+          "uk": "звеш",
+          "en": "you call"
         }
       }
     ],
@@ -653,21 +688,26 @@
       "uk": "дуже приємно",
       "en": "nice to meet you"
     },
+    "literal": {
+      "ru": "много удовольствия",
+      "uk": "багато задоволення",
+      "en": "much pleasure"
+    },
     "parts": [
       {
         "es": "mucho",
         "tr": {
-          "ru": "очень",
-          "uk": "дуже",
-          "en": "very"
+          "ru": "много",
+          "uk": "багато",
+          "en": "much"
         }
       },
       {
         "es": "gusto",
         "tr": {
-          "ru": "приятно",
-          "uk": "приємно",
-          "en": "nice"
+          "ru": "удовольствия",
+          "uk": "задоволення",
+          "en": "pleasure"
         }
       }
     ],
@@ -722,8 +762,8 @@
     "type": "word",
     "es": "soy",
     "tr": {
-      "ru": "я есть",
-      "uk": "я є",
+      "ru": "я",
+      "uk": "я",
       "en": "I am"
     },
     "say": {
@@ -806,21 +846,26 @@
       "uk": "радий(а) познайомитися",
       "en": "pleased to meet you"
     },
+    "literal": {
+      "ru": "очарован / очарована",
+      "uk": "зачарований / зачарована",
+      "en": "enchanted / enchanted"
+    },
     "parts": [
       {
         "es": "encantado",
         "tr": {
-          "ru": "рад",
-          "uk": "радий",
-          "en": "pleased (m.)"
+          "ru": "очарован",
+          "uk": "зачарований",
+          "en": "enchanted (m.)"
         }
       },
       {
         "es": "encantada",
         "tr": {
-          "ru": "рада",
-          "uk": "рада",
-          "en": "pleased (f.)"
+          "ru": "очарована",
+          "uk": "зачарована",
+          "en": "enchanted (f.)"
         }
       }
     ],
@@ -926,21 +971,26 @@
       "uk": "Як справи?",
       "en": "How are you?"
     },
+    "literal": {
+      "ru": "Что такое?",
+      "uk": "Що таке?",
+      "en": "What such?"
+    },
     "parts": [
       {
         "es": "¿Qué",
         "tr": {
-          "ru": "как",
-          "uk": "як",
-          "en": "how"
+          "ru": "что",
+          "uk": "що",
+          "en": "what"
         }
       },
       {
         "es": "tal?",
         "tr": {
-          "ru": "дела",
-          "uk": "справи",
-          "en": "things"
+          "ru": "такое",
+          "uk": "таке",
+          "en": "such"
         }
       }
     ],
@@ -999,13 +1049,18 @@
       "uk": "Добре, дякую",
       "en": "Fine, thanks"
     },
+    "literal": {
+      "ru": "Хорошо, спасибо",
+      "uk": "Добре, дякую",
+      "en": "Well, thanks"
+    },
     "parts": [
       {
         "es": "Bien,",
         "tr": {
           "ru": "хорошо",
           "uk": "добре",
-          "en": "good"
+          "en": "well"
         }
       },
       {
