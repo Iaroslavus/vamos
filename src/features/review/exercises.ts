@@ -161,6 +161,7 @@ function toExercise(
       prompt: card.direction === 'es_to_ru' ? card.es : card.ru,
       direction: card.direction,
       answer,
+      ...phraseOf(card),
     };
   }
 
@@ -178,7 +179,7 @@ function toExercise(
       options,
       answer,
       speakText: card.es,
-      ...(card.audio ? { audio: card.audio } : {}),
+      ...phraseOf(card),
     };
   }
 
@@ -189,6 +190,16 @@ function toExercise(
     prompt: card.direction === 'es_to_ru' ? card.es : card.ru,
     options,
     answer,
+    ...phraseOf(card),
+  };
+}
+
+function phraseOf(card: ReviewExerciseSource) {
+  return {
+    phraseEs: card.es,
+    phraseTr: card.ru,
+    itemIds: [card.itemId],
+    ...(card.audio ? { audio: card.audio } : {}),
   };
 }
 

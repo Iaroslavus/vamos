@@ -1,6 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { X } from 'lucide-react-native';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Keyboard,
@@ -34,9 +34,10 @@ import { LessonHearts } from '@/features/lesson/components/LessonHearts';
 import { MistakesIntro } from '@/features/lesson/components/MistakesIntro';
 import { SpeakRepeatStep } from '@/features/lesson/components/SpeakRepeatStep';
 import { useFinishLesson } from '@/features/lesson/hooks/useFinishLesson';
+import { buildResultSheetModel } from '@/features/lesson/feedbackView';
 import { useRecordLessonMistake } from '@/features/lesson/hooks/useRecordLessonMistake';
+import type { MatchPairsOutcome } from '@/features/lesson/hooks/useMatchPairs';
 import { showsSayRu } from '@/features/lesson/intro';
-import { countSerializedPairs } from '@/features/lesson/pairs';
 import {
   introPlace,
   isTypingExercise,
@@ -45,6 +46,7 @@ import {
   type LoadedLesson,
 } from '@/features/lesson/session';
 import { useLessonStore } from '@/features/lesson/store';
+import { AddToVocabSheet } from '@/features/vocab/components/AddToVocabSheet';
 import { colors, space } from '@/theme/tokens';
 
 type LoadResult = { ok: true; session: LoadedLesson } | { ok: false };
@@ -65,6 +67,7 @@ export default function LessonScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const answerInputRef = useRef<AnswerTextFieldHandle>(null);
+  const [vocabOpen, setVocabOpen] = useState(false);
   const { id } = useLocalSearchParams<{ id: string }>();
   const lessonId = typeof id === 'string' ? id : Array.isArray(id) ? (id[0] ?? '') : '';
   const loaded = useMemo(() => loadSession(lessonId || undefined, language), [language, lessonId]);
@@ -81,6 +84,7 @@ export default function LessonScreen() {
   const startScript = useLessonStore((s) => s.startScript);
   const setAnswer = useLessonStore((s) => s.setAnswer);
   const checkAnswer = useLessonStore((s) => s.checkAnswer);
+  const completeMatchPairs = useLessonStore((s) => s.completeMatchPairs);
   const continueAfterFeedback = useLessonStore((s) => s.continueAfterFeedback);
   const advanceStep = useLessonStore((s) => s.advanceStep);
   const continueMistakesIntro = useLessonStore((s) => s.continueMistakesIntro);
@@ -133,29 +137,28 @@ export default function LessonScreen() {
     [setAnswer],
   );
 
+  const onMatchSolved = useCallback(
+    (outcome: MatchPairsOutcome) => {
+      const current = useLessonStore.getState().getCurrentExercise();
+      const grade = completeMatchPairs(outcome);
+      if (!grade) return;
+      playGradeSound(grade.status);
+      if (current) recordMistake(current, grade.status);
+    },
+    [completeMatchPairs, recordMistake],
+  );
+
   const sheetVisible = lastGrade !== null && (status === 'feedback' || status === 'failed');
-  const sheetSuccess = lastGrade?.status === 'correct' || lastGrade?.status === 'almost';
-
-  const sheetTitle = useMemo(() => {
-    if (!lastGrade) return '';
-    if (lastGrade.status === 'correct') return t('lesson.feedbackCorrect');
-    if (lastGrade.status === 'almost') return t('lesson.feedbackAlmost');
-    if (status === 'failed') return t('lesson.feedbackFailed');
-    return t('lesson.feedbackWrong');
-  }, [lastGrade, status, t]);
-
-  const sheetMessage = useMemo(() => {
-    if (!lastGrade) return undefined;
-    if (lastGrade.status === 'almost') {
-      const hint = lastGrade.note ?? t('lesson.feedbackAlmostHint');
-      const correct = t('lesson.correctAnswer', { answer: lastGrade.correctAnswer });
-      return `${hint}\n${correct}`;
-    }
-    if (lastGrade.status === 'wrong') {
-      return t('lesson.correctAnswer', { answer: lastGrade.correctAnswer });
-    }
-    return undefined;
-  }, [lastGrade, t]);
+  const sheet = useMemo(
+    () =>
+      buildResultSheetModel({
+        t,
+        exercise,
+        grade: sheetVisible ? lastGrade : null,
+        failed: status === 'failed',
+      }),
+    [exercise, lastGrade, sheetVisible, status, t],
+  );
 
   const leaveLesson = useCallback(() => {
     reset();
@@ -214,11 +217,8 @@ export default function LessonScreen() {
     return <View style={[styles.root, { backgroundColor: colors.ground }]} />;
   }
 
-  const canCheck =
-    status === 'active' &&
-    !!exercise &&
-    userAnswer.trim().length > 0 &&
-    (exercise.type !== 'match_pairs' || countSerializedPairs(userAnswer) === exercise.pairs.length);
+  const matchPairs = exercise?.type === 'match_pairs';
+  const canCheck = status === 'active' && !!exercise && userAnswer.trim().length > 0;
 
   const gradeStatus =
     status === 'feedback' || status === 'failed' ? (lastGrade?.status ?? null) : null;
@@ -305,6 +305,7 @@ export default function LessonScreen() {
               gradeStatus={gradeStatus}
               onSelect={setAnswer}
               onAnswerChange={onAnswerChange}
+              onMatchSolved={onMatchSolved}
               inputRef={answerInputRef}
             />
           ) : null}
@@ -318,7 +319,7 @@ export default function LessonScreen() {
         />
       ) : null}
 
-      {surface === 'prompt' || surface === 'exercise' || !surface ? (
+      {!matchPairs && (surface === 'prompt' || surface === 'exercise' || !surface) ? (
         <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, space.lg) }]}>
           {surface === 'exercise' || !surface ? (
             <Button
@@ -342,11 +343,26 @@ export default function LessonScreen() {
 
       <ResultSheet
         visible={sheetVisible}
-        variant={sheetSuccess ? 'success' : 'error'}
-        title={sheetTitle}
-        message={sheetMessage}
+        variant={sheet.variant}
+        title={sheet.title}
+        message={sheet.message}
+        phraseEs={sheet.phraseEs}
+        phraseTr={sheet.phraseTr}
+        pairs={sheet.pairs}
+        correctLabel={sheet.correctLabel}
+        speakText={sheet.speakText}
+        audio={sheet.audio}
+        autoPlay={sheet.autoPlay}
+        onSave={sheet.itemIds.length > 0 ? () => setVocabOpen(true) : undefined}
         continueLabel={status === 'failed' ? t('common.close') : t('lesson.continue')}
         onContinue={onContinue}
+      />
+
+      <AddToVocabSheet
+        visible={vocabOpen}
+        itemIds={sheet.itemIds}
+        onClose={() => setVocabOpen(false)}
+        onChanged={() => setVocabOpen(false)}
       />
 
       <MistakesIntro

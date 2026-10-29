@@ -1,4 +1,10 @@
-import { countSerializedPairs, serializePairs, shuffleInPlace } from './pairs';
+import {
+  countSerializedPairs,
+  resolvePairAttempt,
+  serializePairs,
+  shuffleInPlace,
+  type PairProgress,
+} from './pairs';
 
 describe('serializePairs', () => {
   it('is order-independent', () => {
@@ -26,6 +32,36 @@ describe('countSerializedPairs', () => {
         ]),
       ),
     ).toBe(2);
+  });
+});
+
+const PAIRS = [
+  { left: 'buenas tardes', right: 'добрий день' },
+  { left: 'hola', right: 'привіт' },
+] as const;
+
+const EMPTY: PairProgress = { locked: [], mistakes: 0, wrongKeys: [] };
+
+describe('resolvePairAttempt', () => {
+  it('locks a correct pair immediately and does not count a mistake', () => {
+    const next = resolvePairAttempt(PAIRS, EMPTY, 'buenas tardes', 'добрий день');
+    expect(next.outcome).toBe('correct');
+    expect(next.mistakes).toBe(0);
+    expect(next.flash).toBeNull();
+    expect(next.locked).toEqual([{ left: 'buenas tardes', right: 'добрий день' }]);
+  });
+
+  it('counts a wrong pair, marks both sides, and leaves nothing locked', () => {
+    const next = resolvePairAttempt(PAIRS, EMPTY, 'buenas tardes', 'привіт');
+    expect(next.outcome).toBe('wrong');
+    expect(next.mistakes).toBe(1);
+    expect(next.locked).toEqual([]);
+    expect(next.flash).toEqual({ left: 'buenas tardes', right: 'привіт' });
+    expect(next.wrongKeys).toEqual(['buenas tardes', 'hola']);
+
+    const again = resolvePairAttempt(PAIRS, next, 'hola', 'добрий день');
+    expect(again.mistakes).toBe(2);
+    expect(again.wrongKeys).toEqual(['buenas tardes', 'hola']);
   });
 });
 

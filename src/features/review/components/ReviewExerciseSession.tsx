@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
 
@@ -9,6 +10,7 @@ import { AccentBar } from '@/features/lesson/components/AccentBar';
 import { LessonHearts } from '@/features/lesson/components/LessonHearts';
 import { MistakesIntro } from '@/features/lesson/components/MistakesIntro';
 import type { GradeStatus } from '@/features/lesson/grading';
+import { AddToVocabSheet } from '@/features/vocab/components/AddToVocabSheet';
 import { colors, space } from '@/theme/tokens';
 
 import { useReviewExercisePlayer } from '../hooks/useReviewExercisePlayer';
@@ -29,6 +31,7 @@ export function ReviewExerciseSession({
 }: ReviewExerciseSessionProps) {
   const { t } = useTranslation();
   const player = useReviewExercisePlayer({ busy, onChecked });
+  const [vocabOpen, setVocabOpen] = useState(false);
   const idle = !player.exercise && player.status !== 'mistakes_intro';
 
   if (idle) return <View style={styles.root} />;
@@ -89,11 +92,26 @@ export function ReviewExerciseSession({
 
       <ResultSheet
         visible={player.sheetVisible}
-        variant={player.sheetSuccess ? 'success' : 'error'}
-        title={player.sheetTitle}
-        message={player.sheetMessage}
+        variant={player.sheet.variant}
+        title={player.sheet.title}
+        message={player.sheet.message}
+        phraseEs={player.sheet.phraseEs}
+        phraseTr={player.sheet.phraseTr}
+        pairs={player.sheet.pairs}
+        correctLabel={player.sheet.correctLabel}
+        speakText={player.sheet.speakText}
+        audio={player.sheet.audio}
+        autoPlay={player.sheet.autoPlay}
+        onSave={player.sheet.itemIds.length > 0 ? () => setVocabOpen(true) : undefined}
         continueLabel={t('lesson.continue')}
         onContinue={onAdvance}
+      />
+
+      <AddToVocabSheet
+        visible={vocabOpen}
+        itemIds={player.sheet.itemIds}
+        onClose={() => setVocabOpen(false)}
+        onChanged={() => setVocabOpen(false)}
       />
 
       <MistakesIntro

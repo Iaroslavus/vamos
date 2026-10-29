@@ -267,10 +267,13 @@ async function playToSummary(session: LoadedLesson): Promise<void> {
       await press('Дальше');
       continue;
     }
+    if (step.type === 'match_pairs') {
+      await answerExercise(step);
+      continue;
+    }
     if (
       step.type === 'select_translation' ||
       step.type === 'listen_select' ||
-      step.type === 'match_pairs' ||
       step.type === 'build_sentence' ||
       step.type === 'type_translation' ||
       step.type === 'fill_gap'

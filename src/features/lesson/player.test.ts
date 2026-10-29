@@ -76,6 +76,12 @@ describe('lesson player session', () => {
         if (entry.kind === 'exercise') {
           const exercise = state.getCurrentExercise();
           if (!exercise) throw new Error(`missing exercise ${entry.id}`);
+          if (exercise.type === 'match_pairs') {
+            expect(state.completeMatchPairs({ mistakes: 0, wrongKeys: [] })?.status).toBe(
+              'correct',
+            );
+            continue;
+          }
           state.setAnswer(exercise.answer);
           expect(state.checkAnswer()?.status).toBe('correct');
           continue;

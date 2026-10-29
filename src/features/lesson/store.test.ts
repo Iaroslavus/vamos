@@ -6,6 +6,17 @@ import {
   type LessonExerciseItem,
 } from './store';
 
+const MATCH: LessonExerciseItem = {
+  id: 'm1',
+  type: 'match_pairs',
+  prompt_ru: 'Соедините пары',
+  pairs: [
+    { left: 'buenas tardes', right: 'добрый день' },
+    { left: 'hola', right: 'привет' },
+  ],
+  answer: 'buenas tardes::добрый день|hola::привет',
+};
+
 const EXERCISES: LessonExerciseItem[] = [
   {
     id: 'e1',
@@ -618,5 +629,51 @@ describe('lesson script', () => {
         exercises: [],
       }),
     ).toThrow(/Missing exercise/);
+  });
+
+  it('completes match pairs with no mistakes as a correct answer', () => {
+    useLessonStore.getState().startLesson({
+      lessonId: 'pairs',
+      exercises: [MATCH],
+      now: () => 1_000,
+    });
+
+    const grade = useLessonStore.getState().completeMatchPairs({ mistakes: 0, wrongKeys: [] });
+
+    expect(grade).toEqual({
+      status: 'correct',
+      correctAnswer: MATCH.answer,
+      mistakes: 0,
+      wrongKeys: [],
+    });
+    expect(useLessonStore.getState().status).toBe('feedback');
+    expect(useLessonStore.getState().hearts).toBe(DEFAULT_MAX_HEARTS);
+    expect(useLessonStore.getState().correctCount).toBe(1);
+    expect(useLessonStore.getState().xpEarned).toBe(XP_CORRECT);
+  });
+
+  it('counts match mistakes as one wrong answer and keeps the pair tally', () => {
+    useLessonStore.getState().startLesson({
+      lessonId: 'pairs',
+      exercises: [MATCH],
+      hearts: 2,
+      now: () => 1_000,
+    });
+
+    const grade = useLessonStore.getState().completeMatchPairs({
+      mistakes: 2,
+      wrongKeys: ['hola'],
+    });
+
+    expect(grade).toEqual({
+      status: 'wrong',
+      correctAnswer: MATCH.answer,
+      mistakes: 2,
+      wrongKeys: ['hola'],
+    });
+    expect(useLessonStore.getState().hearts).toBe(1);
+    expect(useLessonStore.getState().wrongCount).toBe(1);
+    expect(useLessonStore.getState().queue).toEqual(['m1', 'm1']);
+    expect(useLessonStore.getState().completeMatchPairs({ mistakes: 1, wrongKeys: [] })).toBeNull();
   });
 });
