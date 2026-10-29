@@ -36,8 +36,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/la_leche.es.normal.m4a",
+      "latam": "items/a1/supermercado/la_leche.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/la_leche.es.slow.m4a",
+        "latam": "items/a1/supermercado/la_leche.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/la_leche.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/la_leche.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/la_leche.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/la_leche.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/la_leche.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/la_leche.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/la_leche.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/la_leche.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -86,8 +109,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/el_pan.es.normal.m4a",
+      "latam": "items/a1/supermercado/el_pan.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/el_pan.es.slow.m4a",
+        "latam": "items/a1/supermercado/el_pan.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/el_pan.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/el_pan.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/el_pan.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/el_pan.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/el_pan.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/el_pan.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/el_pan.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/el_pan.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -136,8 +182,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/el_agua.es.normal.m4a",
+      "latam": "items/a1/supermercado/el_agua.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/el_agua.es.slow.m4a",
+        "latam": "items/a1/supermercado/el_agua.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/el_agua.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/el_agua.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/el_agua.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/el_agua.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/el_agua.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/el_agua.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/el_agua.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/el_agua.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -182,8 +251,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/el_queso.es.normal.m4a",
+      "latam": "items/a1/supermercado/el_queso.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/el_queso.es.slow.m4a",
+        "latam": "items/a1/supermercado/el_queso.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/el_queso.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/el_queso.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/el_queso.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/el_queso.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/el_queso.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/el_queso.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/el_queso.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/el_queso.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -228,8 +320,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/el_pollo.es.normal.m4a",
+      "latam": "items/a1/supermercado/el_pollo.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/el_pollo.es.slow.m4a",
+        "latam": "items/a1/supermercado/el_pollo.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/el_pollo.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/el_pollo.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/el_pollo.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/el_pollo.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/el_pollo.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/el_pollo.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/el_pollo.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/el_pollo.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -274,8 +389,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/el_arroz.es.normal.m4a",
+      "latam": "items/a1/supermercado/el_arroz.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/el_arroz.es.slow.m4a",
+        "latam": "items/a1/supermercado/el_arroz.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/el_arroz.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/el_arroz.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/el_arroz.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/el_arroz.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/el_arroz.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/el_arroz.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/el_arroz.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/el_arroz.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -320,8 +458,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/los_huevos.es.normal.m4a",
+      "latam": "items/a1/supermercado/los_huevos.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/los_huevos.es.slow.m4a",
+        "latam": "items/a1/supermercado/los_huevos.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/los_huevos.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/los_huevos.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/los_huevos.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/los_huevos.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/los_huevos.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/los_huevos.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/los_huevos.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/los_huevos.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -370,8 +531,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/donde_esta.es.normal.m4a",
+      "latam": "items/a1/supermercado/donde_esta.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/donde_esta.es.slow.m4a",
+        "latam": "items/a1/supermercado/donde_esta.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/donde_esta.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/donde_esta.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/donde_esta.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/donde_esta.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/donde_esta.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/donde_esta.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/donde_esta.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/donde_esta.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -416,8 +600,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/al_fondo.es.normal.m4a",
+      "latam": "items/a1/supermercado/al_fondo.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/al_fondo.es.slow.m4a",
+        "latam": "items/a1/supermercado/al_fondo.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/al_fondo.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/al_fondo.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/al_fondo.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/al_fondo.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/al_fondo.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/al_fondo.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/al_fondo.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/al_fondo.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -462,8 +669,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/a_la_derecha.es.normal.m4a",
+      "latam": "items/a1/supermercado/a_la_derecha.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/a_la_derecha.es.slow.m4a",
+        "latam": "items/a1/supermercado/a_la_derecha.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/a_la_derecha.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/a_la_derecha.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/a_la_derecha.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/a_la_derecha.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/a_la_derecha.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/a_la_derecha.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/a_la_derecha.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/a_la_derecha.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -508,8 +738,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/a_la_izquierda.es.normal.m4a",
+      "latam": "items/a1/supermercado/a_la_izquierda.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/a_la_izquierda.es.slow.m4a",
+        "latam": "items/a1/supermercado/a_la_izquierda.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/a_la_izquierda.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/a_la_izquierda.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/a_la_izquierda.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/a_la_izquierda.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/a_la_izquierda.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/a_la_izquierda.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/a_la_izquierda.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/a_la_izquierda.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -554,8 +807,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/en_el_pasillo.es.normal.m4a",
+      "latam": "items/a1/supermercado/en_el_pasillo.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/en_el_pasillo.es.slow.m4a",
+        "latam": "items/a1/supermercado/en_el_pasillo.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/en_el_pasillo.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/en_el_pasillo.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/en_el_pasillo.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/en_el_pasillo.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/en_el_pasillo.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/en_el_pasillo.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/en_el_pasillo.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/en_el_pasillo.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -600,8 +876,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/la_caja.es.normal.m4a",
+      "latam": "items/a1/supermercado/la_caja.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/la_caja.es.slow.m4a",
+        "latam": "items/a1/supermercado/la_caja.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/la_caja.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/la_caja.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/la_caja.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/la_caja.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/la_caja.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/la_caja.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/la_caja.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/la_caja.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -632,8 +931,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/busco.es.normal.m4a",
+      "latam": "items/a1/supermercado/busco.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/busco.es.slow.m4a",
+        "latam": "items/a1/supermercado/busco.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "supermercado"
@@ -678,8 +983,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/una_botella.es.normal.m4a",
+      "latam": "items/a1/supermercado/una_botella.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/una_botella.es.slow.m4a",
+        "latam": "items/a1/supermercado/una_botella.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/una_botella.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/una_botella.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/una_botella.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/una_botella.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/una_botella.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/una_botella.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/una_botella.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/una_botella.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -724,8 +1052,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/un_paquete.es.normal.m4a",
+      "latam": "items/a1/supermercado/un_paquete.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/un_paquete.es.slow.m4a",
+        "latam": "items/a1/supermercado/un_paquete.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/un_paquete.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/un_paquete.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/un_paquete.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/un_paquete.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/un_paquete.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/un_paquete.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/un_paquete.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/un_paquete.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -770,8 +1121,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/dos_litros.es.normal.m4a",
+      "latam": "items/a1/supermercado/dos_litros.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/dos_litros.es.slow.m4a",
+        "latam": "items/a1/supermercado/dos_litros.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/dos_litros.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/dos_litros.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/dos_litros.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/dos_litros.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/dos_litros.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/dos_litros.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/dos_litros.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/dos_litros.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -816,8 +1190,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/una_barra_de_pan.es.normal.m4a",
+      "latam": "items/a1/supermercado/una_barra_de_pan.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/una_barra_de_pan.es.slow.m4a",
+        "latam": "items/a1/supermercado/una_barra_de_pan.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/una_barra_de_pan.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/una_barra_de_pan.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/una_barra_de_pan.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/una_barra_de_pan.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/una_barra_de_pan.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/una_barra_de_pan.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/una_barra_de_pan.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/una_barra_de_pan.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -848,8 +1245,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/necesito.es.normal.m4a",
+      "latam": "items/a1/supermercado/necesito.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/necesito.es.slow.m4a",
+        "latam": "items/a1/supermercado/necesito.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "supermercado"
@@ -880,8 +1283,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/tambien.es.normal.m4a",
+      "latam": "items/a1/supermercado/tambien.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/tambien.es.slow.m4a",
+        "latam": "items/a1/supermercado/tambien.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "supermercado"
@@ -926,8 +1335,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/hay_oferta.es.normal.m4a",
+      "latam": "items/a1/supermercado/hay_oferta.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/hay_oferta.es.slow.m4a",
+        "latam": "items/a1/supermercado/hay_oferta.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/hay_oferta.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/hay_oferta.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/hay_oferta.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/hay_oferta.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/hay_oferta.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/hay_oferta.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/hay_oferta.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/hay_oferta.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -972,8 +1404,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/la_tarjeta.es.normal.m4a",
+      "latam": "items/a1/supermercado/la_tarjeta.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/la_tarjeta.es.slow.m4a",
+        "latam": "items/a1/supermercado/la_tarjeta.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/la_tarjeta.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/la_tarjeta.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/la_tarjeta.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/la_tarjeta.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/la_tarjeta.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/la_tarjeta.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/la_tarjeta.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/la_tarjeta.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -1018,8 +1473,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/en_efectivo.es.normal.m4a",
+      "latam": "items/a1/supermercado/en_efectivo.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/en_efectivo.es.slow.m4a",
+        "latam": "items/a1/supermercado/en_efectivo.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/en_efectivo.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/en_efectivo.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/en_efectivo.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/en_efectivo.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/en_efectivo.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/en_efectivo.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/en_efectivo.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/en_efectivo.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -1064,8 +1542,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/una_bolsa.es.normal.m4a",
+      "latam": "items/a1/supermercado/una_bolsa.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/una_bolsa.es.slow.m4a",
+        "latam": "items/a1/supermercado/una_bolsa.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/una_bolsa.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/una_bolsa.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/una_bolsa.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/una_bolsa.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/una_bolsa.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/una_bolsa.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/una_bolsa.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/una_bolsa.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -1114,8 +1615,31 @@
     "level": "A1",
     "variant": "es",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/el_ticket.es.normal.m4a",
+      "latam": null,
+      "slow": {
+        "es": "items/a1/supermercado/el_ticket.es.slow.m4a",
+        "latam": null
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/el_ticket.p0.es.normal.m4a",
+          "latam": null,
+          "slow": {
+            "es": "items/a1/supermercado/el_ticket.p0.es.slow.m4a",
+            "latam": null
+          }
+        },
+        {
+          "es": "items/a1/supermercado/el_ticket.p1.es.normal.m4a",
+          "latam": null,
+          "slow": {
+            "es": "items/a1/supermercado/el_ticket.p1.es.slow.m4a",
+            "latam": null
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -1164,8 +1688,31 @@
     "level": "A1",
     "variant": "latam",
     "audio": {
+      "source": "tts",
       "es": null,
-      "latam": null
+      "latam": "items/a1/supermercado/el_recibo.mx.normal.m4a",
+      "slow": {
+        "es": null,
+        "latam": "items/a1/supermercado/el_recibo.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": null,
+          "latam": "items/a1/supermercado/el_recibo.p0.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/supermercado/el_recibo.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": null,
+          "latam": "items/a1/supermercado/el_recibo.p1.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/supermercado/el_recibo.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -1210,8 +1757,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/puede_pasar.es.normal.m4a",
+      "latam": "items/a1/supermercado/puede_pasar.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/puede_pasar.es.slow.m4a",
+        "latam": "items/a1/supermercado/puede_pasar.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/puede_pasar.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/puede_pasar.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/puede_pasar.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/puede_pasar.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/puede_pasar.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/puede_pasar.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/puede_pasar.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/puede_pasar.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"
@@ -1256,8 +1826,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/supermercado/aqui_tiene.es.normal.m4a",
+      "latam": "items/a1/supermercado/aqui_tiene.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/supermercado/aqui_tiene.es.slow.m4a",
+        "latam": "items/a1/supermercado/aqui_tiene.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/supermercado/aqui_tiene.p0.es.normal.m4a",
+          "latam": "items/a1/supermercado/aqui_tiene.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/aqui_tiene.p0.es.slow.m4a",
+            "latam": "items/a1/supermercado/aqui_tiene.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/supermercado/aqui_tiene.p1.es.normal.m4a",
+          "latam": "items/a1/supermercado/aqui_tiene.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/supermercado/aqui_tiene.p1.es.slow.m4a",
+            "latam": "items/a1/supermercado/aqui_tiene.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "supermercado"

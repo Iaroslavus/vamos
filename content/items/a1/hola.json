@@ -22,8 +22,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/hola.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/hola.es.normal.m4a",
+      "latam": "items/a1/hola/hola.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/hola.es.slow.m4a",
+        "latam": "items/a1/hola/hola.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "greeting"
@@ -76,8 +82,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/buenos-dias.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/buenos_dias.es.normal.m4a",
+      "latam": "items/a1/hola/buenos_dias.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/buenos_dias.es.slow.m4a",
+        "latam": "items/a1/hola/buenos_dias.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/hola/buenos_dias.p0.es.normal.m4a",
+          "latam": "items/a1/hola/buenos_dias.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/buenos_dias.p0.es.slow.m4a",
+            "latam": "items/a1/hola/buenos_dias.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/hola/buenos_dias.p1.es.normal.m4a",
+          "latam": "items/a1/hola/buenos_dias.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/buenos_dias.p1.es.slow.m4a",
+            "latam": "items/a1/hola/buenos_dias.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "greeting"
@@ -126,8 +155,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/buenas-tardes.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/buenas_tardes.es.normal.m4a",
+      "latam": "items/a1/hola/buenas_tardes.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/buenas_tardes.es.slow.m4a",
+        "latam": "items/a1/hola/buenas_tardes.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/hola/buenas_tardes.p0.es.normal.m4a",
+          "latam": "items/a1/hola/buenas_tardes.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/buenas_tardes.p0.es.slow.m4a",
+            "latam": "items/a1/hola/buenas_tardes.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/hola/buenas_tardes.p1.es.normal.m4a",
+          "latam": "items/a1/hola/buenas_tardes.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/buenas_tardes.p1.es.slow.m4a",
+            "latam": "items/a1/hola/buenas_tardes.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "greeting"
@@ -176,8 +228,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/buenas-noches.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/buenas_noches.es.normal.m4a",
+      "latam": "items/a1/hola/buenas_noches.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/buenas_noches.es.slow.m4a",
+        "latam": "items/a1/hola/buenas_noches.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/hola/buenas_noches.p0.es.normal.m4a",
+          "latam": "items/a1/hola/buenas_noches.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/buenas_noches.p0.es.slow.m4a",
+            "latam": "items/a1/hola/buenas_noches.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/hola/buenas_noches.p1.es.normal.m4a",
+          "latam": "items/a1/hola/buenas_noches.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/buenas_noches.p1.es.slow.m4a",
+            "latam": "items/a1/hola/buenas_noches.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "greeting"
@@ -208,8 +283,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/adios.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/adios.es.normal.m4a",
+      "latam": "items/a1/hola/adios.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/adios.es.slow.m4a",
+        "latam": "items/a1/hola/adios.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "greeting"
@@ -258,8 +339,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/hasta-luego.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/hasta_luego.es.normal.m4a",
+      "latam": "items/a1/hola/hasta_luego.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/hasta_luego.es.slow.m4a",
+        "latam": "items/a1/hola/hasta_luego.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/hola/hasta_luego.p0.es.normal.m4a",
+          "latam": "items/a1/hola/hasta_luego.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/hasta_luego.p0.es.slow.m4a",
+            "latam": "items/a1/hola/hasta_luego.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/hola/hasta_luego.p1.es.normal.m4a",
+          "latam": "items/a1/hola/hasta_luego.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/hasta_luego.p1.es.slow.m4a",
+            "latam": "items/a1/hola/hasta_luego.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "greeting"
@@ -308,8 +412,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/por-favor.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/por_favor.es.normal.m4a",
+      "latam": "items/a1/hola/por_favor.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/por_favor.es.slow.m4a",
+        "latam": "items/a1/hola/por_favor.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/hola/por_favor.p0.es.normal.m4a",
+          "latam": "items/a1/hola/por_favor.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/por_favor.p0.es.slow.m4a",
+            "latam": "items/a1/hola/por_favor.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/hola/por_favor.p1.es.normal.m4a",
+          "latam": "items/a1/hola/por_favor.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/por_favor.p1.es.slow.m4a",
+            "latam": "items/a1/hola/por_favor.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "polite"
@@ -340,8 +467,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/gracias.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/gracias.es.normal.m4a",
+      "latam": "items/a1/hola/gracias.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/gracias.es.slow.m4a",
+        "latam": "items/a1/hola/gracias.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "polite"
@@ -390,8 +523,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/me-llamo.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/me_llamo.es.normal.m4a",
+      "latam": "items/a1/hola/me_llamo.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/me_llamo.es.slow.m4a",
+        "latam": "items/a1/hola/me_llamo.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/hola/me_llamo.p0.es.normal.m4a",
+          "latam": "items/a1/hola/me_llamo.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/me_llamo.p0.es.slow.m4a",
+            "latam": "items/a1/hola/me_llamo.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/hola/me_llamo.p1.es.normal.m4a",
+          "latam": "items/a1/hola/me_llamo.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/me_llamo.p1.es.slow.m4a",
+            "latam": "items/a1/hola/me_llamo.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "intro"
@@ -448,8 +604,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/como-te-llamas.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/como_te_llamas.es.normal.m4a",
+      "latam": "items/a1/hola/como_te_llamas.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/como_te_llamas.es.slow.m4a",
+        "latam": "items/a1/hola/como_te_llamas.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/hola/como_te_llamas.p0.es.normal.m4a",
+          "latam": "items/a1/hola/como_te_llamas.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/como_te_llamas.p0.es.slow.m4a",
+            "latam": "items/a1/hola/como_te_llamas.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/hola/como_te_llamas.p1.es.normal.m4a",
+          "latam": "items/a1/hola/como_te_llamas.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/como_te_llamas.p1.es.slow.m4a",
+            "latam": "items/a1/hola/como_te_llamas.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/hola/como_te_llamas.p2.es.normal.m4a",
+          "latam": "items/a1/hola/como_te_llamas.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/como_te_llamas.p2.es.slow.m4a",
+            "latam": "items/a1/hola/como_te_llamas.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "intro"
@@ -498,8 +685,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/mucho-gusto.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/mucho_gusto.es.normal.m4a",
+      "latam": "items/a1/hola/mucho_gusto.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/mucho_gusto.es.slow.m4a",
+        "latam": "items/a1/hola/mucho_gusto.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/hola/mucho_gusto.p0.es.normal.m4a",
+          "latam": "items/a1/hola/mucho_gusto.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/mucho_gusto.p0.es.slow.m4a",
+            "latam": "items/a1/hola/mucho_gusto.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/hola/mucho_gusto.p1.es.normal.m4a",
+          "latam": "items/a1/hola/mucho_gusto.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/mucho_gusto.p1.es.slow.m4a",
+            "latam": "items/a1/hola/mucho_gusto.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "intro"
@@ -534,8 +744,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/soy.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/soy.es.normal.m4a",
+      "latam": "items/a1/hola/soy.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/soy.es.slow.m4a",
+        "latam": "items/a1/hola/soy.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "intro"
@@ -566,8 +782,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/de.es.normal.m4a",
+      "latam": "items/a1/hola/de.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/de.es.slow.m4a",
+        "latam": "items/a1/hola/de.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "intro"
@@ -620,8 +842,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/encantado.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/encantado.es.normal.m4a",
+      "latam": "items/a1/hola/encantado.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/encantado.es.slow.m4a",
+        "latam": "items/a1/hola/encantado.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/hola/encantado.p0.es.normal.m4a",
+          "latam": "items/a1/hola/encantado.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/encantado.p0.es.slow.m4a",
+            "latam": "items/a1/hola/encantado.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/hola/encantado.p1.es.normal.m4a",
+          "latam": "items/a1/hola/encantado.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/encantado.p1.es.slow.m4a",
+            "latam": "items/a1/hola/encantado.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "intro"
@@ -656,8 +901,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/usted.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/usted.es.normal.m4a",
+      "latam": "items/a1/hola/usted.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/usted.es.slow.m4a",
+        "latam": "items/a1/hola/usted.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "intro",
@@ -707,8 +958,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/que_tal.es.normal.m4a",
+      "latam": "items/a1/hola/que_tal.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/que_tal.es.slow.m4a",
+        "latam": "items/a1/hola/que_tal.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/hola/que_tal.p0.es.normal.m4a",
+          "latam": "items/a1/hola/que_tal.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/que_tal.p0.es.slow.m4a",
+            "latam": "items/a1/hola/que_tal.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/hola/que_tal.p1.es.normal.m4a",
+          "latam": "items/a1/hola/que_tal.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/que_tal.p1.es.slow.m4a",
+            "latam": "items/a1/hola/que_tal.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "greeting"
@@ -757,8 +1031,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/hola/bien_gracias.es.normal.m4a",
+      "latam": "items/a1/hola/bien_gracias.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/hola/bien_gracias.es.slow.m4a",
+        "latam": "items/a1/hola/bien_gracias.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/hola/bien_gracias.p0.es.normal.m4a",
+          "latam": "items/a1/hola/bien_gracias.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/bien_gracias.p0.es.slow.m4a",
+            "latam": "items/a1/hola/bien_gracias.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/hola/bien_gracias.p1.es.normal.m4a",
+          "latam": "items/a1/hola/bien_gracias.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/bien_gracias.p1.es.slow.m4a",
+            "latam": "items/a1/hola/bien_gracias.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "greeting"

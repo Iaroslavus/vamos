@@ -40,8 +40,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/cafe/un_cafe.es.normal.m4a",
+      "latam": "items/a1/cafe/un_cafe.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/cafe/un_cafe.es.slow.m4a",
+        "latam": "items/a1/cafe/un_cafe.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/cafe/un_cafe.p0.es.normal.m4a",
+          "latam": "items/a1/cafe/un_cafe.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/un_cafe.p0.es.slow.m4a",
+            "latam": "items/a1/cafe/un_cafe.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/cafe/un_cafe.p1.es.normal.m4a",
+          "latam": "items/a1/cafe/un_cafe.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/un_cafe.p1.es.slow.m4a",
+            "latam": "items/a1/cafe/un_cafe.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "cafe",
@@ -91,8 +114,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/cafe/cafe_con_leche.es.normal.m4a",
+      "latam": "items/a1/cafe/cafe_con_leche.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/cafe/cafe_con_leche.es.slow.m4a",
+        "latam": "items/a1/cafe/cafe_con_leche.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/cafe/cafe_con_leche.p0.es.normal.m4a",
+          "latam": "items/a1/cafe/cafe_con_leche.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/cafe_con_leche.p0.es.slow.m4a",
+            "latam": "items/a1/cafe/cafe_con_leche.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/cafe/cafe_con_leche.p1.es.normal.m4a",
+          "latam": "items/a1/cafe/cafe_con_leche.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/cafe_con_leche.p1.es.slow.m4a",
+            "latam": "items/a1/cafe/cafe_con_leche.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "cafe",
@@ -138,8 +184,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/cafe/un_te.es.normal.m4a",
+      "latam": "items/a1/cafe/un_te.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/cafe/un_te.es.slow.m4a",
+        "latam": "items/a1/cafe/un_te.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/cafe/un_te.p0.es.normal.m4a",
+          "latam": "items/a1/cafe/un_te.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/un_te.p0.es.slow.m4a",
+            "latam": "items/a1/cafe/un_te.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/cafe/un_te.p1.es.normal.m4a",
+          "latam": "items/a1/cafe/un_te.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/un_te.p1.es.slow.m4a",
+            "latam": "items/a1/cafe/un_te.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "cafe",
@@ -193,8 +262,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/cafe/agua.es.normal.m4a",
+      "latam": "items/a1/cafe/agua.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/cafe/agua.es.slow.m4a",
+        "latam": "items/a1/cafe/agua.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/cafe/agua.p0.es.normal.m4a",
+          "latam": "items/a1/cafe/agua.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/agua.p0.es.slow.m4a",
+            "latam": "items/a1/cafe/agua.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/cafe/agua.p1.es.normal.m4a",
+          "latam": "items/a1/cafe/agua.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/agua.p1.es.slow.m4a",
+            "latam": "items/a1/cafe/agua.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "cafe",
@@ -244,8 +336,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/cafe/para_llevar.es.normal.m4a",
+      "latam": "items/a1/cafe/para_llevar.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/cafe/para_llevar.es.slow.m4a",
+        "latam": "items/a1/cafe/para_llevar.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/cafe/para_llevar.p0.es.normal.m4a",
+          "latam": "items/a1/cafe/para_llevar.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/para_llevar.p0.es.slow.m4a",
+            "latam": "items/a1/cafe/para_llevar.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/cafe/para_llevar.p1.es.normal.m4a",
+          "latam": "items/a1/cafe/para_llevar.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/para_llevar.p1.es.slow.m4a",
+            "latam": "items/a1/cafe/para_llevar.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "cafe"
@@ -294,8 +409,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/cafe/para_tomar_aqui.es.normal.m4a",
+      "latam": "items/a1/cafe/para_tomar_aqui.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/cafe/para_tomar_aqui.es.slow.m4a",
+        "latam": "items/a1/cafe/para_tomar_aqui.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/cafe/para_tomar_aqui.p0.es.normal.m4a",
+          "latam": "items/a1/cafe/para_tomar_aqui.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/para_tomar_aqui.p0.es.slow.m4a",
+            "latam": "items/a1/cafe/para_tomar_aqui.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/cafe/para_tomar_aqui.p1.es.normal.m4a",
+          "latam": "items/a1/cafe/para_tomar_aqui.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/para_tomar_aqui.p1.es.slow.m4a",
+            "latam": "items/a1/cafe/para_tomar_aqui.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "cafe"
@@ -330,8 +468,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/cafe/quiero.es.normal.m4a",
+      "latam": "items/a1/cafe/quiero.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/cafe/quiero.es.slow.m4a",
+        "latam": "items/a1/cafe/quiero.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "cafe"
@@ -380,8 +524,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/cafe/cuanto_es.es.normal.m4a",
+      "latam": "items/a1/cafe/cuanto_es.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/cafe/cuanto_es.es.slow.m4a",
+        "latam": "items/a1/cafe/cuanto_es.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/cafe/cuanto_es.p0.es.normal.m4a",
+          "latam": "items/a1/cafe/cuanto_es.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/cuanto_es.p0.es.slow.m4a",
+            "latam": "items/a1/cafe/cuanto_es.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/cafe/cuanto_es.p1.es.normal.m4a",
+          "latam": "items/a1/cafe/cuanto_es.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/cuanto_es.p1.es.slow.m4a",
+            "latam": "items/a1/cafe/cuanto_es.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "cafe",
@@ -431,8 +598,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/cafe/la_cuenta.es.normal.m4a",
+      "latam": "items/a1/cafe/la_cuenta.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/cafe/la_cuenta.es.slow.m4a",
+        "latam": "items/a1/cafe/la_cuenta.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/cafe/la_cuenta.p0.es.normal.m4a",
+          "latam": "items/a1/cafe/la_cuenta.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/la_cuenta.p0.es.slow.m4a",
+            "latam": "items/a1/cafe/la_cuenta.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/cafe/la_cuenta.p1.es.normal.m4a",
+          "latam": "items/a1/cafe/la_cuenta.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/la_cuenta.p1.es.slow.m4a",
+            "latam": "items/a1/cafe/la_cuenta.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "cafe",
@@ -482,8 +672,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/cafe/nada_mas.es.normal.m4a",
+      "latam": "items/a1/cafe/nada_mas.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/cafe/nada_mas.es.slow.m4a",
+        "latam": "items/a1/cafe/nada_mas.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/cafe/nada_mas.p0.es.normal.m4a",
+          "latam": "items/a1/cafe/nada_mas.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/nada_mas.p0.es.slow.m4a",
+            "latam": "items/a1/cafe/nada_mas.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/cafe/nada_mas.p1.es.normal.m4a",
+          "latam": "items/a1/cafe/nada_mas.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/nada_mas.p1.es.slow.m4a",
+            "latam": "items/a1/cafe/nada_mas.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "cafe"
@@ -532,8 +745,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/cafe/esta_bien.es.normal.m4a",
+      "latam": "items/a1/cafe/esta_bien.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/cafe/esta_bien.es.slow.m4a",
+        "latam": "items/a1/cafe/esta_bien.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/cafe/esta_bien.p0.es.normal.m4a",
+          "latam": "items/a1/cafe/esta_bien.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/esta_bien.p0.es.slow.m4a",
+            "latam": "items/a1/cafe/esta_bien.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/cafe/esta_bien.p1.es.normal.m4a",
+          "latam": "items/a1/cafe/esta_bien.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/cafe/esta_bien.p1.es.slow.m4a",
+            "latam": "items/a1/cafe/esta_bien.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "cafe"
@@ -564,8 +800,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/cafe/aqui.es.normal.m4a",
+      "latam": "items/a1/cafe/aqui.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/cafe/aqui.es.slow.m4a",
+        "latam": "items/a1/cafe/aqui.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "cafe"

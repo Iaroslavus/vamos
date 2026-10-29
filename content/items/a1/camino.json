@@ -40,8 +40,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/camino/donde_esta.es.normal.m4a",
+      "latam": "items/a1/camino/donde_esta.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/camino/donde_esta.es.slow.m4a",
+        "latam": "items/a1/camino/donde_esta.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/camino/donde_esta.p0.es.normal.m4a",
+          "latam": "items/a1/camino/donde_esta.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/donde_esta.p0.es.slow.m4a",
+            "latam": "items/a1/camino/donde_esta.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/camino/donde_esta.p1.es.normal.m4a",
+          "latam": "items/a1/camino/donde_esta.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/donde_esta.p1.es.slow.m4a",
+            "latam": "items/a1/camino/donde_esta.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "city"
@@ -86,8 +109,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/camino/como_llego.es.normal.m4a",
+      "latam": "items/a1/camino/como_llego.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/camino/como_llego.es.slow.m4a",
+        "latam": "items/a1/camino/como_llego.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/camino/como_llego.p0.es.normal.m4a",
+          "latam": "items/a1/camino/como_llego.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/como_llego.p0.es.slow.m4a",
+            "latam": "items/a1/camino/como_llego.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/camino/como_llego.p1.es.normal.m4a",
+          "latam": "items/a1/camino/como_llego.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/como_llego.p1.es.slow.m4a",
+            "latam": "items/a1/camino/como_llego.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "city"
@@ -136,8 +182,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/camino/la_estacion.es.normal.m4a",
+      "latam": "items/a1/camino/la_estacion.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/camino/la_estacion.es.slow.m4a",
+        "latam": "items/a1/camino/la_estacion.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/camino/la_estacion.p0.es.normal.m4a",
+          "latam": "items/a1/camino/la_estacion.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/la_estacion.p0.es.slow.m4a",
+            "latam": "items/a1/camino/la_estacion.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/camino/la_estacion.p1.es.normal.m4a",
+          "latam": "items/a1/camino/la_estacion.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/la_estacion.p1.es.slow.m4a",
+            "latam": "items/a1/camino/la_estacion.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "city"
@@ -182,8 +251,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/camino/el_metro.es.normal.m4a",
+      "latam": "items/a1/camino/el_metro.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/camino/el_metro.es.slow.m4a",
+        "latam": "items/a1/camino/el_metro.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/camino/el_metro.p0.es.normal.m4a",
+          "latam": "items/a1/camino/el_metro.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/el_metro.p0.es.slow.m4a",
+            "latam": "items/a1/camino/el_metro.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/camino/el_metro.p1.es.normal.m4a",
+          "latam": "items/a1/camino/el_metro.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/el_metro.p1.es.slow.m4a",
+            "latam": "items/a1/camino/el_metro.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "city"
@@ -232,8 +324,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/camino/por_aqui.es.normal.m4a",
+      "latam": "items/a1/camino/por_aqui.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/camino/por_aqui.es.slow.m4a",
+        "latam": "items/a1/camino/por_aqui.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/camino/por_aqui.p0.es.normal.m4a",
+          "latam": "items/a1/camino/por_aqui.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/por_aqui.p0.es.slow.m4a",
+            "latam": "items/a1/camino/por_aqui.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/camino/por_aqui.p1.es.normal.m4a",
+          "latam": "items/a1/camino/por_aqui.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/por_aqui.p1.es.slow.m4a",
+            "latam": "items/a1/camino/por_aqui.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "city"
@@ -278,8 +393,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/camino/por_alli.es.normal.m4a",
+      "latam": "items/a1/camino/por_alli.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/camino/por_alli.es.slow.m4a",
+        "latam": "items/a1/camino/por_alli.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/camino/por_alli.p0.es.normal.m4a",
+          "latam": "items/a1/camino/por_alli.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/por_alli.p0.es.slow.m4a",
+            "latam": "items/a1/camino/por_alli.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/camino/por_alli.p1.es.normal.m4a",
+          "latam": "items/a1/camino/por_alli.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/por_alli.p1.es.slow.m4a",
+            "latam": "items/a1/camino/por_alli.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "city"
@@ -324,8 +462,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/camino/derecha.es.normal.m4a",
+      "latam": "items/a1/camino/derecha.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/camino/derecha.es.slow.m4a",
+        "latam": "items/a1/camino/derecha.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/camino/derecha.p0.es.normal.m4a",
+          "latam": "items/a1/camino/derecha.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/derecha.p0.es.slow.m4a",
+            "latam": "items/a1/camino/derecha.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/camino/derecha.p1.es.normal.m4a",
+          "latam": "items/a1/camino/derecha.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/derecha.p1.es.slow.m4a",
+            "latam": "items/a1/camino/derecha.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "city"
@@ -370,8 +531,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/camino/izquierda.es.normal.m4a",
+      "latam": "items/a1/camino/izquierda.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/camino/izquierda.es.slow.m4a",
+        "latam": "items/a1/camino/izquierda.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/camino/izquierda.p0.es.normal.m4a",
+          "latam": "items/a1/camino/izquierda.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/izquierda.p0.es.slow.m4a",
+            "latam": "items/a1/camino/izquierda.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/camino/izquierda.p1.es.normal.m4a",
+          "latam": "items/a1/camino/izquierda.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/izquierda.p1.es.slow.m4a",
+            "latam": "items/a1/camino/izquierda.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "city"
@@ -420,8 +604,31 @@
     "level": "A1",
     "variant": "es",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/camino/recto.es.normal.m4a",
+      "latam": null,
+      "slow": {
+        "es": "items/a1/camino/recto.es.slow.m4a",
+        "latam": null
+      },
+      "parts": [
+        {
+          "es": "items/a1/camino/recto.p0.es.normal.m4a",
+          "latam": null,
+          "slow": {
+            "es": "items/a1/camino/recto.p0.es.slow.m4a",
+            "latam": null
+          }
+        },
+        {
+          "es": "items/a1/camino/recto.p1.es.normal.m4a",
+          "latam": null,
+          "slow": {
+            "es": "items/a1/camino/recto.p1.es.slow.m4a",
+            "latam": null
+          }
+        }
+      ]
     },
     "tags": [
       "city"
@@ -470,8 +677,31 @@
     "level": "A1",
     "variant": "latam",
     "audio": {
+      "source": "tts",
       "es": null,
-      "latam": null
+      "latam": "items/a1/camino/derecho.mx.normal.m4a",
+      "slow": {
+        "es": null,
+        "latam": "items/a1/camino/derecho.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": null,
+          "latam": "items/a1/camino/derecho.p0.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/camino/derecho.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": null,
+          "latam": "items/a1/camino/derecho.p1.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/camino/derecho.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "city"
@@ -516,8 +746,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/camino/cerca.es.normal.m4a",
+      "latam": "items/a1/camino/cerca.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/camino/cerca.es.slow.m4a",
+        "latam": "items/a1/camino/cerca.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/camino/cerca.p0.es.normal.m4a",
+          "latam": "items/a1/camino/cerca.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/cerca.p0.es.slow.m4a",
+            "latam": "items/a1/camino/cerca.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/camino/cerca.p1.es.normal.m4a",
+          "latam": "items/a1/camino/cerca.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/cerca.p1.es.slow.m4a",
+            "latam": "items/a1/camino/cerca.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "city"
@@ -562,8 +815,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/camino/lejos.es.normal.m4a",
+      "latam": "items/a1/camino/lejos.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/camino/lejos.es.slow.m4a",
+        "latam": "items/a1/camino/lejos.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/camino/lejos.p0.es.normal.m4a",
+          "latam": "items/a1/camino/lejos.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/lejos.p0.es.slow.m4a",
+            "latam": "items/a1/camino/lejos.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/camino/lejos.p1.es.normal.m4a",
+          "latam": "items/a1/camino/lejos.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/lejos.p1.es.slow.m4a",
+            "latam": "items/a1/camino/lejos.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "city"
@@ -612,8 +888,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/camino/primera.es.normal.m4a",
+      "latam": "items/a1/camino/primera.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/camino/primera.es.slow.m4a",
+        "latam": "items/a1/camino/primera.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/camino/primera.p0.es.normal.m4a",
+          "latam": "items/a1/camino/primera.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/primera.p0.es.slow.m4a",
+            "latam": "items/a1/camino/primera.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/camino/primera.p1.es.normal.m4a",
+          "latam": "items/a1/camino/primera.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/camino/primera.p1.es.slow.m4a",
+            "latam": "items/a1/camino/primera.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "city"

@@ -8,7 +8,9 @@ import * as Speech from 'expo-speech';
 
 import { cachedAudioUri } from '@/features/audio/cache';
 import { publicAudioUrl } from '@/features/audio/storage';
+import type { Item } from '@/features/content/schema';
 import { BUNDLED_AUDIO_ASSETS } from './assets';
+import { selectClip, type AudioPreference, type AudioSpeed } from './select';
 import { IOS_AV_SPEECH_DEFAULT_RATE, speechEngineRate } from './speechRate';
 
 export const NORMAL_RATE = 1;
@@ -212,4 +214,20 @@ export async function playLessonAudio({
 
   if (generation === playGeneration) onEnd?.();
   return 'speech';
+}
+
+/**
+ * Play one vocabulary item at normal or slow speed.
+ * A stored clip for that voice and speed is a file. Anything else is device speech.
+ */
+export async function play(
+  item: Pick<Item, 'es' | 'audio'>,
+  speed: AudioSpeed = 'normal',
+  preference: AudioPreference = 'es',
+): Promise<PlaybackSource> {
+  return playLessonAudio({
+    text: item.es,
+    audio: selectClip(item.audio, preference, speed),
+    rate: speed === 'slow' ? SLOW_RATE : NORMAL_RATE,
+  });
 }
