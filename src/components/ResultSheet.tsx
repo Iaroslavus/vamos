@@ -11,7 +11,9 @@ import Animated, {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/Button';
+import { ResultPhrase } from '@/components/ResultPhrase';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
+import { stopLessonAudio } from '@/features/audio/playback';
 import { colors, motion, radius, space, type } from '@/theme/tokens';
 
 export type ResultSheetVariant = 'success' | 'error';
@@ -21,6 +23,17 @@ export type ResultSheetProps = {
   variant: ResultSheetVariant;
   title: string;
   message?: string;
+  /** Large Spanish line. Omitted when `pairs` is the answer. */
+  phraseEs?: string;
+  phraseTr?: string;
+  pairs?: readonly { text: string; wrong: boolean }[];
+  /** Shown above the phrase when the answer was not fully correct. */
+  correctLabel?: string;
+  speakText?: string;
+  audio?: string | null;
+  /** Speak `speakText` as soon as the sheet opens. */
+  autoPlay?: boolean;
+  onSave?: () => void;
   continueLabel?: string;
   onContinue: () => void;
   style?: StyleProp<ViewStyle>;
@@ -46,6 +59,14 @@ export function ResultSheet({
   variant,
   title,
   message,
+  phraseEs,
+  phraseTr,
+  pairs,
+  correctLabel,
+  speakText,
+  audio,
+  autoPlay = false,
+  onSave,
   continueLabel = 'Дальше',
   onContinue,
   style,
@@ -152,10 +173,24 @@ export function ResultSheet({
 
         {message ? <Text style={styles.message}>{message}</Text> : null}
 
+        <ResultPhrase
+          phraseEs={phraseEs}
+          phraseTr={phraseTr}
+          pairs={pairs}
+          correctLabel={correctLabel}
+          speakText={speakText}
+          audio={audio}
+          autoPlay={autoPlay && visible}
+          onSave={onSave}
+        />
+
         <Button
           title={continueLabel}
           variant={variant === 'success' ? 'success' : 'primary'}
-          onPress={onContinue}
+          onPress={() => {
+            void stopLessonAudio();
+            onContinue();
+          }}
           style={styles.button}
         />
       </Animated.View>

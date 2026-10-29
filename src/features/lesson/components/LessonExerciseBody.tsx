@@ -1,6 +1,7 @@
 import type { Ref } from 'react';
 
 import type { GradeStatus } from '../grading';
+import type { MatchPairsOutcome } from '../hooks/useMatchPairs';
 import type { LessonExerciseItem } from '../store';
 import type { AnswerTextFieldHandle } from './AnswerTextField';
 import { BuildSentenceExercise } from './BuildSentenceExercise';
@@ -17,6 +18,7 @@ type LessonExerciseBodyProps = {
   gradeStatus: GradeStatus | null;
   onSelect: (value: string) => void;
   onAnswerChange: (value: string) => void;
+  onMatchSolved: (outcome: MatchPairsOutcome) => void;
   inputRef: Ref<AnswerTextFieldHandle>;
 };
 
@@ -27,6 +29,7 @@ export function LessonExerciseBody({
   gradeStatus,
   onSelect,
   onAnswerChange,
+  onMatchSolved,
   inputRef,
 }: LessonExerciseBodyProps) {
   if (exercise.type === 'select_translation') {
@@ -71,8 +74,7 @@ export function LessonExerciseBody({
         key={exercise.id}
         exercise={exercise}
         disabled={disabled}
-        revealResult={Boolean(gradeStatus)}
-        onAnswerChange={onAnswerChange}
+        onSolved={onMatchSolved}
       />
     );
   }

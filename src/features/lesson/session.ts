@@ -89,7 +89,7 @@ export function loadLessonSession(
   const steps = generateLessonSteps({ lesson, items: catalog, seen, language: gloss });
   const byId = new Map(catalog.map((item) => [item.id, item]));
   const exercises = steps.flatMap((step) => {
-    const exercise = exerciseFromStep(step);
+    const exercise = exerciseFromStep(step, byId, gloss);
     return exercise ? [exercise] : [];
   });
 
@@ -111,7 +111,11 @@ function scriptKind(step: LessonStep): ScriptKind {
   return 'prompt';
 }
 
-function exerciseFromStep(step: LessonStep): LessonExerciseItem | null {
+function exerciseFromStep(
+  step: LessonStep,
+  byId: ReadonlyMap<string, Item>,
+  language: ContentLocale,
+): LessonExerciseItem | null {
   if (!EXERCISE_TYPES.has(step.type)) return null;
 
   switch (step.type) {
@@ -123,6 +127,7 @@ function exerciseFromStep(step: LessonStep): LessonExerciseItem | null {
         prompt: step.prompt,
         options: step.options,
         answer: step.answer,
+        ...glossFor(step.itemIds, byId, language),
       };
     case 'build_sentence':
       return {
@@ -132,6 +137,7 @@ function exerciseFromStep(step: LessonStep): LessonExerciseItem | null {
         tiles: step.tiles,
         answer: step.answer,
         ...(step.accepted ? { accepted: step.accepted } : {}),
+        ...glossFor(step.itemIds, byId, language),
       };
     case 'listen_select':
       return {
@@ -143,6 +149,7 @@ function exerciseFromStep(step: LessonStep): LessonExerciseItem | null {
         speakText: step.speakText,
         ...(step.itemIds[0] ? { itemId: step.itemIds[0] } : {}),
         ...(step.audio ? { audio: step.audio } : {}),
+        ...glossFor(step.itemIds, byId, language),
       };
     case 'match_pairs':
       return {
@@ -151,6 +158,10 @@ function exerciseFromStep(step: LessonStep): LessonExerciseItem | null {
         prompt_ru: step.prompt_ru,
         pairs: step.pairs,
         answer: serializePairs(step.pairs),
+        phraseEs: step.pairs.map((pair) => pair.left).join('. '),
+        phraseTr: step.pairs.map((pair) => pair.right).join('. '),
+        itemIds: step.itemIds,
+        audio: firstClip(step.itemIds, byId),
       };
     case 'type_translation':
       return {
@@ -160,6 +171,7 @@ function exerciseFromStep(step: LessonStep): LessonExerciseItem | null {
         prompt: step.prompt,
         direction: step.direction,
         answer: step.answer,
+        ...glossFor(step.itemIds, byId, language),
       };
     case 'fill_gap':
       return {
@@ -169,10 +181,37 @@ function exerciseFromStep(step: LessonStep): LessonExerciseItem | null {
         sentence_es: step.sentence_es,
         answer: step.answer,
         ...(step.options ? { options: step.options } : {}),
+        ...glossFor(step.itemIds, byId, language),
       };
     default:
       return null;
   }
+}
+
+function glossFor(
+  itemIds: readonly string[],
+  byId: ReadonlyMap<string, Item>,
+  language: ContentLocale,
+) {
+  const item = focusItem(itemIds, byId);
+  if (!item) return {};
+  return {
+    phraseEs: item.es,
+    phraseTr: textOf(item.tr, language),
+    itemIds: [item.id],
+    audio: itemAudioPath(item),
+  };
+}
+
+function firstClip(itemIds: readonly string[], byId: ReadonlyMap<string, Item>): string | null {
+  const item = focusItem(itemIds, byId);
+  return item ? itemAudioPath(item) : null;
+}
+
+function focusItem(itemIds: readonly string[], byId: ReadonlyMap<string, Item>): Item | null {
+  const id = itemIds[0];
+  if (!id) return null;
+  return byId.get(id) ?? null;
 }
 
 function toVocabulary(item: Item, language: ContentLocale): VocabularyItem {

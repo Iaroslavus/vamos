@@ -1,4 +1,3 @@
-import type { TFunction } from 'i18next';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Keyboard } from 'react-native';
@@ -6,7 +5,8 @@ import { Keyboard } from 'react-native';
 import { stopLessonAudio } from '@/features/audio/playback';
 import { playGradeSound } from '@/features/audio/sounds';
 import type { AnswerTextFieldHandle } from '@/features/lesson/components/AnswerTextField';
-import type { GradeResult, GradeStatus } from '@/features/lesson/grading';
+import { buildResultSheetModel } from '@/features/lesson/feedbackView';
+import type { GradeStatus } from '@/features/lesson/grading';
 import { useLessonStore } from '@/features/lesson/store';
 
 type PlayerInput = {
@@ -66,30 +66,16 @@ export function useReviewExercisePlayer({ busy, onChecked }: PlayerInput) {
     total,
     progress: total === 0 ? 0 : Math.min(1, solved / total),
     sheetVisible,
-    sheetSuccess: lastGrade?.status === 'correct' || lastGrade?.status === 'almost',
     gradeStatus: sheetVisible ? (lastGrade?.status ?? null) : null,
     typing: exercise?.type === 'type_translation',
     canCheck: active && userAnswer.trim().length > 0,
     disabled: !active,
-    sheetTitle: sheetTitle(t, lastGrade, status === 'failed'),
-    sheetMessage: sheetMessage(t, lastGrade),
+    sheet: buildResultSheetModel({
+      t,
+      exercise,
+      grade: sheetVisible ? lastGrade : null,
+      failed: status === 'failed',
+    }),
     onCheck,
   };
-}
-
-function sheetTitle(t: TFunction, grade: GradeResult | null, failed: boolean): string {
-  if (!grade) return '';
-  if (grade.status === 'correct') return t('lesson.feedbackCorrect');
-  if (grade.status === 'almost') return t('lesson.feedbackAlmost');
-  if (failed) return t('lesson.feedbackFailed');
-  return t('lesson.feedbackWrong');
-}
-
-function sheetMessage(t: TFunction, grade: GradeResult | null): string | undefined {
-  if (!grade || grade.status === 'correct') return undefined;
-  const correct = t('lesson.correctAnswer', { answer: grade.correctAnswer });
-  if (grade.status === 'almost') {
-    return `${grade.note ?? t('lesson.feedbackAlmostHint')}\n${correct}`;
-  }
-  return correct;
 }

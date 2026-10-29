@@ -14,6 +14,14 @@ type LessonExerciseBase = {
   answer: string;
   accepted?: readonly string[];
   prompt_ru: string;
+  /** Spanish the result sheet shows and speaks. */
+  phraseEs?: string;
+  /** Gloss in the interface language. */
+  phraseTr?: string;
+  /** Vocabulary cards behind this exercise. */
+  itemIds?: readonly string[];
+  /** Normal-speed clip. Missing → device speech of `phraseEs`. */
+  audio?: string | null;
 };
 
 export type SelectTranslationItem = LessonExerciseBase & {
@@ -30,8 +38,6 @@ export type BuildSentenceItem = LessonExerciseBase & {
 export type ListenSelectItem = LessonExerciseBase & {
   type: 'listen_select';
   options: readonly string[];
-  /** Content audio path; playback falls back to TTS of `speakText`. */
-  audio?: string;
   /** Pre-rendered slow clip. Missing → device speech, not a stretched normal file. */
   slowAudio?: string;
   /** Catalog id used to pick the profile's Spanish variant at play time. */
@@ -212,6 +218,15 @@ type LessonStoreActions = {
   /** Grade current answer; moves session to `feedback` (or `failed` if hearts hit 0). */
   checkAnswer: () => GradeResult | null;
   /**
+   * Finish match_pairs once every correct pair is locked.
+   * Zero mistakes is a correct answer. Any mistake is one wrong answer,
+   * and `mistakes` is how many pairs were chosen wrong.
+   */
+  completeMatchPairs: (outcome: {
+    mistakes: number;
+    wrongKeys: readonly string[];
+  }) => GradeResult | null;
+  /**
    * After feedback sheet: advance queue.
    * Wrongs were already enqueued at check time; correct/almost just shift.
    * When the main pass ends with retries left → `mistakes_intro` (once).
@@ -325,6 +340,59 @@ function scriptExerciseId(script: readonly ScriptEntry[], index: number): string
   const entry = script[index];
   if (!entry || entry.kind !== 'exercise') return undefined;
   return entry.id;
+}
+
+function currentExerciseId(state: LessonStoreState): string | undefined {
+  return state.flow === 'script'
+    ? scriptExerciseId(state.script, state.scriptIndex)
+    : state.queue[0];
+}
+
+/** Apply a grade the same way a «Проверить» tap does. */
+function commitGrade(
+  state: LessonStoreState,
+  currentId: string,
+  result: GradeResult,
+): Partial<LessonStoreState> {
+  if (result.status === 'correct') {
+    return {
+      status: 'feedback',
+      lastGrade: result,
+      correctCount: state.correctCount + 1,
+      xpEarned: state.xpEarned + xpForStatus(result.status),
+    };
+  }
+
+  if (result.status === 'almost') {
+    return {
+      status: 'feedback',
+      lastGrade: result,
+      almostCount: state.almostCount + 1,
+      xpEarned: state.xpEarned + xpForStatus(result.status),
+    };
+  }
+
+  const hearts = Math.max(0, state.hearts - 1);
+  const queue = [...state.queue, currentId];
+
+  if (hearts === 0) {
+    return {
+      status: 'failed',
+      lastGrade: result,
+      wrongCount: state.wrongCount + 1,
+      hearts,
+      queue,
+      finishedAt: state.getNow(),
+    };
+  }
+
+  return {
+    status: 'feedback',
+    lastGrade: result,
+    wrongCount: state.wrongCount + 1,
+    hearts,
+    queue,
+  };
 }
 
 /** Move past the current generated step. Hearts and scores stay as they are. */
@@ -441,8 +509,7 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
     const state = get();
     if (state.status !== 'active') return null;
 
-    const currentId =
-      state.flow === 'script' ? scriptExerciseId(state.script, state.scriptIndex) : state.queue[0];
+    const currentId = currentExerciseId(state);
     if (!currentId) return null;
 
     const exercise = state.exerciseById[currentId];
@@ -454,50 +521,26 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
       accepted: exercise.accepted,
     });
 
-    if (result.status === 'correct') {
-      set({
-        status: 'feedback',
-        lastGrade: result,
-        correctCount: state.correctCount + 1,
-        xpEarned: state.xpEarned + xpForStatus(result.status),
-      });
-      return result;
-    }
+    set(commitGrade(state, currentId, result));
+    return result;
+  },
 
-    if (result.status === 'almost') {
-      set({
-        status: 'feedback',
-        lastGrade: result,
-        almostCount: state.almostCount + 1,
-        xpEarned: state.xpEarned + xpForStatus(result.status),
-      });
-      return result;
-    }
+  completeMatchPairs: ({ mistakes, wrongKeys }) => {
+    const state = get();
+    if (state.status !== 'active') return null;
 
-    const hearts = Math.max(0, state.hearts - 1);
-    const queue = [...state.queue];
-    // Keep current at head for feedback; append a retry copy at the end.
-    queue.push(currentId);
+    const currentId = currentExerciseId(state);
+    if (!currentId) return null;
 
-    if (hearts === 0) {
-      set({
-        status: 'failed',
-        lastGrade: result,
-        wrongCount: state.wrongCount + 1,
-        hearts,
-        queue,
-        finishedAt: state.getNow(),
-      });
-      return result;
-    }
+    const exercise = state.exerciseById[currentId];
+    if (!exercise || exercise.type !== 'match_pairs') return null;
 
-    set({
-      status: 'feedback',
-      lastGrade: result,
-      wrongCount: state.wrongCount + 1,
-      hearts,
-      queue,
-    });
+    const result: GradeResult =
+      mistakes > 0
+        ? { status: 'wrong', correctAnswer: exercise.answer, mistakes, wrongKeys }
+        : { status: 'correct', correctAnswer: exercise.answer, mistakes: 0, wrongKeys: [] };
+
+    set(commitGrade(state, currentId, result));
     return result;
   },
 
@@ -616,6 +659,9 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
       prompt: record.prompt,
       options: [...record.options],
       answer: record.answer,
+      phraseEs: record.answer,
+      phraseTr: record.prompt,
+      itemIds: [record.itemId],
     };
     const hearts = Math.max(0, state.hearts - 1);
     const failed = hearts === 0;
@@ -652,8 +698,7 @@ export const useLessonStore = create<LessonStore>()((set, get) => ({
 
   getCurrentExercise: () => {
     const state = get();
-    const id =
-      state.flow === 'script' ? scriptExerciseId(state.script, state.scriptIndex) : state.queue[0];
+    const id = currentExerciseId(state);
     if (!id) return null;
     return state.exerciseById[id] ?? null;
   },

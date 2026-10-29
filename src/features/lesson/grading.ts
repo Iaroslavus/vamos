@@ -2,10 +2,17 @@ export type GradeStatus = 'correct' | 'almost' | 'wrong';
 
 export type GradeResult = {
   status: GradeStatus;
-  /** Canonical expected answer shown to the learner. */
+  /**
+   * Canonical expected answer for grading.
+   * May be an internal encoding (`::`, `|`). The result sheet formats it first.
+   */
   correctAnswer: string;
   /** Short Russian note for near-misses (accent / typo). */
   note?: string;
+  /** Wrong pair attempts inside one match_pairs exercise. */
+  mistakes?: number;
+  /** Spanish sides that were part of a wrong match. */
+  wrongKeys?: readonly string[];
 };
 
 export type GradeAnswerInput = {

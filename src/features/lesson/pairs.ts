@@ -3,6 +3,56 @@ import type { MatchPair } from './store';
 const PAIR_SEP = '::';
 const LIST_SEP = '|';
 
+export type PairProgress = {
+  locked: readonly MatchPair[];
+  mistakes: number;
+  wrongKeys: readonly string[];
+};
+
+export type PairAttempt = PairProgress & {
+  outcome: 'correct' | 'wrong';
+  /** Tiles to shake when the attempt is wrong. */
+  flash: { left: string; right: string } | null;
+};
+
+export function isExpectedPair(pairs: readonly MatchPair[], left: string, right: string): boolean {
+  return pairs.some((pair) => pair.left === left && pair.right === right);
+}
+
+/**
+ * Instant match check. A correct pair is locked. A wrong pair counts a mistake,
+ * marks both sides, and does not stay selected.
+ */
+export function resolvePairAttempt(
+  expected: readonly MatchPair[],
+  state: PairProgress,
+  left: string,
+  right: string,
+): PairAttempt {
+  if (isExpectedPair(expected, left, right)) {
+    return {
+      locked: [...state.locked, { left, right }],
+      mistakes: state.mistakes,
+      wrongKeys: state.wrongKeys,
+      outcome: 'correct',
+      flash: null,
+    };
+  }
+
+  const wrongKeys = new Set(state.wrongKeys);
+  wrongKeys.add(left);
+  const owner = expected.find((pair) => pair.right === right);
+  if (owner) wrongKeys.add(owner.left);
+
+  return {
+    locked: state.locked,
+    mistakes: state.mistakes + 1,
+    wrongKeys: [...wrongKeys],
+    outcome: 'wrong',
+    flash: { left, right },
+  };
+}
+
 /** Canonical answer string for match_pairs grading (order-independent). */
 export function serializePairs(pairs: readonly MatchPair[]): string {
   return [...pairs]
