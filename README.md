@@ -29,7 +29,7 @@
 ## Настройка за 30 минут
 
 1. Установите **Node.js LTS**, **Git** и **Cursor** (cursor.com).
-2. Поставьте **Xcode** — он собирает iOS-клиент и открывает симулятор.
+2. Поставьте **Xcode 26.4 или новее** — это минимум для текущего Expo SDK 58. Он собирает iOS-клиент и открывает симулятор.
 3. Создайте пустую папку `vamos`, распакуйте туда этот набор и откройте папку в Cursor.
 4. В Cursor: Settings → Rules — убедитесь, что правила из `.cursor/rules` видны (Project Rules).
 5. Откройте чат Cursor в режиме **Agent** и вставьте первый промпт из `docs/PLAN.md` (Фаза 0).
@@ -43,7 +43,7 @@
 
 Приложение работает как **development build** (`expo-dev-client`): так доступны микрофон и распознавание речи. Идентификаторы: iOS `com.iaroslavus.vamos`, Android `com.iaroslavus.vamos`. Папки `ios/` и `android/` появляются при сборке и в Git не коммитятся.
 
-Нужны Node.js и Xcode с симулятором iOS. Зависимости: `npm install`.
+Нужны Node.js и **Xcode 26.4 или новее** (требование Expo SDK 58, [таблица совместимости](https://docs.expo.dev/versions/v58.0.0/#support-for-android-and-ios-versions)) с симулятором iOS. Зависимости: `npm install`.
 
 ### Первый раз
 
