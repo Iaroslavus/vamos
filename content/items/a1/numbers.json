@@ -22,8 +22,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/uno.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/numbers/uno.es.normal.m4a",
+      "latam": "items/a1/numbers/uno.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/uno.es.slow.m4a",
+        "latam": "items/a1/numbers/uno.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "number"
@@ -50,8 +56,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/dos.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/numbers/dos.es.normal.m4a",
+      "latam": "items/a1/numbers/dos.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/dos.es.slow.m4a",
+        "latam": "items/a1/numbers/dos.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "number"
@@ -78,8 +90,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/tres.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/numbers/tres.es.normal.m4a",
+      "latam": "items/a1/numbers/tres.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/tres.es.slow.m4a",
+        "latam": "items/a1/numbers/tres.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "number"
@@ -136,8 +154,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/numbers/cuatro_y_cinco.es.normal.m4a",
+      "latam": "items/a1/numbers/cuatro_y_cinco.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/cuatro_y_cinco.es.slow.m4a",
+        "latam": "items/a1/numbers/cuatro_y_cinco.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/numbers/cuatro_y_cinco.p0.es.normal.m4a",
+          "latam": "items/a1/numbers/cuatro_y_cinco.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/cuatro_y_cinco.p0.es.slow.m4a",
+            "latam": "items/a1/numbers/cuatro_y_cinco.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/cuatro_y_cinco.p1.es.normal.m4a",
+          "latam": "items/a1/numbers/cuatro_y_cinco.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/cuatro_y_cinco.p1.es.slow.m4a",
+            "latam": "items/a1/numbers/cuatro_y_cinco.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/cuatro_y_cinco.p2.es.normal.m4a",
+          "latam": "items/a1/numbers/cuatro_y_cinco.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/cuatro_y_cinco.p2.es.slow.m4a",
+            "latam": "items/a1/numbers/cuatro_y_cinco.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "number"
@@ -190,8 +239,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/numbers/seis_y_siete.es.normal.m4a",
+      "latam": "items/a1/numbers/seis_y_siete.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/seis_y_siete.es.slow.m4a",
+        "latam": "items/a1/numbers/seis_y_siete.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/numbers/seis_y_siete.p0.es.normal.m4a",
+          "latam": "items/a1/numbers/seis_y_siete.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/seis_y_siete.p0.es.slow.m4a",
+            "latam": "items/a1/numbers/seis_y_siete.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/seis_y_siete.p1.es.normal.m4a",
+          "latam": "items/a1/numbers/seis_y_siete.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/seis_y_siete.p1.es.slow.m4a",
+            "latam": "items/a1/numbers/seis_y_siete.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/seis_y_siete.p2.es.normal.m4a",
+          "latam": "items/a1/numbers/seis_y_siete.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/seis_y_siete.p2.es.slow.m4a",
+            "latam": "items/a1/numbers/seis_y_siete.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "number"
@@ -244,8 +324,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/numbers/ocho_y_nueve.es.normal.m4a",
+      "latam": "items/a1/numbers/ocho_y_nueve.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/ocho_y_nueve.es.slow.m4a",
+        "latam": "items/a1/numbers/ocho_y_nueve.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/numbers/ocho_y_nueve.p0.es.normal.m4a",
+          "latam": "items/a1/numbers/ocho_y_nueve.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/ocho_y_nueve.p0.es.slow.m4a",
+            "latam": "items/a1/numbers/ocho_y_nueve.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/ocho_y_nueve.p1.es.normal.m4a",
+          "latam": "items/a1/numbers/ocho_y_nueve.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/ocho_y_nueve.p1.es.slow.m4a",
+            "latam": "items/a1/numbers/ocho_y_nueve.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/ocho_y_nueve.p2.es.normal.m4a",
+          "latam": "items/a1/numbers/ocho_y_nueve.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/ocho_y_nueve.p2.es.slow.m4a",
+            "latam": "items/a1/numbers/ocho_y_nueve.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "number"
@@ -294,8 +405,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": "a1/diez.mp3",
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/numbers/numero_diez.es.normal.m4a",
+      "latam": "items/a1/numbers/numero_diez.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/numero_diez.es.slow.m4a",
+        "latam": "items/a1/numbers/numero_diez.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/numbers/numero_diez.p0.es.normal.m4a",
+          "latam": "items/a1/numbers/numero_diez.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/numero_diez.p0.es.slow.m4a",
+            "latam": "items/a1/numbers/numero_diez.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/numero_diez.p1.es.normal.m4a",
+          "latam": "items/a1/numbers/numero_diez.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/numero_diez.p1.es.slow.m4a",
+            "latam": "items/a1/numbers/numero_diez.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "number"
@@ -344,8 +478,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/numbers/cuanto_cuesta.es.normal.m4a",
+      "latam": "items/a1/numbers/cuanto_cuesta.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/cuanto_cuesta.es.slow.m4a",
+        "latam": "items/a1/numbers/cuanto_cuesta.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/numbers/cuanto_cuesta.p0.es.normal.m4a",
+          "latam": "items/a1/numbers/cuanto_cuesta.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/cuanto_cuesta.p0.es.slow.m4a",
+            "latam": "items/a1/numbers/cuanto_cuesta.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/cuanto_cuesta.p1.es.normal.m4a",
+          "latam": "items/a1/numbers/cuanto_cuesta.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/cuanto_cuesta.p1.es.slow.m4a",
+            "latam": "items/a1/numbers/cuanto_cuesta.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "price"
@@ -398,8 +555,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/numbers/cuanto_cuestan.es.normal.m4a",
+      "latam": "items/a1/numbers/cuanto_cuestan.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/cuanto_cuestan.es.slow.m4a",
+        "latam": "items/a1/numbers/cuanto_cuestan.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/numbers/cuanto_cuestan.p0.es.normal.m4a",
+          "latam": "items/a1/numbers/cuanto_cuestan.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/cuanto_cuestan.p0.es.slow.m4a",
+            "latam": "items/a1/numbers/cuanto_cuestan.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/cuanto_cuestan.p1.es.normal.m4a",
+          "latam": "items/a1/numbers/cuanto_cuestan.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/cuanto_cuestan.p1.es.slow.m4a",
+            "latam": "items/a1/numbers/cuanto_cuestan.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "price"
@@ -448,8 +628,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/numbers/un_euro.es.normal.m4a",
+      "latam": "items/a1/numbers/un_euro.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/un_euro.es.slow.m4a",
+        "latam": "items/a1/numbers/un_euro.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/numbers/un_euro.p0.es.normal.m4a",
+          "latam": "items/a1/numbers/un_euro.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/un_euro.p0.es.slow.m4a",
+            "latam": "items/a1/numbers/un_euro.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/un_euro.p1.es.normal.m4a",
+          "latam": "items/a1/numbers/un_euro.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/un_euro.p1.es.slow.m4a",
+            "latam": "items/a1/numbers/un_euro.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "price"
@@ -494,8 +697,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/numbers/dos_euros.es.normal.m4a",
+      "latam": "items/a1/numbers/dos_euros.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/dos_euros.es.slow.m4a",
+        "latam": "items/a1/numbers/dos_euros.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/numbers/dos_euros.p0.es.normal.m4a",
+          "latam": "items/a1/numbers/dos_euros.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/dos_euros.p0.es.slow.m4a",
+            "latam": "items/a1/numbers/dos_euros.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/dos_euros.p1.es.normal.m4a",
+          "latam": "items/a1/numbers/dos_euros.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/dos_euros.p1.es.slow.m4a",
+            "latam": "items/a1/numbers/dos_euros.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "price"
@@ -544,8 +770,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/numbers/diez_euros.es.normal.m4a",
+      "latam": "items/a1/numbers/diez_euros.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/diez_euros.es.slow.m4a",
+        "latam": "items/a1/numbers/diez_euros.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/numbers/diez_euros.p0.es.normal.m4a",
+          "latam": "items/a1/numbers/diez_euros.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/diez_euros.p0.es.slow.m4a",
+            "latam": "items/a1/numbers/diez_euros.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/diez_euros.p1.es.normal.m4a",
+          "latam": "items/a1/numbers/diez_euros.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/diez_euros.p1.es.slow.m4a",
+            "latam": "items/a1/numbers/diez_euros.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "price"
@@ -594,8 +843,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/numbers/dos_con_cincuenta.es.normal.m4a",
+      "latam": "items/a1/numbers/dos_con_cincuenta.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/dos_con_cincuenta.es.slow.m4a",
+        "latam": "items/a1/numbers/dos_con_cincuenta.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/numbers/dos_con_cincuenta.p0.es.normal.m4a",
+          "latam": "items/a1/numbers/dos_con_cincuenta.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/dos_con_cincuenta.p0.es.slow.m4a",
+            "latam": "items/a1/numbers/dos_con_cincuenta.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/dos_con_cincuenta.p1.es.normal.m4a",
+          "latam": "items/a1/numbers/dos_con_cincuenta.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/dos_con_cincuenta.p1.es.slow.m4a",
+            "latam": "items/a1/numbers/dos_con_cincuenta.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "price"

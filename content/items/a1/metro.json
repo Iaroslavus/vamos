@@ -40,8 +40,31 @@
     "level": "A1",
     "variant": "es",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/un_billete.es.normal.m4a",
+      "latam": null,
+      "slow": {
+        "es": "items/a1/metro/un_billete.es.slow.m4a",
+        "latam": null
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/un_billete.p0.es.normal.m4a",
+          "latam": null,
+          "slow": {
+            "es": "items/a1/metro/un_billete.p0.es.slow.m4a",
+            "latam": null
+          }
+        },
+        {
+          "es": "items/a1/metro/un_billete.p1.es.normal.m4a",
+          "latam": null,
+          "slow": {
+            "es": "items/a1/metro/un_billete.p1.es.slow.m4a",
+            "latam": null
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -90,8 +113,31 @@
     "level": "A1",
     "variant": "latam",
     "audio": {
+      "source": "tts",
       "es": null,
-      "latam": null
+      "latam": "items/a1/metro/un_boleto.mx.normal.m4a",
+      "slow": {
+        "es": null,
+        "latam": "items/a1/metro/un_boleto.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": null,
+          "latam": "items/a1/metro/un_boleto.p0.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/metro/un_boleto.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": null,
+          "latam": "items/a1/metro/un_boleto.p1.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/metro/un_boleto.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -144,8 +190,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/ida_y_vuelta.es.normal.m4a",
+      "latam": "items/a1/metro/ida_y_vuelta.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/ida_y_vuelta.es.slow.m4a",
+        "latam": "items/a1/metro/ida_y_vuelta.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/ida_y_vuelta.p0.es.normal.m4a",
+          "latam": "items/a1/metro/ida_y_vuelta.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/ida_y_vuelta.p0.es.slow.m4a",
+            "latam": "items/a1/metro/ida_y_vuelta.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/ida_y_vuelta.p1.es.normal.m4a",
+          "latam": "items/a1/metro/ida_y_vuelta.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/ida_y_vuelta.p1.es.slow.m4a",
+            "latam": "items/a1/metro/ida_y_vuelta.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/ida_y_vuelta.p2.es.normal.m4a",
+          "latam": "items/a1/metro/ida_y_vuelta.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/ida_y_vuelta.p2.es.slow.m4a",
+            "latam": "items/a1/metro/ida_y_vuelta.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -190,8 +267,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/solo_ida.es.normal.m4a",
+      "latam": "items/a1/metro/solo_ida.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/solo_ida.es.slow.m4a",
+        "latam": "items/a1/metro/solo_ida.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/solo_ida.p0.es.normal.m4a",
+          "latam": "items/a1/metro/solo_ida.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/solo_ida.p0.es.slow.m4a",
+            "latam": "items/a1/metro/solo_ida.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/solo_ida.p1.es.normal.m4a",
+          "latam": "items/a1/metro/solo_ida.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/solo_ida.p1.es.slow.m4a",
+            "latam": "items/a1/metro/solo_ida.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -236,8 +336,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/cuanto_cuesta.es.normal.m4a",
+      "latam": "items/a1/metro/cuanto_cuesta.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/cuanto_cuesta.es.slow.m4a",
+        "latam": "items/a1/metro/cuanto_cuesta.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/cuanto_cuesta.p0.es.normal.m4a",
+          "latam": "items/a1/metro/cuanto_cuesta.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/cuanto_cuesta.p0.es.slow.m4a",
+            "latam": "items/a1/metro/cuanto_cuesta.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/cuanto_cuesta.p1.es.normal.m4a",
+          "latam": "items/a1/metro/cuanto_cuesta.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/cuanto_cuesta.p1.es.slow.m4a",
+            "latam": "items/a1/metro/cuanto_cuesta.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -282,8 +405,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/el_metro.es.normal.m4a",
+      "latam": "items/a1/metro/el_metro.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/el_metro.es.slow.m4a",
+        "latam": "items/a1/metro/el_metro.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/el_metro.p0.es.normal.m4a",
+          "latam": "items/a1/metro/el_metro.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/el_metro.p0.es.slow.m4a",
+            "latam": "items/a1/metro/el_metro.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/el_metro.p1.es.normal.m4a",
+          "latam": "items/a1/metro/el_metro.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/el_metro.p1.es.slow.m4a",
+            "latam": "items/a1/metro/el_metro.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -332,8 +478,31 @@
     "level": "A1",
     "variant": "latam",
     "audio": {
+      "source": "tts",
       "es": null,
-      "latam": null
+      "latam": "items/a1/metro/el_subte.mx.normal.m4a",
+      "slow": {
+        "es": null,
+        "latam": "items/a1/metro/el_subte.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": null,
+          "latam": "items/a1/metro/el_subte.p0.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/metro/el_subte.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": null,
+          "latam": "items/a1/metro/el_subte.p1.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/metro/el_subte.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -386,8 +555,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/a_que_linea.es.normal.m4a",
+      "latam": "items/a1/metro/a_que_linea.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/a_que_linea.es.slow.m4a",
+        "latam": "items/a1/metro/a_que_linea.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/a_que_linea.p0.es.normal.m4a",
+          "latam": "items/a1/metro/a_que_linea.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/a_que_linea.p0.es.slow.m4a",
+            "latam": "items/a1/metro/a_que_linea.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/a_que_linea.p1.es.normal.m4a",
+          "latam": "items/a1/metro/a_que_linea.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/a_que_linea.p1.es.slow.m4a",
+            "latam": "items/a1/metro/a_que_linea.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/a_que_linea.p2.es.normal.m4a",
+          "latam": "items/a1/metro/a_que_linea.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/a_que_linea.p2.es.slow.m4a",
+            "latam": "items/a1/metro/a_que_linea.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -436,8 +636,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/linea_dos.es.normal.m4a",
+      "latam": "items/a1/metro/linea_dos.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/linea_dos.es.slow.m4a",
+        "latam": "items/a1/metro/linea_dos.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/linea_dos.p0.es.normal.m4a",
+          "latam": "items/a1/metro/linea_dos.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/linea_dos.p0.es.slow.m4a",
+            "latam": "items/a1/metro/linea_dos.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/linea_dos.p1.es.normal.m4a",
+          "latam": "items/a1/metro/linea_dos.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/linea_dos.p1.es.slow.m4a",
+            "latam": "items/a1/metro/linea_dos.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -482,8 +705,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/direccion_centro.es.normal.m4a",
+      "latam": "items/a1/metro/direccion_centro.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/direccion_centro.es.slow.m4a",
+        "latam": "items/a1/metro/direccion_centro.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/direccion_centro.p0.es.normal.m4a",
+          "latam": "items/a1/metro/direccion_centro.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/direccion_centro.p0.es.slow.m4a",
+            "latam": "items/a1/metro/direccion_centro.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/direccion_centro.p1.es.normal.m4a",
+          "latam": "items/a1/metro/direccion_centro.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/direccion_centro.p1.es.slow.m4a",
+            "latam": "items/a1/metro/direccion_centro.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -532,8 +778,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/donde_bajo.es.normal.m4a",
+      "latam": "items/a1/metro/donde_bajo.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/donde_bajo.es.slow.m4a",
+        "latam": "items/a1/metro/donde_bajo.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/donde_bajo.p0.es.normal.m4a",
+          "latam": "items/a1/metro/donde_bajo.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/donde_bajo.p0.es.slow.m4a",
+            "latam": "items/a1/metro/donde_bajo.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/donde_bajo.p1.es.normal.m4a",
+          "latam": "items/a1/metro/donde_bajo.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/donde_bajo.p1.es.slow.m4a",
+            "latam": "items/a1/metro/donde_bajo.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -578,8 +847,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/la_proxima.es.normal.m4a",
+      "latam": "items/a1/metro/la_proxima.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/la_proxima.es.slow.m4a",
+        "latam": "items/a1/metro/la_proxima.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/la_proxima.p0.es.normal.m4a",
+          "latam": "items/a1/metro/la_proxima.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/la_proxima.p0.es.slow.m4a",
+            "latam": "items/a1/metro/la_proxima.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/la_proxima.p1.es.normal.m4a",
+          "latam": "items/a1/metro/la_proxima.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/la_proxima.p1.es.slow.m4a",
+            "latam": "items/a1/metro/la_proxima.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -606,8 +898,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/transbordo.es.normal.m4a",
+      "latam": "items/a1/metro/transbordo.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/transbordo.es.slow.m4a",
+        "latam": "items/a1/metro/transbordo.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "metro"
@@ -634,8 +932,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/salida.es.normal.m4a",
+      "latam": "items/a1/metro/salida.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/salida.es.slow.m4a",
+        "latam": "items/a1/metro/salida.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "metro"
@@ -684,8 +988,31 @@
     "level": "A1",
     "variant": "es",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/el_autobus.es.normal.m4a",
+      "latam": null,
+      "slow": {
+        "es": "items/a1/metro/el_autobus.es.slow.m4a",
+        "latam": null
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/el_autobus.p0.es.normal.m4a",
+          "latam": null,
+          "slow": {
+            "es": "items/a1/metro/el_autobus.p0.es.slow.m4a",
+            "latam": null
+          }
+        },
+        {
+          "es": "items/a1/metro/el_autobus.p1.es.normal.m4a",
+          "latam": null,
+          "slow": {
+            "es": "items/a1/metro/el_autobus.p1.es.slow.m4a",
+            "latam": null
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -734,8 +1061,31 @@
     "level": "A1",
     "variant": "latam",
     "audio": {
+      "source": "tts",
       "es": null,
-      "latam": null
+      "latam": "items/a1/metro/el_bus.mx.normal.m4a",
+      "slow": {
+        "es": null,
+        "latam": "items/a1/metro/el_bus.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": null,
+          "latam": "items/a1/metro/el_bus.p0.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/metro/el_bus.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": null,
+          "latam": "items/a1/metro/el_bus.p1.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/metro/el_bus.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -780,8 +1130,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/numero_cinco.es.normal.m4a",
+      "latam": "items/a1/metro/numero_cinco.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/numero_cinco.es.slow.m4a",
+        "latam": "items/a1/metro/numero_cinco.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/numero_cinco.p0.es.normal.m4a",
+          "latam": "items/a1/metro/numero_cinco.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/numero_cinco.p0.es.slow.m4a",
+            "latam": "items/a1/metro/numero_cinco.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/numero_cinco.p1.es.normal.m4a",
+          "latam": "items/a1/metro/numero_cinco.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/numero_cinco.p1.es.slow.m4a",
+            "latam": "items/a1/metro/numero_cinco.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -826,8 +1199,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/esta_parada.es.normal.m4a",
+      "latam": "items/a1/metro/esta_parada.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/esta_parada.es.slow.m4a",
+        "latam": "items/a1/metro/esta_parada.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/esta_parada.p0.es.normal.m4a",
+          "latam": "items/a1/metro/esta_parada.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/esta_parada.p0.es.slow.m4a",
+            "latam": "items/a1/metro/esta_parada.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/esta_parada.p1.es.normal.m4a",
+          "latam": "items/a1/metro/esta_parada.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/esta_parada.p1.es.slow.m4a",
+            "latam": "items/a1/metro/esta_parada.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -872,8 +1268,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/la_parada.es.normal.m4a",
+      "latam": "items/a1/metro/la_parada.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/la_parada.es.slow.m4a",
+        "latam": "items/a1/metro/la_parada.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/la_parada.p0.es.normal.m4a",
+          "latam": "items/a1/metro/la_parada.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/la_parada.p0.es.slow.m4a",
+            "latam": "items/a1/metro/la_parada.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/la_parada.p1.es.normal.m4a",
+          "latam": "items/a1/metro/la_parada.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/la_parada.p1.es.slow.m4a",
+            "latam": "items/a1/metro/la_parada.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -926,8 +1345,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/va_al_centro.es.normal.m4a",
+      "latam": "items/a1/metro/va_al_centro.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/va_al_centro.es.slow.m4a",
+        "latam": "items/a1/metro/va_al_centro.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/va_al_centro.p0.es.normal.m4a",
+          "latam": "items/a1/metro/va_al_centro.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/va_al_centro.p0.es.slow.m4a",
+            "latam": "items/a1/metro/va_al_centro.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/va_al_centro.p1.es.normal.m4a",
+          "latam": "items/a1/metro/va_al_centro.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/va_al_centro.p1.es.slow.m4a",
+            "latam": "items/a1/metro/va_al_centro.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/va_al_centro.p2.es.normal.m4a",
+          "latam": "items/a1/metro/va_al_centro.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/va_al_centro.p2.es.slow.m4a",
+            "latam": "items/a1/metro/va_al_centro.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -972,8 +1422,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/si_al_centro.es.normal.m4a",
+      "latam": "items/a1/metro/si_al_centro.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/si_al_centro.es.slow.m4a",
+        "latam": "items/a1/metro/si_al_centro.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/si_al_centro.p0.es.normal.m4a",
+          "latam": "items/a1/metro/si_al_centro.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/si_al_centro.p0.es.slow.m4a",
+            "latam": "items/a1/metro/si_al_centro.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/si_al_centro.p1.es.normal.m4a",
+          "latam": "items/a1/metro/si_al_centro.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/si_al_centro.p1.es.slow.m4a",
+            "latam": "items/a1/metro/si_al_centro.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -1018,8 +1491,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/una_tarjeta.es.normal.m4a",
+      "latam": "items/a1/metro/una_tarjeta.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/una_tarjeta.es.slow.m4a",
+        "latam": "items/a1/metro/una_tarjeta.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/una_tarjeta.p0.es.normal.m4a",
+          "latam": "items/a1/metro/una_tarjeta.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/una_tarjeta.p0.es.slow.m4a",
+            "latam": "items/a1/metro/una_tarjeta.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/una_tarjeta.p1.es.normal.m4a",
+          "latam": "items/a1/metro/una_tarjeta.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/una_tarjeta.p1.es.slow.m4a",
+            "latam": "items/a1/metro/una_tarjeta.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -1072,8 +1568,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/donde_esta_la_salida.es.normal.m4a",
+      "latam": "items/a1/metro/donde_esta_la_salida.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/donde_esta_la_salida.es.slow.m4a",
+        "latam": "items/a1/metro/donde_esta_la_salida.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/donde_esta_la_salida.p0.es.normal.m4a",
+          "latam": "items/a1/metro/donde_esta_la_salida.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/donde_esta_la_salida.p0.es.slow.m4a",
+            "latam": "items/a1/metro/donde_esta_la_salida.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/donde_esta_la_salida.p1.es.normal.m4a",
+          "latam": "items/a1/metro/donde_esta_la_salida.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/donde_esta_la_salida.p1.es.slow.m4a",
+            "latam": "items/a1/metro/donde_esta_la_salida.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/donde_esta_la_salida.p2.es.normal.m4a",
+          "latam": "items/a1/metro/donde_esta_la_salida.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/donde_esta_la_salida.p2.es.slow.m4a",
+            "latam": "items/a1/metro/donde_esta_la_salida.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -1122,8 +1649,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/el_anden.es.normal.m4a",
+      "latam": "items/a1/metro/el_anden.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/el_anden.es.slow.m4a",
+        "latam": "items/a1/metro/el_anden.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/el_anden.p0.es.normal.m4a",
+          "latam": "items/a1/metro/el_anden.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/el_anden.p0.es.slow.m4a",
+            "latam": "items/a1/metro/el_anden.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/el_anden.p1.es.normal.m4a",
+          "latam": "items/a1/metro/el_anden.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/el_anden.p1.es.slow.m4a",
+            "latam": "items/a1/metro/el_anden.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -1168,8 +1718,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/anden_dos.es.normal.m4a",
+      "latam": "items/a1/metro/anden_dos.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/anden_dos.es.slow.m4a",
+        "latam": "items/a1/metro/anden_dos.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/anden_dos.p0.es.normal.m4a",
+          "latam": "items/a1/metro/anden_dos.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/anden_dos.p0.es.slow.m4a",
+            "latam": "items/a1/metro/anden_dos.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/anden_dos.p1.es.normal.m4a",
+          "latam": "items/a1/metro/anden_dos.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/anden_dos.p1.es.slow.m4a",
+            "latam": "items/a1/metro/anden_dos.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -1226,8 +1799,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/se_puede_bajar.es.normal.m4a",
+      "latam": "items/a1/metro/se_puede_bajar.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/se_puede_bajar.es.slow.m4a",
+        "latam": "items/a1/metro/se_puede_bajar.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/se_puede_bajar.p0.es.normal.m4a",
+          "latam": "items/a1/metro/se_puede_bajar.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/se_puede_bajar.p0.es.slow.m4a",
+            "latam": "items/a1/metro/se_puede_bajar.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/se_puede_bajar.p1.es.normal.m4a",
+          "latam": "items/a1/metro/se_puede_bajar.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/se_puede_bajar.p1.es.slow.m4a",
+            "latam": "items/a1/metro/se_puede_bajar.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/se_puede_bajar.p2.es.normal.m4a",
+          "latam": "items/a1/metro/se_puede_bajar.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/se_puede_bajar.p2.es.slow.m4a",
+            "latam": "items/a1/metro/se_puede_bajar.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -1276,8 +1880,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/estoy_perdido.es.normal.m4a",
+      "latam": "items/a1/metro/estoy_perdido.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/estoy_perdido.es.slow.m4a",
+        "latam": "items/a1/metro/estoy_perdido.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/estoy_perdido.p0.es.normal.m4a",
+          "latam": "items/a1/metro/estoy_perdido.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/estoy_perdido.p0.es.slow.m4a",
+            "latam": "items/a1/metro/estoy_perdido.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/estoy_perdido.p1.es.normal.m4a",
+          "latam": "items/a1/metro/estoy_perdido.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/estoy_perdido.p1.es.slow.m4a",
+            "latam": "items/a1/metro/estoy_perdido.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"
@@ -1322,8 +1949,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/metro/me_ayuda.es.normal.m4a",
+      "latam": "items/a1/metro/me_ayuda.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/metro/me_ayuda.es.slow.m4a",
+        "latam": "items/a1/metro/me_ayuda.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/metro/me_ayuda.p0.es.normal.m4a",
+          "latam": "items/a1/metro/me_ayuda.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/me_ayuda.p0.es.slow.m4a",
+            "latam": "items/a1/metro/me_ayuda.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/metro/me_ayuda.p1.es.normal.m4a",
+          "latam": "items/a1/metro/me_ayuda.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/metro/me_ayuda.p1.es.slow.m4a",
+            "latam": "items/a1/metro/me_ayuda.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "metro"

@@ -40,8 +40,31 @@
     "level": "A1",
     "variant": "es",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/la_talla.es.normal.m4a",
+      "latam": null,
+      "slow": {
+        "es": "items/a1/ropa/la_talla.es.slow.m4a",
+        "latam": null
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/la_talla.p0.es.normal.m4a",
+          "latam": null,
+          "slow": {
+            "es": "items/a1/ropa/la_talla.p0.es.slow.m4a",
+            "latam": null
+          }
+        },
+        {
+          "es": "items/a1/ropa/la_talla.p1.es.normal.m4a",
+          "latam": null,
+          "slow": {
+            "es": "items/a1/ropa/la_talla.p1.es.slow.m4a",
+            "latam": null
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -90,8 +113,31 @@
     "level": "A1",
     "variant": "latam",
     "audio": {
+      "source": "tts",
       "es": null,
-      "latam": null
+      "latam": "items/a1/ropa/el_talle.mx.normal.m4a",
+      "slow": {
+        "es": null,
+        "latam": "items/a1/ropa/el_talle.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": null,
+          "latam": "items/a1/ropa/el_talle.p0.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/ropa/el_talle.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": null,
+          "latam": "items/a1/ropa/el_talle.p1.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/ropa/el_talle.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -136,8 +182,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/una_talla_mas.es.normal.m4a",
+      "latam": "items/a1/ropa/una_talla_mas.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/una_talla_mas.es.slow.m4a",
+        "latam": "items/a1/ropa/una_talla_mas.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/una_talla_mas.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/una_talla_mas.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/una_talla_mas.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/una_talla_mas.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/una_talla_mas.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/una_talla_mas.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/una_talla_mas.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/una_talla_mas.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -182,8 +251,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/una_talla_menos.es.normal.m4a",
+      "latam": "items/a1/ropa/una_talla_menos.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/una_talla_menos.es.slow.m4a",
+        "latam": "items/a1/ropa/una_talla_menos.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/una_talla_menos.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/una_talla_menos.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/una_talla_menos.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/una_talla_menos.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/una_talla_menos.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/una_talla_menos.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/una_talla_menos.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/una_talla_menos.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -236,8 +328,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/que_talla_usa.es.normal.m4a",
+      "latam": "items/a1/ropa/que_talla_usa.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/que_talla_usa.es.slow.m4a",
+        "latam": "items/a1/ropa/que_talla_usa.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/que_talla_usa.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/que_talla_usa.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/que_talla_usa.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/que_talla_usa.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/que_talla_usa.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/que_talla_usa.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/que_talla_usa.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/que_talla_usa.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/que_talla_usa.p2.es.normal.m4a",
+          "latam": "items/a1/ropa/que_talla_usa.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/que_talla_usa.p2.es.slow.m4a",
+            "latam": "items/a1/ropa/que_talla_usa.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -286,8 +409,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/me_queda.es.normal.m4a",
+      "latam": "items/a1/ropa/me_queda.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/me_queda.es.slow.m4a",
+        "latam": "items/a1/ropa/me_queda.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/me_queda.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/me_queda.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/me_queda.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/me_queda.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/me_queda.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/me_queda.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/me_queda.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/me_queda.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -314,8 +460,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/grande.es.normal.m4a",
+      "latam": "items/a1/ropa/grande.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/grande.es.slow.m4a",
+        "latam": "items/a1/ropa/grande.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "ropa"
@@ -342,8 +494,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/negro.es.normal.m4a",
+      "latam": "items/a1/ropa/negro.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/negro.es.slow.m4a",
+        "latam": "items/a1/ropa/negro.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "ropa"
@@ -370,8 +528,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/blanco.es.normal.m4a",
+      "latam": "items/a1/ropa/blanco.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/blanco.es.slow.m4a",
+        "latam": "items/a1/ropa/blanco.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "ropa"
@@ -398,8 +562,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/azul.es.normal.m4a",
+      "latam": "items/a1/ropa/azul.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/azul.es.slow.m4a",
+        "latam": "items/a1/ropa/azul.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "ropa"
@@ -444,8 +614,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/la_camiseta.es.normal.m4a",
+      "latam": "items/a1/ropa/la_camiseta.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/la_camiseta.es.slow.m4a",
+        "latam": "items/a1/ropa/la_camiseta.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/la_camiseta.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/la_camiseta.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/la_camiseta.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/la_camiseta.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/la_camiseta.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/la_camiseta.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/la_camiseta.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/la_camiseta.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -494,8 +687,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/los_pantalones.es.normal.m4a",
+      "latam": "items/a1/ropa/los_pantalones.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/los_pantalones.es.slow.m4a",
+        "latam": "items/a1/ropa/los_pantalones.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/los_pantalones.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/los_pantalones.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/los_pantalones.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/los_pantalones.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/los_pantalones.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/los_pantalones.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/los_pantalones.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/los_pantalones.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -540,8 +756,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/la_camisa.es.normal.m4a",
+      "latam": "items/a1/ropa/la_camisa.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/la_camisa.es.slow.m4a",
+        "latam": "items/a1/ropa/la_camisa.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/la_camisa.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/la_camisa.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/la_camisa.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/la_camisa.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/la_camisa.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/la_camisa.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/la_camisa.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/la_camisa.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -590,8 +829,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/camiseta_negra.es.normal.m4a",
+      "latam": "items/a1/ropa/camiseta_negra.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/camiseta_negra.es.slow.m4a",
+        "latam": "items/a1/ropa/camiseta_negra.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/camiseta_negra.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/camiseta_negra.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/camiseta_negra.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/camiseta_negra.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/camiseta_negra.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/camiseta_negra.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/camiseta_negra.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/camiseta_negra.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -644,8 +906,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/puedo_probarme.es.normal.m4a",
+      "latam": "items/a1/ropa/puedo_probarme.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/puedo_probarme.es.slow.m4a",
+        "latam": "items/a1/ropa/puedo_probarme.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/puedo_probarme.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/puedo_probarme.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/puedo_probarme.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/puedo_probarme.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/puedo_probarme.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/puedo_probarme.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/puedo_probarme.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/puedo_probarme.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/puedo_probarme.p2.es.normal.m4a",
+          "latam": "items/a1/ropa/puedo_probarme.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/puedo_probarme.p2.es.slow.m4a",
+            "latam": "items/a1/ropa/puedo_probarme.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -694,8 +987,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/el_probador.es.normal.m4a",
+      "latam": "items/a1/ropa/el_probador.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/el_probador.es.slow.m4a",
+        "latam": "items/a1/ropa/el_probador.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/el_probador.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/el_probador.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/el_probador.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/el_probador.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/el_probador.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/el_probador.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/el_probador.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/el_probador.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -740,8 +1056,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/me_queda_bien.es.normal.m4a",
+      "latam": "items/a1/ropa/me_queda_bien.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/me_queda_bien.es.slow.m4a",
+        "latam": "items/a1/ropa/me_queda_bien.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/me_queda_bien.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/me_queda_bien.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/me_queda_bien.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/me_queda_bien.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/me_queda_bien.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/me_queda_bien.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/me_queda_bien.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/me_queda_bien.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -786,8 +1125,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/me_queda_grande.es.normal.m4a",
+      "latam": "items/a1/ropa/me_queda_grande.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/me_queda_grande.es.slow.m4a",
+        "latam": "items/a1/ropa/me_queda_grande.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/me_queda_grande.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/me_queda_grande.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/me_queda_grande.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/me_queda_grande.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/me_queda_grande.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/me_queda_grande.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/me_queda_grande.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/me_queda_grande.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -832,8 +1194,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/me_queda_pequena.es.normal.m4a",
+      "latam": "items/a1/ropa/me_queda_pequena.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/me_queda_pequena.es.slow.m4a",
+        "latam": "items/a1/ropa/me_queda_pequena.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/me_queda_pequena.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/me_queda_pequena.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/me_queda_pequena.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/me_queda_pequena.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/me_queda_pequena.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/me_queda_pequena.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/me_queda_pequena.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/me_queda_pequena.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -878,8 +1263,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/esta_camisa.es.normal.m4a",
+      "latam": "items/a1/ropa/esta_camisa.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/esta_camisa.es.slow.m4a",
+        "latam": "items/a1/ropa/esta_camisa.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/esta_camisa.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/esta_camisa.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/esta_camisa.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/esta_camisa.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/esta_camisa.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/esta_camisa.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/esta_camisa.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/esta_camisa.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -928,8 +1336,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/me_gusta.es.normal.m4a",
+      "latam": "items/a1/ropa/me_gusta.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/me_gusta.es.slow.m4a",
+        "latam": "items/a1/ropa/me_gusta.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/me_gusta.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/me_gusta.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/me_gusta.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/me_gusta.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/me_gusta.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/me_gusta.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/me_gusta.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/me_gusta.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -974,8 +1405,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/no_me_queda.es.normal.m4a",
+      "latam": "items/a1/ropa/no_me_queda.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/no_me_queda.es.slow.m4a",
+        "latam": "items/a1/ropa/no_me_queda.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/no_me_queda.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/no_me_queda.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/no_me_queda.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/no_me_queda.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/no_me_queda.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/no_me_queda.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/no_me_queda.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/no_me_queda.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -1024,8 +1478,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/muy_caro.es.normal.m4a",
+      "latam": "items/a1/ropa/muy_caro.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/muy_caro.es.slow.m4a",
+        "latam": "items/a1/ropa/muy_caro.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/muy_caro.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/muy_caro.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/muy_caro.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/muy_caro.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/muy_caro.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/muy_caro.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/muy_caro.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/muy_caro.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -1070,8 +1547,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/muy_cara.es.normal.m4a",
+      "latam": "items/a1/ropa/muy_cara.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/muy_cara.es.slow.m4a",
+        "latam": "items/a1/ropa/muy_cara.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/muy_cara.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/muy_cara.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/muy_cara.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/muy_cara.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/muy_cara.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/muy_cara.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/muy_cara.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/muy_cara.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -1124,8 +1624,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/me_lo_llevo.es.normal.m4a",
+      "latam": "items/a1/ropa/me_lo_llevo.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/me_lo_llevo.es.slow.m4a",
+        "latam": "items/a1/ropa/me_lo_llevo.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/me_lo_llevo.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/me_lo_llevo.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/me_lo_llevo.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/me_lo_llevo.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/me_lo_llevo.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/me_lo_llevo.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/me_lo_llevo.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/me_lo_llevo.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/me_lo_llevo.p2.es.normal.m4a",
+          "latam": "items/a1/ropa/me_lo_llevo.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/me_lo_llevo.p2.es.slow.m4a",
+            "latam": "items/a1/ropa/me_lo_llevo.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -1170,8 +1701,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/solo_miro.es.normal.m4a",
+      "latam": "items/a1/ropa/solo_miro.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/ropa/solo_miro.es.slow.m4a",
+        "latam": "items/a1/ropa/solo_miro.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/solo_miro.p0.es.normal.m4a",
+          "latam": "items/a1/ropa/solo_miro.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/solo_miro.p0.es.slow.m4a",
+            "latam": "items/a1/ropa/solo_miro.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/ropa/solo_miro.p1.es.normal.m4a",
+          "latam": "items/a1/ropa/solo_miro.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/ropa/solo_miro.p1.es.slow.m4a",
+            "latam": "items/a1/ropa/solo_miro.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -1220,8 +1774,31 @@
     "level": "A1",
     "variant": "es",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/ropa/hay_rebaja.es.normal.m4a",
+      "latam": null,
+      "slow": {
+        "es": "items/a1/ropa/hay_rebaja.es.slow.m4a",
+        "latam": null
+      },
+      "parts": [
+        {
+          "es": "items/a1/ropa/hay_rebaja.p0.es.normal.m4a",
+          "latam": null,
+          "slow": {
+            "es": "items/a1/ropa/hay_rebaja.p0.es.slow.m4a",
+            "latam": null
+          }
+        },
+        {
+          "es": "items/a1/ropa/hay_rebaja.p1.es.normal.m4a",
+          "latam": null,
+          "slow": {
+            "es": "items/a1/ropa/hay_rebaja.p1.es.slow.m4a",
+            "latam": null
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"
@@ -1270,8 +1847,31 @@
     "level": "A1",
     "variant": "latam",
     "audio": {
+      "source": "tts",
       "es": null,
-      "latam": null
+      "latam": "items/a1/ropa/hay_descuento.mx.normal.m4a",
+      "slow": {
+        "es": null,
+        "latam": "items/a1/ropa/hay_descuento.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": null,
+          "latam": "items/a1/ropa/hay_descuento.p0.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/ropa/hay_descuento.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": null,
+          "latam": "items/a1/ropa/hay_descuento.p1.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/ropa/hay_descuento.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "ropa"

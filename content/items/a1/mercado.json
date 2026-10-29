@@ -40,8 +40,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/las_manzanas.es.normal.m4a",
+      "latam": "items/a1/mercado/las_manzanas.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/las_manzanas.es.slow.m4a",
+        "latam": "items/a1/mercado/las_manzanas.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/las_manzanas.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/las_manzanas.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/las_manzanas.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/las_manzanas.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/las_manzanas.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/las_manzanas.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/las_manzanas.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/las_manzanas.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -86,8 +109,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/las_naranjas.es.normal.m4a",
+      "latam": "items/a1/mercado/las_naranjas.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/las_naranjas.es.slow.m4a",
+        "latam": "items/a1/mercado/las_naranjas.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/las_naranjas.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/las_naranjas.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/las_naranjas.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/las_naranjas.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/las_naranjas.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/las_naranjas.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/las_naranjas.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/las_naranjas.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -136,8 +182,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/los_platanos.es.normal.m4a",
+      "latam": "items/a1/mercado/los_platanos.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/los_platanos.es.slow.m4a",
+        "latam": "items/a1/mercado/los_platanos.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/los_platanos.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/los_platanos.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/los_platanos.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/los_platanos.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/los_platanos.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/los_platanos.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/los_platanos.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/los_platanos.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -182,8 +251,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/las_fresas.es.normal.m4a",
+      "latam": "items/a1/mercado/las_fresas.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/las_fresas.es.slow.m4a",
+        "latam": "items/a1/mercado/las_fresas.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/las_fresas.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/las_fresas.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/las_fresas.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/las_fresas.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/las_fresas.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/las_fresas.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/las_fresas.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/las_fresas.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -228,8 +320,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/un_kilo.es.normal.m4a",
+      "latam": "items/a1/mercado/un_kilo.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/un_kilo.es.slow.m4a",
+        "latam": "items/a1/mercado/un_kilo.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/un_kilo.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/un_kilo.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/un_kilo.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/un_kilo.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/un_kilo.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/un_kilo.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/un_kilo.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/un_kilo.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -274,8 +389,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/medio_kilo.es.normal.m4a",
+      "latam": "items/a1/mercado/medio_kilo.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/medio_kilo.es.slow.m4a",
+        "latam": "items/a1/mercado/medio_kilo.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/medio_kilo.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/medio_kilo.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/medio_kilo.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/medio_kilo.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/medio_kilo.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/medio_kilo.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/medio_kilo.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/medio_kilo.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -324,8 +462,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/me_da.es.normal.m4a",
+      "latam": "items/a1/mercado/me_da.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/me_da.es.slow.m4a",
+        "latam": "items/a1/mercado/me_da.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/me_da.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/me_da.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/me_da.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/me_da.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/me_da.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/me_da.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/me_da.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/me_da.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -370,8 +531,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/los_tomates.es.normal.m4a",
+      "latam": "items/a1/mercado/los_tomates.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/los_tomates.es.slow.m4a",
+        "latam": "items/a1/mercado/los_tomates.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/los_tomates.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/los_tomates.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/los_tomates.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/los_tomates.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/los_tomates.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/los_tomates.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/los_tomates.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/los_tomates.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -420,8 +604,31 @@
     "level": "A1",
     "variant": "es",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/las_patatas.es.normal.m4a",
+      "latam": null,
+      "slow": {
+        "es": "items/a1/mercado/las_patatas.es.slow.m4a",
+        "latam": null
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/las_patatas.p0.es.normal.m4a",
+          "latam": null,
+          "slow": {
+            "es": "items/a1/mercado/las_patatas.p0.es.slow.m4a",
+            "latam": null
+          }
+        },
+        {
+          "es": "items/a1/mercado/las_patatas.p1.es.normal.m4a",
+          "latam": null,
+          "slow": {
+            "es": "items/a1/mercado/las_patatas.p1.es.slow.m4a",
+            "latam": null
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -470,8 +677,31 @@
     "level": "A1",
     "variant": "latam",
     "audio": {
+      "source": "tts",
       "es": null,
-      "latam": null
+      "latam": "items/a1/mercado/las_papas.mx.normal.m4a",
+      "slow": {
+        "es": null,
+        "latam": "items/a1/mercado/las_papas.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": null,
+          "latam": "items/a1/mercado/las_papas.p0.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/mercado/las_papas.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": null,
+          "latam": "items/a1/mercado/las_papas.p1.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/mercado/las_papas.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -516,8 +746,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/la_cebolla.es.normal.m4a",
+      "latam": "items/a1/mercado/la_cebolla.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/la_cebolla.es.slow.m4a",
+        "latam": "items/a1/mercado/la_cebolla.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/la_cebolla.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/la_cebolla.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/la_cebolla.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/la_cebolla.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/la_cebolla.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/la_cebolla.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/la_cebolla.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/la_cebolla.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -562,8 +815,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/los_huevos.es.normal.m4a",
+      "latam": "items/a1/mercado/los_huevos.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/los_huevos.es.slow.m4a",
+        "latam": "items/a1/mercado/los_huevos.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/los_huevos.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/los_huevos.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/los_huevos.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/los_huevos.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/los_huevos.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/los_huevos.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/los_huevos.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/los_huevos.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -608,8 +884,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/un_kilo_de_tomates.es.normal.m4a",
+      "latam": "items/a1/mercado/un_kilo_de_tomates.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/un_kilo_de_tomates.es.slow.m4a",
+        "latam": "items/a1/mercado/un_kilo_de_tomates.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/un_kilo_de_tomates.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/un_kilo_de_tomates.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/un_kilo_de_tomates.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/un_kilo_de_tomates.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/un_kilo_de_tomates.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/un_kilo_de_tomates.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/un_kilo_de_tomates.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/un_kilo_de_tomates.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -654,8 +953,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/cuanto_cuesta.es.normal.m4a",
+      "latam": "items/a1/mercado/cuanto_cuesta.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/cuanto_cuesta.es.slow.m4a",
+        "latam": "items/a1/mercado/cuanto_cuesta.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/cuanto_cuesta.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/cuanto_cuesta.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/cuanto_cuesta.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/cuanto_cuesta.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/cuanto_cuesta.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/cuanto_cuesta.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/cuanto_cuesta.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/cuanto_cuesta.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -704,8 +1026,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/estan_frescos.es.normal.m4a",
+      "latam": "items/a1/mercado/estan_frescos.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/estan_frescos.es.slow.m4a",
+        "latam": "items/a1/mercado/estan_frescos.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/estan_frescos.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/estan_frescos.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/estan_frescos.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/estan_frescos.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/estan_frescos.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/estan_frescos.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/estan_frescos.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/estan_frescos.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -750,8 +1095,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/esta_fresca.es.normal.m4a",
+      "latam": "items/a1/mercado/esta_fresca.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/esta_fresca.es.slow.m4a",
+        "latam": "items/a1/mercado/esta_fresca.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/esta_fresca.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/esta_fresca.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/esta_fresca.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/esta_fresca.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/esta_fresca.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/esta_fresca.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/esta_fresca.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/esta_fresca.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -800,8 +1168,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/esta_muy_rico.es.normal.m4a",
+      "latam": "items/a1/mercado/esta_muy_rico.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/esta_muy_rico.es.slow.m4a",
+        "latam": "items/a1/mercado/esta_muy_rico.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/esta_muy_rico.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/esta_muy_rico.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/esta_muy_rico.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/esta_muy_rico.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/esta_muy_rico.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/esta_muy_rico.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/esta_muy_rico.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/esta_muy_rico.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -832,8 +1223,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/quiero.es.normal.m4a",
+      "latam": "items/a1/mercado/quiero.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/quiero.es.slow.m4a",
+        "latam": "items/a1/mercado/quiero.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "mercado"
@@ -864,8 +1261,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/quisiera.es.normal.m4a",
+      "latam": "items/a1/mercado/quisiera.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/quisiera.es.slow.m4a",
+        "latam": "items/a1/mercado/quisiera.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "mercado"
@@ -910,8 +1313,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/algo_mas.es.normal.m4a",
+      "latam": "items/a1/mercado/algo_mas.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/algo_mas.es.slow.m4a",
+        "latam": "items/a1/mercado/algo_mas.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/algo_mas.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/algo_mas.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/algo_mas.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/algo_mas.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/algo_mas.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/algo_mas.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/algo_mas.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/algo_mas.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -964,8 +1390,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/eso_es_todo.es.normal.m4a",
+      "latam": "items/a1/mercado/eso_es_todo.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/eso_es_todo.es.slow.m4a",
+        "latam": "items/a1/mercado/eso_es_todo.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/eso_es_todo.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/eso_es_todo.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/eso_es_todo.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/eso_es_todo.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/eso_es_todo.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/eso_es_todo.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/eso_es_todo.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/eso_es_todo.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/eso_es_todo.p2.es.normal.m4a",
+          "latam": "items/a1/mercado/eso_es_todo.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/eso_es_todo.p2.es.slow.m4a",
+            "latam": "items/a1/mercado/eso_es_todo.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -1018,8 +1475,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/me_da_un_kilo.es.normal.m4a",
+      "latam": "items/a1/mercado/me_da_un_kilo.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/me_da_un_kilo.es.slow.m4a",
+        "latam": "items/a1/mercado/me_da_un_kilo.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/me_da_un_kilo.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/me_da_un_kilo.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/me_da_un_kilo.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/me_da_un_kilo.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/me_da_un_kilo.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/me_da_un_kilo.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/me_da_un_kilo.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/me_da_un_kilo.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/me_da_un_kilo.p2.es.normal.m4a",
+          "latam": "items/a1/mercado/me_da_un_kilo.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/me_da_un_kilo.p2.es.slow.m4a",
+            "latam": "items/a1/mercado/me_da_un_kilo.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -1064,8 +1552,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/medio_kilo_de_fresas.es.normal.m4a",
+      "latam": "items/a1/mercado/medio_kilo_de_fresas.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/medio_kilo_de_fresas.es.slow.m4a",
+        "latam": "items/a1/mercado/medio_kilo_de_fresas.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/medio_kilo_de_fresas.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/medio_kilo_de_fresas.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/medio_kilo_de_fresas.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/medio_kilo_de_fresas.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/medio_kilo_de_fresas.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/medio_kilo_de_fresas.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/medio_kilo_de_fresas.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/medio_kilo_de_fresas.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -1114,8 +1625,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/hay_fresas.es.normal.m4a",
+      "latam": "items/a1/mercado/hay_fresas.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/hay_fresas.es.slow.m4a",
+        "latam": "items/a1/mercado/hay_fresas.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/hay_fresas.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/hay_fresas.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/hay_fresas.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/hay_fresas.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/hay_fresas.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/hay_fresas.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/hay_fresas.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/hay_fresas.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -1160,8 +1694,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/no_hay.es.normal.m4a",
+      "latam": "items/a1/mercado/no_hay.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/no_hay.es.slow.m4a",
+        "latam": "items/a1/mercado/no_hay.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/no_hay.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/no_hay.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/no_hay.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/no_hay.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/no_hay.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/no_hay.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/no_hay.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/no_hay.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -1214,8 +1771,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/cuanto_es_todo.es.normal.m4a",
+      "latam": "items/a1/mercado/cuanto_es_todo.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/cuanto_es_todo.es.slow.m4a",
+        "latam": "items/a1/mercado/cuanto_es_todo.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/cuanto_es_todo.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/cuanto_es_todo.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/cuanto_es_todo.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/cuanto_es_todo.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/cuanto_es_todo.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/cuanto_es_todo.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/cuanto_es_todo.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/cuanto_es_todo.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/cuanto_es_todo.p2.es.normal.m4a",
+          "latam": "items/a1/mercado/cuanto_es_todo.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/cuanto_es_todo.p2.es.slow.m4a",
+            "latam": "items/a1/mercado/cuanto_es_todo.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -1260,8 +1848,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/aqui_tiene.es.normal.m4a",
+      "latam": "items/a1/mercado/aqui_tiene.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/aqui_tiene.es.slow.m4a",
+        "latam": "items/a1/mercado/aqui_tiene.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/aqui_tiene.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/aqui_tiene.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/aqui_tiene.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/aqui_tiene.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/aqui_tiene.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/aqui_tiene.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/aqui_tiene.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/aqui_tiene.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"
@@ -1306,8 +1917,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/mercado/muchas_gracias.es.normal.m4a",
+      "latam": "items/a1/mercado/muchas_gracias.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/mercado/muchas_gracias.es.slow.m4a",
+        "latam": "items/a1/mercado/muchas_gracias.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/mercado/muchas_gracias.p0.es.normal.m4a",
+          "latam": "items/a1/mercado/muchas_gracias.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/muchas_gracias.p0.es.slow.m4a",
+            "latam": "items/a1/mercado/muchas_gracias.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/mercado/muchas_gracias.p1.es.normal.m4a",
+          "latam": "items/a1/mercado/muchas_gracias.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/muchas_gracias.p1.es.slow.m4a",
+            "latam": "items/a1/mercado/muchas_gracias.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "mercado"

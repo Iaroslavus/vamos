@@ -40,8 +40,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tienda/tiene_pan.es.normal.m4a",
+      "latam": "items/a1/tienda/tiene_pan.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tienda/tiene_pan.es.slow.m4a",
+        "latam": "items/a1/tienda/tiene_pan.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tienda/tiene_pan.p0.es.normal.m4a",
+          "latam": "items/a1/tienda/tiene_pan.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/tiene_pan.p0.es.slow.m4a",
+            "latam": "items/a1/tienda/tiene_pan.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tienda/tiene_pan.p1.es.normal.m4a",
+          "latam": "items/a1/tienda/tiene_pan.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/tiene_pan.p1.es.slow.m4a",
+            "latam": "items/a1/tienda/tiene_pan.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "shop"
@@ -94,8 +117,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tienda/hay_leche.es.normal.m4a",
+      "latam": "items/a1/tienda/hay_leche.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tienda/hay_leche.es.slow.m4a",
+        "latam": "items/a1/tienda/hay_leche.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tienda/hay_leche.p0.es.normal.m4a",
+          "latam": "items/a1/tienda/hay_leche.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/hay_leche.p0.es.slow.m4a",
+            "latam": "items/a1/tienda/hay_leche.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tienda/hay_leche.p1.es.normal.m4a",
+          "latam": "items/a1/tienda/hay_leche.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/hay_leche.p1.es.slow.m4a",
+            "latam": "items/a1/tienda/hay_leche.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "shop"
@@ -140,8 +186,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tienda/si_hay.es.normal.m4a",
+      "latam": "items/a1/tienda/si_hay.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tienda/si_hay.es.slow.m4a",
+        "latam": "items/a1/tienda/si_hay.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tienda/si_hay.p0.es.normal.m4a",
+          "latam": "items/a1/tienda/si_hay.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/si_hay.p0.es.slow.m4a",
+            "latam": "items/a1/tienda/si_hay.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tienda/si_hay.p1.es.normal.m4a",
+          "latam": "items/a1/tienda/si_hay.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/si_hay.p1.es.slow.m4a",
+            "latam": "items/a1/tienda/si_hay.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "shop"
@@ -186,8 +255,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tienda/no_hay.es.normal.m4a",
+      "latam": "items/a1/tienda/no_hay.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tienda/no_hay.es.slow.m4a",
+        "latam": "items/a1/tienda/no_hay.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tienda/no_hay.p0.es.normal.m4a",
+          "latam": "items/a1/tienda/no_hay.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/no_hay.p0.es.slow.m4a",
+            "latam": "items/a1/tienda/no_hay.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tienda/no_hay.p1.es.normal.m4a",
+          "latam": "items/a1/tienda/no_hay.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/no_hay.p1.es.slow.m4a",
+            "latam": "items/a1/tienda/no_hay.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "shop"
@@ -218,8 +310,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tienda/esto.es.normal.m4a",
+      "latam": "items/a1/tienda/esto.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tienda/esto.es.slow.m4a",
+        "latam": "items/a1/tienda/esto.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "shop"
@@ -250,8 +348,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tienda/eso.es.normal.m4a",
+      "latam": "items/a1/tienda/eso.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tienda/eso.es.slow.m4a",
+        "latam": "items/a1/tienda/eso.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "shop"
@@ -300,8 +404,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tienda/quiero_esto.es.normal.m4a",
+      "latam": "items/a1/tienda/quiero_esto.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tienda/quiero_esto.es.slow.m4a",
+        "latam": "items/a1/tienda/quiero_esto.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tienda/quiero_esto.p0.es.normal.m4a",
+          "latam": "items/a1/tienda/quiero_esto.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/quiero_esto.p0.es.slow.m4a",
+            "latam": "items/a1/tienda/quiero_esto.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tienda/quiero_esto.p1.es.normal.m4a",
+          "latam": "items/a1/tienda/quiero_esto.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/quiero_esto.p1.es.slow.m4a",
+            "latam": "items/a1/tienda/quiero_esto.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "shop"
@@ -346,8 +473,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tienda/una_bolsa.es.normal.m4a",
+      "latam": "items/a1/tienda/una_bolsa.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tienda/una_bolsa.es.slow.m4a",
+        "latam": "items/a1/tienda/una_bolsa.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tienda/una_bolsa.p0.es.normal.m4a",
+          "latam": "items/a1/tienda/una_bolsa.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/una_bolsa.p0.es.slow.m4a",
+            "latam": "items/a1/tienda/una_bolsa.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tienda/una_bolsa.p1.es.normal.m4a",
+          "latam": "items/a1/tienda/una_bolsa.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/una_bolsa.p1.es.slow.m4a",
+            "latam": "items/a1/tienda/una_bolsa.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "shop"
@@ -392,8 +542,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tienda/con_tarjeta.es.normal.m4a",
+      "latam": "items/a1/tienda/con_tarjeta.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tienda/con_tarjeta.es.slow.m4a",
+        "latam": "items/a1/tienda/con_tarjeta.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tienda/con_tarjeta.p0.es.normal.m4a",
+          "latam": "items/a1/tienda/con_tarjeta.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/con_tarjeta.p0.es.slow.m4a",
+            "latam": "items/a1/tienda/con_tarjeta.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tienda/con_tarjeta.p1.es.normal.m4a",
+          "latam": "items/a1/tienda/con_tarjeta.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/con_tarjeta.p1.es.slow.m4a",
+            "latam": "items/a1/tienda/con_tarjeta.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "shop",
@@ -439,8 +612,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tienda/en_efectivo.es.normal.m4a",
+      "latam": "items/a1/tienda/en_efectivo.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tienda/en_efectivo.es.slow.m4a",
+        "latam": "items/a1/tienda/en_efectivo.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tienda/en_efectivo.p0.es.normal.m4a",
+          "latam": "items/a1/tienda/en_efectivo.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/en_efectivo.p0.es.slow.m4a",
+            "latam": "items/a1/tienda/en_efectivo.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tienda/en_efectivo.p1.es.normal.m4a",
+          "latam": "items/a1/tienda/en_efectivo.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/en_efectivo.p1.es.slow.m4a",
+            "latam": "items/a1/tienda/en_efectivo.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "shop",
@@ -486,8 +682,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tienda/puedo_pagar.es.normal.m4a",
+      "latam": "items/a1/tienda/puedo_pagar.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tienda/puedo_pagar.es.slow.m4a",
+        "latam": "items/a1/tienda/puedo_pagar.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tienda/puedo_pagar.p0.es.normal.m4a",
+          "latam": "items/a1/tienda/puedo_pagar.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/puedo_pagar.p0.es.slow.m4a",
+            "latam": "items/a1/tienda/puedo_pagar.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tienda/puedo_pagar.p1.es.normal.m4a",
+          "latam": "items/a1/tienda/puedo_pagar.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/puedo_pagar.p1.es.slow.m4a",
+            "latam": "items/a1/tienda/puedo_pagar.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "shop",
@@ -537,8 +756,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tienda/el_ticket.es.normal.m4a",
+      "latam": "items/a1/tienda/el_ticket.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tienda/el_ticket.es.slow.m4a",
+        "latam": "items/a1/tienda/el_ticket.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tienda/el_ticket.p0.es.normal.m4a",
+          "latam": "items/a1/tienda/el_ticket.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/el_ticket.p0.es.slow.m4a",
+            "latam": "items/a1/tienda/el_ticket.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tienda/el_ticket.p1.es.normal.m4a",
+          "latam": "items/a1/tienda/el_ticket.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tienda/el_ticket.p1.es.slow.m4a",
+            "latam": "items/a1/tienda/el_ticket.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "shop",

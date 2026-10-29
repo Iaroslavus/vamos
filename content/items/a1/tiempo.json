@@ -40,8 +40,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/el_lunes.es.normal.m4a",
+      "latam": "items/a1/tiempo/el_lunes.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/el_lunes.es.slow.m4a",
+        "latam": "items/a1/tiempo/el_lunes.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/el_lunes.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/el_lunes.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/el_lunes.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/el_lunes.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/el_lunes.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/el_lunes.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/el_lunes.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/el_lunes.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -86,8 +109,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/el_martes.es.normal.m4a",
+      "latam": "items/a1/tiempo/el_martes.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/el_martes.es.slow.m4a",
+        "latam": "items/a1/tiempo/el_martes.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/el_martes.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/el_martes.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/el_martes.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/el_martes.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/el_martes.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/el_martes.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/el_martes.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/el_martes.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -132,8 +178,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/el_miercoles.es.normal.m4a",
+      "latam": "items/a1/tiempo/el_miercoles.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/el_miercoles.es.slow.m4a",
+        "latam": "items/a1/tiempo/el_miercoles.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/el_miercoles.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/el_miercoles.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/el_miercoles.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/el_miercoles.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/el_miercoles.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/el_miercoles.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/el_miercoles.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/el_miercoles.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -178,8 +247,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/el_jueves.es.normal.m4a",
+      "latam": "items/a1/tiempo/el_jueves.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/el_jueves.es.slow.m4a",
+        "latam": "items/a1/tiempo/el_jueves.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/el_jueves.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/el_jueves.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/el_jueves.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/el_jueves.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/el_jueves.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/el_jueves.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/el_jueves.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/el_jueves.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -224,8 +316,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/el_viernes.es.normal.m4a",
+      "latam": "items/a1/tiempo/el_viernes.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/el_viernes.es.slow.m4a",
+        "latam": "items/a1/tiempo/el_viernes.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/el_viernes.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/el_viernes.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/el_viernes.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/el_viernes.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/el_viernes.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/el_viernes.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/el_viernes.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/el_viernes.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -274,8 +389,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/el_sabado.es.normal.m4a",
+      "latam": "items/a1/tiempo/el_sabado.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/el_sabado.es.slow.m4a",
+        "latam": "items/a1/tiempo/el_sabado.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/el_sabado.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/el_sabado.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/el_sabado.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/el_sabado.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/el_sabado.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/el_sabado.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/el_sabado.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/el_sabado.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -320,8 +458,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/el_domingo.es.normal.m4a",
+      "latam": "items/a1/tiempo/el_domingo.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/el_domingo.es.slow.m4a",
+        "latam": "items/a1/tiempo/el_domingo.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/el_domingo.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/el_domingo.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/el_domingo.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/el_domingo.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/el_domingo.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/el_domingo.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/el_domingo.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/el_domingo.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -374,8 +535,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/que_hora_es.es.normal.m4a",
+      "latam": "items/a1/tiempo/que_hora_es.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/que_hora_es.es.slow.m4a",
+        "latam": "items/a1/tiempo/que_hora_es.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/que_hora_es.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/que_hora_es.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/que_hora_es.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/que_hora_es.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/que_hora_es.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/que_hora_es.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/que_hora_es.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/que_hora_es.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/que_hora_es.p2.es.normal.m4a",
+          "latam": "items/a1/tiempo/que_hora_es.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/que_hora_es.p2.es.slow.m4a",
+            "latam": "items/a1/tiempo/que_hora_es.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -424,8 +616,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/es_la_una.es.normal.m4a",
+      "latam": "items/a1/tiempo/es_la_una.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/es_la_una.es.slow.m4a",
+        "latam": "items/a1/tiempo/es_la_una.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/es_la_una.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/es_la_una.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/es_la_una.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/es_la_una.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/es_la_una.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/es_la_una.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/es_la_una.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/es_la_una.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -478,8 +693,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/son_las_dos.es.normal.m4a",
+      "latam": "items/a1/tiempo/son_las_dos.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/son_las_dos.es.slow.m4a",
+        "latam": "items/a1/tiempo/son_las_dos.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/son_las_dos.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/son_las_dos.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/son_las_dos.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/son_las_dos.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/son_las_dos.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/son_las_dos.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/son_las_dos.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/son_las_dos.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/son_las_dos.p2.es.normal.m4a",
+          "latam": "items/a1/tiempo/son_las_dos.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/son_las_dos.p2.es.slow.m4a",
+            "latam": "items/a1/tiempo/son_las_dos.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -532,8 +778,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/son_las_tres.es.normal.m4a",
+      "latam": "items/a1/tiempo/son_las_tres.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/son_las_tres.es.slow.m4a",
+        "latam": "items/a1/tiempo/son_las_tres.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/son_las_tres.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/son_las_tres.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/son_las_tres.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/son_las_tres.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/son_las_tres.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/son_las_tres.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/son_las_tres.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/son_las_tres.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/son_las_tres.p2.es.normal.m4a",
+          "latam": "items/a1/tiempo/son_las_tres.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/son_las_tres.p2.es.slow.m4a",
+            "latam": "items/a1/tiempo/son_las_tres.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -582,8 +859,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/y_media.es.normal.m4a",
+      "latam": "items/a1/tiempo/y_media.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/y_media.es.slow.m4a",
+        "latam": "items/a1/tiempo/y_media.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/y_media.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/y_media.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/y_media.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/y_media.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/y_media.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/y_media.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/y_media.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/y_media.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -632,8 +932,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/y_cuarto.es.normal.m4a",
+      "latam": "items/a1/tiempo/y_cuarto.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/y_cuarto.es.slow.m4a",
+        "latam": "items/a1/tiempo/y_cuarto.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/y_cuarto.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/y_cuarto.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/y_cuarto.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/y_cuarto.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/y_cuarto.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/y_cuarto.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/y_cuarto.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/y_cuarto.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -682,8 +1005,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/menos_cuarto.es.normal.m4a",
+      "latam": "items/a1/tiempo/menos_cuarto.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/menos_cuarto.es.slow.m4a",
+        "latam": "items/a1/tiempo/menos_cuarto.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/menos_cuarto.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/menos_cuarto.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/menos_cuarto.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/menos_cuarto.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/menos_cuarto.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/menos_cuarto.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/menos_cuarto.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/menos_cuarto.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -710,8 +1056,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/hoy.es.normal.m4a",
+      "latam": "items/a1/tiempo/hoy.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/hoy.es.slow.m4a",
+        "latam": "items/a1/tiempo/hoy.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "tiempo"
@@ -742,8 +1094,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/manana.es.normal.m4a",
+      "latam": "items/a1/tiempo/manana.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/manana.es.slow.m4a",
+        "latam": "items/a1/tiempo/manana.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "tiempo"
@@ -800,8 +1158,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/hoy_es_lunes.es.normal.m4a",
+      "latam": "items/a1/tiempo/hoy_es_lunes.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/hoy_es_lunes.es.slow.m4a",
+        "latam": "items/a1/tiempo/hoy_es_lunes.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/hoy_es_lunes.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/hoy_es_lunes.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/hoy_es_lunes.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/hoy_es_lunes.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/hoy_es_lunes.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/hoy_es_lunes.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/hoy_es_lunes.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/hoy_es_lunes.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/hoy_es_lunes.p2.es.normal.m4a",
+          "latam": "items/a1/tiempo/hoy_es_lunes.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/hoy_es_lunes.p2.es.slow.m4a",
+            "latam": "items/a1/tiempo/hoy_es_lunes.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -854,8 +1243,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/manana_es_martes.es.normal.m4a",
+      "latam": "items/a1/tiempo/manana_es_martes.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/manana_es_martes.es.slow.m4a",
+        "latam": "items/a1/tiempo/manana_es_martes.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/manana_es_martes.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/manana_es_martes.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/manana_es_martes.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/manana_es_martes.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/manana_es_martes.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/manana_es_martes.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/manana_es_martes.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/manana_es_martes.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/manana_es_martes.p2.es.normal.m4a",
+          "latam": "items/a1/tiempo/manana_es_martes.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/manana_es_martes.p2.es.slow.m4a",
+            "latam": "items/a1/tiempo/manana_es_martes.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -900,8 +1320,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/por_la_manana.es.normal.m4a",
+      "latam": "items/a1/tiempo/por_la_manana.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/por_la_manana.es.slow.m4a",
+        "latam": "items/a1/tiempo/por_la_manana.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/por_la_manana.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/por_la_manana.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/por_la_manana.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/por_la_manana.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/por_la_manana.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/por_la_manana.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/por_la_manana.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/por_la_manana.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -950,8 +1393,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/por_la_tarde.es.normal.m4a",
+      "latam": "items/a1/tiempo/por_la_tarde.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/por_la_tarde.es.slow.m4a",
+        "latam": "items/a1/tiempo/por_la_tarde.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/por_la_tarde.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/por_la_tarde.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/por_la_tarde.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/por_la_tarde.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/por_la_tarde.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/por_la_tarde.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/por_la_tarde.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/por_la_tarde.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -996,8 +1462,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/por_la_noche.es.normal.m4a",
+      "latam": "items/a1/tiempo/por_la_noche.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/por_la_noche.es.slow.m4a",
+        "latam": "items/a1/tiempo/por_la_noche.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/por_la_noche.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/por_la_noche.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/por_la_noche.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/por_la_noche.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/por_la_noche.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/por_la_noche.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/por_la_noche.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/por_la_noche.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -1050,8 +1539,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/a_que_hora.es.normal.m4a",
+      "latam": "items/a1/tiempo/a_que_hora.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/a_que_hora.es.slow.m4a",
+        "latam": "items/a1/tiempo/a_que_hora.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/a_que_hora.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/a_que_hora.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/a_que_hora.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/a_que_hora.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/a_que_hora.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/a_que_hora.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/a_que_hora.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/a_que_hora.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/a_que_hora.p2.es.normal.m4a",
+          "latam": "items/a1/tiempo/a_que_hora.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/a_que_hora.p2.es.slow.m4a",
+            "latam": "items/a1/tiempo/a_que_hora.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -1100,8 +1620,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/a_las_diez.es.normal.m4a",
+      "latam": "items/a1/tiempo/a_las_diez.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/a_las_diez.es.slow.m4a",
+        "latam": "items/a1/tiempo/a_las_diez.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/a_las_diez.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/a_las_diez.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/a_las_diez.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/a_las_diez.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/a_las_diez.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/a_las_diez.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/a_las_diez.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/a_las_diez.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -1146,8 +1689,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/a_la_una.es.normal.m4a",
+      "latam": "items/a1/tiempo/a_la_una.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/a_la_una.es.slow.m4a",
+        "latam": "items/a1/tiempo/a_la_una.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/a_la_una.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/a_la_una.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/a_la_una.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/a_la_una.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/a_la_una.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/a_la_una.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/a_la_una.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/a_la_una.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -1192,8 +1758,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/el_sabado_por_la_manana.es.normal.m4a",
+      "latam": "items/a1/tiempo/el_sabado_por_la_manana.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/el_sabado_por_la_manana.es.slow.m4a",
+        "latam": "items/a1/tiempo/el_sabado_por_la_manana.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/el_sabado_por_la_manana.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/el_sabado_por_la_manana.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/el_sabado_por_la_manana.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/el_sabado_por_la_manana.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/el_sabado_por_la_manana.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/el_sabado_por_la_manana.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/el_sabado_por_la_manana.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/el_sabado_por_la_manana.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -1238,8 +1827,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/quedamos_a_las_cinco.es.normal.m4a",
+      "latam": "items/a1/tiempo/quedamos_a_las_cinco.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/quedamos_a_las_cinco.es.slow.m4a",
+        "latam": "items/a1/tiempo/quedamos_a_las_cinco.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/quedamos_a_las_cinco.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/quedamos_a_las_cinco.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/quedamos_a_las_cinco.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/quedamos_a_las_cinco.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/quedamos_a_las_cinco.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/quedamos_a_las_cinco.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/quedamos_a_las_cinco.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/quedamos_a_las_cinco.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"
@@ -1270,8 +1882,14 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/vale.es.normal.m4a",
+      "latam": "items/a1/tiempo/vale.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/vale.es.slow.m4a",
+        "latam": "items/a1/tiempo/vale.mx.slow.m4a"
+      },
+      "parts": []
     },
     "tags": [
       "tiempo"
@@ -1316,8 +1934,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/tiempo/hasta_manana.es.normal.m4a",
+      "latam": "items/a1/tiempo/hasta_manana.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/tiempo/hasta_manana.es.slow.m4a",
+        "latam": "items/a1/tiempo/hasta_manana.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/tiempo/hasta_manana.p0.es.normal.m4a",
+          "latam": "items/a1/tiempo/hasta_manana.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/hasta_manana.p0.es.slow.m4a",
+            "latam": "items/a1/tiempo/hasta_manana.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/tiempo/hasta_manana.p1.es.normal.m4a",
+          "latam": "items/a1/tiempo/hasta_manana.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/tiempo/hasta_manana.p1.es.slow.m4a",
+            "latam": "items/a1/tiempo/hasta_manana.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "tiempo"

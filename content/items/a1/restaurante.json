@@ -44,8 +44,39 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/restaurante/mesa.es.normal.m4a",
+      "latam": "items/a1/restaurante/mesa.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/restaurante/mesa.es.slow.m4a",
+        "latam": "items/a1/restaurante/mesa.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/restaurante/mesa.p0.es.normal.m4a",
+          "latam": "items/a1/restaurante/mesa.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/mesa.p0.es.slow.m4a",
+            "latam": "items/a1/restaurante/mesa.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/restaurante/mesa.p1.es.normal.m4a",
+          "latam": "items/a1/restaurante/mesa.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/mesa.p1.es.slow.m4a",
+            "latam": "items/a1/restaurante/mesa.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/restaurante/mesa.p2.es.normal.m4a",
+          "latam": "items/a1/restaurante/mesa.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/mesa.p2.es.slow.m4a",
+            "latam": "items/a1/restaurante/mesa.p2.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "restaurant"
@@ -98,8 +129,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/restaurante/reservar.es.normal.m4a",
+      "latam": "items/a1/restaurante/reservar.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/restaurante/reservar.es.slow.m4a",
+        "latam": "items/a1/restaurante/reservar.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/restaurante/reservar.p0.es.normal.m4a",
+          "latam": "items/a1/restaurante/reservar.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/reservar.p0.es.slow.m4a",
+            "latam": "items/a1/restaurante/reservar.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/restaurante/reservar.p1.es.normal.m4a",
+          "latam": "items/a1/restaurante/reservar.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/reservar.p1.es.slow.m4a",
+            "latam": "items/a1/restaurante/reservar.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "restaurant"
@@ -144,8 +198,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/restaurante/esta_noche.es.normal.m4a",
+      "latam": "items/a1/restaurante/esta_noche.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/restaurante/esta_noche.es.slow.m4a",
+        "latam": "items/a1/restaurante/esta_noche.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/restaurante/esta_noche.p0.es.normal.m4a",
+          "latam": "items/a1/restaurante/esta_noche.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/esta_noche.p0.es.slow.m4a",
+            "latam": "items/a1/restaurante/esta_noche.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/restaurante/esta_noche.p1.es.normal.m4a",
+          "latam": "items/a1/restaurante/esta_noche.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/esta_noche.p1.es.slow.m4a",
+            "latam": "items/a1/restaurante/esta_noche.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "restaurant"
@@ -190,8 +267,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/restaurante/para_dos.es.normal.m4a",
+      "latam": "items/a1/restaurante/para_dos.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/restaurante/para_dos.es.slow.m4a",
+        "latam": "items/a1/restaurante/para_dos.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/restaurante/para_dos.p0.es.normal.m4a",
+          "latam": "items/a1/restaurante/para_dos.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/para_dos.p0.es.slow.m4a",
+            "latam": "items/a1/restaurante/para_dos.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/restaurante/para_dos.p1.es.normal.m4a",
+          "latam": "items/a1/restaurante/para_dos.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/para_dos.p1.es.slow.m4a",
+            "latam": "items/a1/restaurante/para_dos.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "restaurant"
@@ -240,8 +340,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/restaurante/a_mi_nombre.es.normal.m4a",
+      "latam": "items/a1/restaurante/a_mi_nombre.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/restaurante/a_mi_nombre.es.slow.m4a",
+        "latam": "items/a1/restaurante/a_mi_nombre.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/restaurante/a_mi_nombre.p0.es.normal.m4a",
+          "latam": "items/a1/restaurante/a_mi_nombre.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/a_mi_nombre.p0.es.slow.m4a",
+            "latam": "items/a1/restaurante/a_mi_nombre.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/restaurante/a_mi_nombre.p1.es.normal.m4a",
+          "latam": "items/a1/restaurante/a_mi_nombre.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/a_mi_nombre.p1.es.slow.m4a",
+            "latam": "items/a1/restaurante/a_mi_nombre.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "restaurant"
@@ -290,8 +413,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/restaurante/a_las_ocho.es.normal.m4a",
+      "latam": "items/a1/restaurante/a_las_ocho.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/restaurante/a_las_ocho.es.slow.m4a",
+        "latam": "items/a1/restaurante/a_las_ocho.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/restaurante/a_las_ocho.p0.es.normal.m4a",
+          "latam": "items/a1/restaurante/a_las_ocho.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/a_las_ocho.p0.es.slow.m4a",
+            "latam": "items/a1/restaurante/a_las_ocho.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/restaurante/a_las_ocho.p1.es.normal.m4a",
+          "latam": "items/a1/restaurante/a_las_ocho.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/a_las_ocho.p1.es.slow.m4a",
+            "latam": "items/a1/restaurante/a_las_ocho.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "restaurant"
@@ -340,8 +486,31 @@
     "level": "A1",
     "variant": "es",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/restaurante/la_carta.es.normal.m4a",
+      "latam": null,
+      "slow": {
+        "es": "items/a1/restaurante/la_carta.es.slow.m4a",
+        "latam": null
+      },
+      "parts": [
+        {
+          "es": "items/a1/restaurante/la_carta.p0.es.normal.m4a",
+          "latam": null,
+          "slow": {
+            "es": "items/a1/restaurante/la_carta.p0.es.slow.m4a",
+            "latam": null
+          }
+        },
+        {
+          "es": "items/a1/restaurante/la_carta.p1.es.normal.m4a",
+          "latam": null,
+          "slow": {
+            "es": "items/a1/restaurante/la_carta.p1.es.slow.m4a",
+            "latam": null
+          }
+        }
+      ]
     },
     "tags": [
       "restaurant"
@@ -390,8 +559,31 @@
     "level": "A1",
     "variant": "latam",
     "audio": {
+      "source": "tts",
       "es": null,
-      "latam": null
+      "latam": "items/a1/restaurante/el_menu.mx.normal.m4a",
+      "slow": {
+        "es": null,
+        "latam": "items/a1/restaurante/el_menu.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": null,
+          "latam": "items/a1/restaurante/el_menu.p0.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/restaurante/el_menu.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": null,
+          "latam": "items/a1/restaurante/el_menu.p1.mx.normal.m4a",
+          "slow": {
+            "es": null,
+            "latam": "items/a1/restaurante/el_menu.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "restaurant"
@@ -440,8 +632,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/restaurante/para_mi.es.normal.m4a",
+      "latam": "items/a1/restaurante/para_mi.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/restaurante/para_mi.es.slow.m4a",
+        "latam": "items/a1/restaurante/para_mi.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/restaurante/para_mi.p0.es.normal.m4a",
+          "latam": "items/a1/restaurante/para_mi.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/para_mi.p0.es.slow.m4a",
+            "latam": "items/a1/restaurante/para_mi.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/restaurante/para_mi.p1.es.normal.m4a",
+          "latam": "items/a1/restaurante/para_mi.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/para_mi.p1.es.slow.m4a",
+            "latam": "items/a1/restaurante/para_mi.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "restaurant"
@@ -486,8 +701,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/restaurante/sin_gluten.es.normal.m4a",
+      "latam": "items/a1/restaurante/sin_gluten.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/restaurante/sin_gluten.es.slow.m4a",
+        "latam": "items/a1/restaurante/sin_gluten.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/restaurante/sin_gluten.p0.es.normal.m4a",
+          "latam": "items/a1/restaurante/sin_gluten.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/sin_gluten.p0.es.slow.m4a",
+            "latam": "items/a1/restaurante/sin_gluten.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/restaurante/sin_gluten.p1.es.normal.m4a",
+          "latam": "items/a1/restaurante/sin_gluten.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/sin_gluten.p1.es.slow.m4a",
+            "latam": "items/a1/restaurante/sin_gluten.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "restaurant",
@@ -537,8 +775,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/restaurante/alergia.es.normal.m4a",
+      "latam": "items/a1/restaurante/alergia.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/restaurante/alergia.es.slow.m4a",
+        "latam": "items/a1/restaurante/alergia.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/restaurante/alergia.p0.es.normal.m4a",
+          "latam": "items/a1/restaurante/alergia.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/alergia.p0.es.slow.m4a",
+            "latam": "items/a1/restaurante/alergia.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/restaurante/alergia.p1.es.normal.m4a",
+          "latam": "items/a1/restaurante/alergia.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/alergia.p1.es.slow.m4a",
+            "latam": "items/a1/restaurante/alergia.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "restaurant",
@@ -592,8 +853,31 @@
     "level": "A1",
     "variant": "both",
     "audio": {
-      "es": null,
-      "latam": null
+      "source": "tts",
+      "es": "items/a1/restaurante/fructos.es.normal.m4a",
+      "latam": "items/a1/restaurante/fructos.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/restaurante/fructos.es.slow.m4a",
+        "latam": "items/a1/restaurante/fructos.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/restaurante/fructos.p0.es.normal.m4a",
+          "latam": "items/a1/restaurante/fructos.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/fructos.p0.es.slow.m4a",
+            "latam": "items/a1/restaurante/fructos.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/restaurante/fructos.p1.es.normal.m4a",
+          "latam": "items/a1/restaurante/fructos.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/fructos.p1.es.slow.m4a",
+            "latam": "items/a1/restaurante/fructos.p1.mx.slow.m4a"
+          }
+        }
+      ]
     },
     "tags": [
       "restaurant",
