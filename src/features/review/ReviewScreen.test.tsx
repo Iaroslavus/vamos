@@ -5,7 +5,7 @@ import { I18nextProvider } from 'react-i18next';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import ReviewScreen from '../../../app/(lesson)/review';
-import { playLessonAudio } from '@/features/audio/playback';
+import { play } from '@/features/audio/playback';
 import { useLessonStore } from '@/features/lesson/store';
 import { ProgressProvider } from '@/features/progress/ProgressProvider';
 import type { ProgressRepository } from '@/features/progress/types';
@@ -58,6 +58,7 @@ jest.mock('@/lib/supabase', () => ({
 jest.mock('@/features/audio/playback', () => ({
   NORMAL_RATE: 1,
   SLOW_RATE: 0.7,
+  play: jest.fn(() => Promise.resolve('file')),
   playLessonAudio: jest.fn(() => Promise.resolve('speech')),
   stopLessonAudio: jest.fn(() => Promise.resolve()),
 }));
@@ -152,7 +153,7 @@ describe('ReviewScreen', () => {
     readFolders.mockReset();
     recordRating.mockClear();
     awardXp.mockClear();
-    (playLessonAudio as jest.Mock).mockClear();
+    jest.mocked(play).mockClear();
     (Haptics.impactAsync as jest.Mock).mockClear();
   });
 
@@ -166,7 +167,11 @@ describe('ReviewScreen', () => {
     await startCards();
 
     expect(await screen.findByText('hola')).toBeTruthy();
-    expect(playLessonAudio).toHaveBeenCalledWith({ text: 'hola', audio: 'a1/hola.mp3' });
+    expect(play).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'hola.hola', es: 'hola' }),
+      'normal',
+      'es',
+    );
 
     fireEvent.press(screen.getByText('Показать ответ'));
     expect(await screen.findByText('привет')).toBeTruthy();
@@ -201,11 +206,15 @@ describe('ReviewScreen', () => {
     await startCards();
 
     expect(await screen.findByText('спасибо')).toBeTruthy();
-    expect(playLessonAudio).not.toHaveBeenCalled();
+    expect(play).not.toHaveBeenCalled();
 
     fireEvent.press(screen.getByText('Показать ответ'));
     expect(await screen.findByText('gracias')).toBeTruthy();
-    expect(playLessonAudio).toHaveBeenCalledWith({ text: 'gracias', audio: 'a1/gracias.mp3' });
+    expect(play).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'hola.gracias', es: 'gracias' }),
+      'normal',
+      'es',
+    );
   });
 
   it('awards 5 XP through the progress repository after 10 cards', async () => {

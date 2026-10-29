@@ -5,10 +5,11 @@ import { StyleSheet, View } from 'react-native';
 import { Button } from '@/components/Button';
 import { ProgressBar } from '@/components/ProgressBar';
 import { Text } from '@/components/Text';
-import { playLessonAudio, stopLessonAudio } from '@/features/audio/playback';
+import { play, stopLessonAudio } from '@/features/audio/playback';
 import { useAudioPreference } from '@/features/audio/preference';
-import { selectClip, type AudioPreference } from '@/features/audio/select';
+import type { AudioPreference } from '@/features/audio/select';
 import { getItem } from '@/features/content/loader';
+import { blankAudio } from '@/features/content/schema';
 import type { ReviewRating } from '@/features/review/fsrs';
 import { colors, space } from '@/theme/tokens';
 
@@ -39,7 +40,6 @@ export function ReviewStudy({
 }: ReviewStudyProps) {
   const { t } = useTranslation();
   const preference = useAudioPreference();
-  const audio = reviewClip(card.itemId, card.audio, preference);
   const spanishVisible = card.direction === 'es_to_ru' ? !revealed : revealed;
 
   useEffect(() => {
@@ -47,14 +47,14 @@ export function ReviewStudy({
       void stopLessonAudio();
       return;
     }
-    void playLessonAudio({ text: card.es, audio });
+    playCard(card.itemId, card.es, card.audio, preference);
     return () => {
       void stopLessonAudio();
     };
-  }, [audio, card.es, card.key, spanishVisible]);
+  }, [card.audio, card.es, card.itemId, card.key, preference, spanishVisible]);
 
   const replay = () => {
-    void playLessonAudio({ text: card.es, audio });
+    playCard(card.itemId, card.es, card.audio, preference);
   };
 
   const speak = spanishVisible ? { speakLabel: t('review.playWord'), onSpeak: replay } : undefined;
@@ -87,15 +87,20 @@ export function ReviewStudy({
   );
 }
 
-function reviewClip(
+function playCard(
   itemId: string,
+  text: string,
   fallback: string | undefined,
   preference: AudioPreference,
-): string | null {
+): void {
   try {
-    return selectClip(getItem(itemId).audio, preference, 'normal') ?? fallback ?? null;
+    void play(getItem(itemId), 'normal', preference);
   } catch {
-    return fallback ?? null;
+    void play(
+      { es: text, audio: blankAudio(fallback ? { es: fallback } : {}) },
+      'normal',
+      preference,
+    );
   }
 }
 

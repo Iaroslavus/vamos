@@ -1,6 +1,8 @@
 import { createAudioPlayer, setAudioModeAsync } from 'expo-audio';
 import * as Speech from 'expo-speech';
 
+import { blankAudio } from '@/features/content/schema';
+
 import { BUNDLED_AUDIO_ASSETS } from './assets';
 import {
   NORMAL_RATE,
@@ -8,6 +10,7 @@ import {
   SPEECH_LANGUAGE,
   SPEECH_PITCH,
   applyPlayerRate,
+  play,
   playLessonAudio,
   resolveAudioSource,
   stopLessonAudio,
@@ -292,5 +295,72 @@ describe('playLessonAudio', () => {
     const third = (Speech.speak as jest.Mock).mock.calls.at(-1)?.[1] as { onDone: () => void };
     third.onDone();
     expect(heard).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('play', () => {
+  const phrase = {
+    es: 'hola',
+    audio: blankAudio({
+      es: 'items/a1/hola/hola.es.normal.m4a',
+      slow: { es: 'items/a1/hola/hola.es.slow.m4a' },
+    }),
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    registerAudioCache(null);
+  });
+
+  it('plays the file when the item has one for that speed', async () => {
+    const previous = process.env.EXPO_PUBLIC_SUPABASE_URL;
+    process.env.EXPO_PUBLIC_SUPABASE_URL = 'http://127.0.0.1:54321/';
+
+    try {
+      expect(await play(phrase, 'normal')).toBe('file');
+      expect(createAudioPlayer).toHaveBeenCalledWith(
+        'http://127.0.0.1:54321/storage/v1/object/public/audio/items/a1/hola/hola.es.normal.m4a',
+      );
+      expect(Speech.speak).not.toHaveBeenCalled();
+
+      jest.clearAllMocks();
+      expect(await play(phrase, 'slow')).toBe('file');
+      expect(createAudioPlayer).toHaveBeenCalledWith(
+        'http://127.0.0.1:54321/storage/v1/object/public/audio/items/a1/hola/hola.es.slow.m4a',
+      );
+      expect(Speech.speak).not.toHaveBeenCalled();
+    } finally {
+      process.env.EXPO_PUBLIC_SUPABASE_URL = previous;
+    }
+  });
+
+  it('uses expo-speech when the item has no file for that speed', async () => {
+    expect(await play({ es: 'hola', audio: blankAudio() }, 'normal')).toBe('speech');
+    expect(Speech.speak).toHaveBeenCalledWith(
+      'hola',
+      expect.objectContaining({
+        language: SPEECH_LANGUAGE,
+        rate: NORMAL_RATE,
+        pitch: SPEECH_PITCH,
+      }),
+    );
+    expect(createAudioPlayer).not.toHaveBeenCalled();
+
+    jest.clearAllMocks();
+    expect(
+      await play(
+        { es: 'hola', audio: blankAudio({ es: 'items/a1/hola/hola.es.normal.m4a' }) },
+        'slow',
+      ),
+    ).toBe('speech');
+    expect(Speech.speak).toHaveBeenCalledWith(
+      'hola',
+      expect.objectContaining({
+        language: SPEECH_LANGUAGE,
+        rate: speechEngineRate(SLOW_RATE),
+        pitch: SPEECH_PITCH,
+      }),
+    );
+    expect(createAudioPlayer).not.toHaveBeenCalled();
   });
 });

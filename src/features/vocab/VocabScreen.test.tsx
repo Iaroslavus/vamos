@@ -3,7 +3,7 @@ import { fireEvent, render, screen, userEvent } from '@testing-library/react-nat
 import { I18nextProvider } from 'react-i18next';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { playLessonAudio } from '@/features/audio/playback';
+import { play } from '@/features/audio/playback';
 import type { StoredCard } from '@/features/review/types';
 import i18n from '@/i18n';
 
@@ -47,8 +47,7 @@ jest.mock('@/features/progress/useProgress', () => ({
 }));
 
 jest.mock('@/features/audio/playback', () => ({
-  playLessonAudio: jest.fn(() => Promise.resolve('speech')),
-  stopLessonAudio: jest.fn(() => Promise.resolve()),
+  play: jest.fn(() => Promise.resolve('file')),
 }));
 
 jest.mock('@/features/review/defaultRepository', () => ({
@@ -174,7 +173,7 @@ describe('FolderScreen', () => {
   beforeEach(() => {
     mockVocabMemory.clear();
     mockParams.id = undefined;
-    jest.mocked(playLessonAudio).mockClear();
+    jest.mocked(play).mockClear();
   });
 
   it('plays a saved word and removes it from the folder', async () => {
@@ -192,7 +191,11 @@ describe('FolderScreen', () => {
     expect(screen.getByText('привет')).toBeTruthy();
 
     await fireEvent.press(screen.getByRole('button', { name: 'Слушать hola' }));
-    expect(playLessonAudio).toHaveBeenCalledWith({ text: 'hola', audio: 'a1/hola.mp3' });
+    expect(play).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'hola.hola', es: 'hola' }),
+      'normal',
+      'es',
+    );
 
     await fireEvent.press(screen.getByRole('button', { name: 'Убрать hola' }));
     expect(

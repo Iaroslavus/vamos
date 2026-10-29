@@ -6,12 +6,11 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { Button } from '@/components/Button';
 import { RetryNote } from '@/components/RetryNote';
 import { Text } from '@/components/Text';
-import { playLessonAudio } from '@/features/audio/playback';
+import { play } from '@/features/audio/playback';
 import { useAudioPreference } from '@/features/audio/preference';
-import type { AudioPreference } from '@/features/audio/select';
 import { contentLanguage, getItem } from '@/features/content/loader';
+import { blankAudio, type Item } from '@/features/content/schema';
 import { textOf } from '@/features/content/text';
-import { itemAudioPath } from '@/features/lesson/intro';
 import { colors, space } from '@/theme/tokens';
 
 import { FolderFormSheet } from './components/FolderFormSheet';
@@ -83,7 +82,7 @@ export function FolderScreen() {
           </Text>
         ) : (
           itemIds.map((itemId) => {
-            const word = lookup(itemId, preference);
+            const word = lookup(itemId);
             return (
               <FolderItemRow
                 key={itemId}
@@ -91,7 +90,11 @@ export function FolderScreen() {
                 ru={word.ru}
                 editable={editable}
                 onPlay={() => {
-                  void playLessonAudio({ text: word.es, audio: word.audio });
+                  void play(
+                    word.item ?? { es: word.es, audio: blankAudio() },
+                    'normal',
+                    preference,
+                  );
                 }}
                 onRemove={() => {
                   if (!vocab.userId) return;
@@ -152,19 +155,16 @@ export function FolderScreen() {
   );
 }
 
-function lookup(
-  itemId: string,
-  preference: AudioPreference,
-): { es: string; ru: string; audio: string | null } {
+function lookup(itemId: string): { es: string; ru: string; item: Item | null } {
   try {
     const item = getItem(itemId);
     return {
       es: item.es,
       ru: textOf(item.tr, contentLanguage()),
-      audio: itemAudioPath(item, preference),
+      item,
     };
   } catch {
-    return { es: itemId, ru: '', audio: null };
+    return { es: itemId, ru: '', item: null };
   }
 }
 
