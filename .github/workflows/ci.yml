@@ -21,6 +21,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npx expo-doctor
       # `typecheck` runs `expo customize tsconfig.json` first so typed routes
       # (.expo/types) exist — same generation path as a local `expo start`.
       - run: npm run typecheck
