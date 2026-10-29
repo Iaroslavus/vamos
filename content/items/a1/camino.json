@@ -8,6 +8,11 @@
       "uk": "Де знаходиться?",
       "en": "Where is it?"
     },
+    "literal": {
+      "ru": "Где находится?",
+      "uk": "Де знаходиться?",
+      "en": "Where is located?"
+    },
     "parts": [
       {
         "es": "¿Dónde",
@@ -81,6 +86,11 @@
       "uk": "Як пройти?",
       "en": "How do I get there?"
     },
+    "literal": {
+      "ru": "Как я прихожу?",
+      "uk": "Як я приходжу?",
+      "en": "How I arrive?"
+    },
     "parts": [
       {
         "es": "¿Cómo",
@@ -93,9 +103,9 @@
       {
         "es": "llego?",
         "tr": {
-          "ru": "мне дойти",
-          "uk": "мені дійти",
-          "en": "for me to get there"
+          "ru": "я прихожу",
+          "uk": "я приходжу",
+          "en": "I arrive"
         }
       }
     ],
@@ -150,13 +160,18 @@
       "uk": "Вокзал",
       "en": "The station"
     },
+    "literal": {
+      "ru": "Станция",
+      "uk": "Станція",
+      "en": "Station"
+    },
     "parts": [
       {
         "es": "La",
         "tr": {
-          "ru": "эта",
-          "uk": "ця",
-          "en": "this"
+          "ru": "ж.р.",
+          "uk": "ж.р.",
+          "en": "the (f.)"
         }
       },
       {
@@ -227,9 +242,9 @@
       {
         "es": "El",
         "tr": {
-          "ru": "этот",
-          "uk": "цей",
-          "en": "this"
+          "ru": "м.р.",
+          "uk": "ч.р.",
+          "en": "the (m.)"
         }
       },
       {
@@ -291,6 +306,11 @@
       "ru": "Сюда",
       "uk": "Сюди",
       "en": "This way"
+    },
+    "literal": {
+      "ru": "По здесь",
+      "uk": "По тут",
+      "en": "Along here"
     },
     "parts": [
       {
@@ -362,8 +382,13 @@
     "es": "Por allí",
     "tr": {
       "ru": "Вон там",
-      "uk": "Он там",
+      "uk": "Отам",
       "en": "Over there"
+    },
+    "literal": {
+      "ru": "По там",
+      "uk": "По там",
+      "en": "Along there"
     },
     "parts": [
       {
@@ -434,21 +459,26 @@
       "uk": "Праворуч",
       "en": "To the right"
     },
+    "literal": {
+      "ru": "К правой",
+      "uk": "До правої",
+      "en": "To the right"
+    },
     "parts": [
       {
         "es": "A la",
         "tr": {
-          "ru": "на",
-          "uk": "на",
-          "en": "on"
+          "ru": "к",
+          "uk": "до",
+          "en": "to the"
         }
       },
       {
         "es": "derecha",
         "tr": {
-          "ru": "право",
-          "uk": "право",
-          "en": "the right"
+          "ru": "правой",
+          "uk": "правої",
+          "en": "right"
         }
       }
     ],
@@ -503,21 +533,26 @@
       "uk": "Ліворуч",
       "en": "To the left"
     },
+    "literal": {
+      "ru": "К левой",
+      "uk": "До лівої",
+      "en": "To the left"
+    },
     "parts": [
       {
         "es": "A la",
         "tr": {
-          "ru": "на",
-          "uk": "на",
-          "en": "on"
+          "ru": "к",
+          "uk": "до",
+          "en": "to the"
         }
       },
       {
         "es": "izquierda",
         "tr": {
-          "ru": "лево",
-          "uk": "ліво",
-          "en": "the left"
+          "ru": "левой",
+          "uk": "лівої",
+          "en": "left"
         }
       }
     ],
@@ -571,6 +606,11 @@
       "ru": "Прямо",
       "uk": "Прямо",
       "en": "Straight ahead"
+    },
+    "literal": {
+      "ru": "Всё прямо",
+      "uk": "Все прямо",
+      "en": "All straight"
     },
     "parts": [
       {
@@ -645,6 +685,11 @@
       "uk": "Прямо вперед",
       "en": "Straight on"
     },
+    "literal": {
+      "ru": "Всё прямо",
+      "uk": "Все прямо",
+      "en": "All straight"
+    },
     "parts": [
       {
         "es": "Todo",
@@ -718,6 +763,11 @@
       "uk": "Це близько",
       "en": "It's close"
     },
+    "literal": {
+      "ru": "Находится близко",
+      "uk": "Знаходиться близько",
+      "en": "Is located close"
+    },
     "parts": [
       {
         "es": "Está",
@@ -786,6 +836,11 @@
       "ru": "Это далеко",
       "uk": "Це далеко",
       "en": "It's far"
+    },
+    "literal": {
+      "ru": "Находится далеко",
+      "uk": "Знаходиться далеко",
+      "en": "Is located far"
     },
     "parts": [
       {

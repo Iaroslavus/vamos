@@ -292,6 +292,7 @@
     "introTitle": "Знакомство с фразой",
     "introProgress": "Новые фразы {{current}} из {{total}}",
     "introPart": "{{es}} · {{ru}}",
+    "introLiteral": "буквально: {{text}}",
     "introWhy": "Почему так?",
     "introWhyClose": "Понятно",
     "introSave": "+ В словник",

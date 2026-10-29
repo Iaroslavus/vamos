@@ -15,6 +15,7 @@ function item(overrides: Partial<Item> = {}): Item {
     type: 'phrase',
     es: 'buenos días',
     tr: fillLocales('доброе утро'),
+    literal: null,
     parts: [],
     say: fillLocales('буЭнос дИас'),
     note: null,

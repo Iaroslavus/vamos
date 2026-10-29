@@ -292,6 +292,7 @@
     "introTitle": "Meet the phrase",
     "introProgress": "New phrases {{current}} of {{total}}",
     "introPart": "{{es}} · {{ru}}",
+    "introLiteral": "literally: {{text}}",
     "introWhy": "Why this?",
     "introWhyClose": "Got it",
     "introSave": "+ Phrasebook",

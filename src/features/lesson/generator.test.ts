@@ -377,6 +377,7 @@ function unit(id: string, type: Item['type'], es: string, ru: string, parts: Ite
     type,
     es,
     tr: fillLocales(ru),
+    literal: null,
     parts,
     say: fillLocales('тест'),
     note: null,

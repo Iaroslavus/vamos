@@ -76,6 +76,7 @@ function item(id: string, es: string, ru: string): Item {
     type: 'phrase',
     es,
     tr: fillLocales(ru),
+    literal: null,
     parts: [],
     say: fillLocales('sa'),
     note: null,

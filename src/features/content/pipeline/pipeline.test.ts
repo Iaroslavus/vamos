@@ -75,6 +75,9 @@ describe('draftIssues', () => {
     const prompt = topicPrompt(spec);
     expect(prompt.system).toContain('a1.cafe');
     expect(prompt.system).toContain('Ukrainian');
+    expect(prompt.system).toContain('buenos días');
+    expect(prompt.system).toContain('literal');
+    expect(prompt.system).toContain('дни/дні/days');
     expect(prompt.user).toContain('uk and en');
     expect(prompt.user).toContain('A1');
     expect(prompt.user).toContain('Заказать напиток');
@@ -135,6 +138,7 @@ describe('content report', () => {
     expect(formatReport(report)).toContain('a1.cafe.l1');
     expect(formatReport(report)).toContain('Ссылки: ок');
     expect(formatReport(report)).toContain('Не хватает переводов');
+    expect(formatReport(report)).toContain('Дословный разбор: ок');
     expect(report.missingTranslations).toEqual({ ru: [], uk: [], en: [] });
   });
 

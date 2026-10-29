@@ -8,20 +8,25 @@
       "uk": "Столик на двох, будь ласка",
       "en": "A table for two, please"
     },
+    "literal": {
+      "ru": "Стол для двух, пожалуйста",
+      "uk": "Стіл для двох, будь ласка",
+      "en": "A table for two, please"
+    },
     "parts": [
       {
         "es": "Una mesa",
         "tr": {
-          "ru": "столик",
-          "uk": "столик",
-          "en": "table"
+          "ru": "стол",
+          "uk": "стіл",
+          "en": "a table"
         }
       },
       {
         "es": "para dos,",
         "tr": {
-          "ru": "на двоих",
-          "uk": "на двох",
+          "ru": "для двух",
+          "uk": "для двох",
           "en": "for two"
         }
       },
@@ -89,16 +94,16 @@
     "type": "phrase",
     "es": "Quisiera reservar",
     "tr": {
-      "ru": "Я бы хотел забронировать",
-      "uk": "Я б хотів забронювати",
+      "ru": "Я бы хотел(а) забронировать",
+      "uk": "Я б хотів(ла) забронювати",
       "en": "I would like to book"
     },
     "parts": [
       {
         "es": "Quisiera",
         "tr": {
-          "ru": "я бы хотел",
-          "uk": "я б хотів",
+          "ru": "я бы хотел(а)",
+          "uk": "я б хотів(ла)",
           "en": "I would like"
         }
       },
@@ -170,21 +175,26 @@
       "uk": "Сьогодні ввечері",
       "en": "This evening"
     },
+    "literal": {
+      "ru": "Эта ночь",
+      "uk": "Ця ніч",
+      "en": "This night"
+    },
     "parts": [
       {
         "es": "Esta",
         "tr": {
-          "ru": "этот",
-          "uk": "цей",
+          "ru": "эта",
+          "uk": "ця",
           "en": "this"
         }
       },
       {
         "es": "noche",
         "tr": {
-          "ru": "вечер",
-          "uk": "вечір",
-          "en": "evening"
+          "ru": "ночь",
+          "uk": "ніч",
+          "en": "night"
         }
       }
     ],
@@ -239,6 +249,11 @@
       "uk": "На двох",
       "en": "For two"
     },
+    "literal": {
+      "ru": "Для двух",
+      "uk": "Для двох",
+      "en": "For two"
+    },
     "parts": [
       {
         "es": "Para",
@@ -251,9 +266,9 @@
       {
         "es": "dos",
         "tr": {
-          "ru": "двоих",
+          "ru": "двух",
           "uk": "двох",
-          "en": "two people"
+          "en": "two"
         }
       }
     ],
@@ -308,20 +323,25 @@
       "uk": "На моє ім'я",
       "en": "Under my name"
     },
+    "literal": {
+      "ru": "К моему имени",
+      "uk": "До мого імені",
+      "en": "To my name"
+    },
     "parts": [
       {
         "es": "A mi",
         "tr": {
-          "ru": "на моё",
-          "uk": "на моє",
-          "en": "under my"
+          "ru": "к моему",
+          "uk": "до мого",
+          "en": "to my"
         }
       },
       {
         "es": "nombre",
         "tr": {
-          "ru": "имя",
-          "uk": "ім'я",
+          "ru": "имени",
+          "uk": "імені",
           "en": "name"
         }
       }
@@ -381,20 +401,25 @@
       "uk": "О восьмій",
       "en": "At eight"
     },
+    "literal": {
+      "ru": "К восьми",
+      "uk": "До восьми",
+      "en": "At eight"
+    },
     "parts": [
       {
         "es": "A las",
         "tr": {
-          "ru": "в",
-          "uk": "у",
-          "en": "in"
+          "ru": "к",
+          "uk": "до",
+          "en": "at"
         }
       },
       {
         "es": "ocho",
         "tr": {
-          "ru": "восемь",
-          "uk": "вісім",
+          "ru": "восьми",
+          "uk": "восьми",
           "en": "eight"
         }
       }
@@ -460,7 +485,7 @@
         "tr": {
           "ru": "меню",
           "uk": "меню",
-          "en": "menu"
+          "en": "the menu"
         }
       },
       {
@@ -523,9 +548,9 @@
     "type": "phrase",
     "es": "El menú, por favor",
     "tr": {
-      "ru": "Принесите меню",
-      "uk": "Принесіть меню",
-      "en": "Bring the menu"
+      "ru": "Меню, пожалуйста",
+      "uk": "Меню, будь ласка",
+      "en": "The menu, please"
     },
     "parts": [
       {
@@ -533,7 +558,7 @@
         "tr": {
           "ru": "меню",
           "uk": "меню",
-          "en": "menu"
+          "en": "the menu"
         }
       },
       {
@@ -598,6 +623,11 @@
     "tr": {
       "ru": "Мне",
       "uk": "Мені",
+      "en": "For me"
+    },
+    "literal": {
+      "ru": "Для меня",
+      "uk": "Для мене",
       "en": "For me"
     },
     "parts": [
@@ -673,13 +703,18 @@
       "uk": "Без глютену, будь ласка",
       "en": "Gluten-free, please"
     },
+    "literal": {
+      "ru": "Без глютена, пожалуйста",
+      "uk": "Без глютену, будь ласка",
+      "en": "Without gluten, please"
+    },
     "parts": [
       {
         "es": "Sin gluten,",
         "tr": {
           "ru": "без глютена",
           "uk": "без глютену",
-          "en": "gluten-free"
+          "en": "without gluten"
         }
       },
       {
@@ -741,6 +776,11 @@
     "tr": {
       "ru": "У меня аллергия",
       "uk": "У мене алергія",
+      "en": "I have an allergy"
+    },
+    "literal": {
+      "ru": "У меня есть аллергия",
+      "uk": "У мене є алергія",
       "en": "I have an allergy"
     },
     "parts": [
@@ -817,21 +857,26 @@
       "uk": "У мене алергія на горіхи",
       "en": "I'm allergic to nuts"
     },
+    "literal": {
+      "ru": "Я есть аллергичный к сухим плодам",
+      "uk": "Я є алергічний до сухих плодів",
+      "en": "I am allergic to dried fruits"
+    },
     "parts": [
       {
         "es": "Soy alérgico",
         "tr": {
-          "ru": "я аллергик",
-          "uk": "я алергік",
-          "en": "I'm allergic"
+          "ru": "я есть аллергичный",
+          "uk": "я є алергічний",
+          "en": "I am allergic"
         }
       },
       {
         "es": "a los frutos secos",
         "tr": {
-          "ru": "на орехи",
-          "uk": "на горіхи",
-          "en": "to nuts"
+          "ru": "к сухим плодам",
+          "uk": "до сухих плодів",
+          "en": "to dried fruits"
         }
       }
     ],
