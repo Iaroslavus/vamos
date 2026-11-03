@@ -8,8 +8,25 @@ import {
   speechVolumeLevel,
   type SpeechAccess,
 } from '../options';
+import type { SpeechAlternative } from '../score';
 
 export type SpeechNotice = 'none' | 'no-speech' | 'error';
+
+export type SpeechListenMode = 'grade' | 'dialog';
+
+export type SpeechCaptureRequest = {
+  mode: SpeechListenMode;
+  hints: readonly string[];
+  /** Write a cache file so the learner can hear the take. The caller deletes it. */
+  record: boolean;
+};
+
+export type SpeechFinal = {
+  transcript: string;
+  confidence: number;
+  alternatives: SpeechAlternative[];
+  recordingUri: string | null;
+};
 
 type PermissionSnapshot = {
   granted: boolean;
@@ -18,18 +35,22 @@ type PermissionSnapshot = {
 };
 
 /**
- * Listens once and reports transcripts.
- * Never enables `recordingOptions`, so the user's audio is not stored.
+ * Listens once and reports the best hypothesis plus n-best alternatives.
+ * A recording file is created only when `record` is set.
  */
-export function useSpeechCapture(hints: readonly string[], onFinal: (transcript: string) => void) {
+export function useSpeechCapture(
+  request: SpeechCaptureRequest,
+  onFinal: (result: SpeechFinal) => void,
+) {
   const onFinalRef = useRef(onFinal);
-  const hintsRef = useRef(hints);
+  const requestRef = useRef(request);
+  const recordingRef = useRef<string | null>(null);
   const mounted = useRef(true);
 
   useEffect(() => {
     onFinalRef.current = onFinal;
-    hintsRef.current = hints;
-  }, [hints, onFinal]);
+    requestRef.current = request;
+  }, [onFinal, request]);
 
   const [access, setAccess] = useState<SpeechAccess>('unknown');
   const [listening, setListening] = useState(false);
@@ -68,10 +89,27 @@ export function useSpeechCapture(hints: readonly string[], onFinal: (transcript:
         setListening(false);
         setVolume(0);
       }),
+      ExpoSpeechRecognitionModule.addListener('audiostart', () => {
+        recordingRef.current = null;
+      }),
+      ExpoSpeechRecognitionModule.addListener('audioend', (event) => {
+        recordingRef.current = event.uri;
+      }),
       ExpoSpeechRecognitionModule.addListener('result', (event) => {
-        const text = event.results[0]?.transcript ?? '';
+        const best = event.results[0];
+        const text = best?.transcript ?? '';
         setTranscript(text);
-        if (event.isFinal) onFinalRef.current(text);
+        if (!event.isFinal) return;
+        const alternatives = event.results.slice(1).map((item) => ({
+          transcript: item.transcript,
+          confidence: item.confidence,
+        }));
+        onFinalRef.current({
+          transcript: text,
+          confidence: best?.confidence ?? -1,
+          alternatives,
+          recordingUri: recordingRef.current,
+        });
       }),
       ExpoSpeechRecognitionModule.addListener('error', (event) => {
         setListening(false);
@@ -126,7 +164,10 @@ export function useSpeechCapture(hints: readonly string[], onFinal: (transcript:
         ExpoSpeechRecognitionModule.supportsOnDeviceRecognition(),
         locales.installedLocales,
       );
-      ExpoSpeechRecognitionModule.start(speechStartOptions(onDevice, hintsRef.current));
+      const pending = requestRef.current;
+      ExpoSpeechRecognitionModule.start(
+        speechStartOptions(onDevice, pending.mode, pending.hints, pending.record),
+      );
       return true;
     } catch {
       setAccess('unavailable');

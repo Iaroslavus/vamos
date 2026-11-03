@@ -18,10 +18,38 @@ const ALIGN_POINT = {
 /** A word longer than this may be off by one edit and still count as close. */
 const TYPO_MIN_LENGTH = 4;
 
+/**
+ * Best-hypothesis confidence required before an exact word counts as ok.
+ * A negative value means the recognizer did not report a confidence.
+ */
+export const SPEECH_CONFIDENCE_MIN = 0.6;
+
+/** A listed neighbor within this many edits belongs to that reference word. */
+const CONFUSABLE_DISTANCE = 2;
+
+/** One or two words are too short for the recognizer to separate from a neighbor. */
+export function needsSelfCompare(phrase: string): boolean {
+  const count = speechWords(phrase).length;
+  return count >= 1 && count <= 2;
+}
+
+export type SpeechAlternative = {
+  transcript: string;
+  confidence: number;
+};
+
+/** N-best metadata. Omit it when the caller only has a plain transcript. */
+export type SpeechScoreInput = {
+  /** 0–1 from the best hypothesis. Negative or omitted when it was not reported. */
+  confidence?: number;
+  alternatives?: readonly SpeechAlternative[];
+  confusables?: readonly string[];
+};
+
 const EDGE_PUNCTUATION = /[¿¡.,;:!?…«»"'`´\-—–()[\]{}]/u;
 
 export type WordMark = 'ok' | 'close' | 'miss';
-export type CloseReason = 'accent' | 'near';
+export type CloseReason = 'accent' | 'near' | 'uncertain' | 'confused';
 
 export type ScoredWord = {
   /** Token from the reference, without surrounding punctuation. */
@@ -202,9 +230,71 @@ function alignWords(expected: readonly string[], heard: readonly string[]): Scor
   return reversed.reverse();
 }
 
-/** Compare a recognition transcript with the reference, word by word. */
-export function scoreSpeech(expected: string, heard: string): SpeechScore {
-  const words = alignWords(speechWords(expected), speechWords(heard));
+function plainWord(word: string): string {
+  return stripDiacritics(normalizeForCompare(word));
+}
+
+/** True when an n-best line contains a listed neighbor of this reference word. */
+function wordConfused(
+  expected: string,
+  alternatives: readonly SpeechAlternative[],
+  confusables: readonly string[],
+): boolean {
+  const expectedPlain = plainWord(expected);
+  if (!expectedPlain) return false;
+  const neighbors = new Set(
+    confusables.map(plainWord).filter((item) => item.length > 0 && item !== expectedPlain),
+  );
+  if (neighbors.size === 0) return false;
+
+  for (const alternative of alternatives) {
+    for (const token of speechWords(alternative.transcript)) {
+      const heard = plainWord(token);
+      if (!neighbors.has(heard)) continue;
+      if (levenshtein(expectedPlain, heard) <= CONFUSABLE_DISTANCE) return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * An exact word stays ok only when the best hypothesis is confident
+ * and no alternative is a listed neighbor of that word.
+ */
+function applyRecognition(words: ScoredWord[], recognition?: SpeechScoreInput): ScoredWord[] {
+  if (!recognition) return words;
+  const confidence = recognition.confidence;
+  const lowConfidence =
+    confidence !== undefined &&
+    Number.isFinite(confidence) &&
+    confidence >= 0 &&
+    confidence < SPEECH_CONFIDENCE_MIN;
+  const alternatives = recognition.alternatives ?? [];
+  const confusables = recognition.confusables ?? [];
+
+  return words.map((word) => {
+    if (word.mark !== 'ok') return word;
+    if (wordConfused(word.expected, alternatives, confusables)) {
+      return { ...word, mark: 'close', reason: 'confused' };
+    }
+    if (lowConfidence) return { ...word, mark: 'close', reason: 'uncertain' };
+    return word;
+  });
+}
+
+/**
+ * Compare a recognition transcript with the reference, word by word.
+ * Pass `recognition` when n-best lines and a confidence are available.
+ */
+export function scoreSpeech(
+  expected: string,
+  heard: string,
+  recognition?: SpeechScoreInput,
+): SpeechScore {
+  const words = applyRecognition(
+    alignWords(speechWords(expected), speechWords(heard)),
+    recognition,
+  );
   return {
     words,
     score: toPercent(words),

@@ -179,6 +179,12 @@ export const ItemSchema = z
       parts: [],
     }),
     tags: z.array(z.string().min(1)).default([]),
+    /**
+     * Words the recognizer mixes up with this unit.
+     * Example: hola → ola, olla, hora, jola.
+     * Short words also gain distance-1 neighbors from the course lexicon when scoring.
+     */
+    confusables: z.array(z.string().min(1)).default([]),
     /** Draft units are not shown as published course material. */
     draft: z.boolean().default(false),
     /** Ukrainian and English glosses are an unreviewed draft. */

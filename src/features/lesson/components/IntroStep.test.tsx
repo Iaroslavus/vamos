@@ -93,6 +93,7 @@ const phrase: Item = {
     slow: { latam: 'a1/buenos-dias-latam-slow.mp3' },
   }),
   tags: ['greeting'],
+  confusables: [],
   draft: false,
   draft_i18n: false,
 };

@@ -37,30 +37,42 @@ export function speechVolumeLevel(value: number): number {
   return Math.min(1, value / 10);
 }
 
+/** How many n-best lines to ask for when grading pronunciation. */
+export const SPEECH_ALTERNATIVE_COUNT = 5;
+
 /**
- * One recognition pass.
- * `recordingOptions` and `audioSource` are intentionally absent: the buffer is not written to a file.
+ * `grade` scores pronunciation and must not be told the reference.
+ * `dialog` may receive the line options, because it checks which meaning was said.
+ * A temp recording is written only when `record` is set, and the caller deletes it.
  */
 export function speechStartOptions(
   onDevice: boolean,
-  hints: readonly string[],
+  mode: 'grade' | 'dialog',
+  hints: readonly string[] = [],
+  record = false,
 ): ExpoSpeechRecognitionOptions {
-  const contextualStrings = [...new Set(hints.map((hint) => hint.trim()).filter(Boolean))].slice(
-    0,
-    20,
-  );
-  return {
+  const options: ExpoSpeechRecognitionOptions = {
     lang: SPEECH_LOCALE,
     interimResults: true,
     continuous: false,
-    maxAlternatives: 1,
+    maxAlternatives: mode === 'dialog' ? 1 : SPEECH_ALTERNATIVE_COUNT,
     requiresOnDeviceRecognition: onDevice,
     addsPunctuation: false,
-    contextualStrings,
     iosTaskHint: 'dictation',
     volumeChangeEventOptions: {
       enabled: true,
       intervalMillis: 100,
     },
   };
+
+  if (mode === 'dialog') {
+    const contextualStrings = [...new Set(hints.map((hint) => hint.trim()).filter(Boolean))].slice(
+      0,
+      20,
+    );
+    if (contextualStrings.length > 0) options.contextualStrings = contextualStrings;
+  }
+
+  if (record) options.recordingOptions = { persist: true };
+  return options;
 }

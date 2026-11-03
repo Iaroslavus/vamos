@@ -1,4 +1,5 @@
 import { audioGaps } from '@/features/audio/select';
+import { confusableReportLines } from '@/features/speech/confusables';
 
 import { contentIssues, type ContentBundle } from '../integrity';
 import { literalPartWarnings } from '../literal';
@@ -31,6 +32,8 @@ export type ContentReport = {
    * Printed by the content check. Does not fail the link check.
    */
   literalWarnings: string[];
+  /** Short-word neighbors: authored list and distance-1 words from the lexicon. */
+  confusableNotes: string[];
   issues: string[];
   ok: boolean;
 };
@@ -64,6 +67,7 @@ export function buildReport(
       .map((row) => `${row.id} — нет ${row.missing}`),
     missingTranslations: gapsByLocale(translationGaps(bundle)),
     literalWarnings: bundle.items.flatMap((item) => literalPartWarnings(item)),
+    confusableNotes: confusableReportLines(bundle.items),
     issues,
     ok: issues.length === 0,
   };
@@ -96,6 +100,11 @@ export function formatReport(report: ContentReport): string {
       ? 'Дословный разбор: ок'
       : `Дословный разбор: предупреждения (${report.literalWarnings.length})`,
     ...report.literalWarnings.map((warning) => `  ${warning}`),
+    '',
+    report.confusableNotes.length === 0
+      ? 'Соседи коротких слов: нет'
+      : `Соседи коротких слов: ${report.confusableNotes.length}`,
+    ...report.confusableNotes.map((note) => `  ${note}`),
     '',
     report.ok ? 'Ссылки: ок' : 'Ссылки: сломаны',
     ...report.issues.map((issue) => `  ${issue}`),

@@ -28,6 +28,7 @@ function item(overrides: Partial<Item> = {}): Item {
       slow: { es: 'a1/buenos-dias-slow.mp3', latam: 'a1/buenos-dias-latam-slow.mp3' },
     }),
     tags: [],
+    confusables: [],
     draft: false,
     draft_i18n: false,
     ...overrides,

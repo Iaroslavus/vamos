@@ -38,6 +38,7 @@ import { buildResultSheetModel } from '@/features/lesson/feedbackView';
 import { useRecordLessonMistake } from '@/features/lesson/hooks/useRecordLessonMistake';
 import type { MatchPairsOutcome } from '@/features/lesson/hooks/useMatchPairs';
 import { showsSayRu } from '@/features/lesson/intro';
+import { confusablesForUnit, lexiconOf } from '@/features/speech/confusables';
 import {
   introPlace,
   isTypingExercise,
@@ -279,6 +280,7 @@ export default function LessonScreen() {
           audio={clipForItem(step.itemIds[0], audioPreference) ?? step.audio}
           sayRu={speakHint(loaded.session, step.itemIds[0] ?? '', language)}
           parts={speakParts(loaded.session, step.itemIds[0] ?? '', language)}
+          confusables={speakConfusables(loaded.session, step.itemIds[0] ?? '', step.prompt_es)}
           onSkip={onSoftContinue}
           onContinue={onSoftContinue}
         />
@@ -401,6 +403,11 @@ function speakParts(session: LoadedLesson, itemId: string, language: ContentLoca
   const item = itemById(session, itemId);
   if (!item) return [];
   return item.parts.map((part) => ({ es: part.es, ru: textOf(part.tr, language) }));
+}
+
+function speakConfusables(session: LoadedLesson, itemId: string, phrase: string): string[] {
+  const item = itemById(session, itemId);
+  return confusablesForUnit(phrase, item?.confusables ?? [], lexiconOf(session.items));
 }
 
 const styles = StyleSheet.create({

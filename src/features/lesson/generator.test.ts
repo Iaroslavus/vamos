@@ -386,6 +386,7 @@ function unit(id: string, type: Item['type'], es: string, ru: string, parts: Ite
     variant: 'both',
     audio: blankAudio({ es: `${id}.mp3` }),
     tags: [],
+    confusables: [],
     draft: true,
     draft_i18n: false,
   };
