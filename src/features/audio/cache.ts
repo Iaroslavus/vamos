@@ -33,6 +33,7 @@ export function collectTopicAudioPaths(items: readonly Item[]): string[] {
     push(item.audio.latam);
     push(item.audio.slow.es);
     push(item.audio.slow.latam);
+    push(item.audio.features);
     for (const part of item.audio.parts) {
       push(part.es);
       push(part.latam);

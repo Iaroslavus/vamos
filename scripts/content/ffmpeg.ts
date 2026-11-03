@@ -22,6 +22,20 @@ export async function normalizeToM4a(input: Uint8Array): Promise<Uint8Array> {
   }
 }
 
+/** Mono 16 kHz 16-bit WAV. The app parses this header in TypeScript. */
+export async function decodeToPcmWav(input: Uint8Array): Promise<Uint8Array> {
+  const dir = await mkdtemp(path.join(os.tmpdir(), 'vamos-pcm-'));
+  const source = path.join(dir, 'in.bin');
+  const target = path.join(dir, 'out.wav');
+  try {
+    await writeFile(source, input);
+    await runFfmpeg(['-y', '-i', source, '-ac', '1', '-ar', '16000', '-c:a', 'pcm_s16le', target]);
+    return new Uint8Array(await readFile(target));
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+}
+
 /** Duration in seconds via ffprobe. The bytes are the normalized m4a. */
 export async function probeDurationSeconds(audio: Uint8Array): Promise<number> {
   const dir = await mkdtemp(path.join(os.tmpdir(), 'vamos-tts-probe-'));

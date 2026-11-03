@@ -456,6 +456,7 @@
     "selfCompareNote": "The recording is only for comparison and is deleted after this step.",
     "soundsSame": "Sounds the same",
     "again": "Again",
+    "acousticSilentH": "h is not pronounced.",
     "ruleSilentH": "h at the start of a word is silent.",
     "ruleYeismo": "ll and y sound the same.",
     "ruleJota": "j sounds like a harsh h. So does g before e or i.",

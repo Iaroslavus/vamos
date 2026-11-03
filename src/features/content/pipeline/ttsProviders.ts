@@ -34,6 +34,47 @@ const AZURE_VOICES: Record<TtsLocale, string> = {
   'es-MX': 'es-MX-DaliaNeural',
 };
 
+export type VoiceGender = 'female' | 'male';
+
+/**
+ * Gender of a neural voice, when we know it.
+ * Male names are listed so a clip is labeled when that voice is the one we synthesize.
+ */
+const VOICE_GENDER: Record<string, VoiceGender> = {
+  'es-ES-ElviraNeural': 'female',
+  'es-MX-DaliaNeural': 'female',
+  'es-ES-AlvaroNeural': 'male',
+  'es-MX-JorgeNeural': 'male',
+  'es-ES-Neural2-A': 'female',
+  'es-MX-Neural2-A': 'female',
+  'es-ES-Neural2-B': 'male',
+  'es-MX-Neural2-B': 'male',
+  coral: 'female',
+};
+
+export function genderOfVoice(name: string): VoiceGender | null {
+  return VOICE_GENDER[name] ?? null;
+}
+
+/** The one voice this provider speaks for the locale. Null when the provider is unknown. */
+export function activeVoice(
+  providerId: string,
+  locale: TtsLocale,
+): { name: string; gender: VoiceGender } | null {
+  const name =
+    providerId === 'azure'
+      ? AZURE_VOICES[locale]
+      : providerId === 'google'
+        ? GOOGLE_VOICES[locale]
+        : providerId === 'openai'
+          ? DEFAULT_OPENAI_VOICE
+          : null;
+  if (!name) return null;
+  const gender = genderOfVoice(name);
+  if (!gender) return null;
+  return { name, gender };
+}
+
 const GOOGLE_VOICES: Record<TtsLocale, string> = {
   'es-ES': 'es-ES-Neural2-A',
   'es-MX': 'es-MX-Neural2-A',

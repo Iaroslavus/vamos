@@ -3,6 +3,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { stopLessonAudio } from '@/features/audio/playback';
 
+import { assessRecording, combinePronunciationScore } from '../acoustic/assess';
+import { beginWavTake, type WavTake } from '../acoustic/record';
+import type { UnitFeatures } from '../acoustic/reference';
+import { errorFindings, type AcousticFinding } from '../acoustic/rules';
 import { useSpeechCapture, type SpeechFinal } from './useSpeechCapture';
 import { SPEECH_MAX_ATTEMPTS } from '../options';
 import { deleteSpeechFile } from '../recording';
@@ -29,6 +33,8 @@ type UseSpeakPracticeInput = {
   /** Dialog keeps the try count above the sheet, so closing it does not reset the cap. */
   attemptsUsed?: number;
   onAttemptsUsed?: (count: number) => void;
+  /** Normal-speed MFCC for each voice. Null keeps the text score on its own. */
+  references?: UnitFeatures | null;
 };
 
 /**
@@ -44,6 +50,7 @@ export function useSpeakPractice({
   onMatch,
   attemptsUsed,
   onAttemptsUsed,
+  references = null,
 }: UseSpeakPracticeInput) {
   const [localAttempts, setLocalAttempts] = useState(0);
   const [scored, setScored] = useState<SpeechScore | null>(null);
@@ -51,6 +58,7 @@ export function useSpeakPractice({
   const [compareToken, setCompareToken] = useState(0);
   const [recordingUri, setRecordingUri] = useState<string | null>(null);
   const [dialogMiss, setDialogMiss] = useState(false);
+  const [findings, setFindings] = useState<AcousticFinding[]>([]);
   const onMatchRef = useRef(onMatch);
   const optionsRef = useRef(options);
   const confusablesRef = useRef(confusables);
@@ -58,6 +66,9 @@ export function useSpeakPractice({
   const onAttemptsUsedRef = useRef(onAttemptsUsed);
   const phraseRef = useRef(phrase);
   const recordingRef = useRef<string | null>(null);
+  const takeRef = useRef<WavTake | null>(null);
+  const takeGeneration = useRef(0);
+  const referencesRef = useRef(references);
 
   const attempts = attemptsUsed ?? localAttempts;
   const selfCompare = mode !== 'dialog' && needsSelfCompare(phrase);
@@ -67,13 +78,17 @@ export function useSpeakPractice({
     optionsRef.current = options;
     confusablesRef.current = confusables;
     onAttemptsUsedRef.current = onAttemptsUsed;
-  }, [confusables, onAttemptsUsed, onMatch, options]);
+    referencesRef.current = references;
+  }, [confusables, onAttemptsUsed, onMatch, options, references]);
 
   useEffect(() => {
     attemptsRef.current = attempts;
   }, [attempts]);
 
   const forgetRecording = useCallback(() => {
+    takeGeneration.current += 1;
+    takeRef.current?.discard();
+    takeRef.current = null;
     deleteSpeechFile(recordingRef.current);
     recordingRef.current = null;
     setRecordingUri(null);
@@ -81,6 +96,7 @@ export function useSpeakPractice({
 
   useEffect(() => {
     return () => {
+      takeRef.current?.discard();
       deleteSpeechFile(recordingRef.current);
     };
   }, []);
@@ -93,6 +109,7 @@ export function useSpeakPractice({
     setDialogMiss(false);
     setConfirmed(false);
     setCompareToken(0);
+    setFindings([]);
     forgetRecording();
   }, [forgetRecording, phrase]);
 
@@ -121,29 +138,48 @@ export function useSpeakPractice({
         return;
       }
 
-      const next = scoreSpeech(phrase, result.transcript, {
+      const text = scoreSpeech(phrase, result.transcript, {
         confidence: result.confidence,
         alternatives: result.alternatives,
         confusables: confusablesRef.current,
       });
-      setScored(next);
-      setConfirmed(false);
+      takeGeneration.current += 1;
+      const take = takeRef.current;
+      takeRef.current = null;
 
-      if (selfCompare) {
-        if (result.recordingUri !== recordingRef.current) {
-          deleteSpeechFile(recordingRef.current);
+      const publish = (samples: Float32Array | null) => {
+        const acoustic = samples ? assessRecording(samples, referencesRef.current, phrase) : null;
+        const next = {
+          ...text,
+          score: combinePronunciationScore(
+            text.score,
+            acoustic?.similarity ?? null,
+            acoustic?.penalty ?? 0,
+          ),
+        };
+        setFindings(errorFindings(acoustic?.findings ?? []));
+        setScored(next);
+        setConfirmed(false);
+
+        if (selfCompare) {
+          if (result.recordingUri !== recordingRef.current) {
+            deleteSpeechFile(recordingRef.current);
+          }
+          recordingRef.current = result.recordingUri;
+          setRecordingUri(result.recordingUri);
+          setCompareToken((token) => token + 1);
+          return;
         }
-        recordingRef.current = result.recordingUri;
-        setRecordingUri(result.recordingUri);
-        setCompareToken((token) => token + 1);
-        return;
-      }
 
-      void Haptics.notificationAsync(
-        isSpeechPass(next)
-          ? Haptics.NotificationFeedbackType.Success
-          : Haptics.NotificationFeedbackType.Error,
-      );
+        void Haptics.notificationAsync(
+          isSpeechPass(next)
+            ? Haptics.NotificationFeedbackType.Success
+            : Haptics.NotificationFeedbackType.Error,
+        );
+      };
+
+      if (take) void take.finish().then(publish);
+      else publish(null);
     },
     [mode, phrase, selfCompare],
   );
@@ -173,8 +209,20 @@ export function useSpeakPractice({
     setScored(null);
     setConfirmed(false);
     setCompareToken(0);
+    setFindings([]);
     forgetRecording();
-    void capture.begin();
+    const generation = takeGeneration.current;
+    void capture.begin().then((started) => {
+      if (!started || mode === 'dialog' || takeGeneration.current !== generation) return;
+      void beginWavTake().then((take) => {
+        if (!take) return;
+        if (takeGeneration.current !== generation) {
+          take.discard();
+          return;
+        }
+        takeRef.current = take;
+      });
+    });
   };
 
   const confirm = () => {
@@ -220,5 +268,6 @@ export function useSpeakPractice({
     onMic,
     confirm,
     onAgain,
+    findings,
   };
 }
