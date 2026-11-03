@@ -132,6 +132,7 @@ export function IntroStep({
         sayRu={sayRu}
         parts={speechParts}
         confusables={confusables}
+        featuresPath={item.audio.features}
         onClose={() => setPracticeItemId(null)}
       />
     </View>

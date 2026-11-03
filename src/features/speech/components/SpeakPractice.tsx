@@ -7,6 +7,7 @@ import { colors, space } from '@/theme/tokens';
 
 import { useComparePlayback } from '../hooks/useComparePlayback';
 import { useSpeakPractice, type SpeakPracticeMode } from '../hooks/useSpeakPractice';
+import { useUnitFeatures } from '../hooks/useUnitFeatures';
 import type { SpeechOption } from '../score';
 import { ColoredPhrase } from './ColoredPhrase';
 import { PronunciationHints } from './PronunciationHints';
@@ -32,6 +33,8 @@ export type SpeakPracticeProps = {
   onClose?: () => void;
   attemptsUsed?: number;
   onAttemptsUsed?: (count: number) => void;
+  /** Storage path of the unit's MFCC reference. Missing path keeps the text score. */
+  featuresPath?: string | null;
 };
 
 export function SpeakPractice({
@@ -48,8 +51,10 @@ export function SpeakPractice({
   onClose,
   attemptsUsed,
   onAttemptsUsed,
+  featuresPath = null,
 }: SpeakPracticeProps) {
   const { t } = useTranslation();
+  const references = useUnitFeatures(featuresPath);
   const practice = useSpeakPractice({
     phrase,
     mode,
@@ -58,6 +63,7 @@ export function SpeakPractice({
     onMatch,
     attemptsUsed,
     onAttemptsUsed,
+    references,
   });
   useComparePlayback(practice.compareToken, practice.recordingUri, { audio, text: phrase });
   const access = practice.capture.access;
@@ -89,6 +95,7 @@ export function SpeakPractice({
             sayRu={sayRu}
             parts={parts}
             showAttempts={mode === 'step'}
+            acousticHints={practice.findings}
           />
         ) : mode === 'step' ? (
           <Text variant="body" color={colors.inkMuted}>

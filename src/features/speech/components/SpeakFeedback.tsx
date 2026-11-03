@@ -6,6 +6,11 @@ import { Text } from '@/components/Text';
 import { glossForWord, isSpeechPass, type SpeechScore } from '@/features/speech/score';
 import { colors, radius, space } from '@/theme/tokens';
 
+type AcousticHint = {
+  id: string;
+  hintKey: string;
+};
+
 type SpeakFeedbackProps = {
   score: SpeechScore;
   attemptsLeft: number;
@@ -13,6 +18,8 @@ type SpeakFeedbackProps = {
   parts: readonly { es: string; ru: string }[];
   /** Practice has no try cap, so the remaining-attempts line stays hidden. */
   showAttempts?: boolean;
+  /** Point checks that fired on this take, in the interface language. */
+  acousticHints?: readonly AcousticHint[];
 };
 
 function hintKey(score: SpeechScore): string {
@@ -27,6 +34,7 @@ export function SpeakFeedback({
   sayRu,
   parts,
   showAttempts = true,
+  acousticHints = [],
 }: SpeakFeedbackProps) {
   const { t } = useTranslation();
   const problem = score.problem;
@@ -35,6 +43,11 @@ export function SpeakFeedback({
 
   return (
     <View style={styles.root}>
+      {acousticHints.map((hint) => (
+        <Text key={hint.id} variant="bodyBold">
+          {t(hint.hintKey)}
+        </Text>
+      ))}
       {problem ? (
         <View style={styles.hint} accessibilityLiveRegion="polite">
           <Text variant="bodyBold">{t(hintKey(score), { word: problem.expected })}</Text>

@@ -28,7 +28,7 @@ import {
   SLOW_MIN_DURATION_RATIO,
   storageUploadRequest,
 } from './tts';
-import { ttsAdapter } from './ttsProviders';
+import { activeVoice, genderOfVoice, ttsAdapter } from './ttsProviders';
 
 const spec: TopicSpec = {
   level: 'A1',
@@ -223,6 +223,11 @@ describe('tts plan', () => {
     expect(azure.headers['Ocp-Apim-Subscription-Key']).toBe('secret');
     expect(azure.body).toContain('rate="-25%"');
     expect(azure.body).toContain('es-ES-ElviraNeural');
+    expect(genderOfVoice('es-ES-ElviraNeural')).toBe('female');
+    expect(genderOfVoice('es-MX-JorgeNeural')).toBe('male');
+    expect(activeVoice('azure', 'es-ES')).toEqual({ name: 'es-ES-ElviraNeural', gender: 'female' });
+    expect(activeVoice('azure', 'es-MX')?.gender).toBe('female');
+    expect(activeVoice('nope', 'es-ES')).toBeNull();
     expect(SLOW_PROSODY.startsWith('-')).toBe(true);
 
     const google = JSON.parse(
@@ -272,7 +277,9 @@ describe('tts plan', () => {
       'audio/x-m4a',
       'audio/aac',
       'audio/mpeg',
+      'application/json',
     ]);
+    expect(audioUploadContentType('items/a1/cafe/un_cafe.features.json')).toBe('application/json');
     expect(() => audioUploadContentType('clip.wav')).toThrow(/\.m4a/);
   });
 
@@ -323,6 +330,7 @@ describe('tts plan', () => {
               slow: { es: null, latam: 'items/a1/cafe/un_cafe.p0.mx.slow.m4a' },
             },
           ],
+          features: null,
         },
       },
       { id: 'human.hola', audio: { source: 'human', es: 'items/a1/hola/human.m4a' } },

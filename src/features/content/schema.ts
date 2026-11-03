@@ -106,6 +106,8 @@ export const AudioSchema = z.object({
   latam: nullablePath.default(null),
   slow: SpeedPairSchema.default({ es: null, latam: null }),
   parts: z.array(AudioTrackSchema).default([]),
+  /** Compact MFCC reference for the phrase, normal speed, every stored voice. */
+  features: nullablePath.default(null),
 });
 export type Audio = z.infer<typeof AudioSchema>;
 
@@ -119,6 +121,7 @@ export function blankAudio(
     latam?: string | null;
     slow?: { es?: string | null; latam?: string | null };
     parts?: Audio['parts'];
+    features?: string | null;
   } = {},
 ): Audio {
   return {
@@ -130,6 +133,7 @@ export function blankAudio(
       latam: overrides.slow?.latam ?? null,
     },
     parts: overrides.parts ?? [],
+    features: overrides.features ?? null,
   };
 }
 
@@ -177,6 +181,7 @@ export const ItemSchema = z
       latam: null,
       slow: { es: null, latam: null },
       parts: [],
+      features: null,
     }),
     tags: z.array(z.string().min(1)).default([]),
     /**

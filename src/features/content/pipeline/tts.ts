@@ -159,14 +159,18 @@ export const AUDIO_BUCKET_MIME_TYPES = [
   'audio/x-m4a',
   'audio/aac',
   'audio/mpeg',
+  'application/json',
 ] as const;
 
-/** `.m4a` is audio/mp4, `.mp3` is audio/mpeg. Both are on the bucket allow-list. */
-export function audioUploadContentType(objectPath: string): 'audio/mp4' | 'audio/mpeg' {
+/** `.m4a` is audio/mp4, `.mp3` is audio/mpeg, `.json` is the MFCC reference. */
+export function audioUploadContentType(
+  objectPath: string,
+): 'audio/mp4' | 'audio/mpeg' | 'application/json' {
   const normalized = objectPath.toLowerCase();
   if (normalized.endsWith('.m4a')) return 'audio/mp4';
   if (normalized.endsWith('.mp3')) return 'audio/mpeg';
-  throw new Error(`Для загрузки нужен файл .m4a или .mp3: ${objectPath}`);
+  if (normalized.endsWith('.json')) return 'application/json';
+  throw new Error(`Для загрузки нужен файл .m4a, .mp3 или .json: ${objectPath}`);
 }
 
 export function storageUploadRequest(input: {
@@ -254,6 +258,7 @@ export function applyAudioPaths(raw: unknown, updates: readonly AudioPathUpdate[
         latam: phrase.latam,
         slow: phrase.slow,
         parts,
+        features: asPath(audio.features),
       },
     };
   });

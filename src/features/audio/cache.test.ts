@@ -16,6 +16,7 @@ describe('topic audio cache', () => {
       audio: blankAudio({
         es: 'items/a1/cafe/hola.es.normal.m4a',
         slow: { es: 'items/a1/cafe/hola.es.slow.m4a' },
+        features: 'items/a1/cafe/hola.features.json',
         parts: [
           {
             es: 'items/a1/cafe/hola.p0.es.normal.m4a',
@@ -29,6 +30,7 @@ describe('topic audio cache', () => {
     expect(collectTopicAudioPaths([item])).toEqual([
       'items/a1/cafe/hola.es.normal.m4a',
       'items/a1/cafe/hola.es.slow.m4a',
+      'items/a1/cafe/hola.features.json',
       'items/a1/cafe/hola.p0.es.normal.m4a',
     ]);
     expect(collectTopicAudioPaths([{ ...item, audio: blankAudio({ es: 'a1/hola.mp3' }) }])).toEqual(

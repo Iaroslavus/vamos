@@ -281,6 +281,7 @@ export default function LessonScreen() {
           sayRu={speakHint(loaded.session, step.itemIds[0] ?? '', language)}
           parts={speakParts(loaded.session, step.itemIds[0] ?? '', language)}
           confusables={speakConfusables(loaded.session, step.itemIds[0] ?? '', step.prompt_es)}
+          featuresPath={itemById(loaded.session, step.itemIds[0] ?? '')?.audio.features ?? null}
           onSkip={onSoftContinue}
           onContinue={onSoftContinue}
         />

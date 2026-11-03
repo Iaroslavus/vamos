@@ -30,6 +30,7 @@ import {
 } from '../../src/features/audio/select';
 import { ItemSchema, type Item } from '../../src/features/content/schema';
 import { decodeTtsPayload } from '../../src/features/content/pipeline/ssml';
+import { applyFeaturesPaths } from '../../src/features/speech/acoustic/reference';
 import {
   applyAudioPaths,
   assertSlowLongerThanNormal,
@@ -42,6 +43,7 @@ import {
 } from '../../src/features/content/pipeline/tts';
 import { ttsAdapter } from '../../src/features/content/pipeline/ttsProviders';
 
+import { buildUnitFeatureFile, downloadStoredAudio } from './features';
 import { normalizeToM4a, probeDurationSeconds } from './ffmpeg';
 import { putStorageBytes } from './put-storage';
 
@@ -64,6 +66,7 @@ async function main(): Promise<void> {
     const raw: unknown = JSON.parse(fs.readFileSync(file, 'utf8')) as unknown;
     const items = z.array(ItemSchema).parse(raw);
     const updates: AudioPathUpdate[] = [];
+    const featureUpdates: { id: string; path: string }[] = [];
 
     for (const item of items) {
       const rendered = new Map<string, RenderedClip>();
@@ -100,12 +103,38 @@ async function main(): Promise<void> {
           path: clip.objectPath,
         });
       }
+
+      const fresh = [...rendered.values()]
+        .filter((entry) => entry.clip.partIndex === null && entry.clip.speed === 'normal')
+        .map((entry) => ({ voice: entry.clip.voice, audio: entry.audio }));
+      const features =
+        fresh.length === 0 && item.audio.features
+          ? null
+          : await buildUnitFeatureFile({
+              item,
+              providerId: provider.id,
+              fresh,
+              readStored: (objectPath) => downloadStoredAudio(objectPath, supabaseUrl),
+            });
+      if (features) {
+        const upload = storageUploadRequest({
+          supabaseUrl,
+          apiKey: storageKey,
+          objectPath: features.path,
+        });
+        await putStorageBytes(upload, features.body, storageKey);
+        featureUpdates.push({ id: item.id, path: features.path });
+      }
     }
 
-    if (updates.length === 0) continue;
-    fs.writeFileSync(file, `${JSON.stringify(applyAudioPaths(raw, updates), null, 2)}\n`);
-    written += updates.length;
-    console.log(`${path.relative(root, file)}: ${updates.length}`);
+    if (updates.length === 0 && featureUpdates.length === 0) continue;
+    const withClips = applyAudioPaths(raw, updates);
+    fs.writeFileSync(
+      file,
+      `${JSON.stringify(applyFeaturesPaths(withClips, featureUpdates), null, 2)}\n`,
+    );
+    written += updates.length + featureUpdates.length;
+    console.log(`${path.relative(root, file)}: ${updates.length + featureUpdates.length}`);
   }
 
   console.log(
@@ -115,11 +144,7 @@ async function main(): Promise<void> {
   );
 }
 
-function slotKey(
-  partIndex: number | null,
-  voice: AudioPreference,
-  speed: AudioSpeed,
-): string {
+function slotKey(partIndex: number | null, voice: AudioPreference, speed: AudioSpeed): string {
   return `${partIndex ?? 'phrase'}:${voice}:${speed}`;
 }
 

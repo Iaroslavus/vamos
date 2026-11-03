@@ -12,6 +12,7 @@ type SpeakRepeatStepProps = {
   sayRu?: string | null;
   parts?: readonly SpeakPart[];
   confusables?: readonly string[];
+  featuresPath?: string | null;
   onSkip: () => void;
   onContinue: () => void;
 };
@@ -22,6 +23,7 @@ export function SpeakRepeatStep({
   sayRu = null,
   parts = [],
   confusables = [],
+  featuresPath = null,
   onSkip,
   onContinue,
 }: SpeakRepeatStepProps) {
@@ -36,6 +38,7 @@ export function SpeakRepeatStep({
         sayRu={sayRu}
         parts={parts}
         confusables={confusables}
+        featuresPath={featuresPath}
         onSkip={onSkip}
         onContinue={onContinue}
       />

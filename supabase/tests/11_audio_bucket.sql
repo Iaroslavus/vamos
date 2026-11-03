@@ -16,8 +16,8 @@ select results_eq(
 
 select is(
   (select allowed_mime_types::text[] from storage.buckets where id = 'audio'),
-  array['audio/mp4', 'audio/x-m4a', 'audio/aac', 'audio/mpeg']::text[],
-  'audio bucket allows m4a containers and narrator mp3'
+  array['audio/mp4', 'audio/x-m4a', 'audio/aac', 'audio/mpeg', 'application/json']::text[],
+  'audio bucket allows m4a, narrator mp3, and pronunciation features'
 );
 
 reset role;
