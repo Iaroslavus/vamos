@@ -34,6 +34,12 @@
     "tags": [
       "greeting"
     ],
+    "confusables": [
+      "ola",
+      "olla",
+      "hora",
+      "jola"
+    ],
     "draft": true,
     "draft_i18n": true
   },

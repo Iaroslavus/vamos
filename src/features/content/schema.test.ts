@@ -114,6 +114,14 @@ describe('content v2 schema', () => {
     expect(parsed.literal).toEqual({ ru: 'добрые дни', uk: 'добрі дні', en: 'good days' });
   });
 
+  it('keeps recognizer neighbors and defaults the list to empty', () => {
+    expect(ItemSchema.parse(cafeItem).confusables).toEqual([]);
+    expect(
+      ItemSchema.parse({ ...cafeItem, es: 'hola', confusables: ['ola', 'olla', 'hora', 'jola'] })
+        .confusables,
+    ).toEqual(['ola', 'olla', 'hora', 'jola']);
+  });
+
   it('requires a pronunciation hint on A1', () => {
     const result = ItemSchema.safeParse({ ...cafeItem, say: null });
     expect(result.success).toBe(false);

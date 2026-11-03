@@ -5,9 +5,12 @@ import { Text } from '@/components/Text';
 import { playLessonAudio, stopLessonAudio } from '@/features/audio/playback';
 import { colors, space } from '@/theme/tokens';
 
+import { useComparePlayback } from '../hooks/useComparePlayback';
 import { useSpeakPractice, type SpeakPracticeMode } from '../hooks/useSpeakPractice';
 import type { SpeechOption } from '../score';
 import { ColoredPhrase } from './ColoredPhrase';
+import { PronunciationHints } from './PronunciationHints';
+import { SelfCompareActions } from './SelfCompareActions';
 import { SpeakActions } from './SpeakActions';
 import { SpeakFeedback } from './SpeakFeedback';
 import { SpeakPracticeControls, SpeakPracticeHeading } from './SpeakPracticeChrome';
@@ -21,6 +24,7 @@ export type SpeakPracticeProps = {
   sayRu?: string | null;
   parts?: readonly Part[];
   mode: SpeakPracticeMode;
+  confusables?: readonly string[];
   options?: readonly SpeechOption[];
   onMatch?: (optionId: string) => void;
   onSkip?: () => void;
@@ -36,6 +40,7 @@ export function SpeakPractice({
   sayRu = null,
   parts = [],
   mode,
+  confusables = [],
   options,
   onMatch,
   onSkip,
@@ -49,10 +54,12 @@ export function SpeakPractice({
     phrase,
     mode,
     options,
+    confusables,
     onMatch,
     attemptsUsed,
     onAttemptsUsed,
   });
+  useComparePlayback(practice.compareToken, practice.recordingUri, { audio, text: phrase });
   const access = practice.capture.access;
   const fallback = access === 'unavailable' || access === 'denied' || access === 'blocked';
   const tone: SpeechFallbackTone = mode === 'step' ? 'step' : mode;
@@ -72,8 +79,9 @@ export function SpeakPractice({
   return (
     <View style={[styles.root, mode === 'step' ? styles.step : null]}>
       <View style={styles.body}>
-        <SpeakPracticeHeading mode={mode} />
+        <SpeakPracticeHeading mode={mode} selfCompare={practice.selfCompare} />
         {mode === 'dialog' ? null : <ColoredPhrase phrase={phrase} score={practice.shown} />}
+        {mode === 'dialog' ? null : <PronunciationHints phrase={phrase} />}
         {practice.shown ? (
           <SpeakFeedback
             score={practice.shown}
@@ -99,6 +107,20 @@ export function SpeakPractice({
           </Text>
         )}
       </View>
+
+      {practice.comparing ? (
+        <SelfCompareActions
+          againDisabled={practice.locked || practice.micBlocked}
+          onSame={() => {
+            practice.confirm();
+            if (mode === 'step') onContinue?.();
+          }}
+          onAgain={() => {
+            void stopLessonAudio();
+            practice.onAgain();
+          }}
+        />
+      ) : null}
 
       {mode === 'step' ? (
         <SpeakActions

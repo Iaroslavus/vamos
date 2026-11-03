@@ -27,6 +27,7 @@ function item(id: string, es: string, ru: string): Item {
     variant: 'both',
     audio: blankAudio({ es: `${id}.mp3` }),
     tags: [],
+    confusables: [],
     draft: false,
     draft_i18n: false,
   };

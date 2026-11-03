@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from '@testing-library/react-native';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 import type { ComponentProps } from 'react';
 import { I18nextProvider } from 'react-i18next';
@@ -85,6 +85,7 @@ function item(id: string, es: string, ru: string): Item {
     variant: 'both',
     audio: blankAudio({ es: `${id}.mp3` }),
     tags: [],
+    confusables: [],
     draft: false,
     draft_i18n: false,
   };
@@ -281,6 +282,13 @@ describe('DialogStep', () => {
     expect(screen.getByText('gracias')).toBeTruthy();
 
     await fireEvent.press(screen.getByText('Сказать вслух'));
+    await waitFor(() => {
+      expect(ExpoSpeechRecognitionModule.start).toHaveBeenCalled();
+    });
+    const started = jest.mocked(ExpoSpeechRecognitionModule.start).mock.calls.at(-1)?.[0];
+    expect(started?.contextualStrings).toEqual(['buenos días', 'gracias', 'adiós']);
+    expect(started).not.toHaveProperty('recordingOptions');
+
     const speech = ExpoSpeechRecognitionModule as unknown as {
       __emit: (event: string, payload: unknown) => void;
     };

@@ -273,6 +273,7 @@ function canonicalItem(item: Item): Item {
     variant: item.variant,
     audio: blankAudio(),
     tags: item.tags,
+    confusables: item.confusables,
     draft: true,
     draft_i18n: true,
   };

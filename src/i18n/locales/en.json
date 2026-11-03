@@ -451,7 +451,15 @@
     "permissionDialog": "Without microphone access you can't say the line. Choose it on the screen. Audio isn't saved.",
     "noSpeech": "We can't hear you. Come a little closer and say the phrase again.",
     "error": "We couldn't recognize that. Try again.",
-    "dialogMiss": "We didn't catch the line. Say it again, or choose it."
+    "dialogMiss": "We didn't catch the line. Say it again, or choose it.",
+    "selfCompare": "We're checking whether what you said is understandable.",
+    "selfCompareNote": "The recording is only for comparison and is deleted after this step.",
+    "soundsSame": "Sounds the same",
+    "again": "Again",
+    "ruleSilentH": "h at the start of a word is silent.",
+    "ruleYeismo": "ll and y sound the same.",
+    "ruleJota": "j sounds like a harsh h. So does g before e or i.",
+    "ruleStress": "Stress falls on the vowel with the accent mark."
   },
   "common": {
     "devComponents": "Components (dev)",

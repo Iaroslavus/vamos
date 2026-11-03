@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
@@ -8,10 +8,12 @@ import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
 import { Appear } from '@/features/auth/components/Appear';
 import { useAudioPreference } from '@/features/audio/preference';
+import { listItems } from '@/features/content/loader';
 import type { Item } from '@/features/content/schema';
 import { contentLocale, textOf } from '@/features/content/text';
 import { resolveTopicIcon } from '@/features/content/topicIcons';
 import { SpeakPracticeSheet } from '@/features/speech/components/SpeakPracticeSheet';
+import { confusablesForUnit, lexiconOf } from '@/features/speech/confusables';
 import { AddToVocabSheet } from '@/features/vocab/components/AddToVocabSheet';
 import { useItemSaveState } from '@/features/vocab/hooks/useItemSaveState';
 import { colors, radius, space } from '@/theme/tokens';
@@ -64,6 +66,10 @@ export function IntroStep({
   const why = textOf(item.why, language);
   const sayRu = showsSayRu(item.level) ? textOf(item.say, language) : null;
   const speechParts = item.parts.map((part) => ({ es: part.es, ru: textOf(part.tr, language) }));
+  const confusables = useMemo(
+    () => confusablesForUnit(item.es, item.confusables ?? [], lexiconOf(listItems())),
+    [item.confusables, item.es],
+  );
   const TopicIcon = resolveTopicIcon(topicIcon);
   const swipe = useCardSwipe(onNext, item.id);
 
@@ -125,6 +131,7 @@ export function IntroStep({
         audio={itemAudioPath(item, audioVariant)}
         sayRu={sayRu}
         parts={speechParts}
+        confusables={confusables}
         onClose={() => setPracticeItemId(null)}
       />
     </View>

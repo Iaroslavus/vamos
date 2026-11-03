@@ -53,6 +53,7 @@ function item(overrides: Partial<Item> = {}): Item {
       ],
     }),
     tags: [],
+    confusables: [],
     draft: false,
     draft_i18n: false,
     ...overrides,

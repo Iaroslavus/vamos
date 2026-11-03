@@ -11,9 +11,11 @@ import { SoundWave } from './SoundWave';
 
 type SpeakPracticeHeadingProps = {
   mode: SpeakPracticeMode;
+  /** Short phrases ask the learner to compare, and the caption says so. */
+  selfCompare?: boolean;
 };
 
-export function SpeakPracticeHeading({ mode }: SpeakPracticeHeadingProps) {
+export function SpeakPracticeHeading({ mode, selfCompare = false }: SpeakPracticeHeadingProps) {
   const { t } = useTranslation();
   if (mode === 'dialog') {
     return (
@@ -39,8 +41,13 @@ export function SpeakPracticeHeading({ mode }: SpeakPracticeHeadingProps) {
         </Text>
       ) : null}
       <Text variant="caption" color={colors.inkMuted}>
-        {t('speech.honesty')}
+        {t(selfCompare ? 'speech.selfCompare' : 'speech.honesty')}
       </Text>
+      {selfCompare ? (
+        <Text variant="caption" color={colors.inkMuted}>
+          {t('speech.selfCompareNote')}
+        </Text>
+      ) : null}
     </View>
   );
 }

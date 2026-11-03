@@ -29,10 +29,20 @@ const granted = {
   status: 'granted' as const,
 };
 
-function emitTranscript(transcript: string): void {
+function emitTranscript(
+  transcript: string,
+  extra: { confidence?: number; alternatives?: string[] } = {},
+): void {
   speech.__emit('result', {
     isFinal: true,
-    results: [{ transcript, confidence: 1, segments: [] }],
+    results: [
+      { transcript, confidence: extra.confidence ?? 1, segments: [] },
+      ...(extra.alternatives ?? []).map((alternative) => ({
+        transcript: alternative,
+        confidence: 0.4,
+        segments: [],
+      })),
+    ],
   });
 }
 
@@ -41,18 +51,29 @@ const safeArea = {
   insets: { top: 47, left: 0, right: 0, bottom: 34 },
 };
 
-async function renderStep(onSkip = jest.fn(), onContinue = jest.fn()) {
+async function renderStep({
+  onSkip = jest.fn(),
+  onContinue = jest.fn(),
+  promptEs = 'buenos días',
+  confusables = [] as string[],
+}: {
+  onSkip?: jest.Mock;
+  onContinue?: jest.Mock;
+  promptEs?: string;
+  confusables?: string[];
+} = {}) {
   await render(
     <I18nextProvider i18n={i18n}>
       <SafeAreaProvider initialMetrics={safeArea}>
         <SpeakRepeatStep
-          promptEs="buenos días"
+          promptEs={promptEs}
           audio="a1/buenos-dias.mp3"
           sayRu="буЭнос дИас"
           parts={[
             { es: 'buenos', ru: 'добрые' },
             { es: 'días', ru: 'утро' },
           ]}
+          confusables={confusables}
           onSkip={onSkip}
           onContinue={onContinue}
         />
@@ -83,10 +104,11 @@ describe('SpeakRepeatStep', () => {
     expect(screen.getByText('Слушать образец')).toBeTruthy();
     expect(screen.getByText('Пропустить')).toBeTruthy();
     expect(screen.getByText('Осталось 3 попытки')).toBeTruthy();
-    expect(screen.getByText(/Запись не сохраняется/)).toBeTruthy();
+    expect(screen.getByText('Проверяем, понятно ли вы сказали.')).toBeTruthy();
+    expect(screen.getByText('Ударение там, где стоит знак ударения.')).toBeTruthy();
   });
 
-  it('starts es-ES recognition without a saved recording', async () => {
+  it('grades a short phrase without the reference and keeps a temp recording', async () => {
     await renderStep();
 
     await fireEvent.press(screen.getByLabelText('Говорить'));
@@ -96,16 +118,32 @@ describe('SpeakRepeatStep', () => {
         expect.objectContaining({
           lang: 'es-ES',
           requiresOnDeviceRecognition: true,
+          maxAlternatives: 5,
+          recordingOptions: { persist: true },
         }),
       );
     });
     const options = jest.mocked(ExpoSpeechRecognitionModule.start).mock.calls[0]?.[0];
-    expect(options).not.toHaveProperty('recordingOptions');
+    expect(options).not.toHaveProperty('contextualStrings');
     expect(options).not.toHaveProperty('audioSource');
   });
 
+  it('grades a longer phrase without saving audio or hinting the reference', async () => {
+    await renderStep({ promptEs: 'una mesa roja' });
+
+    expect(screen.getByText(/Запись не сохраняется/)).toBeTruthy();
+    await fireEvent.press(screen.getByLabelText('Говорить'));
+
+    await waitFor(() => {
+      expect(ExpoSpeechRecognitionModule.start).toHaveBeenCalled();
+    });
+    const options = jest.mocked(ExpoSpeechRecognitionModule.start).mock.calls[0]?.[0];
+    expect(options).not.toHaveProperty('contextualStrings');
+    expect(options).not.toHaveProperty('recordingOptions');
+  });
+
   it('colors the words, shows the percent and the problem hint', async () => {
-    await renderStep();
+    const { onContinue } = await renderStep();
 
     await act(async () => {
       emitTranscript('buenos dias');
@@ -116,7 +154,42 @@ describe('SpeakRepeatStep', () => {
     expect(screen.getByText('Как звучит: буЭнос дИас')).toBeTruthy();
     expect(screen.getByText('93%')).toBeTruthy();
     expect(screen.getByText('Осталось 2 попытки')).toBeTruthy();
+    expect(screen.getByText('Звучит так же')).toBeTruthy();
+    expect(screen.getByText('Ещё раз')).toBeTruthy();
+    expect(screen.queryByText('Дальше')).toBeNull();
+
+    await fireEvent.press(screen.getByText('Звучит так же'));
+    expect(onContinue).toHaveBeenCalledTimes(1);
+  });
+
+  it('accepts a longer phrase from the recognizer when every word is clear', async () => {
+    const { onContinue } = await renderStep({ promptEs: 'una mesa roja' });
+
+    await act(async () => {
+      emitTranscript('una mesa roja');
+    });
+
     expect(screen.getByText('Дальше')).toBeTruthy();
+    expect(screen.queryByText('Звучит так же')).toBeNull();
+    await fireEvent.press(screen.getByText('Дальше'));
+    expect(onContinue).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not accept hola when a neighbor is among the alternatives', async () => {
+    await renderStep({
+      promptEs: 'hola',
+      confusables: ['ola', 'olla', 'hora', 'jola'],
+    });
+
+    expect(screen.getByText('h в начале слова не читается.')).toBeTruthy();
+
+    await act(async () => {
+      emitTranscript('hola', { alternatives: ['jola'] });
+    });
+
+    expect(screen.getByText('Почти «hola». Послушайте образец ещё раз.')).toBeTruthy();
+    expect(screen.queryByText('Дальше')).toBeNull();
+    expect(screen.getByText('Звучит так же')).toBeTruthy();
   });
 
   it('disables the microphone after three attempts', async () => {

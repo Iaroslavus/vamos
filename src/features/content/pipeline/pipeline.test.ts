@@ -139,6 +139,7 @@ describe('content report', () => {
     expect(formatReport(report)).toContain('Ссылки: ок');
     expect(formatReport(report)).toContain('Не хватает переводов');
     expect(formatReport(report)).toContain('Дословный разбор: ок');
+    expect(formatReport(report)).toContain('Соседи коротких слов');
     expect(report.missingTranslations).toEqual({ ru: [], uk: [], en: [] });
   });
 

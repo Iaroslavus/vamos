@@ -1,4 +1,11 @@
-import { glossForWord, isSpeechPass, matchSpokenOption, scoreSpeech, speechWords } from './score';
+import {
+  glossForWord,
+  isSpeechPass,
+  matchSpokenOption,
+  scoreSpeech,
+  SPEECH_CONFIDENCE_MIN,
+  speechWords,
+} from './score';
 
 describe('scoreSpeech', () => {
   it('marks an exact phrase as ok with a perfect score', () => {
@@ -184,6 +191,53 @@ describe('scoreSpeech', () => {
 
     expect(matchSpokenOption('zzzz', options)).toBeNull();
     expect(matchSpokenOption('', options)).toBeNull();
+  });
+
+  it('marks hola close when an alternative is a listed neighbor', () => {
+    const confusables = ['ola', 'olla', 'hora', 'jola'];
+    const jola = scoreSpeech('hola', 'hola', {
+      confidence: 0.9,
+      alternatives: [{ transcript: 'jola', confidence: 0.4 }],
+      confusables,
+    });
+    const olla = scoreSpeech('hola', 'hola', {
+      confidence: 0.9,
+      alternatives: [{ transcript: 'olla', confidence: 0.4 }],
+      confusables,
+    });
+
+    expect(jola.words[0]).toMatchObject({ mark: 'close', reason: 'confused', heard: 'hola' });
+    expect(olla.words[0]?.mark).toBe('close');
+    expect(isSpeechPass(jola)).toBe(false);
+    expect(isSpeechPass(olla)).toBe(false);
+  });
+
+  it('marks an exact word close when confidence is below the threshold', () => {
+    const result = scoreSpeech('hola', 'hola', {
+      confidence: SPEECH_CONFIDENCE_MIN - 0.01,
+    });
+
+    expect(result.words[0]).toMatchObject({ mark: 'close', reason: 'uncertain' });
+    expect(isSpeechPass(result)).toBe(false);
+  });
+
+  it('keeps an exact word ok at the confidence threshold without a neighbor', () => {
+    const result = scoreSpeech('hola', 'Hola', {
+      confidence: SPEECH_CONFIDENCE_MIN,
+      alternatives: [{ transcript: 'zzzz', confidence: 0.1 }],
+      confusables: ['ola', 'olla', 'hora', 'jola'],
+    });
+
+    expect(result.words[0]?.mark).toBe('ok');
+    expect(result.score).toBe(100);
+    expect(isSpeechPass(result)).toBe(true);
+  });
+
+  it('does not punish a missing confidence value', () => {
+    const result = scoreSpeech('hola', 'hola', { confidence: -1 });
+
+    expect(result.words[0]?.mark).toBe('ok');
+    expect(isSpeechPass(result)).toBe(true);
   });
 
   it('finds the Russian gloss of a reference word', () => {
