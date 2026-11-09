@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { fireEvent, render, screen, userEvent } from '@testing-library/react-native';
+import { fireEvent, render, screen, userEvent, waitFor } from '@testing-library/react-native';
 import { I18nextProvider } from 'react-i18next';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -201,5 +201,45 @@ describe('FolderScreen', () => {
     expect(
       await screen.findByText('В этой папке пока пусто. Добавьте фразу с карточки или из диалога.'),
     ).toBeTruthy();
+  });
+
+  it('opens study modes, keeps the last settings, and marks unfinished modes', async () => {
+    const seeded = await vocabRepository.syncDerived('user-1', {
+      topics: [],
+      difficultItemIds: [],
+    });
+    const favorites = seeded.folders.find((folder) => folder.systemKey === 'favorites');
+    await vocabRepository.addItems('user-1', favorites?.id ?? '', ['hola.hola']);
+    mockParams.id = favorites?.id;
+
+    await renderFolder();
+    expect(await screen.findByLabelText('1 новые, 0 учу, 0 знаю')).toBeTruthy();
+
+    await user.press(screen.getByText('Учить'));
+    expect(await screen.findByText('Как учить')).toBeTruthy();
+    expect(screen.getAllByText('скоро').length).toBeGreaterThanOrEqual(2);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('study-mode-review').props.accessibilityState).toEqual(
+        expect.objectContaining({ disabled: false }),
+      );
+    });
+    expect(screen.getByTestId('study-mode-flashcards').props.accessibilityState).toEqual(
+      expect.objectContaining({ disabled: true }),
+    );
+    expect(screen.getByTestId('study-mode-test').props.accessibilityState).toEqual(
+      expect.objectContaining({ disabled: true }),
+    );
+
+    await user.press(screen.getByLabelText('Настройки сессии'));
+    expect(screen.getByText('Направление')).toBeTruthy();
+    expect(screen.getByText('Автоозвучка')).toBeTruthy();
+
+    await user.press(screen.getByLabelText('Назад'));
+    await user.press(screen.getByTestId('study-mode-review'));
+    expect(mockPush).toHaveBeenCalledWith({
+      pathname: '/study',
+      params: { folder: favorites?.id, mode: 'review' },
+    });
   });
 });
