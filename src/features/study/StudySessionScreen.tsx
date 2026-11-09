@@ -13,6 +13,7 @@ import { vocabRepository } from '@/features/vocab/defaultRepository';
 import { colors, space } from '@/theme/tokens';
 
 import { FlashcardSession } from './components/FlashcardSession';
+import { LearnSession } from './components/LearnSession';
 import { StudyPlayer } from './components/StudyPlayer';
 import { flashcardSteps } from './flashcards';
 import { recordStudyResult, studyModeGrades } from './fsrs';
@@ -61,6 +62,13 @@ export function StudySessionScreen() {
             if (!launch.userId) return Promise.reject(new Error('Missing user'));
             return vocabRepository.pinDifficult(launch.userId, itemIds).then(() => undefined);
           }}
+        />
+      ) : launch.status === 'ready' && mode === 'learn' ? (
+        <LearnSession
+          units={launch.selected}
+          settings={launch.settings}
+          onRecord={onRecord}
+          onClose={leave}
         />
       ) : launch.status === 'ready' && mode ? (
         <StudyPlayer

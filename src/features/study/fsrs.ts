@@ -5,9 +5,11 @@ import type { ReviewRepository } from '@/features/review/types';
 import type { MasteryBand, MasteryCounts, StudyGrade, StudyMode, StudyUnit } from './types';
 
 /**
- * How a finished mode treats the deck.
- * `rating` writes one review through the repository.
+ * V1. How a finished mode treats the deck.
+ * `rating` writes a review through the repository.
  * `none` leaves the schedule untouched.
+ * Learn writes that review once, when a unit is learned, using
+ * {@link ratingForStudyGrade}: no misses → Good, any miss → Hard.
  */
 export const STUDY_FSRS = {
   review: 'rating',

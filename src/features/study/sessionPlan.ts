@@ -2,6 +2,7 @@ import { normalizeForCompare } from '@/features/lesson/grading';
 import type { ReviewDirection, StoredCard } from '@/features/review/types';
 
 import { cardIsHard } from './fsrs';
+import type { LearnTask } from './learn';
 import { ACCENT_PASS_SCORE } from './modes';
 import {
   MATCH_BOARD_SIZE,
@@ -178,29 +179,54 @@ function matchesFilter(unit: StudyUnit, filter: StudyFilter): boolean {
   }
 }
 
+/**
+ * One opening prompt per unit.
+ * The learn screen does not walk this list. It runs the level queue.
+ * The list only tells the launcher whether the folder has something to study.
+ */
 function learnSteps(
   selected: readonly StudyUnit[],
   pool: readonly StudyUnit[],
   settings: StudySettings,
 ): StudyStep[] {
-  const steps: StudyStep[] = [];
-  for (const [index, unit] of selected.entries()) {
-    const choice = exerciseStep(
-      unit,
-      index,
-      'select_translation',
-      pool,
-      settings,
-      'learn',
-      `learn-${index}-a`,
-    );
-    steps.push(choice);
-    if (choice.type === 'type_translation') continue;
-    steps.push(
-      exerciseStep(unit, index, 'type_translation', pool, settings, 'learn', `learn-${index}-b`),
-    );
+  return selected.map((unit, index) =>
+    planLearnStep(unit, pool, settings, 'select', `learn-${index}`, index),
+  );
+}
+
+/** The prompt a learn unit shows at its current level. */
+export function planLearnStep(
+  unit: StudyUnit,
+  pool: readonly StudyUnit[],
+  settings: StudySettings,
+  task: LearnTask,
+  id: string,
+  index: number,
+): StudyStep {
+  if (task === 'speak') {
+    return { ...speakStep(unit, index, settings), id };
   }
-  return steps;
+  if (task === 'type_reverse') {
+    const facing = studyDirectionAt(settings.direction, index);
+    return typeStep(unit, facing === 'es_to_ru' ? 'ru_to_es' : 'es_to_ru', {
+      id,
+      autoplay: false,
+      itemId: unit.id,
+      phraseEs: unit.es,
+      phraseTr: unit.tr,
+      audio: unit.audio,
+      playEs: false,
+    });
+  }
+  return exerciseStep(
+    unit,
+    index,
+    task === 'select' ? 'select_translation' : 'type_translation',
+    pool,
+    settings,
+    'learn',
+    id,
+  );
 }
 
 function exerciseStep(
@@ -359,10 +385,15 @@ function matchBoards(units: readonly StudyUnit[], settings: StudySettings): Stud
   return boards;
 }
 
-function directionFor(setting: StudyDirectionSetting, index: number): ReviewDirection {
+/** Direction of unit `index`. Mixed alternates, starting with Spanish → translation. */
+export function studyDirectionAt(setting: StudyDirectionSetting, index: number): ReviewDirection {
   if (setting === 'ru_to_es') return 'ru_to_es';
   if (setting === 'mixed') return index % 2 === 0 ? 'es_to_ru' : 'ru_to_es';
   return 'es_to_ru';
+}
+
+function directionFor(setting: StudyDirectionSetting, index: number): ReviewDirection {
+  return studyDirectionAt(setting, index);
 }
 
 function choices(
