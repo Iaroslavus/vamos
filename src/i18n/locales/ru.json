@@ -490,7 +490,7 @@
       },
       "learn": {
         "title": "Заучивание",
-        "body": "Сначала выбор, потом письмо."
+        "body": "Порции по семь фраз: выбор, письмо, потом вслух."
       },
       "test": {
         "title": "Тест",
@@ -541,6 +541,12 @@
     "masteryKnown": "знаю",
     "masterySummary": "{{new}} новые, {{learning}} учу, {{known}} знаю",
     "progress": "{{done}} из {{total}}",
+    "learnedOf": "{{learned}} из {{total}} выучено",
+    "learnBreakBody": "Эта порция собрана.",
+    "learnNext": "Следующая порция",
+    "learnSummaryTitle": "Сессия готова",
+    "learnSummaryBody": "За сессию выучено {{learned}} из {{total}}.",
+    "learnSummaryMisses": "Ошибок по пути: {{count}}",
     "summaryTitle": "Готово",
     "summaryBody": "Пройдено шагов: {{count}}",
     "backToFolder": "К папке",

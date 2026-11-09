@@ -7,8 +7,8 @@ import { glossItem } from '../gloss';
 import { useReviewSnapshot } from '../hooks/useReviewSnapshot';
 import { useStudyPrefs } from '../hooks/useStudyPrefs';
 import { isPlayableStudyMode } from '../modes';
-import { buildStudyUnits, sessionPlan } from '../sessionPlan';
-import type { StudyMode, StudyStep } from '../types';
+import { buildStudyUnits, selectStudyUnits, sessionPlan } from '../sessionPlan';
+import type { StudyMode, StudyStep, StudyUnit } from '../types';
 
 export type StudyLaunchStatus =
   'loading' | 'error' | 'missing' | 'unavailable' | 'empty' | 'invalid' | 'ready';
@@ -36,10 +36,16 @@ export function useStudyLaunch(folderId: string, mode: StudyMode | null) {
     [i18n.language, itemIds, now, review.data],
   );
 
+  const settings = prefs.prefs.settings;
+  const selected = useMemo(() => {
+    if (!mode || !prefs.ready) return [] as StudyUnit[];
+    return selectStudyUnits(units, settings, mode);
+  }, [mode, prefs.ready, settings, units]);
+
   const steps = useMemo(() => {
     if (!mode || !prefs.ready) return [] as StudyStep[];
-    return sessionPlan(mode, units, prefs.prefs.settings);
-  }, [mode, prefs.prefs.settings, prefs.ready, units]);
+    return sessionPlan(mode, units, settings);
+  }, [mode, prefs.ready, settings, units]);
 
   const folder = vocab.snapshot?.folders.find((entry) => entry.id === folderId) ?? null;
   const waiting = vocab.isPending || !prefs.ready || (vocab.userId != null && review.isPending);
@@ -53,6 +59,8 @@ export function useStudyLaunch(folderId: string, mode: StudyMode | null) {
       empty: steps.length === 0,
     }),
     steps,
+    selected,
+    settings,
     userId: vocab.userId,
     reload: () => {
       void vocab.refetch();

@@ -490,7 +490,7 @@
       },
       "learn": {
         "title": "Learn",
-        "body": "Choose first, then write."
+        "body": "Sets of seven: choose, write, then say it aloud."
       },
       "test": {
         "title": "Test",
@@ -541,6 +541,12 @@
     "masteryKnown": "known",
     "masterySummary": "{{new}} new, {{learning}} learning, {{known}} known",
     "progress": "{{done}} of {{total}}",
+    "learnedOf": "{{learned}} of {{total}} learned",
+    "learnBreakBody": "This set is done.",
+    "learnNext": "Next set",
+    "learnSummaryTitle": "Session complete",
+    "learnSummaryBody": "Learned {{learned}} of {{total}} this session.",
+    "learnSummaryMisses": "Misses along the way: {{count}}",
     "summaryTitle": "Done",
     "summaryBody": "Steps finished: {{count}}",
     "backToFolder": "Back to folder",

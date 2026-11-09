@@ -490,7 +490,7 @@
       },
       "learn": {
         "title": "Вивчення",
-        "body": "Спочатку вибір, потім письмо."
+        "body": "Порції по сім фраз: вибір, письмо, потім уголос."
       },
       "test": {
         "title": "Контрольна",
@@ -541,6 +541,12 @@
     "masteryKnown": "знаю",
     "masterySummary": "{{new}} нові, {{learning}} вчу, {{known}} знаю",
     "progress": "{{done}} із {{total}}",
+    "learnedOf": "{{learned}} із {{total}} вивчено",
+    "learnBreakBody": "Цю порцію зібрано.",
+    "learnNext": "Наступна порція",
+    "learnSummaryTitle": "Сесію завершено",
+    "learnSummaryBody": "За сесію вивчено {{learned}} із {{total}}.",
+    "learnSummaryMisses": "Помилок по дорозі: {{count}}",
     "summaryTitle": "Готово",
     "summaryBody": "Пройдено кроків: {{count}}",
     "backToFolder": "До папки",

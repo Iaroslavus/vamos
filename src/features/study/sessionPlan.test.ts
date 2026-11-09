@@ -4,7 +4,7 @@ import {
   isPlayableStudyMode,
   orderedStudyModes,
 } from './modes';
-import { sessionPlan } from './sessionPlan';
+import { planLearnStep, sessionPlan } from './sessionPlan';
 import {
   DEFAULT_STUDY_SETTINGS,
   type StudySettings,
@@ -108,14 +108,42 @@ describe('sessionPlan', () => {
     expect(isPlayableStudyMode('test')).toBe(false);
   });
 
-  it('teaches with a choice and then a written step', () => {
+  it('lists one opening learn prompt per phrase', () => {
     const steps = sessionPlan('learn', POOL, settings({ count: 5 }));
-    expect(steps.slice(0, 2).map((step) => step.id)).toEqual(['learn-0-a', 'learn-0-b']);
-    expect(steps.slice(0, 2).map((step) => step.type)).toEqual([
-      'select_translation',
-      'type_translation',
-    ]);
-    expect(steps).toHaveLength(8);
+    expect(steps.map((step) => step.id)).toEqual(['learn-0', 'learn-1', 'learn-2', 'learn-3']);
+    expect(steps.every((step) => step.type === 'select_translation')).toBe(true);
+  });
+
+  it('builds each learn task, including the reverse of the session direction', () => {
+    const unit = POOL[0]!;
+    const select = planLearnStep(unit, POOL, settings(), 'select', 's', 0);
+    expect(select.type).toBe('select_translation');
+    if (select.type === 'select_translation') expect(select.options).toHaveLength(4);
+
+    const typed = planLearnStep(unit, POOL, settings({ direction: 'ru_to_es' }), 'type', 't', 0);
+    expect(typed).toMatchObject({
+      type: 'type_translation',
+      direction: 'ru_to_es',
+      answer: 'adiós',
+    });
+
+    const reverse = planLearnStep(unit, POOL, settings(), 'type_reverse', 'r', 0);
+    expect(reverse).toMatchObject({
+      type: 'type_translation',
+      direction: 'ru_to_es',
+      prompt: 'пока',
+      answer: 'adiós',
+    });
+
+    const spoken = planLearnStep(
+      unit,
+      POOL,
+      settings({ accentStrictness: 'strict' }),
+      'speak',
+      'v',
+      1,
+    );
+    expect(spoken).toMatchObject({ type: 'speak_repeat', id: 'v', promptEs: 'adiós' });
   });
 
   it('falls back to typing when the folder has no other choice', () => {
