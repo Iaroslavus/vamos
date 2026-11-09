@@ -302,11 +302,14 @@ export function scoreSpeech(
   };
 }
 
-/** Understood: nothing was missed, and the weighted score clears the bar. */
-export function isSpeechPass(result: SpeechScore): boolean {
+/**
+ * Understood: nothing was missed, and the weighted score clears the bar.
+ * Lessons use {@link SPEECH_PASS_SCORE}. A study session can pass a stricter line.
+ */
+export function isSpeechPass(result: SpeechScore, passScore = SPEECH_PASS_SCORE): boolean {
   if (result.words.length === 0) return false;
   if (result.words.some((word) => word.mark === 'miss')) return false;
-  return result.score >= SPEECH_PASS_SCORE;
+  return result.score >= passScore;
 }
 
 /**

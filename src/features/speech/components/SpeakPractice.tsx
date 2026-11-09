@@ -35,6 +35,8 @@ export type SpeakPracticeProps = {
   onAttemptsUsed?: (count: number) => void;
   /** Storage path of the unit's MFCC reference. Missing path keeps the text score. */
   featuresPath?: string | null;
+  /** Understood at this score. Omitted in a lesson, where the speech default applies. */
+  passScore?: number;
 };
 
 export function SpeakPractice({
@@ -52,6 +54,7 @@ export function SpeakPractice({
   attemptsUsed,
   onAttemptsUsed,
   featuresPath = null,
+  passScore,
 }: SpeakPracticeProps) {
   const { t } = useTranslation();
   const references = useUnitFeatures(featuresPath);
@@ -64,6 +67,7 @@ export function SpeakPractice({
     attemptsUsed,
     onAttemptsUsed,
     references,
+    passScore,
   });
   useComparePlayback(practice.compareToken, practice.recordingUri, { audio, text: phrase });
   const access = practice.capture.access;
@@ -96,6 +100,7 @@ export function SpeakPractice({
             parts={parts}
             showAttempts={mode === 'step'}
             acousticHints={practice.findings}
+            passScore={passScore}
           />
         ) : mode === 'step' ? (
           <Text variant="body" color={colors.inkMuted}>

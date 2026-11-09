@@ -12,15 +12,19 @@ import { reviewRepository } from '@/features/review/defaultRepository';
 import { vocabRepository } from '@/features/vocab/defaultRepository';
 import { colors, space } from '@/theme/tokens';
 
+import { DictationSession } from './components/DictationSession';
 import { FlashcardSession } from './components/FlashcardSession';
 import { LearnSession } from './components/LearnSession';
+import { SpeakSession } from './components/SpeakSession';
 import { StudyPlayer } from './components/StudyPlayer';
 import { TestSession } from './components/TestSession';
+import { TimedPairsSession } from './components/TimedPairsSession';
 import { flashcardSteps } from './flashcards';
 import { recordStudyResult, studyModeGrades } from './fsrs';
 import { useStudyLaunch } from './hooks/useStudyLaunch';
 import type { StudyRecordInput } from './hooks/useStudyPlayer';
 import { isStudyMode } from './modes';
+import type { StudySpeakStep } from './types';
 
 export function StudySessionScreen() {
   const router = useRouter();
@@ -74,6 +78,23 @@ export function StudySessionScreen() {
             if (!launch.userId) return Promise.reject(new Error('Missing user'));
             return vocabRepository.pinDifficult(launch.userId, itemIds).then(() => undefined);
           }}
+          onClose={leave}
+        />
+      ) : launch.status === 'ready' && mode === 'match' ? (
+        <TimedPairsSession
+          units={launch.selected}
+          userId={launch.userId}
+          folderId={folderId}
+          onClose={leave}
+        />
+      ) : launch.status === 'ready' && mode === 'spell' ? (
+        <DictationSession units={launch.selected} onRecord={onRecord} onClose={leave} />
+      ) : launch.status === 'ready' && mode === 'speak' ? (
+        <SpeakSession
+          steps={launch.steps.filter(
+            (step): step is StudySpeakStep => step.type === 'speak_repeat',
+          )}
+          onRecord={onRecord}
           onClose={leave}
         />
       ) : launch.status === 'ready' && mode === 'learn' ? (

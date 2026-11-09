@@ -497,16 +497,16 @@
         "body": "Без підказок до кнопки «Здати». Потім — відсоток і помилки."
       },
       "match": {
-        "title": "Пари",
-        "body": "З’єднайте іспанську й переклад."
+        "title": "Пари на час",
+        "body": "Сітка з шести пар. Помилка додає секунду, рекорд лишається в папці."
       },
       "spell": {
-        "title": "Правопис",
-        "body": "Напишіть фразу з пам’яті."
+        "title": "Диктант",
+        "body": "Почуєте фразу і напишете її. Відкрита літера коштує бал."
       },
       "speak": {
-        "title": "Уголос",
-        "body": "Повторіть фразу вголос."
+        "title": "Говоріння",
+        "body": "Скажіть кожну фразу. Вимову перевіряють як на уроці."
       },
       "quick5": {
         "title": "П’ять швидко",
@@ -623,6 +623,29 @@
       "added": "Додано до складних",
       "addError": "Не вдалося додати до складних. Спробуйте ще раз.",
       "rateError": "Оцінки не збереглися. Підсумок на екрані правильний."
+    },
+    "games": {
+      "pairsBoard": "Сітка {{current}} з {{total}}",
+      "pairsBoardClear": "Сітку зібрано",
+      "pairsTime": "Час {{time}}",
+      "pairsRecord": "Рекорд {{time}}",
+      "pairsNoRecord": "Рекорду поки немає",
+      "pairsNewRecord": "Новий рекорд",
+      "pairsDone": "Пари зібрано",
+      "pairsNext": "Наступна сітка",
+      "pairsPenalties_one": "Штраф {{count}} секунда",
+      "pairsPenalties_few": "Штраф {{count}} секунди",
+      "pairsPenalties_many": "Штраф {{count}} секунд",
+      "pairsPenalties_other": "Штраф {{count}} секунд",
+      "dictationPrompt": "Напишіть, що чуєте",
+      "dictationPlaceholder": "Фраза іспанською",
+      "dictationReveal": "Відкрити літеру",
+      "dictationRevealLabel": "Відкрити літеру. Мінус один бал. Зараз {{score}}",
+      "dictationStake": "Бали за фразу: {{score}}",
+      "dictationTotal": "Бали: {{score}}",
+      "dictationMask": "Підказка {{mask}}",
+      "dictationDone": "Диктант готовий",
+      "speakProgress": "{{current}} з {{total}}"
     }
   },
   "common": {

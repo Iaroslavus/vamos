@@ -3,7 +3,12 @@ import { StyleSheet, View } from 'react-native';
 
 import { Ring } from '@/components/Ring';
 import { Text } from '@/components/Text';
-import { glossForWord, isSpeechPass, type SpeechScore } from '@/features/speech/score';
+import {
+  SPEECH_PASS_SCORE,
+  glossForWord,
+  isSpeechPass,
+  type SpeechScore,
+} from '@/features/speech/score';
 import { colors, radius, space } from '@/theme/tokens';
 
 type AcousticHint = {
@@ -20,6 +25,8 @@ type SpeakFeedbackProps = {
   showAttempts?: boolean;
   /** Point checks that fired on this take, in the interface language. */
   acousticHints?: readonly AcousticHint[];
+  /** Same bar the practice hook uses to decide a pass. */
+  passScore?: number;
 };
 
 function hintKey(score: SpeechScore): string {
@@ -35,11 +42,12 @@ export function SpeakFeedback({
   parts,
   showAttempts = true,
   acousticHints = [],
+  passScore = SPEECH_PASS_SCORE,
 }: SpeakFeedbackProps) {
   const { t } = useTranslation();
   const problem = score.problem;
   const gloss = problem ? glossForWord(problem.expected, parts) : null;
-  const passed = isSpeechPass(score);
+  const passed = isSpeechPass(score, passScore);
 
   return (
     <View style={styles.root}>

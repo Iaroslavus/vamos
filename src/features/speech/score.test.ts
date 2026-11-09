@@ -240,6 +240,18 @@ describe('scoreSpeech', () => {
     expect(isSpeechPass(result)).toBe(true);
   });
 
+  it('uses a stricter pass line when the study session asks for one', () => {
+    const result = scoreSpeech('hola', 'hola');
+    expect(result.score).toBe(100);
+    expect(isSpeechPass(result, 85)).toBe(true);
+    const soft = {
+      ...result,
+      score: 70,
+    };
+    expect(isSpeechPass(soft)).toBe(true);
+    expect(isSpeechPass(soft, 85)).toBe(false);
+  });
+
   it('finds the Russian gloss of a reference word', () => {
     const parts = [
       { es: 'buenos', ru: 'добрые' },
