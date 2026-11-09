@@ -69,7 +69,8 @@
             "latam": "items/a1/camino/donde_esta.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/camino/donde_esta.features.json"
     },
     "tags": [
       "city"
@@ -143,7 +144,8 @@
             "latam": "items/a1/camino/como_llego.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/camino/como_llego.features.json"
     },
     "tags": [
       "city"
@@ -221,7 +223,8 @@
             "latam": "items/a1/camino/la_estacion.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/camino/la_estacion.features.json"
     },
     "tags": [
       "city"
@@ -290,7 +293,8 @@
             "latam": "items/a1/camino/el_metro.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/camino/el_metro.features.json"
     },
     "tags": [
       "city"
@@ -368,7 +372,8 @@
             "latam": "items/a1/camino/por_aqui.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/camino/por_aqui.features.json"
     },
     "tags": [
       "city"
@@ -442,7 +447,8 @@
             "latam": "items/a1/camino/por_alli.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/camino/por_alli.features.json"
     },
     "tags": [
       "city"
@@ -516,7 +522,8 @@
             "latam": "items/a1/camino/derecha.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/camino/derecha.features.json"
     },
     "tags": [
       "city"
@@ -590,7 +597,8 @@
             "latam": "items/a1/camino/izquierda.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/camino/izquierda.features.json"
     },
     "tags": [
       "city"
@@ -668,7 +676,8 @@
             "latam": null
           }
         }
-      ]
+      ],
+      "features": "items/a1/camino/recto.features.json"
     },
     "tags": [
       "city"
@@ -746,7 +755,8 @@
             "latam": "items/a1/camino/derecho.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/camino/derecho.features.json"
     },
     "tags": [
       "city"
@@ -820,7 +830,8 @@
             "latam": "items/a1/camino/cerca.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/camino/cerca.features.json"
     },
     "tags": [
       "city"
@@ -894,7 +905,8 @@
             "latam": "items/a1/camino/lejos.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/camino/lejos.features.json"
     },
     "tags": [
       "city"
@@ -967,7 +979,8 @@
             "latam": "items/a1/camino/primera.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/camino/primera.features.json"
     },
     "tags": [
       "city"

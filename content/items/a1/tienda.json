@@ -69,7 +69,8 @@
             "latam": "items/a1/tienda/tiene_pan.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tienda/tiene_pan.features.json"
     },
     "tags": [
       "shop"
@@ -151,7 +152,8 @@
             "latam": "items/a1/tienda/hay_leche.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tienda/hay_leche.features.json"
     },
     "tags": [
       "shop"
@@ -220,7 +222,8 @@
             "latam": "items/a1/tienda/si_hay.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tienda/si_hay.features.json"
     },
     "tags": [
       "shop"
@@ -294,7 +297,8 @@
             "latam": "items/a1/tienda/no_hay.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tienda/no_hay.features.json"
     },
     "tags": [
       "shop"
@@ -332,7 +336,8 @@
         "es": "items/a1/tienda/esto.es.slow.m4a",
         "latam": "items/a1/tienda/esto.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/tienda/esto.features.json"
     },
     "tags": [
       "shop"
@@ -370,7 +375,8 @@
         "es": "items/a1/tienda/eso.es.slow.m4a",
         "latam": "items/a1/tienda/eso.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/tienda/eso.features.json"
     },
     "tags": [
       "shop"
@@ -448,7 +454,8 @@
             "latam": "items/a1/tienda/quiero_esto.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tienda/quiero_esto.features.json"
     },
     "tags": [
       "shop"
@@ -517,7 +524,8 @@
             "latam": "items/a1/tienda/una_bolsa.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tienda/una_bolsa.features.json"
     },
     "tags": [
       "shop"
@@ -591,7 +599,8 @@
             "latam": "items/a1/tienda/con_tarjeta.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tienda/con_tarjeta.features.json"
     },
     "tags": [
       "shop",
@@ -666,7 +675,8 @@
             "latam": "items/a1/tienda/en_efectivo.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tienda/en_efectivo.features.json"
     },
     "tags": [
       "shop",
@@ -741,7 +751,8 @@
             "latam": "items/a1/tienda/puedo_pagar.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tienda/puedo_pagar.features.json"
     },
     "tags": [
       "shop",
@@ -815,7 +826,8 @@
             "latam": "items/a1/tienda/el_ticket.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tienda/el_ticket.features.json"
     },
     "tags": [
       "shop",

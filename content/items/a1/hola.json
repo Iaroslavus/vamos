@@ -29,7 +29,8 @@
         "es": "items/a1/hola/hola.es.slow.m4a",
         "latam": "items/a1/hola/hola.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/hola/hola.features.json"
     },
     "tags": [
       "greeting"
@@ -117,7 +118,8 @@
             "latam": "items/a1/hola/buenos_dias.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/hola/buenos_dias.features.json"
     },
     "tags": [
       "greeting"
@@ -195,7 +197,8 @@
             "latam": "items/a1/hola/buenas_tardes.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/hola/buenas_tardes.features.json"
     },
     "tags": [
       "greeting"
@@ -273,7 +276,8 @@
             "latam": "items/a1/hola/buenas_noches.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/hola/buenas_noches.features.json"
     },
     "tags": [
       "greeting"
@@ -311,7 +315,8 @@
         "es": "items/a1/hola/adios.es.slow.m4a",
         "latam": "items/a1/hola/adios.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/hola/adios.features.json"
     },
     "tags": [
       "greeting"
@@ -389,7 +394,8 @@
             "latam": "items/a1/hola/hasta_luego.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/hola/hasta_luego.features.json"
     },
     "tags": [
       "greeting"
@@ -467,7 +473,8 @@
             "latam": "items/a1/hola/por_favor.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/hola/por_favor.features.json"
     },
     "tags": [
       "polite"
@@ -505,7 +512,8 @@
         "es": "items/a1/hola/gracias.es.slow.m4a",
         "latam": "items/a1/hola/gracias.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/hola/gracias.features.json"
     },
     "tags": [
       "polite"
@@ -583,7 +591,8 @@
             "latam": "items/a1/hola/me_llamo.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/hola/me_llamo.features.json"
     },
     "tags": [
       "intro"
@@ -677,7 +686,8 @@
             "latam": "items/a1/hola/como_te_llamas.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/hola/como_te_llamas.features.json"
     },
     "tags": [
       "intro"
@@ -755,7 +765,8 @@
             "latam": "items/a1/hola/mucho_gusto.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/hola/mucho_gusto.features.json"
     },
     "tags": [
       "intro"
@@ -797,7 +808,8 @@
         "es": "items/a1/hola/soy.es.slow.m4a",
         "latam": "items/a1/hola/soy.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/hola/soy.features.json"
     },
     "tags": [
       "intro"
@@ -835,7 +847,8 @@
         "es": "items/a1/hola/de.es.slow.m4a",
         "latam": "items/a1/hola/de.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/hola/de.features.json"
     },
     "tags": [
       "intro"
@@ -917,7 +930,8 @@
             "latam": "items/a1/hola/encantado.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/hola/encantado.features.json"
     },
     "tags": [
       "intro"
@@ -959,7 +973,8 @@
         "es": "items/a1/hola/usted.es.slow.m4a",
         "latam": "items/a1/hola/usted.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/hola/usted.features.json"
     },
     "tags": [
       "intro",
@@ -1038,7 +1053,8 @@
             "latam": "items/a1/hola/que_tal.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/hola/que_tal.features.json"
     },
     "tags": [
       "greeting"
@@ -1116,7 +1132,8 @@
             "latam": "items/a1/hola/bien_gracias.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/hola/bien_gracias.features.json"
     },
     "tags": [
       "greeting"

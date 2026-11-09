@@ -69,7 +69,8 @@
             "latam": null
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/la_talla.features.json"
     },
     "tags": [
       "ropa"
@@ -147,7 +148,8 @@
             "latam": "items/a1/ropa/el_talle.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/el_talle.features.json"
     },
     "tags": [
       "ropa"
@@ -221,7 +223,8 @@
             "latam": "items/a1/ropa/una_talla_mas.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/una_talla_mas.features.json"
     },
     "tags": [
       "ropa"
@@ -295,7 +298,8 @@
             "latam": "items/a1/ropa/una_talla_menos.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/una_talla_menos.features.json"
     },
     "tags": [
       "ropa"
@@ -385,7 +389,8 @@
             "latam": "items/a1/ropa/que_talla_usa.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/que_talla_usa.features.json"
     },
     "tags": [
       "ropa"
@@ -463,7 +468,8 @@
             "latam": "items/a1/ropa/me_queda.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/me_queda.features.json"
     },
     "tags": [
       "ropa"
@@ -497,7 +503,8 @@
         "es": "items/a1/ropa/grande.es.slow.m4a",
         "latam": "items/a1/ropa/grande.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/ropa/grande.features.json"
     },
     "tags": [
       "ropa"
@@ -531,7 +538,8 @@
         "es": "items/a1/ropa/negro.es.slow.m4a",
         "latam": "items/a1/ropa/negro.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/ropa/negro.features.json"
     },
     "tags": [
       "ropa"
@@ -565,7 +573,8 @@
         "es": "items/a1/ropa/blanco.es.slow.m4a",
         "latam": "items/a1/ropa/blanco.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/ropa/blanco.features.json"
     },
     "tags": [
       "ropa"
@@ -599,7 +608,8 @@
         "es": "items/a1/ropa/azul.es.slow.m4a",
         "latam": "items/a1/ropa/azul.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/ropa/azul.features.json"
     },
     "tags": [
       "ropa"
@@ -668,7 +678,8 @@
             "latam": "items/a1/ropa/la_camiseta.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/la_camiseta.features.json"
     },
     "tags": [
       "ropa"
@@ -741,7 +752,8 @@
             "latam": "items/a1/ropa/los_pantalones.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/los_pantalones.features.json"
     },
     "tags": [
       "ropa"
@@ -810,7 +822,8 @@
             "latam": "items/a1/ropa/la_camisa.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/la_camisa.features.json"
     },
     "tags": [
       "ropa"
@@ -888,7 +901,8 @@
             "latam": "items/a1/ropa/camiseta_negra.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/camiseta_negra.features.json"
     },
     "tags": [
       "ropa"
@@ -978,7 +992,8 @@
             "latam": "items/a1/ropa/puedo_probarme.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/puedo_probarme.features.json"
     },
     "tags": [
       "ropa"
@@ -1051,7 +1066,8 @@
             "latam": "items/a1/ropa/el_probador.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/el_probador.features.json"
     },
     "tags": [
       "ropa"
@@ -1125,7 +1141,8 @@
             "latam": "items/a1/ropa/me_queda_bien.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/me_queda_bien.features.json"
     },
     "tags": [
       "ropa"
@@ -1199,7 +1216,8 @@
             "latam": "items/a1/ropa/me_queda_grande.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/me_queda_grande.features.json"
     },
     "tags": [
       "ropa"
@@ -1273,7 +1291,8 @@
             "latam": "items/a1/ropa/me_queda_pequena.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/me_queda_pequena.features.json"
     },
     "tags": [
       "ropa"
@@ -1342,7 +1361,8 @@
             "latam": "items/a1/ropa/esta_camisa.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/esta_camisa.features.json"
     },
     "tags": [
       "ropa"
@@ -1420,7 +1440,8 @@
             "latam": "items/a1/ropa/me_gusta.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/me_gusta.features.json"
     },
     "tags": [
       "ropa"
@@ -1494,7 +1515,8 @@
             "latam": "items/a1/ropa/no_me_queda.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/no_me_queda.features.json"
     },
     "tags": [
       "ropa"
@@ -1572,7 +1594,8 @@
             "latam": "items/a1/ropa/muy_caro.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/muy_caro.features.json"
     },
     "tags": [
       "ropa"
@@ -1646,7 +1669,8 @@
             "latam": "items/a1/ropa/muy_cara.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/muy_cara.features.json"
     },
     "tags": [
       "ropa"
@@ -1736,7 +1760,8 @@
             "latam": "items/a1/ropa/me_lo_llevo.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/me_lo_llevo.features.json"
     },
     "tags": [
       "ropa"
@@ -1810,7 +1835,8 @@
             "latam": "items/a1/ropa/solo_miro.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/solo_miro.features.json"
     },
     "tags": [
       "ropa"
@@ -1888,7 +1914,8 @@
             "latam": null
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/hay_rebaja.features.json"
     },
     "tags": [
       "ropa"
@@ -1966,7 +1993,8 @@
             "latam": "items/a1/ropa/hay_descuento.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/ropa/hay_descuento.features.json"
     },
     "tags": [
       "ropa"

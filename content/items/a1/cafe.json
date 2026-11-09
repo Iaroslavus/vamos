@@ -64,7 +64,8 @@
             "latam": "items/a1/cafe/un_cafe.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/cafe/un_cafe.features.json"
     },
     "tags": [
       "cafe",
@@ -138,7 +139,8 @@
             "latam": "items/a1/cafe/cafe_con_leche.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/cafe/cafe_con_leche.features.json"
     },
     "tags": [
       "cafe",
@@ -208,7 +210,8 @@
             "latam": "items/a1/cafe/un_te.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/cafe/un_te.features.json"
     },
     "tags": [
       "cafe",
@@ -291,7 +294,8 @@
             "latam": "items/a1/cafe/agua.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/cafe/agua.features.json"
     },
     "tags": [
       "cafe",
@@ -370,7 +374,8 @@
             "latam": "items/a1/cafe/para_llevar.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/cafe/para_llevar.features.json"
     },
     "tags": [
       "cafe"
@@ -448,7 +453,8 @@
             "latam": "items/a1/cafe/para_tomar_aqui.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/cafe/para_tomar_aqui.features.json"
     },
     "tags": [
       "cafe"
@@ -490,7 +496,8 @@
         "es": "items/a1/cafe/quiero.es.slow.m4a",
         "latam": "items/a1/cafe/quiero.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/cafe/quiero.features.json"
     },
     "tags": [
       "cafe"
@@ -568,7 +575,8 @@
             "latam": "items/a1/cafe/cuanto_es.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/cafe/cuanto_es.features.json"
     },
     "tags": [
       "cafe",
@@ -642,7 +650,8 @@
             "latam": "items/a1/cafe/la_cuenta.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/cafe/la_cuenta.features.json"
     },
     "tags": [
       "cafe",
@@ -721,7 +730,8 @@
             "latam": "items/a1/cafe/nada_mas.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/cafe/nada_mas.features.json"
     },
     "tags": [
       "cafe"
@@ -799,7 +809,8 @@
             "latam": "items/a1/cafe/esta_bien.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/cafe/esta_bien.features.json"
     },
     "tags": [
       "cafe"
@@ -837,7 +848,8 @@
         "es": "items/a1/cafe/aqui.es.slow.m4a",
         "latam": "items/a1/cafe/aqui.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/cafe/aqui.features.json"
     },
     "tags": [
       "cafe"

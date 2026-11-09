@@ -29,7 +29,8 @@
         "es": "items/a1/numbers/uno.es.slow.m4a",
         "latam": "items/a1/numbers/uno.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/numbers/uno.features.json"
     },
     "tags": [
       "number"
@@ -63,7 +64,8 @@
         "es": "items/a1/numbers/dos.es.slow.m4a",
         "latam": "items/a1/numbers/dos.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/numbers/dos.features.json"
     },
     "tags": [
       "number"
@@ -97,7 +99,8 @@
         "es": "items/a1/numbers/tres.es.slow.m4a",
         "latam": "items/a1/numbers/tres.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/numbers/tres.features.json"
     },
     "tags": [
       "number"
@@ -186,7 +189,8 @@
             "latam": "items/a1/numbers/cuatro_y_cinco.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/numbers/cuatro_y_cinco.features.json"
     },
     "tags": [
       "number"
@@ -271,7 +275,8 @@
             "latam": "items/a1/numbers/seis_y_siete.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/numbers/seis_y_siete.features.json"
     },
     "tags": [
       "number"
@@ -356,7 +361,8 @@
             "latam": "items/a1/numbers/ocho_y_nueve.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/numbers/ocho_y_nueve.features.json"
     },
     "tags": [
       "number"
@@ -429,7 +435,8 @@
             "latam": "items/a1/numbers/numero_diez.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/numbers/numero_diez.features.json"
     },
     "tags": [
       "number"
@@ -507,7 +514,8 @@
             "latam": "items/a1/numbers/cuanto_cuesta.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/numbers/cuanto_cuesta.features.json"
     },
     "tags": [
       "price"
@@ -589,7 +597,8 @@
             "latam": "items/a1/numbers/cuanto_cuestan.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/numbers/cuanto_cuestan.features.json"
     },
     "tags": [
       "price"
@@ -662,7 +671,8 @@
             "latam": "items/a1/numbers/un_euro.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/numbers/un_euro.features.json"
     },
     "tags": [
       "price"
@@ -731,7 +741,8 @@
             "latam": "items/a1/numbers/dos_euros.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/numbers/dos_euros.features.json"
     },
     "tags": [
       "price"
@@ -804,7 +815,8 @@
             "latam": "items/a1/numbers/diez_euros.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/numbers/diez_euros.features.json"
     },
     "tags": [
       "price"
@@ -882,7 +894,8 @@
             "latam": "items/a1/numbers/dos_con_cincuenta.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/numbers/dos_con_cincuenta.features.json"
     },
     "tags": [
       "price"
