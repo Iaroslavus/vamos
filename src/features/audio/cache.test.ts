@@ -68,6 +68,40 @@ describe('topic audio cache', () => {
     ]);
   });
 
+  it('downloads a features file from the same public URL and cache key as a clip', async () => {
+    const item = ItemSchema.parse({
+      id: 'cafe.hola',
+      type: 'word',
+      es: 'hola',
+      tr: fillLocales('привет'),
+      say: fillLocales('ола'),
+      level: 'A1',
+      audio: blankAudio({
+        es: 'items/a1/cafe/hola.es.normal.m4a',
+        features: 'items/a1/cafe/hola.features.json',
+      }),
+    });
+    const keys: string[] = [];
+    const downloaded: string[] = [];
+    const store: AudioCacheStore = {
+      async localUri() {
+        return null;
+      },
+      async download(objectPath, url) {
+        keys.push(objectPath);
+        downloaded.push(url);
+      },
+    };
+
+    await cacheTopicAudio([item], 'http://127.0.0.1:54321/', store);
+
+    expect(keys).toEqual(['items/a1/cafe/hola.es.normal.m4a', 'items/a1/cafe/hola.features.json']);
+    expect(downloaded).toEqual([
+      'http://127.0.0.1:54321/storage/v1/object/public/audio/items/a1/cafe/hola.es.normal.m4a',
+      'http://127.0.0.1:54321/storage/v1/object/public/audio/items/a1/cafe/hola.features.json',
+    ]);
+  });
+
   it('loads every unit of a starter topic', () => {
     const items = itemsForTopic('a1.hola');
     expect(items.length).toBeGreaterThan(6);

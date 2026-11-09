@@ -152,7 +152,7 @@ function existingPath(
 /**
  * MIME types stored on the `audio` bucket.
  * Keep this list identical to `allowed_mime_types` in
- * `supabase/migrations/20261028180000_audio_bucket_mime.sql`.
+ * `supabase/migrations/20261103120000_audio_features_json.sql`.
  */
 export const AUDIO_BUCKET_MIME_TYPES = [
   'audio/mp4',

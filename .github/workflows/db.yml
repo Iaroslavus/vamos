@@ -37,6 +37,7 @@ jobs:
               - 'scripts/content/put-storage.ts'
               - 'scripts/content/import-human.ts'
               - 'scripts/content/tts.ts'
+              - 'scripts/content/features.ts'
               - '.github/workflows/db.yml'
 
       - uses: actions/setup-node@v5
@@ -53,7 +54,7 @@ jobs:
 
       # Local stack only (Docker). Services that are not needed to run migrations,
       # pgTAP, and the m4a upload check are excluded to keep the job fast.
-      # storage-api stays up so a real .m4a can be posted to the audio bucket.
+      # storage-api stays up so a real .m4a and .features.json can be posted to the audio bucket.
       - name: supabase start
         if: steps.changes.outputs.supabase == 'true'
         run: supabase start -x studio,imgproxy,mailpit,edge-runtime,logflare,vector,supavisor,realtime
@@ -69,7 +70,7 @@ jobs:
       # src/lib/database.types.ts must match the migrations. Regenerate with `npm run db:types`.
       - run: npm ci
         if: steps.changes.outputs.supabase == 'true'
-      - name: Local storage accepts an m4a upload
+      - name: Local storage accepts m4a and features JSON
         if: steps.changes.outputs.supabase == 'true'
         run: npx tsx scripts/content/verify-audio-upload.ts
       - name: Check generated types are up to date

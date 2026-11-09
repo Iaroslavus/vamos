@@ -1,6 +1,7 @@
 /**
- * Posts a tiny .m4a to the local audio bucket and expects Storage to accept audio/mp4.
- * The service role is read from `supabase status` and is never printed.
+ * Posts a tiny .m4a and a tiny .features.json to the local audio bucket.
+ * Storage must accept audio/mp4 and application/json. The service role is read
+ * from `supabase status` and is never printed.
  */
 import { execFileSync } from 'child_process';
 
@@ -17,38 +18,63 @@ const M4A = Uint8Array.from([
   0x4d, 0x34, 0x41, 0x20, 0x6d, 0x70, 0x34, 0x32,
 ]);
 
+const FEATURES = new TextEncoder().encode('{"v":1,"probe":true}');
+
 async function main(): Promise<void> {
   const { url, key } = localApi();
-  const objectPath = `items/_mime_probe/${Date.now()}.m4a`;
-  const contentType = audioUploadContentType(objectPath);
-  if (contentType !== 'audio/mp4') {
-    throw new Error(`Для .m4a ожидался audio/mp4, получен ${contentType}.`);
+  const stamp = Date.now();
+  await probe({
+    url,
+    key,
+    objectPath: `items/_mime_probe/${stamp}.m4a`,
+    body: M4A,
+    contentType: 'audio/mp4',
+  });
+  await probe({
+    url,
+    key,
+    objectPath: `items/_mime_probe/${stamp}.features.json`,
+    body: FEATURES,
+    contentType: 'application/json',
+  });
+  console.log('local storage accepted .m4a as audio/mp4 and .features.json as application/json');
+}
+
+async function probe(input: {
+  url: string;
+  key: string;
+  objectPath: string;
+  body: Uint8Array;
+  contentType: 'audio/mp4' | 'application/json';
+}): Promise<void> {
+  const detected = audioUploadContentType(input.objectPath);
+  if (detected !== input.contentType) {
+    throw new Error(`Для ${input.objectPath} ожидался ${input.contentType}, получен ${detected}.`);
   }
 
   const upload = storageUploadRequest({
-    supabaseUrl: url,
-    apiKey: key,
-    objectPath,
+    supabaseUrl: input.url,
+    apiKey: input.key,
+    objectPath: input.objectPath,
   });
-  if (upload.headers['Content-Type'] !== 'audio/mp4') {
+  if (upload.headers['Content-Type'] !== input.contentType) {
     throw new Error(`Запрос ушёл с Content-Type ${upload.headers['Content-Type']}.`);
   }
 
-  await putStorageBytes(upload, M4A, key);
+  await putStorageBytes(upload, input.body, input.key);
 
   const remove = await fetch(upload.url, {
     method: 'DELETE',
     headers: {
-      Authorization: `Bearer ${key}`,
-      apikey: key,
+      Authorization: `Bearer ${input.key}`,
+      apikey: input.key,
     },
   });
   if (!remove.ok) {
     const text = await remove.text();
-    const safe = text.split(key).join('[redacted]');
+    const safe = text.split(input.key).join('[redacted]');
     throw new Error(`Не удалось удалить пробу: ${remove.status} ${safe.slice(0, 200)}`);
   }
-  console.log('local storage accepted .m4a as audio/mp4');
 }
 
 function localApi(): { url: string; key: string } {
