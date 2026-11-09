@@ -486,7 +486,7 @@
       },
       "flashcards": {
         "title": "Flashcards",
-        "body": "Flip cards without a grade."
+        "body": "Flip the card. Right means Know, left means Still learning."
       },
       "learn": {
         "title": "Learn",
@@ -559,6 +559,21 @@
       "typeRu": "Write the Spanish",
       "match": "Match the pairs",
       "speak": "Say it aloud"
+    },
+    "flash": {
+      "counter": "{{current}} / {{total}}",
+      "flipHint": "Tap to flip",
+      "flipLabel": "{{text}}. Flip the card",
+      "shuffle": "Shuffle",
+      "playNormal": "Normal",
+      "playSlow": "Slow",
+      "know": "Know",
+      "again": "Still learning",
+      "summary": "Know {{know}} / Still learning {{again}}",
+      "repeat": "Repeat \"still learning\"",
+      "addDifficult": "Add to Tricky",
+      "added": "Added to Tricky",
+      "addError": "Couldn't add these to Tricky. Try again."
     }
   },
   "common": {

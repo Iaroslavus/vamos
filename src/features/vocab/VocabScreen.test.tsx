@@ -217,7 +217,7 @@ describe('FolderScreen', () => {
 
     await user.press(screen.getByText('Учить'));
     expect(await screen.findByText('Как учить')).toBeTruthy();
-    expect(screen.getAllByText('скоро').length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByText('скоро')).toHaveLength(1);
 
     await waitFor(() => {
       expect(screen.getByTestId('study-mode-review').props.accessibilityState).toEqual(
@@ -225,7 +225,7 @@ describe('FolderScreen', () => {
       );
     });
     expect(screen.getByTestId('study-mode-flashcards').props.accessibilityState).toEqual(
-      expect.objectContaining({ disabled: true }),
+      expect.objectContaining({ disabled: false }),
     );
     expect(screen.getByTestId('study-mode-test').props.accessibilityState).toEqual(
       expect.objectContaining({ disabled: true }),

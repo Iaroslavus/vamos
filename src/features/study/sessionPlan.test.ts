@@ -197,15 +197,15 @@ describe('sessionPlan', () => {
     });
   });
 
-  it('plans flashcards without offering them as a playable mode', () => {
+  it('plans a playable flashcard in the chosen direction', () => {
     const steps = sessionPlan('flashcards', POOL.slice(0, 1), settings({ direction: 'ru_to_es' }));
     expect(steps[0]).toMatchObject({
       type: 'flashcard',
       front: 'пока',
       back: 'adiós',
     });
-    expect(isPlayableStudyMode('flashcards')).toBe(false);
-    expect(isPlayableStudyMode('review')).toBe(true);
+    expect(isPlayableStudyMode('flashcards')).toBe(true);
+    expect(isPlayableStudyMode('test')).toBe(false);
   });
 });
 

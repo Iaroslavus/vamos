@@ -245,6 +245,71 @@ describe('vocab repository', () => {
     expect(remote.removed).toEqual([]);
   });
 
+  it('reads a cache from before pinned difficult phrases', async () => {
+    const { storage, repository } = setup();
+    await storage.setItem(
+      vocabStorageKey(USER),
+      JSON.stringify({
+        version: 1,
+        folders: {},
+        items: {},
+        outbox: [],
+        favoritesMigrated: true,
+      }),
+    );
+
+    await expect(repository.read(USER)).resolves.toEqual({
+      folders: [],
+      items: [],
+      pending: 0,
+    });
+  });
+
+  it('pins phrases into difficult offline and keeps them when the automatic list drops them', async () => {
+    const { repository } = setup(false);
+    const seeded = await repository.syncDerived(USER, {
+      topics: [],
+      difficultItemIds: ['hola.hola', 'hola.gracias'],
+    });
+    const difficult = seeded.folders.find((folder) => folder.systemKey === 'difficult');
+    const pinned = await repository.pinDifficult(USER, ['hola.hola', 'hola.adios']);
+
+    expect(difficultItems(pinned, difficult?.id)).toEqual([
+      'hola.adios',
+      'hola.gracias',
+      'hola.hola',
+    ]);
+    expect(pinned.pending).toBe(seeded.pending + 1);
+
+    const again = await repository.pinDifficult(USER, ['hola.hola']);
+    expect(again.pending).toBe(pinned.pending);
+    expect(difficultItems(again, difficult?.id)).toEqual([
+      'hola.adios',
+      'hola.gracias',
+      'hola.hola',
+    ]);
+
+    const dropped = await repository.syncDerived(USER, {
+      topics: [],
+      difficultItemIds: [],
+    });
+    expect(difficultItems(dropped, difficult?.id)).toEqual(['hola.adios', 'hola.hola']);
+  });
+
+  it('rejects an empty pin without writing and still blocks a manual add', async () => {
+    const { repository } = setup();
+    const base = await repository.ensureBases(USER);
+    const difficult = base.folders.find((folder) => folder.systemKey === 'difficult');
+    const empty = await repository.pinDifficult(USER, []);
+
+    expect(empty.items).toEqual([]);
+    expect(empty.pending).toBe(base.pending);
+    await expect(repository.pinDifficult(USER, [' '])).rejects.toThrow('Invalid item id');
+    await expect(repository.addItems(USER, difficult?.id ?? '', ['hola.hola'])).rejects.toThrow(
+      'Folder is automatic',
+    );
+  });
+
   it('refuses an unreadable local cache', async () => {
     const { storage, repository } = setup();
     await storage.setItem(vocabStorageKey(USER), '{');
