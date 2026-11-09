@@ -2,7 +2,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useRef, useState } from 'react';
 
 import { parseStudyPrefs, serializeStudyPrefs, studyPrefsKey } from '../prefs';
-import { DEFAULT_STUDY_PREFS, type StudyMode, type StudyPrefs, type StudySettings } from '../types';
+import {
+  DEFAULT_STUDY_PREFS,
+  type StudyMode,
+  type StudyPrefs,
+  type StudySettings,
+  type TestSettings,
+} from '../types';
 
 export function useStudyPrefs(userId: string | null, folderId: string) {
   const key = userId && folderId ? studyPrefsKey(userId, folderId) : null;
@@ -44,6 +50,9 @@ export function useStudyPrefs(userId: string | null, folderId: string) {
     },
     setLastMode(lastMode: StudyMode) {
       write({ ...prefsRef.current, lastMode });
+    },
+    setTestSettings(test: TestSettings) {
+      write({ ...prefsRef.current, test });
     },
   };
 }

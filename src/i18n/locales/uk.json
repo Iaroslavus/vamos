@@ -494,7 +494,7 @@
       },
       "test": {
         "title": "Контрольна",
-        "body": "Змішані питання й підсумок наприкінці."
+        "body": "Без підказок до кнопки «Здати». Потім — відсоток і помилки."
       },
       "match": {
         "title": "Пари",
@@ -580,6 +580,49 @@
       "addDifficult": "Додати до Складних",
       "added": "Додано до Складних",
       "addError": "Не вдалося додати до Складних. Спробуйте ще раз."
+    },
+    "test": {
+      "setupTitle": "Контрольна",
+      "countLabel": "Скільки питань",
+      "countOption_one": "{{count}} питання",
+      "countOption_few": "{{count}} питання",
+      "countOption_many": "{{count}} питань",
+      "countOption_other": "{{count}} питань",
+      "kindsLabel": "Типи питань",
+      "kind": {
+        "choice": "Вибір",
+        "input": "Введення",
+        "true_false": "Вірно/невірно",
+        "pairs": "Пари"
+      },
+      "start": "Почати",
+      "next": "Далі",
+      "submit": "Здати",
+      "previous": "Попереднє питання",
+      "counter": "{{current}} / {{total}}",
+      "promptChoice": "Оберіть відповідь",
+      "promptInput": "Напишіть відповідь",
+      "promptBool": "Це вірно?",
+      "promptPairs": "З’єднайте пари",
+      "claim": "Це «{{claim}}»?",
+      "true": "Вірно",
+      "false": "Невірно",
+      "answer": "Ваша відповідь",
+      "tooFew": "Для цих типів поки мало фраз.",
+      "resultTitle": "Результат",
+      "percent": "{{count}}%",
+      "scoreLabel": "Результат {{percent}} відсотків",
+      "perfect": "Без помилок",
+      "missHeading": "Помилки",
+      "missLine": "{{yours}} → {{correct}}",
+      "blank": "—",
+      "truth": "Насправді: {{text}}",
+      "play": "Озвучити {{phrase}}, помилка {{index}}",
+      "repeat": "Повторити помилки",
+      "addDifficult": "До складних",
+      "added": "Додано до складних",
+      "addError": "Не вдалося додати до складних. Спробуйте ще раз.",
+      "rateError": "Оцінки не збереглися. Підсумок на екрані правильний."
     }
   },
   "common": {

@@ -1,16 +1,19 @@
 import { SPEECH_PASS_SCORE } from '@/features/speech/score';
 
-import { QUICK5_LIMIT, STUDY_MODES, type AccentStrictness, type StudyMode } from './types';
+import {
+  DEFAULT_TEST_COUNT,
+  QUICK5_LIMIT,
+  STUDY_MODES,
+  type AccentStrictness,
+  type StudyMode,
+} from './types';
 
-/**
- * Test holds feedback until the end.
- * The planner still builds those steps. The folder sheet marks them «скоро».
- */
+/** A mode that is not ready stays on the sheet as «скоро». */
 export const STUDY_MODE_READY: Record<StudyMode, boolean> = {
   review: true,
   flashcards: true,
   learn: true,
-  test: false,
+  test: true,
   match: true,
   spell: true,
   speak: true,
@@ -55,8 +58,13 @@ export function orderedStudyModes(last: StudyMode | null): StudyMode[] {
 
 /** Rough session length shown on a mode card. At least one minute. */
 export function estimateStudyMinutes(mode: StudyMode, itemCount: number): number {
+  const available = Math.max(0, itemCount);
   const count =
-    mode === 'quick5' ? Math.min(QUICK5_LIMIT, Math.max(0, itemCount)) : Math.max(0, itemCount);
+    mode === 'quick5'
+      ? Math.min(QUICK5_LIMIT, available)
+      : mode === 'test'
+        ? Math.min(DEFAULT_TEST_COUNT, available)
+        : available;
   if (count === 0) return 1;
   return Math.max(1, Math.round((count * MINUTE_TENTHS[mode]) / 10));
 }

@@ -4,7 +4,7 @@ import {
   isPlayableStudyMode,
   orderedStudyModes,
 } from './modes';
-import { planLearnStep, sessionPlan } from './sessionPlan';
+import { planLearnStep, selectStudyUnits, sessionPlan } from './sessionPlan';
 import {
   DEFAULT_STUDY_SETTINGS,
   type StudySettings,
@@ -79,6 +79,7 @@ describe('sessionPlan', () => {
     expect(sessionPlan('spell', many, settings({ count: 5 }))).toHaveLength(5);
     expect(sessionPlan('quick5', many, settings({ count: 20 }))).toHaveLength(5);
     expect(sessionPlan('quick5', many, settings({ count: 5 }))[0]?.id).toBe('quick5-0');
+    expect(selectStudyUnits(many, settings({ count: 5 }), 'test')).toHaveLength(8);
   });
 
   it('cycles review through select, listen, and type', () => {
@@ -98,14 +99,9 @@ describe('sessionPlan', () => {
     }
   });
 
-  it('starts a test with typing, distinct from review', () => {
-    const steps = sessionPlan('test', POOL.slice(0, 3), settings());
-    expect(steps.map((step) => step.type)).toEqual([
-      'type_translation',
-      'select_translation',
-      'listen_select',
-    ]);
-    expect(isPlayableStudyMode('test')).toBe(false);
+  it('leaves test questions to the test planner and keeps the mode playable', () => {
+    expect(sessionPlan('test', POOL, settings())).toEqual([]);
+    expect(isPlayableStudyMode('test')).toBe(true);
   });
 
   it('lists one opening learn prompt per phrase', () => {
@@ -233,7 +229,7 @@ describe('sessionPlan', () => {
       back: 'adiós',
     });
     expect(isPlayableStudyMode('flashcards')).toBe(true);
-    expect(isPlayableStudyMode('test')).toBe(false);
+    expect(isPlayableStudyMode('test')).toBe(true);
   });
 });
 
@@ -245,6 +241,8 @@ describe('study mode order', () => {
     expect(estimateStudyMinutes('learn', 10)).toBe(8);
     expect(estimateStudyMinutes('quick5', 20)).toBe(2);
     expect(estimateStudyMinutes('review', 0)).toBe(1);
+    expect(estimateStudyMinutes('test', 40)).toBe(5);
+    expect(estimateStudyMinutes('test', 3)).toBe(2);
   });
 });
 

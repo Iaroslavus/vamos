@@ -56,11 +56,13 @@ export function useStudyLaunch(folderId: string, mode: StudyMode | null) {
       waiting,
       folderMissing: vocab.isSuccess && !folder,
       failed: vocab.isError || review.isError,
-      empty: steps.length === 0,
+      empty: mode === 'test' ? selected.length === 0 : steps.length === 0,
     }),
     steps,
     selected,
     settings,
+    testSettings: prefs.prefs.test,
+    setTestSettings: prefs.setTestSettings,
     userId: vocab.userId,
     reload: () => {
       void vocab.refetch();

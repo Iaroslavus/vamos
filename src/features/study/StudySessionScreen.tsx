@@ -15,6 +15,7 @@ import { colors, space } from '@/theme/tokens';
 import { FlashcardSession } from './components/FlashcardSession';
 import { LearnSession } from './components/LearnSession';
 import { StudyPlayer } from './components/StudyPlayer';
+import { TestSession } from './components/TestSession';
 import { flashcardSteps } from './flashcards';
 import { recordStudyResult, studyModeGrades } from './fsrs';
 import { useStudyLaunch } from './hooks/useStudyLaunch';
@@ -62,6 +63,18 @@ export function StudySessionScreen() {
             if (!launch.userId) return Promise.reject(new Error('Missing user'));
             return vocabRepository.pinDifficult(launch.userId, itemIds).then(() => undefined);
           }}
+        />
+      ) : launch.status === 'ready' && mode === 'test' ? (
+        <TestSession
+          units={launch.selected}
+          settings={launch.testSettings}
+          onChangeSettings={launch.setTestSettings}
+          onRecord={onRecord}
+          onAddDifficult={(itemIds) => {
+            if (!launch.userId) return Promise.reject(new Error('Missing user'));
+            return vocabRepository.pinDifficult(launch.userId, itemIds).then(() => undefined);
+          }}
+          onClose={leave}
         />
       ) : launch.status === 'ready' && mode === 'learn' ? (
         <LearnSession

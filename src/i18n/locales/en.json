@@ -494,7 +494,7 @@
       },
       "test": {
         "title": "Test",
-        "body": "Mixed questions and a score at the end."
+        "body": "No hints until you hand it in. Then a score and the misses."
       },
       "match": {
         "title": "Match",
@@ -580,6 +580,49 @@
       "addDifficult": "Add to Tricky",
       "added": "Added to Tricky",
       "addError": "Couldn't add these to Tricky. Try again."
+    },
+    "test": {
+      "setupTitle": "Test",
+      "countLabel": "How many questions",
+      "countOption_one": "{{count}} question",
+      "countOption_few": "{{count}} questions",
+      "countOption_many": "{{count}} questions",
+      "countOption_other": "{{count}} questions",
+      "kindsLabel": "Question types",
+      "kind": {
+        "choice": "Choice",
+        "input": "Typing",
+        "true_false": "True/false",
+        "pairs": "Pairs"
+      },
+      "start": "Start",
+      "next": "Next",
+      "submit": "Hand in",
+      "previous": "Previous question",
+      "counter": "{{current}} / {{total}}",
+      "promptChoice": "Choose an answer",
+      "promptInput": "Write the answer",
+      "promptBool": "Is this right?",
+      "promptPairs": "Match the pairs",
+      "claim": "Is it \"{{claim}}\"?",
+      "true": "True",
+      "false": "False",
+      "answer": "Your answer",
+      "tooFew": "Not enough phrases for these question types.",
+      "resultTitle": "Result",
+      "percent": "{{count}}%",
+      "scoreLabel": "Score {{percent}} percent",
+      "perfect": "No mistakes",
+      "missHeading": "Mistakes",
+      "missLine": "{{yours}} → {{correct}}",
+      "blank": "—",
+      "truth": "Actually: {{text}}",
+      "play": "Play {{phrase}}, miss {{index}}",
+      "repeat": "Retry the mistakes",
+      "addDifficult": "To Tricky",
+      "added": "Added to Tricky",
+      "addError": "Couldn't add these to Tricky. Try again.",
+      "rateError": "The grades were not saved. The score on screen is right."
     }
   },
   "common": {
