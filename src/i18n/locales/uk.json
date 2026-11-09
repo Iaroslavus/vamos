@@ -462,6 +462,105 @@
     "ruleJota": "j читається як «х». Так само g перед e та i.",
     "ruleStress": "Наголос там, де стоїть знак наголосу."
   },
+  "study": {
+    "learn": "Вчити",
+    "sheetTitle": "Як вчити",
+    "settings": "Налаштування сесії",
+    "settingsTitle": "Налаштування",
+    "back": "Назад",
+    "soon": "незабаром",
+    "again": "Ще раз",
+    "close": "Закрити",
+    "minutes_one": "~{{count}} хвилина",
+    "minutes_few": "~{{count}} хвилини",
+    "minutes_many": "~{{count}} хвилин",
+    "minutes_other": "~{{count}} хвилин",
+    "noneIntroduced": "Спочатку познайомтеся з фразами в уроці. До сесії потрапляють лише вони.",
+    "noneFiltered": "За цим фільтром поки нічого вчити.",
+    "modeLabel": "{{title}}. {{minutes}}. {{body}}",
+    "modeSoonLabel": "{{title}}. {{minutes}}. {{body}}. {{soon}}",
+    "modes": {
+      "review": {
+        "title": "Повторення",
+        "body": "Вправи на знайомі фрази. Відповідь зсуває інтервал."
+      },
+      "flashcards": {
+        "title": "Картки",
+        "body": "Гортайте картки без оцінки."
+      },
+      "learn": {
+        "title": "Вивчення",
+        "body": "Спочатку вибір, потім письмо."
+      },
+      "test": {
+        "title": "Контрольна",
+        "body": "Змішані питання й підсумок наприкінці."
+      },
+      "match": {
+        "title": "Пари",
+        "body": "З’єднайте іспанську й переклад."
+      },
+      "spell": {
+        "title": "Правопис",
+        "body": "Напишіть фразу з пам’яті."
+      },
+      "speak": {
+        "title": "Уголос",
+        "body": "Повторіть фразу вголос."
+      },
+      "quick5": {
+        "title": "П’ять швидко",
+        "body": "П’ять коротких питань без оцінки."
+      }
+    },
+    "directionLabel": "Напрямок",
+    "direction": {
+      "es_to_ru": "Іспанська → переклад",
+      "ru_to_es": "Переклад → іспанська",
+      "mixed": "Навпереміш"
+    },
+    "filterLabel": "Які фрази",
+    "filter": {
+      "all": "Усі знайомі",
+      "due": "До повторення",
+      "hard": "Складні",
+      "unlearned": "Ще не вивчені"
+    },
+    "countLabel": "Скільки",
+    "countOption": "{{count}}",
+    "autoplay": "Автоозвучення",
+    "accentLabel": "Суворість наголосів",
+    "accent": {
+      "relaxed": "М’яко",
+      "standard": "Звичайно",
+      "strict": "Суворо"
+    },
+    "masteryLabel": "Освоєння папки",
+    "masteryNew": "нові",
+    "masteryLearning": "вчу",
+    "masteryKnown": "знаю",
+    "masterySummary": "{{new}} нові, {{learning}} вчу, {{known}} знаю",
+    "progress": "{{done}} із {{total}}",
+    "summaryTitle": "Готово",
+    "summaryBody": "Пройдено кроків: {{count}}",
+    "backToFolder": "До папки",
+    "loading": "Збираємо сесію",
+    "loadError": "Не вдалося зібрати сесію. Перевірте мережу й спробуйте ще раз.",
+    "emptyTitle": "Поки нічого вчити",
+    "emptyBody": "Змініть фільтр або спочатку пройдіть знайомство в уроці.",
+    "rateError": "Не вдалося зберегти відповідь. Спробуйте ще раз.",
+    "unavailableTitle": "Незабаром",
+    "unavailableBody": "Цей режим ще готується.",
+    "prompt": {
+      "selectEs": "Оберіть переклад",
+      "selectRu": "Оберіть іспанською",
+      "listen": "Що ви чуєте?",
+      "typeEs": "Напишіть переклад",
+      "typeRu": "Напишіть іспанською",
+      "match": "З’єднайте пари",
+      "speak": "Скажіть уголос"
+    }
+  },
   "common": {
     "devComponents": "Компоненти (dev)",
     "devIntro": "Знайомство з фразою",

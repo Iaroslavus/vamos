@@ -462,6 +462,105 @@
     "ruleJota": "j sounds like a harsh h. So does g before e or i.",
     "ruleStress": "Stress falls on the vowel with the accent mark."
   },
+  "study": {
+    "learn": "Study",
+    "sheetTitle": "How to study",
+    "settings": "Session settings",
+    "settingsTitle": "Settings",
+    "back": "Back",
+    "soon": "soon",
+    "again": "Try again",
+    "close": "Close",
+    "minutes_one": "~{{count}} min",
+    "minutes_few": "~{{count}} min",
+    "minutes_many": "~{{count}} min",
+    "minutes_other": "~{{count}} min",
+    "noneIntroduced": "Meet the phrases in a lesson first. A session only includes those.",
+    "noneFiltered": "Nothing matches this filter yet.",
+    "modeLabel": "{{title}}. {{minutes}}. {{body}}",
+    "modeSoonLabel": "{{title}}. {{minutes}}. {{body}}. {{soon}}",
+    "modes": {
+      "review": {
+        "title": "Review",
+        "body": "Exercises on phrases you have met. The answer moves the interval."
+      },
+      "flashcards": {
+        "title": "Flashcards",
+        "body": "Flip cards without a grade."
+      },
+      "learn": {
+        "title": "Learn",
+        "body": "Choose first, then write."
+      },
+      "test": {
+        "title": "Test",
+        "body": "Mixed questions and a score at the end."
+      },
+      "match": {
+        "title": "Match",
+        "body": "Pair Spanish with the translation."
+      },
+      "spell": {
+        "title": "Spell",
+        "body": "Write the phrase from memory."
+      },
+      "speak": {
+        "title": "Speak",
+        "body": "Say the phrase aloud."
+      },
+      "quick5": {
+        "title": "Quick 5",
+        "body": "Five short questions without a grade."
+      }
+    },
+    "directionLabel": "Direction",
+    "direction": {
+      "es_to_ru": "Spanish → translation",
+      "ru_to_es": "Translation → Spanish",
+      "mixed": "Mixed"
+    },
+    "filterLabel": "Which phrases",
+    "filter": {
+      "all": "All familiar",
+      "due": "Due",
+      "hard": "Hard",
+      "unlearned": "Not learned yet"
+    },
+    "countLabel": "How many",
+    "countOption": "{{count}}",
+    "autoplay": "Autoplay",
+    "accentLabel": "Accent strictness",
+    "accent": {
+      "relaxed": "Lenient",
+      "standard": "Standard",
+      "strict": "Strict"
+    },
+    "masteryLabel": "Folder mastery",
+    "masteryNew": "new",
+    "masteryLearning": "learning",
+    "masteryKnown": "known",
+    "masterySummary": "{{new}} new, {{learning}} learning, {{known}} known",
+    "progress": "{{done}} of {{total}}",
+    "summaryTitle": "Done",
+    "summaryBody": "Steps finished: {{count}}",
+    "backToFolder": "Back to folder",
+    "loading": "Building the session",
+    "loadError": "We couldn't build the session. Check your connection and try again.",
+    "emptyTitle": "Nothing to study yet",
+    "emptyBody": "Change the filter, or meet the phrases in a lesson first.",
+    "rateError": "Couldn't save that answer. Try again.",
+    "unavailableTitle": "Soon",
+    "unavailableBody": "This mode is still on the way.",
+    "prompt": {
+      "selectEs": "Choose the translation",
+      "selectRu": "Choose the Spanish",
+      "listen": "What do you hear?",
+      "typeEs": "Write the translation",
+      "typeRu": "Write the Spanish",
+      "match": "Match the pairs",
+      "speak": "Say it aloud"
+    }
+  },
   "common": {
     "devComponents": "Components (dev)",
     "devIntro": "Meet the phrase",

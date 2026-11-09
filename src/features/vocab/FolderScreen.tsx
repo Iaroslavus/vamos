@@ -11,6 +11,7 @@ import { useAudioPreference } from '@/features/audio/preference';
 import { contentLanguage, getItem } from '@/features/content/loader';
 import { blankAudio, type Item } from '@/features/content/schema';
 import { textOf } from '@/features/content/text';
+import { FolderStudySection } from '@/features/study/components/FolderStudySection';
 import { colors, space } from '@/theme/tokens';
 
 import { FolderFormSheet } from './components/FolderFormSheet';
@@ -71,6 +72,7 @@ export function FolderScreen() {
   } else if (folder) {
     body = (
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <FolderStudySection folderId={folder.id} userId={vocab.userId} itemIds={itemIds} />
         <Button
           title={t('vocab.reviewFolder', { count: due })}
           disabled={due === 0}

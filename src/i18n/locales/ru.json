@@ -462,6 +462,105 @@
     "ruleJota": "j читается как «х». Так же g перед e и i.",
     "ruleStress": "Ударение там, где стоит знак ударения."
   },
+  "study": {
+    "learn": "Учить",
+    "sheetTitle": "Как учить",
+    "settings": "Настройки сессии",
+    "settingsTitle": "Настройки",
+    "back": "Назад",
+    "soon": "скоро",
+    "again": "Ещё раз",
+    "close": "Закрыть",
+    "minutes_one": "~{{count}} минута",
+    "minutes_few": "~{{count}} минуты",
+    "minutes_many": "~{{count}} минут",
+    "minutes_other": "~{{count}} минут",
+    "noneIntroduced": "Сначала познакомьтесь с фразами в уроке. В сессию попадают только они.",
+    "noneFiltered": "По этому фильтру пока нечего учить.",
+    "modeLabel": "{{title}}. {{minutes}}. {{body}}",
+    "modeSoonLabel": "{{title}}. {{minutes}}. {{body}}. {{soon}}",
+    "modes": {
+      "review": {
+        "title": "Повторение",
+        "body": "Упражнения по знакомым фразам. Ответ сдвигает интервал."
+      },
+      "flashcards": {
+        "title": "Карточки",
+        "body": "Листайте карточки без оценки."
+      },
+      "learn": {
+        "title": "Заучивание",
+        "body": "Сначала выбор, потом письмо."
+      },
+      "test": {
+        "title": "Тест",
+        "body": "Смешанные вопросы и итог в конце."
+      },
+      "match": {
+        "title": "Пары",
+        "body": "Соедините испанский и перевод."
+      },
+      "spell": {
+        "title": "Правописание",
+        "body": "Напишите фразу по памяти."
+      },
+      "speak": {
+        "title": "Вслух",
+        "body": "Повторите фразу вслух."
+      },
+      "quick5": {
+        "title": "Пять быстро",
+        "body": "Пять коротких вопросов без оценки."
+      }
+    },
+    "directionLabel": "Направление",
+    "direction": {
+      "es_to_ru": "Испанский → перевод",
+      "ru_to_es": "Перевод → испанский",
+      "mixed": "Вперемешку"
+    },
+    "filterLabel": "Какие фразы",
+    "filter": {
+      "all": "Все знакомые",
+      "due": "К повторению",
+      "hard": "Сложные",
+      "unlearned": "Ещё не выученные"
+    },
+    "countLabel": "Сколько",
+    "countOption": "{{count}}",
+    "autoplay": "Автоозвучка",
+    "accentLabel": "Строгость акцентов",
+    "accent": {
+      "relaxed": "Мягко",
+      "standard": "Обычно",
+      "strict": "Строго"
+    },
+    "masteryLabel": "Освоение папки",
+    "masteryNew": "новые",
+    "masteryLearning": "учу",
+    "masteryKnown": "знаю",
+    "masterySummary": "{{new}} новые, {{learning}} учу, {{known}} знаю",
+    "progress": "{{done}} из {{total}}",
+    "summaryTitle": "Готово",
+    "summaryBody": "Пройдено шагов: {{count}}",
+    "backToFolder": "К папке",
+    "loading": "Собираем сессию",
+    "loadError": "Не удалось собрать сессию. Проверьте сеть и повторите.",
+    "emptyTitle": "Пока нечего учить",
+    "emptyBody": "Смените фильтр или сначала пройдите знакомство в уроке.",
+    "rateError": "Не удалось сохранить ответ. Попробуйте ещё раз.",
+    "unavailableTitle": "Скоро",
+    "unavailableBody": "Этот режим ещё готовится.",
+    "prompt": {
+      "selectEs": "Выберите перевод",
+      "selectRu": "Выберите по-испански",
+      "listen": "Что вы слышите?",
+      "typeEs": "Напишите перевод",
+      "typeRu": "Напишите по-испански",
+      "match": "Соедините пары",
+      "speak": "Скажите вслух"
+    }
+  },
   "common": {
     "devComponents": "Компоненты (dev)",
     "devIntro": "Знакомство с фразой",
