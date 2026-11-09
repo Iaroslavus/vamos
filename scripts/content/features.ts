@@ -105,6 +105,8 @@ async function main(): Promise<void> {
         apiKey: storageKey,
         objectPath: built.path,
       });
+      // The audio bucket rejects anything outside its allow-list with 415.
+      upload.headers['Content-Type'] = 'application/json';
       await putStorageBytes(upload, built.body, storageKey);
       updates.push({ id: item.id, path: built.path });
     }

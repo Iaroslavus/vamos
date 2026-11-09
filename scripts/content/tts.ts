@@ -122,6 +122,7 @@ async function main(): Promise<void> {
           apiKey: storageKey,
           objectPath: features.path,
         });
+        upload.headers['Content-Type'] = 'application/json';
         await putStorageBytes(upload, features.body, storageKey);
         featureUpdates.push({ id: item.id, path: features.path });
       }
