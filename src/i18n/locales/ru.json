@@ -494,7 +494,7 @@
       },
       "test": {
         "title": "Тест",
-        "body": "Смешанные вопросы и итог в конце."
+        "body": "Без подсказок до кнопки «Сдать». Потом — процент и ошибки."
       },
       "match": {
         "title": "Пары",
@@ -580,6 +580,49 @@
       "addDifficult": "Добавить в Сложные",
       "added": "Добавлено в Сложные",
       "addError": "Не удалось добавить в Сложные. Попробуйте ещё раз."
+    },
+    "test": {
+      "setupTitle": "Тест",
+      "countLabel": "Сколько вопросов",
+      "countOption_one": "{{count}} вопрос",
+      "countOption_few": "{{count}} вопроса",
+      "countOption_many": "{{count}} вопросов",
+      "countOption_other": "{{count}} вопросов",
+      "kindsLabel": "Типы вопросов",
+      "kind": {
+        "choice": "Выбор",
+        "input": "Ввод",
+        "true_false": "Верно/неверно",
+        "pairs": "Пары"
+      },
+      "start": "Начать",
+      "next": "Дальше",
+      "submit": "Сдать",
+      "previous": "Предыдущий вопрос",
+      "counter": "{{current}} / {{total}}",
+      "promptChoice": "Выберите ответ",
+      "promptInput": "Напишите ответ",
+      "promptBool": "Это верно?",
+      "promptPairs": "Соедините пары",
+      "claim": "Это «{{claim}}»?",
+      "true": "Верно",
+      "false": "Неверно",
+      "answer": "Ваш ответ",
+      "tooFew": "Для выбранных типов пока мало фраз.",
+      "resultTitle": "Результат",
+      "percent": "{{count}}%",
+      "scoreLabel": "Результат {{percent}} процентов",
+      "perfect": "Без ошибок",
+      "missHeading": "Ошибки",
+      "missLine": "{{yours}} → {{correct}}",
+      "blank": "—",
+      "truth": "На самом деле: {{text}}",
+      "play": "Озвучить {{phrase}}, ошибка {{index}}",
+      "repeat": "Повторить ошибки",
+      "addDifficult": "В Сложные",
+      "added": "Добавлено в Сложные",
+      "addError": "Не удалось добавить в Сложные. Попробуйте ещё раз.",
+      "rateError": "Оценки не сохранились. Итог на экране верный."
     }
   },
   "common": {

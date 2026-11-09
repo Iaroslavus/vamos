@@ -28,6 +28,28 @@ export type StudyCount = (typeof STUDY_COUNTS)[number];
 
 export const DEFAULT_STUDY_COUNT: StudyCount = 10;
 
+/** Questions in one test. Separate from the shared session length. */
+export const TEST_COUNTS = [10, 20, 30] as const;
+export type TestCount = (typeof TEST_COUNTS)[number];
+
+export const DEFAULT_TEST_COUNT: TestCount = 10;
+
+/** Choice, typing, true/false, and matching. At least one stays on. */
+export const TEST_KINDS = ['choice', 'input', 'true_false', 'pairs'] as const;
+export type TestKind = (typeof TEST_KINDS)[number];
+
+export type TestSettings = {
+  count: TestCount;
+  kinds: readonly TestKind[];
+  direction: StudyDirectionSetting;
+};
+
+export const DEFAULT_TEST_SETTINGS: TestSettings = {
+  count: DEFAULT_TEST_COUNT,
+  kinds: TEST_KINDS,
+  direction: 'es_to_ru',
+};
+
 /** Quick 5 never asks for more than this, even when the folder setting is higher. */
 export const QUICK5_LIMIT = 5;
 
@@ -52,11 +74,13 @@ export const DEFAULT_STUDY_SETTINGS: StudySettings = {
 
 export type StudyPrefs = {
   settings: StudySettings;
+  test: TestSettings;
   lastMode: StudyMode | null;
 };
 
 export const DEFAULT_STUDY_PREFS: StudyPrefs = {
   settings: DEFAULT_STUDY_SETTINGS,
+  test: DEFAULT_TEST_SETTINGS,
   lastMode: null,
 };
 

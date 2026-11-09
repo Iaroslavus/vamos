@@ -1,4 +1,4 @@
-import { DEFAULT_STUDY_PREFS } from './types';
+import { DEFAULT_STUDY_PREFS, DEFAULT_TEST_SETTINGS } from './types';
 import { parseStudyPrefs, serializeStudyPrefs, studyPrefsKey } from './prefs';
 
 describe('study prefs', () => {
@@ -25,9 +25,19 @@ describe('study prefs', () => {
           autoplay: false,
           accentStrictness: 'strict',
         },
+        test: {
+          count: 30,
+          kinds: ['input', 'pairs'],
+          direction: 'ru_to_es',
+        },
       }),
     );
     expect(prefs.lastMode).toBe('spell');
+    expect(prefs.test).toEqual({
+      count: 30,
+      kinds: ['input', 'pairs'],
+      direction: 'ru_to_es',
+    });
     expect(prefs.settings).toMatchObject({
       direction: 'mixed',
       filter: 'hard',
@@ -40,5 +50,19 @@ describe('study prefs', () => {
   it('drops an unknown last mode', () => {
     const prefs = parseStudyPrefs(JSON.stringify({ lastMode: 'arcade', settings: {} }));
     expect(prefs.lastMode).toBeNull();
+  });
+
+  it('keeps a test setup and drops unknown question types', () => {
+    expect(parseStudyPrefs(null).test).toEqual(DEFAULT_TEST_SETTINGS);
+    const prefs = parseStudyPrefs(
+      JSON.stringify({
+        test: { count: 15, kinds: ['choice', 'nope', 'choice'], direction: 'mixed' },
+      }),
+    );
+    expect(prefs.test).toEqual({
+      count: DEFAULT_TEST_SETTINGS.count,
+      kinds: ['choice'],
+      direction: 'mixed',
+    });
   });
 });

@@ -9,7 +9,7 @@ import Animated, {
 import Svg, { Circle } from 'react-native-svg';
 
 import { useReduceMotion } from '@/hooks/useReduceMotion';
-import { colors, motion, type } from '@/theme/tokens';
+import { colors, fonts, motion, type } from '@/theme/tokens';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -21,6 +21,8 @@ export type RingProps = {
   color?: string;
   trackColor?: string;
   label?: string;
+  /** Larger percent, for a finished test. */
+  prominent?: boolean;
   style?: StyleProp<ViewStyle>;
   accessibilityLabel?: string;
 };
@@ -36,6 +38,7 @@ export function Ring({
   color = colors.saffron,
   trackColor = colors.surfaceSunken,
   label,
+  prominent = false,
   style,
   accessibilityLabel,
 }: RingProps) {
@@ -95,7 +98,7 @@ export function Ring({
         />
       </Svg>
       <View style={styles.labelWrap} pointerEvents="none">
-        <Text style={styles.label}>{percentLabel}</Text>
+        <Text style={[styles.label, prominent && styles.prominent]}>{percentLabel}</Text>
       </View>
     </View>
   );
@@ -116,5 +119,11 @@ const styles = StyleSheet.create({
     fontSize: type.label.fontSize,
     letterSpacing: type.label.letterSpacing,
     color: colors.ink,
+  },
+  prominent: {
+    fontFamily: fonts.display,
+    fontSize: 32,
+    lineHeight: 36,
+    letterSpacing: -0.4,
   },
 });

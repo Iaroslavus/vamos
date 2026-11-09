@@ -24,7 +24,6 @@ import {
 const CHOICES = 4;
 
 const REVIEW_CYCLE = ['select_translation', 'listen_select', 'type_translation'] as const;
-const TEST_CYCLE = ['type_translation', 'select_translation', 'listen_select'] as const;
 
 type Gloss = { es: string; tr: string; audio: string | null };
 type Side = 'es' | 'tr';
@@ -57,17 +56,8 @@ export function sessionPlan(
     case 'learn':
       return learnSteps(selected, known, settings);
     case 'test':
-      return selected.map((unit, index) =>
-        exerciseStep(
-          unit,
-          index,
-          TEST_CYCLE[index % TEST_CYCLE.length] ?? 'type_translation',
-          known,
-          settings,
-          'test',
-          `test-${index}`,
-        ),
-      );
+      // Questions are built by planTest. They are not lesson steps.
+      return [];
     case 'quick5':
       return selected.map((unit, index) =>
         exerciseStep(
@@ -158,7 +148,12 @@ function selectUnits(
   mode: StudyMode,
 ): StudyUnit[] {
   const filtered = known.filter((unit) => matchesFilter(unit, settings.filter));
-  const limit = mode === 'quick5' ? Math.min(QUICK5_LIMIT, settings.count) : settings.count;
+  const limit =
+    mode === 'quick5'
+      ? Math.min(QUICK5_LIMIT, settings.count)
+      : mode === 'test'
+        ? filtered.length
+        : settings.count;
   return filtered.slice(0, Math.max(0, limit));
 }
 
@@ -253,7 +248,7 @@ function exerciseStep(
   };
 
   if (kind === 'listen_select') {
-    const options = choices(pool, unit.tr, 'tr', index, `${unit.id}:listen`);
+    const options = translationChoices(pool, unit.tr, 'tr', index, `${unit.id}:listen`);
     if (options.length >= 2) {
       return {
         ...base,
@@ -271,7 +266,7 @@ function exerciseStep(
   if (kind === 'select_translation') {
     const side: Side = direction === 'es_to_ru' ? 'tr' : 'es';
     const answer = unit[side];
-    const options = choices(pool, answer, side, index, `${unit.id}:select`);
+    const options = translationChoices(pool, answer, side, index, `${unit.id}:select`);
     if (options.length >= 2) {
       return {
         ...base,
@@ -396,7 +391,8 @@ function directionFor(setting: StudyDirectionSetting, index: number): ReviewDire
   return studyDirectionAt(setting, index);
 }
 
-function choices(
+/** Four options when the pool has another phrase, otherwise none. */
+export function translationChoices(
   pool: readonly StudyUnit[],
   answer: string,
   side: Side,

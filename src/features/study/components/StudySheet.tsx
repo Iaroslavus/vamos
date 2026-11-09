@@ -41,7 +41,7 @@ const TINT: Record<StudyMode, { face: string; icon: string }> = {
   review: { face: colors.tealSoft, icon: colors.teal },
   flashcards: { face: colors.saffronSoft, icon: colors.saffronDeep },
   learn: { face: colors.errorSoft, icon: colors.coral },
-  test: { face: colors.surfaceSunken, icon: colors.ink },
+  test: { face: colors.tealSoft, icon: colors.blue },
   match: { face: colors.saffronSoft, icon: colors.saffronDeep },
   spell: { face: colors.errorSoft, icon: colors.coral },
   speak: { face: colors.tealSoft, icon: colors.teal },
