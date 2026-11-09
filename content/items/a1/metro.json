@@ -69,7 +69,8 @@
             "latam": null
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/un_billete.features.json"
     },
     "tags": [
       "metro"
@@ -147,7 +148,8 @@
             "latam": "items/a1/metro/un_boleto.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/un_boleto.features.json"
     },
     "tags": [
       "metro"
@@ -237,7 +239,8 @@
             "latam": "items/a1/metro/ida_y_vuelta.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/ida_y_vuelta.features.json"
     },
     "tags": [
       "metro"
@@ -311,7 +314,8 @@
             "latam": "items/a1/metro/solo_ida.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/solo_ida.features.json"
     },
     "tags": [
       "metro"
@@ -385,7 +389,8 @@
             "latam": "items/a1/metro/cuanto_cuesta.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/cuanto_cuesta.features.json"
     },
     "tags": [
       "metro"
@@ -454,7 +459,8 @@
             "latam": "items/a1/metro/el_metro.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/el_metro.features.json"
     },
     "tags": [
       "metro"
@@ -532,7 +538,8 @@
             "latam": "items/a1/metro/el_subte.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/el_subte.features.json"
     },
     "tags": [
       "metro"
@@ -622,7 +629,8 @@
             "latam": "items/a1/metro/a_que_linea.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/a_que_linea.features.json"
     },
     "tags": [
       "metro"
@@ -700,7 +708,8 @@
             "latam": "items/a1/metro/linea_dos.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/linea_dos.features.json"
     },
     "tags": [
       "metro"
@@ -774,7 +783,8 @@
             "latam": "items/a1/metro/direccion_centro.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/direccion_centro.features.json"
     },
     "tags": [
       "metro"
@@ -852,7 +862,8 @@
             "latam": "items/a1/metro/donde_bajo.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/donde_bajo.features.json"
     },
     "tags": [
       "metro"
@@ -926,7 +937,8 @@
             "latam": "items/a1/metro/la_proxima.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/la_proxima.features.json"
     },
     "tags": [
       "metro"
@@ -960,7 +972,8 @@
         "es": "items/a1/metro/transbordo.es.slow.m4a",
         "latam": "items/a1/metro/transbordo.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/metro/transbordo.features.json"
     },
     "tags": [
       "metro"
@@ -994,7 +1007,8 @@
         "es": "items/a1/metro/salida.es.slow.m4a",
         "latam": "items/a1/metro/salida.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/metro/salida.features.json"
     },
     "tags": [
       "metro"
@@ -1072,7 +1086,8 @@
             "latam": null
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/el_autobus.features.json"
     },
     "tags": [
       "metro"
@@ -1150,7 +1165,8 @@
             "latam": "items/a1/metro/el_bus.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/el_bus.features.json"
     },
     "tags": [
       "metro"
@@ -1224,7 +1240,8 @@
             "latam": "items/a1/metro/numero_cinco.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/numero_cinco.features.json"
     },
     "tags": [
       "metro"
@@ -1293,7 +1310,8 @@
             "latam": "items/a1/metro/esta_parada.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/esta_parada.features.json"
     },
     "tags": [
       "metro"
@@ -1362,7 +1380,8 @@
             "latam": "items/a1/metro/la_parada.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/la_parada.features.json"
     },
     "tags": [
       "metro"
@@ -1452,7 +1471,8 @@
             "latam": "items/a1/metro/va_al_centro.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/va_al_centro.features.json"
     },
     "tags": [
       "metro"
@@ -1526,7 +1546,8 @@
             "latam": "items/a1/metro/si_al_centro.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/si_al_centro.features.json"
     },
     "tags": [
       "metro"
@@ -1600,7 +1621,8 @@
             "latam": "items/a1/metro/una_tarjeta.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/una_tarjeta.features.json"
     },
     "tags": [
       "metro"
@@ -1690,7 +1712,8 @@
             "latam": "items/a1/metro/donde_esta_la_salida.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/donde_esta_la_salida.features.json"
     },
     "tags": [
       "metro"
@@ -1763,7 +1786,8 @@
             "latam": "items/a1/metro/el_anden.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/el_anden.features.json"
     },
     "tags": [
       "metro"
@@ -1837,7 +1861,8 @@
             "latam": "items/a1/metro/anden_dos.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/anden_dos.features.json"
     },
     "tags": [
       "metro"
@@ -1931,7 +1956,8 @@
             "latam": "items/a1/metro/se_puede_bajar.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/se_puede_bajar.features.json"
     },
     "tags": [
       "metro"
@@ -2009,7 +2035,8 @@
             "latam": "items/a1/metro/estoy_perdido.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/estoy_perdido.features.json"
     },
     "tags": [
       "metro"
@@ -2083,7 +2110,8 @@
             "latam": "items/a1/metro/me_ayuda.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/metro/me_ayuda.features.json"
     },
     "tags": [
       "metro"

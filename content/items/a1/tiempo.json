@@ -64,7 +64,8 @@
             "latam": "items/a1/tiempo/el_lunes.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/el_lunes.features.json"
     },
     "tags": [
       "tiempo"
@@ -133,7 +134,8 @@
             "latam": "items/a1/tiempo/el_martes.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/el_martes.features.json"
     },
     "tags": [
       "tiempo"
@@ -202,7 +204,8 @@
             "latam": "items/a1/tiempo/el_miercoles.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/el_miercoles.features.json"
     },
     "tags": [
       "tiempo"
@@ -271,7 +274,8 @@
             "latam": "items/a1/tiempo/el_jueves.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/el_jueves.features.json"
     },
     "tags": [
       "tiempo"
@@ -340,7 +344,8 @@
             "latam": "items/a1/tiempo/el_viernes.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/el_viernes.features.json"
     },
     "tags": [
       "tiempo"
@@ -413,7 +418,8 @@
             "latam": "items/a1/tiempo/el_sabado.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/el_sabado.features.json"
     },
     "tags": [
       "tiempo"
@@ -482,7 +488,8 @@
             "latam": "items/a1/tiempo/el_domingo.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/el_domingo.features.json"
     },
     "tags": [
       "tiempo"
@@ -572,7 +579,8 @@
             "latam": "items/a1/tiempo/que_hora_es.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/que_hora_es.features.json"
     },
     "tags": [
       "tiempo"
@@ -650,7 +658,8 @@
             "latam": "items/a1/tiempo/es_la_una.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/es_la_una.features.json"
     },
     "tags": [
       "tiempo"
@@ -740,7 +749,8 @@
             "latam": "items/a1/tiempo/son_las_dos.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/son_las_dos.features.json"
     },
     "tags": [
       "tiempo"
@@ -830,7 +840,8 @@
             "latam": "items/a1/tiempo/son_las_tres.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/son_las_tres.features.json"
     },
     "tags": [
       "tiempo"
@@ -908,7 +919,8 @@
             "latam": "items/a1/tiempo/y_media.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/y_media.features.json"
     },
     "tags": [
       "tiempo"
@@ -986,7 +998,8 @@
             "latam": "items/a1/tiempo/y_cuarto.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/y_cuarto.features.json"
     },
     "tags": [
       "tiempo"
@@ -1064,7 +1077,8 @@
             "latam": "items/a1/tiempo/menos_cuarto.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/menos_cuarto.features.json"
     },
     "tags": [
       "tiempo"
@@ -1098,7 +1112,8 @@
         "es": "items/a1/tiempo/hoy.es.slow.m4a",
         "latam": "items/a1/tiempo/hoy.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/tiempo/hoy.features.json"
     },
     "tags": [
       "tiempo"
@@ -1136,7 +1151,8 @@
         "es": "items/a1/tiempo/manana.es.slow.m4a",
         "latam": "items/a1/tiempo/manana.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/tiempo/manana.features.json"
     },
     "tags": [
       "tiempo"
@@ -1230,7 +1246,8 @@
             "latam": "items/a1/tiempo/hoy_es_lunes.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/hoy_es_lunes.features.json"
     },
     "tags": [
       "tiempo"
@@ -1320,7 +1337,8 @@
             "latam": "items/a1/tiempo/manana_es_martes.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/manana_es_martes.features.json"
     },
     "tags": [
       "tiempo"
@@ -1394,7 +1412,8 @@
             "latam": "items/a1/tiempo/por_la_manana.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/por_la_manana.features.json"
     },
     "tags": [
       "tiempo"
@@ -1472,7 +1491,8 @@
             "latam": "items/a1/tiempo/por_la_tarde.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/por_la_tarde.features.json"
     },
     "tags": [
       "tiempo"
@@ -1546,7 +1566,8 @@
             "latam": "items/a1/tiempo/por_la_noche.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/por_la_noche.features.json"
     },
     "tags": [
       "tiempo"
@@ -1636,7 +1657,8 @@
             "latam": "items/a1/tiempo/a_que_hora.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/a_que_hora.features.json"
     },
     "tags": [
       "tiempo"
@@ -1714,7 +1736,8 @@
             "latam": "items/a1/tiempo/a_las_diez.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/a_las_diez.features.json"
     },
     "tags": [
       "tiempo"
@@ -1788,7 +1811,8 @@
             "latam": "items/a1/tiempo/a_la_una.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/a_la_una.features.json"
     },
     "tags": [
       "tiempo"
@@ -1862,7 +1886,8 @@
             "latam": "items/a1/tiempo/el_sabado_por_la_manana.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/el_sabado_por_la_manana.features.json"
     },
     "tags": [
       "tiempo"
@@ -1936,7 +1961,8 @@
             "latam": "items/a1/tiempo/quedamos_a_las_cinco.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/quedamos_a_las_cinco.features.json"
     },
     "tags": [
       "tiempo"
@@ -1974,7 +2000,8 @@
         "es": "items/a1/tiempo/vale.es.slow.m4a",
         "latam": "items/a1/tiempo/vale.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/tiempo/vale.features.json"
     },
     "tags": [
       "tiempo"
@@ -2048,7 +2075,8 @@
             "latam": "items/a1/tiempo/hasta_manana.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/tiempo/hasta_manana.features.json"
     },
     "tags": [
       "tiempo"

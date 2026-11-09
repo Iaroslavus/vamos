@@ -64,7 +64,8 @@
             "latam": "items/a1/mercado/las_manzanas.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/las_manzanas.features.json"
     },
     "tags": [
       "mercado"
@@ -133,7 +134,8 @@
             "latam": "items/a1/mercado/las_naranjas.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/las_naranjas.features.json"
     },
     "tags": [
       "mercado"
@@ -206,7 +208,8 @@
             "latam": "items/a1/mercado/los_platanos.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/los_platanos.features.json"
     },
     "tags": [
       "mercado"
@@ -275,7 +278,8 @@
             "latam": "items/a1/mercado/las_fresas.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/las_fresas.features.json"
     },
     "tags": [
       "mercado"
@@ -344,7 +348,8 @@
             "latam": "items/a1/mercado/un_kilo.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/un_kilo.features.json"
     },
     "tags": [
       "mercado"
@@ -418,7 +423,8 @@
             "latam": "items/a1/mercado/medio_kilo.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/medio_kilo.features.json"
     },
     "tags": [
       "mercado"
@@ -496,7 +502,8 @@
             "latam": "items/a1/mercado/me_da.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/me_da.features.json"
     },
     "tags": [
       "mercado"
@@ -565,7 +572,8 @@
             "latam": "items/a1/mercado/los_tomates.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/los_tomates.features.json"
     },
     "tags": [
       "mercado"
@@ -643,7 +651,8 @@
             "latam": null
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/las_patatas.features.json"
     },
     "tags": [
       "mercado"
@@ -721,7 +730,8 @@
             "latam": "items/a1/mercado/las_papas.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/las_papas.features.json"
     },
     "tags": [
       "mercado"
@@ -790,7 +800,8 @@
             "latam": "items/a1/mercado/la_cebolla.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/la_cebolla.features.json"
     },
     "tags": [
       "mercado"
@@ -859,7 +870,8 @@
             "latam": "items/a1/mercado/los_huevos.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/los_huevos.features.json"
     },
     "tags": [
       "mercado"
@@ -933,7 +945,8 @@
             "latam": "items/a1/mercado/un_kilo_de_tomates.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/un_kilo_de_tomates.features.json"
     },
     "tags": [
       "mercado"
@@ -1007,7 +1020,8 @@
             "latam": "items/a1/mercado/cuanto_cuesta.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/cuanto_cuesta.features.json"
     },
     "tags": [
       "mercado"
@@ -1085,7 +1099,8 @@
             "latam": "items/a1/mercado/estan_frescos.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/estan_frescos.features.json"
     },
     "tags": [
       "mercado"
@@ -1159,7 +1174,8 @@
             "latam": "items/a1/mercado/esta_fresca.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/esta_fresca.features.json"
     },
     "tags": [
       "mercado"
@@ -1237,7 +1253,8 @@
             "latam": "items/a1/mercado/esta_muy_rico.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/esta_muy_rico.features.json"
     },
     "tags": [
       "mercado"
@@ -1275,7 +1292,8 @@
         "es": "items/a1/mercado/quiero.es.slow.m4a",
         "latam": "items/a1/mercado/quiero.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/mercado/quiero.features.json"
     },
     "tags": [
       "mercado"
@@ -1313,7 +1331,8 @@
         "es": "items/a1/mercado/quisiera.es.slow.m4a",
         "latam": "items/a1/mercado/quisiera.mx.slow.m4a"
       },
-      "parts": []
+      "parts": [],
+      "features": "items/a1/mercado/quisiera.features.json"
     },
     "tags": [
       "mercado"
@@ -1387,7 +1406,8 @@
             "latam": "items/a1/mercado/algo_mas.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/algo_mas.features.json"
     },
     "tags": [
       "mercado"
@@ -1477,7 +1497,8 @@
             "latam": "items/a1/mercado/eso_es_todo.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/eso_es_todo.features.json"
     },
     "tags": [
       "mercado"
@@ -1567,7 +1588,8 @@
             "latam": "items/a1/mercado/me_da_un_kilo.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/me_da_un_kilo.features.json"
     },
     "tags": [
       "mercado"
@@ -1641,7 +1663,8 @@
             "latam": "items/a1/mercado/medio_kilo_de_fresas.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/medio_kilo_de_fresas.features.json"
     },
     "tags": [
       "mercado"
@@ -1719,7 +1742,8 @@
             "latam": "items/a1/mercado/hay_fresas.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/hay_fresas.features.json"
     },
     "tags": [
       "mercado"
@@ -1793,7 +1817,8 @@
             "latam": "items/a1/mercado/no_hay.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/no_hay.features.json"
     },
     "tags": [
       "mercado"
@@ -1883,7 +1908,8 @@
             "latam": "items/a1/mercado/cuanto_es_todo.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/cuanto_es_todo.features.json"
     },
     "tags": [
       "mercado"
@@ -1957,7 +1983,8 @@
             "latam": "items/a1/mercado/aqui_tiene.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/aqui_tiene.features.json"
     },
     "tags": [
       "mercado"
@@ -2031,7 +2058,8 @@
             "latam": "items/a1/mercado/muchas_gracias.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/mercado/muchas_gracias.features.json"
     },
     "tags": [
       "mercado"

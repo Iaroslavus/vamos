@@ -81,7 +81,8 @@
             "latam": "items/a1/restaurante/mesa.p2.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/restaurante/mesa.features.json"
     },
     "tags": [
       "restaurant"
@@ -158,7 +159,8 @@
             "latam": "items/a1/restaurante/reservar.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/restaurante/reservar.features.json"
     },
     "tags": [
       "restaurant"
@@ -232,7 +234,8 @@
             "latam": "items/a1/restaurante/esta_noche.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/restaurante/esta_noche.features.json"
     },
     "tags": [
       "restaurant"
@@ -306,7 +309,8 @@
             "latam": "items/a1/restaurante/para_dos.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/restaurante/para_dos.features.json"
     },
     "tags": [
       "restaurant"
@@ -384,7 +388,8 @@
             "latam": "items/a1/restaurante/a_mi_nombre.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/restaurante/a_mi_nombre.features.json"
     },
     "tags": [
       "restaurant"
@@ -462,7 +467,8 @@
             "latam": "items/a1/restaurante/a_las_ocho.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/restaurante/a_las_ocho.features.json"
     },
     "tags": [
       "restaurant"
@@ -535,7 +541,8 @@
             "latam": null
           }
         }
-      ]
+      ],
+      "features": "items/a1/restaurante/la_carta.features.json"
     },
     "tags": [
       "restaurant"
@@ -608,7 +615,8 @@
             "latam": "items/a1/restaurante/el_menu.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/restaurante/el_menu.features.json"
     },
     "tags": [
       "restaurant"
@@ -686,7 +694,8 @@
             "latam": "items/a1/restaurante/para_mi.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/restaurante/para_mi.features.json"
     },
     "tags": [
       "restaurant"
@@ -760,7 +769,8 @@
             "latam": "items/a1/restaurante/sin_gluten.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/restaurante/sin_gluten.features.json"
     },
     "tags": [
       "restaurant",
@@ -839,7 +849,8 @@
             "latam": "items/a1/restaurante/alergia.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/restaurante/alergia.features.json"
     },
     "tags": [
       "restaurant",
@@ -922,7 +933,8 @@
             "latam": "items/a1/restaurante/fructos.p1.mx.slow.m4a"
           }
         }
-      ]
+      ],
+      "features": "items/a1/restaurante/fructos.features.json"
     },
     "tags": [
       "restaurant",
