@@ -3,12 +3,12 @@ import { SPEECH_PASS_SCORE } from '@/features/speech/score';
 import { QUICK5_LIMIT, STUDY_MODES, type AccentStrictness, type StudyMode } from './types';
 
 /**
- * Flashcards need a flip screen. Test holds feedback until the end.
- * The planner still builds their steps. The folder sheet marks them «скоро».
+ * Test holds feedback until the end.
+ * The planner still builds those steps. The folder sheet marks them «скоро».
  */
 export const STUDY_MODE_READY: Record<StudyMode, boolean> = {
   review: true,
-  flashcards: false,
+  flashcards: true,
   learn: true,
   test: false,
   match: true,

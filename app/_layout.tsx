@@ -10,6 +10,8 @@ import { DefaultTheme, Stack, ThemeProvider, type Theme } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
+import { StyleSheet } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
 import { SessionError, SessionLoading } from '@/features/auth/components/SessionStatus';
@@ -75,21 +77,29 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <I18nextProvider i18n={i18n}>
-      <QueryClientProvider client={queryClient}>
-        <SessionProvider>
-          <ProgressProvider>
-            <LearnerProvider>
-              <AudioPreferenceProvider>
-                <AppShell fontsLoaded={loaded && languageReady} />
-              </AudioPreferenceProvider>
-            </LearnerProvider>
-          </ProgressProvider>
-        </SessionProvider>
-      </QueryClientProvider>
-    </I18nextProvider>
+    <GestureHandlerRootView style={styles.root}>
+      <I18nextProvider i18n={i18n}>
+        <QueryClientProvider client={queryClient}>
+          <SessionProvider>
+            <ProgressProvider>
+              <LearnerProvider>
+                <AudioPreferenceProvider>
+                  <AppShell fontsLoaded={loaded && languageReady} />
+                </AudioPreferenceProvider>
+              </LearnerProvider>
+            </ProgressProvider>
+          </SessionProvider>
+        </QueryClientProvider>
+      </I18nextProvider>
+    </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+});
 
 function AppShell({ fontsLoaded }: { fontsLoaded: boolean }) {
   const { status } = useSession();

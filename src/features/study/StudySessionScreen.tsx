@@ -9,9 +9,12 @@ import { IconButton } from '@/components/IconButton';
 import { RetryNote } from '@/components/RetryNote';
 import { Text } from '@/components/Text';
 import { reviewRepository } from '@/features/review/defaultRepository';
+import { vocabRepository } from '@/features/vocab/defaultRepository';
 import { colors, space } from '@/theme/tokens';
 
+import { FlashcardSession } from './components/FlashcardSession';
 import { StudyPlayer } from './components/StudyPlayer';
+import { flashcardSteps } from './flashcards';
 import { recordStudyResult, studyModeGrades } from './fsrs';
 import { useStudyLaunch } from './hooks/useStudyLaunch';
 import type { StudyRecordInput } from './hooks/useStudyPlayer';
@@ -50,7 +53,16 @@ export function StudySessionScreen() {
 
   return (
     <View style={[styles.root, pad]}>
-      {launch.status === 'ready' && mode ? (
+      {launch.status === 'ready' && mode === 'flashcards' ? (
+        <FlashcardSession
+          steps={flashcardSteps(launch.steps)}
+          onClose={leave}
+          onAddDifficult={(itemIds) => {
+            if (!launch.userId) return Promise.reject(new Error('Missing user'));
+            return vocabRepository.pinDifficult(launch.userId, itemIds).then(() => undefined);
+          }}
+        />
+      ) : launch.status === 'ready' && mode ? (
         <StudyPlayer
           steps={launch.steps}
           recordGrades={studyModeGrades(mode)}

@@ -132,7 +132,7 @@ export type StudySpeakStep = StepBase & {
   passScore: number;
 };
 
-/** Planned, but the flip screen is not built yet. */
+/** One card in the flip deck. A swipe does not grade the FSRS schedule. */
 export type StudyFlashcardStep = StepBase & {
   type: 'flashcard';
   itemId: string;

@@ -50,6 +50,11 @@ export type PersistedFolders = {
   items: Record<string, FolderItem>;
   outbox: OutboxItem[];
   favoritesMigrated: boolean;
+  /**
+   * Phrases the learner pinned into Сложные from flashcards.
+   * The automatic list still rebuilds, and these ids stay in the folder.
+   */
+  pinnedDifficult: string[];
 };
 
 export type KeyValueStorage = {
@@ -85,6 +90,11 @@ export type VocabRepository = {
   createFolder(userId: string, input: FolderDraft): Promise<FolderSnapshot>;
   updateFolder(userId: string, folderId: string, input: FolderDraft): Promise<FolderSnapshot>;
   addItems(userId: string, folderId: string, itemIds: readonly string[]): Promise<FolderSnapshot>;
+  /**
+   * Puts phrases into Сложные and keeps them there after the automatic rebuild.
+   * Saves on the device first, then flushes when the network is back.
+   */
+  pinDifficult(userId: string, itemIds: readonly string[]): Promise<FolderSnapshot>;
   removeItem(userId: string, folderId: string, itemId: string): Promise<FolderSnapshot>;
   moveItem(
     userId: string,

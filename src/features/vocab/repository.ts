@@ -93,7 +93,11 @@ export function createVocabRepository(deps: VocabRepositoryDeps): VocabRepositor
       throw new Error('Stored folders are unreadable');
     }
     if (!isPersisted(parsed)) throw new Error('Stored folders are unreadable');
-    return { ...parsed, favoritesMigrated: parsed.favoritesMigrated === true };
+    return {
+      ...parsed,
+      favoritesMigrated: parsed.favoritesMigrated === true,
+      pinnedDifficult: cleanPins(parsed.pinnedDifficult),
+    };
   }
 
   async function save(userId: string, state: PersistedFolders): Promise<void> {
@@ -145,7 +149,7 @@ export function createVocabRepository(deps: VocabRepositoryDeps): VocabRepositor
     if (!difficult) throw new Error('Difficult folder is missing');
 
     const wanted = new Set<string>();
-    for (const raw of input.difficultItemIds) {
+    for (const raw of [...input.difficultItemIds, ...state.pinnedDifficult]) {
       const itemId = cleanItemId(raw);
       if (itemId) wanted.add(itemId);
     }
@@ -346,6 +350,29 @@ export function createVocabRepository(deps: VocabRepositoryDeps): VocabRepositor
       });
     },
 
+    pinDifficult(userId, itemIds) {
+      return finish(userId, async () => {
+        const ids = uniqueItemIds(itemIds);
+        if (ids.length === 0) return;
+        let state = await applyBases(userId);
+        const difficult = findSystem(state, 'difficult');
+        if (!difficult) throw new Error('Difficult folder is missing');
+        const addedAt = now();
+        let changed = false;
+        for (const itemId of ids) {
+          const added = addItem(state, difficult.id, itemId, addedAt);
+          state = added.state;
+          changed = changed || added.changed;
+        }
+        const pinned = mergePins(state.pinnedDifficult, ids);
+        if (pinned.length !== state.pinnedDifficult.length) {
+          state = { ...state, pinnedDifficult: pinned };
+          changed = true;
+        }
+        if (changed) await save(userId, state);
+      });
+    },
+
     addItems(userId, folderId, itemIds) {
       return finish(userId, async () => {
         let state = await load(userId);
@@ -439,7 +466,14 @@ export function createVocabRepository(deps: VocabRepositoryDeps): VocabRepositor
 }
 
 function emptyFolders(): PersistedFolders {
-  return { version: 1, folders: {}, items: {}, outbox: [], favoritesMigrated: false };
+  return {
+    version: 1,
+    folders: {},
+    items: {},
+    outbox: [],
+    favoritesMigrated: false,
+    pinnedDifficult: [],
+  };
 }
 
 function isPersisted(value: unknown): value is PersistedFolders {
@@ -623,6 +657,26 @@ function mergeRemote(
   });
 
   return { ...state, folders, items, outbox };
+}
+
+function cleanPins(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  const ids: string[] = [];
+  for (const entry of value) {
+    if (typeof entry !== 'string') continue;
+    const itemId = cleanItemId(entry);
+    if (!itemId || ids.includes(itemId)) continue;
+    ids.push(itemId);
+  }
+  return ids;
+}
+
+function mergePins(current: readonly string[], extra: readonly string[]): string[] {
+  const pins = [...current];
+  for (const id of extra) {
+    if (!pins.includes(id)) pins.push(id);
+  }
+  return pins;
 }
 
 function uniqueItemIds(itemIds: readonly string[]): string[] {

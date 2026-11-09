@@ -51,6 +51,9 @@ jest.mock('react-native-reanimated', () => {
     withDelay: (_delay, animation) => animation,
     withRepeat: (animation) => animation,
     withSequence: (...animations) => animations[animations.length - 1],
+    runOnJS: (fn) => fn,
+    interpolate: (value) => value,
+    Extrapolation: { CLAMP: 'clamp', EXTEND: 'extend', IDENTITY: 'identity' },
     Easing: {
       out: (fn) => fn,
       inOut: (fn) => fn,
@@ -102,6 +105,41 @@ jest.mock('expo-speech-recognition', () => {
       supportsOnDeviceRecognition: jest.fn(() => true),
       addListener: jest.fn(addListener),
       __emit: emit,
+    },
+  };
+});
+
+jest.mock('react-native-gesture-handler', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+
+  function chain() {
+    const api = {
+      enabled() {
+        return api;
+      },
+      activeOffsetX() {
+        return api;
+      },
+      failOffsetY() {
+        return api;
+      },
+      onUpdate() {
+        return api;
+      },
+      onEnd() {
+        return api;
+      },
+    };
+    return api;
+  }
+
+  return {
+    GestureHandlerRootView: ({ children, ...props }) => React.createElement(View, props, children),
+    GestureDetector: ({ children }) => children,
+    Gesture: {
+      Pan: chain,
+      Tap: chain,
     },
   };
 });
