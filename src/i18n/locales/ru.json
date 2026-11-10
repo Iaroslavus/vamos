@@ -497,16 +497,16 @@
         "body": "Без подсказок до кнопки «Сдать». Потом — процент и ошибки."
       },
       "match": {
-        "title": "Пары",
-        "body": "Соедините испанский и перевод."
+        "title": "Пары на время",
+        "body": "Сетка из шести пар. Ошибка добавляет секунду, рекорд остаётся в папке."
       },
       "spell": {
-        "title": "Правописание",
-        "body": "Напишите фразу по памяти."
+        "title": "Диктант",
+        "body": "Услышите фразу и напишите её. Открытая буква стоит балл."
       },
       "speak": {
-        "title": "Вслух",
-        "body": "Повторите фразу вслух."
+        "title": "Говорение",
+        "body": "Скажите каждую фразу. Произношение проверяется как в уроке."
       },
       "quick5": {
         "title": "Пять быстро",
@@ -623,6 +623,29 @@
       "added": "Добавлено в Сложные",
       "addError": "Не удалось добавить в Сложные. Попробуйте ещё раз.",
       "rateError": "Оценки не сохранились. Итог на экране верный."
+    },
+    "games": {
+      "pairsBoard": "Сетка {{current}} из {{total}}",
+      "pairsBoardClear": "Сетка собрана",
+      "pairsTime": "Время {{time}}",
+      "pairsRecord": "Рекорд {{time}}",
+      "pairsNoRecord": "Рекорда пока нет",
+      "pairsNewRecord": "Новый рекорд",
+      "pairsDone": "Пары собраны",
+      "pairsNext": "Следующая сетка",
+      "pairsPenalties_one": "Штраф {{count}} секунда",
+      "pairsPenalties_few": "Штраф {{count}} секунды",
+      "pairsPenalties_many": "Штраф {{count}} секунд",
+      "pairsPenalties_other": "Штраф {{count}} секунд",
+      "dictationPrompt": "Напишите, что слышите",
+      "dictationPlaceholder": "Фраза по-испански",
+      "dictationReveal": "Открыть букву",
+      "dictationRevealLabel": "Открыть букву. Минус один балл. Сейчас {{score}}",
+      "dictationStake": "Баллы за фразу: {{score}}",
+      "dictationTotal": "Баллы: {{score}}",
+      "dictationMask": "Подсказка {{mask}}",
+      "dictationDone": "Диктант готов",
+      "speakProgress": "{{current}} из {{total}}"
     }
   },
   "common": {

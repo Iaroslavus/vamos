@@ -2,9 +2,6 @@ import type { RefObject } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { AudioControls } from '@/features/audio/AudioControls';
-import { contentLanguage } from '@/features/content/language';
-import { getItem } from '@/features/content/loader';
-import { textOf } from '@/features/content/text';
 import type { AnswerTextFieldHandle } from '@/features/lesson/components/AnswerTextField';
 import { LessonExerciseBody } from '@/features/lesson/components/LessonExerciseBody';
 import { SpeakRepeatStep } from '@/features/lesson/components/SpeakRepeatStep';
@@ -13,6 +10,7 @@ import type { MatchPairsOutcome } from '@/features/lesson/hooks/useMatchPairs';
 import { space } from '@/theme/tokens';
 
 import { studyStepExercise } from '../exercise';
+import { speakExtras } from '../speakExtras';
 import type { StudyStep } from '../types';
 
 type StudyStepBodyProps = {
@@ -76,26 +74,6 @@ export function StudyStepBody({
       />
     </View>
   );
-}
-
-function speakExtras(itemId: string): {
-  sayRu: string | null;
-  parts: { es: string; ru: string }[];
-  confusables: string[];
-  featuresPath: string | null;
-} {
-  try {
-    const item = getItem(itemId);
-    const say = textOf(item.say, contentLanguage());
-    return {
-      sayRu: say || null,
-      parts: item.parts.map((part) => ({ es: part.es, ru: textOf(part.tr, contentLanguage()) })),
-      confusables: [...item.confusables],
-      featuresPath: item.audio.features,
-    };
-  } catch {
-    return { sayRu: null, parts: [], confusables: [], featuresPath: null };
-  }
 }
 
 const styles = StyleSheet.create({

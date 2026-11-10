@@ -11,6 +11,7 @@ import { useSpeechCapture, type SpeechFinal } from './useSpeechCapture';
 import { SPEECH_MAX_ATTEMPTS } from '../options';
 import { deleteSpeechFile } from '../recording';
 import {
+  SPEECH_PASS_SCORE,
   isSpeechPass,
   matchSpokenOption,
   needsSelfCompare,
@@ -35,6 +36,8 @@ type UseSpeakPracticeInput = {
   onAttemptsUsed?: (count: number) => void;
   /** Normal-speed MFCC for each voice. Null keeps the text score on its own. */
   references?: UnitFeatures | null;
+  /** Score that counts as understood. Lessons leave this on the speech default. */
+  passScore?: number;
 };
 
 /**
@@ -51,6 +54,7 @@ export function useSpeakPractice({
   attemptsUsed,
   onAttemptsUsed,
   references = null,
+  passScore = SPEECH_PASS_SCORE,
 }: UseSpeakPracticeInput) {
   const [localAttempts, setLocalAttempts] = useState(0);
   const [scored, setScored] = useState<SpeechScore | null>(null);
@@ -69,6 +73,7 @@ export function useSpeakPractice({
   const takeRef = useRef<WavTake | null>(null);
   const takeGeneration = useRef(0);
   const referencesRef = useRef(references);
+  const passScoreRef = useRef(passScore);
 
   const attempts = attemptsUsed ?? localAttempts;
   const selfCompare = mode !== 'dialog' && needsSelfCompare(phrase);
@@ -79,7 +84,8 @@ export function useSpeakPractice({
     confusablesRef.current = confusables;
     onAttemptsUsedRef.current = onAttemptsUsed;
     referencesRef.current = references;
-  }, [confusables, onAttemptsUsed, onMatch, options, references]);
+    passScoreRef.current = passScore;
+  }, [confusables, onAttemptsUsed, onMatch, options, passScore, references]);
 
   useEffect(() => {
     attemptsRef.current = attempts;
@@ -172,7 +178,7 @@ export function useSpeakPractice({
         }
 
         void Haptics.notificationAsync(
-          isSpeechPass(next)
+          isSpeechPass(next, passScoreRef.current)
             ? Haptics.NotificationFeedbackType.Success
             : Haptics.NotificationFeedbackType.Error,
         );
@@ -194,7 +200,8 @@ export function useSpeakPractice({
       : null;
   const shown = mode === 'dialog' || phrase.length === 0 ? null : (live ?? scored);
   const passed =
-    mode !== 'dialog' && (selfCompare ? confirmed : scored !== null && isSpeechPass(scored));
+    mode !== 'dialog' &&
+    (selfCompare ? confirmed : scored !== null && isSpeechPass(scored, passScore));
   const comparing = selfCompare && scored !== null && !confirmed;
   const locked = mode !== 'practice' && attempts >= SPEECH_MAX_ATTEMPTS;
   const micBlocked = capture.access === 'blocked' || capture.access === 'unavailable';

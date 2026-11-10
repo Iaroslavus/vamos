@@ -497,16 +497,16 @@
         "body": "No hints until you hand it in. Then a score and the misses."
       },
       "match": {
-        "title": "Match",
-        "body": "Pair Spanish with the translation."
+        "title": "Timed pairs",
+        "body": "A grid of six pairs. A miss adds a second, and the record stays with the folder."
       },
       "spell": {
-        "title": "Spell",
-        "body": "Write the phrase from memory."
+        "title": "Dictation",
+        "body": "Hear the phrase and write it. Revealing a letter costs a point."
       },
       "speak": {
-        "title": "Speak",
-        "body": "Say the phrase aloud."
+        "title": "Speaking",
+        "body": "Say each phrase. Pronunciation is checked the same way as in a lesson."
       },
       "quick5": {
         "title": "Quick 5",
@@ -623,6 +623,29 @@
       "added": "Added to Tricky",
       "addError": "Couldn't add these to Tricky. Try again.",
       "rateError": "The grades were not saved. The score on screen is right."
+    },
+    "games": {
+      "pairsBoard": "Grid {{current}} of {{total}}",
+      "pairsBoardClear": "Grid cleared",
+      "pairsTime": "Time {{time}}",
+      "pairsRecord": "Record {{time}}",
+      "pairsNoRecord": "No record yet",
+      "pairsNewRecord": "New record",
+      "pairsDone": "Pairs cleared",
+      "pairsNext": "Next grid",
+      "pairsPenalties_one": "Penalty {{count}} second",
+      "pairsPenalties_few": "Penalty {{count}} seconds",
+      "pairsPenalties_many": "Penalty {{count}} seconds",
+      "pairsPenalties_other": "Penalty {{count}} seconds",
+      "dictationPrompt": "Write what you hear",
+      "dictationPlaceholder": "The phrase in Spanish",
+      "dictationReveal": "Reveal a letter",
+      "dictationRevealLabel": "Reveal a letter. Minus one point. Now {{score}}",
+      "dictationStake": "Points for this phrase: {{score}}",
+      "dictationTotal": "Points: {{score}}",
+      "dictationMask": "Hint {{mask}}",
+      "dictationDone": "Dictation complete",
+      "speakProgress": "{{current}} of {{total}}"
     }
   },
   "common": {
