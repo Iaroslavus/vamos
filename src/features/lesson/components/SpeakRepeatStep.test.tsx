@@ -1,9 +1,10 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
+import { setAudioModeAsync } from 'expo-audio';
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 import { I18nextProvider } from 'react-i18next';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { playLessonAudio } from '@/features/audio/playback';
+import { playLessonAudio, stopLessonAudio } from '@/features/audio/playback';
 import i18n from '@/i18n';
 
 import { SpeakRepeatStep } from './SpeakRepeatStep';
@@ -85,6 +86,7 @@ async function renderStep({
 
 describe('SpeakRepeatStep', () => {
   beforeEach(() => {
+    (globalThis as { __resetAudio__?: () => void }).__resetAudio__?.();
     jest.clearAllMocks();
     jest.mocked(ExpoSpeechRecognitionModule.getPermissionsAsync).mockResolvedValue(granted);
     jest.mocked(ExpoSpeechRecognitionModule.requestPermissionsAsync).mockResolvedValue(granted);
@@ -108,10 +110,21 @@ describe('SpeakRepeatStep', () => {
     expect(screen.getByText('Ударение там, где стоит знак ударения.')).toBeTruthy();
   });
 
-  it('grades a short phrase without the reference and keeps a temp recording', async () => {
+  it('records alone, then recognizes the wav without a second microphone', async () => {
     await renderStep();
 
     await fireEvent.press(screen.getByLabelText('Говорить'));
+
+    expect(ExpoSpeechRecognitionModule.start).not.toHaveBeenCalled();
+    await waitFor(() => {
+      expect(screen.getByLabelText('Остановить запись')).toBeTruthy();
+    });
+    expect(ExpoSpeechRecognitionModule.abort).toHaveBeenCalled();
+    expect(setAudioModeAsync).toHaveBeenCalledWith(
+      expect.objectContaining({ allowsRecording: true, playsInSilentMode: true }),
+    );
+
+    await fireEvent.press(screen.getByLabelText('Остановить запись'));
 
     await waitFor(() => {
       expect(ExpoSpeechRecognitionModule.start).toHaveBeenCalledWith(
@@ -119,27 +132,75 @@ describe('SpeakRepeatStep', () => {
           lang: 'es-ES',
           requiresOnDeviceRecognition: true,
           maxAlternatives: 5,
-          recordingOptions: { persist: true },
+          audioSource: { uri: 'file:///cache/take.wav' },
         }),
       );
     });
     const options = jest.mocked(ExpoSpeechRecognitionModule.start).mock.calls[0]?.[0];
     expect(options).not.toHaveProperty('contextualStrings');
-    expect(options).not.toHaveProperty('audioSource');
+    expect(options).not.toHaveProperty('recordingOptions');
   });
 
-  it('grades a longer phrase without saving audio or hinting the reference', async () => {
+  it('does not hint a longer phrase when the file is recognized', async () => {
     await renderStep({ promptEs: 'una mesa roja' });
 
     expect(screen.getByText(/Запись не сохраняется/)).toBeTruthy();
     await fireEvent.press(screen.getByLabelText('Говорить'));
+    await waitFor(() => {
+      expect(screen.getByLabelText('Остановить запись')).toBeTruthy();
+    });
+    await fireEvent.press(screen.getByLabelText('Остановить запись'));
 
     await waitFor(() => {
       expect(ExpoSpeechRecognitionModule.start).toHaveBeenCalled();
     });
-    const options = jest.mocked(ExpoSpeechRecognitionModule.start).mock.calls[0]?.[0];
+    const options = jest.mocked(ExpoSpeechRecognitionModule.start).mock.calls.at(-1)?.[0];
     expect(options).not.toHaveProperty('contextualStrings');
     expect(options).not.toHaveProperty('recordingOptions');
+    expect(options).toEqual(
+      expect.objectContaining({ audioSource: { uri: 'file:///cache/take.wav' } }),
+    );
+  });
+
+  it('shows the microphone message when the input cannot be opened', async () => {
+    const state = (
+      globalThis as {
+        __VAMOS_AUDIO__: { inputs: unknown[]; current: { uid: string } | null };
+      }
+    ).__VAMOS_AUDIO__;
+    state.inputs = [];
+    state.current = null;
+
+    await renderStep();
+    await fireEvent.press(screen.getByLabelText('Говорить'));
+
+    expect(await screen.findByText('Микрофон недоступен')).toBeTruthy();
+    expect(screen.getByText('Прослушать и повторить')).toBeTruthy();
+    expect(ExpoSpeechRecognitionModule.start).not.toHaveBeenCalled();
+    expect(setAudioModeAsync).toHaveBeenCalledWith(
+      expect.objectContaining({ allowsRecording: false, playsInSilentMode: true }),
+    );
+  });
+
+  it('stops the sample before arming the microphone', async () => {
+    const order: string[] = [];
+    jest.mocked(stopLessonAudio).mockImplementation(async () => {
+      order.push('stop');
+    });
+    jest.mocked(setAudioModeAsync).mockImplementation(async (mode) => {
+      order.push(mode.allowsRecording ? 'record' : 'play');
+    });
+
+    await renderStep();
+    await fireEvent.press(screen.getByText('Слушать образец'));
+    await fireEvent.press(screen.getByLabelText('Говорить'));
+
+    await waitFor(() => {
+      expect(order).toContain('record');
+    });
+    expect(order.indexOf('stop')).toBeGreaterThanOrEqual(0);
+    expect(order.indexOf('stop')).toBeLessThan(order.indexOf('record'));
+    expect(ExpoSpeechRecognitionModule.start).not.toHaveBeenCalled();
   });
 
   it('colors the words, shows the percent and the problem hint', async () => {

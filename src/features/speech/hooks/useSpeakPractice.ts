@@ -4,10 +4,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { stopLessonAudio } from '@/features/audio/playback';
 
 import { assessRecording, combinePronunciationScore } from '../acoustic/assess';
-import { beginWavTake, type WavTake } from '../acoustic/record';
 import type { UnitFeatures } from '../acoustic/reference';
 import { errorFindings, type AcousticFinding } from '../acoustic/rules';
 import { useSpeechCapture, type SpeechFinal } from './useSpeechCapture';
+import { useWavRecorder } from './useWavRecorder';
 import { SPEECH_MAX_ATTEMPTS } from '../options';
 import { deleteSpeechFile } from '../recording';
 import {
@@ -44,6 +44,7 @@ type UseSpeakPracticeInput = {
  * Scores one spoken attempt against a reference phrase, or matches a dialog line.
  * Never reads or writes the lesson store: practice misses do not spend hearts.
  * One- and two-word phrases wait for the learner to compare the take with the sample.
+ * The acoustic file is the only microphone capture; recognition runs on that file afterwards.
  */
 export function useSpeakPractice({
   phrase,
@@ -63,6 +64,7 @@ export function useSpeakPractice({
   const [recordingUri, setRecordingUri] = useState<string | null>(null);
   const [dialogMiss, setDialogMiss] = useState(false);
   const [findings, setFindings] = useState<AcousticFinding[]>([]);
+  const [micUnavailable, setMicUnavailable] = useState(false);
   const onMatchRef = useRef(onMatch);
   const optionsRef = useRef(options);
   const confusablesRef = useRef(confusables);
@@ -70,8 +72,12 @@ export function useSpeakPractice({
   const onAttemptsUsedRef = useRef(onAttemptsUsed);
   const phraseRef = useRef(phrase);
   const recordingRef = useRef<string | null>(null);
-  const takeRef = useRef<WavTake | null>(null);
+  const acousticSamples = useRef<Float32Array | null>(null);
   const takeGeneration = useRef(0);
+  const scoreGeneration = useRef(0);
+  const finishRef = useRef<() => void>(() => undefined);
+  const wav = useWavRecorder({ onEnded: () => finishRef.current() });
+  const wavRef = useRef(wav);
   const referencesRef = useRef(references);
   const passScoreRef = useRef(passScore);
 
@@ -93,8 +99,8 @@ export function useSpeakPractice({
 
   const forgetRecording = useCallback(() => {
     takeGeneration.current += 1;
-    takeRef.current?.discard();
-    takeRef.current = null;
+    wavRef.current.discard();
+    acousticSamples.current = null;
     deleteSpeechFile(recordingRef.current);
     recordingRef.current = null;
     setRecordingUri(null);
@@ -102,7 +108,6 @@ export function useSpeakPractice({
 
   useEffect(() => {
     return () => {
-      takeRef.current?.discard();
       deleteSpeechFile(recordingRef.current);
     };
   }, []);
@@ -116,6 +121,7 @@ export function useSpeakPractice({
     setConfirmed(false);
     setCompareToken(0);
     setFindings([]);
+    setMicUnavailable(false);
     forgetRecording();
   }, [forgetRecording, phrase]);
 
@@ -126,6 +132,8 @@ export function useSpeakPractice({
 
   const onFinal = useCallback(
     (result: SpeechFinal) => {
+      if (mode !== 'dialog' && scoreGeneration.current !== takeGeneration.current) return;
+
       const nextCount = Math.min(SPEECH_MAX_ATTEMPTS, attemptsRef.current + 1);
       attemptsRef.current = nextCount;
       if (onAttemptsUsedRef.current) onAttemptsUsedRef.current(nextCount);
@@ -149,12 +157,11 @@ export function useSpeakPractice({
         alternatives: result.alternatives,
         confusables: confusablesRef.current,
       });
-      takeGeneration.current += 1;
-      const take = takeRef.current;
-      takeRef.current = null;
+      const samples = acousticSamples.current;
+      acousticSamples.current = null;
 
-      const publish = (samples: Float32Array | null) => {
-        const acoustic = samples ? assessRecording(samples, referencesRef.current, phrase) : null;
+      const publish = (taken: Float32Array | null) => {
+        const acoustic = taken ? assessRecording(taken, referencesRef.current, phrase) : null;
         const next = {
           ...text,
           score: combinePronunciationScore(
@@ -163,20 +170,25 @@ export function useSpeakPractice({
             acoustic?.penalty ?? 0,
           ),
         };
+        setMicUnavailable(false);
         setFindings(errorFindings(acoustic?.findings ?? []));
         setScored(next);
         setConfirmed(false);
 
         if (selfCompare) {
-          if (result.recordingUri !== recordingRef.current) {
-            deleteSpeechFile(recordingRef.current);
+          const uri = recordingRef.current ?? result.recordingUri;
+          if (result.recordingUri && result.recordingUri !== uri) {
+            deleteSpeechFile(result.recordingUri);
           }
-          recordingRef.current = result.recordingUri;
-          setRecordingUri(result.recordingUri);
+          recordingRef.current = uri;
+          setRecordingUri(uri);
           setCompareToken((token) => token + 1);
           return;
         }
 
+        deleteSpeechFile(recordingRef.current);
+        deleteSpeechFile(result.recordingUri);
+        recordingRef.current = null;
         void Haptics.notificationAsync(
           isSpeechPass(next, passScoreRef.current)
             ? Haptics.NotificationFeedbackType.Success
@@ -184,8 +196,7 @@ export function useSpeakPractice({
         );
       };
 
-      if (take) void take.finish().then(publish);
-      else publish(null);
+      publish(samples);
     },
     [mode, phrase, selfCompare],
   );
@@ -194,6 +205,54 @@ export function useSpeakPractice({
     { mode: mode === 'dialog' ? 'dialog' : 'grade', hints, record: selfCompare },
     onFinal,
   );
+  const captureRef = useRef(capture);
+
+  useEffect(() => {
+    wavRef.current = wav;
+    captureRef.current = capture;
+  }, [capture, wav]);
+
+  const finishAndRecognize = useCallback(async () => {
+    const generation = takeGeneration.current;
+    const result = await wavRef.current.finish();
+    if (takeGeneration.current !== generation) return;
+    if (!result?.uri) {
+      setMicUnavailable(true);
+      return;
+    }
+    acousticSamples.current = result.samples;
+    recordingRef.current = result.uri;
+    scoreGeneration.current = generation;
+    const started = await captureRef.current.beginFile(result.uri);
+    if (takeGeneration.current !== generation) return;
+    if (!started) {
+      onFinal({
+        transcript: '',
+        confidence: -1,
+        alternatives: [],
+        recordingUri: result.uri,
+      });
+    }
+  }, [onFinal]);
+
+  useEffect(() => {
+    finishRef.current = () => {
+      void finishAndRecognize();
+    };
+  }, [finishAndRecognize]);
+
+  const startTake = useCallback(() => {
+    const generation = takeGeneration.current;
+    void wavRef.current.begin().then((result) => {
+      if (takeGeneration.current !== generation) {
+        if (result === 'started') wavRef.current.discard();
+        return;
+      }
+      if (result === 'failed') setMicUnavailable(true);
+      if (result === 'started') setMicUnavailable(false);
+    });
+  }, []);
+
   const live =
     mode !== 'dialog' && capture.listening && capture.transcript && scored === null
       ? scoreSpeech(phrase, capture.transcript)
@@ -207,6 +266,10 @@ export function useSpeakPractice({
   const micBlocked = capture.access === 'blocked' || capture.access === 'unavailable';
 
   const onMic = () => {
+    if (mode !== 'dialog' && wav.recording) {
+      void finishAndRecognize();
+      return;
+    }
     if (capture.listening) {
       capture.stop();
       return;
@@ -217,19 +280,13 @@ export function useSpeakPractice({
     setConfirmed(false);
     setCompareToken(0);
     setFindings([]);
+    setMicUnavailable(false);
     forgetRecording();
-    const generation = takeGeneration.current;
-    void capture.begin().then((started) => {
-      if (!started || mode === 'dialog' || takeGeneration.current !== generation) return;
-      void beginWavTake().then((take) => {
-        if (!take) return;
-        if (takeGeneration.current !== generation) {
-          take.discard();
-          return;
-        }
-        takeRef.current = take;
-      });
-    });
+    if (mode === 'dialog') {
+      void capture.begin();
+      return;
+    }
+    startTake();
   };
 
   const confirm = () => {
@@ -242,8 +299,20 @@ export function useSpeakPractice({
     setScored(null);
     setConfirmed(false);
     setCompareToken(0);
+    setMicUnavailable(false);
     if (locked || micBlocked) return;
-    void capture.begin();
+    if (mode === 'dialog') {
+      void capture.begin();
+      return;
+    }
+    startTake();
+  };
+
+  const cancelRecording = () => {
+    if (!wav.recording) return;
+    takeGeneration.current += 1;
+    wav.discard();
+    acousticSamples.current = null;
   };
 
   const { begin, stop } = capture;
@@ -266,6 +335,9 @@ export function useSpeakPractice({
     passed,
     locked,
     micBlocked,
+    micUnavailable,
+    recording: wav.recording,
+    level: wav.level,
     dialogMiss,
     selfCompare,
     comparing,
@@ -275,6 +347,7 @@ export function useSpeakPractice({
     onMic,
     confirm,
     onAgain,
+    cancelRecording,
     findings,
   };
 }
