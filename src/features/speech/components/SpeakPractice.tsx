@@ -73,9 +73,14 @@ export function SpeakPractice({
   const access = practice.capture.access;
   const fallback = access === 'unavailable' || access === 'denied' || access === 'blocked';
   const tone: SpeechFallbackTone = mode === 'step' ? 'step' : mode;
-  const micDisabled = (practice.locked || practice.micBlocked) && !practice.capture.listening;
+  const listening = practice.recording || practice.capture.listening;
+  const volume = practice.recording ? practice.level : practice.capture.volume;
+  const micDisabled = (practice.locked || practice.micBlocked) && !listening;
+  const repeatSample = practice.micUnavailable || (mode !== 'step' && fallback);
+  const sampleTitle = t(repeatSample ? 'speech.listenAndRepeat' : 'speech.listenSample');
 
   const onSample = () => {
+    practice.cancelRecording();
     if (practice.capture.listening) practice.capture.stop();
     if (!phrase) return;
     void playLessonAudio({ audio, text: phrase });
@@ -113,6 +118,9 @@ export function SpeakPractice({
           </Text>
         ) : null}
         <SpeechFallback access={access} tone={tone} onAllow={() => void practice.capture.begin()} />
+        {practice.micUnavailable && !fallback ? (
+          <Text variant="bodyBold">{t('speech.permissionTitle')}</Text>
+        ) : null}
         {practice.capture.notice === 'none' ? null : (
           <Text variant="body" color={colors.inkMuted}>
             {t(practice.capture.notice === 'no-speech' ? 'speech.noSpeech' : 'speech.error')}
@@ -136,10 +144,11 @@ export function SpeakPractice({
 
       {mode === 'step' ? (
         <SpeakActions
-          listening={practice.capture.listening}
-          volume={practice.capture.volume}
+          listening={listening}
+          volume={volume}
           micDisabled={micDisabled}
           passed={practice.passed}
+          sampleTitle={sampleTitle}
           onMic={onMic}
           onSample={onSample}
           onSkip={() => onSkip?.()}
@@ -147,11 +156,11 @@ export function SpeakPractice({
         />
       ) : (
         <SpeakPracticeControls
-          listening={practice.capture.listening}
-          volume={practice.capture.volume}
+          listening={listening}
+          volume={volume}
           micDisabled={micDisabled}
           showSample={mode !== 'dialog'}
-          sampleTitle={t(fallback ? 'speech.listenAndRepeat' : 'speech.listenSample')}
+          sampleTitle={sampleTitle}
           closeTitle={t(practice.passed ? 'speech.practiceDone' : 'common.close')}
           closePrimary={practice.passed}
           onMic={onMic}

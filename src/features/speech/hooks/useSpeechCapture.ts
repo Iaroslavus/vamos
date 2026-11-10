@@ -45,6 +45,7 @@ export function useSpeechCapture(
   const onFinalRef = useRef(onFinal);
   const requestRef = useRef(request);
   const recordingRef = useRef<string | null>(null);
+  const fileRef = useRef(false);
   const mounted = useRef(true);
 
   useEffect(() => {
@@ -80,12 +81,17 @@ export function useSpeechCapture(
   useEffect(() => {
     const subscriptions = [
       ExpoSpeechRecognitionModule.addListener('start', () => {
+        if (fileRef.current) {
+          setNotice('none');
+          return;
+        }
         setListening(true);
         setTranscript('');
         setVolume(0);
         setNotice('none');
       }),
       ExpoSpeechRecognitionModule.addListener('end', () => {
+        fileRef.current = false;
         setListening(false);
         setVolume(0);
       }),
@@ -112,6 +118,7 @@ export function useSpeechCapture(
         });
       }),
       ExpoSpeechRecognitionModule.addListener('error', (event) => {
+        fileRef.current = false;
         setListening(false);
         setVolume(0);
         if (event.error === 'aborted') return;
@@ -140,7 +147,7 @@ export function useSpeechCapture(
     };
   }, []);
 
-  const begin = useCallback(async (): Promise<boolean> => {
+  const prepare = useCallback(async (): Promise<boolean> => {
     try {
       if (!ExpoSpeechRecognitionModule.isRecognitionAvailable()) {
         setAccess('unavailable');
@@ -157,27 +164,60 @@ export function useSpeechCapture(
       }
       const next = accessFromPermission(permission);
       setAccess(next);
-      if (next !== 'granted') return false;
-
-      const locales = await ExpoSpeechRecognitionModule.getSupportedLocales({});
-      const onDevice = shouldRequireOnDevice(
-        ExpoSpeechRecognitionModule.supportsOnDeviceRecognition(),
-        locales.installedLocales,
-      );
-      const pending = requestRef.current;
-      ExpoSpeechRecognitionModule.start(
-        speechStartOptions(onDevice, pending.mode, pending.hints, pending.record),
-      );
-      return true;
+      return next === 'granted';
     } catch {
       setAccess('unavailable');
       return false;
     }
   }, []);
 
+  const recognitionOptions = useCallback(async (record?: boolean) => {
+    const locales = await ExpoSpeechRecognitionModule.getSupportedLocales({});
+    const onDevice = shouldRequireOnDevice(
+      ExpoSpeechRecognitionModule.supportsOnDeviceRecognition(),
+      locales.installedLocales,
+    );
+    const pending = requestRef.current;
+    return speechStartOptions(onDevice, pending.mode, pending.hints, record ?? pending.record);
+  }, []);
+
+  const begin = useCallback(async (): Promise<boolean> => {
+    const ready = await prepare();
+    if (!ready) return false;
+    try {
+      fileRef.current = false;
+      ExpoSpeechRecognitionModule.start(await recognitionOptions());
+      return true;
+    } catch {
+      setAccess('unavailable');
+      return false;
+    }
+  }, [prepare, recognitionOptions]);
+
+  /** Score a finished take. The file is not a second microphone capture. */
+  const beginFile = useCallback(
+    async (uri: string): Promise<boolean> => {
+      const ready = await prepare();
+      if (!ready) return false;
+      try {
+        fileRef.current = true;
+        ExpoSpeechRecognitionModule.start({
+          ...(await recognitionOptions(false)),
+          audioSource: { uri },
+        });
+        return true;
+      } catch {
+        fileRef.current = false;
+        setNotice('error');
+        return false;
+      }
+    },
+    [prepare, recognitionOptions],
+  );
+
   const stop = useCallback(() => {
     ExpoSpeechRecognitionModule.stop();
   }, []);
 
-  return { access, listening, transcript, volume, notice, begin, stop };
+  return { access, listening, transcript, volume, notice, begin, beginFile, stop };
 }

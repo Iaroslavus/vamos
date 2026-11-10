@@ -1,96 +1,148 @@
-import { File } from 'expo-file-system';
+import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 
-import { deleteSpeechFile } from '../recording';
-import { ACOUSTIC } from './config';
 import { decodeWavPcm } from './wav';
+import {
+  MAX_TAKE_SECONDS,
+  PLAYBACK_AUDIO_MODE,
+  RECORDING_AUDIO_MODE,
+  recordingInputReady,
+  type AudioSessionMode,
+} from './session';
 
-type PcmStream = {
-  start: () => Promise<void>;
-  stop: () => void;
-  startFileRecordingAsync: (options: {
-    format: 'wav';
-    directory: 'cache';
-  }) => Promise<{ uri: string }>;
-  stopFileRecordingAsync: () => Promise<{ uri: string }>;
+const RECOGNITION_STOP_MS = 500;
+
+export type WavTakeResult = {
+  samples: Float32Array | null;
+  uri: string;
 };
 
 export type WavTake = {
-  /** Stop, read the WAV, and delete the file. Null when the file could not be read. */
-  finish: () => Promise<Float32Array | null>;
+  /** Stop, read the file, and restore playback. Null when the recorder itself failed. */
+  finish: () => Promise<WavTakeResult | null>;
   discard: () => void;
 };
 
+export type PcmRecorder = {
+  prepareToRecordAsync: () => Promise<void>;
+  getAvailableInputs: () => readonly { uid?: string | null }[];
+  getCurrentInput: () => Promise<{ uid?: string | null }>;
+  record: (options?: { forDuration?: number }) => void;
+  stop: () => Promise<void>;
+  getStatus: () => { isRecording: boolean; url?: string | null };
+  readonly uri: string | null;
+};
+
+export type RecordingControls = {
+  abortRecognition: () => Promise<void> | void;
+  stopPlayback: () => Promise<void>;
+  requestPermission: () => Promise<{ granted: boolean }>;
+  setAudioMode: (mode: AudioSessionMode) => Promise<void>;
+  readFile: (uri: string) => Promise<ArrayBuffer>;
+  deleteFile: (uri: string | null | undefined) => void;
+};
+
 /**
- * Record mono 16 kHz PCM in a WAV container.
- * Returns null when the microphone or the native stream is unavailable.
- * The file is deleted as soon as it has been read.
+ * Wait until speech recognition has dropped the microphone.
+ * `abort` is asynchronous; starting a recorder before `end` leaves the input at 0 Hz.
  */
-export async function beginWavTake(): Promise<WavTake | null> {
-  let stream: PcmStream;
-  let uri: string | null = null;
-  try {
-    const audio = await import('expo-audio');
-    const native = audio.AudioModule as unknown as {
-      AudioStream?: new (options: {
-        sampleRate: number;
-        channels: number;
-        encoding: 'int16';
-      }) => PcmStream;
+export function stopSpeechRecognition(): Promise<void> {
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      subscription.remove();
+      resolve();
     };
-    const Stream = native.AudioStream;
-    if (typeof Stream !== 'function') return null;
-    const permission = await audio.requestRecordingPermissionsAsync();
+    const subscription = ExpoSpeechRecognitionModule.addListener('end', () => {
+      finish();
+    });
+    const timer = setTimeout(finish, RECOGNITION_STOP_MS);
+    try {
+      ExpoSpeechRecognitionModule.abort();
+    } catch {
+      finish();
+    }
+  });
+}
+
+/**
+ * One microphone take as a WAV file.
+ * AudioStream is not used: its `start()` installs a tap before anyone can see the
+ * hardware format, and a 0 Hz input (simulator I/O → None, or a session still held
+ * by playback / recognition) raises an Objective-C exception that never reaches JS.
+ * `prepare` + `getAvailableInputs` fail with a normal rejection instead.
+ */
+export async function openWavTake(
+  recorder: PcmRecorder,
+  io: RecordingControls,
+): Promise<WavTake | null> {
+  let recordingMode = false;
+  const restorePlayback = async () => {
+    recordingMode = false;
+    try {
+      await io.setAudioMode(PLAYBACK_AUDIO_MODE);
+    } catch {
+      // Playback mode is applied again the next time a clip starts.
+    }
+  };
+
+  try {
+    await io.abortRecognition();
+    await io.stopPlayback();
+    const permission = await io.requestPermission();
     if (!permission.granted) return null;
-    await audio.setAudioModeAsync({
-      allowsRecording: true,
-      playsInSilentMode: true,
-      interruptionMode: 'duckOthers',
-    });
-    stream = new Stream({
-      sampleRate: ACOUSTIC.sampleRate,
-      channels: 1,
-      encoding: 'int16',
-    });
-    await stream.start();
-    const started = await stream.startFileRecordingAsync({ format: 'wav', directory: 'cache' });
-    uri = started.uri;
+    await io.setAudioMode(RECORDING_AUDIO_MODE);
+    recordingMode = true;
+    await recorder.prepareToRecordAsync();
+    let current: { uid?: string | null } | null = null;
+    try {
+      current = await recorder.getCurrentInput();
+    } catch {
+      current = null;
+    }
+    if (!recordingInputReady(recorder.getAvailableInputs(), current)) {
+      await restorePlayback();
+      return null;
+    }
+    recorder.record({ forDuration: MAX_TAKE_SECONDS });
+    if (!recorder.getStatus().isRecording) {
+      await restorePlayback();
+      return null;
+    }
   } catch {
-    deleteSpeechFile(uri);
+    if (recordingMode) await restorePlayback();
     return null;
   }
 
   let settled = false;
-  const close = () => {
-    try {
-      stream.stop();
-    } catch {
-      // The stream may already have been released.
-    }
-  };
-
   return {
     async finish() {
       if (settled) return null;
       settled = true;
       try {
-        const result = await stream.stopFileRecordingAsync();
-        close();
-        const fileUri = result.uri || uri;
-        if (!fileUri) return null;
-        const bytes = new Uint8Array(await new File(fileUri).arrayBuffer());
-        deleteSpeechFile(fileUri);
-        return decodeWavPcm(bytes).samples;
+        await recorder.stop();
       } catch {
-        close();
-        deleteSpeechFile(uri);
+        await restorePlayback();
         return null;
+      }
+      await restorePlayback();
+      const uri = recorder.uri || recorder.getStatus().url;
+      if (!uri) return null;
+      try {
+        const bytes = new Uint8Array(await io.readFile(uri));
+        return { samples: decodeWavPcm(bytes).samples, uri };
+      } catch {
+        return { samples: null, uri };
       }
     },
     discard() {
       if (settled) return;
       settled = true;
-      close();
-      deleteSpeechFile(uri);
+      void recorder.stop().catch(() => undefined);
+      void restorePlayback();
+      io.deleteFile(recorder.uri || recorder.getStatus().url);
     },
   };
 }

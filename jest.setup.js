@@ -100,12 +100,90 @@ jest.mock('expo-speech-recognition', () => {
       })),
       start: jest.fn(),
       stop: jest.fn(),
-      abort: jest.fn(),
+      abort: jest.fn(() => {
+        emit('end', {});
+      }),
       isRecognitionAvailable: jest.fn(() => true),
       supportsOnDeviceRecognition: jest.fn(() => true),
       addListener: jest.fn(addListener),
       __emit: emit,
     },
+  };
+});
+
+globalThis.__VAMOS_AUDIO__ = {
+  granted: true,
+  inputs: [{ name: 'Microphone', type: 'MicrophoneBuiltIn', uid: 'mic' }],
+  current: { name: 'Microphone', type: 'MicrophoneBuiltIn', uid: 'mic' },
+  isRecording: false,
+  failPrepare: false,
+  uri: 'file:///cache/take.wav',
+};
+
+globalThis.__resetAudio__ = () => {
+  globalThis.__VAMOS_AUDIO__ = {
+    granted: true,
+    inputs: [{ name: 'Microphone', type: 'MicrophoneBuiltIn', uid: 'mic' }],
+    current: { name: 'Microphone', type: 'MicrophoneBuiltIn', uid: 'mic' },
+    isRecording: false,
+    failPrepare: false,
+    uri: 'file:///cache/take.wav',
+  };
+};
+
+jest.mock('expo-audio', () => {
+  const audio = () => globalThis.__VAMOS_AUDIO__;
+  const permission = () => ({
+    granted: audio().granted,
+    canAskAgain: true,
+    expires: 'never',
+    status: audio().granted ? 'granted' : 'denied',
+  });
+  const recorder = {
+    prepareToRecordAsync: jest.fn(async () => {
+      if (audio().failPrepare) throw new Error('prepare failed');
+    }),
+    getAvailableInputs: jest.fn(() => audio().inputs),
+    getCurrentInput: jest.fn(async () => {
+      const current = audio().current;
+      if (!current) throw new Error('no input');
+      return current;
+    }),
+    record: jest.fn(() => {
+      audio().isRecording = true;
+    }),
+    stop: jest.fn(async () => {
+      audio().isRecording = false;
+    }),
+    getStatus: jest.fn(() => ({
+      canRecord: true,
+      isRecording: audio().isRecording,
+      durationMillis: 0,
+      fileSize: 0,
+      mediaServicesDidReset: false,
+      url: audio().uri,
+    })),
+    get uri() {
+      return audio().uri;
+    },
+    addListener: jest.fn(() => ({ remove: jest.fn() })),
+    id: 'recorder-test',
+  };
+
+  return {
+    useAudioRecorder: () => recorder,
+    setAudioModeAsync: jest.fn(async () => undefined),
+    requestRecordingPermissionsAsync: jest.fn(async () => permission()),
+    getRecordingPermissionsAsync: jest.fn(async () => permission()),
+    createAudioPlayer: jest.fn(() => ({
+      play: jest.fn(),
+      pause: jest.fn(),
+      remove: jest.fn(),
+      seekTo: jest.fn(async () => undefined),
+      setPlaybackRate: jest.fn(),
+      addListener: jest.fn(() => ({ remove: jest.fn() })),
+      shouldCorrectPitch: false,
+    })),
   };
 });
 

@@ -13,6 +13,7 @@ type SpeakActionsProps = {
   volume: number;
   micDisabled: boolean;
   passed: boolean;
+  sampleTitle?: string;
   onMic: () => void;
   onSample: () => void;
   onSkip: () => void;
@@ -24,6 +25,7 @@ export function SpeakActions({
   volume,
   micDisabled,
   passed,
+  sampleTitle,
   onMic,
   onSample,
   onSkip,
@@ -41,7 +43,7 @@ export function SpeakActions({
         onPress={onMic}
       />
       <Button
-        title={t('speech.listenSample')}
+        title={sampleTitle ?? t('speech.listenSample')}
         variant="secondary"
         onPress={onSample}
         style={styles.wide}
