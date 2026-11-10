@@ -180,6 +180,22 @@ describe('progress tab badge', () => {
     expect(screen.getByText('a11y:Сегодня')).toBeTruthy();
   });
 
+  it('counts one word once when both card directions are due', async () => {
+    const cards = {
+      'hola:es_to_ru': { ...dueCard('hola'), id: 'hola:es_to_ru', direction: 'es_to_ru' as const },
+      'hola:ru_to_es': { ...dueCard('hola'), id: 'hola:ru_to_es', direction: 'ru_to_es' as const },
+    };
+    await AsyncStorage.setItem(
+      reviewStorageKey('user-1'),
+      JSON.stringify({ version: 1, cards, logs: [], outbox: [] }),
+    );
+    await renderTabs();
+
+    expect(await screen.findByText('badge:1')).toBeTruthy();
+    expect(screen.getByText('a11y:Сегодня, повторить: 1')).toBeTruthy();
+    await flush();
+  });
+
   it('shows the due count on the progress tab', async () => {
     const cards = {
       'hola:es_to_ru': dueCard('hola'),

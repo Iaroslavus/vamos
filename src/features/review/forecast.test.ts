@@ -66,17 +66,35 @@ describe('review forecast', () => {
     expect(reviewForecast({ cards: [], now: NOW, timeZone: UTC, days: 0 })).toEqual([]);
   });
 
-  it('caps the study count and still shows every card due today', () => {
+  it('counts a unit once when both directions are due', () => {
+    const agenda = reviewAgenda({
+      cards: [
+        stored({ id: 'hola:es', itemId: 'hola', direction: 'es_to_ru' }),
+        stored({ id: 'hola:ru', itemId: 'hola', direction: 'ru_to_es' }),
+        stored({ id: 'adios', itemId: 'adios' }),
+        stored({ id: 'later', itemId: 'later', due: '2026-10-24T00:00:00.000Z' }),
+      ],
+      logs: [],
+      now: NOW,
+      timeZone: UTC,
+    });
+
+    expect(agenda.dueCount).toBe(2);
+    expect(agenda.forecast[0]?.count).toBe(3);
+  });
+
+  it('counts every due unit, including ones past the new-card cap', () => {
     const cards = Array.from({ length: NEW_CARDS_PER_DAY + 5 }, (_, index) =>
       stored({ id: `word-${index}`, itemId: `word-${index}` }),
     );
+    cards.push(stored({ id: 'word-0:ru', itemId: 'word-0', direction: 'ru_to_es' }));
     const agenda = reviewAgenda({ cards, logs: [], now: NOW, timeZone: UTC });
 
-    expect(agenda.dueCount).toBe(NEW_CARDS_PER_DAY);
-    expect(agenda.forecast[0]?.count).toBe(NEW_CARDS_PER_DAY + 5);
+    expect(agenda.dueCount).toBe(NEW_CARDS_PER_DAY + 5);
+    expect(agenda.forecast[0]?.count).toBe(NEW_CARDS_PER_DAY + 6);
   });
 
-  it('leaves a due new card on today after the new-card cap is spent', () => {
+  it('still counts a due unit after the new-card cap is spent', () => {
     const agenda = reviewAgenda({
       cards: [stored({ id: 'hola', itemId: 'hola' })],
       logs: Array.from({ length: NEW_CARDS_PER_DAY }, () => ({
@@ -87,7 +105,7 @@ describe('review forecast', () => {
       timeZone: UTC,
     });
 
-    expect(agenda.dueCount).toBe(0);
+    expect(agenda.dueCount).toBe(1);
     expect(agenda.forecast[0]?.count).toBe(1);
   });
 });

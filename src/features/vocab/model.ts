@@ -115,17 +115,32 @@ export function topicSeeds(
   return seeds;
 }
 
-export function countMatchingCards(
+export type CountNoun = 'words' | 'phrases';
+
+/**
+ * Units in `itemIds` that appear on at least one card.
+ * Two cards for the same unit count once.
+ */
+export function countMatchingUnits(
   cards: readonly { itemId: string }[],
   itemIds: readonly string[],
 ): number {
   if (itemIds.length === 0 || cards.length === 0) return 0;
   const wanted = new Set(itemIds);
-  let count = 0;
+  const seen = new Set<string>();
   for (const card of cards) {
-    if (wanted.has(card.itemId)) count += 1;
+    if (wanted.has(card.itemId)) seen.add(card.itemId);
   }
-  return count;
+  return seen.size;
+}
+
+/**
+ * «Фразы» only when every unit is a phrase.
+ * Words, a mix, or an unknown type use the general «слова».
+ */
+export function folderCountNoun(types: readonly ('word' | 'phrase' | null)[]): CountNoun {
+  if (types.length > 0 && types.every((type) => type === 'phrase')) return 'phrases';
+  return 'words';
 }
 
 export function sortFolders<

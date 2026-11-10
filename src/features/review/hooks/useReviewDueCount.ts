@@ -45,7 +45,7 @@ export function useReviewAgenda(): ReviewAgenda {
   return query.data ?? empty;
 }
 
-/** How many cards the learner can study right now, after the daily caps. */
+/** Units with a card due right now. Both directions of one unit count once. */
 export function useReviewDueCount(): number {
   return useReviewAgenda().dueCount;
 }

@@ -11,6 +11,7 @@ import { colors, motion, space } from '@/theme/tokens';
 
 import { FolderFormSheet } from './components/FolderFormSheet';
 import { FolderRow } from './components/FolderRow';
+import { VocabHeader } from './components/VocabHeader';
 import { useFolders } from './hooks/useFolders';
 import { vocabRepository } from './defaultRepository';
 
@@ -55,10 +56,11 @@ export function VocabScreen() {
   return (
     <View style={styles.root}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <Button
-          title={t('vocab.reviewAll', { count: vocab.dueTotal })}
-          disabled={vocab.dueTotal === 0}
-          onPress={() => router.push('/review')}
+        <VocabHeader
+          learned={vocab.learnedTotal}
+          due={vocab.dueTotal}
+          nextInMs={vocab.nextInMs}
+          onReview={() => router.push('/review')}
         />
         <View style={styles.list}>
           {vocab.rows.map((row, index) => (

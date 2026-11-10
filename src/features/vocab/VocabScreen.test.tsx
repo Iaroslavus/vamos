@@ -7,6 +7,8 @@ import { play } from '@/features/audio/playback';
 import type { StoredCard } from '@/features/review/types';
 import i18n from '@/i18n';
 
+import { reviewRepository } from '@/features/review/defaultRepository';
+
 import { FolderScreen } from './FolderScreen';
 import { vocabRepository } from './defaultRepository';
 import { VocabScreen } from './VocabScreen';
@@ -92,11 +94,11 @@ jest.mock('./defaultRepository', () => {
   };
 });
 
-function mockDueCard(itemId: string): StoredCard {
+function mockDueCard(itemId: string, direction: StoredCard['direction'] = 'es_to_ru'): StoredCard {
   return {
-    id: itemId,
+    id: `${itemId}:${direction}`,
     itemId,
-    direction: 'es_to_ru',
+    direction,
     due: '2020-01-01T00:00:00.000Z',
     stability: 0,
     difficulty: 0,
@@ -147,25 +149,86 @@ function renderFolder() {
 
 const user = userEvent.setup();
 
+function resetReview(cards: StoredCard[] = [mockDueCard('hola.hola')]) {
+  jest.mocked(reviewRepository.read).mockReset();
+  jest.mocked(reviewRepository.read).mockResolvedValue({
+    cards,
+    logs: [],
+    dueCount: cards.length,
+    pending: 0,
+  });
+}
+
+async function seedFavorites(itemIds: readonly string[]) {
+  const seeded = await vocabRepository.syncDerived('user-1', {
+    topics: [],
+    difficultItemIds: [],
+  });
+  const favorites = seeded.folders.find((folder) => folder.systemKey === 'favorites');
+  await vocabRepository.addItems('user-1', favorites?.id ?? '', itemIds);
+}
+
 describe('VocabScreen', () => {
   beforeEach(() => {
     mockVocabMemory.clear();
     mockPush.mockClear();
     mockParams.id = undefined;
+    resetReview();
   });
 
-  it('lists the system folders, the due count, and a new custom folder', async () => {
+  it('lists the learned count, the wait, and a new custom folder', async () => {
     await renderVocab();
 
-    expect(await screen.findByText('Повторить всё · 1 к повторению')).toBeTruthy();
+    expect(await screen.findByText('Изучено 1 слово')).toBeTruthy();
+    expect(screen.getByText('1 ждёт повторения · ~1 минута')).toBeTruthy();
+    expect(screen.getByText('Повторить всё')).toBeTruthy();
     expect(screen.getByText('Избранное')).toBeTruthy();
+    expect(screen.getByText('0 слов · 0 к повторению')).toBeTruthy();
     expect(screen.getByText('Сложные')).toBeTruthy();
+    expect(screen.getByText('Здесь появятся слова, в которых вы часто ошибаетесь')).toBeTruthy();
+    expect(screen.queryByText(/единиц/)).toBeNull();
+
+    await user.press(screen.getByText('Повторить всё'));
+    expect(mockPush).toHaveBeenCalledWith('/review');
 
     await user.press(screen.getByText('+ Новая папка'));
     await user.type(screen.getByLabelText('Название'), 'Для переезда');
     await user.press(screen.getByText('Создать'));
 
     expect(await screen.findByText('Для переезда')).toBeTruthy();
+  });
+
+  it('counts one word when both card directions are due', async () => {
+    resetReview([mockDueCard('hola.hola', 'es_to_ru'), mockDueCard('hola.hola', 'ru_to_es')]);
+    await renderVocab();
+
+    expect(await screen.findByText('Изучено 1 слово')).toBeTruthy();
+    expect(screen.getByText('1 ждёт повторения · ~1 минута')).toBeTruthy();
+    expect(screen.queryByText('2 ждут повторения · ~1 минута')).toBeNull();
+  });
+
+  it('says everything is reviewed and disables the button when nothing is due', async () => {
+    const later = new Date(Date.now() + 10 * 60 * 1000).toISOString();
+    resetReview([{ ...mockDueCard('hola.hola'), due: later }]);
+    await renderVocab();
+
+    expect(await screen.findByText('Изучено 1 слово')).toBeTruthy();
+    expect(screen.getByText('Всё повторено, следующее — через 10 минут')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Повторить всё' }).props.accessibilityState).toEqual(
+      expect.objectContaining({ disabled: true }),
+    );
+  });
+
+  it('calls a phrase folder phrases', async () => {
+    await seedFavorites(['hola.buenos_dias']);
+    await renderVocab();
+    expect(await screen.findByText('1 фраза · 0 к повторению')).toBeTruthy();
+  });
+
+  it('uses the general word when a folder mixes words and phrases', async () => {
+    await seedFavorites(['hola.hola', 'hola.buenos_dias']);
+    await renderVocab();
+    expect(await screen.findByText('2 слова · 1 к повторению')).toBeTruthy();
   });
 });
 
@@ -174,6 +237,7 @@ describe('FolderScreen', () => {
     mockVocabMemory.clear();
     mockParams.id = undefined;
     jest.mocked(play).mockClear();
+    resetReview();
   });
 
   it('plays a saved word and removes it from the folder', async () => {

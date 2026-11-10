@@ -1,7 +1,8 @@
 import { calendarDate } from '@/features/progress/streak';
 
-import { buildReviewQueue, type ReviewActivity } from './session';
+import type { ReviewActivity } from './session';
 import type { StoredCard } from './types';
+import { dueUnitCount } from './units';
 
 /** Civil days shown on the progress chart, starting with today. */
 export const FORECAST_DAYS = 7;
@@ -17,7 +18,7 @@ export type ReviewForecastDay = {
 };
 
 export type ReviewAgenda = {
-  /** Cards the learner can study right now, after the daily caps. */
+  /** Units with at least one card due now. Both directions count once. */
   dueCount: number;
   forecast: ReviewForecastDay[];
 };
@@ -25,7 +26,7 @@ export type ReviewAgenda = {
 /**
  * Cards scheduled across the next civil days.
  * A card due today or earlier counts on today. Cards past the window are left out.
- * Today's bar can be taller than `dueCount`: the study queue stops at the daily caps.
+ * The bar counts cards, so one unit with both directions can stand taller than `dueCount`.
  */
 export function reviewForecast(input: {
   cards: readonly { due: string }[];
@@ -58,7 +59,7 @@ export function reviewForecast(input: {
   }));
 }
 
-/** Due queue for the counters, plus the uncapped seven-day schedule. */
+/** Due units for the counters, plus the uncapped seven-day card schedule. */
 export function reviewAgenda(input: {
   cards: readonly StoredCard[];
   logs: readonly ReviewActivity[];
@@ -66,7 +67,7 @@ export function reviewAgenda(input: {
   timeZone: string;
 }): ReviewAgenda {
   return {
-    dueCount: buildReviewQueue(input).cards.length,
+    dueCount: dueUnitCount(input.cards, input.now),
     forecast: reviewForecast({
       cards: input.cards,
       now: input.now,

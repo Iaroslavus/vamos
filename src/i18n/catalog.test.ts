@@ -95,6 +95,40 @@ describe('plurals', () => {
     expect(i18n.t('topics.lessonCount', { lng: 'ru', count: 5 })).toBe('5 уроков');
   });
 
+  it('names learned words, phrases, and the review wait in each language', () => {
+    expect(i18n.t('vocab.learned', { lng: 'ru', count: 1 })).toBe('Изучено 1 слово');
+    expect(i18n.t('vocab.learned', { lng: 'ru', count: 2 })).toBe('Изучено 2 слова');
+    expect(i18n.t('vocab.learned', { lng: 'ru', count: 5 })).toBe('Изучено 5 слов');
+    expect(i18n.t('vocab.learned', { lng: 'uk', count: 1 })).toBe('Вивчено 1 слово');
+    expect(i18n.t('vocab.learned', { lng: 'uk', count: 2 })).toBe('Вивчено 2 слова');
+    expect(i18n.t('vocab.learned', { lng: 'uk', count: 5 })).toBe('Вивчено 5 слів');
+    expect(i18n.t('vocab.learned', { lng: 'uk', count: 21 })).toBe('Вивчено 21 слово');
+    expect(i18n.t('vocab.learned', { lng: 'en', count: 1 })).toBe('Learned 1 word');
+    expect(i18n.t('vocab.learned', { lng: 'en', count: 2 })).toBe('Learned 2 words');
+
+    expect(i18n.t('vocab.phrases', { lng: 'ru', count: 4 })).toBe('4 фразы');
+    expect(i18n.t('vocab.phrases', { lng: 'uk', count: 4 })).toBe('4 фрази');
+    expect(i18n.t('vocab.phrases', { lng: 'uk', count: 5 })).toBe('5 фраз');
+    expect(i18n.t('vocab.words', { lng: 'uk', count: 4 })).toBe('4 слова');
+    expect(i18n.t('vocab.words', { lng: 'en', count: 1 })).toBe('1 word');
+
+    expect(i18n.t('vocab.waiting', { lng: 'ru', count: 1 })).toBe('1 ждёт повторения');
+    expect(i18n.t('vocab.waiting', { lng: 'ru', count: 2 })).toBe('2 ждут повторения');
+    expect(i18n.t('vocab.waiting', { lng: 'uk', count: 1 })).toBe('1 чекає на повторення');
+    expect(i18n.t('vocab.waiting', { lng: 'uk', count: 5 })).toBe('5 чекають на повторення');
+    expect(i18n.t('vocab.waiting', { lng: 'en', count: 1 })).toBe('1 is waiting for review');
+    expect(i18n.t('vocab.waiting', { lng: 'en', count: 2 })).toBe('2 are waiting for review');
+
+    expect(i18n.t('vocab.eta', { lng: 'ru', count: 1 })).toBe('~1 минута');
+    expect(i18n.t('vocab.eta', { lng: 'ru', count: 2 })).toBe('~2 минуты');
+    expect(i18n.t('vocab.eta', { lng: 'ru', count: 5 })).toBe('~5 минут');
+    expect(i18n.t('vocab.eta', { lng: 'uk', count: 2 })).toBe('~2 хвилини');
+    expect(i18n.t('vocab.eta', { lng: 'en', count: 1 })).toBe('~1 minute');
+    expect(i18n.t('vocab.nextMinutes', { lng: 'uk', count: 1 })).toBe('через 1 хвилину');
+    expect(i18n.t('vocab.nextHours', { lng: 'ru', count: 2 })).toBe('через 2 часа');
+    expect(i18n.t('vocab.nextDays', { lng: 'en', count: 3 })).toBe('in 3 days');
+  });
+
   it('uses English one/other forms', () => {
     expect(i18n.t('topics.phraseCount', { lng: 'en', count: 1 })).toBe('1 phrase');
     expect(i18n.t('topics.phraseCount', { lng: 'en', count: 2 })).toBe('2 phrases');
