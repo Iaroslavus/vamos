@@ -53,3 +53,4 @@ tmp/
 .env.content*
 supabase/snippets/
 supabase/snippets/
+private/

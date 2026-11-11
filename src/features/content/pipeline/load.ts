@@ -20,6 +20,9 @@ export type LoadedContent = {
   issues: string[];
 };
 
+/** Course metadata read by scripts and docs, not bundled into the app. */
+const NON_BUNDLE_FILES = new Set(['content/course-plan.json']);
+
 const REQUIRE_PATTERN = /require\('(\.\.\/\.\.\/\.\.\/content\/[^']+\.json)'\)/g;
 
 /** Read content JSON and compare it with the literal requires in the Metro loader. */
@@ -27,7 +30,9 @@ export function loadContent(root: string): LoadedContent {
   const contentDir = path.join(root, 'content');
   const loaderPath = path.join(root, 'src/features/content/loader.ts');
   const issues: string[] = [];
-  const files = walkJson(contentDir).sort();
+  const files = walkJson(contentDir)
+    .filter((file) => !NON_BUNDLE_FILES.has(repoPath(root, file)))
+    .sort();
   const items: Item[] = [];
   const topics: Topic[] = [];
   const lessons: Lesson[] = [];
