@@ -1,0 +1,5115 @@
+{
+  "version": 1,
+  "variant": "es-ES",
+  "variant_notes": "es-419 differences are marked with variant_note / note_ru",
+  "generated_by": "docs/COURSE.md — edit course data, not this file by hand",
+  "starter_week": [
+    {
+      "day": 1,
+      "topic_id": "a1.hola"
+    },
+    {
+      "day": 2,
+      "topic_id": "a1.cafe"
+    },
+    {
+      "day": 3,
+      "topic_id": "a1.numbers"
+    },
+    {
+      "day": 4,
+      "topic_id": "a1.tienda"
+    },
+    {
+      "day": 5,
+      "topic_id": "a1.camino"
+    },
+    {
+      "day": 6,
+      "topic_id": "a1.restaurante"
+    },
+    {
+      "day": 7,
+      "scene_id": "a1.week1",
+      "checkpoint_id": "cp.a1.week1"
+    }
+  ],
+  "levels": [
+    {
+      "level": "A1",
+      "title_ru": "Выживание: первые разговоры",
+      "can_do_ru": "Понимаю и использую повседневные фразы, могу представиться и решить простые бытовые задачи.",
+      "vocab_target": "700–900",
+      "guided_hours": "90–100",
+      "units": [
+        {
+          "id": "a1.u01",
+          "title_ru": "¡Hola! Первые слова",
+          "grammar_ids": [
+            "g.a1.01",
+            "g.a1.02"
+          ],
+          "sound_ids": [
+            "s.01",
+            "s.02"
+          ],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a1.hola",
+              "title_ru": "¡Hola! Знакомство",
+              "category": "first_steps",
+              "can_do_ru": [
+                "Поздороваться и попрощаться",
+                "Назвать своё имя и спросить имя",
+                "Сказать, откуда вы и кем работаете"
+              ],
+              "icon": "hand",
+              "starter_day": 1,
+              "lessons": [
+                {
+                  "id": "a1.hola.l1",
+                  "title_ru": "Привет и пока",
+                  "goal_ru": "Здороваться в разное время дня и прощаться",
+                  "items": [
+                    {
+                      "es": "Hola",
+                      "ru": "Привет",
+                      "type": "word"
+                    },
+                    {
+                      "es": "Buenos días",
+                      "ru": "Доброе утро / добрый день",
+                      "type": "phrase",
+                      "note_ru": "До обеда"
+                    },
+                    {
+                      "es": "Buenas tardes",
+                      "ru": "Добрый день",
+                      "type": "phrase",
+                      "note_ru": "После обеда, примерно до 20–21 ч"
+                    },
+                    {
+                      "es": "Buenas noches",
+                      "ru": "Добрый вечер / спокойной ночи",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Adiós",
+                      "ru": "До свидания",
+                      "type": "word"
+                    },
+                    {
+                      "es": "Hasta luego",
+                      "ru": "До встречи",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Qué tal?",
+                      "ru": "Как дела?",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.hola.l2",
+                  "title_ru": "Как тебя зовут?",
+                  "goal_ru": "Представиться и спросить имя",
+                  "items": [
+                    {
+                      "es": "Me llamo Ana",
+                      "ru": "Меня зовут Ана",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Cómo te llamas?",
+                      "ru": "Как тебя зовут?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Soy Pablo",
+                      "ru": "Я Пабло",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Mucho gusto",
+                      "ru": "Очень приятно",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Encantado / Encantada",
+                      "ru": "Приятно познакомиться",
+                      "type": "phrase",
+                      "note_ru": "Encantado говорит мужчина, encantada — женщина"
+                    },
+                    {
+                      "es": "¿Y tú?",
+                      "ru": "А ты?",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.hola.l3",
+                  "title_ru": "Откуда ты?",
+                  "goal_ru": "Сказать, откуда вы и где живёте",
+                  "items": [
+                    {
+                      "es": "¿De dónde eres?",
+                      "ru": "Откуда ты?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Soy de Ucrania",
+                      "ru": "Я из Украины",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Vivo en Madrid",
+                      "ru": "Я живу в Мадриде",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Dónde vives?",
+                      "ru": "Где ты живёшь?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Bien, gracias",
+                      "ru": "Хорошо, спасибо",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Gracias",
+                      "ru": "Спасибо",
+                      "type": "word"
+                    },
+                    {
+                      "es": "Por favor",
+                      "ru": "Пожалуйста",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.hola.l4",
+                  "title_ru": "Кем ты работаешь?",
+                  "goal_ru": "Назвать профессию и национальность",
+                  "items": [
+                    {
+                      "es": "¿A qué te dedicas?",
+                      "ru": "Чем ты занимаешься?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Soy profesor / profesora",
+                      "ru": "Я учитель / учительница",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Soy estudiante",
+                      "ru": "Я студент(ка)",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Trabajo en una oficina",
+                      "ru": "Я работаю в офисе",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Soy ucraniano / ucraniana",
+                      "ru": "Я украинец / украинка",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Eres español?",
+                      "ru": "Ты испанец?",
+                      "type": "phrase"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a1.u02",
+          "title_ru": "Кафе",
+          "grammar_ids": [
+            "g.a1.03"
+          ],
+          "sound_ids": [
+            "s.03"
+          ],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a1.cafe",
+              "title_ru": "В кафе",
+              "category": "food",
+              "can_do_ru": [
+                "Заказать напиток и выпечку",
+                "Спросить цену",
+                "Попросить счёт и оплатить"
+              ],
+              "icon": "cup",
+              "starter_day": 2,
+              "lessons": [
+                {
+                  "id": "a1.cafe.l1",
+                  "title_ru": "Заказываем кофе",
+                  "goal_ru": "Заказать кофе здесь или с собой",
+                  "items": [
+                    {
+                      "es": "Un café, por favor",
+                      "ru": "Кофе, пожалуйста",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Un café con leche",
+                      "ru": "Кофе с молоком",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Un té",
+                      "ru": "Чай",
+                      "type": "word"
+                    },
+                    {
+                      "es": "Para llevar",
+                      "ru": "С собой",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Para tomar aquí",
+                      "ru": "Здесь",
+                      "type": "phrase",
+                      "note_ru": "Буквально «чтобы выпить здесь»"
+                    },
+                    {
+                      "es": "¿Cuánto es?",
+                      "ru": "Сколько с меня?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Aquí tiene",
+                      "ru": "Вот, пожалуйста",
+                      "type": "phrase",
+                      "note_ru": "Когда что-то протягиваете"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.cafe.l2",
+                  "title_ru": "Что-нибудь ещё?",
+                  "goal_ru": "Заказать воду, сок, выпечку и закончить заказ",
+                  "items": [
+                    {
+                      "es": "Quisiera un zumo de naranja",
+                      "ru": "Я бы хотел апельсиновый сок",
+                      "type": "phrase",
+                      "note_ru": "В Латинской Америке — jugo",
+                      "variant_note": true
+                    },
+                    {
+                      "es": "Un vaso de agua",
+                      "ru": "Стакан воды",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Agua con gas",
+                      "ru": "Вода с газом",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Algo más?",
+                      "ru": "Что-нибудь ещё?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Nada más, gracias",
+                      "ru": "Больше ничего, спасибо",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Un cruasán",
+                      "ru": "Круассан",
+                      "type": "word"
+                    },
+                    {
+                      "es": "¿Me pone un café?",
+                      "ru": "Сделайте мне кофе",
+                      "type": "phrase",
+                      "note_ru": "Испания, разговорное"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.cafe.l3",
+                  "title_ru": "Счёт, пожалуйста",
+                  "goal_ru": "Попросить счёт, оплатить, спросить, где туалет",
+                  "items": [
+                    {
+                      "es": "La cuenta, por favor",
+                      "ru": "Счёт, пожалуйста",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Puedo pagar con tarjeta?",
+                      "ru": "Можно оплатить картой?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "En efectivo",
+                      "ru": "Наличными",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Dónde está el baño?",
+                      "ru": "Где туалет?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Está muy bueno",
+                      "ru": "Очень вкусно",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¡Que aproveche!",
+                      "ru": "Приятного аппетита!",
+                      "type": "phrase"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a1.u03",
+          "title_ru": "Числа и цены",
+          "grammar_ids": [
+            "g.a1.04"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a1.numbers",
+              "title_ru": "Числа и цены",
+              "category": "first_steps",
+              "can_do_ru": [
+                "Понять цену на слух",
+                "Спросить «сколько стоит?»",
+                "Назвать возраст и номер телефона"
+              ],
+              "icon": "hash",
+              "starter_day": 3,
+              "lessons": [
+                {
+                  "id": "a1.numbers.l1",
+                  "title_ru": "От 1 до 10",
+                  "goal_ru": "Считать до десяти и называть количество",
+                  "items": [
+                    {
+                      "es": "Uno, dos, tres",
+                      "ru": "Один, два, три",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Cuatro, cinco, seis",
+                      "ru": "Четыре, пять, шесть",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Siete, ocho, nueve, diez",
+                      "ru": "Семь, восемь, девять, десять",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Cuántos?",
+                      "ru": "Сколько?",
+                      "type": "word"
+                    },
+                    {
+                      "es": "Dos cafés",
+                      "ru": "Два кофе",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Tres personas",
+                      "ru": "Три человека",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.numbers.l2",
+                  "title_ru": "Сколько стоит?",
+                  "goal_ru": "Спросить и понять цену",
+                  "items": [
+                    {
+                      "es": "¿Cuánto cuesta?",
+                      "ru": "Сколько стоит?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Cuesta cinco euros",
+                      "ru": "Стоит пять евро",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Es muy caro",
+                      "ru": "Это очень дорого",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Es barato",
+                      "ru": "Это дёшево",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Veinte euros",
+                      "ru": "Двадцать евро",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Cincuenta céntimos",
+                      "ru": "Пятьдесят центов",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.numbers.l3",
+                  "title_ru": "Возраст и телефон",
+                  "goal_ru": "Назвать возраст и номер телефона",
+                  "items": [
+                    {
+                      "es": "¿Cuántos años tienes?",
+                      "ru": "Сколько тебе лет?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Tengo treinta años",
+                      "ru": "Мне тридцать лет",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Mi número es…",
+                      "ru": "Мой номер…",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Once, doce, quince",
+                      "ru": "Одиннадцать, двенадцать, пятнадцать",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Cien",
+                      "ru": "Сто",
+                      "type": "word"
+                    },
+                    {
+                      "es": "Mil",
+                      "ru": "Тысяча",
+                      "type": "word"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a1.u04",
+          "title_ru": "Магазин",
+          "grammar_ids": [
+            "g.a1.05"
+          ],
+          "sound_ids": [
+            "s.04"
+          ],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a1.tienda",
+              "title_ru": "В магазине",
+              "category": "shopping",
+              "can_do_ru": [
+                "Спросить, есть ли товар",
+                "Расплатиться на кассе",
+                "Попросить помощи, если не понимаете"
+              ],
+              "icon": "bag",
+              "starter_day": 4,
+              "lessons": [
+                {
+                  "id": "a1.tienda.l1",
+                  "title_ru": "У вас есть…?",
+                  "goal_ru": "Найти нужный товар",
+                  "items": [
+                    {
+                      "es": "¿Tiene agua?",
+                      "ru": "У вас есть вода?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Busco pan",
+                      "ru": "Я ищу хлеб",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Dónde está la leche?",
+                      "ru": "Где молоко?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Aquí",
+                      "ru": "Здесь",
+                      "type": "word"
+                    },
+                    {
+                      "es": "Allí",
+                      "ru": "Там",
+                      "type": "word"
+                    },
+                    {
+                      "es": "No, no tenemos",
+                      "ru": "Нет, у нас нет",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.tienda.l2",
+                  "title_ru": "На кассе",
+                  "goal_ru": "Оплатить покупку и попрощаться",
+                  "items": [
+                    {
+                      "es": "¿Necesita bolsa?",
+                      "ru": "Вам нужен пакет?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Una bolsa, por favor",
+                      "ru": "Пакет, пожалуйста",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Son diez euros",
+                      "ru": "С вас десять евро",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "El tique, por favor",
+                      "ru": "Чек, пожалуйста",
+                      "type": "phrase",
+                      "note_ru": "Часто пишут и говорят ticket"
+                    },
+                    {
+                      "es": "¿Puedo pagar con tarjeta?",
+                      "ru": "Можно оплатить картой?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Que tenga buen día",
+                      "ru": "Хорошего дня",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.tienda.l3",
+                  "title_ru": "Я не понимаю",
+                  "goal_ru": "Выручающие фразы, когда что-то непонятно",
+                  "items": [
+                    {
+                      "es": "No entiendo",
+                      "ru": "Я не понимаю",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Más despacio, por favor",
+                      "ru": "Помедленнее, пожалуйста",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Me puede ayudar?",
+                      "ru": "Вы можете мне помочь?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Cómo se dice…?",
+                      "ru": "Как сказать…?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Qué es esto?",
+                      "ru": "Что это?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Perdón",
+                      "ru": "Извините",
+                      "type": "word"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a1.u05",
+          "title_ru": "Город",
+          "grammar_ids": [
+            "g.a1.06",
+            "g.a1.07"
+          ],
+          "sound_ids": [
+            "s.05"
+          ],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a1.camino",
+              "title_ru": "Как пройти?",
+              "category": "city",
+              "can_do_ru": [
+                "Спросить дорогу",
+                "Понять «направо / налево / прямо»",
+                "Спросить, далеко ли"
+              ],
+              "icon": "map",
+              "starter_day": 5,
+              "lessons": [
+                {
+                  "id": "a1.camino.l1",
+                  "title_ru": "Направо, налево",
+                  "goal_ru": "Спросить дорогу и понять направление",
+                  "items": [
+                    {
+                      "es": "Perdone",
+                      "ru": "Извините",
+                      "type": "word",
+                      "note_ru": "Чтобы обратиться к незнакомому человеку"
+                    },
+                    {
+                      "es": "¿Dónde está la estación?",
+                      "ru": "Где вокзал?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "A la derecha",
+                      "ru": "Направо",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "A la izquierda",
+                      "ru": "Налево",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Todo recto",
+                      "ru": "Прямо",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Está cerca",
+                      "ru": "Это близко",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Está lejos",
+                      "ru": "Это далеко",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.camino.l2",
+                  "title_ru": "Где это?",
+                  "goal_ru": "Понять, где находится место",
+                  "items": [
+                    {
+                      "es": "¿Cómo llego al centro?",
+                      "ru": "Как добраться до центра?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "La primera calle",
+                      "ru": "Первая улица",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "En la esquina",
+                      "ru": "На углу",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Al lado de",
+                      "ru": "Рядом с",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Enfrente de",
+                      "ru": "Напротив",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Está lejos de aquí?",
+                      "ru": "Это далеко отсюда?",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.camino.l3",
+                  "title_ru": "Я заблудился",
+                  "goal_ru": "Найти нужное место поблизости",
+                  "items": [
+                    {
+                      "es": "¿Hay una farmacia por aquí?",
+                      "ru": "Здесь поблизости есть аптека?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Cruce la calle",
+                      "ru": "Перейдите улицу",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Siga recto",
+                      "ru": "Идите прямо",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "A cinco minutos",
+                      "ru": "В пяти минутах",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Estoy perdido / perdida",
+                      "ru": "Я заблудился / заблудилась",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Muy amable",
+                      "ru": "Очень любезно",
+                      "type": "phrase"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "a1.metro",
+              "title_ru": "Метро, автобус, такси",
+              "category": "city",
+              "can_do_ru": [
+                "Купить билет",
+                "Узнать, куда идёт транспорт и где выходить",
+                "Взять такси"
+              ],
+              "icon": "train",
+              "lessons": [
+                {
+                  "id": "a1.metro.l1",
+                  "title_ru": "Билет, пожалуйста",
+                  "goal_ru": "Купить билет и найти нужную линию",
+                  "items": [
+                    {
+                      "es": "Un billete, por favor",
+                      "ru": "Один билет, пожалуйста",
+                      "type": "phrase",
+                      "note_ru": "В Латинской Америке чаще boleto",
+                      "variant_note": true
+                    },
+                    {
+                      "es": "Ida y vuelta",
+                      "ru": "Туда и обратно",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Cuánto cuesta el billete?",
+                      "ru": "Сколько стоит билет?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "La parada de autobús",
+                      "ru": "Автобусная остановка",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Qué línea va al centro?",
+                      "ru": "Какая линия идёт в центр?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "El metro",
+                      "ru": "Метро",
+                      "type": "word"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.metro.l2",
+                  "title_ru": "Где выходить?",
+                  "goal_ru": "Ориентироваться в транспорте",
+                  "items": [
+                    {
+                      "es": "¿Este autobús va a la playa?",
+                      "ru": "Этот автобус идёт на пляж?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Dónde me bajo?",
+                      "ru": "Где мне выходить?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "La próxima parada",
+                      "ru": "Следующая остановка",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Tengo que cambiar",
+                      "ru": "Мне нужно сделать пересадку",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿A qué hora sale?",
+                      "ru": "Во сколько отправляется?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "El tren",
+                      "ru": "Поезд",
+                      "type": "word"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.metro.l3",
+                  "title_ru": "Такси",
+                  "goal_ru": "Доехать на такси",
+                  "items": [
+                    {
+                      "es": "Al aeropuerto, por favor",
+                      "ru": "В аэропорт, пожалуйста",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Cuánto cuesta hasta el centro?",
+                      "ru": "Сколько стоит до центра?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Pare aquí, por favor",
+                      "ru": "Остановите здесь, пожалуйста",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Me puede llamar un taxi?",
+                      "ru": "Можете вызвать мне такси?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Quédese con el cambio",
+                      "ru": "Сдачи не нужно",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Tengo prisa",
+                      "ru": "Я спешу",
+                      "type": "phrase"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a1.u06",
+          "title_ru": "Ресторан",
+          "grammar_ids": [
+            "g.a1.08"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": "cp.a1.week1",
+          "topics": [
+            {
+              "id": "a1.restaurante",
+              "title_ru": "В ресторане",
+              "category": "food",
+              "can_do_ru": [
+                "Забронировать столик",
+                "Заказать блюдо и напиток",
+                "Сказать об аллергии",
+                "Попросить счёт"
+              ],
+              "icon": "utensils",
+              "starter_day": 6,
+              "lessons": [
+                {
+                  "id": "a1.restaurante.l1",
+                  "title_ru": "Столик на двоих",
+                  "goal_ru": "Получить столик и меню",
+                  "items": [
+                    {
+                      "es": "Una mesa para dos, por favor",
+                      "ru": "Столик на двоих, пожалуйста",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Tengo una reserva",
+                      "ru": "У меня бронь",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "A nombre de…",
+                      "ru": "На имя…",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Hay mesa en la terraza?",
+                      "ru": "Есть столик на террасе?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Cuánto hay que esperar?",
+                      "ru": "Сколько нужно ждать?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "La carta, por favor",
+                      "ru": "Меню, пожалуйста",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.restaurante.l2",
+                  "title_ru": "Заказ",
+                  "goal_ru": "Заказать еду и напитки",
+                  "items": [
+                    {
+                      "es": "Quisiera…",
+                      "ru": "Я бы хотел(а)…",
+                      "type": "word"
+                    },
+                    {
+                      "es": "¿Qué me recomienda?",
+                      "ru": "Что посоветуете?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "El menú del día",
+                      "ru": "Комплексный обед",
+                      "type": "phrase",
+                      "note_ru": "Испания: обычно первое, второе, десерт и напиток"
+                    },
+                    {
+                      "es": "De primero, sopa",
+                      "ru": "На первое — суп",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "De segundo, pescado",
+                      "ru": "На второе — рыбу",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Para beber, agua",
+                      "ru": "Пить — воду",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.restaurante.l3",
+                  "title_ru": "Особые пожелания",
+                  "goal_ru": "Сказать об аллергии и предпочтениях",
+                  "items": [
+                    {
+                      "es": "Soy alérgico / alérgica a…",
+                      "ru": "У меня аллергия на…",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Sin cebolla, por favor",
+                      "ru": "Без лука, пожалуйста",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Soy vegetariano / vegetariana",
+                      "ru": "Я вегетарианец / вегетарианка",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Lleva gluten?",
+                      "ru": "Здесь есть глютен?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Poco hecho",
+                      "ru": "С кровью",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Picante",
+                      "ru": "Острое",
+                      "type": "word"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.restaurante.l4",
+                  "title_ru": "Счёт",
+                  "goal_ru": "Похвалить еду и рассчитаться",
+                  "items": [
+                    {
+                      "es": "Está riquísimo",
+                      "ru": "Очень вкусно",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Nos trae la cuenta?",
+                      "ru": "Принесёте нам счёт?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Vamos a pagar por separado",
+                      "ru": "Мы заплатим отдельно",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Invito yo",
+                      "ru": "Я угощаю",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Está incluido el servicio?",
+                      "ru": "Обслуживание включено?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Todo muy bien, gracias",
+                      "ru": "Всё отлично, спасибо",
+                      "type": "phrase"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a1.u07",
+          "title_ru": "Продукты",
+          "grammar_ids": [
+            "g.a1.09"
+          ],
+          "sound_ids": [
+            "s.06"
+          ],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a1.mercado",
+              "title_ru": "На рынке",
+              "category": "food",
+              "can_do_ru": [
+                "Купить продукты на вес",
+                "Спросить цену за килограмм",
+                "Попросить больше или меньше"
+              ],
+              "icon": "basket",
+              "lessons": [
+                {
+                  "id": "a1.mercado.l1",
+                  "title_ru": "Килограмм помидоров",
+                  "goal_ru": "Покупать на вес",
+                  "items": [
+                    {
+                      "es": "Un kilo de tomates",
+                      "ru": "Килограмм помидоров",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Medio kilo",
+                      "ru": "Полкило",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿A cuánto están las fresas?",
+                      "ru": "Почём клубника?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Están muy frescas",
+                      "ru": "Она очень свежая",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Póngame dos",
+                      "ru": "Дайте мне две / два",
+                      "type": "phrase",
+                      "note_ru": "Испания, разговорное"
+                    },
+                    {
+                      "es": "Las manzanas",
+                      "ru": "Яблоки",
+                      "type": "word"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.mercado.l2",
+                  "title_ru": "Чуть больше",
+                  "goal_ru": "Уточнить количество и закончить покупку",
+                  "items": [
+                    {
+                      "es": "Un poco más",
+                      "ru": "Немного больше",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Un poco menos",
+                      "ru": "Немного меньше",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Así está bien",
+                      "ru": "Так хорошо",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Eso es todo",
+                      "ru": "Это всё",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Me da una bolsa?",
+                      "ru": "Дадите пакет?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Algo más?",
+                      "ru": "Что-нибудь ещё?",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.mercado.l3",
+                  "title_ru": "Мясо, рыба, яйца",
+                  "goal_ru": "Купить мясо, рыбу и нарезку",
+                  "items": [
+                    {
+                      "es": "Una docena de huevos",
+                      "ru": "Десяток яиц",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Cien gramos de jamón",
+                      "ru": "Сто граммов хамона",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "En lonchas finas",
+                      "ru": "Тонкими ломтиками",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "El pescado fresco",
+                      "ru": "Свежая рыба",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿De dónde es?",
+                      "ru": "Откуда это?",
+                      "type": "phrase",
+                      "note_ru": "О происхождении продукта"
+                    },
+                    {
+                      "es": "El pollo",
+                      "ru": "Курица",
+                      "type": "word"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "a1.supermercado",
+              "title_ru": "Супермаркет",
+              "category": "food",
+              "can_do_ru": [
+                "Найти товар в супермаркете",
+                "Пройти кассу",
+                "Понять ценники и сроки"
+              ],
+              "icon": "cart",
+              "lessons": [
+                {
+                  "id": "a1.supermercado.l1",
+                  "title_ru": "В каком ряду?",
+                  "goal_ru": "Найти нужный товар",
+                  "items": [
+                    {
+                      "es": "¿En qué pasillo está…?",
+                      "ru": "В каком ряду…?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "La leche sin lactosa",
+                      "ru": "Безлактозное молоко",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "El aceite de oliva",
+                      "ru": "Оливковое масло",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Fruta y verdura",
+                      "ru": "Фрукты и овощи",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Está en oferta",
+                      "ru": "Это по акции",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Los congelados",
+                      "ru": "Замороженные продукты",
+                      "type": "word"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.supermercado.l2",
+                  "title_ru": "На кассе самообслуживания",
+                  "goal_ru": "Расплатиться и разобраться с кассой",
+                  "items": [
+                    {
+                      "es": "La caja",
+                      "ru": "Касса",
+                      "type": "word"
+                    },
+                    {
+                      "es": "Hacer cola",
+                      "ru": "Стоять в очереди",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Puedo pagar con el móvil?",
+                      "ru": "Можно оплатить телефоном?",
+                      "type": "phrase",
+                      "note_ru": "В Латинской Америке — celular",
+                      "variant_note": true
+                    },
+                    {
+                      "es": "La caja de autopago",
+                      "ru": "Касса самообслуживания",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Tiene tarjeta de cliente?",
+                      "ru": "У вас есть карта клиента?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Necesito una bolsa",
+                      "ru": "Мне нужен пакет",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.supermercado.l3",
+                  "title_ru": "Срок годности",
+                  "goal_ru": "Понять ценники и сроки",
+                  "items": [
+                    {
+                      "es": "La fecha de caducidad",
+                      "ru": "Срок годности",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Está caducado",
+                      "ru": "Просрочено",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Dónde están los huevos?",
+                      "ru": "Где яйца?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Productos de limpieza",
+                      "ru": "Бытовая химия",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Un carrito",
+                      "ru": "Тележка",
+                      "type": "word"
+                    },
+                    {
+                      "es": "El precio por kilo",
+                      "ru": "Цена за килограмм",
+                      "type": "phrase"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a1.u08",
+          "title_ru": "Время, мой день и настроение",
+          "grammar_ids": [
+            "g.a1.10",
+            "g.a1.11",
+            "g.a1.20"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a1.estados",
+              "title_ru": "Как ты себя чувствуешь?",
+              "category": "social",
+              "can_do_ru": [
+                "Сказать, как вы себя чувствуете",
+                "Сказать, что голодны, хотите пить или спать"
+              ],
+              "icon": "smile",
+              "lessons": [
+                {
+                  "id": "a1.estados.l1",
+                  "title_ru": "Как ты?",
+                  "goal_ru": "Описать настроение и состояние",
+                  "items": [
+                    {
+                      "es": "¿Cómo estás hoy?",
+                      "ru": "Как ты сегодня?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Estoy cansado / cansada",
+                      "ru": "Я устал / устала",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Estoy contento / contenta",
+                      "ru": "Я доволен / довольна",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Estoy nervioso / nerviosa",
+                      "ru": "Я нервничаю",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Estoy preocupado / preocupada",
+                      "ru": "Я беспокоюсь",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Estoy ocupado / ocupada",
+                      "ru": "Я занят / занята",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.estados.l2",
+                  "title_ru": "Голоден и хочу пить",
+                  "goal_ru": "Состояния с tener",
+                  "items": [
+                    {
+                      "es": "Tengo hambre",
+                      "ru": "Я голоден",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Tengo sed",
+                      "ru": "Я хочу пить",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Tengo sueño",
+                      "ru": "Я хочу спать",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Tengo frío",
+                      "ru": "Мне холодно",
+                      "type": "phrase",
+                      "note_ru": "Сравните: hace frío — холодно на улице"
+                    },
+                    {
+                      "es": "Tengo calor",
+                      "ru": "Мне жарко",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Qué te pasa?",
+                      "ru": "Что с тобой?",
+                      "type": "phrase"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "a1.hora",
+              "title_ru": "Время и распорядок",
+              "category": "first_steps",
+              "can_do_ru": [
+                "Спросить и назвать время",
+                "Назвать день недели, месяц и дату",
+                "Связно рассказать о своём дне"
+              ],
+              "icon": "clock",
+              "lessons": [
+                {
+                  "id": "a1.hora.l1",
+                  "title_ru": "Который час?",
+                  "goal_ru": "Называть время",
+                  "items": [
+                    {
+                      "es": "¿Qué hora es?",
+                      "ru": "Который час?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Es la una",
+                      "ru": "Час",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Son las dos",
+                      "ru": "Два часа",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Y media",
+                      "ru": "С половиной",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Y cuarto",
+                      "ru": "С четвертью",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Menos cuarto",
+                      "ru": "Без четверти",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.hora.l2",
+                  "title_ru": "Сегодня и завтра",
+                  "goal_ru": "Говорить о днях",
+                  "items": [
+                    {
+                      "es": "Hoy",
+                      "ru": "Сегодня",
+                      "type": "word"
+                    },
+                    {
+                      "es": "Mañana",
+                      "ru": "Завтра",
+                      "type": "word"
+                    },
+                    {
+                      "es": "El lunes",
+                      "ru": "В понедельник",
+                      "type": "word"
+                    },
+                    {
+                      "es": "El fin de semana",
+                      "ru": "Выходные",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Qué día es hoy?",
+                      "ru": "Какой сегодня день?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Por la mañana",
+                      "ru": "Утром",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Por la tarde",
+                      "ru": "Днём / вечером",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.hora.l3",
+                  "title_ru": "Мой день",
+                  "goal_ru": "Рассказать о распорядке дня",
+                  "items": [
+                    {
+                      "es": "Me levanto a las siete",
+                      "ru": "Я встаю в семь",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Desayuno café",
+                      "ru": "На завтрак пью кофе",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Trabajo de nueve a cinco",
+                      "ru": "Работаю с девяти до пяти",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Como a las dos",
+                      "ru": "Обедаю в два",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Ceno tarde",
+                      "ru": "Ужинаю поздно",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Me acuesto a las once",
+                      "ru": "Ложусь спать в одиннадцать",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.hora.l4",
+                  "title_ru": "Дни и месяцы",
+                  "goal_ru": "Назвать день, месяц и дату",
+                  "items": [
+                    {
+                      "es": "Hoy es lunes",
+                      "ru": "Сегодня понедельник",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Mañana es viernes",
+                      "ru": "Завтра пятница",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Qué fecha es hoy?",
+                      "ru": "Какое сегодня число?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Es el tres de marzo",
+                      "ru": "Третье марта",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "En enero",
+                      "ru": "В январе",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Mi cumpleaños es en mayo",
+                      "ru": "Мой день рождения в мае",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.hora.l5",
+                  "title_ru": "Рассказ о моём дне",
+                  "goal_ru": "Связно рассказать о дне: сначала, потом, в конце",
+                  "items": [
+                    {
+                      "es": "Primero desayuno",
+                      "ru": "Сначала я завтракаю",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Después trabajo en el ordenador",
+                      "ru": "Потом работаю за компьютером",
+                      "type": "phrase",
+                      "note_ru": "В Латинской Америке — computadora",
+                      "variant_note": true
+                    },
+                    {
+                      "es": "Luego como con mis compañeros",
+                      "ru": "Затем обедаю с коллегами",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Por la tarde estudio español",
+                      "ru": "Вечером учу испанский",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Al final leo un libro",
+                      "ru": "В конце читаю книгу",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Los sábados no trabajo",
+                      "ru": "По субботам я не работаю",
+                      "type": "phrase"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a1.u09",
+          "title_ru": "Одежда и погода",
+          "grammar_ids": [
+            "g.a1.12",
+            "g.a1.13"
+          ],
+          "sound_ids": [
+            "s.07"
+          ],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a1.ropa",
+              "title_ru": "Одежда",
+              "category": "shopping",
+              "can_do_ru": [
+                "Спросить размер и цвет",
+                "Примерить вещь",
+                "Купить или вернуть"
+              ],
+              "icon": "shirt",
+              "lessons": [
+                {
+                  "id": "a1.ropa.l1",
+                  "title_ru": "Размер",
+                  "goal_ru": "Примерить и подобрать размер",
+                  "items": [
+                    {
+                      "es": "¿Tiene esta camiseta en azul?",
+                      "ru": "Есть эта футболка в синем?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Qué talla usa?",
+                      "ru": "Какой у вас размер?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Puedo probármelo?",
+                      "ru": "Можно примерить?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Los probadores",
+                      "ru": "Примерочные",
+                      "type": "word"
+                    },
+                    {
+                      "es": "Me queda grande",
+                      "ru": "Мне велико",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Me queda pequeño",
+                      "ru": "Мне мало",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.ropa.l2",
+                  "title_ru": "Беру!",
+                  "goal_ru": "Решить, брать ли вещь",
+                  "items": [
+                    {
+                      "es": "Solo estoy mirando",
+                      "ru": "Я просто смотрю",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Tiene una talla más?",
+                      "ru": "Есть на размер больше?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Está rebajado?",
+                      "ru": "Это со скидкой?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Me lo llevo",
+                      "ru": "Я беру",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Los zapatos",
+                      "ru": "Обувь",
+                      "type": "word"
+                    },
+                    {
+                      "es": "¿Qué número calza?",
+                      "ru": "Какой у вас размер обуви?",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.ropa.l3",
+                  "title_ru": "Цвета",
+                  "goal_ru": "Называть цвета и выражать предпочтения",
+                  "items": [
+                    {
+                      "es": "Rojo, azul, verde",
+                      "ru": "Красный, синий, зелёный",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Negro y blanco",
+                      "ru": "Чёрный и белый",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Me gusta este color",
+                      "ru": "Мне нравится этот цвет",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Prefiero el otro",
+                      "ru": "Я предпочитаю другой",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Es demasiado caro",
+                      "ru": "Это слишком дорого",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Puedo devolverlo?",
+                      "ru": "Можно его вернуть?",
+                      "type": "phrase"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "a1.tiempo",
+              "title_ru": "Погода",
+              "category": "home",
+              "can_do_ru": [
+                "Спросить о погоде",
+                "Описать погоду",
+                "Сказать о любимом времени года"
+              ],
+              "icon": "sun",
+              "lessons": [
+                {
+                  "id": "a1.tiempo.l1",
+                  "title_ru": "Какая погода?",
+                  "goal_ru": "Описать погоду сейчас",
+                  "items": [
+                    {
+                      "es": "¿Qué tiempo hace?",
+                      "ru": "Какая погода?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Hace calor",
+                      "ru": "Жарко",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Hace frío",
+                      "ru": "Холодно",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Hace sol",
+                      "ru": "Солнечно",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Llueve",
+                      "ru": "Идёт дождь",
+                      "type": "word"
+                    },
+                    {
+                      "es": "Hace viento",
+                      "ru": "Ветрено",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.tiempo.l2",
+                  "title_ru": "Хорошая погода",
+                  "goal_ru": "Рассказать подробнее",
+                  "items": [
+                    {
+                      "es": "Está nublado",
+                      "ru": "Облачно",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Hace buen tiempo",
+                      "ru": "Хорошая погода",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Hace mal tiempo",
+                      "ru": "Плохая погода",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Hoy hace veinte grados",
+                      "ru": "Сегодня двадцать градусов",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Va a llover?",
+                      "ru": "Будет дождь?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Necesito un paraguas",
+                      "ru": "Мне нужен зонт",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.tiempo.l3",
+                  "title_ru": "Времена года",
+                  "goal_ru": "Говорить о временах года",
+                  "items": [
+                    {
+                      "es": "En verano",
+                      "ru": "Летом",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "En invierno",
+                      "ru": "Зимой",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "La primavera",
+                      "ru": "Весна",
+                      "type": "word"
+                    },
+                    {
+                      "es": "El otoño",
+                      "ru": "Осень",
+                      "type": "word"
+                    },
+                    {
+                      "es": "Me encanta el verano",
+                      "ru": "Обожаю лето",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Mañana va a hacer frío",
+                      "ru": "Завтра будет холодно",
+                      "type": "phrase"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a1.u10",
+          "title_ru": "Семья и дом",
+          "grammar_ids": [
+            "g.a1.14",
+            "g.a1.15",
+            "g.a1.21"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a1.familia",
+              "title_ru": "Моя семья",
+              "category": "social",
+              "can_do_ru": [
+                "Рассказать о семье",
+                "Описать внешность и характер"
+              ],
+              "icon": "people",
+              "lessons": [
+                {
+                  "id": "a1.familia.l1",
+                  "title_ru": "Моя семья",
+                  "goal_ru": "Назвать членов семьи",
+                  "items": [
+                    {
+                      "es": "Mi madre y mi padre",
+                      "ru": "Моя мама и мой папа",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Tengo un hermano",
+                      "ru": "У меня есть брат",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Tengo dos hijos",
+                      "ru": "У меня двое детей",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Estoy casado / casada",
+                      "ru": "Я женат / замужем",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Tienes hermanos?",
+                      "ru": "У тебя есть братья или сёстры?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Mis abuelos",
+                      "ru": "Мои бабушка и дедушка",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.familia.l2",
+                  "title_ru": "Кто это?",
+                  "goal_ru": "Рассказать о близком человеке",
+                  "items": [
+                    {
+                      "es": "Mi pareja",
+                      "ru": "Мой партнёр / моя партнёрша",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Se llama Laura",
+                      "ru": "Её зовут Лаура",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Es médico",
+                      "ru": "Он врач",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Es muy simpática",
+                      "ru": "Она очень милая",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Vive en Valencia",
+                      "ru": "Он живёт в Валенсии",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Trabaja mucho",
+                      "ru": "Он много работает",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.familia.l3",
+                  "title_ru": "Какой он?",
+                  "goal_ru": "Описать внешность",
+                  "items": [
+                    {
+                      "es": "Es alto / alta",
+                      "ru": "Он высокий / она высокая",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Tiene el pelo largo",
+                      "ru": "У неё длинные волосы",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Tiene los ojos azules",
+                      "ru": "У него голубые глаза",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Es joven",
+                      "ru": "Он молодой",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Es mayor",
+                      "ru": "Он пожилой / старше",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Nos parecemos mucho",
+                      "ru": "Мы очень похожи",
+                      "type": "phrase"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "a1.casa",
+              "title_ru": "Мой дом",
+              "category": "home",
+              "can_do_ru": [
+                "Описать квартиру",
+                "Рассказать о районе",
+                "Сказать, что ищете жильё"
+              ],
+              "icon": "home",
+              "lessons": [
+                {
+                  "id": "a1.casa.l1",
+                  "title_ru": "Моя квартира",
+                  "goal_ru": "Описать жильё",
+                  "items": [
+                    {
+                      "es": "Vivo en un piso",
+                      "ru": "Я живу в квартире",
+                      "type": "phrase",
+                      "note_ru": "В Латинской Америке — departamento / apartamento",
+                      "variant_note": true
+                    },
+                    {
+                      "es": "Tiene dos habitaciones",
+                      "ru": "В ней две комнаты",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "La cocina",
+                      "ru": "Кухня",
+                      "type": "word"
+                    },
+                    {
+                      "es": "El salón",
+                      "ru": "Гостиная",
+                      "type": "word"
+                    },
+                    {
+                      "es": "El baño",
+                      "ru": "Ванная",
+                      "type": "word"
+                    },
+                    {
+                      "es": "Mi casa es pequeña",
+                      "ru": "Мой дом маленький",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.casa.l2",
+                  "title_ru": "Где что",
+                  "goal_ru": "Рассказать, что есть в доме",
+                  "items": [
+                    {
+                      "es": "Está en el segundo piso",
+                      "ru": "Это на втором этаже",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Hay un balcón",
+                      "ru": "Есть балкон",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "No hay ascensor",
+                      "ru": "Нет лифта",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Las llaves",
+                      "ru": "Ключи",
+                      "type": "word"
+                    },
+                    {
+                      "es": "La puerta y la ventana",
+                      "ru": "Дверь и окно",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "El dormitorio",
+                      "ru": "Спальня",
+                      "type": "word"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.casa.l3",
+                  "title_ru": "Мой район",
+                  "goal_ru": "Описать район и поиск жилья",
+                  "items": [
+                    {
+                      "es": "Mi barrio es tranquilo",
+                      "ru": "Мой район тихий",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Hay un supermercado cerca",
+                      "ru": "Рядом есть супермаркет",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "El alquiler es caro",
+                      "ru": "Аренда дорогая",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Busco piso",
+                      "ru": "Ищу квартиру",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Comparto piso",
+                      "ru": "Снимаю квартиру с соседями",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Mis vecinos son amables",
+                      "ru": "Мои соседи доброжелательные",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.casa.l4",
+                  "title_ru": "Где что лежит?",
+                  "goal_ru": "Описать, где находятся вещи",
+                  "items": [
+                    {
+                      "es": "¿Dónde están mis llaves?",
+                      "ru": "Где мои ключи?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Encima de la mesa",
+                      "ru": "На столе",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Debajo de la cama",
+                      "ru": "Под кроватью",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Detrás del sofá",
+                      "ru": "За диваном",
+                      "type": "phrase",
+                      "note_ru": "de + el = del"
+                    },
+                    {
+                      "es": "Delante de la ventana",
+                      "ru": "Перед окном",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Dentro de la caja",
+                      "ru": "Внутри коробки",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Entre la lámpara y el sillón",
+                      "ru": "Между лампой и креслом",
+                      "type": "phrase"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a1.u11",
+          "title_ru": "Здоровье и спорт",
+          "grammar_ids": [
+            "g.a1.16"
+          ],
+          "sound_ids": [
+            "s.08"
+          ],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a1.farmacia",
+              "title_ru": "Аптека и самочувствие",
+              "category": "health",
+              "can_do_ru": [
+                "Сказать, что болит",
+                "Купить лекарство",
+                "Вызвать помощь"
+              ],
+              "icon": "cross",
+              "lessons": [
+                {
+                  "id": "a1.farmacia.l1",
+                  "title_ru": "Что болит?",
+                  "goal_ru": "Описать самочувствие",
+                  "items": [
+                    {
+                      "es": "Me duele la cabeza",
+                      "ru": "У меня болит голова",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Me duele la garganta",
+                      "ru": "У меня болит горло",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Tengo fiebre",
+                      "ru": "У меня температура",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Estoy resfriado / resfriada",
+                      "ru": "Я простужен / простужена",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Tengo tos",
+                      "ru": "У меня кашель",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Me encuentro mal",
+                      "ru": "Мне плохо",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.farmacia.l2",
+                  "title_ru": "В аптеке",
+                  "goal_ru": "Купить лекарство и понять, как принимать",
+                  "items": [
+                    {
+                      "es": "¿Tiene algo para el dolor de cabeza?",
+                      "ru": "У вас есть что-нибудь от головной боли?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Sin receta",
+                      "ru": "Без рецепта",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Cuántas veces al día?",
+                      "ru": "Сколько раз в день?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Dos veces al día",
+                      "ru": "Два раза в день",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Después de comer",
+                      "ru": "После еды",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Las pastillas",
+                      "ru": "Таблетки",
+                      "type": "word"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.farmacia.l3",
+                  "title_ru": "Срочно",
+                  "goal_ru": "Попросить помощи в экстренной ситуации",
+                  "items": [
+                    {
+                      "es": "Necesito un médico",
+                      "ru": "Мне нужен врач",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Llame a una ambulancia",
+                      "ru": "Вызовите скорую",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Es urgente",
+                      "ru": "Это срочно",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Dónde está el hospital?",
+                      "ru": "Где больница?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Soy alérgico a la penicilina",
+                      "ru": "У меня аллергия на пенициллин",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "El 112",
+                      "ru": "Сто двенадцать",
+                      "type": "word",
+                      "note_ru": "Единый номер экстренных служб в Испании и ЕС"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "a1.gimnasio",
+              "title_ru": "Спортзал",
+              "category": "health",
+              "can_do_ru": [
+                "Записаться в зал",
+                "Договориться о тренажёре",
+                "Рассказать о своём спорте"
+              ],
+              "icon": "dumbbell",
+              "lessons": [
+                {
+                  "id": "a1.gimnasio.l1",
+                  "title_ru": "Хочу записаться",
+                  "goal_ru": "Узнать цены и расписание",
+                  "items": [
+                    {
+                      "es": "Quiero apuntarme",
+                      "ru": "Хочу записаться",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Cuánto cuesta la cuota mensual?",
+                      "ru": "Сколько стоит месячный абонемент?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿A qué hora abre?",
+                      "ru": "Во сколько открывается?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Hay clases de yoga?",
+                      "ru": "Есть занятия йогой?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Los vestuarios",
+                      "ru": "Раздевалки",
+                      "type": "word"
+                    },
+                    {
+                      "es": "Una toalla",
+                      "ru": "Полотенце",
+                      "type": "word"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.gimnasio.l2",
+                  "title_ru": "Этот тренажёр свободен?",
+                  "goal_ru": "Общаться в зале",
+                  "items": [
+                    {
+                      "es": "¿Está libre esta máquina?",
+                      "ru": "Этот тренажёр свободен?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Puedo usarla?",
+                      "ru": "Можно воспользоваться?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Una serie más",
+                      "ru": "Ещё один подход",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Cuántas repeticiones?",
+                      "ru": "Сколько повторений?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Estoy cansado / cansada",
+                      "ru": "Я устал / устала",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Me duelen las piernas",
+                      "ru": "У меня болят ноги",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.gimnasio.l3",
+                  "title_ru": "Мой спорт",
+                  "goal_ru": "Рассказать о своей активности",
+                  "items": [
+                    {
+                      "es": "¿Qué deporte haces?",
+                      "ru": "Каким спортом занимаешься?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Voy al gimnasio tres veces por semana",
+                      "ru": "Хожу в зал три раза в неделю",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Me gusta correr",
+                      "ru": "Люблю бегать",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Juego al fútbol",
+                      "ru": "Играю в футбол",
+                      "type": "phrase",
+                      "note_ru": "В Латинской Америке часто juego fútbol",
+                      "variant_note": true
+                    },
+                    {
+                      "es": "Nado en la piscina",
+                      "ru": "Плаваю в бассейне",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Estoy en forma",
+                      "ru": "Я в форме",
+                      "type": "phrase"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a1.u12",
+          "title_ru": "Путешествие и планы",
+          "grammar_ids": [
+            "g.a1.17",
+            "g.a1.18",
+            "g.a1.19"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": "cp.a1.final",
+          "topics": [
+            {
+              "id": "a1.hotel",
+              "title_ru": "Отель",
+              "category": "travel",
+              "can_do_ru": [
+                "Заселиться в отель",
+                "Решить простую проблему с номером"
+              ],
+              "icon": "bed",
+              "lessons": [
+                {
+                  "id": "a1.hotel.l1",
+                  "title_ru": "Заселение",
+                  "goal_ru": "Заселиться и узнать главное",
+                  "items": [
+                    {
+                      "es": "Tengo una reserva",
+                      "ru": "У меня бронь",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Una habitación doble",
+                      "ru": "Двухместный номер",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿El desayuno está incluido?",
+                      "ru": "Завтрак включён?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿A qué hora hay que dejar la habitación?",
+                      "ru": "Во сколько нужно освободить номер?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "La llave de la habitación",
+                      "ru": "Ключ от номера",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Cuál es la contraseña del wifi?",
+                      "ru": "Какой пароль от вайфая?",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.hotel.l2",
+                  "title_ru": "Проблема с номером",
+                  "goal_ru": "Сообщить о проблеме",
+                  "items": [
+                    {
+                      "es": "No funciona el aire acondicionado",
+                      "ru": "Не работает кондиционер",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "No hay agua caliente",
+                      "ru": "Нет горячей воды",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Hay mucho ruido",
+                      "ru": "Очень шумно",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Necesito más toallas",
+                      "ru": "Мне нужно больше полотенец",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Me puede cambiar de habitación?",
+                      "ru": "Можете поменять мне номер?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Puede ayudarme?",
+                      "ru": "Можете мне помочь?",
+                      "type": "phrase"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "a1.aeropuerto",
+              "title_ru": "Аэропорт",
+              "category": "travel",
+              "can_do_ru": [
+                "Пройти регистрацию и посадку",
+                "Решить проблему с багажом или рейсом"
+              ],
+              "icon": "plane",
+              "lessons": [
+                {
+                  "id": "a1.aeropuerto.l1",
+                  "title_ru": "Регистрация",
+                  "goal_ru": "Пройти регистрацию и найти выход",
+                  "items": [
+                    {
+                      "es": "¿Dónde se factura?",
+                      "ru": "Где регистрация багажа?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "El pasaporte, por favor",
+                      "ru": "Паспорт, пожалуйста",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Solo equipaje de mano",
+                      "ru": "Только ручная кладь",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Ventanilla o pasillo",
+                      "ru": "У окна или у прохода",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "La puerta de embarque",
+                      "ru": "Выход на посадку",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Mi vuelo sale a las diez",
+                      "ru": "Мой рейс в десять",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.aeropuerto.l2",
+                  "title_ru": "Прилёт",
+                  "goal_ru": "Решить проблему и добраться до города",
+                  "items": [
+                    {
+                      "es": "El vuelo está retrasado",
+                      "ru": "Рейс задерживается",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Mi maleta no ha llegado",
+                      "ru": "Мой чемодан не прилетел",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Dónde está la salida?",
+                      "ru": "Где выход?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "La parada de taxis",
+                      "ru": "Стоянка такси",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Hay autobús al centro?",
+                      "ru": "Есть автобус в центр?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Estoy de vacaciones",
+                      "ru": "Я в отпуске",
+                      "type": "phrase"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "a1.planes",
+              "title_ru": "Планы на выходные",
+              "category": "social",
+              "can_do_ru": [
+                "Пригласить и договориться о встрече",
+                "Написать короткое сообщение"
+              ],
+              "icon": "chat",
+              "lessons": [
+                {
+                  "id": "a1.planes.l1",
+                  "title_ru": "Встретимся?",
+                  "goal_ru": "Договориться о встрече",
+                  "items": [
+                    {
+                      "es": "¿Qué haces el sábado?",
+                      "ru": "Что делаешь в субботу?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Quedamos?",
+                      "ru": "Встретимся?",
+                      "type": "word"
+                    },
+                    {
+                      "es": "¿A qué hora quedamos?",
+                      "ru": "Во сколько встречаемся?",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Vamos al cine",
+                      "ru": "Пойдём в кино",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¡Vale!",
+                      "ru": "Окей! / Договорились!",
+                      "type": "word",
+                      "note_ru": "Испания"
+                    },
+                    {
+                      "es": "No puedo, lo siento",
+                      "ru": "Не могу, извини",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.planes.l2",
+                  "title_ru": "Сообщения",
+                  "goal_ru": "Переписываться о встрече",
+                  "items": [
+                    {
+                      "es": "Voy a ir a la playa",
+                      "ru": "Я пойду на пляж",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¿Te apetece un café?",
+                      "ru": "Хочешь кофе?",
+                      "type": "phrase",
+                      "note_ru": "Испания"
+                    },
+                    {
+                      "es": "Te escribo luego",
+                      "ru": "Напишу тебе позже",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Mándame la ubicación",
+                      "ru": "Скинь мне геолокацию",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "Llego en diez minutos",
+                      "ru": "Буду через десять минут",
+                      "type": "phrase"
+                    },
+                    {
+                      "es": "¡Nos vemos!",
+                      "ru": "Увидимся!",
+                      "type": "phrase"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "grammar": [
+        {
+          "id": "g.a1.01",
+          "title_ru": "Звуки испанского и ударение",
+          "focus_ru": "Читается как пишется; пять чистых гласных; ударение и знак тильды (´)",
+          "examples": [
+            "Hola",
+            "Buenos días",
+            "Café"
+          ]
+        },
+        {
+          "id": "g.a1.02",
+          "title_ru": "Ser: soy, eres, es",
+          "focus_ru": "Кто я и откуда: soy / eres / es + имя, профессия, происхождение",
+          "examples": [
+            "Soy Pablo",
+            "¿De dónde eres?",
+            "Es médico"
+          ]
+        },
+        {
+          "id": "g.a1.03",
+          "title_ru": "Род и артикли",
+          "focus_ru": "un / una, el / la; как угадать род по окончанию -o / -a и исключения",
+          "examples": [
+            "Un café",
+            "Una mesa",
+            "La cuenta"
+          ]
+        },
+        {
+          "id": "g.a1.04",
+          "title_ru": "Множественное число",
+          "focus_ru": "-s / -es; los / las; согласование с числом",
+          "examples": [
+            "Dos cafés",
+            "Tres personas",
+            "Las manzanas"
+          ]
+        },
+        {
+          "id": "g.a1.05",
+          "title_ru": "Tener и querer",
+          "focus_ru": "Tengo / tienes / tiene; quiero / quieres; вежливое quisiera",
+          "examples": [
+            "¿Tiene agua?",
+            "Tengo treinta años",
+            "Quisiera un zumo"
+          ]
+        },
+        {
+          "id": "g.a1.06",
+          "title_ru": "Estar и hay",
+          "focus_ru": "Где находится конкретное (está) и есть ли вообще (hay)",
+          "examples": [
+            "¿Dónde está la estación?",
+            "¿Hay una farmacia por aquí?"
+          ]
+        },
+        {
+          "id": "g.a1.07",
+          "title_ru": "Tú и usted",
+          "focus_ru": "Когда «ты», когда «вы»; формы глаголов для usted",
+          "examples": [
+            "¿Me puede ayudar?",
+            "Perdone",
+            "¿Y tú?"
+          ]
+        },
+        {
+          "id": "g.a1.08",
+          "title_ru": "Глаголы на -ar",
+          "focus_ru": "Настоящее время: hablo, hablas, habla, hablamos, habláis, hablan",
+          "examples": [
+            "Trabajo mucho",
+            "¿Dónde vives?",
+            "Vamos a pagar por separado"
+          ]
+        },
+        {
+          "id": "g.a1.09",
+          "title_ru": "Gustar",
+          "focus_ru": "Me gusta + единственное / me gustan + множественное; me encanta",
+          "examples": [
+            "Me gusta este color",
+            "Me encanta el verano"
+          ]
+        },
+        {
+          "id": "g.a1.10",
+          "title_ru": "Глаголы на -er и -ir",
+          "focus_ru": "Como, comes, come…; vivo, vives, vive…",
+          "examples": [
+            "Como a las dos",
+            "Vivo en Madrid"
+          ]
+        },
+        {
+          "id": "g.a1.11",
+          "title_ru": "Возвратные глаголы и время",
+          "focus_ru": "Me levanto, te acuestas; es la una / son las dos",
+          "examples": [
+            "Me levanto a las siete",
+            "Son las dos"
+          ]
+        },
+        {
+          "id": "g.a1.12",
+          "title_ru": "Прилагательные",
+          "focus_ru": "Согласование в роде и числе; место после существительного",
+          "examples": [
+            "Las fresas están muy frescas",
+            "Mi casa es pequeña"
+          ]
+        },
+        {
+          "id": "g.a1.13",
+          "title_ru": "Este, ese, aquel",
+          "focus_ru": "Это / то / вон то",
+          "examples": [
+            "Me gusta este color",
+            "¿Qué es esto?"
+          ]
+        },
+        {
+          "id": "g.a1.14",
+          "title_ru": "Притяжательные",
+          "focus_ru": "Mi, tu, su, nuestro, vuestro",
+          "examples": [
+            "Mi familia",
+            "Mis abuelos"
+          ]
+        },
+        {
+          "id": "g.a1.15",
+          "title_ru": "Ser или estar",
+          "focus_ru": "Постоянное (ser) и состояние, место (estar)",
+          "examples": [
+            "Es alta",
+            "Estoy cansada",
+            "Está cerca"
+          ]
+        },
+        {
+          "id": "g.a1.16",
+          "title_ru": "Doler",
+          "focus_ru": "Me duele + единственное / me duelen + множественное",
+          "examples": [
+            "Me duele la cabeza",
+            "Me duelen las piernas"
+          ]
+        },
+        {
+          "id": "g.a1.17",
+          "title_ru": "Ir a + инфинитив",
+          "focus_ru": "Планы на будущее: voy a…, ¿vas a…?",
+          "examples": [
+            "Voy a ir a la playa",
+            "¿Va a llover?"
+          ]
+        },
+        {
+          "id": "g.a1.18",
+          "title_ru": "Вопросительные слова",
+          "focus_ru": "Qué, dónde, cuándo, cuánto, cómo, por qué; ¿ и ¡ в начале",
+          "examples": [
+            "¿Cuánto cuesta?",
+            "¿Cómo te llamas?"
+          ]
+        },
+        {
+          "id": "g.a1.20",
+          "title_ru": "Состояния: estar + прилагательное и tener + существительное",
+          "focus_ru": "Estoy cansado, но tengo hambre / sed / frío; согласование cansado / cansada",
+          "examples": [
+            "Estoy cansada",
+            "Tengo hambre",
+            "Tengo frío"
+          ]
+        },
+        {
+          "id": "g.a1.21",
+          "title_ru": "Предлоги места",
+          "focus_ru": "Encima de, debajo de, delante de, detrás de, dentro de, entre, al lado de; de + el = del, a + el = al",
+          "examples": [
+            "Encima de la mesa",
+            "Detrás del sofá"
+          ]
+        },
+        {
+          "id": "g.a1.19",
+          "title_ru": "Vosotros и ustedes",
+          "focus_ru": "Испания: vosotros (вы, неформально) и ustedes; Латинская Америка: только ustedes",
+          "examples": [
+            "¿Qué queréis?",
+            "¿Qué quieren?"
+          ]
+        }
+      ]
+    },
+    {
+      "level": "A2",
+      "title_ru": "Жизнь в стране",
+      "can_do_ru": "Рассказываю о прошлом и привычках, решаю бытовые и административные задачи.",
+      "vocab_target": "~1500",
+      "guided_hours": "180–200 (накопительно)",
+      "units": [
+        {
+          "id": "a2.u01",
+          "title_ru": "Мои привычки",
+          "grammar_ids": [
+            "g.a2.01",
+            "g.a2.02"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a2.rutina",
+              "title_ru": "Мой обычный день",
+              "category": "daily",
+              "can_do_ru": [
+                "Рассказать о привычках и частоте",
+                "Сравнить будни и выходные"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Normalmente me levanto temprano",
+                  "ru": "Обычно я встаю рано"
+                },
+                {
+                  "es": "Casi nunca como en casa",
+                  "ru": "Я почти никогда не ем дома"
+                },
+                {
+                  "es": "Suelo ir andando al trabajo",
+                  "ru": "Обычно я хожу на работу пешком"
+                },
+                {
+                  "es": "Los domingos no hago nada",
+                  "ru": "По воскресеньям я ничего не делаю"
+                }
+              ]
+            },
+            {
+              "id": "a2.ocio",
+              "title_ru": "Свободное время",
+              "category": "social",
+              "can_do_ru": [
+                "Рассказать о хобби",
+                "Сказать, что нравится и что нет"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "En mi tiempo libre leo mucho",
+                  "ru": "В свободное время я много читаю"
+                },
+                {
+                  "es": "Me encanta salir de tapas",
+                  "ru": "Обожаю ходить по тапас-барам"
+                },
+                {
+                  "es": "No me gusta nada el fútbol",
+                  "ru": "Мне совсем не нравится футбол"
+                },
+                {
+                  "es": "A mí también / A mí tampoco",
+                  "ru": "Мне тоже / Мне тоже нет"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a2.u02",
+          "title_ru": "Что я сегодня сделал",
+          "grammar_ids": [
+            "g.a2.03"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a2.hoy",
+              "title_ru": "Сегодня и на этой неделе",
+              "category": "daily",
+              "can_do_ru": [
+                "Рассказать, что уже сделали сегодня",
+                "Сказать, что ещё не сделали"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Hoy he trabajado mucho",
+                  "ru": "Сегодня я много работал"
+                },
+                {
+                  "es": "¿Ya has comido?",
+                  "ru": "Ты уже поел?"
+                },
+                {
+                  "es": "Todavía no he terminado",
+                  "ru": "Я ещё не закончил"
+                },
+                {
+                  "es": "Esta semana he ido dos veces al gimnasio",
+                  "ru": "На этой неделе я дважды ходил в зал"
+                }
+              ]
+            },
+            {
+              "id": "a2.experiencias",
+              "title_ru": "Опыт",
+              "category": "social",
+              "can_do_ru": [
+                "Спросить, бывали ли вы где-то",
+                "Рассказать о новом опыте"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "¿Has estado en Barcelona?",
+                  "ru": "Ты бывал в Барселоне?"
+                },
+                {
+                  "es": "Nunca he probado el pulpo",
+                  "ru": "Я никогда не пробовал осьминога"
+                },
+                {
+                  "es": "He estado allí dos veces",
+                  "ru": "Я был там два раза"
+                },
+                {
+                  "es": "¿Alguna vez has vivido en el extranjero?",
+                  "ru": "Ты когда-нибудь жил за границей?"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a2.u03",
+          "title_ru": "Выходные и поездки",
+          "grammar_ids": [
+            "g.a2.04"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a2.finde",
+              "title_ru": "Что ты делал на выходных?",
+              "category": "social",
+              "can_do_ru": [
+                "Рассказать о прошедших выходных",
+                "Расспросить собеседника"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "El sábado fui a la playa",
+                  "ru": "В субботу я ходил на пляж"
+                },
+                {
+                  "es": "Ayer cené con unos amigos",
+                  "ru": "Вчера я ужинал с друзьями"
+                },
+                {
+                  "es": "¿Qué hiciste el fin de semana?",
+                  "ru": "Что ты делал на выходных?"
+                },
+                {
+                  "es": "No hice nada especial",
+                  "ru": "Ничего особенного не делал"
+                }
+              ]
+            },
+            {
+              "id": "a2.viaje_pasado",
+              "title_ru": "Моё путешествие",
+              "category": "travel",
+              "can_do_ru": [
+                "Рассказать о поездке по порядку"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "El verano pasado viajé a Andalucía",
+                  "ru": "Прошлым летом я ездил в Андалусию"
+                },
+                {
+                  "es": "Primero fuimos a Sevilla y luego a Granada",
+                  "ru": "Сначала мы поехали в Севилью, потом в Гранаду"
+                },
+                {
+                  "es": "Lo pasamos genial",
+                  "ru": "Мы отлично провели время"
+                },
+                {
+                  "es": "Fue un viaje increíble",
+                  "ru": "Это была невероятная поездка"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a2.u04",
+          "title_ru": "Как было раньше",
+          "grammar_ids": [
+            "g.a2.05"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a2.infancia",
+              "title_ru": "Детство и прошлое",
+              "category": "social",
+              "can_do_ru": [
+                "Описать, как было раньше",
+                "Сравнить прошлое и настоящее"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Cuando era pequeño vivía en un pueblo",
+                  "ru": "Когда я был маленьким, я жил в деревне"
+                },
+                {
+                  "es": "Antes jugaba al fútbol todos los días",
+                  "ru": "Раньше я играл в футбол каждый день"
+                },
+                {
+                  "es": "Mi abuela cocinaba muy bien",
+                  "ru": "Моя бабушка очень хорошо готовила"
+                },
+                {
+                  "es": "Antes no había móviles",
+                  "ru": "Раньше не было мобильных"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a2.u05",
+          "title_ru": "Жильё",
+          "grammar_ids": [
+            "g.a2.06"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a2.piso",
+              "title_ru": "Снять квартиру",
+              "category": "home",
+              "can_do_ru": [
+                "Позвонить по объявлению",
+                "Спросить об условиях аренды"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Estoy buscando un piso de alquiler",
+                  "ru": "Я ищу квартиру в аренду"
+                },
+                {
+                  "es": "¿Los gastos están incluidos?",
+                  "ru": "Коммунальные включены?"
+                },
+                {
+                  "es": "¿Cuándo puedo verlo?",
+                  "ru": "Когда можно посмотреть?"
+                },
+                {
+                  "es": "¿Está amueblado?",
+                  "ru": "Она меблирована?"
+                }
+              ]
+            },
+            {
+              "id": "a2.averias",
+              "title_ru": "Что-то сломалось",
+              "category": "home",
+              "can_do_ru": [
+                "Сообщить о поломке",
+                "Договориться о ремонте"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Se ha roto la lavadora",
+                  "ru": "Сломалась стиральная машина"
+                },
+                {
+                  "es": "Gotea el grifo",
+                  "ru": "Капает кран"
+                },
+                {
+                  "es": "No funciona la calefacción",
+                  "ru": "Не работает отопление"
+                },
+                {
+                  "es": "¿Cuándo puede venir el técnico?",
+                  "ru": "Когда может прийти мастер?"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a2.u06",
+          "title_ru": "Документы и банк",
+          "grammar_ids": [
+            "g.a2.07"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a2.tramites",
+              "title_ru": "Госучреждения",
+              "category": "admin",
+              "can_do_ru": [
+                "Записаться на приём",
+                "Понять, какие нужны документы"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Necesito pedir cita previa",
+                  "ru": "Мне нужно записаться на приём"
+                },
+                {
+                  "es": "Vengo a empadronarme",
+                  "ru": "Я пришёл зарегистрироваться по месту жительства"
+                },
+                {
+                  "es": "¿Qué documentos tengo que traer?",
+                  "ru": "Какие документы нужно принести?"
+                },
+                {
+                  "es": "Hay que rellenar este formulario",
+                  "ru": "Нужно заполнить этот бланк"
+                }
+              ]
+            },
+            {
+              "id": "a2.banco",
+              "title_ru": "Банк",
+              "category": "admin",
+              "can_do_ru": [
+                "Открыть счёт",
+                "Решить проблему с картой"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Quiero abrir una cuenta",
+                  "ru": "Я хочу открыть счёт"
+                },
+                {
+                  "es": "Me han bloqueado la tarjeta",
+                  "ru": "Мне заблокировали карту"
+                },
+                {
+                  "es": "¿Hay comisiones?",
+                  "ru": "Есть комиссии?"
+                },
+                {
+                  "es": "Necesito hacer una transferencia",
+                  "ru": "Мне нужно сделать перевод"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a2.u07",
+          "title_ru": "У врача",
+          "grammar_ids": [
+            "g.a2.08",
+            "g.a2.09"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a2.medico",
+              "title_ru": "Приём у врача",
+              "category": "health",
+              "can_do_ru": [
+                "Записаться к терапевту",
+                "Описать симптомы и их длительность",
+                "Понять рекомендации"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Quería pedir cita con el médico de cabecera",
+                  "ru": "Я хотел бы записаться к терапевту"
+                },
+                {
+                  "es": "Me duele aquí desde hace tres días",
+                  "ru": "У меня болит здесь уже три дня"
+                },
+                {
+                  "es": "Tome esto cada ocho horas",
+                  "ru": "Принимайте это каждые восемь часов"
+                },
+                {
+                  "es": "¿Es grave?",
+                  "ru": "Это серьёзно?"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a2.u08",
+          "title_ru": "Работа и звонки",
+          "grammar_ids": [
+            "g.a2.10",
+            "g.a2.11"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a2.trabajo",
+              "title_ru": "Моя работа",
+              "category": "work",
+              "can_do_ru": [
+                "Рассказать о работе и обязанностях"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Trabajo en una empresa de software",
+                  "ru": "Я работаю в софтверной компании"
+                },
+                {
+                  "es": "Me encargo de los clientes",
+                  "ru": "Я отвечаю за клиентов"
+                },
+                {
+                  "es": "Teletrabajo dos días a la semana",
+                  "ru": "Два дня в неделю работаю из дома"
+                },
+                {
+                  "es": "Tengo una reunión a las diez",
+                  "ru": "У меня встреча в десять"
+                }
+              ]
+            },
+            {
+              "id": "a2.llamada",
+              "title_ru": "Телефонный звонок",
+              "category": "admin",
+              "can_do_ru": [
+                "Позвонить в компанию",
+                "Попросить соединить и перезвонить"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Llamo por un problema con mi factura",
+                  "ru": "Звоню по поводу проблемы со счётом"
+                },
+                {
+                  "es": "¿Me puede pasar con el departamento técnico?",
+                  "ru": "Можете соединить с техотделом?"
+                },
+                {
+                  "es": "¿Le importa repetirlo?",
+                  "ru": "Не могли бы вы повторить?"
+                },
+                {
+                  "es": "Le vuelvo a llamar más tarde",
+                  "ru": "Я перезвоню вам позже"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a2.u09",
+          "title_ru": "Покупки 2.0",
+          "grammar_ids": [
+            "g.a2.12",
+            "g.a2.13"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a2.devolucion",
+              "title_ru": "Обмен и возврат",
+              "category": "shopping",
+              "can_do_ru": [
+                "Вернуть или обменять товар",
+                "Сравнить варианты"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Quiero devolver estos pantalones",
+                  "ru": "Я хочу вернуть эти брюки"
+                },
+                {
+                  "es": "¿Me lo puede cambiar por otro?",
+                  "ru": "Можете поменять на другой?"
+                },
+                {
+                  "es": "Este es más barato que aquel",
+                  "ru": "Этот дешевле, чем тот"
+                },
+                {
+                  "es": "Aquí tiene el tique",
+                  "ru": "Вот чек"
+                }
+              ]
+            },
+            {
+              "id": "a2.online",
+              "title_ru": "Покупки онлайн",
+              "category": "shopping",
+              "can_do_ru": [
+                "Решить проблему с заказом",
+                "Написать в поддержку"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Mi pedido no ha llegado",
+                  "ru": "Мой заказ не пришёл"
+                },
+                {
+                  "es": "El paquete llegó dañado",
+                  "ru": "Посылка пришла повреждённой"
+                },
+                {
+                  "es": "Quisiera un reembolso",
+                  "ru": "Я бы хотел возврат денег"
+                },
+                {
+                  "es": "Se lo envío por correo",
+                  "ru": "Я отправлю вам это по почте"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a2.u10",
+          "title_ru": "Планы и путешествия",
+          "grammar_ids": [
+            "g.a2.14",
+            "g.a2.15"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a2.reservas",
+              "title_ru": "Бронирование",
+              "category": "travel",
+              "can_do_ru": [
+                "Забронировать жильё и экскурсию",
+                "Сравнить варианты"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Quiero reservar dos noches",
+                  "ru": "Хочу забронировать две ночи"
+                },
+                {
+                  "es": "Es el hotel más céntrico",
+                  "ru": "Это самый центральный отель"
+                },
+                {
+                  "es": "Salimos para Málaga el viernes",
+                  "ru": "В пятницу едем в Малагу"
+                },
+                {
+                  "es": "¿Se puede cancelar gratis?",
+                  "ru": "Можно отменить бесплатно?"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a2.u11",
+          "title_ru": "Общение",
+          "grammar_ids": [
+            "g.a2.16"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "a2.quedar",
+              "title_ru": "Приглашения",
+              "category": "social",
+              "can_do_ru": [
+                "Пригласить, принять и вежливо отказаться"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "¿Te vienes a cenar el viernes?",
+                  "ru": "Пойдёшь ужинать в пятницу?"
+                },
+                {
+                  "es": "Me encantaría, pero no puedo",
+                  "ru": "С удовольствием, но не могу"
+                },
+                {
+                  "es": "¿Qué tal si quedamos el domingo?",
+                  "ru": "Как насчёт воскресенья?"
+                },
+                {
+                  "es": "Te aviso",
+                  "ru": "Я тебе дам знать"
+                }
+              ]
+            },
+            {
+              "id": "a2.fiestas",
+              "title_ru": "Праздники",
+              "category": "social",
+              "can_do_ru": [
+                "Поздравить",
+                "Рассказать о традициях"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "¡Feliz cumpleaños!",
+                  "ru": "С днём рождения!"
+                },
+                {
+                  "es": "¡Felices fiestas!",
+                  "ru": "С праздниками!"
+                },
+                {
+                  "es": "En Nochevieja comemos doce uvas",
+                  "ru": "В новогоднюю ночь мы едим двенадцать виноградин"
+                },
+                {
+                  "es": "¡Enhorabuena!",
+                  "ru": "Поздравляю!"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a2.u12",
+          "title_ru": "Ресторан 2.0",
+          "grammar_ids": [],
+          "sound_ids": [],
+          "checkpoint_id": "cp.a2.final",
+          "topics": [
+            {
+              "id": "a2.restaurante2",
+              "title_ru": "Жалоба в ресторане",
+              "category": "food",
+              "can_do_ru": [
+                "Вежливо пожаловаться",
+                "Попросить заменить блюдо"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Esto no es lo que he pedido",
+                  "ru": "Это не то, что я заказывал"
+                },
+                {
+                  "es": "La sopa está fría",
+                  "ru": "Суп холодный"
+                },
+                {
+                  "es": "¿Me lo puede calentar?",
+                  "ru": "Можете подогреть?"
+                },
+                {
+                  "es": "Llevamos media hora esperando",
+                  "ru": "Мы ждём уже полчаса"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "grammar": [
+        {
+          "id": "g.a2.01",
+          "title_ru": "Отклоняющиеся глаголы e>ie, o>ue, e>i",
+          "focus_ru": "Quiero, puedo, pido; jugar > juego",
+          "examples": [
+            "Puedo ir mañana",
+            "Empiezo a las nueve"
+          ]
+        },
+        {
+          "id": "g.a2.02",
+          "title_ru": "Частота: soler, siempre, nunca",
+          "focus_ru": "Suelo + инфинитив; наречия частоты",
+          "examples": [
+            "Suelo ir andando",
+            "Casi nunca"
+          ]
+        },
+        {
+          "id": "g.a2.03",
+          "title_ru": "Pretérito perfecto",
+          "focus_ru": "He / has / ha + причастие; ya, todavía no, hoy, esta semana",
+          "examples": [
+            "He comido",
+            "Todavía no he terminado"
+          ]
+        },
+        {
+          "id": "g.a2.04",
+          "title_ru": "Pretérito indefinido",
+          "focus_ru": "Законченные действия в прошлом: fui, hice, estuve; ayer, el año pasado",
+          "examples": [
+            "Fui a la playa",
+            "¿Qué hiciste?"
+          ]
+        },
+        {
+          "id": "g.a2.05",
+          "title_ru": "Pretérito imperfecto",
+          "focus_ru": "Привычки и описания в прошлом: era, vivía, había",
+          "examples": [
+            "Cuando era pequeño…",
+            "Antes jugaba…"
+          ]
+        },
+        {
+          "id": "g.a2.06",
+          "title_ru": "Se: безличные и случайные действия",
+          "focus_ru": "Se ha roto, se me ha olvidado",
+          "examples": [
+            "Se ha roto la lavadora",
+            "Se me ha olvidado"
+          ]
+        },
+        {
+          "id": "g.a2.07",
+          "title_ru": "Обязанность: tener que, hay que, deber",
+          "focus_ru": "Личная и безличная необходимость",
+          "examples": [
+            "Tengo que ir",
+            "Hay que rellenar"
+          ]
+        },
+        {
+          "id": "g.a2.08",
+          "title_ru": "Императив usted",
+          "focus_ru": "Tome, siga, llame; отрицательная форма",
+          "examples": [
+            "Tome esto",
+            "No coma grasa"
+          ]
+        },
+        {
+          "id": "g.a2.09",
+          "title_ru": "Desde hace, hace, desde",
+          "focus_ru": "Длительность и момент в прошлом",
+          "examples": [
+            "Desde hace tres días",
+            "Hace un año"
+          ]
+        },
+        {
+          "id": "g.a2.10",
+          "title_ru": "Косвенное дополнение: me, te, le…",
+          "focus_ru": "Le escribo, ¿me puede pasar…?",
+          "examples": [
+            "Le llamo",
+            "Me han dicho"
+          ]
+        },
+        {
+          "id": "g.a2.11",
+          "title_ru": "Императив tú",
+          "focus_ru": "Habla, ven, dime; утвердительный",
+          "examples": [
+            "Llámame",
+            "Dime"
+          ]
+        },
+        {
+          "id": "g.a2.12",
+          "title_ru": "Двойные местоимения",
+          "focus_ru": "Me lo, se lo",
+          "examples": [
+            "Me lo llevo",
+            "Se lo envío"
+          ]
+        },
+        {
+          "id": "g.a2.13",
+          "title_ru": "Сравнения",
+          "focus_ru": "Más… que, menos… que, tan… como; mejor, peor",
+          "examples": [
+            "Es más barato que…",
+            "Es tan caro como…"
+          ]
+        },
+        {
+          "id": "g.a2.14",
+          "title_ru": "Превосходная степень",
+          "focus_ru": "El más…, -ísimo",
+          "examples": [
+            "Es el hotel más céntrico",
+            "Riquísimo"
+          ]
+        },
+        {
+          "id": "g.a2.15",
+          "title_ru": "Por и para (база)",
+          "focus_ru": "Цель, направление, причина, путь",
+          "examples": [
+            "Para Málaga",
+            "Por la mañana"
+          ]
+        },
+        {
+          "id": "g.a2.16",
+          "title_ru": "Условное вежливое",
+          "focus_ru": "Me encantaría, ¿podrías…?, me gustaría",
+          "examples": [
+            "Me encantaría",
+            "¿Podrías ayudarme?"
+          ]
+        }
+      ]
+    },
+    {
+      "level": "B1",
+      "title_ru": "Самостоятельность",
+      "can_do_ru": "Объясняю мнение, рассказываю истории, справляюсь почти с любой ситуацией в поездке и на работе.",
+      "vocab_target": "~3000",
+      "guided_hours": "350–400 (накопительно)",
+      "units": [
+        {
+          "id": "b1.u01",
+          "title_ru": "Работа",
+          "grammar_ids": [
+            "g.b1.01"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b1.entrevista",
+              "title_ru": "Собеседование",
+              "category": "work",
+              "can_do_ru": [
+                "Рассказать о себе и опыте",
+                "Задать вопросы работодателю"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Tengo experiencia en atención al cliente",
+                  "ru": "У меня есть опыт работы с клиентами"
+                },
+                {
+                  "es": "Busco un puesto donde pueda crecer",
+                  "ru": "Ищу должность, где смогу расти"
+                },
+                {
+                  "es": "¿Cómo es un día normal en este puesto?",
+                  "ru": "Как выглядит обычный день на этой должности?"
+                }
+              ]
+            },
+            {
+              "id": "b1.equipo",
+              "title_ru": "Работа в команде",
+              "category": "work",
+              "can_do_ru": [
+                "Попросить, предложить, договориться с коллегами"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Necesito que me envíes el informe",
+                  "ru": "Мне нужно, чтобы ты прислал отчёт"
+                },
+                {
+                  "es": "Te propongo que lo hablemos mañana",
+                  "ru": "Предлагаю обсудить это завтра"
+                },
+                {
+                  "es": "Es importante que todos estén de acuerdo",
+                  "ru": "Важно, чтобы все были согласны"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b1.u02",
+          "title_ru": "Жильё и соседи",
+          "grammar_ids": [
+            "g.b1.02"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b1.contrato",
+              "title_ru": "Договор аренды",
+              "category": "home",
+              "can_do_ru": [
+                "Понять договор",
+                "Обсудить залог и условия"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "La fianza es de dos meses",
+                  "ru": "Залог — два месяца"
+                },
+                {
+                  "es": "¿Quién paga las reparaciones?",
+                  "ru": "Кто платит за ремонт?"
+                },
+                {
+                  "es": "El contrato es por un año",
+                  "ru": "Договор на год"
+                }
+              ]
+            },
+            {
+              "id": "b1.vecinos",
+              "title_ru": "Соседи",
+              "category": "home",
+              "can_do_ru": [
+                "Вежливо решить конфликт с соседями"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "¿Le importaría bajar la música?",
+                  "ru": "Не могли бы вы сделать музыку потише?"
+                },
+                {
+                  "es": "Ojalá se arregle pronto",
+                  "ru": "Надеюсь, это скоро решится"
+                },
+                {
+                  "es": "Hay una reunión de vecinos",
+                  "ru": "Будет собрание жильцов"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b1.u03",
+          "title_ru": "Здоровье",
+          "grammar_ids": [
+            "g.b1.03"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b1.salud",
+              "title_ru": "Здоровье и врачи",
+              "category": "health",
+              "can_do_ru": [
+                "Подробно описать проблему",
+                "Понять диагноз и лечение"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Llevo una semana con dolor de espalda",
+                  "ru": "У меня уже неделю болит спина"
+                },
+                {
+                  "es": "Me han hecho un análisis de sangre",
+                  "ru": "Мне сделали анализ крови"
+                },
+                {
+                  "es": "Tengo que hacer reposo",
+                  "ru": "Мне нужен покой"
+                }
+              ]
+            },
+            {
+              "id": "b1.habitos",
+              "title_ru": "Здоровый образ жизни",
+              "category": "health",
+              "can_do_ru": [
+                "Давать и принимать советы"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Debería dormir más",
+                  "ru": "Мне стоило бы больше спать"
+                },
+                {
+                  "es": "Te recomiendo que hagas ejercicio",
+                  "ru": "Советую тебе заниматься спортом"
+                },
+                {
+                  "es": "He dejado de fumar",
+                  "ru": "Я бросил курить"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b1.u04",
+          "title_ru": "Мнения",
+          "grammar_ids": [
+            "g.b1.04"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b1.opinion",
+              "title_ru": "Моё мнение",
+              "category": "opinion",
+              "can_do_ru": [
+                "Выразить мнение, согласие и несогласие"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "No creo que sea buena idea",
+                  "ru": "Не думаю, что это хорошая идея"
+                },
+                {
+                  "es": "Estoy de acuerdo contigo",
+                  "ru": "Я с тобой согласен"
+                },
+                {
+                  "es": "Depende de cómo lo mires",
+                  "ru": "Зависит от того, как посмотреть"
+                }
+              ]
+            },
+            {
+              "id": "b1.noticias",
+              "title_ru": "Новости",
+              "category": "opinion",
+              "can_do_ru": [
+                "Пересказать новость и отреагировать"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "¿Has oído lo de…?",
+                  "ru": "Ты слышал про…?"
+                },
+                {
+                  "es": "Me parece increíble que…",
+                  "ru": "Мне кажется невероятным, что…"
+                },
+                {
+                  "es": "Según el periódico…",
+                  "ru": "Согласно газете…"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b1.u05",
+          "title_ru": "Истории",
+          "grammar_ids": [
+            "g.b1.05"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b1.historias",
+              "title_ru": "Рассказать историю",
+              "category": "social",
+              "can_do_ru": [
+                "Связно рассказать историю из жизни"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Estaba en el metro cuando me llamaron",
+                  "ru": "Я был в метро, когда мне позвонили"
+                },
+                {
+                  "es": "De repente…",
+                  "ru": "Вдруг…"
+                },
+                {
+                  "es": "Al final todo salió bien",
+                  "ru": "В итоге всё закончилось хорошо"
+                }
+              ]
+            },
+            {
+              "id": "b1.viajes_problemas",
+              "title_ru": "Неприятности в поездке",
+              "category": "travel",
+              "can_do_ru": [
+                "Рассказать, что пошло не так"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Cuando llegué, el tren ya había salido",
+                  "ru": "Когда я пришёл, поезд уже ушёл"
+                },
+                {
+                  "es": "Me robaron la cartera",
+                  "ru": "У меня украли кошелёк"
+                },
+                {
+                  "es": "Tuve que poner una denuncia",
+                  "ru": "Мне пришлось написать заявление в полицию"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b1.u06",
+          "title_ru": "Жалобы и официальные письма",
+          "grammar_ids": [
+            "g.b1.06"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b1.reclamacion",
+              "title_ru": "Жалоба",
+              "category": "admin",
+              "can_do_ru": [
+                "Подать жалобу устно и письменно"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Quiero poner una reclamación",
+                  "ru": "Я хочу подать жалобу"
+                },
+                {
+                  "es": "Exijo una solución",
+                  "ru": "Я требую решения"
+                },
+                {
+                  "es": "Me gustaría hablar con el responsable",
+                  "ru": "Я бы хотел поговорить с ответственным"
+                }
+              ]
+            },
+            {
+              "id": "b1.formal",
+              "title_ru": "Официальное письмо",
+              "category": "admin",
+              "can_do_ru": [
+                "Написать официальное письмо или e-mail"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Le escribo para solicitar…",
+                  "ru": "Пишу вам, чтобы запросить…"
+                },
+                {
+                  "es": "Quedo a la espera de su respuesta",
+                  "ru": "Жду вашего ответа"
+                },
+                {
+                  "es": "Atentamente",
+                  "ru": "С уважением"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b1.u07",
+          "title_ru": "Будущее",
+          "grammar_ids": [
+            "g.b1.07"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b1.futuro",
+              "title_ru": "Планы и мечты",
+              "category": "opinion",
+              "can_do_ru": [
+                "Говорить о планах с условиями"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Cuando tenga tiempo, aprenderé a bucear",
+                  "ru": "Когда будет время, научусь нырять"
+                },
+                {
+                  "es": "Si puedo, iré",
+                  "ru": "Если смогу, приду"
+                },
+                {
+                  "es": "Dentro de cinco años me veo…",
+                  "ru": "Через пять лет я вижу себя…"
+                }
+              ]
+            },
+            {
+              "id": "b1.estudios",
+              "title_ru": "Учёба и курсы",
+              "category": "work",
+              "can_do_ru": [
+                "Рассказать об учёбе и записаться на курс"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Me he matriculado en un curso",
+                  "ru": "Я записался на курс"
+                },
+                {
+                  "es": "Estoy preparando el DELE",
+                  "ru": "Готовлюсь к DELE"
+                },
+                {
+                  "es": "¿Cuál es el plazo de inscripción?",
+                  "ru": "Какой срок подачи заявки?"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b1.u08",
+          "title_ru": "Культура",
+          "grammar_ids": [
+            "g.b1.08"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b1.cine",
+              "title_ru": "Кино и книги",
+              "category": "culture",
+              "can_do_ru": [
+                "Рассказать сюжет и дать оценку"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Trata de una mujer que…",
+                  "ru": "Это о женщине, которая…"
+                },
+                {
+                  "es": "Me ha enganchado",
+                  "ru": "Меня зацепило"
+                },
+                {
+                  "es": "No te la pierdas",
+                  "ru": "Не пропусти её"
+                }
+              ]
+            },
+            {
+              "id": "b1.costumbres",
+              "title_ru": "Обычаи",
+              "category": "culture",
+              "can_do_ru": [
+                "Сравнить обычаи разных стран"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Aquí se cena muy tarde",
+                  "ru": "Здесь ужинают очень поздно"
+                },
+                {
+                  "es": "En mi país se suele…",
+                  "ru": "В моей стране обычно…"
+                },
+                {
+                  "es": "Me llama la atención que…",
+                  "ru": "Меня удивляет, что…"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b1.u09",
+          "title_ru": "Отношения",
+          "grammar_ids": [
+            "g.b1.09"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b1.relaciones",
+              "title_ru": "Отношения",
+              "category": "social",
+              "can_do_ru": [
+                "Говорить о чувствах и отношениях"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Nos llevamos muy bien",
+                  "ru": "Мы отлично ладим"
+                },
+                {
+                  "es": "Me molesta que llegue tarde",
+                  "ru": "Меня раздражает, что он опаздывает"
+                },
+                {
+                  "es": "Hemos hecho las paces",
+                  "ru": "Мы помирились"
+                }
+              ]
+            },
+            {
+              "id": "b1.consejos",
+              "title_ru": "Советы",
+              "category": "social",
+              "can_do_ru": [
+                "Дать совет в сложной ситуации"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Yo que tú, hablaría con ella",
+                  "ru": "На твоём месте я бы поговорил с ней"
+                },
+                {
+                  "es": "¿Por qué no lo intentas?",
+                  "ru": "Почему бы не попробовать?"
+                },
+                {
+                  "es": "Lo mejor es que esperes",
+                  "ru": "Лучше всего подождать"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b1.u10",
+          "title_ru": "Деньги и мир",
+          "grammar_ids": [
+            "g.b1.10"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": "cp.b1.final",
+          "topics": [
+            {
+              "id": "b1.dinero",
+              "title_ru": "Деньги",
+              "category": "admin",
+              "can_do_ru": [
+                "Говорить о расходах и сбережениях"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "No llego a fin de mes",
+                  "ru": "Мне не хватает до конца месяца"
+                },
+                {
+                  "es": "Estoy ahorrando para un viaje",
+                  "ru": "Коплю на поездку"
+                },
+                {
+                  "es": "Me sale más barato",
+                  "ru": "Мне так дешевле выходит"
+                }
+              ]
+            },
+            {
+              "id": "b1.medioambiente",
+              "title_ru": "Экология",
+              "category": "opinion",
+              "can_do_ru": [
+                "Обсудить экологию и предложить решения"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Hay que reciclar más",
+                  "ru": "Нужно больше перерабатывать"
+                },
+                {
+                  "es": "Es fundamental que reduzcamos el plástico",
+                  "ru": "Крайне важно сократить пластик"
+                },
+                {
+                  "es": "Cada vez hace más calor",
+                  "ru": "С каждым годом всё жарче"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "grammar": [
+        {
+          "id": "g.b1.01",
+          "title_ru": "Presente de subjuntivo: желания и просьбы",
+          "focus_ru": "Quiero que, necesito que, es importante que",
+          "examples": [
+            "Necesito que me envíes…"
+          ]
+        },
+        {
+          "id": "g.b1.02",
+          "title_ru": "Subjuntivo: вежливые просьбы и пожелания",
+          "focus_ru": "¿Le importaría…?, ojalá",
+          "examples": [
+            "Ojalá se arregle"
+          ]
+        },
+        {
+          "id": "g.b1.03",
+          "title_ru": "Советы: condicional и subjuntivo",
+          "focus_ru": "Deberías, te recomiendo que",
+          "examples": [
+            "Te recomiendo que hagas ejercicio"
+          ]
+        },
+        {
+          "id": "g.b1.04",
+          "title_ru": "Мнение: indicativo vs subjuntivo",
+          "focus_ru": "Creo que + ind. / no creo que + subj.",
+          "examples": [
+            "No creo que sea buena idea"
+          ]
+        },
+        {
+          "id": "g.b1.05",
+          "title_ru": "Прошедшие времена вместе + pluscuamperfecto",
+          "focus_ru": "Indefinido / imperfecto / había + participio",
+          "examples": [
+            "Ya había salido"
+          ]
+        },
+        {
+          "id": "g.b1.06",
+          "title_ru": "Формальный регистр",
+          "focus_ru": "Usted, condicional вежливости, формулы писем",
+          "examples": [
+            "Le escribo para…"
+          ]
+        },
+        {
+          "id": "g.b1.07",
+          "title_ru": "Futuro simple и cuando + subjuntivo",
+          "focus_ru": "Iré, tendré; cuando tenga…",
+          "examples": [
+            "Cuando tenga tiempo…"
+          ]
+        },
+        {
+          "id": "g.b1.08",
+          "title_ru": "Относительные: que, quien, donde, lo que",
+          "focus_ru": "Связывание предложений",
+          "examples": [
+            "La película que vi"
+          ]
+        },
+        {
+          "id": "g.b1.09",
+          "title_ru": "Чувства + subjuntivo",
+          "focus_ru": "Me molesta que, me alegra que",
+          "examples": [
+            "Me molesta que llegue tarde"
+          ]
+        },
+        {
+          "id": "g.b1.10",
+          "title_ru": "Condicional simple",
+          "focus_ru": "Yo que tú, haría…; гипотезы в настоящем",
+          "examples": [
+            "Yo que tú, hablaría con ella"
+          ]
+        }
+      ]
+    },
+    {
+      "level": "B2",
+      "title_ru": "Свобода",
+      "can_do_ru": "Спорю и аргументирую, понимаю новости и сериалы, говорю спонтанно без напряжения.",
+      "vocab_target": "~5000",
+      "guided_hours": "500–600 (накопительно)",
+      "units": [
+        {
+          "id": "b2.u01",
+          "title_ru": "Карьера",
+          "grammar_ids": [
+            "g.b2.01"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b2.carrera",
+              "title_ru": "Карьера",
+              "category": "work",
+              "can_do_ru": [
+                "Обсудить карьерные решения",
+                "Аргументировать свою позицию на работе"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Me gustaría que me tuvieran en cuenta para el puesto",
+                  "ru": "Я бы хотел, чтобы меня рассмотрели на должность"
+                },
+                {
+                  "es": "Me propusieron que liderara el proyecto",
+                  "ru": "Мне предложили возглавить проект"
+                },
+                {
+                  "es": "He decidido dar un giro a mi carrera",
+                  "ru": "Я решил сменить направление карьеры"
+                }
+              ]
+            },
+            {
+              "id": "b2.negociacion",
+              "title_ru": "Переговоры",
+              "category": "work",
+              "can_do_ru": [
+                "Вести переговоры и ставить условия"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Siempre que se respeten los plazos",
+                  "ru": "При условии, что сроки будут соблюдены"
+                },
+                {
+                  "es": "Estamos dispuestos a ceder en el precio",
+                  "ru": "Мы готовы уступить в цене"
+                },
+                {
+                  "es": "¿Qué margen tenemos?",
+                  "ru": "Какой у нас запас?"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b2.u02",
+          "title_ru": "Дискуссии",
+          "grammar_ids": [
+            "g.b2.02"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b2.debate",
+              "title_ru": "Дебаты",
+              "category": "opinion",
+              "can_do_ru": [
+                "Спорить вежливо и аргументированно"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "No es que no me guste, es que…",
+                  "ru": "Дело не в том, что мне не нравится, а в том, что…"
+                },
+                {
+                  "es": "Entiendo tu punto, pero…",
+                  "ru": "Понимаю твою точку зрения, но…"
+                },
+                {
+                  "es": "Por mucho que insistas…",
+                  "ru": "Сколько бы ты ни настаивал…"
+                }
+              ]
+            },
+            {
+              "id": "b2.argumentar",
+              "title_ru": "Аргументация",
+              "category": "opinion",
+              "can_do_ru": [
+                "Строить аргумент: тезис, довод, пример, вывод"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Por un lado… por otro…",
+                  "ru": "С одной стороны… с другой…"
+                },
+                {
+                  "es": "Cabe destacar que…",
+                  "ru": "Стоит подчеркнуть, что…"
+                },
+                {
+                  "es": "De ahí que…",
+                  "ru": "Поэтому…"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b2.u03",
+          "title_ru": "Если бы…",
+          "grammar_ids": [
+            "g.b2.03"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b2.hipotesis",
+              "title_ru": "Гипотезы и сожаления",
+              "category": "opinion",
+              "can_do_ru": [
+                "Говорить о нереальных ситуациях и сожалениях"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Si lo hubiera sabido, no habría venido",
+                  "ru": "Если бы я знал, я бы не пришёл"
+                },
+                {
+                  "es": "Ojalá pudiera quedarme",
+                  "ru": "Хотел бы я остаться"
+                },
+                {
+                  "es": "Como si no pasara nada",
+                  "ru": "Как будто ничего не происходит"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b2.u04",
+          "title_ru": "Медиа",
+          "grammar_ids": [
+            "g.b2.04"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b2.medios",
+              "title_ru": "Соцсети и медиа",
+              "category": "culture",
+              "can_do_ru": [
+                "Обсуждать медиа и соцсети"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Se ha hecho viral",
+                  "ru": "Это стало вирусным"
+                },
+                {
+                  "es": "No te fíes de todo lo que lees",
+                  "ru": "Не верь всему, что читаешь"
+                },
+                {
+                  "es": "Es un bulo",
+                  "ru": "Это фейк"
+                }
+              ]
+            },
+            {
+              "id": "b2.noticias2",
+              "title_ru": "Пересказ и новости",
+              "category": "culture",
+              "can_do_ru": [
+                "Передавать чужие слова",
+                "Понимать новости"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Dijo que vendría al día siguiente",
+                  "ru": "Он сказал, что придёт на следующий день"
+                },
+                {
+                  "es": "Se espera que la ley se apruebe",
+                  "ru": "Ожидается, что закон примут"
+                },
+                {
+                  "es": "Según fuentes oficiales…",
+                  "ru": "По данным официальных источников…"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b2.u05",
+          "title_ru": "Права и официальное",
+          "grammar_ids": [
+            "g.b2.05"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b2.reclamacion_formal",
+              "title_ru": "Официальная жалоба",
+              "category": "admin",
+              "can_do_ru": [
+                "Составить жалобу со ссылкой на права"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "En caso de que no se resuelva…",
+                  "ru": "В случае, если это не будет решено…"
+                },
+                {
+                  "es": "Tengo derecho a…",
+                  "ru": "Я имею право на…"
+                },
+                {
+                  "es": "A pesar de haberlo solicitado…",
+                  "ru": "Несмотря на то что я это запрашивал…"
+                }
+              ]
+            },
+            {
+              "id": "b2.vivienda_derecho",
+              "title_ru": "Жильё и законы",
+              "category": "home",
+              "can_do_ru": [
+                "Обсудить проблемы с арендой и законами"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "El casero se niega a devolver la fianza",
+                  "ru": "Хозяин отказывается вернуть залог"
+                },
+                {
+                  "es": "Según el contrato…",
+                  "ru": "Согласно договору…"
+                },
+                {
+                  "es": "Voy a consultar a un abogado",
+                  "ru": "Я проконсультируюсь с юристом"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b2.u06",
+          "title_ru": "Общество и наука",
+          "grammar_ids": [
+            "g.b2.06"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b2.sociedad",
+              "title_ru": "Общество",
+              "category": "opinion",
+              "can_do_ru": [
+                "Обсуждать социальные темы"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Es un tema delicado",
+                  "ru": "Это деликатная тема"
+                },
+                {
+                  "es": "Cada vez más gente…",
+                  "ru": "Всё больше людей…"
+                },
+                {
+                  "es": "Habría que replantearse…",
+                  "ru": "Стоило бы переосмыслить…"
+                }
+              ]
+            },
+            {
+              "id": "b2.ciencia",
+              "title_ru": "Технологии",
+              "category": "opinion",
+              "can_do_ru": [
+                "Обсуждать технологии и прогресс"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "A medida que avanza la tecnología…",
+                  "ru": "По мере развития технологий…"
+                },
+                {
+                  "es": "La inteligencia artificial",
+                  "ru": "Искусственный интеллект"
+                },
+                {
+                  "es": "Tiene sus ventajas e inconvenientes",
+                  "ru": "У этого есть плюсы и минусы"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b2.u07",
+          "title_ru": "Живой язык",
+          "grammar_ids": [
+            "g.b2.07"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b2.expresiones",
+              "title_ru": "Идиомы",
+              "category": "culture",
+              "can_do_ru": [
+                "Понимать и использовать частые идиомы"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Me ha costado un ojo de la cara",
+                  "ru": "Это стоило мне целое состояние"
+                },
+                {
+                  "es": "No tiene pelos en la lengua",
+                  "ru": "Он говорит, что думает"
+                },
+                {
+                  "es": "Estar en las nubes",
+                  "ru": "Витать в облаках"
+                }
+              ]
+            },
+            {
+              "id": "b2.humor",
+              "title_ru": "Юмор и ирония",
+              "category": "culture",
+              "can_do_ru": [
+                "Понимать шутки, иронию и разговорные реакции"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "¡Qué fuerte!",
+                  "ru": "Ничего себе!"
+                },
+                {
+                  "es": "Lo dice de broma",
+                  "ru": "Он говорит в шутку"
+                },
+                {
+                  "es": "¡No me digas!",
+                  "ru": "Да ты что!"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b2.u08",
+          "title_ru": "Выступления",
+          "grammar_ids": [
+            "g.b2.08"
+          ],
+          "sound_ids": [],
+          "checkpoint_id": null,
+          "topics": [
+            {
+              "id": "b2.presentar",
+              "title_ru": "Презентация",
+              "category": "work",
+              "can_do_ru": [
+                "Сделать структурированную презентацию"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Para empezar, me gustaría…",
+                  "ru": "Для начала я хотел бы…"
+                },
+                {
+                  "es": "Como se puede ver en el gráfico…",
+                  "ru": "Как видно на графике…"
+                },
+                {
+                  "es": "Para concluir…",
+                  "ru": "В заключение…"
+                }
+              ]
+            },
+            {
+              "id": "b2.conflictos",
+              "title_ru": "Конфликты",
+              "category": "work",
+              "can_do_ru": [
+                "Сгладить конфликт и найти компромисс"
+              ],
+              "planned_lessons": 3,
+              "key_phrases": [
+                {
+                  "es": "Creo que ha habido un malentendido",
+                  "ru": "Думаю, произошло недоразумение"
+                },
+                {
+                  "es": "Busquemos un punto intermedio",
+                  "ru": "Давайте найдём компромисс"
+                },
+                {
+                  "es": "No era mi intención molestarte",
+                  "ru": "Я не хотел тебя задеть"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b2.u09",
+          "title_ru": "Подготовка к DELE B2",
+          "grammar_ids": [],
+          "sound_ids": [],
+          "checkpoint_id": "cp.b2.final",
+          "topics": [
+            {
+              "id": "b2.dele",
+              "title_ru": "Стратегии DELE B2",
+              "category": "exam",
+              "can_do_ru": [
+                "Знать формат экзамена",
+                "Выполнить каждую часть на время"
+              ],
+              "planned_lessons": 6,
+              "key_phrases": [
+                {
+                  "es": "En mi opinión, la mejor opción es…",
+                  "ru": "По моему мнению, лучший вариант —…"
+                },
+                {
+                  "es": "Teniendo en cuenta que…",
+                  "ru": "Учитывая, что…"
+                },
+                {
+                  "es": "En resumen…",
+                  "ru": "Подводя итог…"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "grammar": [
+        {
+          "id": "g.b2.01",
+          "title_ru": "Imperfecto de subjuntivo",
+          "focus_ru": "Quería que, me pidieron que + -ra / -se",
+          "examples": [
+            "Me propusieron que liderara…"
+          ]
+        },
+        {
+          "id": "g.b2.02",
+          "title_ru": "Уступительные и противительные",
+          "focus_ru": "Aunque, por mucho que, no es que… sino",
+          "examples": [
+            "Por mucho que insistas"
+          ]
+        },
+        {
+          "id": "g.b2.03",
+          "title_ru": "Условные предложения всех типов",
+          "focus_ru": "Si + pluscuamperfecto de subj. + condicional compuesto; ojalá, como si",
+          "examples": [
+            "Si lo hubiera sabido…"
+          ]
+        },
+        {
+          "id": "g.b2.04",
+          "title_ru": "Косвенная речь и пассив",
+          "focus_ru": "Estilo indirecto, согласование времён; se espera que, ser + participio",
+          "examples": [
+            "Dijo que vendría"
+          ]
+        },
+        {
+          "id": "g.b2.05",
+          "title_ru": "Условия и цели: en caso de que, a fin de que",
+          "focus_ru": "Сложные союзы с subjuntivo",
+          "examples": [
+            "En caso de que no se resuelva"
+          ]
+        },
+        {
+          "id": "g.b2.06",
+          "title_ru": "Связки и дискурсивные маркеры",
+          "focus_ru": "A medida que, de ahí que, cabe destacar",
+          "examples": [
+            "A medida que avanza…"
+          ]
+        },
+        {
+          "id": "g.b2.07",
+          "title_ru": "Перифразы и идиомы",
+          "focus_ru": "Llevar + gerundio, acabar de, ponerse a, volver a",
+          "examples": [
+            "Llevo un año estudiando"
+          ]
+        },
+        {
+          "id": "g.b2.08",
+          "title_ru": "Структура монолога",
+          "focus_ru": "Вступление, переходы, вывод; эмфаза lo que…",
+          "examples": [
+            "Lo que quiero decir es…"
+          ]
+        }
+      ]
+    }
+  ],
+  "sounds": [
+    {
+      "id": "s.01",
+      "title_ru": "Пять чистых гласных",
+      "focus_ru": "Без редукции: «о» всегда о, «е» всегда э"
+    },
+    {
+      "id": "s.02",
+      "title_ru": "Ударение и тильда",
+      "focus_ru": "Ударный слог по правилам и по знаку ´: papa / papá"
+    },
+    {
+      "id": "s.03",
+      "title_ru": "R и RR",
+      "focus_ru": "Одноударное r (pero) и раскатистое rr (perro)"
+    },
+    {
+      "id": "s.04",
+      "title_ru": "J и G перед e, i",
+      "focus_ru": "Звук [х]: jamón, gente"
+    },
+    {
+      "id": "s.05",
+      "title_ru": "LL и Y",
+      "focus_ru": "Звучат как «й» (в Аргентине — как «ш»): llamo, yo"
+    },
+    {
+      "id": "s.06",
+      "title_ru": "C, Z — испанский θ",
+      "focus_ru": "Испания: межзубный звук (cena, zumo); Латинская Америка — «с»"
+    },
+    {
+      "id": "s.07",
+      "title_ru": "Немая H",
+      "focus_ru": "H не читается: hola, hasta"
+    },
+    {
+      "id": "s.08",
+      "title_ru": "B и V; мягкие b, d, g",
+      "focus_ru": "B и V звучат одинаково; между гласными смягчаются"
+    }
+  ],
+  "checkpoints": [
+    {
+      "id": "cp.a1.week1",
+      "level": "A1",
+      "title_ru": "Итог первой недели",
+      "format_ru": "Сценка «Первый разговор»: знакомство, кафе, цена, дорога, ресторан. 10 минут, без оценки — только похвала и что повторить."
+    },
+    {
+      "id": "cp.a1.final",
+      "level": "A1",
+      "title_ru": "Тест A1 (в формате DELE A1)",
+      "format_ru": "Аудирование, чтение, письмо (короткое сообщение), говорение (3 вопроса о себе с проверкой произношения). Порог 60%."
+    },
+    {
+      "id": "cp.a2.final",
+      "level": "A2",
+      "title_ru": "Тест A2 (в формате DELE A2)",
+      "format_ru": "4 части как DELE A2; разбор ошибок по темам."
+    },
+    {
+      "id": "cp.b1.final",
+      "level": "B1",
+      "title_ru": "Тест B1 (в формате DELE B1)",
+      "format_ru": "4 части; письмо и говорение оцениваются ИИ по критериям DELE."
+    },
+    {
+      "id": "cp.b2.final",
+      "level": "B2",
+      "title_ru": "Тест B2 (в формате DELE B2)",
+      "format_ru": "4 части; рекомендации, что подтянуть перед реальным экзаменом."
+    }
+  ]
+}
