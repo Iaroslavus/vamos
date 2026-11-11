@@ -1,3 +1,5 @@
+jest.mock('lottie-react-native', () => 'LottieView');
+
 jest.mock('expo-localization', () => ({
   getLocales: () => [{ languageCode: 'ru', languageTag: 'ru-RU' }],
 }));

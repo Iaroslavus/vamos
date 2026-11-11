@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
-
-import { Button } from '@/components/Button';
-import { Text } from '@/components/Text';
-import { colors, space } from '@/theme/tokens';
 
 import type { StudyRecordInput } from '../hooks/useStudyPlayer';
+import {
+  attemptsFromUnits,
+  studyStepsForRepeat,
+  summarizeScores,
+  type ScoreAttempt,
+} from '../sessionSummary';
 import type { StudyExerciseStep, StudyMatchStep, StudyStep, StudyUnit } from '../types';
 import { DictationSession } from './DictationSession';
+import { SessionSummaryView } from './SessionSummary';
 import { StudyPlayer } from './StudyPlayer';
 import { TimedPairsSession } from './TimedPairsSession';
 
@@ -27,22 +28,27 @@ export function LearnMixSession({
   onRecord,
   onClose,
 }: LearnMixSessionProps) {
-  const { t } = useTranslation();
+  const [queue, setQueue] = useState(steps);
   const [index, setIndex] = useState(0);
-  const step = steps[index];
+  const [attempts, setAttempts] = useState<ScoreAttempt[]>([]);
+  const step = queue[index];
   const advance = () => setIndex((current) => current + 1);
+  const add = (attempt: ScoreAttempt) => setAttempts((current) => [...current, attempt]);
 
   if (!step) {
+    const summary = summarizeScores(attempts);
     return (
-      <View style={styles.done}>
-        <Text variant="h2" style={styles.center}>
-          {t('study.summaryTitle')}
-        </Text>
-        <Text variant="body" color={colors.inkMuted} style={styles.center}>
-          {t('study.summaryBody', { count: steps.length })}
-        </Text>
-        <Button title={t('study.backToFolder')} onPress={onClose} />
-      </View>
+      <SessionSummaryView
+        summary={summary}
+        onDone={onClose}
+        onRepeat={() => {
+          const next = studyStepsForRepeat(queue, summary.repeatIds);
+          if (next.length === 0) return;
+          setQueue(next);
+          setAttempts([]);
+          setIndex(0);
+        }}
+      />
     );
   }
 
@@ -54,7 +60,12 @@ export function LearnMixSession({
         userId={userId}
         folderId={folderId}
         onClose={onClose}
-        onFinished={advance}
+        onFinished={(missed) => {
+          for (const attempt of attemptsFromUnits(unitsFromPairs(step), missed, step.id)) {
+            add(attempt);
+          }
+          advance();
+        }}
       />
     );
   }
@@ -66,6 +77,7 @@ export function LearnMixSession({
         units={[unitFromExercise(step)]}
         onRecord={onRecord}
         onClose={onClose}
+        onAttempt={add}
         onFinished={advance}
       />
     );
@@ -77,6 +89,7 @@ export function LearnMixSession({
       steps={[step]}
       recordGrades
       onRecord={onRecord}
+      onAttempt={add}
       onClose={onClose}
       onFinished={advance}
     />
@@ -110,14 +123,3 @@ function unitFromExercise(step: StudyExerciseStep): StudyUnit {
     recall: step.direction === 'ru_to_es',
   };
 }
-
-const styles = StyleSheet.create({
-  done: {
-    flex: 1,
-    justifyContent: 'center',
-    gap: space.lg,
-  },
-  center: {
-    textAlign: 'center',
-  },
-});

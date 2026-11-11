@@ -30,6 +30,7 @@ export function useTimedPairs(units: readonly StudyUnit[], record: RecordStore, 
   const [frozenMs, setFrozenMs] = useState<number | null>(null);
   const [fresh, setFresh] = useState(false);
   const [startedAt, setStartedAt] = useState(() => Date.now());
+  const [missedIds, setMissedIds] = useState<readonly string[]>([]);
   const now = useTickingClock(armed && phase === 'play' && frozenMs == null);
   const retired = useRef(new Set<string>());
   const finished = useRef(false);
@@ -77,6 +78,15 @@ export function useTimedPairs(units: readonly StudyUnit[], record: RecordStore, 
     if (tap.kind === 'match') {
       void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     } else if (tap.kind === 'miss') {
+      const pair = tap.progress.miss;
+      if (pair) {
+        setMissedIds((current) => {
+          const next = new Set(current);
+          next.add(pair.esId);
+          next.add(pair.trId);
+          return [...next];
+        });
+      }
       void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     } else {
       void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -124,6 +134,7 @@ export function useTimedPairs(units: readonly StudyUnit[], record: RecordStore, 
     onPress,
     onRetired,
     onNext,
+    missedIds,
   };
 }
 

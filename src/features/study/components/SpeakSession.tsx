@@ -3,7 +3,6 @@ import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
-import { Button } from '@/components/Button';
 import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
 import { SpeakPractice } from '@/features/speech/components/SpeakPractice';
@@ -11,8 +10,10 @@ import { colors, space } from '@/theme/tokens';
 
 import { gradeSpokenPass } from '../games/speakGrade';
 import type { StudyRecordInput } from '../hooks/useStudyPlayer';
+import { studyStepsForRepeat, summarizeSpeak, type SpeakTake } from '../sessionSummary';
 import { speakExtras } from '../speakExtras';
 import type { StudySpeakStep } from '../types';
+import { SessionSummaryView } from './SessionSummary';
 
 type SpeakSessionProps = {
   steps: readonly StudySpeakStep[];
@@ -22,15 +23,17 @@ type SpeakSessionProps = {
 
 export function SpeakSession({ steps, onRecord, onClose }: SpeakSessionProps) {
   const { t } = useTranslation();
+  const [queue, setQueue] = useState(steps);
   const [index, setIndex] = useState(0);
   const attemptsRef = useRef(0);
   const [attempts, setAttemptsState] = useState(0);
+  const [takes, setTakes] = useState<SpeakTake[]>([]);
   const [done, setDone] = useState(false);
   const [busy, setBusy] = useState(false);
   const [rateError, setRateError] = useState(false);
-  const step = steps[index] ?? null;
+  const step = queue[index] ?? null;
 
-  const finish = async (passed: boolean) => {
+  const finish = async (passed: boolean, score: number | null) => {
     if (!step || busy) return;
     setBusy(true);
     setRateError(false);
@@ -47,24 +50,39 @@ export function SpeakSession({ steps, onRecord, onClose }: SpeakSessionProps) {
       setBusy(false);
       return;
     }
+    const take: SpeakTake = {
+      key: step.id,
+      itemId: step.itemId,
+      phraseEs: step.promptEs,
+      phraseTr: step.phraseTr,
+      audio: step.audio,
+      score,
+      passed,
+    };
     attemptsRef.current = 0;
     setAttemptsState(0);
     setBusy(false);
-    if (index + 1 >= steps.length) setDone(true);
+    setTakes((current) => [...current, take]);
+    if (index + 1 >= queue.length) setDone(true);
     else setIndex(index + 1);
   };
 
   if (done || !step) {
+    const summary = summarizeSpeak(takes);
     return (
-      <View style={styles.done}>
-        <Text variant="h2" style={styles.center}>
-          {t('study.summaryTitle')}
-        </Text>
-        <Text variant="body" color={colors.inkMuted} style={styles.center}>
-          {t('study.summaryBody', { count: steps.length })}
-        </Text>
-        <Button title={t('study.backToFolder')} onPress={onClose} />
-      </View>
+      <SessionSummaryView
+        summary={summary}
+        notice={rateError ? t('study.rateError') : null}
+        onDone={onClose}
+        onRepeat={() => {
+          const next = studyStepsForRepeat(queue, summary.repeatIds);
+          if (next.length === 0) return;
+          setQueue(next.filter((item): item is StudySpeakStep => item.type === 'speak_repeat'));
+          setTakes([]);
+          setIndex(0);
+          setDone(false);
+        }}
+      />
     );
   }
 
@@ -101,10 +119,10 @@ export function SpeakSession({ steps, onRecord, onClose }: SpeakSessionProps) {
           setAttemptsState(count);
         }}
         onSkip={() => {
-          void finish(false);
+          void finish(false, null);
         }}
-        onContinue={(passed = true) => {
-          void finish(passed);
+        onContinue={(passed = true, score = null) => {
+          void finish(passed, score);
         }}
       />
     </View>
@@ -123,11 +141,6 @@ const styles = StyleSheet.create({
   },
   progress: {
     flex: 1,
-  },
-  done: {
-    flex: 1,
-    justifyContent: 'center',
-    gap: space.lg,
   },
   center: {
     textAlign: 'center',

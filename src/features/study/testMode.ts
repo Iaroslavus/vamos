@@ -171,6 +171,46 @@ export function planTest(units: readonly StudyUnit[], settings: TestSettings): T
   return questions;
 }
 
+/**
+ * One pass over the missed phrases, in the same kinds.
+ * The paper is not refilled up to 10, 20, or 30.
+ */
+export function planMistakeTest(
+  units: readonly StudyUnit[],
+  settings: TestSettings,
+): TestQuestion[] {
+  const pool = studyPool(units);
+  const kinds = selectedTestKinds(settings.kinds);
+  if (pool.length === 0 || kinds.length === 0) return [];
+
+  const singles = kinds.filter((kind) => kind !== 'pairs');
+  const questions: TestQuestion[] = [];
+  let cursor = 0;
+  let turn = 0;
+
+  while (cursor < pool.length) {
+    const kind = kinds[turn % kinds.length] ?? 'choice';
+    turn += 1;
+    if (kind === 'pairs') {
+      const board = nextBoard(pool, cursor);
+      if (!board) {
+        const fallback = singles[0];
+        if (!fallback) break;
+        questions.push(makeSingle(fallback, pool[cursor]!, pool, questions.length, settings));
+        cursor += 1;
+        continue;
+      }
+      questions.push(makePairs(board, questions.length, settings));
+      cursor += board.length;
+      continue;
+    }
+    questions.push(makeSingle(kind, pool[cursor]!, pool, questions.length, settings));
+    cursor += 1;
+  }
+
+  return questions;
+}
+
 /** Phrases from `missedItemIds`, in the original folder order. */
 export function testUnitsForMistakes(
   units: readonly StudyUnit[],

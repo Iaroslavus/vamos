@@ -19,8 +19,11 @@ type TimedPairsSessionProps = {
   userId: string | null;
   folderId: string;
   onClose: () => void;
-  /** When set, a cleared board continues a mixed session instead of the finish screen. */
-  onFinished?: () => void;
+  /**
+   * When set, a cleared board continues a mixed session instead of the finish screen.
+   * The ids are the phrases that were paired wrong.
+   */
+  onFinished?: (missedItemIds: readonly string[]) => void;
 };
 
 export function TimedPairsSession({
@@ -39,8 +42,8 @@ export function TimedPairsSession({
   useEffect(() => {
     if (!finished || !onFinished || reported.current) return;
     reported.current = true;
-    onFinished();
-  }, [finished, onFinished]);
+    onFinished(game.missedIds);
+  }, [finished, game.missedIds, onFinished]);
 
   if (!record.ready) {
     return (
