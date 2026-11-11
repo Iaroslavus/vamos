@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import { I18nextProvider } from 'react-i18next';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { play, playLessonAudio } from '@/features/audio/playback';
 import i18n from '@/i18n';
@@ -33,21 +34,25 @@ describe('FlashcardSession', () => {
     await renderSession([hola, adios], onStillLearning);
 
     expect(screen.getByText('1 / 2')).toBeTruthy();
+    await openMenu();
     expect(screen.getByLabelText('Перемешать').props.accessibilityState).toEqual(
       expect.objectContaining({ disabled: false }),
     );
+    await closeMenu();
 
-    await fireEvent.press(screen.getByRole('button', { name: /Перевернуть карточку/ }));
-    expect(screen.getByRole('button', { name: /Привет/ }).props.accessibilityState).toEqual(
+    await fireEvent.press(screen.getAllByRole('button', { name: /Перевернуть карточку/ })[0]!);
+    expect(screen.getAllByRole('button', { name: /Привет/ })[0]?.props.accessibilityState).toEqual(
       expect.objectContaining({ expanded: true }),
     );
 
     await fireEvent.press(screen.getByRole('button', { name: 'Знаю' }));
     expect(screen.getByText('2 / 2')).toBeTruthy();
     expect(screen.getByText('Adiós')).toBeTruthy();
+    await openMenu();
     expect(screen.getByLabelText('Перемешать').props.accessibilityState).toEqual(
       expect.objectContaining({ disabled: true }),
     );
+    await closeMenu();
 
     await fireEvent.press(screen.getByRole('button', { name: 'Ещё учу' }));
     expect(screen.getByText('Знаю 1 · Ещё учу 1')).toBeTruthy();
@@ -74,7 +79,7 @@ describe('FlashcardSession', () => {
   it('speaks a bundled phrase at normal speed and a missing one slowly', async () => {
     const first = await renderSession([hola]);
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Обычно' }));
+    await fireEvent.press(screen.getAllByRole('button', { name: 'Слушать' })[0]!);
     await waitFor(() => {
       expect(play).toHaveBeenCalledWith(
         expect.objectContaining({ id: 'hola.hola', es: 'hola' }),
@@ -85,7 +90,7 @@ describe('FlashcardSession', () => {
     await first.unmount();
 
     await renderSession([adios]);
-    await fireEvent.press(screen.getByRole('button', { name: 'Медленно' }));
+    await fireEvent.press(screen.getAllByRole('button', { name: 'Медленно' })[0]!);
     await waitFor(() => {
       expect(playLessonAudio).toHaveBeenCalledWith({
         text: 'adiós',
@@ -106,7 +111,7 @@ describe('FlashcardSession', () => {
     ]);
     expect(play).not.toHaveBeenCalled();
 
-    await fireEvent.press(screen.getByRole('button', { name: /Перевернуть карточку/ }));
+    await fireEvent.press(screen.getAllByRole('button', { name: /Перевернуть карточку/ })[0]!);
     await waitFor(() => {
       expect(play).toHaveBeenCalledWith(
         expect.objectContaining({ id: 'hola.hola' }),
@@ -135,9 +140,25 @@ function renderSession(
 ) {
   return render(
     <I18nextProvider i18n={i18n}>
-      <FlashcardSession steps={steps} onClose={jest.fn()} onStillLearning={onStillLearning} />
+      <SafeAreaProvider
+        initialMetrics={{
+          frame: { x: 0, y: 0, width: 390, height: 844 },
+          insets: { top: 47, left: 0, right: 0, bottom: 34 },
+        }}
+      >
+        <FlashcardSession steps={steps} onClose={jest.fn()} onStillLearning={onStillLearning} />
+      </SafeAreaProvider>
     </I18nextProvider>,
   );
+}
+
+async function openMenu() {
+  await fireEvent.press(screen.getByLabelText('Меню сессии'));
+}
+
+async function closeMenu() {
+  const closes = screen.getAllByLabelText('Закрыть');
+  await fireEvent.press(closes[closes.length - 1]!);
 }
 
 function card(

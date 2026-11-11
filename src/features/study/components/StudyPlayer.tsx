@@ -1,11 +1,8 @@
-import { X } from 'lucide-react-native';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { IconButton } from '@/components/IconButton';
-import { ProgressBar } from '@/components/ProgressBar';
 import { ResultSheet } from '@/components/ResultSheet';
 import { Text } from '@/components/Text';
 import { stopLessonAudio } from '@/features/audio/playback';
@@ -17,8 +14,10 @@ import { colors, space } from '@/theme/tokens';
 import { studyStepExercise } from '../exercise';
 import { playUnit } from '../playUnit';
 import { useStudyPlayer, type StudyRecordInput } from '../hooks/useStudyPlayer';
+import { shuffleFrom } from '../order';
 import { studyStepsForRepeat, summarizeScores, type ScoreAttempt } from '../sessionSummary';
-import type { StudyStep } from '../types';
+import type { StudySettings, StudyStep } from '../types';
+import { SessionBar, type SessionPlace } from './SessionBar';
 import { SessionSummaryView } from './SessionSummary';
 import { StudyStepBody } from './StudyStepBody';
 
@@ -30,6 +29,12 @@ type StudyPlayerProps = {
   onAttempt?: (attempt: ScoreAttempt) => void;
   /** When set, finishing the last step continues a mixed session instead of the summary. */
   onFinished?: () => void;
+  place?: SessionPlace;
+  timer?: string | null;
+  onShuffle?: () => void;
+  shuffleDisabled?: boolean;
+  settings?: StudySettings;
+  onChangeSettings?: (settings: StudySettings) => void;
 };
 
 export function StudyPlayer({ steps, ...rest }: StudyPlayerProps) {
@@ -50,14 +55,21 @@ export function StudyPlayer({ steps, ...rest }: StudyPlayerProps) {
 }
 
 function StudyPlayerRound({
-  steps,
+  steps: initialSteps,
   recordGrades,
   onRecord,
   onClose,
   onAttempt,
   onFinished,
   onReplay,
+  place,
+  timer,
+  onShuffle,
+  shuffleDisabled = false,
+  settings,
+  onChangeSettings,
 }: StudyPlayerProps & { onReplay: (itemIds: readonly string[]) => void }) {
+  const [steps, setSteps] = useState(() => [...initialSteps]);
   const { t } = useTranslation();
   const preference = useAudioPreference();
   const player = useStudyPlayer({ steps, recordGrades, onRecord, onAttempt });
@@ -97,6 +109,10 @@ function StudyPlayerRound({
     );
   }
 
+  const ownShuffle = player.total - player.index >= 2;
+  const shuffle = ownShuffle
+    ? () => setSteps((current) => shuffleFrom(current, player.index, Math.random))
+    : onShuffle;
   const prompt = step.type === 'flashcard' ? '' : t(`study.prompt.${step.promptKey}`);
   const exercise = studyStepExercise(step, prompt);
   const model = buildResultSheetModel({
@@ -112,17 +128,20 @@ function StudyPlayerRound({
       style={styles.root}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <View style={styles.header}>
-        <IconButton accessibilityLabel={t('study.close')} onPress={onClose}>
-          <X size={22} color={colors.ink} strokeWidth={2.2} />
-        </IconButton>
-        <View style={styles.progress}>
-          <ProgressBar
-            progress={player.total === 0 ? 0 : player.index / player.total}
-            accessibilityLabel={t('study.progress', { done: player.index, total: player.total })}
-          />
-        </View>
-      </View>
+      <SessionBar
+        current={place?.current ?? player.index + 1}
+        total={place?.total ?? player.total}
+        onClose={onClose}
+        onShuffle={shuffle}
+        shuffleDisabled={ownShuffle ? false : shuffleDisabled || !onShuffle}
+        settings={settings}
+        onChangeSettings={onChangeSettings}
+      />
+      {timer ? (
+        <Text variant="caption" color={colors.inkMuted} style={styles.center}>
+          {timer}
+        </Text>
+      ) : null}
 
       {step.type === 'speak_repeat' ? (
         <StudyStepBody
@@ -198,14 +217,6 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     gap: space.md,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: space.md,
-  },
-  progress: {
-    flex: 1,
   },
   body: {
     flex: 1,

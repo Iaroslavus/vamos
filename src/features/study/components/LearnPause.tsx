@@ -1,11 +1,11 @@
-import { X } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
 import { colors, space } from '@/theme/tokens';
+
+import { SessionBar } from './SessionBar';
 
 type LearnPauseProps = {
   kind: 'break' | 'done';
@@ -24,11 +24,7 @@ export function LearnPause({ kind, learned, total, misses, onContinue, onClose }
 
   return (
     <View style={styles.root} testID={done ? 'learn-summary' : 'learn-break'}>
-      <View style={styles.header}>
-        <IconButton accessibilityLabel={t('study.close')} onPress={onClose}>
-          <X size={22} color={colors.ink} strokeWidth={2.2} />
-        </IconButton>
-      </View>
+      <SessionBar current={learned} total={total} onClose={onClose} />
       <View style={styles.body}>
         <Text variant="h2" style={styles.center}>
           {title}
@@ -53,9 +49,6 @@ export function LearnPause({ kind, learned, total, misses, onContinue, onClose }
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-  },
-  header: {
-    alignItems: 'flex-start',
   },
   body: {
     flex: 1,

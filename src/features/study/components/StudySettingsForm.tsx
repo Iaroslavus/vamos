@@ -50,6 +50,16 @@ export function StudySettingsForm({ settings, onChange }: StudySettingsFormProps
           thumbColor={colors.surface}
         />
       </View>
+      <View style={styles.switchRow}>
+        <Text variant="bodyBold">{t('session.showTimer')}</Text>
+        <Switch
+          accessibilityLabel={t('session.showTimer')}
+          value={settings.showTimer}
+          onValueChange={(showTimer) => onChange({ ...settings, showTimer })}
+          trackColor={{ false: colors.borderStrong, true: colors.teal }}
+          thumbColor={colors.surface}
+        />
+      </View>
       <Choices
         label={t('study.accentLabel')}
         value={settings.accentStrictness}

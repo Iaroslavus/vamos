@@ -747,6 +747,22 @@
     "false": "Неверно",
     "blank": "—"
   },
+  "session": {
+    "close": "Закрыть",
+    "counter": "{{current}} / {{total}}",
+    "menu": "Меню сессии",
+    "shuffle": "Перемешать",
+    "settings": "Настройки сессии",
+    "showTimer": "Показывать таймер",
+    "found": "Найдено {{found}} из {{total}}",
+    "round": "Раунд {{current}} из {{total}}",
+    "seconds": "{{time}} с",
+    "timeRecord": "{{time}} — новый рекорд!",
+    "timer": "Время {{time}}",
+    "record": "Рекорд {{time}}",
+    "noRecord": "Рекорда пока нет",
+    "previous": "Предыдущий вопрос"
+  },
   "studyModes": {
     "title": "Выберите способ",
     "recommended": "Рекомендуем",

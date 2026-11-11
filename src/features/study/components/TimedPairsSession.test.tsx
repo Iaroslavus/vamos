@@ -60,7 +60,11 @@ describe('TimedPairsSession', () => {
       ),
     );
 
-    expect(await screen.findByText('Рекорда пока нет')).toBeTruthy();
+    expect(await screen.findByText('Найдено 0 из 2')).toBeTruthy();
+    expect(screen.getByText('Раунд 1 из 1')).toBeTruthy();
+    expect(screen.getByTestId('session-counter')).toHaveTextContent('1 / 1');
+    expect(screen.queryByText('Рекорда пока нет')).toBeNull();
+    expect(screen.queryByText(/Сетка/)).toBeNull();
     await press('es0');
     await press('tr1');
     expect(screen.getByText('Штраф 1 секунда')).toBeTruthy();
@@ -71,6 +75,8 @@ describe('TimedPairsSession', () => {
     await press('tr1');
 
     expect(await screen.findByText('Пары собраны')).toBeTruthy();
+    expect(screen.getByText('Рекорда пока нет')).toBeTruthy();
+    expect(screen.queryByText(/новый рекорд/)).toBeNull();
     expect(await AsyncStorage.getItem(pairsRecordKey('user', 'folder'))).toBeNull();
   });
 
@@ -82,14 +88,16 @@ describe('TimedPairsSession', () => {
       host(<TimedPairsSession units={units} userId="user" folderId="folder" onClose={jest.fn()} />),
     );
 
-    expect(await screen.findByText('Рекорд 0:00.0')).toBeTruthy();
+    expect(await screen.findByText('Найдено 0 из 6')).toBeTruthy();
+    expect(screen.queryByText(/Рекорд/)).toBeNull();
     for (let index = 0; index < 6; index += 1) {
       await press(`es${index}`);
       await press(`tr${index}`);
     }
 
     expect(await screen.findByText('Пары собраны')).toBeTruthy();
-    expect(screen.queryByText('Новый рекорд')).toBeNull();
+    expect(screen.queryByText(/новый рекорд/)).toBeNull();
+    expect(screen.getByText('Рекорд 0,0 с')).toBeTruthy();
     expect(parsePairsRecord(await AsyncStorage.getItem(key))).toBe(1);
   });
 
@@ -100,13 +108,14 @@ describe('TimedPairsSession', () => {
       host(<TimedPairsSession units={units} userId="user" folderId="folder" onClose={jest.fn()} />),
     );
 
-    expect(await screen.findByText('Рекорда пока нет')).toBeTruthy();
+    expect(await screen.findByText('Найдено 0 из 6')).toBeTruthy();
+    expect(screen.queryByText('Рекорда пока нет')).toBeNull();
     for (let index = 0; index < 6; index += 1) {
       await press(`es${index}`);
       await press(`tr${index}`);
     }
 
-    expect(await screen.findByText('Новый рекорд')).toBeTruthy();
+    expect(await screen.findByText(/— новый рекорд!/)).toBeTruthy();
     expect(parsePairsRecord(await AsyncStorage.getItem(key))).toEqual(expect.any(Number));
   });
 });

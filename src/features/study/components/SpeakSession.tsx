@@ -1,9 +1,7 @@
-import { X } from 'lucide-react-native';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
-import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
 import { SpeakPractice } from '@/features/speech/components/SpeakPractice';
 import { colors, space } from '@/theme/tokens';
@@ -11,17 +9,27 @@ import { colors, space } from '@/theme/tokens';
 import { gradeSpokenPass } from '../games/speakGrade';
 import type { StudyRecordInput } from '../hooks/useStudyPlayer';
 import { studyStepsForRepeat, summarizeSpeak, type SpeakTake } from '../sessionSummary';
+import { shuffleFrom } from '../order';
 import { speakExtras } from '../speakExtras';
-import type { StudySpeakStep } from '../types';
+import type { StudySettings, StudySpeakStep } from '../types';
+import { SessionBar } from './SessionBar';
 import { SessionSummaryView } from './SessionSummary';
 
 type SpeakSessionProps = {
   steps: readonly StudySpeakStep[];
   onRecord: (record: StudyRecordInput) => Promise<void>;
   onClose: () => void;
+  settings?: StudySettings;
+  onChangeSettings?: (settings: StudySettings) => void;
 };
 
-export function SpeakSession({ steps, onRecord, onClose }: SpeakSessionProps) {
+export function SpeakSession({
+  steps,
+  onRecord,
+  onClose,
+  settings,
+  onChangeSettings,
+}: SpeakSessionProps) {
   const { t } = useTranslation();
   const [queue, setQueue] = useState(steps);
   const [index, setIndex] = useState(0);
@@ -90,14 +98,15 @@ export function SpeakSession({ steps, onRecord, onClose }: SpeakSessionProps) {
 
   return (
     <View style={styles.root}>
-      <View style={styles.header}>
-        <IconButton accessibilityLabel={t('study.close')} onPress={onClose}>
-          <X size={22} color={colors.ink} strokeWidth={2.2} />
-        </IconButton>
-        <Text variant="bodyBold" style={styles.progress}>
-          {t('study.games.speakProgress', { current: index + 1, total: steps.length })}
-        </Text>
-      </View>
+      <SessionBar
+        current={index + 1}
+        total={queue.length}
+        onClose={onClose}
+        onShuffle={() => setQueue((current) => shuffleFrom(current, index, Math.random))}
+        shuffleDisabled={queue.length - index < 2}
+        settings={settings}
+        onChangeSettings={onChangeSettings}
+      />
       {rateError ? (
         <Text variant="caption" color={colors.errorInk} style={styles.center}>
           {t('study.rateError')}
@@ -133,14 +142,6 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     gap: space.md,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: space.md,
-  },
-  progress: {
-    flex: 1,
   },
   center: {
     textAlign: 'center',

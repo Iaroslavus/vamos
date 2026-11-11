@@ -107,7 +107,7 @@ describe('TestSession', () => {
   it('holds feedback until the paper is handed in, then records Good', async () => {
     const { onRecord } = await renderTest();
     await fireEvent.press(ui.getByRole('button', { name: 'Начать' }));
-    expect(ui.getByTestId('test-counter')).toHaveTextContent('1 / 10');
+    expect(ui.getByTestId('session-counter')).toHaveTextContent('1 / 10');
     expect(ui.queryByRole('button', { name: 'Сдать' })).toBeNull();
 
     await answerPaper(true);
@@ -145,7 +145,7 @@ describe('TestSession', () => {
 
     await fireEvent.press(ui.getByRole('button', { name: 'Повторить ошибки' }));
     expect(ui.queryByText('Правильно: 0 · Ошибок: 10')).toBeNull();
-    expect(ui.getByTestId('test-counter')).toHaveTextContent('1 / 10');
+    expect(ui.getByTestId('session-counter')).toHaveTextContent('1 / 10');
     expect(ui.queryByText('Ошибки')).toBeNull();
   });
 

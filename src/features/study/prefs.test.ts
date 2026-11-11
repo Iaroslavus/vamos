@@ -44,7 +44,26 @@ describe('study prefs', () => {
       count: 5,
       autoplay: false,
       accentStrictness: 'strict',
+      showTimer: false,
     });
+  });
+
+  it('keeps the timer hidden unless the folder asked for it', () => {
+    expect(parseStudyPrefs(null).settings.showTimer).toBe(false);
+    const prefs = parseStudyPrefs(
+      JSON.stringify({
+        settings: {
+          direction: 'es_to_ru',
+          filter: 'all',
+          count: 10,
+          autoplay: true,
+          accentStrictness: 'standard',
+          showTimer: true,
+        },
+      }),
+    );
+    expect(prefs.settings.showTimer).toBe(true);
+    expect(parseStudyPrefs(serializeStudyPrefs(prefs)).settings.showTimer).toBe(true);
   });
 
   it('drops an unknown last mode', () => {

@@ -747,6 +747,22 @@
     "false": "False",
     "blank": "—"
   },
+  "session": {
+    "close": "Close",
+    "counter": "{{current}} / {{total}}",
+    "menu": "Session menu",
+    "shuffle": "Shuffle",
+    "settings": "Session settings",
+    "showTimer": "Show timer",
+    "found": "Found {{found}} of {{total}}",
+    "round": "Round {{current}} of {{total}}",
+    "seconds": "{{time}} s",
+    "timeRecord": "{{time}} — new record!",
+    "timer": "Time {{time}}",
+    "record": "Record {{time}}",
+    "noRecord": "No record yet",
+    "previous": "Previous question"
+  },
   "studyModes": {
     "title": "Choose a way",
     "recommended": "Recommended",

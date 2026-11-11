@@ -1,13 +1,20 @@
 import { useState } from 'react';
 
 import type { StudyRecordInput } from '../hooks/useStudyPlayer';
+import { shuffleFrom } from '../order';
 import {
   attemptsFromUnits,
   studyStepsForRepeat,
   summarizeScores,
   type ScoreAttempt,
 } from '../sessionSummary';
-import type { StudyExerciseStep, StudyMatchStep, StudyStep, StudyUnit } from '../types';
+import type {
+  StudyExerciseStep,
+  StudyMatchStep,
+  StudySettings,
+  StudyStep,
+  StudyUnit,
+} from '../types';
 import { DictationSession } from './DictationSession';
 import { SessionSummaryView } from './SessionSummary';
 import { StudyPlayer } from './StudyPlayer';
@@ -19,6 +26,8 @@ type LearnMixSessionProps = {
   folderId: string;
   onRecord: (record: StudyRecordInput) => Promise<void>;
   onClose: () => void;
+  settings?: StudySettings;
+  onChangeSettings?: (settings: StudySettings) => void;
 };
 
 export function LearnMixSession({
@@ -27,11 +36,16 @@ export function LearnMixSession({
   folderId,
   onRecord,
   onClose,
+  settings,
+  onChangeSettings,
 }: LearnMixSessionProps) {
   const [queue, setQueue] = useState(steps);
   const [index, setIndex] = useState(0);
   const [attempts, setAttempts] = useState<ScoreAttempt[]>([]);
   const step = queue[index];
+  const place = { current: index + 1, total: queue.length };
+  const shuffleDisabled = queue.length - index < 2;
+  const shuffle = () => setQueue((current) => shuffleFrom(current, index, Math.random));
   const advance = () => setIndex((current) => current + 1);
   const add = (attempt: ScoreAttempt) => setAttempts((current) => [...current, attempt]);
 
@@ -60,6 +74,9 @@ export function LearnMixSession({
         userId={userId}
         folderId={folderId}
         onClose={onClose}
+        place={place}
+        settings={settings}
+        onChangeSettings={onChangeSettings}
         onFinished={(missed) => {
           for (const attempt of attemptsFromUnits(unitsFromPairs(step), missed, step.id)) {
             add(attempt);
@@ -79,6 +96,11 @@ export function LearnMixSession({
         onClose={onClose}
         onAttempt={add}
         onFinished={advance}
+        place={place}
+        onShuffle={shuffle}
+        shuffleDisabled={shuffleDisabled}
+        settings={settings}
+        onChangeSettings={onChangeSettings}
       />
     );
   }
@@ -92,6 +114,11 @@ export function LearnMixSession({
       onAttempt={add}
       onClose={onClose}
       onFinished={advance}
+      place={place}
+      onShuffle={shuffle}
+      shuffleDisabled={shuffleDisabled}
+      settings={settings}
+      onChangeSettings={onChangeSettings}
     />
   );
 }

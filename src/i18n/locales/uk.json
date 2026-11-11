@@ -747,6 +747,22 @@
     "false": "Невірно",
     "blank": "—"
   },
+  "session": {
+    "close": "Закрити",
+    "counter": "{{current}} / {{total}}",
+    "menu": "Меню сесії",
+    "shuffle": "Перемішати",
+    "settings": "Налаштування сесії",
+    "showTimer": "Показувати таймер",
+    "found": "Знайдено {{found}} з {{total}}",
+    "round": "Раунд {{current}} з {{total}}",
+    "seconds": "{{time}} с",
+    "timeRecord": "{{time}} — новий рекорд!",
+    "timer": "Час {{time}}",
+    "record": "Рекорд {{time}}",
+    "noRecord": "Рекорду поки немає",
+    "previous": "Попереднє питання"
+  },
   "studyModes": {
     "title": "Оберіть спосіб",
     "recommended": "Рекомендовано",

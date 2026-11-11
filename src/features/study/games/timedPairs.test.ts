@@ -6,6 +6,9 @@ import {
   TIMED_PAIR_COUNT,
   buildTimedRounds,
   formatRaceTime,
+  formatResultClock,
+  resultDecimal,
+  shuffleRoundTiles,
   nextPairsRecord,
   pairCount,
   raceTimeMs,
@@ -75,6 +78,25 @@ describe('timed pairs', () => {
     expect(formatRaceTime(0)).toBe('0:00.0');
     expect(formatRaceTime(12_500)).toBe('0:12.5');
     expect(formatRaceTime(65_040)).toBe('1:05.0');
+    expect(formatResultClock(8_600)).toBe('8,6');
+    expect(formatResultClock(8_600, '.')).toBe('8.6');
+    expect(formatResultClock(12_500)).toBe('12,5');
+    expect(formatResultClock(65_040)).toBe('1:05,0');
+    expect(formatResultClock(Number.NaN)).toBe('0,0');
+    expect(resultDecimal('uk')).toBe(',');
+    expect(resultDecimal('en')).toBe('.');
+  });
+
+  it('shuffles each pairs column without dropping a tile', () => {
+    const round = buildTimedRounds([word(0), word(1), word(2)], () => 0)[0];
+    if (!round) throw new Error('expected a round');
+    const shuffled = shuffleRoundTiles(round, () => 0.99);
+    expect(shuffled.tiles.map((tile) => tile.id).sort()).toEqual(
+      round.tiles.map((tile) => tile.id).sort(),
+    );
+    expect(shuffled.tiles.filter((tile) => tile.side === 'es')).toHaveLength(3);
+    expect(shuffled.tiles.slice(0, 3).every((tile) => tile.side === 'es')).toBe(true);
+    expect(shuffled.tiles.slice(3).every((tile) => tile.side === 'tr')).toBe(true);
   });
 
   it('keeps the folder record for a full board only', () => {

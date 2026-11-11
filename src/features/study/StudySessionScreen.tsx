@@ -61,6 +61,8 @@ export function StudySessionScreen() {
         <FlashcardSession
           steps={flashcardSteps(launch.steps)}
           onClose={leave}
+          settings={launch.settings}
+          onChangeSettings={launch.setSettings}
           onStillLearning={(input) => {
             if (!launch.userId) return;
             void recordStillLearning(reviewRepository, launch.userId, input).catch(() => undefined);
@@ -73,9 +75,16 @@ export function StudySessionScreen() {
           onChangeSettings={launch.setTestSettings}
           onRecord={onRecord}
           onClose={leave}
+          studySettings={launch.settings}
+          onChangeStudySettings={launch.setSettings}
         />
       ) : launch.status === 'ready' && mode === 'blitz' ? (
-        <BlitzSession steps={launch.steps} onClose={leave} />
+        <BlitzSession
+          steps={launch.steps}
+          onClose={leave}
+          settings={launch.settings}
+          onChangeSettings={launch.setSettings}
+        />
       ) : launch.status === 'ready' && mode === 'speak' ? (
         <SpeakSession
           steps={launch.steps.filter(
@@ -83,6 +92,8 @@ export function StudySessionScreen() {
           )}
           onRecord={onRecord}
           onClose={leave}
+          settings={launch.settings}
+          onChangeSettings={launch.setSettings}
         />
       ) : launch.status === 'ready' && mode === 'learn' ? (
         <LearnMixSession
@@ -91,6 +102,8 @@ export function StudySessionScreen() {
           folderId={folderId}
           onRecord={onRecord}
           onClose={leave}
+          settings={launch.settings}
+          onChangeSettings={launch.setSettings}
         />
       ) : launch.status === 'ready' && mode ? (
         <StudyPlayer
@@ -98,6 +111,8 @@ export function StudySessionScreen() {
           recordGrades={studyModeGrades(mode)}
           onRecord={onRecord}
           onClose={leave}
+          settings={launch.settings}
+          onChangeSettings={launch.setSettings}
         />
       ) : (
         <Status

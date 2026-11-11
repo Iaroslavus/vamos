@@ -52,6 +52,7 @@ function parseSettings(value: unknown): StudySettings {
     count: oneOf(STUDY_COUNTS, record.count, fallback.count),
     autoplay: typeof record.autoplay === 'boolean' ? record.autoplay : fallback.autoplay,
     accentStrictness: oneOf(ACCENT_LEVELS, record.accentStrictness, fallback.accentStrictness),
+    showTimer: typeof record.showTimer === 'boolean' ? record.showTimer : fallback.showTimer,
   };
 }
 

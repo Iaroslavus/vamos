@@ -10,7 +10,7 @@ import { colors, space } from '@/theme/tokens';
 import { useTestSession } from '../hooks/useTestSession';
 import type { StudyRecordInput } from '../hooks/useStudyPlayer';
 import { summaryFromTest } from '../sessionSummary';
-import type { StudyUnit, TestSettings } from '../types';
+import type { StudySettings, StudyUnit, TestSettings } from '../types';
 import { SessionSummaryView } from './SessionSummary';
 import { TestQuiz } from './TestQuiz';
 import { TestSetup } from './TestSetup';
@@ -21,6 +21,8 @@ type TestSessionProps = {
   onChangeSettings: (settings: TestSettings) => void;
   onRecord: (record: StudyRecordInput) => Promise<void>;
   onClose: () => void;
+  studySettings?: StudySettings;
+  onChangeStudySettings?: (settings: StudySettings) => void;
 };
 
 export function TestSession({
@@ -29,6 +31,8 @@ export function TestSession({
   onChangeSettings,
   onRecord,
   onClose,
+  studySettings,
+  onChangeStudySettings,
 }: TestSessionProps) {
   const { t } = useTranslation();
   const session = useTestSession({ units, settings, onChangeSettings, onRecord });
@@ -65,7 +69,14 @@ export function TestSession({
     return <EmptyTest onClose={onClose} />;
   }
 
-  return <TestQuiz session={session} onClose={onClose} />;
+  return (
+    <TestQuiz
+      session={session}
+      onClose={onClose}
+      settings={studySettings}
+      onChangeSettings={onChangeStudySettings}
+    />
+  );
 }
 
 function CloseHeader({ onClose }: { onClose: () => void }) {

@@ -1,14 +1,10 @@
-import { Shuffle, X } from 'lucide-react-native';
 import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
-import { IconButton } from '@/components/IconButton';
-import { Text } from '@/components/Text';
 import { stopLessonAudio } from '@/features/audio/playback';
 import { useAudioPreference } from '@/features/audio/preference';
 import type { AudioSpeed } from '@/features/audio/select';
-import { colors, space } from '@/theme/tokens';
+import { space } from '@/theme/tokens';
 
 import { playFlashPhrase } from '../flashAudio';
 import {
@@ -22,13 +18,16 @@ import {
   type FlashRound,
 } from '../flashcards';
 import { summarizeCards } from '../sessionSummary';
-import type { StudyFlashcardStep } from '../types';
+import type { StudyFlashcardStep, StudySettings } from '../types';
 import { FlashcardDeck } from './FlashcardDeck';
+import { SessionBar } from './SessionBar';
 import { SessionSummaryView } from './SessionSummary';
 
 type FlashcardSessionProps = {
   steps: readonly StudyFlashcardStep[];
   onClose: () => void;
+  settings?: StudySettings;
+  onChangeSettings?: (settings: StudySettings) => void;
   /** «Still learning» writes Again so the phrase shows up sooner in Learn. */
   onStillLearning?: (input: {
     itemId: string;
@@ -37,8 +36,13 @@ type FlashcardSessionProps = {
   }) => void;
 };
 
-export function FlashcardSession({ steps, onClose, onStillLearning }: FlashcardSessionProps) {
-  const { t } = useTranslation();
+export function FlashcardSession({
+  steps,
+  onClose,
+  settings,
+  onChangeSettings,
+  onStillLearning,
+}: FlashcardSessionProps) {
   const preference = useAudioPreference();
   const markSeq = useRef(0);
   const [round, setRound] = useState<FlashRound>(() => startRound(steps));
@@ -91,29 +95,15 @@ export function FlashcardSession({ steps, onClose, onStillLearning }: FlashcardS
 
   return (
     <View style={styles.root}>
-      <View style={styles.header}>
-        <IconButton accessibilityLabel={t('study.close')} onPress={onClose}>
-          <X size={22} color={colors.ink} strokeWidth={2.2} />
-        </IconButton>
-        {card ? (
-          <Text variant="bodyBold" style={styles.counter}>
-            {t('study.flash.counter', { current: round.index + 1, total: round.cards.length })}
-          </Text>
-        ) : (
-          <View style={styles.headerGap} />
-        )}
-        {card ? (
-          <IconButton
-            accessibilityLabel={t('study.flash.shuffle')}
-            disabled={cardsLeft(round) < 2}
-            onPress={shuffle}
-          >
-            <Shuffle size={22} color={colors.ink} strokeWidth={2.2} />
-          </IconButton>
-        ) : (
-          <View style={styles.headerGap} />
-        )}
-      </View>
+      <SessionBar
+        current={card ? round.index + 1 : round.cards.length}
+        total={round.cards.length}
+        onClose={onClose}
+        onShuffle={card ? shuffle : undefined}
+        shuffleDisabled={!card || cardsLeft(round) < 2}
+        settings={settings}
+        onChangeSettings={onChangeSettings}
+      />
       {card ? (
         <FlashcardDeck
           card={card}
@@ -133,17 +123,5 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     gap: space.md,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: space.md,
-  },
-  counter: {
-    flex: 1,
-    textAlign: 'center',
-  },
-  headerGap: {
-    flex: 1,
   },
 });

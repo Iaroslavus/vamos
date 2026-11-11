@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
 import { displayText } from '@/features/content/displayText';
+import { IntroAudioButtons } from '@/features/lesson/components/IntroAudioButtons';
 import type { AudioSpeed } from '@/features/audio/select';
 import { colors, space } from '@/theme/tokens';
 
@@ -22,6 +23,7 @@ type FlashcardDeckProps = {
 export function FlashcardDeck({ card, revealed, onFlip, onMark, onPlay }: FlashcardDeckProps) {
   const { t } = useTranslation();
   const face = revealed ? card.back : card.front;
+  const play = (rate: number) => onPlay(rate < 1 ? 'slow' : 'normal');
 
   return (
     <View style={styles.root}>
@@ -36,24 +38,11 @@ export function FlashcardDeck({ card, revealed, onFlip, onMark, onPlay }: Flashc
           flipLabel={t('study.flash.flipLabel', { text: displayText(face) })}
           onFlip={onFlip}
           onMark={onMark}
+          renderAudio={() => <IntroAudioButtons onPlay={play} />}
         />
         <Text variant="caption" color={colors.inkMuted} style={styles.hint}>
           {t('study.flash.flipHint')}
         </Text>
-      </View>
-      <View style={styles.row}>
-        <Button
-          title={t('study.flash.playNormal')}
-          variant="secondary"
-          onPress={() => onPlay('normal')}
-          style={styles.grow}
-        />
-        <Button
-          title={t('study.flash.playSlow')}
-          variant="secondary"
-          onPress={() => onPlay('slow')}
-          style={styles.grow}
-        />
       </View>
       <View style={styles.row}>
         <Button
