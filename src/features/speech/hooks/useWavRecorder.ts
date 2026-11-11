@@ -9,11 +9,17 @@ import {
   stopSpeechRecognition,
   type RecordingControls,
   type WavTake,
+  type WavTakeResult,
 } from '../acoustic/record';
 import { acousticRecordingOptions, meterLevel } from '../acoustic/session';
 import { deleteSpeechFile } from '../recording';
+import { MAX_TAKE_MS, SPEECH_LEVEL, takeStopReason } from '../takeStop';
 
-export type WavBeginResult = 'started' | 'busy' | 'failed';
+export type WavBeginResult = 'started' | 'busy' | 'failed' | 'cancelled';
+
+const TICK_MS = 100;
+
+const recordingOptions = acousticRecordingOptions();
 
 const recordingControls: RecordingControls = {
   abortRecognition: () => stopSpeechRecognition(),
@@ -25,24 +31,33 @@ const recordingControls: RecordingControls = {
 };
 
 type UseWavRecorderOptions = {
-  /** The native recorder stopped on its own (duration cap). */
+  /** Twice the sample, already capped. Unknown samples stay on the 8 second maximum. */
+  limitMs?: number;
+  /** The take ended: the learner stopped it, silence, or the duration cap. */
   onEnded?: () => void;
 };
 
 /**
  * File recording through `useAudioRecorder` (WAV Linear PCM on iOS).
  * One take at a time. Speech recognition and sample playback are released first.
+ * `isLive` reads the take itself, so a tap can stop it before React paints the button.
  */
-export function useWavRecorder({ onEnded }: UseWavRecorderOptions = {}) {
-  const recorder = useAudioRecorder(acousticRecordingOptions());
+export function useWavRecorder({ limitMs = MAX_TAKE_MS, onEnded }: UseWavRecorderOptions = {}) {
+  const recorder = useAudioRecorder(recordingOptions);
   const takeRef = useRef<WavTake | null>(null);
   const starting = useRef(false);
+  const cancelRequested = useRef(false);
   const sawRecording = useRef(false);
   const onEndedRef = useRef(onEnded);
+  const limitRef = useRef(limitMs);
 
   useEffect(() => {
     onEndedRef.current = onEnded;
   }, [onEnded]);
+
+  useEffect(() => {
+    limitRef.current = limitMs;
+  }, [limitMs]);
 
   const [recording, setRecording] = useState(false);
   const [level, setLevel] = useState(0);
@@ -50,8 +65,14 @@ export function useWavRecorder({ onEnded }: UseWavRecorderOptions = {}) {
   const begin = useCallback(async (): Promise<WavBeginResult> => {
     if (starting.current || takeRef.current) return 'busy';
     starting.current = true;
+    cancelRequested.current = false;
     try {
-      const take = await openWavTake(recorder, recordingControls);
+      const take = await openWavTake(recorder, recordingControls, limitRef.current / 1000);
+      if (cancelRequested.current) {
+        take?.discard();
+        cancelRequested.current = false;
+        return 'cancelled';
+      }
       if (!take) return 'failed';
       takeRef.current = take;
       sawRecording.current = true;
@@ -65,9 +86,12 @@ export function useWavRecorder({ onEnded }: UseWavRecorderOptions = {}) {
     }
   }, [recorder]);
 
-  const finish = useCallback(async () => {
+  const finish = useCallback(async (): Promise<WavTakeResult | null | 'cancelled'> => {
     const take = takeRef.current;
-    if (!take) return null;
+    if (!take) {
+      if (starting.current) cancelRequested.current = true;
+      return 'cancelled';
+    }
     takeRef.current = null;
     sawRecording.current = false;
     setRecording(false);
@@ -76,17 +100,37 @@ export function useWavRecorder({ onEnded }: UseWavRecorderOptions = {}) {
   }, []);
 
   const discard = useCallback(() => {
+    cancelRequested.current = true;
     const take = takeRef.current;
     takeRef.current = null;
     sawRecording.current = false;
     starting.current = false;
     setRecording(false);
     setLevel(0);
-    take?.discard();
-  }, []);
+    if (take) {
+      take.discard();
+      return;
+    }
+    try {
+      if (recorder.getStatus().isRecording) void recorder.stop().catch(() => undefined);
+    } catch {
+      // The native recorder can throw once it has already been released.
+    }
+  }, [recorder]);
+
+  const isLive = useCallback(() => starting.current || takeRef.current !== null, []);
 
   useEffect(() => {
     if (!recording) return undefined;
+    const startedAt = Date.now();
+    let speechHeard = false;
+    let lastSpeechAt = startedAt;
+    let ended = false;
+    const end = () => {
+      if (ended) return;
+      ended = true;
+      onEndedRef.current?.();
+    };
     const timer = setInterval(() => {
       if (!takeRef.current) return;
       let status: { isRecording: boolean; metering?: number };
@@ -97,21 +141,30 @@ export function useWavRecorder({ onEnded }: UseWavRecorderOptions = {}) {
       }
       const next = meterLevel(status.metering);
       setLevel((current) => (Math.abs(current - next) < 0.02 ? current : next));
-      if (sawRecording.current && !status.isRecording) {
-        sawRecording.current = false;
-        onEndedRef.current?.();
+      const now = Date.now();
+      if (next >= SPEECH_LEVEL) {
+        speechHeard = true;
+        lastSpeechAt = now;
       }
-    }, 100);
+      const reason = takeStopReason({
+        elapsedMs: now - startedAt,
+        limitMs: limitRef.current,
+        speechHeard,
+        silenceMs: speechHeard ? now - lastSpeechAt : 0,
+      });
+      if (reason || (sawRecording.current && !status.isRecording)) {
+        sawRecording.current = false;
+        end();
+      }
+    }, TICK_MS);
     return () => clearInterval(timer);
   }, [recorder, recording]);
 
   useEffect(() => {
     return () => {
-      const take = takeRef.current;
-      takeRef.current = null;
-      take?.discard();
+      discard();
     };
-  }, []);
+  }, [discard]);
 
-  return { recording, level, begin, finish, discard };
+  return { recording, level, begin, finish, discard, isLive };
 }

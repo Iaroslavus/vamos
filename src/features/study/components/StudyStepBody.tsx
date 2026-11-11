@@ -49,7 +49,10 @@ export function StudyStepBody({
         confusables={extras.confusables}
         featuresPath={extras.featuresPath}
         onSkip={onSpeakSkip}
-        onContinue={onSpeakPass}
+        onContinue={(passed) => {
+          if (passed) onSpeakPass();
+          else onSpeakSkip();
+        }}
       />
     );
   }

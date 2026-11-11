@@ -302,6 +302,24 @@ describe('DialogStep', () => {
     expect(screen.getByLabelText('Ваша реплика: buenos días')).toBeTruthy();
   });
 
+  it('stops dialog recording when the microphone is tapped', async () => {
+    await renderStep();
+    await finishPlayback();
+
+    await fireEvent.press(screen.getByText('Сказать вслух'));
+    await waitFor(() => {
+      expect(ExpoSpeechRecognitionModule.start).toHaveBeenCalled();
+    });
+    const speech = ExpoSpeechRecognitionModule as unknown as {
+      __emit: (event: string, payload: unknown) => void;
+    };
+    speech.__emit('start', {});
+
+    jest.mocked(ExpoSpeechRecognitionModule.stop).mockClear();
+    await fireEvent.press(await screen.findByLabelText('Остановить запись'));
+    expect(ExpoSpeechRecognitionModule.stop).toHaveBeenCalled();
+  });
+
   it('keeps the chips when the recognizer misses the line', async () => {
     await renderStep();
     await finishPlayback();

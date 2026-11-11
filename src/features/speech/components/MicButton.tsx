@@ -25,7 +25,7 @@ type MicButtonProps = {
 export function MicButton({ listening, disabled, accessibilityLabel, onPress }: MicButtonProps) {
   const reduceMotion = useReduceMotion();
   const pulse = useSharedValue(1);
-  const showPulse = !disabled;
+  const showPulse = listening || !disabled;
 
   useEffect(() => {
     if (!showPulse || reduceMotion) {
@@ -47,12 +47,20 @@ export function MicButton({ listening, disabled, accessibilityLabel, onPress }: 
     opacity: 2 - pulse.value,
   }));
 
+  const blocked = disabled && !listening;
   const Icon = listening ? Square : Mic;
-  const iconColor = disabled ? colors.inkDisabled : colors.inkOnDark;
+  const iconColor = blocked ? colors.inkDisabled : colors.inkOnDark;
 
   return (
-    <View style={styles.wrap}>
-      {showPulse ? (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      accessibilityState={{ disabled: blocked, busy: listening }}
+      disabled={blocked}
+      onPress={onPress}
+      style={styles.wrap}
+    >
+      {showPulse && !blocked ? (
         <Animated.View
           pointerEvents="none"
           style={[styles.ring, reduceMotion ? styles.ringStill : ringStyle]}
@@ -60,22 +68,15 @@ export function MicButton({ listening, disabled, accessibilityLabel, onPress }: 
       ) : null}
       <View
         pointerEvents="none"
-        style={[
-          styles.sole,
-          { backgroundColor: disabled ? colors.borderStrong : colors.coralDeep },
-        ]}
+        style={[styles.sole, { backgroundColor: blocked ? colors.borderStrong : colors.coralDeep }]}
       />
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={accessibilityLabel}
-        accessibilityState={{ disabled, busy: listening }}
-        disabled={disabled}
-        onPress={onPress}
-        style={[styles.face, { backgroundColor: disabled ? colors.surfaceSunken : colors.coral }]}
+      <View
+        pointerEvents="none"
+        style={[styles.face, { backgroundColor: blocked ? colors.surfaceSunken : colors.coral }]}
       >
         <Icon size={32} color={iconColor} strokeWidth={ICON_STROKE} />
-      </Pressable>
-    </View>
+      </View>
+    </Pressable>
   );
 }
 

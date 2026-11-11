@@ -14,7 +14,7 @@ type SpeakRepeatStepProps = {
   confusables?: readonly string[];
   featuresPath?: string | null;
   onSkip: () => void;
-  onContinue: () => void;
+  onContinue: (passed: boolean) => void;
 };
 
 export function SpeakRepeatStep({
