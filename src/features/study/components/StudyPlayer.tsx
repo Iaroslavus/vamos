@@ -36,10 +36,9 @@ export function StudyPlayer({ steps, recordGrades, onRecord, onClose }: StudyPla
   useEffect(() => {
     if (!step || !step.autoplay) return undefined;
     const itemId = 'itemId' in step ? step.itemId : null;
+    // listen_select starts itself when the exercise appears.
     const shouldPlay =
-      step.type === 'listen_select' ||
-      step.type === 'speak_repeat' ||
-      (step.type === 'type_translation' && step.playEs);
+      step.type === 'speak_repeat' || (step.type === 'type_translation' && step.playEs);
     if (!itemId || !shouldPlay) return undefined;
     try {
       void play(getItem(itemId), 'normal', preference);

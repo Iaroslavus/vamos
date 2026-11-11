@@ -28,6 +28,8 @@ export type ChipProps = Omit<PressableProps, 'children' | 'style'> & {
   selected?: boolean;
   /** Post-check correctness colors (teal / coral). */
   tone?: ChipTone;
+  /** Full-width row with a 56px hit target. */
+  fill?: boolean;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -84,6 +86,7 @@ export function Chip({
   used = false,
   selected = false,
   tone = 'neutral',
+  fill = false,
   disabled = false,
   onPress,
   style,
@@ -120,11 +123,12 @@ export function Chip({
   const palette = paletteFor(used, selected, tone);
 
   return (
-    <Animated.View style={[styles.wrap, animatedStyle, style]}>
+    <Animated.View style={[styles.wrap, fill && styles.fill, animatedStyle, style]}>
       <View style={[styles.sole, { backgroundColor: palette.sole, top: depth.chip }]} />
       <View
         style={[
           styles.face,
+          fill && styles.faceFill,
           {
             backgroundColor: palette.face,
             borderColor: palette.border,
@@ -138,7 +142,7 @@ export function Chip({
           accessibilityState={{ disabled: isDisabled, selected }}
           disabled={isDisabled}
           onPress={isDisabled ? undefined : onPress}
-          style={styles.pressable}
+          style={[styles.pressable, fill && styles.pressableFill]}
         >
           <Text style={[styles.label, { color: palette.label }]}>{label}</Text>
         </Pressable>
@@ -152,6 +156,10 @@ const styles = StyleSheet.create({
     position: 'relative',
     alignSelf: 'flex-start',
   },
+  fill: {
+    alignSelf: 'stretch',
+    width: '100%',
+  },
   sole: {
     ...StyleSheet.absoluteFill,
     borderRadius: radius.sm,
@@ -161,11 +169,19 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     minHeight: 44,
   },
+  faceFill: {
+    width: '100%',
+    minHeight: 56,
+  },
   pressable: {
     minHeight: 44,
     justifyContent: 'center',
     paddingHorizontal: space.md,
     paddingVertical: space.sm,
+  },
+  pressableFill: {
+    width: '100%',
+    minHeight: 56,
   },
   label: {
     fontFamily: type.bodyBold.fontFamily,

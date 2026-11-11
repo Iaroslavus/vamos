@@ -1,16 +1,26 @@
+import { Turtle, Volume2 } from 'lucide-react-native';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
 import { Chip, type ChipTone } from '@/components/Chip';
 import { Text } from '@/components/Text';
-import { displayText } from '@/features/content/displayText';
-import { AudioControls } from '@/features/audio/AudioControls';
+import { Appear } from '@/features/auth/components/Appear';
 import { useAudioPreference } from '@/features/audio/preference';
+import {
+  NORMAL_RATE,
+  SLOW_RATE,
+  playLessonAudio,
+  stopLessonAudio,
+} from '@/features/audio/playback';
 import { selectClip, type AudioPreference } from '@/features/audio/select';
+import { displayText } from '@/features/content/displayText';
 import { getItem } from '@/features/content/loader';
-import { colors, space } from '@/theme/tokens';
+import { motion, space } from '@/theme/tokens';
 
 import type { GradeStatus } from '../grading';
 import type { ListenSelectItem } from '../store';
+import { ListenRoundButton } from './ListenRoundButton';
 
 type ListenSelectExerciseProps = {
   exercise: ListenSelectItem;
@@ -64,38 +74,73 @@ export function ListenSelectExercise({
   gradeStatus = null,
   onSelect,
 }: ListenSelectExerciseProps) {
+  const { t } = useTranslation();
   const revealed = Boolean(gradeStatus);
   const preference = useAudioPreference();
   const clips = clipsFor(exercise, preference);
 
+  useEffect(() => {
+    if (disabled) return undefined;
+    void playLessonAudio({
+      audio: clips.normal,
+      text: exercise.speakText,
+      rate: NORMAL_RATE,
+    });
+    return () => {
+      void stopLessonAudio();
+    };
+  }, [clips.normal, disabled, exercise.id, exercise.speakText]);
+
+  const play = (rate: number) => {
+    if (disabled) return;
+    const slow = rate < 1;
+    void playLessonAudio({
+      audio: slow ? (clips.slow ?? null) : (clips.normal ?? null),
+      text: exercise.speakText,
+      rate,
+    });
+  };
+
   return (
     <View style={styles.root}>
-      <Text variant="caption" color={colors.inkMuted}>
-        {exercise.prompt_ru}
-      </Text>
+      <Text variant="h2">{exercise.prompt_ru}</Text>
 
-      <AudioControls
-        text={exercise.speakText}
-        audio={clips.normal}
-        slowAudio={clips.slow}
-        disabled={disabled}
-      />
+      <View style={styles.controls}>
+        <ListenRoundButton
+          label={t('lesson.playAudio')}
+          Icon={Volume2}
+          size="large"
+          tone="primary"
+          disabled={disabled}
+          onPress={() => play(NORMAL_RATE)}
+          testID="listen-play"
+        />
+        <ListenRoundButton
+          label={t('lesson.playSlow')}
+          Icon={Turtle}
+          size="small"
+          tone="secondary"
+          disabled={disabled}
+          onPress={() => play(SLOW_RATE)}
+          testID="listen-slow"
+        />
+      </View>
 
       <View style={styles.options}>
-        {exercise.options.map((option) => {
+        {exercise.options.map((option, index) => {
           const isSelected = selected === option;
           return (
-            <Chip
-              key={option}
-              label={displayText(option)}
-              selected={isSelected && !revealed}
-              tone={optionTone(option, selected, gradeStatus, exercise.answer)}
-              disabled={disabled}
-              onPress={() => onSelect(isSelected ? '' : option)}
-              accessibilityRole="button"
-              accessibilityState={{ selected: isSelected, disabled }}
-              style={styles.chip}
-            />
+            <Appear key={option} delay={index * motion.stagger} style={styles.option}>
+              <Chip
+                label={displayText(option)}
+                fill
+                selected={isSelected && !revealed}
+                tone={optionTone(option, selected, gradeStatus, exercise.answer)}
+                disabled={disabled}
+                onPress={() => onSelect(isSelected ? '' : option)}
+                accessibilityState={{ selected: isSelected, disabled }}
+              />
+            </Appear>
           );
         })}
       </View>
@@ -106,13 +151,19 @@ export function ListenSelectExercise({
 const styles = StyleSheet.create({
   root: {
     gap: space.lg,
+    width: '100%',
+  },
+  controls: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: space.xl,
   },
   options: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    width: '100%',
     gap: space.sm,
   },
-  chip: {
-    marginBottom: space.xs,
+  option: {
+    width: '100%',
   },
 });
