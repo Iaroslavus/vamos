@@ -236,7 +236,8 @@
   },
   "profile": {
     "title": "Profile",
-    "stub": "Settings, reminders, and your subscription will live here."
+    "stub": "Settings, reminders, and your subscription will live here.",
+    "showPhraseBreakdown": "Show phrase breakdown"
   },
   "auth": {
     "saveTitle": "Save your progress",
@@ -329,8 +330,11 @@
     "introProgress": "New phrases {{current}} of {{total}}",
     "introPart": "{{es}} · {{ru}}",
     "introLiteral": "literally: {{text}}",
+    "introSay": "How to say it",
+    "introWordForWord": "Word for word",
+    "introMore": "More",
+    "introLess": "Hide",
     "introWhy": "Why this?",
-    "introWhyClose": "Got it",
     "introSave": "+ Phrasebook",
     "introSaved": "In Favorites",
     "introInVocab": "In Phrasebook",

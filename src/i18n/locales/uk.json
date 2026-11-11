@@ -236,7 +236,8 @@
   },
   "profile": {
     "title": "Профіль",
-    "stub": "Тут з'являться налаштування, нагадування та підписка."
+    "stub": "Тут з'являться налаштування, нагадування та підписка.",
+    "showPhraseBreakdown": "Показувати розбір фраз"
   },
   "auth": {
     "saveTitle": "Зберегти прогрес",
@@ -329,8 +330,11 @@
     "introProgress": "Нові фрази {{current}} із {{total}}",
     "introPart": "{{es}} · {{ru}}",
     "introLiteral": "буквально: {{text}}",
+    "introSay": "Як вимовляти",
+    "introWordForWord": "Дослівно",
+    "introMore": "Детальніше",
+    "introLess": "Сховати",
     "introWhy": "Чому так?",
-    "introWhyClose": "Зрозуміло",
     "introSave": "+ У словник",
     "introSaved": "В обраному",
     "introInVocab": "У словнику",

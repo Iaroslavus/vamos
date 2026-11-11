@@ -1,16 +1,17 @@
-import type { LucideIcon } from 'lucide-react-native';
+import * as Haptics from 'expo-haptics';
+import { ChevronDown, type LucideIcon } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
-import { Button } from '@/components/Button';
-import { Chip } from '@/components/Chip';
 import { Text } from '@/components/Text';
 import { displayText } from '@/features/content/displayText';
 import type { Item } from '@/features/content/schema';
 import { contentLocale, textOf } from '@/features/content/text';
 import { colors, depth, radius, space } from '@/theme/tokens';
 
+import { hasIntroBreakdown } from '../intro';
 import { IntroAudioButtons } from './IntroAudioButtons';
+import { IntroBreakdown } from './IntroBreakdown';
 import { IntroCardHeader } from './IntroCardHeader';
 
 type Part = Item['parts'][number];
@@ -21,10 +22,11 @@ type IntroCardProps = {
   sayRu: string | null;
   saved: boolean;
   saveLabel: string;
+  expanded: boolean;
   onPlay: (rate: number) => void;
   onPlayPart: (part: Part, index: number) => void;
   onSave: () => void;
-  onWhy: () => void;
+  onToggleDetails: () => void;
 };
 
 export function IntroCard({
@@ -33,16 +35,22 @@ export function IntroCard({
   sayRu,
   saved,
   saveLabel,
+  expanded,
   onPlay,
   onPlayPart,
   onSave,
-  onWhy,
+  onToggleDetails,
 }: IntroCardProps) {
   const { t, i18n } = useTranslation();
   const language = contentLocale(i18n.language);
   const translation = textOf(item.tr, language);
-  const literal = textOf(item.literal, language);
-  const note = textOf(item.note, language);
+  const showDetails = hasIntroBreakdown(item, language);
+  const detailsLabel = expanded ? t('lesson.introLess') : t('lesson.introMore');
+
+  const toggleDetails = () => {
+    void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onToggleDetails();
+  };
 
   return (
     <View style={styles.wrap}>
@@ -61,49 +69,28 @@ export function IntroCard({
 
         <IntroAudioButtons onPlay={onPlay} />
 
-        {sayRu ? (
-          <Text variant="body" style={styles.say}>
-            {sayRu}
-          </Text>
-        ) : null}
-
         <Text variant="bodyBold" style={styles.center}>
           {displayText(translation)}
         </Text>
 
-        {item.parts.length > 0 ? (
-          <View style={styles.parts}>
-            {item.parts.map((part, index) => {
-              const label = t('lesson.introPart', {
-                es: displayText(part.es),
-                ru: displayText(textOf(part.tr, language)),
-              });
-              return (
-                <Chip
-                  key={`${part.es}-${index}`}
-                  label={label}
-                  accessibilityLabel={label}
-                  onPress={() => onPlayPart(part, index)}
-                />
-              );
-            })}
-          </View>
-        ) : null}
-
-        {literal ? (
-          <Text variant="caption" color={colors.inkMuted} style={styles.center}>
-            {t('lesson.introLiteral', { text: displayText(literal) })}
-          </Text>
-        ) : null}
-
-        {note ? (
-          <Text variant="caption" color={colors.inkMuted} style={styles.center}>
-            {displayText(note)}
-          </Text>
-        ) : null}
-
-        {textOf(item.why, language) ? (
-          <Button title={t('lesson.introWhy')} variant="secondary" onPress={onWhy} />
+        {showDetails ? (
+          <>
+            <IntroBreakdown open={expanded} item={item} say={sayRu} onPlayPart={onPlayPart} />
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={detailsLabel}
+              accessibilityState={{ expanded }}
+              onPress={toggleDetails}
+              style={styles.more}
+            >
+              <Text variant="body" color={colors.inkMuted}>
+                {detailsLabel}
+              </Text>
+              <View style={expanded ? styles.chevronOpen : undefined}>
+                <ChevronDown size={18} color={colors.inkMuted} strokeWidth={2.2} />
+              </View>
+            </Pressable>
+          </>
         ) : null}
       </View>
     </View>
@@ -132,19 +119,14 @@ const styles = StyleSheet.create({
   center: {
     textAlign: 'center',
   },
-  say: {
-    textAlign: 'center',
-    color: colors.ink,
-    backgroundColor: colors.hint,
-    borderRadius: radius.lg,
-    paddingHorizontal: space.lg,
-    paddingVertical: space.sm,
-    overflow: 'hidden',
-  },
-  parts: {
+  more: {
+    minHeight: 44,
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    alignItems: 'center',
     justifyContent: 'center',
-    gap: space.sm,
+    gap: space.xs,
+  },
+  chevronOpen: {
+    transform: [{ rotate: '180deg' }],
   },
 });

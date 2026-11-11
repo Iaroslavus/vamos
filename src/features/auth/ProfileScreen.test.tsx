@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import { I18nextProvider } from 'react-i18next';
 import { Alert } from 'react-native';
@@ -5,6 +6,7 @@ import { Alert } from 'react-native';
 import ProfileScreen from '../../../app/(tabs)/profile';
 import { SessionProvider } from '@/features/auth/SessionProvider';
 import type { AuthGateway, AuthSession, AuthUser } from '@/features/auth/types';
+import { usePhraseBreakdownStore } from '@/features/settings/phraseBreakdownStore';
 import i18n from '@/i18n';
 import { activeUiLanguage } from '@/i18n/language';
 
@@ -107,8 +109,11 @@ function confirmAlert() {
 }
 
 describe('ProfileScreen', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
+    await AsyncStorage.clear();
+    await usePhraseBreakdownStore.persist.rehydrate();
+    usePhraseBreakdownStore.setState({ show: false, streak: 2 });
   });
 
   afterEach(() => {
@@ -216,6 +221,21 @@ describe('ProfileScreen', () => {
     await waitFor(() => {
       expect(auth.signOut).toHaveBeenCalledTimes(1);
       expect(auth.signInAnonymously).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('turns on phrase breakdown from the profile switch and clears the streak', async () => {
+    const auth = createAuth();
+    await renderProfile(auth);
+
+    const toggle = await screen.findByRole('switch', { name: 'Показывать разбор фраз' });
+    expect(toggle.props.value).toBe(false);
+
+    fireEvent(toggle, 'valueChange', true);
+
+    await waitFor(() => {
+      expect(usePhraseBreakdownStore.getState()).toMatchObject({ show: true, streak: 0 });
+      expect(screen.getByRole('switch', { name: 'Показывать разбор фраз' }).props.value).toBe(true);
     });
   });
 
