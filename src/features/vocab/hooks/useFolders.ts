@@ -3,16 +3,23 @@ import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useSession } from '@/features/auth/useSession';
-import { listLessons, listTopics } from '@/features/content/loader';
+import { getItem, listLessons, listTopics } from '@/features/content/loader';
 import { contentLocale, textOf } from '@/features/content/text';
-import { deviceTimeZone } from '@/features/progress/study';
 import { useProgress } from '@/features/progress/useProgress';
 import { reviewRepository } from '@/features/review/defaultRepository';
-import { buildReviewQueue } from '@/features/review/session';
+import { selectDueCards } from '@/features/review/fsrs';
+import { dueUnitCount, learnedUnitCount, nextDueInMs } from '@/features/review/units';
 
-import { folderTitle } from '../display';
-import { countMatchingCards, difficultItemIds, sortFolders, topicSeeds } from '../model';
 import { vocabRepository } from '../defaultRepository';
+import { folderTitle } from '../display';
+import {
+  countMatchingUnits,
+  difficultItemIds,
+  folderCountNoun,
+  sortFolders,
+  topicSeeds,
+} from '../model';
+import type { CountNoun } from '../model';
 import type { Folder } from '../types';
 
 export type FolderRowModel = {
@@ -20,6 +27,7 @@ export type FolderRowModel = {
   title: string;
   count: number;
   due: number;
+  countNoun: CountNoun;
   icon?: string;
 };
 
@@ -73,13 +81,14 @@ export function useFolders() {
           now,
         ),
       });
-      const dueCards = buildReviewQueue({
-        cards: review.cards,
-        logs: review.logs,
-        now,
-        timeZone: deviceTimeZone(),
-      }).cards;
-      return { snapshot, dueCards };
+      const dueCards = selectDueCards(review.cards, now);
+      return {
+        snapshot,
+        dueCards,
+        learned: learnedUnitCount(review.cards),
+        due: dueUnitCount(review.cards, now),
+        nextInMs: nextDueInMs(review.cards, now),
+      };
     },
   });
 
@@ -102,7 +111,8 @@ export function useFolders() {
         folder,
         title: folderTitle(folder, t),
         count: itemIds.length,
-        due: countMatchingCards(query.data?.dueCards ?? [], itemIds),
+        due: countMatchingUnits(query.data?.dueCards ?? [], itemIds),
+        countNoun: folderCountNoun(itemIds.map(itemType)),
         ...(folder.topicId ? { icon: icons.get(folder.topicId) } : {}),
       };
     });
@@ -116,9 +126,19 @@ export function useFolders() {
   return {
     ...query,
     rows,
-    dueTotal: query.data?.dueCards.length ?? 0,
+    learnedTotal: query.data?.learned ?? 0,
+    dueTotal: query.data?.due ?? 0,
+    nextInMs: query.data?.nextInMs ?? null,
     userId,
     refresh,
     snapshot: query.data?.snapshot,
   };
+}
+
+function itemType(itemId: string): 'word' | 'phrase' | null {
+  try {
+    return getItem(itemId).type;
+  } catch {
+    return null;
+  }
 }

@@ -1,6 +1,7 @@
 import {
-  countMatchingCards,
+  countMatchingUnits,
   difficultItemIds,
+  folderCountNoun,
   folderHoldsAll,
   parseFolderName,
   parseLegacyFavoriteIds,
@@ -100,9 +101,18 @@ describe('folder helpers', () => {
     expect(parseFolderName('я'.repeat(41))).toBeNull();
   });
 
-  it('counts due cards that belong to the folder', () => {
-    expect(countMatchingCards([{ itemId: 'a' }, { itemId: 'b' }, { itemId: 'a' }], ['a'])).toBe(2);
-    expect(countMatchingCards([{ itemId: 'b' }], [])).toBe(0);
+  it('counts a folder unit once when both directions are due', () => {
+    expect(countMatchingUnits([{ itemId: 'a' }, { itemId: 'b' }, { itemId: 'a' }], ['a'])).toBe(1);
+    expect(countMatchingUnits([{ itemId: 'a' }, { itemId: 'a' }], ['a', 'b'])).toBe(1);
+    expect(countMatchingUnits([{ itemId: 'b' }], [])).toBe(0);
+  });
+
+  it('says phrases only when every unit is a phrase', () => {
+    expect(folderCountNoun(['phrase', 'phrase'])).toBe('phrases');
+    expect(folderCountNoun(['word'])).toBe('words');
+    expect(folderCountNoun(['word', 'phrase'])).toBe('words');
+    expect(folderCountNoun(['phrase', null])).toBe('words');
+    expect(folderCountNoun([])).toBe('words');
   });
 
   it('knows when every requested item is already in the folder', () => {

@@ -18,13 +18,19 @@ type FolderRowProps = {
 
 export function FolderRow({ row, onPress }: FolderRowProps) {
   const { t } = useTranslation();
-  const units = t('vocab.units', { count: row.count });
+  const emptyDifficult = row.folder.systemKey === 'difficult' && row.count === 0;
+  const hint = t('vocab.difficultEmpty');
+  const items = t(`vocab.${row.countNoun}`, { count: row.count });
   const due = t('vocab.due', { count: row.due });
 
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={t('vocab.folderLabel', { name: row.title, units, due })}
+      accessibilityLabel={
+        emptyDifficult
+          ? t('vocab.folderEmptyLabel', { name: row.title, hint })
+          : t('vocab.folderLabel', { name: row.title, items, due })
+      }
       onPress={() => {
         void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         onPress();
@@ -37,7 +43,7 @@ export function FolderRow({ row, onPress }: FolderRowProps) {
       <View style={styles.copy}>
         <Text variant="bodyBold">{row.title}</Text>
         <Text variant="caption" color={colors.inkMuted}>
-          {t('vocab.rowMeta', { units, due })}
+          {emptyDifficult ? hint : t('vocab.rowMeta', { items, due })}
         </Text>
       </View>
     </Pressable>
