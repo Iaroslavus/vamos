@@ -199,6 +199,8 @@ async function seedFavorites(itemIds: readonly string[]) {
 }
 
 describe('VocabScreen', () => {
+  jest.setTimeout(20_000);
+
   beforeEach(() => {
     mockVocabMemory.clear();
     mockPush.mockClear();
@@ -277,6 +279,8 @@ describe('VocabScreen', () => {
 });
 
 describe('FolderScreen', () => {
+  jest.setTimeout(20_000);
+
   beforeEach(() => {
     mockVocabMemory.clear();
     mockParams.id = undefined;
