@@ -1,4 +1,4 @@
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -23,7 +23,6 @@ import { vocabRepository } from './defaultRepository';
 
 export function FolderScreen() {
   const { t } = useTranslation();
-  const router = useRouter();
   const params = useLocalSearchParams<{ id?: string | string[] }>();
   const folderId = typeof params.id === 'string' ? params.id : '';
   const vocab = useFolders();
@@ -35,7 +34,6 @@ export function FolderScreen() {
   const itemIds =
     vocab.snapshot?.items.filter((item) => item.folderId === folderId).map((item) => item.itemId) ??
     [];
-  const due = vocab.rows.find((row) => row.folder.id === folderId)?.due ?? 0;
   const preference = useAudioPreference();
 
   const change = async (task: () => Promise<unknown>) => {
@@ -73,11 +71,6 @@ export function FolderScreen() {
     body = (
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <FolderStudySection folderId={folder.id} userId={vocab.userId} itemIds={itemIds} />
-        <Button
-          title={t('vocab.reviewFolder', { count: due })}
-          disabled={due === 0}
-          onPress={() => router.push({ pathname: '/review', params: { folder: folder.id } })}
-        />
         {itemIds.length === 0 ? (
           <Text variant="body" color={colors.inkMuted} style={styles.center}>
             {t('vocab.emptyFolder')}

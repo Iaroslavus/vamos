@@ -19,8 +19,8 @@ type MasteryBarProps = {
 };
 
 const SEGMENTS = [
-  { key: 'new', color: colors.saffron, label: 'study.masteryNew' },
-  { key: 'learning', color: colors.coral, label: 'study.masteryLearning' },
+  { key: 'new', color: colors.inkDisabled, label: 'study.masteryNew' },
+  { key: 'learning', color: colors.saffron, label: 'study.masteryLearning' },
   { key: 'known', color: colors.teal, label: 'study.masteryKnown' },
 ] as const;
 
@@ -65,7 +65,10 @@ export function MasteryBar({ counts }: MasteryBarProps) {
       <View style={styles.legend}>
         {SEGMENTS.map((segment) => (
           <View key={segment.key} style={styles.legendItem}>
-            <View style={[styles.dot, { backgroundColor: segment.color }]} />
+            <View
+              testID={`mastery-${segment.key}`}
+              style={[styles.dot, { backgroundColor: segment.color }]}
+            />
             <Text variant="caption" color={colors.inkMuted}>
               {t(segment.label)} {counts[segment.key]}
             </Text>
