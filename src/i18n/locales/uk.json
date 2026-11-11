@@ -730,6 +730,11 @@
       "speakProgress": "{{current}} з {{total}}"
     }
   },
+  "studyModes": {
+    "title": "Оберіть спосіб",
+    "recommended": "Рекомендовано",
+    "due": "{{due}} до повторення"
+  },
   "common": {
     "devComponents": "Компоненти (dev)",
     "devIntro": "Знайомство з фразою",

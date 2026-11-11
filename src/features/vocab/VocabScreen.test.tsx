@@ -350,7 +350,7 @@ describe('FolderScreen', () => {
     );
 
     await user.press(screen.getByText('Учить'));
-    expect(await screen.findByText('Как учить')).toBeTruthy();
+    expect(await screen.findByText('Выберите способ')).toBeTruthy();
     expect(screen.queryByText('скоро')).toBeNull();
 
     await waitFor(() => {
