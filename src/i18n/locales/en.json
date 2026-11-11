@@ -143,6 +143,24 @@
     "moveEmpty": "Create a folder of your own first.",
     "longPressAdd": "Hold to add to your phrasebook"
   },
+  "folder": {
+    "menu": "Folder actions",
+    "edit": "Edit folder",
+    "delete": "Delete folder",
+    "deleteTitle": "Delete this folder?",
+    "deleteBody": "“{{name}}” will leave your phrasebook. Course phrases stay.",
+    "deleteConfirm": "Delete",
+    "addWords": "+ Add words",
+    "searchTitle": "Add words",
+    "addOwn": "Add your own word",
+    "searchLabel": "Search phrases",
+    "searchPlaceholder": "In Spanish or English",
+    "clearSearch": "Clear search",
+    "searchEmpty": "Nothing matched",
+    "addPhrase": "Add {{es}}",
+    "removePhrase": "Remove {{es}}",
+    "soon": "soon"
+  },
   "topics": {
     "title": "Topics",
     "searchLabel": "Search topics",

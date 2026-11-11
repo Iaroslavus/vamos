@@ -1,140 +1,111 @@
-import { Stack, useLocalSearchParams } from 'expo-router';
-import { useState } from 'react';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import { Button } from '@/components/Button';
-import { RetryNote } from '@/components/RetryNote';
-import { Text } from '@/components/Text';
-import { play } from '@/features/audio/playback';
 import { useAudioPreference } from '@/features/audio/preference';
-import { contentLanguage, getItem } from '@/features/content/loader';
-import { blankAudio, type Item } from '@/features/content/schema';
-import { textOf } from '@/features/content/text';
-import { FolderStudySection } from '@/features/study/components/FolderStudySection';
-import { colors, space } from '@/theme/tokens';
+import { colors } from '@/theme/tokens';
 
+import { FolderContents } from './components/FolderContents';
 import { FolderFormSheet } from './components/FolderFormSheet';
-import { FolderItemRow } from './components/FolderItemRow';
+import {
+  DeleteFolderSheet,
+  FolderMenuButton,
+  FolderMenuSheet,
+  SoonSheet,
+} from './components/FolderManageSheets';
 import { MoveItemSheet } from './components/MoveItemSheet';
+import { PhraseSearchModal } from './components/PhraseSearchModal';
+import { vocabRepository } from './defaultRepository';
 import { folderTitle } from './display';
 import { useFolders } from './hooks/useFolders';
-import { vocabRepository } from './defaultRepository';
 
 export function FolderScreen() {
   const { t } = useTranslation();
+  const router = useRouter();
   const params = useLocalSearchParams<{ id?: string | string[] }>();
   const folderId = typeof params.id === 'string' ? params.id : '';
   const vocab = useFolders();
+  const preference = useAudioPreference();
   const [movingId, setMovingId] = useState<string | null>(null);
   const [editing, setEditing] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
+  const [searching, setSearching] = useState(false);
+  const [soon, setSoon] = useState(false);
+
   const folder = vocab.snapshot?.folders.find((entry) => entry.id === folderId);
   const title = folder ? folderTitle(folder, t) : t('vocab.title');
   const editable = folder != null && folder.systemKey !== 'difficult';
-  const itemIds =
-    vocab.snapshot?.items.filter((item) => item.folderId === folderId).map((item) => item.itemId) ??
-    [];
-  const preference = useAudioPreference();
+  const custom = folder?.kind === 'custom';
+  const itemIds = useMemo(
+    () =>
+      vocab.snapshot?.items
+        .filter((item) => item.folderId === folderId)
+        .map((item) => item.itemId) ?? [],
+    [folderId, vocab.snapshot?.items],
+  );
 
   const change = async (task: () => Promise<unknown>) => {
     await task();
     await vocab.refresh();
   };
 
-  let body = (
-    <View style={styles.empty}>
-      <Text variant="body" color={colors.inkMuted}>
-        {t('vocab.loading')}
-      </Text>
-    </View>
-  );
-
-  if (vocab.isError) {
-    body = (
-      <RetryNote
-        title={t('vocab.loadError')}
-        action={t('common.retry')}
-        onPress={() => {
-          void vocab.refetch();
-        }}
-      />
-    );
-  } else if (vocab.isSuccess && !folder) {
-    body = (
-      <View style={styles.empty}>
-        <Text variant="h3" style={styles.center}>
-          {t('vocab.missing')}
-        </Text>
-      </View>
-    );
-  } else if (folder) {
-    body = (
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <FolderStudySection folderId={folder.id} userId={vocab.userId} itemIds={itemIds} />
-        {itemIds.length === 0 ? (
-          <Text variant="body" color={colors.inkMuted} style={styles.center}>
-            {t('vocab.emptyFolder')}
-          </Text>
-        ) : (
-          itemIds.map((itemId) => {
-            const word = lookup(itemId);
-            return (
-              <FolderItemRow
-                key={itemId}
-                es={word.es}
-                ru={word.ru}
-                editable={editable}
-                onPlay={() => {
-                  void play(
-                    word.item ?? { es: word.es, audio: blankAudio() },
-                    'normal',
-                    preference,
-                  );
-                }}
-                onRemove={() => {
-                  if (!vocab.userId) return;
-                  void change(() =>
-                    vocabRepository.removeItem(vocab.userId as string, folder.id, itemId),
-                  );
-                }}
-                onMove={() => setMovingId(itemId)}
-              />
-            );
-          })
-        )}
-        {folder.kind === 'custom' ? (
-          <Button
-            title={t('vocab.editFolder')}
-            variant="secondary"
-            onPress={() => setEditing(true)}
-          />
-        ) : null}
-      </ScrollView>
-    );
-  }
+  const togglePhrase = (itemId: string) => {
+    if (!vocab.userId || !folder) return Promise.resolve();
+    const present = itemIds.includes(itemId);
+    const task = present
+      ? vocabRepository.removeItem(vocab.userId, folder.id, itemId)
+      : vocabRepository.addItems(vocab.userId, folder.id, [itemId]);
+    return task.then(() => vocab.refresh());
+  };
 
   return (
     <View style={styles.root}>
-      <Stack.Screen options={{ title }} />
-      {body}
+      <Stack.Screen
+        options={{
+          title,
+          headerRight: custom
+            ? () => <FolderMenuButton onPress={() => setMenuOpen(true)} />
+            : undefined,
+        }}
+      />
+      <FolderContents
+        isError={vocab.isError}
+        isReady={vocab.isSuccess}
+        folder={folder}
+        userId={vocab.userId}
+        itemIds={itemIds}
+        editable={editable}
+        preference={preference}
+        onRetry={() => {
+          void vocab.refetch();
+        }}
+        onRemove={(itemId) => {
+          const userId = vocab.userId;
+          if (!userId || !folder) return;
+          void change(() => vocabRepository.removeItem(userId, folder.id, itemId));
+        }}
+        onMove={setMovingId}
+        onAdd={() => setSearching(true)}
+      />
       <MoveItemSheet
         visible={movingId !== null}
         folders={vocab.snapshot?.folders ?? []}
         fromId={folderId}
         onClose={() => setMovingId(null)}
         onMove={(toId) => {
-          if (!vocab.userId || !movingId) return;
+          const userId = vocab.userId;
+          if (!userId || !movingId) return;
           const itemId = movingId;
           setMovingId(null);
-          void change(() =>
-            vocabRepository.moveItem(vocab.userId as string, { itemId, fromId: folderId, toId }),
-          );
+          void change(() => vocabRepository.moveItem(userId, { itemId, fromId: folderId, toId }));
         }}
       />
       {folder?.kind === 'custom' ? (
         <FolderFormSheet
           visible={editing}
-          title={t('vocab.editTitle')}
+          title={t('folder.edit')}
           submitLabel={t('vocab.save')}
           initialName={folder.name}
           initialColor={folder.color}
@@ -146,40 +117,43 @@ export function FolderScreen() {
           }}
         />
       ) : null}
+      <FolderMenuSheet
+        visible={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        onEdit={() => setEditing(true)}
+        onDelete={() => setConfirmingDelete(true)}
+      />
+      <DeleteFolderSheet
+        visible={confirmingDelete}
+        name={folder?.name ?? ''}
+        onClose={() => setConfirmingDelete(false)}
+        onConfirm={async () => {
+          if (!vocab.userId || !folder) throw new Error('Invalid user id');
+          await vocabRepository.deleteFolder(vocab.userId, folder.id);
+          await vocab.refresh();
+        }}
+        onDeleted={() => router.back()}
+      />
+      {searching ? (
+        <PhraseSearchModal
+          visible
+          selectedIds={itemIds}
+          onClose={() => {
+            setSearching(false);
+            setSoon(false);
+          }}
+          onToggle={togglePhrase}
+          onAddOwn={() => setSoon(true)}
+        />
+      ) : null}
+      <SoonSheet visible={soon} onClose={() => setSoon(false)} />
     </View>
   );
-}
-
-function lookup(itemId: string): { es: string; ru: string; item: Item | null } {
-  try {
-    const item = getItem(itemId);
-    return {
-      es: item.es,
-      ru: textOf(item.tr, contentLanguage()),
-      item,
-    };
-  } catch {
-    return { es: itemId, ru: '', item: null };
-  }
 }
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: colors.ground,
-  },
-  content: {
-    paddingHorizontal: space.xl,
-    paddingTop: space.lg,
-    paddingBottom: space.xxxl,
-    gap: space.md,
-  },
-  empty: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: space.xl,
-  },
-  center: {
-    textAlign: 'center',
   },
 });

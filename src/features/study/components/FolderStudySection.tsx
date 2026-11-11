@@ -1,8 +1,10 @@
 import { useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
+import { space } from '@/theme/tokens';
 
 import { MasteryBar } from './MasteryBar';
 import { StudySheet } from './StudySheet';
@@ -46,14 +48,20 @@ export function FolderStudySection({ folderId, userId, itemIds }: FolderStudySec
     router.push({ pathname: '/study', params: { folder: folderId, mode } });
   };
 
+  const hasItems = itemIds.length > 0;
+
   return (
     <>
-      <MasteryBar counts={masteryCounts(units)} />
-      <Button
-        title={t('study.learn')}
-        disabled={itemIds.length === 0 || userId == null}
-        onPress={() => setOpen(true)}
-      />
+      <View testID="folder-study" style={hasItems ? styles.withLearn : undefined}>
+        <MasteryBar counts={masteryCounts(units)} />
+        {hasItems ? (
+          <Button
+            title={t('study.learn')}
+            disabled={userId == null}
+            onPress={() => setOpen(true)}
+          />
+        ) : null}
+      </View>
       <StudySheet
         visible={open}
         units={units}
@@ -65,3 +73,9 @@ export function FolderStudySection({ folderId, userId, itemIds }: FolderStudySec
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  withLearn: {
+    gap: space.xxl,
+  },
+});
