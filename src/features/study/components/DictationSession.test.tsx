@@ -14,6 +14,8 @@ jest.mock('@/features/audio/playback', () => ({
   play: jest.fn(async () => 'file'),
   playLessonAudio: jest.fn(async () => 'speech'),
   stopLessonAudio: jest.fn(async () => undefined),
+  NORMAL_RATE: 1,
+  SLOW_RATE: 0.7,
 }));
 
 jest.mock('expo-haptics', () => ({
@@ -57,7 +59,11 @@ describe('DictationSession', () => {
 
     expect(screen.getByText('·····')).toBeTruthy();
     expect(screen.getByText('Баллы за фразу: 10')).toBeTruthy();
-    expect(playLessonAudio).toHaveBeenCalledWith({ audio: null, text: 'adiós' });
+    expect(playLessonAudio).toHaveBeenCalledWith({
+      text: 'adiós',
+      rate: 1,
+      language: 'es-ES',
+    });
 
     await fireEvent.press(screen.getByRole('button', { name: /Открыть букву/ }));
     expect(screen.getByText('a····')).toBeTruthy();

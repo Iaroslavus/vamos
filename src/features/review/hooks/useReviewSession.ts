@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useSession } from '@/features/auth/useSession';
 import type { GradeStatus } from '@/features/lesson/grading';
 import { courseVocabulary, type CourseWord } from '@/features/lesson/reviewSources';
+import { withCustomWords } from '@/features/vocab/customWord';
 import { useLessonStore } from '@/features/lesson/store';
 import { deviceTimeZone } from '@/features/progress/study';
 import { useProgressRepository } from '@/features/progress/useProgress';
@@ -77,6 +78,7 @@ function deckPhase(
   now: Date,
   timeZone: string,
   itemIds: ReadonlySet<string> | null,
+  words: readonly CourseWord[],
 ): ReviewPhase {
   const cards = itemIds
     ? snapshot.cards.filter((card) => itemIds.has(card.itemId))
@@ -90,7 +92,6 @@ function deckPhase(
   if (queue.cards.length === 0) {
     return { status: queue.capped ? 'limited' : 'empty' };
   }
-  const words = courseVocabulary();
   return {
     status: 'choose',
     queue: queue.cards.map((card) => toCard(card, words, now)),
@@ -151,6 +152,7 @@ export function useReviewSession(folderId?: string) {
   const pendingRef = useRef<PendingRating[]>([]);
   const ratingsRef = useRef<ReviewRating[]>([]);
   const linksRef = useRef(new Map<string, { itemId: string; direction: ReviewDirection }>());
+  const wordsRef = useRef<CourseWord[]>(courseVocabulary());
 
   const clearPractice = useCallback(() => {
     attemptsRef.current = new Map();
@@ -185,19 +187,30 @@ export function useReviewSession(folderId?: string) {
       ratingId.current = null;
       lock.current = false;
       heldIndex.current = null;
-      setPhase(deckPhase(snapshot, new Date(), deviceTimeZone(), itemIds));
+      setPhase(deckPhase(snapshot, new Date(), deviceTimeZone(), itemIds, wordsRef.current));
     },
     [clearPractice, stopPractice],
   );
 
   const folderItems = useCallback(async (): Promise<ReadonlySet<string> | null> => {
-    if (!folderId || !userId) return null;
-    const folders = await vocabRepository.read(userId);
-    const folder = folders.folders.find((entry) => entry.id === folderId);
-    if (!folder) return new Set();
-    return new Set(
-      folders.items.filter((item) => item.folderId === folderId).map((item) => item.itemId),
-    );
+    let custom: Awaited<ReturnType<typeof vocabRepository.read>>['userItems'] = [];
+    if (userId) {
+      const folders = await vocabRepository.read(userId);
+      custom = folders.userItems;
+      wordsRef.current = withCustomWords(courseVocabulary(), custom, (item) => ({
+        id: item.id,
+        es: item.es,
+        ru: item.tr,
+      }));
+      if (!folderId) return null;
+      const folder = folders.folders.find((entry) => entry.id === folderId);
+      if (!folder) return new Set();
+      return new Set(
+        folders.items.filter((item) => item.folderId === folderId).map((item) => item.itemId),
+      );
+    }
+    wordsRef.current = courseVocabulary();
+    return null;
   }, [folderId, userId]);
 
   const load = useCallback(async () => {
@@ -271,7 +284,7 @@ export function useReviewSession(folderId?: string) {
 
       const drafts = buildQuickReviewExercises({
         cards: current.queue.map(exerciseSource),
-        pool: courseVocabulary(),
+        pool: wordsRef.current,
         prompts: {
           select: t('review.exerciseSelect'),
           listen: t('review.exerciseListen'),

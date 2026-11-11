@@ -1,5 +1,12 @@
 import { createVocabRepository, itemKey, vocabStorageKey } from './repository';
-import type { Folder, FolderItem, KeyValueStorage, NetworkMonitor, VocabRemote } from './types';
+import type {
+  Folder,
+  FolderItem,
+  KeyValueStorage,
+  NetworkMonitor,
+  UserItem,
+  VocabRemote,
+} from './types';
 
 const USER = 'user-1';
 
@@ -43,10 +50,13 @@ function createNetwork(initial: boolean): NetworkMonitor & { setOnline(online: b
 function createRemote() {
   const folders = new Map<string, Folder>();
   const items = new Map<string, FolderItem>();
+  const words = new Map<string, UserItem>();
   let failAdds = 0;
   const inserted: FolderItem[] = [];
   const removed: string[] = [];
   const deletedFolders: string[] = [];
+  const savedWords: UserItem[] = [];
+  const deletedWords: string[] = [];
 
   const remote: VocabRemote = {
     async fetchFolders() {
@@ -54,6 +64,9 @@ function createRemote() {
     },
     async fetchItems() {
       return [...items.values()];
+    },
+    async fetchUserItems() {
+      return [...words.values()];
     },
     async upsertFolder(_userId, folder) {
       const twin = [...folders.values()].find(
@@ -64,6 +77,18 @@ function createRemote() {
       const saved = twin ?? folder;
       folders.set(saved.id, twin ? twin : folder);
       return saved;
+    },
+    async upsertUserItem(_userId, item) {
+      words.set(item.id, item);
+      savedWords.push(item);
+      return item;
+    },
+    async deleteUserItem(_userId, itemId) {
+      words.delete(itemId);
+      for (const [key, item] of items) {
+        if (item.itemId === itemId) items.delete(key);
+      }
+      deletedWords.push(itemId);
     },
     async insertItem(_userId, item) {
       if (failAdds > 0) {
@@ -90,9 +115,12 @@ function createRemote() {
     remote,
     folders,
     items,
+    words,
     inserted,
     removed,
     deletedFolders,
+    savedWords,
+    deletedWords,
     failNextAdd() {
       failAdds += 1;
     },
@@ -270,6 +298,7 @@ describe('vocab repository', () => {
     await expect(repository.read(USER)).resolves.toEqual({
       folders: [],
       items: [],
+      userItems: [],
       pending: 0,
     });
   });
@@ -350,6 +379,75 @@ describe('vocab repository', () => {
     expect(synced.pending).toBe(0);
     expect(remote.deletedFolders).toEqual([folderId]);
     expect(remote.folders.has(folderId)).toBe(false);
+  });
+
+  it('saves a custom word offline, then edits and deletes it', async () => {
+    const { repository, network, remote } = setup(false);
+    const created = await repository.createFolder(USER, { name: 'Поездка', color: 'teal' });
+    const folder = created.folders.find((entry) => entry.kind === 'custom');
+    const folderId = folder?.id ?? '';
+
+    const saved = await repository.addUserItem(USER, folderId, {
+      es: '  gato  ',
+      tr: '  кот  ',
+      note: '   ',
+    });
+    expect(saved.item).toMatchObject({ es: 'gato', tr: 'кот', note: null });
+    expect(saved.snapshot.userItems).toEqual([saved.item]);
+    expect(saved.snapshot.items).toEqual([
+      expect.objectContaining({
+        folderId,
+        itemId: saved.item.id,
+        userItemId: saved.item.id,
+      }),
+    ]);
+    expect(remote.savedWords).toEqual([]);
+
+    await expect(
+      repository.addUserItem(USER, folderId, { es: 'Gató', tr: 'кошка', note: '' }),
+    ).rejects.toThrow('duplicate');
+
+    const edited = await repository.updateUserItem(USER, saved.item.id, {
+      es: 'gata',
+      tr: 'кошка',
+      note: 'дом',
+    });
+    expect(edited.userItems).toEqual([
+      expect.objectContaining({ id: saved.item.id, es: 'gata', tr: 'кошка', note: 'дом' }),
+    ]);
+
+    network.setOnline(true);
+    const synced = await repository.sync(USER);
+    expect(synced.pending).toBe(0);
+    expect(remote.words.get(saved.item.id)?.es).toBe('gata');
+    expect(remote.items.get(itemKey(folderId, saved.item.id))?.userItemId).toBe(saved.item.id);
+
+    network.setOnline(false);
+    const removed = await repository.deleteUserItem(USER, saved.item.id);
+    expect(removed.userItems).toEqual([]);
+    expect(removed.items.filter((item) => item.itemId === saved.item.id)).toEqual([]);
+    expect(remote.deletedWords).toEqual([]);
+
+    network.setOnline(true);
+    await repository.sync(USER);
+    expect(remote.deletedWords).toEqual([saved.item.id]);
+    expect(remote.words.has(saved.item.id)).toBe(false);
+  });
+
+  it('keeps a custom word that has not reached the server when the pull is empty', async () => {
+    const { repository, network } = setup(false);
+    const created = await repository.createFolder(USER, { name: 'Дом', color: 'blue' });
+    const folder = created.folders.find((entry) => entry.kind === 'custom');
+    const saved = await repository.addUserItem(USER, folder?.id ?? '', {
+      es: 'casa',
+      tr: 'дом',
+      note: '',
+    });
+
+    network.setOnline(true);
+    const synced = await repository.sync(USER);
+    expect(synced.userItems.map((item) => item.es)).toEqual(['casa']);
+    expect(synced.items.map((item) => item.itemId)).toContain(saved.item.id);
   });
 
   it('refuses an unreadable local cache', async () => {

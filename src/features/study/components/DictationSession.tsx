@@ -7,14 +7,14 @@ import { Button } from '@/components/Button';
 import { IconButton } from '@/components/IconButton';
 import { ResultSheet } from '@/components/ResultSheet';
 import { Text } from '@/components/Text';
-import { play, playLessonAudio, stopLessonAudio } from '@/features/audio/playback';
+import { stopLessonAudio } from '@/features/audio/playback';
 import { useAudioPreference } from '@/features/audio/preference';
-import { getItem } from '@/features/content/loader';
 import { AccentBar } from '@/features/lesson/components/AccentBar';
 import { buildResultSheetModel } from '@/features/lesson/feedbackView';
 import { colors, space } from '@/theme/tokens';
 
 import { dictationMask, dictationPoints } from '../games/dictation';
+import { playUnit } from '../playUnit';
 import { useDictationSession } from '../hooks/useDictationSession';
 import type { StudyRecordInput } from '../hooks/useStudyPlayer';
 import type { StudyUnit } from '../types';
@@ -37,11 +37,7 @@ export function DictationSession({ units, onRecord, onClose, onFinished }: Dicta
 
   useEffect(() => {
     if (!unit) return undefined;
-    try {
-      void play(getItem(unit.id), 'normal', preference);
-    } catch {
-      void playLessonAudio({ audio: unit.audio, text: unit.es });
-    }
+    playUnit(unit.id, unit.es, preference);
     return () => {
       void stopLessonAudio();
     };

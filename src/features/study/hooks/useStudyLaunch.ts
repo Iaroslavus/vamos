@@ -31,9 +31,9 @@ export function useStudyLaunch(folderId: string, mode: StudyMode | null) {
         itemIds,
         cards: review.data?.cards ?? [],
         now,
-        gloss: (id) => glossItem(id, i18n.language),
+        gloss: (id) => glossItem(id, i18n.language, vocab.snapshot?.userItems ?? []),
       }),
-    [i18n.language, itemIds, now, review.data],
+    [i18n.language, itemIds, now, review.data, vocab.snapshot?.userItems],
   );
 
   const settings = prefs.prefs.settings;

@@ -89,6 +89,7 @@ describe('ListenSelectExercise', () => {
       audio: listen.audio,
       text: listen.speakText,
       rate: 1,
+      language: 'es-ES',
     });
   });
 
@@ -125,6 +126,7 @@ describe('ListenSelectExercise slow button', () => {
       audio: null,
       text: listen.speakText,
       rate: SLOW_RATE,
+      language: 'es-ES',
     });
   });
 
@@ -151,6 +153,7 @@ describe('ListenSelectExercise slow button', () => {
       audio: null,
       text: 'Hola',
       rate: SLOW_RATE,
+      language: 'es-ES',
     });
   });
 
@@ -163,6 +166,7 @@ describe('ListenSelectExercise slow button', () => {
       audio: 'a1/u01/l01-e04-slow.m4a',
       text: 'Hola',
       rate: SLOW_RATE,
+      language: 'es-ES',
     });
   });
 });

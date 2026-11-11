@@ -372,4 +372,12 @@ describe('play', () => {
     );
     expect(createAudioPlayer).not.toHaveBeenCalled();
   });
+
+  it('speaks es-MX when the profile prefers Latin America', async () => {
+    expect(await play({ es: 'hola', audio: blankAudio() }, 'normal', 'latam')).toBe('speech');
+    expect(Speech.speak).toHaveBeenCalledWith(
+      'hola',
+      expect.objectContaining({ language: 'es-MX', pitch: SPEECH_PITCH }),
+    );
+  });
 });

@@ -10,13 +10,14 @@ export type PhraseCandidate = {
  * Accents and case do not matter. An empty query matches nothing.
  */
 export function searchPhrases(items: readonly PhraseCandidate[], query: string): PhraseCandidate[] {
-  const needle = fold(query);
+  const needle = foldPhrase(query);
   if (!needle) return [];
   const seen = new Set<string>();
   const matches: PhraseCandidate[] = [];
   for (const item of items) {
     if (seen.has(item.id)) continue;
-    if (!fold(item.es).includes(needle) && !fold(item.translation).includes(needle)) continue;
+    if (!foldPhrase(item.es).includes(needle) && !foldPhrase(item.translation).includes(needle))
+      continue;
     seen.add(item.id);
     matches.push(item);
   }
@@ -25,6 +26,7 @@ export function searchPhrases(items: readonly PhraseCandidate[], query: string):
   );
 }
 
-function fold(value: string): string {
+/** Case and accents do not change the phrase. Punctuation stays. */
+export function foldPhrase(value: string): string {
   return value.trim().toLocaleLowerCase('es').normalize('NFD').replace(/\p{M}/gu, '');
 }

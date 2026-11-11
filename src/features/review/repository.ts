@@ -190,13 +190,22 @@ export function createReviewRepository(deps: ReviewRepositoryDeps): ReviewReposi
     const pendingItems = new Set(
       state.outbox.flatMap((item) => {
         if (item.kind === 'card') return [item.key];
+        if (item.kind !== 'review') return [];
         const log = state.logs.find((entry) => entry.clientId === item.key);
         return log ? [cardKey(log.itemId, log.direction)] : [];
       }),
     );
 
+    const forgotten = new Set(
+      state.outbox.filter((item) => item.kind === 'forget').map((item) => item.key),
+    );
     const cards = { ...state.cards };
+    for (const key of Object.keys(cards)) {
+      const card = cards[key];
+      if (card && forgotten.has(card.itemId)) delete cards[key];
+    }
     for (const remote of remoteCards) {
+      if (forgotten.has(remote.itemId)) continue;
       const key = cardKey(remote.itemId, remote.direction);
       cards[key] = mergeCard(cards[key], remote, pendingItems.has(key));
     }
@@ -228,6 +237,18 @@ export function createReviewRepository(deps: ReviewRepositoryDeps): ReviewReposi
       if (!state.outbox.some((entry) => sameItem(entry, item))) continue;
       if (item.kind === 'card') {
         state = await flushCard(userId, state, item);
+        continue;
+      }
+      if (item.kind === 'forget') {
+        try {
+          await deps.remote.deleteCards(userId, item.key);
+          state = without(state, item);
+          await save(userId, state);
+        } catch (error) {
+          state = bump(state, item);
+          await save(userId, state);
+          throw error;
+        }
         continue;
       }
 
@@ -308,6 +329,40 @@ export function createReviewRepository(deps: ReviewRepositoryDeps): ReviewReposi
       });
     },
 
+    forgetItems(userId, itemIds) {
+      return exclusive(async () => {
+        const ids: string[] = [];
+        const seen = new Set<string>();
+        for (const raw of itemIds) {
+          const itemId = raw.trim();
+          if (itemId.length < 1 || itemId.length > ITEM_ID_MAX) throw new Error('Invalid item id');
+          if (seen.has(itemId)) continue;
+          seen.add(itemId);
+          ids.push(itemId);
+        }
+        let state = await load(userId);
+        let changed = false;
+        for (const itemId of ids) {
+          const next = forgetItem(state, itemId);
+          if (next !== state) {
+            state = next;
+            changed = true;
+          }
+        }
+        if (changed) await save(userId, state);
+        if (await deps.network.isOnline()) {
+          try {
+            await flush(userId);
+          } catch {
+            scheduleRetry(() => flush(userId));
+          }
+        }
+        const snapshot = toSnapshot(await load(userId), now());
+        queueMicrotask(emit);
+        return snapshot;
+      });
+    },
+
     recordRating(userId, input) {
       return exclusive(async () => {
         await applyRating(userId, input);
@@ -366,6 +421,21 @@ export function createReviewRepository(deps: ReviewRepositoryDeps): ReviewReposi
       return tail;
     },
   };
+}
+
+function forgetItem(state: PersistedReviews, itemId: string): PersistedReviews {
+  const keys = Object.entries(state.cards)
+    .filter(([, card]) => card.itemId === itemId)
+    .map(([key]) => key);
+  const queued = state.outbox.some((entry) => entry.kind === 'forget' && entry.key === itemId);
+  if (keys.length === 0 && queued) return state;
+  const cards = { ...state.cards };
+  for (const key of keys) delete cards[key];
+  const dropped = new Set(keys);
+  const outbox = state.outbox.filter((entry) => !(entry.kind === 'card' && dropped.has(entry.key)));
+  const next = { ...state, cards, outbox };
+  if (queued) return next;
+  return enqueue(next, { kind: 'forget', key: itemId, attempts: 0 });
 }
 
 function emptyReviews(): PersistedReviews {

@@ -2,10 +2,11 @@ import type { Tables, TablesInsert } from '@/lib/database.types';
 import type { TypedSupabaseClient } from '@/lib/supabase';
 
 import { isFolderColor } from './model';
-import type { Folder, FolderItem, FolderKind, SystemKey, VocabRemote } from './types';
+import type { Folder, FolderItem, FolderKind, SystemKey, UserItem, VocabRemote } from './types';
 
 type FolderRow = Tables<'folders'>;
 type ItemRow = Tables<'folder_items'>;
+type UserItemRow = Tables<'user_items'>;
 
 export function createSupabaseVocabRemote(client: TypedSupabaseClient): VocabRemote {
   return {
@@ -21,6 +22,12 @@ export function createSupabaseVocabRemote(client: TypedSupabaseClient): VocabRem
       return (data ?? []).map(mapItem);
     },
 
+    async fetchUserItems(userId) {
+      const { data, error } = await client.from('user_items').select('*').eq('user_id', userId);
+      if (error) throw error;
+      return (data ?? []).map(mapUserItem);
+    },
+
     async upsertFolder(userId, folder) {
       const { data, error } = await client
         .from('folders')
@@ -34,6 +41,21 @@ export function createSupabaseVocabRemote(client: TypedSupabaseClient): VocabRem
         if (existing) return mapFolder(existing);
       }
       throw error;
+    },
+
+    async upsertUserItem(userId, item) {
+      const { data, error } = await client
+        .from('user_items')
+        .upsert(userItemPayload(userId, item), { onConflict: 'id' })
+        .select('*')
+        .single();
+      if (error) throw error;
+      return mapUserItem(data);
+    },
+
+    async deleteUserItem(_userId, itemId) {
+      const { error } = await client.from('user_items').delete().eq('id', itemId);
+      if (error) throw error;
     },
 
     async insertItem(_userId, item) {
@@ -87,11 +109,23 @@ function folderPayload(userId: string, folder: Folder): TablesInsert<'folders'> 
   };
 }
 
+function userItemPayload(userId: string, item: UserItem): TablesInsert<'user_items'> {
+  return {
+    id: item.id,
+    user_id: userId,
+    es: item.es,
+    tr: item.tr,
+    note: item.note,
+    created_at: item.createdAt,
+  };
+}
+
 function itemPayload(item: FolderItem): TablesInsert<'folder_items'> {
   return {
     folder_id: item.folderId,
     item_id: item.itemId,
     added_at: item.addedAt,
+    user_item_id: item.userItemId,
   };
 }
 
@@ -108,11 +142,22 @@ function mapFolder(row: FolderRow): Folder {
   };
 }
 
+function mapUserItem(row: UserItemRow): UserItem {
+  return {
+    id: row.id,
+    es: row.es,
+    tr: row.tr,
+    note: row.note,
+    createdAt: row.created_at,
+  };
+}
+
 function mapItem(row: ItemRow): FolderItem {
   return {
     folderId: row.folder_id,
     itemId: row.item_id,
     addedAt: row.added_at,
+    userItemId: row.user_item_id,
   };
 }
 

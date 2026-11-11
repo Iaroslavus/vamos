@@ -17,6 +17,7 @@ describe('database.types', () => {
       'review_logs',
       'folders',
       'folder_items',
+      'user_items',
     ];
     const satisfiesTable: Record<PublicTable, true> = {
       profiles: true,
@@ -27,6 +28,7 @@ describe('database.types', () => {
       review_logs: true,
       folders: true,
       folder_items: true,
+      user_items: true,
     };
     expect(Object.keys(satisfiesTable).sort()).toEqual([...tables].sort());
   });

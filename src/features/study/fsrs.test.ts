@@ -168,6 +168,9 @@ function silentRemote(): ReviewRemote {
     async insertLog() {
       return undefined;
     },
+    async deleteCards() {
+      return undefined;
+    },
   };
 }
 

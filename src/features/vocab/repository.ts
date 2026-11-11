@@ -1,4 +1,5 @@
 import { cleanItemId, isFolderColor, parseFolderName, parseLegacyFavoriteIds } from './model';
+import { foldPhrase } from './phraseSearch';
 import type {
   DerivedInput,
   Folder,
@@ -8,9 +9,11 @@ import type {
   KeyValueStorage,
   NetworkMonitor,
   OutboxItem,
+  ParsedUserItem,
   PersistedFolders,
   Scheduler,
   SystemKey,
+  UserItem,
   VocabRemote,
   VocabRepository,
 } from './types';
@@ -97,6 +100,8 @@ export function createVocabRepository(deps: VocabRepositoryDeps): VocabRepositor
       ...parsed,
       favoritesMigrated: parsed.favoritesMigrated === true,
       pinnedDifficult: cleanPins(parsed.pinnedDifficult),
+      userItems: cleanUserItems(parsed.userItems),
+      items: cleanFolderItems(parsed.items),
     };
   }
 
@@ -193,16 +198,17 @@ export function createVocabRepository(deps: VocabRepositoryDeps): VocabRepositor
   }
 
   async function pull(userId: string): Promise<void> {
-    const [remoteFolders, remoteItems] = await Promise.all([
+    const [remoteFolders, remoteItems, remoteWords] = await Promise.all([
       deps.remote.fetchFolders(userId),
       deps.remote.fetchItems(userId),
+      deps.remote.fetchUserItems(userId),
     ]);
     let state = await load(userId);
     for (const remote of remoteFolders) {
       const local = twin(state, remote);
       if (local && local.id !== remote.id) state = adoptFolderId(state, local.id, remote.id);
     }
-    state = mergeRemote(state, remoteFolders, remoteItems);
+    state = mergeRemote(state, remoteFolders, remoteItems, remoteWords);
     await save(userId, state);
   }
 
@@ -219,6 +225,9 @@ export function createVocabRepository(deps: VocabRepositoryDeps): VocabRepositor
         if (item.kind === 'folder') state = await flushFolder(userId, state, item);
         else if (item.kind === 'folder-delete')
           state = await flushFolderDelete(userId, state, item);
+        else if (item.kind === 'user-item') state = await flushUserItem(userId, state, item);
+        else if (item.kind === 'user-item-delete')
+          state = await flushUserItemDelete(userId, state, item);
         else if (item.kind === 'item-add') state = await flushAdd(userId, state, item);
         else state = await flushRemove(userId, state, item);
       } catch (error) {
@@ -271,6 +280,34 @@ export function createVocabRepository(deps: VocabRepositoryDeps): VocabRepositor
       return state;
     }
     await deps.remote.insertItem(userId, entry);
+    state = without(state, item);
+    await save(userId, state);
+    return state;
+  }
+
+  async function flushUserItem(
+    userId: string,
+    state: PersistedFolders,
+    item: OutboxItem,
+  ): Promise<PersistedFolders> {
+    const word = state.userItems[item.key];
+    if (!word) {
+      state = without(state, item);
+      await save(userId, state);
+      return state;
+    }
+    await deps.remote.upsertUserItem(userId, word);
+    state = without(state, item);
+    await save(userId, state);
+    return state;
+  }
+
+  async function flushUserItemDelete(
+    userId: string,
+    state: PersistedFolders,
+    item: OutboxItem,
+  ): Promise<PersistedFolders> {
+    await deps.remote.deleteUserItem(userId, item.key);
     state = without(state, item);
     await save(userId, state);
     return state;
@@ -428,6 +465,60 @@ export function createVocabRepository(deps: VocabRepositoryDeps): VocabRepositor
       });
     },
 
+    addUserItem(userId, folderId, input) {
+      let created: UserItem | null = null;
+      const snapshot = finish(userId, async () => {
+        let state = await load(userId);
+        const folder = state.folders[folderId];
+        if (!folder) throw new Error('Unknown folder');
+        assertEditable(folder);
+        const word = requireUserItem(input);
+        assertUniqueWord(state, word.es);
+        const item: UserItem = {
+          id: createId(),
+          es: word.es,
+          tr: word.tr,
+          note: word.note,
+          createdAt: now(),
+        };
+        state = enqueue(putUserItem(state, item), {
+          kind: 'user-item',
+          key: item.id,
+          attempts: 0,
+        });
+        state = addItem(state, folderId, item.id, item.createdAt, item.id).state;
+        await save(userId, state);
+        created = item;
+      });
+      return snapshot.then((next) => {
+        if (!created) throw new Error('Invalid custom word');
+        return { snapshot: next, item: created };
+      });
+    },
+
+    updateUserItem(userId, itemId, input) {
+      return finish(userId, async () => {
+        const word = requireUserItem(input);
+        const state = await load(userId);
+        const current = state.userItems[itemId];
+        if (!current) throw new Error('Unknown word');
+        assertUniqueWord(state, word.es, itemId);
+        if (current.es === word.es && current.tr === word.tr && current.note === word.note) return;
+        const next = putUserItem(state, { ...current, es: word.es, tr: word.tr, note: word.note });
+        await save(userId, enqueue(next, { kind: 'user-item', key: itemId, attempts: 0 }));
+      });
+    },
+
+    deleteUserItem(userId, itemId) {
+      return finish(userId, async () => {
+        const cleaned = cleanItemId(itemId);
+        if (!cleaned) throw new Error('Invalid item id');
+        const state = await load(userId);
+        if (!state.userItems[cleaned]) throw new Error('Unknown word');
+        await save(userId, dropUserItem(state, cleaned));
+      });
+    },
+
     moveItem(userId, input) {
       return finish(userId, async () => {
         if (input.fromId === input.toId) throw new Error('Unknown folder');
@@ -439,9 +530,10 @@ export function createVocabRepository(deps: VocabRepositoryDeps): VocabRepositor
         assertEditable(to);
         const itemId = cleanItemId(input.itemId);
         if (!itemId) throw new Error('Invalid item id');
+        const previous = state.items[itemKey(from.id, itemId)];
         const removed = removeItem(state, from.id, itemId);
         if (!removed.changed) throw new Error('Item is not in the folder');
-        state = addItem(removed.state, to.id, itemId, now()).state;
+        state = addItem(removed.state, to.id, itemId, now(), previous?.userItemId ?? null).state;
         await save(userId, state);
       });
     },
@@ -493,6 +585,7 @@ function emptyFolders(): PersistedFolders {
     version: 1,
     folders: {},
     items: {},
+    userItems: {},
     outbox: [],
     favoritesMigrated: false,
     pinnedDifficult: [],
@@ -522,7 +615,11 @@ function toSnapshot(state: PersistedFolders): FolderSnapshot {
     (left, right) =>
       left.addedAt.localeCompare(right.addedAt) || left.itemId.localeCompare(right.itemId),
   );
-  return { folders, items, pending: state.outbox.length };
+  const userItems = Object.values(state.userItems).sort(
+    (left, right) =>
+      left.createdAt.localeCompare(right.createdAt) || left.id.localeCompare(right.id),
+  );
+  return { folders, items, userItems, pending: state.outbox.length };
 }
 
 function makeSystem(key: SystemKey, id: string, createdAt: string): Folder {
@@ -573,10 +670,16 @@ function dropFolder(state: PersistedFolders, folderId: string): PersistedFolders
     if (entry.key.startsWith(prefix)) return false;
     return true;
   });
-  return enqueue(
+  let next = enqueue(
     { ...state, folders, items, outbox },
     { kind: 'folder-delete', key: folderId, attempts: 0 },
   );
+  const kept = new Set(Object.values(next.items).map((item) => item.itemId));
+  for (const word of Object.values(state.userItems)) {
+    if (kept.has(word.id)) continue;
+    next = dropUserItem(next, word.id);
+  }
+  return next;
 }
 
 function addItem(
@@ -584,6 +687,7 @@ function addItem(
   folderId: string,
   itemId: string,
   addedAt: string,
+  userItemId: string | null = null,
 ): { state: PersistedFolders; changed: boolean } {
   const key = itemKey(folderId, itemId);
   if (state.items[key]) return { state, changed: false };
@@ -592,7 +696,7 @@ function addItem(
   );
   let next: PersistedFolders = {
     ...state,
-    items: { ...state.items, [key]: { folderId, itemId, addedAt } },
+    items: { ...state.items, [key]: { folderId, itemId, addedAt, userItemId } },
     outbox: state.outbox.filter((entry) => !(entry.kind === 'item-remove' && entry.key === key)),
   };
   if (!cancellingRemove) next = enqueue(next, { kind: 'item-add', key, attempts: 0 });
@@ -648,6 +752,7 @@ function mergeRemote(
   state: PersistedFolders,
   remoteFolders: readonly Folder[],
   remoteItems: readonly FolderItem[],
+  remoteWords: readonly UserItem[] = [],
 ): PersistedFolders {
   const folders = { ...state.folders };
   const remoteIds = new Set(remoteFolders.map((folder) => folder.id));
@@ -703,7 +808,125 @@ function mergeRemote(
     return remoteKeys.has(entry.key);
   });
 
-  return { ...state, folders, items, outbox };
+  return mergeUserItems({ ...state, folders, items, outbox }, remoteWords);
+}
+
+function mergeUserItems(
+  state: PersistedFolders,
+  remoteWords: readonly UserItem[],
+): PersistedFolders {
+  const userItems = { ...state.userItems };
+  const remoteIds = new Set(remoteWords.map((item) => item.id));
+
+  for (const remote of remoteWords) {
+    if (
+      state.outbox.some((entry) => entry.kind === 'user-item-delete' && entry.key === remote.id)
+    ) {
+      continue;
+    }
+    const pending = state.outbox.some(
+      (entry) => entry.kind === 'user-item' && entry.key === remote.id,
+    );
+    if (!userItems[remote.id] || !pending) userItems[remote.id] = remote;
+  }
+
+  for (const item of Object.values({ ...userItems })) {
+    if (remoteIds.has(item.id)) continue;
+    const pending = state.outbox.some(
+      (entry) =>
+        (entry.kind === 'user-item' || entry.kind === 'user-item-delete') && entry.key === item.id,
+    );
+    if (pending) continue;
+    delete userItems[item.id];
+  }
+
+  return { ...state, userItems };
+}
+
+function putUserItem(state: PersistedFolders, item: UserItem): PersistedFolders {
+  return { ...state, userItems: { ...state.userItems, [item.id]: item } };
+}
+
+function dropUserItem(state: PersistedFolders, itemId: string): PersistedFolders {
+  const userItems = { ...state.userItems };
+  delete userItems[itemId];
+  const items: Record<string, FolderItem> = {};
+  for (const [key, item] of Object.entries(state.items)) {
+    if (item.itemId !== itemId) items[key] = item;
+  }
+  const suffix = `:${itemId}`;
+  const outbox = state.outbox.filter((entry) => {
+    if ((entry.kind === 'user-item' || entry.kind === 'user-item-delete') && entry.key === itemId) {
+      return false;
+    }
+    if ((entry.kind === 'item-add' || entry.kind === 'item-remove') && entry.key.endsWith(suffix)) {
+      return false;
+    }
+    return true;
+  });
+  return enqueue(
+    { ...state, userItems, items, outbox },
+    { kind: 'user-item-delete', key: itemId, attempts: 0 },
+  );
+}
+
+function assertUniqueWord(state: PersistedFolders, es: string, exceptId?: string): void {
+  const folded = foldPhrase(es);
+  const duplicate = Object.values(state.userItems).some(
+    (item) => item.id !== exceptId && foldPhrase(item.es) === folded,
+  );
+  if (duplicate) throw new Error('duplicate');
+}
+
+function requireUserItem(input: ParsedUserItem): ParsedUserItem {
+  const es = input.es.trim();
+  const tr = input.tr.trim();
+  const note = input.note?.trim() ?? '';
+  if (es.length < 1 || es.length > 80) throw new Error('Invalid custom word');
+  if (tr.length < 1 || tr.length > 120) throw new Error('Invalid custom word');
+  if (note.length > 240) throw new Error('Invalid custom word');
+  return { es, tr, note: note.length > 0 ? note : null };
+}
+
+function cleanUserItems(value: unknown): Record<string, UserItem> {
+  if (typeof value !== 'object' || value === null) return {};
+  const items: Record<string, UserItem> = {};
+  for (const [key, entry] of Object.entries(value)) {
+    if (!isUserItem(entry) || entry.id !== key) continue;
+    items[key] = {
+      id: entry.id,
+      es: entry.es,
+      tr: entry.tr,
+      note: entry.note,
+      createdAt: entry.createdAt,
+    };
+  }
+  return items;
+}
+
+function isUserItem(value: unknown): value is UserItem {
+  if (typeof value !== 'object' || value === null) return false;
+  const item = value as UserItem;
+  return (
+    typeof item.id === 'string' &&
+    typeof item.es === 'string' &&
+    typeof item.tr === 'string' &&
+    (item.note === null || typeof item.note === 'string') &&
+    typeof item.createdAt === 'string'
+  );
+}
+
+function cleanFolderItems(value: unknown): Record<string, FolderItem> {
+  if (typeof value !== 'object' || value === null) return {};
+  const items: Record<string, FolderItem> = {};
+  for (const [key, entry] of Object.entries(value)) {
+    if (typeof entry !== 'object' || entry === null) continue;
+    const item = entry as FolderItem;
+    if (typeof item.folderId !== 'string' || typeof item.itemId !== 'string') continue;
+    if (typeof item.addedAt !== 'string') continue;
+    items[key] = { ...item, userItemId: item.userItemId ?? null };
+  }
+  return items;
 }
 
 function cleanPins(value: unknown): string[] {

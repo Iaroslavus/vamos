@@ -39,8 +39,8 @@ export type LocalReviewLog = ReviewLog & {
 };
 
 export type OutboxItem = {
-  /** `review` syncs a rating. `card` syncs a card that has not been rated yet. */
-  kind: 'review' | 'card';
+  /** `review` syncs a rating. `card` syncs a new card. `forget` drops every card for an item. */
+  kind: 'review' | 'card' | 'forget';
   key: string;
   attempts: number;
 };
@@ -93,6 +93,8 @@ export type ReviewRemote = {
   upsertCard(userId: string, card: StoredCard): Promise<StoredCard>;
   /** Inserts the log once per clientId. */
   insertLog(userId: string, log: ReviewLog): Promise<void>;
+  /** Deletes every card for this item. Missing cards are fine. */
+  deleteCards(userId: string, itemId: string): Promise<void>;
 };
 
 export type Scheduler = (fn: () => void, delayMs: number) => () => void;
@@ -104,6 +106,11 @@ export type ReviewRepository = {
    * An existing card keeps its schedule, so repeating a lesson does not duplicate it.
    */
   introduceItems(userId: string, items: readonly { id: string }[]): Promise<ReviewSnapshot>;
+  /**
+   * Drops local cards for these items and deletes them on the server.
+   * A later pull does not bring them back while the delete is still queued.
+   */
+  forgetItems(userId: string, itemIds: readonly string[]): Promise<ReviewSnapshot>;
   recordRating(userId: string, input: RatingInput): Promise<ReviewSnapshot>;
   sync(userId: string): Promise<ReviewSnapshot>;
   start(userId: string, onSynced: () => void): () => void;

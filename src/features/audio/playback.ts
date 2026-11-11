@@ -10,7 +10,7 @@ import { cachedAudioUri } from '@/features/audio/cache';
 import { publicAudioUrl } from '@/features/audio/storage';
 import type { Item } from '@/features/content/schema';
 import { BUNDLED_AUDIO_ASSETS } from './assets';
-import { selectClip, type AudioPreference, type AudioSpeed } from './select';
+import { selectClip, speechLocale, type AudioPreference, type AudioSpeed } from './select';
 import { IOS_AV_SPEECH_DEFAULT_RATE, speechEngineRate } from './speechRate';
 
 export const NORMAL_RATE = 1;
@@ -28,6 +28,8 @@ export type PlayLessonAudioInput = {
   /** Spanish text for TTS fallback (and always used when no file). */
   text: string;
   rate?: number;
+  /** Device voice. Spain is es-ES, Latin America is es-MX. */
+  language?: string;
   /**
    * Fires when this playback finishes.
    * A newer `playLessonAudio` / `stopLessonAudio` cancels it.
@@ -107,6 +109,7 @@ export async function playLessonAudio({
   audio,
   text,
   rate = NORMAL_RATE,
+  language = SPEECH_LANGUAGE,
   onEnd,
 }: PlayLessonAudioInput): Promise<PlaybackSource> {
   const trimmed = text.trim();
@@ -183,12 +186,12 @@ export async function playLessonAudio({
       speechRate: Number(engineRate.toFixed(3)),
       nativeUtteranceRate,
       pitch: SPEECH_PITCH,
-      language: SPEECH_LANGUAGE,
+      language,
       text: JSON.stringify(trimmed),
     });
     const timing = { startedAt: 0 };
     Speech.speak(trimmed, {
-      language: SPEECH_LANGUAGE,
+      language,
       rate: engineRate,
       pitch: SPEECH_PITCH,
       onStart: () => {
@@ -229,5 +232,6 @@ export async function play(
     text: item.es,
     audio: selectClip(item.audio, preference, speed),
     rate: speed === 'slow' ? SLOW_RATE : NORMAL_RATE,
+    language: speechLocale(preference),
   });
 }

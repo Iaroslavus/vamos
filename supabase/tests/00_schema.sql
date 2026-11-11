@@ -1,7 +1,7 @@
 -- Structural checks: tables, keys, RLS enabled everywhere, signup trigger wiring.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(29);
+select plan(33);
 
 select has_table('public', 'profiles', 'profiles table exists');
 select has_table('public', 'lesson_progress', 'lesson_progress table exists');
@@ -11,6 +11,7 @@ select has_table('public', 'review_cards', 'review_cards table exists');
 select has_table('public', 'review_logs', 'review_logs table exists');
 select has_table('public', 'folders', 'folders table exists');
 select has_table('public', 'folder_items', 'folder_items table exists');
+select has_table('public', 'user_items', 'user_items table exists');
 
 select col_is_pk('public', 'profiles', 'id', 'profiles.id is the primary key');
 select col_is_pk('public', 'lesson_progress', array['user_id', 'lesson_id'], 'lesson_progress pk is (user_id, lesson_id)');
@@ -20,6 +21,9 @@ select col_is_pk('public', 'review_cards', 'id', 'review_cards.id is the primary
 select col_is_pk('public', 'review_logs', 'id', 'review_logs.id is the primary key');
 select col_is_pk('public', 'folders', 'id', 'folders.id is the primary key');
 select col_is_pk('public', 'folder_items', array['folder_id', 'item_id'], 'folder_items pk is (folder_id, item_id)');
+select col_is_pk('public', 'user_items', 'id', 'user_items.id is the primary key');
+select has_column('public', 'folder_items', 'user_item_id', 'folder_items can point at a user item');
+select has_column('public', 'review_cards', 'user_item_id', 'review cards can point at a user item');
 select has_column('public', 'review_cards', 'direction', 'review_cards.direction exists');
 select col_not_null('public', 'review_cards', 'direction', 'review_cards.direction is required');
 select col_is_unique(
