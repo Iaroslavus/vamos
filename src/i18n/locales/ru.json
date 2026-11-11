@@ -235,7 +235,9 @@
     "title": "Настройки",
     "open": "Настройки",
     "languageTitle": "Язык интерфейса",
-    "languageSelected": "{{language}}, выбран"
+    "languageSelected": "{{language}}, выбран",
+    "advancedRating": "Расширенная оценка",
+    "advancedRatingHint": "Четыре оценки без интервалов под кнопками"
   },
   "profile": {
     "title": "Профиль",
@@ -362,6 +364,9 @@
     "title": "Повторение",
     "loading": "Загружаем карточки",
     "showAnswer": "Показать ответ",
+    "forgot": "Не помню",
+    "remember": "Помню",
+    "returnsIn": "Вернётся через {{when}}",
     "again": "Снова",
     "hard": "Трудно",
     "good": "Хорошо",

@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
-import { Button } from '@/components/Button';
 import { ProgressBar } from '@/components/ProgressBar';
 import { Text } from '@/components/Text';
 import { play, stopLessonAudio } from '@/features/audio/playback';
@@ -11,14 +10,15 @@ import type { AudioPreference } from '@/features/audio/select';
 import { getItem } from '@/features/content/loader';
 import { blankAudio } from '@/features/content/schema';
 import type { ReviewRating } from '@/features/review/fsrs';
+import { useAdvancedRatingStore } from '@/features/settings/advancedRatingStore';
 import { colors, space } from '@/theme/tokens';
 
 import type { StudyCard } from '../hooks/useReviewSession';
-import { FlipCard } from './FlipCard';
-import { RatingChoices } from './RatingChoices';
+import { ReviewDeck } from './ReviewDeck';
 
 type ReviewStudyProps = {
   card: StudyCard;
+  nextCard: StudyCard | null;
   index: number;
   total: number;
   revealed: boolean;
@@ -30,6 +30,7 @@ type ReviewStudyProps = {
 
 export function ReviewStudy({
   card,
+  nextCard,
   index,
   total,
   revealed,
@@ -39,6 +40,7 @@ export function ReviewStudy({
   onRate,
 }: ReviewStudyProps) {
   const { t } = useTranslation();
+  const advanced = useAdvancedRatingStore((state) => state.enabled);
   const preference = useAudioPreference();
   const spanishVisible = card.direction === 'es_to_ru' ? !revealed : revealed;
 
@@ -57,32 +59,29 @@ export function ReviewStudy({
     playCard(card.itemId, card.es, card.audio, preference);
   };
 
-  const speak = spanishVisible ? { speakLabel: t('review.playWord'), onSpeak: replay } : undefined;
-
   return (
     <View style={styles.body}>
       <ProgressBar
         progress={total === 0 ? 0 : index / total}
         accessibilityLabel={t('review.progress', { done: index, total })}
       />
-      <View style={styles.card}>
-        <FlipCard
-          cardKey={card.key}
-          revealed={revealed}
-          front={{ text: card.front, ...(card.direction === 'es_to_ru' ? speak : undefined) }}
-          back={{ text: card.back, ...(card.direction === 'ru_to_es' ? speak : undefined) }}
-        />
-      </View>
       {rateError ? (
         <Text variant="caption" color={colors.errorInk} style={styles.error}>
           {t('review.rateError')}
         </Text>
       ) : null}
-      {revealed ? (
-        <RatingChoices intervals={card.intervals} disabled={busy} onRate={onRate} />
-      ) : (
-        <Button title={t('review.showAnswer')} disabled={busy} onPress={onReveal} />
-      )}
+      <ReviewDeck
+        card={card}
+        nextCard={nextCard}
+        revealed={revealed}
+        busy={busy}
+        rateError={rateError}
+        advanced={advanced}
+        speakLabel={t('review.playWord')}
+        onSpeak={replay}
+        onReveal={onReveal}
+        onRate={onRate}
+      />
     </View>
   );
 }
@@ -108,10 +107,6 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     gap: space.lg,
-  },
-  card: {
-    flex: 1,
-    justifyContent: 'center',
   },
   error: {
     textAlign: 'center',

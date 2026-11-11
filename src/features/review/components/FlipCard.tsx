@@ -25,9 +25,11 @@ type FlipCardProps = {
   revealed: boolean;
   front: Face;
   back: Face;
+  /** Skip the blank fade. The deck already has this face painted offstage. */
+  prepared?: boolean;
 };
 
-export function FlipCard({ cardKey, revealed, front, back }: FlipCardProps) {
+export function FlipCard({ cardKey, revealed, front, back, prepared = false }: FlipCardProps) {
   const reduceMotion = useReduceMotion();
   const spin = useSharedValue(0);
   const offset = useSharedValue(0);
@@ -44,6 +46,13 @@ export function FlipCard({ cardKey, revealed, front, back }: FlipCardProps) {
   }, [reduceMotion, revealed, spin]);
 
   useEffect(() => {
+    if (prepared) {
+      // A prepared card is the next face, already painted. Fading it through 0
+      // is the empty-card flash between reviews.
+      offset.value = 0;
+      opacity.value = 1;
+      return;
+    }
     if (reduceMotion) {
       offset.value = 0;
       opacity.value = withTiming(1, { duration: motion.press.duration });
@@ -53,7 +62,7 @@ export function FlipCard({ cardKey, revealed, front, back }: FlipCardProps) {
     opacity.value = 0;
     offset.value = withSpring(0, motion.spring);
     opacity.value = withTiming(1, { duration: motion.progress.duration });
-  }, [cardKey, offset, opacity, reduceMotion]);
+  }, [cardKey, offset, opacity, prepared, reduceMotion]);
 
   const stageStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,

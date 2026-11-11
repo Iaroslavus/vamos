@@ -235,7 +235,9 @@
     "title": "Налаштування",
     "open": "Налаштування",
     "languageTitle": "Мова інтерфейсу",
-    "languageSelected": "{{language}}, вибрано"
+    "languageSelected": "{{language}}, вибрано",
+    "advancedRating": "Розширена оцінка",
+    "advancedRatingHint": "Чотири оцінки без інтервалів під кнопками"
   },
   "profile": {
     "title": "Профіль",
@@ -362,6 +364,9 @@
     "title": "Повторення",
     "loading": "Завантажуємо картки",
     "showAnswer": "Показати відповідь",
+    "forgot": "Не пам'ятаю",
+    "remember": "Пам'ятаю",
+    "returnsIn": "Повернеться через {{when}}",
     "again": "Знову",
     "hard": "Важко",
     "good": "Добре",

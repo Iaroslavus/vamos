@@ -235,7 +235,9 @@
     "title": "Settings",
     "open": "Settings",
     "languageTitle": "App language",
-    "languageSelected": "{{language}}, selected"
+    "languageSelected": "{{language}}, selected",
+    "advancedRating": "Advanced grading",
+    "advancedRatingHint": "Four grades, with no intervals under the buttons"
   },
   "profile": {
     "title": "Profile",
@@ -362,6 +364,9 @@
     "title": "Review",
     "loading": "Loading cards",
     "showAnswer": "Show answer",
+    "forgot": "Don't remember",
+    "remember": "Remember",
+    "returnsIn": "Back in {{when}}",
     "again": "Again",
     "hard": "Hard",
     "good": "Good",

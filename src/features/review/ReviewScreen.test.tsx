@@ -1,5 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import * as Haptics from 'expo-haptics';
 import { I18nextProvider } from 'react-i18next';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -10,6 +11,8 @@ import { useLessonStore } from '@/features/lesson/store';
 import { ProgressProvider } from '@/features/progress/ProgressProvider';
 import type { ProgressRepository } from '@/features/progress/types';
 import { reviewRepository } from '@/features/review/defaultRepository';
+import { REVIEW_CAPTION_MS, REVIEW_ENTER_MS, reviewTiming } from '@/features/review/flight';
+import { useAdvancedRatingStore } from '@/features/settings/advancedRatingStore';
 import { vocabRepository } from '@/features/vocab/defaultRepository';
 import type { StoredCard } from '@/features/review/types';
 import i18n from '@/i18n';
@@ -113,10 +116,17 @@ const initialMetrics = {
   frame: { x: 0, y: 0, width: 390, height: 844 },
 };
 
+async function flushFlight() {
+  for (let step = 0; step < 8; step += 1) {
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+  }
+}
+
 async function pressRating(label: string) {
   await fireEvent.press(screen.getByText(label));
-  // The rating promise resolves after this turn. Wait it out before the next act().
-  await new Promise((resolve) => setTimeout(resolve, 0));
+  await flushFlight();
 }
 
 function renderReview() {
@@ -146,19 +156,28 @@ async function pressContinue() {
 }
 
 describe('ReviewScreen', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     mockReviewFolder = undefined;
     useLessonStore.getState().reset();
     read.mockReset();
     readFolders.mockReset();
-    recordRating.mockClear();
+    recordRating.mockReset();
+    recordRating.mockImplementation(async () => ({ cards: [], logs: [], dueCount: 0, pending: 0 }));
     awardXp.mockClear();
+    reviewTiming.captionMs = 0;
+    reviewTiming.enterMs = 0;
     jest.mocked(play).mockClear();
     (Haptics.impactAsync as jest.Mock).mockClear();
+    await AsyncStorage.clear();
+    await useAdvancedRatingStore.persist.rehydrate();
+    useAdvancedRatingStore.setState({ enabled: false });
   });
 
   afterEach(() => {
     useLessonStore.getState().reset();
+    reviewTiming.captionMs = REVIEW_CAPTION_MS;
+    reviewTiming.enterMs = REVIEW_ENTER_MS;
+    jest.restoreAllMocks();
   });
 
   it('speaks a Spanish prompt, then rates it and shows when the card returns', async () => {
@@ -175,15 +194,14 @@ describe('ReviewScreen', () => {
 
     fireEvent.press(screen.getByText('Показать ответ'));
     expect(await screen.findByText('Привет')).toBeTruthy();
-    expect(screen.getByLabelText(/Снова, /)).toBeTruthy();
-    expect(screen.getByLabelText(/Трудно, /)).toBeTruthy();
-    expect(screen.getByLabelText(/Хорошо, /)).toBeTruthy();
-    expect(screen.getByLabelText(/Легко, /)).toBeTruthy();
-    expect(screen.getAllByText(/\d+ (мин|ч|дн)/).length).toBeGreaterThanOrEqual(4);
+    expect(screen.getByText('Не помню')).toBeTruthy();
+    expect(screen.getByText('Помню')).toBeTruthy();
+    expect(screen.queryByText('Снова')).toBeNull();
+    expect(screen.queryByText(/\d+ мин/)).toBeNull();
 
-    await fireEvent(screen.getByRole('button', { name: /Хорошо/ }), 'pressIn');
+    await fireEvent(screen.getByRole('button', { name: 'Помню' }), 'pressIn');
     expect(Haptics.impactAsync).toHaveBeenCalled();
-    await pressRating('Хорошо');
+    await pressRating('Помню');
     expect(screen.getByText('Повторение готово')).toBeTruthy();
     expect(screen.getByText('1')).toBeTruthy();
     expect(screen.getByText('100%')).toBeTruthy();
@@ -191,7 +209,7 @@ describe('ReviewScreen', () => {
     expect(awardXp).not.toHaveBeenCalled();
     expect(recordRating).toHaveBeenCalledWith(
       'user-1',
-      expect.objectContaining({ itemId: 'hola.hola', direction: 'es_to_ru', rating: 'good' }),
+      expect.objectContaining({ itemId: 'hola.hola', direction: 'es_to_ru', rating: 'easy' }),
     );
   });
 
@@ -229,7 +247,7 @@ describe('ReviewScreen', () => {
 
     for (let step = 0; step < 10; step += 1) {
       await fireEvent.press(await screen.findByText('Показать ответ'));
-      await pressRating('Хорошо');
+      await pressRating('Помню');
     }
 
     expect(screen.getByText('Повторение готово')).toBeTruthy();
@@ -252,10 +270,89 @@ describe('ReviewScreen', () => {
     await startCards();
 
     await fireEvent.press(await screen.findByText('Показать ответ'));
-    await pressRating('Снова');
+    await pressRating('Не помню');
 
     expect(screen.getByText('0%')).toBeTruthy();
     expect(screen.getByText('+0')).toBeTruthy();
+    expect(recordRating).toHaveBeenCalledWith(
+      'user-1',
+      expect.objectContaining({ rating: 'again' }),
+    );
+  });
+
+  it('maps a quick remember to Easy and a slow one to Good', async () => {
+    let clock = 5_000;
+    jest.spyOn(Date, 'now').mockImplementation(() => clock);
+    read.mockResolvedValue({
+      cards: [card('hola.hola'), card('hola.gracias')],
+      logs: [],
+      dueCount: 2,
+      pending: 0,
+    });
+    await renderReview();
+    await startCards();
+
+    clock = 5_000;
+    await fireEvent.press(await screen.findByText('Показать ответ'));
+    clock = 5_000 + 2_999;
+    await pressRating('Помню');
+    expect(recordRating).toHaveBeenLastCalledWith(
+      'user-1',
+      expect.objectContaining({ itemId: 'hola.hola', rating: 'easy' }),
+    );
+
+    clock = 20_000;
+    await fireEvent.press(await screen.findByText('Показать ответ'));
+    clock = 23_000;
+    await pressRating('Помню');
+    expect(recordRating).toHaveBeenLastCalledWith(
+      'user-1',
+      expect.objectContaining({ itemId: 'hola.gracias', rating: 'good' }),
+    );
+  });
+
+  it('keeps the next card painted while the rated one leaves', async () => {
+    reviewTiming.captionMs = 60_000;
+    read.mockResolvedValue({
+      cards: [card('hola.hola'), card('hola.gracias')],
+      logs: [],
+      dueCount: 2,
+      pending: 0,
+    });
+    await renderReview();
+    await startCards();
+
+    expect(await screen.findByText('Hola')).toBeTruthy();
+    expect(screen.queryByText('Gracias')).toBeNull();
+    expect(screen.getByText('Gracias', { includeHiddenElements: true })).toBeTruthy();
+
+    await fireEvent.press(screen.getByText('Показать ответ'));
+    await fireEvent.press(screen.getByText('Помню'));
+    expect(screen.getByText(/Вернётся через/)).toBeTruthy();
+    expect(screen.getByText('Привет')).toBeTruthy();
+    expect(screen.getByText('Gracias', { includeHiddenElements: true })).toBeTruthy();
+    expect(screen.queryByText('Gracias')).toBeNull();
+  });
+
+  it('shows four grades without intervals when advanced grading is on', async () => {
+    useAdvancedRatingStore.setState({ enabled: true });
+    read.mockResolvedValue({ cards: [card('hola.hola')], logs: [], dueCount: 1, pending: 0 });
+    await renderReview();
+    await startCards();
+    await fireEvent.press(await screen.findByText('Показать ответ'));
+
+    expect(screen.getByText('Снова')).toBeTruthy();
+    expect(screen.getByText('Трудно')).toBeTruthy();
+    expect(screen.getByText('Хорошо')).toBeTruthy();
+    expect(screen.getByText('Легко')).toBeTruthy();
+    expect(screen.queryByText('Помню')).toBeNull();
+    expect(screen.queryByText(/\d+ мин/)).toBeNull();
+
+    await pressRating('Хорошо');
+    expect(recordRating).toHaveBeenCalledWith(
+      'user-1',
+      expect.objectContaining({ itemId: 'hola.hola', rating: 'good' }),
+    );
   });
 
   it('rates a first-try exercise Good', async () => {
@@ -328,13 +425,13 @@ describe('ReviewScreen', () => {
     await startCards();
 
     await fireEvent.press(await screen.findByText('Показать ответ'));
-    await pressRating('Хорошо');
+    await pressRating('Помню');
 
     expect(screen.getByText('Повторение готово')).toBeTruthy();
     expect(recordRating).toHaveBeenCalledTimes(1);
     expect(recordRating).toHaveBeenCalledWith(
       'user-1',
-      expect.objectContaining({ itemId: 'hola.hola', rating: 'good' }),
+      expect.objectContaining({ itemId: 'hola.hola', rating: 'easy' }),
     );
   });
 
