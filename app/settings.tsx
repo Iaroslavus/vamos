@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet } from 'react-native';
 
 import { Text } from '@/components/Text';
+import { AdvancedRatingSetting } from '@/features/settings/AdvancedRatingSetting';
 import { LanguageOptions } from '@/features/settings/LanguageOptions';
 import { colors, space } from '@/theme/tokens';
 
@@ -14,6 +15,7 @@ export default function SettingsScreen() {
         {t('settings.languageTitle')}
       </Text>
       <LanguageOptions />
+      <AdvancedRatingSetting />
     </ScrollView>
   );
 }

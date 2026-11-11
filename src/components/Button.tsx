@@ -19,6 +19,8 @@ export type ButtonVariant = 'primary' | 'secondary' | 'success';
 export type ButtonProps = Omit<PressableProps, 'children' | 'style'> & {
   title: string;
   variant?: ButtonVariant;
+  /** Taller face for the two review grades. */
+  large?: boolean;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
 };
@@ -58,6 +60,7 @@ const disabledColors: VariantColors = {
 export function Button({
   title,
   variant = 'primary',
+  large = false,
   disabled = false,
   onPress,
   onPressIn,
@@ -114,6 +117,7 @@ export function Button({
       <Animated.View
         style={[
           styles.face,
+          large ? styles.faceLarge : null,
           faceStyle,
           {
             backgroundColor: palette.face,
@@ -131,7 +135,7 @@ export function Button({
           onPress={disabled ? undefined : onPress}
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}
-          style={styles.pressable}
+          style={[styles.pressable, large ? styles.pressableLarge : null]}
         >
           <Text style={[styles.label, { color: palette.label }]}>{title}</Text>
         </Pressable>
@@ -173,6 +177,9 @@ const styles = StyleSheet.create({
     borderRadius: radius.md,
     minHeight: 44,
   },
+  faceLarge: {
+    minHeight: 64,
+  },
   pressable: {
     minHeight: 44,
     width: '100%',
@@ -180,6 +187,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: space.xl,
     paddingVertical: space.md,
+  },
+  pressableLarge: {
+    minHeight: 64,
+    paddingVertical: space.lg,
   },
   label: {
     fontFamily: type.button.fontFamily,

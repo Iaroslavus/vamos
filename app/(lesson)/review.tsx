@@ -24,6 +24,7 @@ export default function ReviewScreen() {
   const { phase, reload, reveal, rate, begin, noteChecked, advancePractice } =
     useReviewSession(folderId);
   const card = phase.status === 'study' ? phase.queue[phase.index] : undefined;
+  const nextCard = phase.status === 'study' ? (phase.queue[phase.index + 1] ?? null) : null;
 
   const leave = () => {
     if (router.canGoBack()) router.back();
@@ -94,6 +95,7 @@ export default function ReviewScreen() {
       {phase.status === 'study' && card ? (
         <ReviewStudy
           card={card}
+          nextCard={nextCard}
           index={phase.index}
           total={phase.queue.length}
           revealed={phase.revealed}
