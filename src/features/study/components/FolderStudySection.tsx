@@ -58,7 +58,6 @@ export function FolderStudySection({ folderId, userId, itemIds }: FolderStudySec
         visible={open}
         units={units}
         settings={prefs.prefs.settings}
-        lastMode={prefs.prefs.lastMode}
         onClose={() => setOpen(false)}
         onChangeSettings={prefs.setSettings}
         onStart={start}

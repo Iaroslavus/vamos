@@ -1,4 +1,5 @@
 import { X } from 'lucide-react-native';
+import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
@@ -18,12 +19,28 @@ type TimedPairsSessionProps = {
   userId: string | null;
   folderId: string;
   onClose: () => void;
+  /** When set, a cleared board continues a mixed session instead of the finish screen. */
+  onFinished?: () => void;
 };
 
-export function TimedPairsSession({ units, userId, folderId, onClose }: TimedPairsSessionProps) {
+export function TimedPairsSession({
+  units,
+  userId,
+  folderId,
+  onClose,
+  onFinished,
+}: TimedPairsSessionProps) {
   const { t } = useTranslation();
   const record = usePairsRecord(userId, folderId);
   const game = useTimedPairs(units, record, record.ready);
+  const reported = useRef(false);
+  const finished = record.ready && game.phase === 'done';
+
+  useEffect(() => {
+    if (!finished || !onFinished || reported.current) return;
+    reported.current = true;
+    onFinished();
+  }, [finished, onFinished]);
 
   if (!record.ready) {
     return (
@@ -34,6 +51,8 @@ export function TimedPairsSession({ units, userId, folderId, onClose }: TimedPai
       </View>
     );
   }
+
+  if (finished && onFinished) return null;
 
   if (!game.round) {
     return (

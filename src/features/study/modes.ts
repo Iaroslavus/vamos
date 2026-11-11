@@ -1,35 +1,23 @@
 import { SPEECH_PASS_SCORE } from '@/features/speech/score';
 
-import {
-  DEFAULT_TEST_COUNT,
-  QUICK5_LIMIT,
-  STUDY_MODES,
-  type AccentStrictness,
-  type StudyMode,
-} from './types';
+import { DEFAULT_TEST_COUNT, STUDY_MODES, type AccentStrictness, type StudyMode } from './types';
 
 /** A mode that is not ready stays on the sheet as «скоро». */
 export const STUDY_MODE_READY: Record<StudyMode, boolean> = {
-  review: true,
-  flashcards: true,
   learn: true,
-  test: true,
-  match: true,
-  spell: true,
+  flashcards: true,
+  blitz: true,
   speak: true,
-  quick5: true,
+  test: true,
 };
 
 /** Minutes × 10 per item, so the estimate does not depend on binary fractions. */
 const MINUTE_TENTHS: Record<StudyMode, number> = {
-  review: 4,
+  learn: 6,
   flashcards: 2,
-  learn: 8,
-  test: 5,
-  match: 4,
-  spell: 5,
+  blitz: 4,
   speak: 7,
-  quick5: 4,
+  test: 5,
 };
 
 /**
@@ -50,21 +38,16 @@ export function isPlayableStudyMode(mode: StudyMode): boolean {
   return STUDY_MODE_READY[mode];
 }
 
-/** Last mode leads. The rest keep the catalog order. */
-export function orderedStudyModes(last: StudyMode | null): StudyMode[] {
-  if (!last) return [...STUDY_MODES];
-  return [last, ...STUDY_MODES.filter((mode) => mode !== last)];
+/** «Вчити» stays first. The sheet does not reshuffle around the last session. */
+export function orderedStudyModes(): StudyMode[] {
+  return [...STUDY_MODES];
 }
 
-/** Rough session length shown on a mode card. At least one minute. */
+/** Rough session length. Blitz is a fixed two-minute warm-up. At least one minute. */
 export function estimateStudyMinutes(mode: StudyMode, itemCount: number): number {
+  if (mode === 'blitz') return 2;
   const available = Math.max(0, itemCount);
-  const count =
-    mode === 'quick5'
-      ? Math.min(QUICK5_LIMIT, available)
-      : mode === 'test'
-        ? Math.min(DEFAULT_TEST_COUNT, available)
-        : available;
+  const count = mode === 'test' ? Math.min(DEFAULT_TEST_COUNT, available) : available;
   if (count === 0) return 1;
   return Math.max(1, Math.round((count * MINUTE_TENTHS[mode]) / 10));
 }

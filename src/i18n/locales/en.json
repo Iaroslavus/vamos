@@ -517,41 +517,35 @@
     "minutes_other": "~{{count}} min",
     "noneIntroduced": "Meet the phrases in a lesson first. A session only includes those.",
     "noneFiltered": "Nothing matches this filter yet.",
-    "modeLabel": "{{title}}. {{minutes}}. {{body}}",
-    "modeSoonLabel": "{{title}}. {{minutes}}. {{body}}. {{soon}}",
+    "modeLabel": "{{title}}. {{body}}",
+    "modeSoonLabel": "{{title}}. {{body}}. {{soon}}",
+    "modeDueLabel": "{{title}}. {{body}}. {{due}}",
+    "dueBadge": "{{due}} to review",
     "modes": {
-      "review": {
-        "title": "Review",
-        "body": "Exercises on phrases you have met. The answer moves the interval."
+      "learn": {
+        "title": "Study",
+        "body": "The best way to remember"
       },
       "flashcards": {
-        "title": "Flashcards",
-        "body": "Flip the card. Right means Know, left means Still learning."
+        "title": "Cards",
+        "body": "A quick look"
       },
-      "learn": {
-        "title": "Learn",
-        "body": "Sets of seven: choose, write, then say it aloud."
-      },
-      "test": {
-        "title": "Test",
-        "body": "No hints until you hand it in. Then a score and the misses."
-      },
-      "match": {
-        "title": "Timed pairs",
-        "body": "A grid of six pairs. A miss adds a second, and the record stays with the folder."
-      },
-      "spell": {
-        "title": "Dictation",
-        "body": "Hear the phrase and write it. Revealing a letter costs a point."
+      "blitz": {
+        "title": "Blitz",
+        "body": "A 2-minute warm-up"
       },
       "speak": {
         "title": "Speaking",
-        "body": "Say each phrase. Pronunciation is checked the same way as in a lesson."
+        "body": "Practice your pronunciation"
       },
-      "quick5": {
-        "title": "Quick 5",
-        "body": "Five short questions without a grade."
+      "test": {
+        "title": "Test",
+        "body": "Check yourself"
       }
+    },
+    "blitz": {
+      "timer": "{{time}} left",
+      "done": "Warm-up complete"
     },
     "directionLabel": "Direction",
     "direction": {

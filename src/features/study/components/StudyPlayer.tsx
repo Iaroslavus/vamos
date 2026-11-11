@@ -1,5 +1,5 @@
 import { X } from 'lucide-react-native';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
 
@@ -25,13 +25,22 @@ type StudyPlayerProps = {
   recordGrades: boolean;
   onRecord: (record: StudyRecordInput) => Promise<void>;
   onClose: () => void;
+  /** When set, finishing the last step continues a mixed session instead of the summary. */
+  onFinished?: () => void;
 };
 
-export function StudyPlayer({ steps, recordGrades, onRecord, onClose }: StudyPlayerProps) {
+export function StudyPlayer({
+  steps,
+  recordGrades,
+  onRecord,
+  onClose,
+  onFinished,
+}: StudyPlayerProps) {
   const { t } = useTranslation();
   const preference = useAudioPreference();
   const player = useStudyPlayer({ steps, recordGrades, onRecord });
   const step = player.step;
+  const reported = useRef(false);
 
   useEffect(() => {
     if (!step || !step.autoplay) return undefined;
@@ -50,7 +59,14 @@ export function StudyPlayer({ steps, recordGrades, onRecord, onClose }: StudyPla
     };
   }, [preference, step]);
 
+  useEffect(() => {
+    if (!player.done || !onFinished || reported.current) return;
+    reported.current = true;
+    onFinished();
+  }, [onFinished, player.done]);
+
   if (player.done || !step) {
+    if (onFinished) return null;
     return (
       <View style={styles.done}>
         <Text variant="h2" style={styles.center}>

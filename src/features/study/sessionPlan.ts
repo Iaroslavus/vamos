@@ -6,7 +6,6 @@ import type { LearnTask } from './learn';
 import { ACCENT_PASS_SCORE } from './modes';
 import {
   MATCH_BOARD_SIZE,
-  QUICK5_LIMIT,
   type StudyDirectionSetting,
   type StudyExerciseKind,
   type StudyExerciseStep,
@@ -23,7 +22,7 @@ import {
 
 const CHOICES = 4;
 
-const REVIEW_CYCLE = ['select_translation', 'listen_select', 'type_translation'] as const;
+const LEARN_CYCLE = ['choice', 'pairs', 'input', 'dictation'] as const;
 
 type Gloss = { es: string; tr: string; audio: string | null };
 type Side = 'es' | 'tr';
@@ -45,41 +44,22 @@ export function sessionPlan(
   switch (mode) {
     case 'flashcards':
       return selected.map((unit, index) => flashcardStep(unit, index, settings));
-    case 'match':
-      return matchBoards(selected, settings);
     case 'speak':
       return selected.map((unit, index) => speakStep(unit, index, settings));
-    case 'spell':
-      return selected.map((unit, index) =>
-        exerciseStep(unit, index, 'type_translation', known, settings, 'spell', `spell-${index}`),
-      );
     case 'learn':
-      return learnSteps(selected, known, settings);
+      return learnMix(selected, known, settings);
     case 'test':
       // Questions are built by planTest. They are not lesson steps.
       return [];
-    case 'quick5':
+    case 'blitz':
       return selected.map((unit, index) =>
         exerciseStep(
           unit,
           index,
-          REVIEW_CYCLE[index % REVIEW_CYCLE.length] ?? 'select_translation',
+          'select_translation',
           known,
-          settings,
-          'quick5',
-          `quick5-${index}`,
-        ),
-      );
-    case 'review':
-      return selected.map((unit, index) =>
-        exerciseStep(
-          unit,
-          index,
-          REVIEW_CYCLE[index % REVIEW_CYCLE.length] ?? 'select_translation',
-          known,
-          settings,
-          'review',
-          `review-${index}`,
+          { ...settings, direction: 'es_to_ru' },
+          `blitz-${index}`,
         ),
       );
     default: {
@@ -148,13 +128,32 @@ function selectUnits(
   mode: StudyMode,
 ): StudyUnit[] {
   const filtered = known.filter((unit) => matchesFilter(unit, settings.filter));
-  const limit =
-    mode === 'quick5'
-      ? Math.min(QUICK5_LIMIT, settings.count)
-      : mode === 'test'
-        ? filtered.length
-        : settings.count;
-  return filtered.slice(0, Math.max(0, limit));
+  const ordered = mode === 'learn' ? orderForLearn(filtered) : filtered;
+  const limit = mode === 'test' ? ordered.length : settings.count;
+  return ordered.slice(0, Math.max(0, limit));
+}
+
+/**
+ * Due reviews first, then FSRS-new phrases, then everything else the filter kept.
+ * Due cards that are still new stay in the review group.
+ */
+function orderForLearn(units: readonly StudyUnit[]): StudyUnit[] {
+  const due: StudyUnit[] = [];
+  const fresh: StudyUnit[] = [];
+  const rest: StudyUnit[] = [];
+  for (const unit of units) {
+    if (unit.due) due.push(unit);
+    else if (unit.state === 0) fresh.push(unit);
+    else rest.push(unit);
+  }
+  return [...due, ...fresh, ...rest];
+}
+
+/** Introduced phrases that are actually due. The «Вчити» badge uses this. */
+export function dueStudyCount(units: readonly StudyUnit[]): number {
+  return units.filter(
+    (unit) => unit.introduced && unit.due && unit.es.trim().length > 0 && unit.tr.trim().length > 0,
+  ).length;
 }
 
 function matchesFilter(unit: StudyUnit, filter: StudyFilter): boolean {
@@ -175,18 +174,82 @@ function matchesFilter(unit: StudyUnit, filter: StudyFilter): boolean {
 }
 
 /**
- * One opening prompt per unit.
- * The learn screen does not walk this list. It runs the level queue.
- * The list only tells the launcher whether the folder has something to study.
+ * «Вчити»: choice, a pairs board, typing, then dictation, and again.
+ * A pairs turn needs two phrases. A single leftover becomes a choice.
  */
-function learnSteps(
+function learnMix(
   selected: readonly StudyUnit[],
   pool: readonly StudyUnit[],
   settings: StudySettings,
 ): StudyStep[] {
-  return selected.map((unit, index) =>
-    planLearnStep(unit, pool, settings, 'select', `learn-${index}`, index),
+  const steps: StudyStep[] = [];
+  let cursor = 0;
+  let turn = 0;
+
+  while (cursor < selected.length) {
+    const kind = LEARN_CYCLE[turn % LEARN_CYCLE.length] ?? 'choice';
+    turn += 1;
+    const unit = selected[cursor];
+    if (!unit) break;
+
+    if (kind === 'pairs') {
+      const remaining = selected.length - cursor;
+      if (remaining < 2) {
+        steps.push(choiceStep(unit, cursor, pool, settings));
+        cursor += 1;
+        continue;
+      }
+      const size = Math.min(MATCH_BOARD_SIZE, remaining);
+      const chunk = selected.slice(cursor, cursor + size);
+      const board = matchBoards(chunk, settings)[0];
+      if (board) steps.push({ ...board, id: `learn-pairs-${cursor}` });
+      cursor += size;
+      continue;
+    }
+
+    if (kind === 'input') steps.push(inputStep(unit, cursor, pool, settings));
+    else if (kind === 'dictation') steps.push(dictationStep(unit, cursor, pool, settings));
+    else steps.push(choiceStep(unit, cursor, pool, settings));
+    cursor += 1;
+  }
+
+  return steps;
+}
+
+function choiceStep(
+  unit: StudyUnit,
+  index: number,
+  pool: readonly StudyUnit[],
+  settings: StudySettings,
+): StudyStep {
+  return exerciseStep(unit, index, 'select_translation', pool, settings, `learn-choice-${index}`);
+}
+
+function inputStep(
+  unit: StudyUnit,
+  index: number,
+  pool: readonly StudyUnit[],
+  settings: StudySettings,
+): StudyStep {
+  return exerciseStep(unit, index, 'type_translation', pool, settings, `learn-input-${index}`);
+}
+
+/** Hear the Spanish and write it. The dictation screen plays the clip itself. */
+function dictationStep(
+  unit: StudyUnit,
+  index: number,
+  pool: readonly StudyUnit[],
+  settings: StudySettings,
+): StudyExerciseStep {
+  const step = exerciseStep(
+    unit,
+    index,
+    'type_translation',
+    pool,
+    { ...settings, direction: 'ru_to_es' },
+    `learn-dictation-${index}`,
   );
+  return { ...step, playEs: true };
 }
 
 /** The prompt a learn unit shows at its current level. */
@@ -219,7 +282,6 @@ export function planLearnStep(
     task === 'select' ? 'select_translation' : 'type_translation',
     pool,
     settings,
-    'learn',
     id,
   );
 }
@@ -230,7 +292,6 @@ function exerciseStep(
   ask: StudyExerciseKind,
   pool: readonly StudyUnit[],
   settings: StudySettings,
-  mode: StudyMode,
   id: string,
 ): StudyExerciseStep {
   const direction = directionFor(settings.direction, index);
@@ -244,7 +305,7 @@ function exerciseStep(
     phraseEs: unit.es,
     phraseTr: unit.tr,
     audio: unit.audio,
-    playEs: mode === 'spell' && settings.autoplay,
+    playEs: false,
   };
 
   if (kind === 'listen_select') {

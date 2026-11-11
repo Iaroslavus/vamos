@@ -12,13 +12,12 @@ import { reviewRepository } from '@/features/review/defaultRepository';
 import { vocabRepository } from '@/features/vocab/defaultRepository';
 import { colors, space } from '@/theme/tokens';
 
-import { DictationSession } from './components/DictationSession';
+import { BlitzSession } from './components/BlitzSession';
 import { FlashcardSession } from './components/FlashcardSession';
-import { LearnSession } from './components/LearnSession';
+import { LearnMixSession } from './components/LearnMixSession';
 import { SpeakSession } from './components/SpeakSession';
 import { StudyPlayer } from './components/StudyPlayer';
 import { TestSession } from './components/TestSession';
-import { TimedPairsSession } from './components/TimedPairsSession';
 import { flashcardSteps } from './flashcards';
 import { recordStudyResult, studyModeGrades } from './fsrs';
 import { useStudyLaunch } from './hooks/useStudyLaunch';
@@ -80,15 +79,8 @@ export function StudySessionScreen() {
           }}
           onClose={leave}
         />
-      ) : launch.status === 'ready' && mode === 'match' ? (
-        <TimedPairsSession
-          units={launch.selected}
-          userId={launch.userId}
-          folderId={folderId}
-          onClose={leave}
-        />
-      ) : launch.status === 'ready' && mode === 'spell' ? (
-        <DictationSession units={launch.selected} onRecord={onRecord} onClose={leave} />
+      ) : launch.status === 'ready' && mode === 'blitz' ? (
+        <BlitzSession steps={launch.steps} onClose={leave} />
       ) : launch.status === 'ready' && mode === 'speak' ? (
         <SpeakSession
           steps={launch.steps.filter(
@@ -98,9 +90,10 @@ export function StudySessionScreen() {
           onClose={leave}
         />
       ) : launch.status === 'ready' && mode === 'learn' ? (
-        <LearnSession
-          units={launch.selected}
-          settings={launch.settings}
+        <LearnMixSession
+          steps={launch.steps}
+          userId={launch.userId}
+          folderId={folderId}
           onRecord={onRecord}
           onClose={leave}
         />

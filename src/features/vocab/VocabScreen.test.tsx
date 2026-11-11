@@ -316,7 +316,7 @@ describe('FolderScreen', () => {
     expect(screen.queryByText('скоро')).toBeNull();
 
     await waitFor(() => {
-      expect(screen.getByTestId('study-mode-review').props.accessibilityState).toEqual(
+      expect(screen.getByTestId('study-mode-learn').props.accessibilityState).toEqual(
         expect.objectContaining({ disabled: false }),
       );
     });
@@ -332,10 +332,14 @@ describe('FolderScreen', () => {
     expect(screen.getByText('Автоозвучка')).toBeTruthy();
 
     await user.press(screen.getByLabelText('Назад'));
-    await user.press(screen.getByTestId('study-mode-review'));
+    expect(screen.getByText('1 к повторению')).toBeTruthy();
+    expect(screen.queryByText('Контрольная')).toBeNull();
+    expect(screen.queryByTestId('study-mode-match')).toBeNull();
+    expect(screen.queryByTestId('study-mode-spell')).toBeNull();
+    await user.press(screen.getByTestId('study-mode-learn'));
     expect(mockPush).toHaveBeenCalledWith({
       pathname: '/study',
-      params: { folder: favorites?.id, mode: 'review' },
+      params: { folder: favorites?.id, mode: 'learn' },
     });
   });
 });

@@ -1,15 +1,6 @@
 import type { ReviewDirection } from '@/features/review/types';
 
-export const STUDY_MODES = [
-  'review',
-  'flashcards',
-  'learn',
-  'test',
-  'match',
-  'spell',
-  'speak',
-  'quick5',
-] as const;
+export const STUDY_MODES = ['learn', 'flashcards', 'blitz', 'speak', 'test'] as const;
 
 export type StudyMode = (typeof STUDY_MODES)[number];
 
@@ -49,9 +40,6 @@ export const DEFAULT_TEST_SETTINGS: TestSettings = {
   kinds: TEST_KINDS,
   direction: 'es_to_ru',
 };
-
-/** Quick 5 never asks for more than this, even when the folder setting is higher. */
-export const QUICK5_LIMIT = 5;
 
 /** Pairs on one match board. A leftover single item is left out. */
 export const MATCH_BOARD_SIZE = 4;
