@@ -1,20 +1,22 @@
+import { Volume2 } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
+import { IconButton } from '@/components/IconButton';
+import { Ring } from '@/components/Ring';
 import { Text } from '@/components/Text';
 import { playLessonAudio, stopLessonAudio } from '@/features/audio/playback';
 import { colors, space } from '@/theme/tokens';
 
-import { useComparePlayback } from '../hooks/useComparePlayback';
+import { pronunciationCoach } from '../coach';
+import { useSampleDuration } from '../hooks/useSampleDuration';
 import { useSpeakPractice, type SpeakPracticeMode } from '../hooks/useSpeakPractice';
 import { useUnitFeatures } from '../hooks/useUnitFeatures';
-import type { SpeechOption } from '../score';
+import type { SpeechOption, SpeechScore } from '../score';
+import { speechScoreColor } from '../scoreColor';
 import { ColoredPhrase } from './ColoredPhrase';
-import { PronunciationHints } from './PronunciationHints';
-import { SelfCompareActions } from './SelfCompareActions';
-import { SpeakActions } from './SpeakActions';
-import { SpeakFeedback } from './SpeakFeedback';
-import { SpeakPracticeControls, SpeakPracticeHeading } from './SpeakPracticeChrome';
+import { MicButton } from './MicButton';
+import { SpeakPracticeFooter } from './SpeakPracticeFooter';
 import { SpeechFallback, type SpeechFallbackTone } from './SpeechFallback';
 
 type Part = { es: string; ru: string };
@@ -29,7 +31,8 @@ export type SpeakPracticeProps = {
   options?: readonly SpeechOption[];
   onMatch?: (optionId: string) => void;
   onSkip?: () => void;
-  onContinue?: () => void;
+  /** `passed` is false when the learner moves on after a miss. */
+  onContinue?: (passed: boolean) => void;
   onClose?: () => void;
   attemptsUsed?: number;
   onAttemptsUsed?: (count: number) => void;
@@ -37,13 +40,16 @@ export type SpeakPracticeProps = {
   featuresPath?: string | null;
   /** Understood at this score. Omitted in a lesson, where the speech default applies. */
   passScore?: number;
+  /**
+   * Dev gallery only. A release build ignores it, so a fake score cannot ship.
+   */
+  preview?: SpeechScore | null;
 };
 
 export function SpeakPractice({
   phrase,
   audio = null,
   sayRu = null,
-  parts = [],
   mode,
   confusables = [],
   options,
@@ -55,8 +61,10 @@ export function SpeakPractice({
   onAttemptsUsed,
   featuresPath = null,
   passScore,
+  preview = null,
 }: SpeakPracticeProps) {
   const { t } = useTranslation();
+  const sampleDurationMs = useSampleDuration(audio);
   const references = useUnitFeatures(featuresPath);
   const practice = useSpeakPractice({
     phrase,
@@ -68,16 +76,17 @@ export function SpeakPractice({
     onAttemptsUsed,
     references,
     passScore,
+    sampleDurationMs,
   });
-  useComparePlayback(practice.compareToken, practice.recordingUri, { audio, text: phrase });
   const access = practice.capture.access;
   const fallback = access === 'unavailable' || access === 'denied' || access === 'blocked';
   const tone: SpeechFallbackTone = mode === 'step' ? 'step' : mode;
   const listening = practice.recording || practice.capture.listening;
-  const volume = practice.recording ? practice.level : practice.capture.volume;
-  const micDisabled = (practice.locked || practice.micBlocked) && !listening;
-  const repeatSample = practice.micUnavailable || (mode !== 'step' && fallback);
-  const sampleTitle = t(repeatSample ? 'speech.listenAndRepeat' : 'speech.listenSample');
+  const shown = __DEV__ && preview ? preview : practice.shown;
+  const answered = shown != null || (mode === 'dialog' && practice.dialogMiss);
+  const scoreColor = shown ? speechScoreColor(shown.score) : colors.ink;
+  const hint = shown?.problem ? coachLine(t, phrase, shown.problem.expected, sayRu) : null;
+  const micDisabled = practice.grading || ((practice.locked || practice.micBlocked) && !listening);
 
   const onSample = () => {
     practice.cancelRecording();
@@ -86,30 +95,22 @@ export function SpeakPractice({
     void playLessonAudio({ audio, text: phrase });
   };
 
-  const onMic = () => {
-    void stopLessonAudio();
-    practice.onMic();
-  };
-
   return (
     <View style={[styles.root, mode === 'step' ? styles.step : null]}>
-      <View style={styles.body}>
-        <SpeakPracticeHeading mode={mode} selfCompare={practice.selfCompare} />
-        {mode === 'dialog' ? null : <ColoredPhrase phrase={phrase} score={practice.shown} />}
-        {mode === 'dialog' ? null : <PronunciationHints phrase={phrase} />}
-        {practice.shown ? (
-          <SpeakFeedback
-            score={practice.shown}
-            attemptsLeft={practice.attemptsLeft}
-            sayRu={sayRu}
-            parts={parts}
-            showAttempts={mode === 'step'}
-            acousticHints={practice.findings}
-            passScore={passScore}
-          />
-        ) : mode === 'step' ? (
-          <Text variant="body" color={colors.inkMuted}>
-            {t('speech.attemptsLeft', { count: practice.attemptsLeft })}
+      <View style={styles.top}>
+        {mode === 'dialog' || phrase.length === 0 ? null : (
+          <View style={styles.phraseRow}>
+            <View style={styles.phrase}>
+              <ColoredPhrase phrase={phrase} color={scoreColor} />
+            </View>
+            <IconButton accessibilityLabel={t('speech.listenSample')} onPress={onSample}>
+              <Volume2 size={22} color={colors.ink} strokeWidth={2.2} />
+            </IconButton>
+          </View>
+        )}
+        {hint ? (
+          <Text variant="body" accessibilityLiveRegion="polite">
+            {hint}
           </Text>
         ) : null}
         {mode === 'dialog' && practice.dialogMiss ? (
@@ -128,60 +129,89 @@ export function SpeakPractice({
         )}
       </View>
 
-      {practice.comparing ? (
-        <SelfCompareActions
-          againDisabled={practice.locked || practice.micBlocked}
-          onSame={() => {
-            practice.confirm();
-            if (mode === 'step') onContinue?.();
-          }}
-          onAgain={() => {
-            void stopLessonAudio();
-            practice.onAgain();
-          }}
-        />
-      ) : null}
+      <View style={styles.stage}>
+        {shown ? (
+          <Ring
+            progress={shown.score / 100}
+            size={120}
+            strokeWidth={10}
+            color={scoreColor}
+            labelColor={scoreColor}
+            prominent
+            accessibilityLabel={t('speech.scoreA11y', { score: shown.score })}
+          />
+        ) : answered ? null : (
+          <MicButton
+            listening={listening}
+            disabled={micDisabled}
+            accessibilityLabel={t(listening ? 'speech.micStop' : 'speech.micStart')}
+            onPress={() => {
+              void stopLessonAudio();
+              practice.onMic();
+            }}
+          />
+        )}
+      </View>
 
-      {mode === 'step' ? (
-        <SpeakActions
-          listening={listening}
-          volume={volume}
-          micDisabled={micDisabled}
-          passed={practice.passed}
-          sampleTitle={sampleTitle}
-          onMic={onMic}
-          onSample={onSample}
-          onSkip={() => onSkip?.()}
-          onContinue={() => onContinue?.()}
-        />
-      ) : (
-        <SpeakPracticeControls
-          listening={listening}
-          volume={volume}
-          micDisabled={micDisabled}
-          showSample={mode !== 'dialog'}
-          sampleTitle={sampleTitle}
-          closeTitle={t(practice.passed ? 'speech.practiceDone' : 'common.close')}
-          closePrimary={practice.passed}
-          onMic={onMic}
-          onSample={onSample}
-          onClose={() => onClose?.()}
-        />
-      )}
+      <SpeakPracticeFooter
+        answered={answered}
+        againDisabled={practice.locked || practice.micBlocked || practice.grading}
+        onAgain={() => {
+          void stopLessonAudio();
+          practice.onAgain();
+        }}
+        onNext={() => {
+          if (onContinue) onContinue(practice.passed);
+          else onClose?.();
+        }}
+        onSkip={() => {
+          practice.cancelRecording();
+          if (onSkip) onSkip();
+          else onClose?.();
+        }}
+      />
     </View>
   );
 }
 
+function coachLine(
+  translate: (key: string, options?: Record<string, string>) => string,
+  phrase: string,
+  problemWord: string,
+  say: string | null,
+): string | null {
+  const rule = pronunciationCoach(phrase, problemWord);
+  const tip = rule ? translate(rule.hintKey) : null;
+  const spoken = say?.trim() ? say.trim() : null;
+  if (tip && spoken) return translate('speech.coachLine', { tip, say: spoken });
+  return tip ?? spoken;
+}
+
 const styles = StyleSheet.create({
   root: {
-    gap: space.md,
-  },
-  step: {
-    flex: 1,
+    flexGrow: 1,
+    minHeight: 420,
     justifyContent: 'space-between',
     gap: space.lg,
   },
-  body: {
+  step: {
+    flex: 1,
+    minHeight: 0,
+  },
+  top: {
     gap: space.md,
+  },
+  phraseRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: space.sm,
+  },
+  phrase: {
+    flex: 1,
+  },
+  stage: {
+    minHeight: 132,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

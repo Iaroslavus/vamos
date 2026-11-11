@@ -103,8 +103,8 @@ export function SpeakSession({ steps, onRecord, onClose }: SpeakSessionProps) {
         onSkip={() => {
           void finish(false);
         }}
-        onContinue={() => {
-          void finish(true);
+        onContinue={(passed = true) => {
+          void finish(passed);
         }}
       />
     </View>

@@ -1,42 +1,31 @@
 import { StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/Text';
-import { speechWords, type SpeechScore, type WordMark } from '@/features/speech/score';
-import { colors, space } from '@/theme/tokens';
-
-const markColor: Record<WordMark | 'pending', string> = {
-  ok: colors.teal,
-  close: colors.saffronDeep,
-  miss: colors.errorInk,
-  pending: colors.ink,
-};
+import { speechWords } from '@/features/speech/score';
+import { space } from '@/theme/tokens';
 
 type ColoredPhraseProps = {
   phrase: string;
-  score: SpeechScore | null;
+  color: string;
 };
 
-export function ColoredPhrase({ phrase, score }: ColoredPhraseProps) {
-  const pending = speechWords(phrase).map((expected) => ({
-    expected,
-    mark: 'pending' as const,
-  }));
-  const words = score?.words ?? pending;
+/** The reference, one color for every word. */
+export function ColoredPhrase({ phrase, color }: ColoredPhraseProps) {
+  const words = speechWords(phrase);
 
   if (words.length === 0) {
-    return <Text variant="h1">{phrase}</Text>;
+    return (
+      <Text variant="h1" color={color}>
+        {phrase}
+      </Text>
+    );
   }
 
   return (
     <View style={styles.row} accessibilityRole="text" accessibilityLabel={phrase}>
       {words.map((word, index) => (
-        <Text
-          key={`${word.expected}-${index}`}
-          variant="h1"
-          color={markColor[word.mark]}
-          style={styles.word}
-        >
-          {word.expected}
+        <Text key={`${word}-${index}`} variant="h1" color={color} style={styles.word}>
+          {word}
         </Text>
       ))}
     </View>

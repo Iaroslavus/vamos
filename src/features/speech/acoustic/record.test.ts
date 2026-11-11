@@ -175,7 +175,7 @@ describe('openWavTake', () => {
     });
   });
 
-  it('returns null and restores playback when stop fails', async () => {
+  it('still reads the file when stop fails after the cap has ended the take', async () => {
     const { io, calls } = controls();
     const mic = recorder({
       stop: jest.fn(async () => {
@@ -184,7 +184,18 @@ describe('openWavTake', () => {
     });
     const take = await openWavTake(mic, io);
 
-    expect(await take?.finish()).toBeNull();
+    const result = await take?.finish();
+    expect(result?.uri).toBe('file:///cache/take.wav');
+    expect(result?.samples?.length).toBeGreaterThan(0);
     expect(calls.filter((call) => call === 'play-mode')).toHaveLength(1);
+  });
+
+  it('records for the caller duration instead of the safety cap', async () => {
+    const { io } = controls();
+    const mic = recorder();
+
+    await openWavTake(mic, io, 3);
+
+    expect(mic.record).toHaveBeenCalledWith({ forDuration: 3 });
   });
 });

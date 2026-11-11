@@ -245,14 +245,16 @@ describe('IntroStep', () => {
     await renderStep(phrase);
 
     expect(screen.queryByText('Повторите вслух')).toBeNull();
-    expect(screen.queryByText('Слушать образец')).toBeNull();
+    expect(screen.queryByLabelText('Слушать образец')).toBeNull();
 
     await fireEvent.press(screen.getByText('Повторить вслух'));
 
-    expect(await screen.findByText('Повторите вслух')).toBeTruthy();
-    expect(screen.getByText('Слушать образец')).toBeTruthy();
+    expect(screen.queryByText('Повторите вслух')).toBeNull();
+    expect(screen.queryByText('Тренировка: сердечки и ошибки урока не меняются.')).toBeNull();
+    expect(screen.getByLabelText('Слушать образец')).toBeTruthy();
     expect(screen.getByLabelText('Говорить')).toBeTruthy();
-    expect(screen.getByText('Тренировка: сердечки и ошибки урока не меняются.')).toBeTruthy();
+    expect(screen.getByText('Пропустить')).toBeTruthy();
+    expect(screen.queryByText('Закрыть')).toBeNull();
   });
 
   it('offers listen-and-repeat when recognition is unavailable', async () => {
@@ -264,7 +266,7 @@ describe('IntroStep', () => {
     expect(await screen.findByText('Распознавание недоступно')).toBeTruthy();
     expect(screen.getByText(/Прослушайте фразу и повторите её сами/)).toBeTruthy();
 
-    await fireEvent.press(screen.getByText('Прослушать и повторить'));
+    await fireEvent.press(screen.getByLabelText('Слушать образец'));
 
     expect(ExpoSpeechRecognitionModule.start).not.toHaveBeenCalled();
     expect(playLessonAudio).toHaveBeenCalledWith(
@@ -286,7 +288,7 @@ describe('IntroStep', () => {
     expect(await screen.findByText('Микрофон недоступен')).toBeTruthy();
     expect(screen.getByText(/Прослушайте фразу и повторите её сами/)).toBeTruthy();
 
-    await fireEvent.press(screen.getByText('Прослушать и повторить'));
+    await fireEvent.press(screen.getByLabelText('Слушать образец'));
 
     expect(ExpoSpeechRecognitionModule.start).not.toHaveBeenCalled();
     expect(playLessonAudio).toHaveBeenCalledWith(
@@ -316,7 +318,7 @@ describe('IntroStep', () => {
       emitTranscript('zzzz');
     });
 
-    expect(await screen.findByText('Не расслышали «buenos».')).toBeTruthy();
+    expect(await screen.findByText('ударение на отмеченной гласной: буЭнос дИас')).toBeTruthy();
     const state = useLessonStore.getState();
     expect(state.hearts).toBe(DEFAULT_MAX_HEARTS);
     expect(state.wrongCount).toBe(0);
@@ -345,5 +347,19 @@ describe('IntroStep', () => {
     const view = await renderStep(phrase);
     await view.unmount();
     expect(stopLessonAudio).toHaveBeenCalled();
+  });
+
+  it('releases the microphone when the practice sheet closes', async () => {
+    (globalThis as { __resetAudio__?: () => void }).__resetAudio__?.();
+    await renderStep(phrase);
+    await fireEvent.press(screen.getByText('Повторить вслух'));
+    await fireEvent.press(await screen.findByLabelText('Говорить'));
+    expect(await screen.findByLabelText('Остановить запись')).toBeTruthy();
+
+    const close = screen.getAllByLabelText('Закрыть');
+    await fireEvent.press(close[close.length - 1]);
+
+    const audio = (globalThis as { __VAMOS_AUDIO__: { isRecording: boolean } }).__VAMOS_AUDIO__;
+    expect(audio.isRecording).toBe(false);
   });
 });

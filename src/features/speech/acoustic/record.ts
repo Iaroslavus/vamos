@@ -77,6 +77,7 @@ export function stopSpeechRecognition(): Promise<void> {
 export async function openWavTake(
   recorder: PcmRecorder,
   io: RecordingControls,
+  forDurationSeconds = MAX_TAKE_SECONDS,
 ): Promise<WavTake | null> {
   let recordingMode = false;
   const restorePlayback = async () => {
@@ -106,7 +107,11 @@ export async function openWavTake(
       await restorePlayback();
       return null;
     }
-    recorder.record({ forDuration: MAX_TAKE_SECONDS });
+    const seconds = Math.min(
+      MAX_TAKE_SECONDS,
+      Math.max(0.2, forDurationSeconds > 0 ? forDurationSeconds : MAX_TAKE_SECONDS),
+    );
+    recorder.record({ forDuration: seconds });
     if (!recorder.getStatus().isRecording) {
       await restorePlayback();
       return null;
@@ -124,8 +129,7 @@ export async function openWavTake(
       try {
         await recorder.stop();
       } catch {
-        await restorePlayback();
-        return null;
+        // The duration cap may have stopped the file already. Still try to read it.
       }
       await restorePlayback();
       const uri = recorder.uri || recorder.getStatus().url;

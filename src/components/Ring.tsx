@@ -23,6 +23,8 @@ export type RingProps = {
   label?: string;
   /** Larger percent, for a finished test. */
   prominent?: boolean;
+  /** Percent color. Defaults to ink. */
+  labelColor?: string;
   style?: StyleProp<ViewStyle>;
   accessibilityLabel?: string;
 };
@@ -39,6 +41,7 @@ export function Ring({
   trackColor = colors.surfaceSunken,
   label,
   prominent = false,
+  labelColor = colors.ink,
   style,
   accessibilityLabel,
 }: RingProps) {
@@ -98,7 +101,9 @@ export function Ring({
         />
       </Svg>
       <View style={styles.labelWrap} pointerEvents="none">
-        <Text style={[styles.label, prominent && styles.prominent]}>{percentLabel}</Text>
+        <Text style={[styles.label, prominent && styles.prominent, { color: labelColor }]}>
+          {percentLabel}
+        </Text>
       </View>
     </View>
   );

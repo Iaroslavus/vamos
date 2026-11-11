@@ -13,7 +13,7 @@ import { ACOUSTIC } from './config';
 export const NATIVE_PCM_RATE = 48_000;
 
 /** Safety cap so a take cannot hold the microphone open. */
-export const MAX_TAKE_SECONDS = 15;
+export const MAX_TAKE_SECONDS = 8;
 
 export const RECORDING_AUDIO_MODE = {
   allowsRecording: true,

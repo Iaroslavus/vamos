@@ -116,6 +116,7 @@ globalThis.__VAMOS_AUDIO__ = {
   inputs: [{ name: 'Microphone', type: 'MicrophoneBuiltIn', uid: 'mic' }],
   current: { name: 'Microphone', type: 'MicrophoneBuiltIn', uid: 'mic' },
   isRecording: false,
+  metering: undefined,
   failPrepare: false,
   uri: 'file:///cache/take.wav',
 };
@@ -126,6 +127,7 @@ globalThis.__resetAudio__ = () => {
     inputs: [{ name: 'Microphone', type: 'MicrophoneBuiltIn', uid: 'mic' }],
     current: { name: 'Microphone', type: 'MicrophoneBuiltIn', uid: 'mic' },
     isRecording: false,
+    metering: undefined,
     failPrepare: false,
     uri: 'file:///cache/take.wav',
   };
@@ -162,6 +164,7 @@ jest.mock('expo-audio', () => {
       fileSize: 0,
       mediaServicesDidReset: false,
       url: audio().uri,
+      metering: audio().metering,
     })),
     get uri() {
       return audio().uri;

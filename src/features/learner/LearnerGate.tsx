@@ -52,16 +52,19 @@ export function LearnerGate({ children }: { children: ReactNode }) {
   const onName = parts.includes('name');
   const onPreferences = parts.includes('preferences');
   const inLesson = parts.includes('(lesson)') || parts.includes('lesson');
+  const inDev = parts.includes('dev');
 
   useEffect(() => {
+    if (inDev) return;
     if (destination === 'name' && !onName) {
       router.replace('/onboarding/name');
     } else if (destination === 'preferences' && !onPreferences && !inLesson) {
       router.replace('/onboarding/preferences');
     }
-  }, [destination, inLesson, onName, onPreferences, router]);
+  }, [destination, inDev, inLesson, onName, onPreferences, router]);
 
   const cover =
+    !inDev &&
     !inLesson &&
     (destination === 'pending' ||
       (destination === 'name' && !onName) ||

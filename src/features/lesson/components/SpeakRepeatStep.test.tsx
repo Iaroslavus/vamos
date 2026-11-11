@@ -7,6 +7,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { playLessonAudio, stopLessonAudio } from '@/features/audio/playback';
 import i18n from '@/i18n';
 
+import { colors } from '@/theme/tokens';
+
 import { SpeakRepeatStep } from './SpeakRepeatStep';
 
 jest.mock('expo-haptics', () => ({
@@ -56,20 +58,22 @@ async function renderStep({
   onSkip = jest.fn(),
   onContinue = jest.fn(),
   promptEs = 'buenos días',
+  sayRu = 'буЭнос дИас',
   confusables = [] as string[],
 }: {
   onSkip?: jest.Mock;
   onContinue?: jest.Mock;
   promptEs?: string;
+  sayRu?: string | null;
   confusables?: string[];
 } = {}) {
-  await render(
+  const rendered = await render(
     <I18nextProvider i18n={i18n}>
       <SafeAreaProvider initialMetrics={safeArea}>
         <SpeakRepeatStep
           promptEs={promptEs}
           audio="a1/buenos-dias.mp3"
-          sayRu="буЭнос дИас"
+          sayRu={sayRu}
           parts={[
             { es: 'buenos', ru: 'добрые' },
             { es: 'días', ru: 'утро' },
@@ -81,7 +85,15 @@ async function renderStep({
       </SafeAreaProvider>
     </I18nextProvider>,
   );
-  return { onSkip, onContinue };
+  return { onSkip, onContinue, unmount: rendered.unmount };
+}
+
+function audioState(): { isRecording: boolean; metering?: number } {
+  return (
+    globalThis as {
+      __VAMOS_AUDIO__: { isRecording: boolean; metering?: number };
+    }
+  ).__VAMOS_AUDIO__;
 }
 
 describe('SpeakRepeatStep', () => {
@@ -97,17 +109,18 @@ describe('SpeakRepeatStep', () => {
     });
   });
 
-  it('shows the phrase, the sample, the attempts and skip', async () => {
+  it('shows the phrase, a sample icon and a quiet skip', async () => {
     await renderStep();
 
-    expect(screen.getByText('Скажите вслух')).toBeTruthy();
+    expect(screen.queryByText('Скажите вслух')).toBeNull();
+    expect(screen.queryByText(/Проверяем/)).toBeNull();
+    expect(screen.queryByText(/не сохраняется/)).toBeNull();
+    expect(screen.queryByText(/Осталось/)).toBeNull();
     expect(screen.getByText('buenos')).toBeTruthy();
     expect(screen.getByText('días')).toBeTruthy();
-    expect(screen.getByText('Слушать образец')).toBeTruthy();
+    expect(screen.getByLabelText('Слушать образец')).toBeTruthy();
     expect(screen.getByText('Пропустить')).toBeTruthy();
-    expect(screen.getByText('Осталось 3 попытки')).toBeTruthy();
-    expect(screen.getByText('Проверяем, понятно ли вы сказали.')).toBeTruthy();
-    expect(screen.getByText('Ударение там, где стоит знак ударения.')).toBeTruthy();
+    expect(screen.queryByText('Дальше')).toBeNull();
   });
 
   it('records alone, then recognizes the wav without a second microphone', async () => {
@@ -126,6 +139,7 @@ describe('SpeakRepeatStep', () => {
 
     await fireEvent.press(screen.getByLabelText('Остановить запись'));
 
+    expect(audioState().isRecording).toBe(false);
     await waitFor(() => {
       expect(ExpoSpeechRecognitionModule.start).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -141,10 +155,11 @@ describe('SpeakRepeatStep', () => {
     expect(options).not.toHaveProperty('recordingOptions');
   });
 
-  it('does not hint a longer phrase when the file is recognized', async () => {
+  it('does not mention where the recording is kept', async () => {
     await renderStep({ promptEs: 'una mesa roja' });
 
-    expect(screen.getByText(/Запись не сохраняется/)).toBeTruthy();
+    expect(screen.queryByText(/не сохраняется/)).toBeNull();
+    expect(screen.queryByText(/только для сравнения/)).toBeNull();
     await fireEvent.press(screen.getByLabelText('Говорить'));
     await waitFor(() => {
       expect(screen.getByLabelText('Остановить запись')).toBeTruthy();
@@ -175,7 +190,7 @@ describe('SpeakRepeatStep', () => {
     await fireEvent.press(screen.getByLabelText('Говорить'));
 
     expect(await screen.findByText('Микрофон недоступен')).toBeTruthy();
-    expect(screen.getByText('Прослушать и повторить')).toBeTruthy();
+    expect(screen.getByLabelText('Слушать образец')).toBeTruthy();
     expect(ExpoSpeechRecognitionModule.start).not.toHaveBeenCalled();
     expect(setAudioModeAsync).toHaveBeenCalledWith(
       expect.objectContaining({ allowsRecording: false, playsInSilentMode: true }),
@@ -192,7 +207,7 @@ describe('SpeakRepeatStep', () => {
     });
 
     await renderStep();
-    await fireEvent.press(screen.getByText('Слушать образец'));
+    await fireEvent.press(screen.getByLabelText('Слушать образец'));
     await fireEvent.press(screen.getByLabelText('Говорить'));
 
     await waitFor(() => {
@@ -203,24 +218,26 @@ describe('SpeakRepeatStep', () => {
     expect(ExpoSpeechRecognitionModule.start).not.toHaveBeenCalled();
   });
 
-  it('colors the words, shows the percent and the problem hint', async () => {
+  it('paints the phrase and the ring the same color, then moves on', async () => {
     const { onContinue } = await renderStep();
 
     await act(async () => {
       emitTranscript('buenos dias');
     });
 
-    expect(screen.getByText('Почти «días» — проверьте ударение.')).toBeTruthy();
-    expect(screen.getByText('Это значит «утро».')).toBeTruthy();
-    expect(screen.getByText('Как звучит: буЭнос дИас')).toBeTruthy();
+    expect(screen.getByText('ударение на отмеченной гласной: буЭнос дИас')).toBeTruthy();
+    expect(screen.queryByText(/Это значит/)).toBeNull();
+    expect(screen.queryByText(/Как звучит/)).toBeNull();
     expect(screen.getByText('93%')).toBeTruthy();
-    expect(screen.getByText('Осталось 2 попытки')).toBeTruthy();
-    expect(screen.getByText('Звучит так же')).toBeTruthy();
+    expect(screen.getByText('buenos')).toHaveStyle({ color: colors.teal });
+    expect(screen.getByText('días')).toHaveStyle({ color: colors.teal });
     expect(screen.getByText('Ещё раз')).toBeTruthy();
-    expect(screen.queryByText('Дальше')).toBeNull();
+    expect(screen.getByText('Дальше')).toBeTruthy();
+    expect(screen.queryByText('Звучит так же')).toBeNull();
+    expect(screen.queryByText('Пропустить')).toBeNull();
 
-    await fireEvent.press(screen.getByText('Звучит так же'));
-    expect(onContinue).toHaveBeenCalledTimes(1);
+    await fireEvent.press(screen.getByText('Дальше'));
+    expect(onContinue).toHaveBeenCalledWith(true);
   });
 
   it('accepts a longer phrase from the recognizer when every word is clear', async () => {
@@ -232,8 +249,9 @@ describe('SpeakRepeatStep', () => {
 
     expect(screen.getByText('Дальше')).toBeTruthy();
     expect(screen.queryByText('Звучит так же')).toBeNull();
+    expect(screen.queryByText(/гласной/)).toBeNull();
     await fireEvent.press(screen.getByText('Дальше'));
-    expect(onContinue).toHaveBeenCalledTimes(1);
+    expect(onContinue).toHaveBeenCalledWith(true);
   });
 
   it('does not accept hola when a neighbor is among the alternatives', async () => {
@@ -242,15 +260,15 @@ describe('SpeakRepeatStep', () => {
       confusables: ['ola', 'olla', 'hora', 'jola'],
     });
 
-    expect(screen.getByText('h в начале слова не читается.')).toBeTruthy();
+    expect(screen.queryByText(/h не читается/)).toBeNull();
 
     await act(async () => {
       emitTranscript('hola', { alternatives: ['jola'] });
     });
 
-    expect(screen.getByText('Почти «hola». Послушайте образец ещё раз.')).toBeTruthy();
-    expect(screen.queryByText('Дальше')).toBeNull();
-    expect(screen.getByText('Звучит так же')).toBeTruthy();
+    expect(screen.getByText('h не читается: буЭнос дИас')).toBeTruthy();
+    expect(screen.getByText('Дальше')).toBeTruthy();
+    expect(screen.queryByText('Звучит так же')).toBeNull();
   });
 
   it('disables the microphone after three attempts', async () => {
@@ -262,9 +280,9 @@ describe('SpeakRepeatStep', () => {
       emitTranscript('zzzz');
     });
 
-    expect(screen.getByLabelText('Говорить')).toBeDisabled();
-    expect(screen.getByText('Пропустить')).toBeTruthy();
-    expect(screen.queryByText('Дальше')).toBeNull();
+    expect(screen.getByRole('button', { name: 'Ещё раз' })).toBeDisabled();
+    expect(screen.getByText('Дальше')).toBeTruthy();
+    expect(screen.queryByText('Пропустить')).toBeNull();
   });
 
   it('keeps listen and skip available when the microphone is blocked', async () => {
@@ -277,18 +295,107 @@ describe('SpeakRepeatStep', () => {
     const { onSkip } = await renderStep();
 
     expect(await screen.findByText('Микрофон недоступен')).toBeTruthy();
-    expect(screen.getByText('Слушать образец')).toBeTruthy();
+    expect(screen.getByLabelText('Слушать образец')).toBeTruthy();
     expect(screen.getByText(/Без доступа можно слушать образец/)).toBeTruthy();
 
     await fireEvent.press(screen.getByLabelText('Говорить'));
     expect(ExpoSpeechRecognitionModule.start).not.toHaveBeenCalled();
 
-    await fireEvent.press(screen.getByText('Слушать образец'));
+    await fireEvent.press(screen.getByLabelText('Слушать образец'));
     expect(playLessonAudio).toHaveBeenCalledWith(
       expect.objectContaining({ text: 'buenos días', audio: 'a1/buenos-dias.mp3' }),
     );
 
     await fireEvent.press(screen.getByText('Пропустить'));
     expect(onSkip).toHaveBeenCalledTimes(1);
+  });
+
+  it('stops a take when the screen goes away', async () => {
+    const { unmount } = await renderStep();
+
+    await fireEvent.press(screen.getByLabelText('Говорить'));
+    await waitFor(() => {
+      expect(audioState().isRecording).toBe(true);
+    });
+
+    await unmount();
+
+    expect(audioState().isRecording).toBe(false);
+  });
+
+  it('stops and grades about a second after the voice goes quiet', async () => {
+    jest.useFakeTimers();
+    try {
+      await renderStep();
+      await act(async () => {
+        fireEvent.press(screen.getByLabelText('Говорить'));
+        await jest.advanceTimersByTimeAsync(20);
+      });
+      await act(async () => {
+        await jest.advanceTimersByTimeAsync(50);
+      });
+      expect(audioState().isRecording).toBe(true);
+
+      audioState().metering = -20;
+      await act(async () => {
+        await jest.advanceTimersByTimeAsync(400);
+      });
+      audioState().metering = -80;
+      await act(async () => {
+        await jest.advanceTimersByTimeAsync(1_200);
+      });
+
+      expect(audioState().isRecording).toBe(false);
+      expect(ExpoSpeechRecognitionModule.start).toHaveBeenCalledWith(
+        expect.objectContaining({ audioSource: { uri: 'file:///cache/take.wav' } }),
+      );
+    } finally {
+      audioState().metering = undefined;
+      jest.useRealTimers();
+    }
+  });
+
+  it('stops at 8 seconds when the sample length is unknown and nobody spoke', async () => {
+    jest.useFakeTimers();
+    try {
+      await renderStep();
+      await act(async () => {
+        fireEvent.press(screen.getByLabelText('Говорить'));
+        await jest.advanceTimersByTimeAsync(50);
+      });
+      expect(audioState().isRecording).toBe(true);
+
+      await act(async () => {
+        await jest.advanceTimersByTimeAsync(7_900);
+      });
+      expect(audioState().isRecording).toBe(true);
+
+      await act(async () => {
+        await jest.advanceTimersByTimeAsync(200);
+      });
+      expect(audioState().isRecording).toBe(false);
+      expect(ExpoSpeechRecognitionModule.start).toHaveBeenCalled();
+    } finally {
+      jest.useRealTimers();
+    }
+  });
+
+  it('shows one pronunciation hint, and only after a miss', async () => {
+    await renderStep({ promptEs: 'me llamo', sayRu: 'ме йАмо' });
+
+    expect(screen.queryByText(/ll звучит/)).toBeNull();
+
+    await act(async () => {
+      emitTranscript('xxxx');
+    });
+
+    expect(screen.getByText('ll звучит как «й»: ме йАмо')).toBeTruthy();
+    expect(screen.queryByText(/Это значит/)).toBeNull();
+    expect(screen.getByText('me')).toHaveStyle({ color: colors.coralDeep });
+
+    await fireEvent.press(screen.getByText('Ещё раз'));
+    await waitFor(() => {
+      expect(screen.getByLabelText('Остановить запись')).toBeTruthy();
+    });
   });
 });
