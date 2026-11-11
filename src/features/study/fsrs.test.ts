@@ -16,16 +16,13 @@ import { STUDY_MODES } from './types';
 const USER = '11111111-1111-1111-1111-111111111111';
 
 describe('STUDY_FSRS', () => {
-  it('rates review, learn, test, spell, and speak, and leaves the others alone', () => {
+  it('rates learn, test, and speak, and leaves cards and blitz alone', () => {
     expect(STUDY_FSRS).toEqual({
-      review: 'rating',
       learn: 'rating',
       test: 'rating',
-      spell: 'rating',
       speak: 'rating',
       flashcards: 'none',
-      match: 'none',
-      quick5: 'none',
+      blitz: 'none',
     });
     for (const mode of STUDY_MODES) {
       expect(studyModeGrades(mode)).toBe(STUDY_FSRS[mode] === 'rating');
@@ -73,11 +70,11 @@ describe('recordStudyResult', () => {
       clientId: 'cards-hola',
     });
     await recordStudyResult(repository, USER, {
-      mode: 'spell',
+      mode: 'speak',
       itemId: 'nunca',
       direction: 'es_to_ru',
       grade: 'incorrect',
-      clientId: 'spell-nunca',
+      clientId: 'speak-nunca',
     });
 
     const snapshot = await repository.read(USER);
@@ -87,7 +84,7 @@ describe('recordStudyResult', () => {
     expect(new Set(snapshot.cards.map((card) => card.itemId))).toEqual(new Set(['hola']));
   });
 
-  it('skips match and quick 5 and records the grading modes', async () => {
+  it('skips cards and blitz and records the grading modes', async () => {
     for (const mode of STUDY_MODES) {
       const repository = offlineRepository();
       await repository.introduceItems(USER, [{ id: 'hola' }]);

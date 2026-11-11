@@ -12,14 +12,11 @@ import type { MasteryBand, MasteryCounts, StudyGrade, StudyMode, StudyUnit } fro
  * {@link ratingForStudyGrade}: no misses → Good, any miss → Hard.
  */
 export const STUDY_FSRS = {
-  review: 'rating',
   learn: 'rating',
   test: 'rating',
-  spell: 'rating',
   speak: 'rating',
   flashcards: 'none',
-  match: 'none',
-  quick5: 'none',
+  blitz: 'none',
 } as const satisfies Record<StudyMode, 'rating' | 'none'>;
 
 /** FSRS difficulty is about 1–10 after a review. A new card stays at 0. */

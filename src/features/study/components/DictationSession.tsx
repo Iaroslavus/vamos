@@ -1,5 +1,5 @@
 import { X } from 'lucide-react-native';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 
@@ -24,13 +24,16 @@ type DictationSessionProps = {
   units: readonly StudyUnit[];
   onRecord: (record: StudyRecordInput) => Promise<void>;
   onClose: () => void;
+  /** When set, the last phrase continues a mixed session instead of the summary. */
+  onFinished?: () => void;
 };
 
-export function DictationSession({ units, onRecord, onClose }: DictationSessionProps) {
+export function DictationSession({ units, onRecord, onClose, onFinished }: DictationSessionProps) {
   const { t } = useTranslation();
   const preference = useAudioPreference();
   const session = useDictationSession({ units, onRecord });
   const unit = session.unit;
+  const reported = useRef(false);
 
   useEffect(() => {
     if (!unit) return undefined;
@@ -44,7 +47,14 @@ export function DictationSession({ units, onRecord, onClose }: DictationSessionP
     };
   }, [preference, unit]);
 
+  useEffect(() => {
+    if (!session.done || !onFinished || reported.current) return;
+    reported.current = true;
+    onFinished();
+  }, [onFinished, session.done]);
+
   if (session.done || !unit) {
+    if (onFinished) return null;
     return (
       <View style={styles.done}>
         <Text variant="h2" style={styles.center}>

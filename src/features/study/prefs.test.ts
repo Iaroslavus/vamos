@@ -17,7 +17,7 @@ describe('study prefs', () => {
   it('round-trips a folder session', () => {
     const prefs = parseStudyPrefs(
       serializeStudyPrefs({
-        lastMode: 'spell',
+        lastMode: 'speak',
         settings: {
           direction: 'mixed',
           filter: 'hard',
@@ -32,7 +32,7 @@ describe('study prefs', () => {
         },
       }),
     );
-    expect(prefs.lastMode).toBe('spell');
+    expect(prefs.lastMode).toBe('speak');
     expect(prefs.test).toEqual({
       count: 30,
       kinds: ['input', 'pairs'],
