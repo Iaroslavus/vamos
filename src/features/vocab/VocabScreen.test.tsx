@@ -1,7 +1,10 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fireEvent, render, screen, userEvent, waitFor } from '@testing-library/react-native';
 import { I18nextProvider } from 'react-i18next';
+import { StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import { colors } from '@/theme/tokens';
 
 import { play } from '@/features/audio/playback';
 import type { StoredCard } from '@/features/review/types';
@@ -230,6 +233,20 @@ describe('VocabScreen', () => {
     await renderVocab();
     expect(await screen.findByText('2 слова · 1 к повторению')).toBeTruthy();
   });
+
+  it('counts a folder phrase once when both directions are due', async () => {
+    resetReview([
+      mockDueCard('hola.buenos_dias', 'es_to_ru'),
+      mockDueCard('hola.buenos_dias', 'ru_to_es'),
+    ]);
+    await seedFavorites(['hola.buenos_dias']);
+    await renderVocab();
+
+    expect(await screen.findByText('Изучено 1 слово')).toBeTruthy();
+    expect(screen.getByText('1 ждёт повторения · ~1 минута')).toBeTruthy();
+    expect(screen.getByText('1 фраза · 1 к повторению')).toBeTruthy();
+    expect(screen.queryByText('1 фраза · 2 к повторению')).toBeNull();
+  });
 });
 
 describe('FolderScreen', () => {
@@ -254,6 +271,9 @@ describe('FolderScreen', () => {
     expect(await screen.findByText('Hola')).toBeTruthy();
     expect(screen.getByText('Привет')).toBeTruthy();
 
+    expect(screen.queryByRole('button', { name: 'Удалить Hola' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Перенести Hola' })).toBeNull();
+
     await fireEvent.press(screen.getByRole('button', { name: 'Слушать Hola' }));
     expect(play).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'hola.hola', es: 'hola' }),
@@ -261,7 +281,8 @@ describe('FolderScreen', () => {
       'es',
     );
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Убрать Hola' }));
+    fireEvent(screen.getByLabelText('Hola, Привет'), 'longPress');
+    await fireEvent.press(await screen.findByRole('button', { name: 'Удалить Hola' }));
     expect(
       await screen.findByText('В этой папке пока пусто. Добавьте фразу с карточки или из диалога.'),
     ).toBeTruthy();
@@ -278,6 +299,17 @@ describe('FolderScreen', () => {
 
     await renderFolder();
     expect(await screen.findByLabelText('1 новые, 0 учу, 0 знаю')).toBeTruthy();
+    expect(StyleSheet.flatten(screen.getByTestId('mastery-new').props.style).backgroundColor).toBe(
+      colors.inkDisabled,
+    );
+    expect(
+      StyleSheet.flatten(screen.getByTestId('mastery-learning').props.style).backgroundColor,
+    ).toBe(colors.saffron);
+    expect(
+      StyleSheet.flatten(screen.getByTestId('mastery-known').props.style).backgroundColor,
+    ).toBe(colors.teal);
+    expect(screen.queryByText(/Повторить ·/)).toBeNull();
+    expect(screen.getAllByRole('button', { name: 'Учить' })).toHaveLength(1);
 
     await user.press(screen.getByText('Учить'));
     expect(await screen.findByText('Как учить')).toBeTruthy();
