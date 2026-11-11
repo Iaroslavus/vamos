@@ -193,7 +193,6 @@ export type Database = {
           elapsed_days?: number;
           id?: string;
           item_id: string;
-          user_item_id?: string | null;
           lapses?: number;
           last_review?: string | null;
           learning_steps?: number;
@@ -203,6 +202,7 @@ export type Database = {
           state?: number;
           updated_at?: string;
           user_id: string;
+          user_item_id?: string | null;
         };
         Update: {
           created_at?: string;
