@@ -6,6 +6,7 @@ import { stopLessonAudio } from '@/features/audio/playback';
 import type { StudyRecordInput } from './useStudyPlayer';
 import {
   gradeTest,
+  planMistakeTest,
   planTest,
   testUnitsForMistakes,
   type TestAnswerValue,
@@ -21,9 +22,8 @@ export function useTestSession(input: {
   settings: TestSettings;
   onChangeSettings: (settings: TestSettings) => void;
   onRecord: (record: StudyRecordInput) => Promise<void>;
-  onAddDifficult: (itemIds: readonly string[]) => Promise<void>;
 }) {
-  const { units, onChangeSettings, onRecord, onAddDifficult } = input;
+  const { units, onChangeSettings, onRecord } = input;
   const roundRef = useRef(0);
   const lock = useRef(false);
   const alive = useRef(true);
@@ -38,34 +38,34 @@ export function useTestSession(input: {
   const [pool, setPool] = useState(units);
   const [phase, setPhase] = useState<Phase>('setup');
   const [round, setRound] = useState(0);
+  const [mistakeRound, setMistakeRound] = useState(false);
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<TestAnswers>({});
   const [score, setScore] = useState<TestResult | null>(null);
   const [busy, setBusy] = useState(false);
   const [rateError, setRateError] = useState(false);
-  const [adding, setAdding] = useState(false);
-  const [added, setAdded] = useState(false);
-  const [addError, setAddError] = useState(false);
 
-  const questions = useMemo(() => planTest(pool, active), [active, pool]);
+  const questions = useMemo(
+    () => (mistakeRound ? planMistakeTest(pool, active) : planTest(pool, active)),
+    [active, mistakeRound, pool],
+  );
   const question = questions[index];
   const repeatPool = useMemo(
     () => (score ? testUnitsForMistakes(units, score.missedItemIds) : []),
     [score, units],
   );
-  const canRepeat = planTest(repeatPool, active).length > 0;
+  const canRepeat = planMistakeTest(repeatPool, active).length > 0;
 
-  const begin = (nextPool: readonly StudyUnit[], nextSettings: TestSettings) => {
+  const begin = (nextPool: readonly StudyUnit[], nextSettings: TestSettings, mistakes: boolean) => {
     roundRef.current += 1;
     setRound(roundRef.current);
+    setMistakeRound(mistakes);
     setActive(nextSettings);
     setPool(nextPool);
     setAnswers({});
     setIndex(0);
     setScore(null);
     setRateError(false);
-    setAdded(false);
-    setAddError(false);
     setPhase('quiz');
     void stopLessonAudio();
   };
@@ -109,22 +109,6 @@ export function useTestSession(input: {
     })();
   };
 
-  const add = () => {
-    if (!score || adding || added || score.missedItemIds.length === 0) return;
-    setAdding(true);
-    setAddError(false);
-    void onAddDifficult(score.missedItemIds)
-      .then(() => {
-        if (alive.current) setAdded(true);
-      })
-      .catch(() => {
-        if (alive.current) setAddError(true);
-      })
-      .finally(() => {
-        if (alive.current) setAdding(false);
-      });
-  };
-
   const goBack = () => {
     setIndex((current) => Math.max(0, current - 1));
     void stopLessonAudio();
@@ -147,7 +131,7 @@ export function useTestSession(input: {
       setDraft(next);
       onChangeSettings(next);
     },
-    start: () => begin(units, draft),
+    start: () => begin(units, draft, false),
     questions,
     question,
     index,
@@ -159,12 +143,8 @@ export function useTestSession(input: {
     goNext,
     score,
     canRepeat,
-    repeat: () => begin(repeatPool, active),
-    adding,
-    added,
-    addError,
+    repeat: () => begin(repeatPool, active, true),
     rateError,
-    add,
   };
 }
 

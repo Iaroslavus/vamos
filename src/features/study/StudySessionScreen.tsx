@@ -9,7 +9,6 @@ import { IconButton } from '@/components/IconButton';
 import { RetryNote } from '@/components/RetryNote';
 import { Text } from '@/components/Text';
 import { reviewRepository } from '@/features/review/defaultRepository';
-import { vocabRepository } from '@/features/vocab/defaultRepository';
 import { colors, space } from '@/theme/tokens';
 
 import { BlitzSession } from './components/BlitzSession';
@@ -19,7 +18,7 @@ import { SpeakSession } from './components/SpeakSession';
 import { StudyPlayer } from './components/StudyPlayer';
 import { TestSession } from './components/TestSession';
 import { flashcardSteps } from './flashcards';
-import { recordStudyResult, studyModeGrades } from './fsrs';
+import { recordStillLearning, recordStudyResult, studyModeGrades } from './fsrs';
 import { useStudyLaunch } from './hooks/useStudyLaunch';
 import type { StudyRecordInput } from './hooks/useStudyPlayer';
 import { isStudyMode } from './modes';
@@ -62,9 +61,9 @@ export function StudySessionScreen() {
         <FlashcardSession
           steps={flashcardSteps(launch.steps)}
           onClose={leave}
-          onAddDifficult={(itemIds) => {
-            if (!launch.userId) return Promise.reject(new Error('Missing user'));
-            return vocabRepository.pinDifficult(launch.userId, itemIds).then(() => undefined);
+          onStillLearning={(input) => {
+            if (!launch.userId) return;
+            void recordStillLearning(reviewRepository, launch.userId, input).catch(() => undefined);
           }}
         />
       ) : launch.status === 'ready' && mode === 'test' ? (
@@ -73,10 +72,6 @@ export function StudySessionScreen() {
           settings={launch.testSettings}
           onChangeSettings={launch.setTestSettings}
           onRecord={onRecord}
-          onAddDifficult={(itemIds) => {
-            if (!launch.userId) return Promise.reject(new Error('Missing user'));
-            return vocabRepository.pinDifficult(launch.userId, itemIds).then(() => undefined);
-          }}
           onClose={leave}
         />
       ) : launch.status === 'ready' && mode === 'blitz' ? (

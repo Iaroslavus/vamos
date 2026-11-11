@@ -60,7 +60,6 @@ async function renderTest(
   units: readonly StudyUnit[] = UNITS,
 ) {
   const onRecord = jest.fn(async () => undefined);
-  const onAdd = jest.fn(async () => undefined);
   const onChange = jest.fn();
   ui = await render(
     host(
@@ -69,12 +68,11 @@ async function renderTest(
         settings={settings}
         onChangeSettings={onChange}
         onRecord={onRecord}
-        onAddDifficult={onAdd}
         onClose={jest.fn()}
       />,
     ),
   );
-  return { onRecord, onAdd, onChange };
+  return { onRecord, onChange };
 }
 
 async function answerPaper(correct: boolean) {
@@ -114,10 +112,10 @@ describe('TestSession', () => {
 
     await answerPaper(true);
 
-    expect(await ui.findByText('Результат')).toBeTruthy();
+    expect(await ui.findByText('Правильно: 10 · Ошибок: 0')).toBeTruthy();
     expect(ui.getByText('100%')).toBeTruthy();
-    expect(ui.getByText('Без ошибок')).toBeTruthy();
-    expect(ui.queryByText('Ошибки')).toBeNull();
+    expect(ui.getByText('Без единой ошибки!')).toBeTruthy();
+    expect(ui.queryByRole('button', { name: 'Повторить ошибки' })).toBeNull();
     await waitFor(() => expect(onRecord).toHaveBeenCalledTimes(10));
     expect(onRecord).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -129,8 +127,8 @@ describe('TestSession', () => {
     );
   });
 
-  it('lists a miss as yours to correct, then retries only those phrases and pins them', async () => {
-    const { onRecord, onAdd } = await renderTest();
+  it('lists a miss as yours to correct, then retries only those phrases', async () => {
+    const { onRecord } = await renderTest();
     const questions = planTest(UNITS, { ...DEFAULT_TEST_SETTINGS, kinds: ['choice'] });
     const first = questions[0] as TestChoiceQuestion;
     const wrong = first.options.find((option) => option !== first.answer) ?? '';
@@ -138,21 +136,15 @@ describe('TestSession', () => {
     await fireEvent.press(ui.getByRole('button', { name: 'Начать' }));
     await answerPaper(false);
 
-    expect(
-      await ui.findByText(`${displayText(wrong)} → ${displayText(first.answer)}`),
-    ).toBeTruthy();
+    expect(await ui.findByText(`Вы ответили: ${displayText(wrong)}`)).toBeTruthy();
+    expect(ui.getByText(displayText(first.answer))).toBeTruthy();
     expect(ui.getByLabelText(`Озвучить ${displayText(first.prompt)}, ошибка 1`)).toBeTruthy();
+    expect(ui.queryByRole('button', { name: 'В Сложные' })).toBeNull();
     await waitFor(() => expect(onRecord).toHaveBeenCalled());
     expect(onRecord.mock.calls.every((call) => call[0].grade === 'incorrect')).toBe(true);
 
-    await fireEvent.press(ui.getByRole('button', { name: 'В Сложные' }));
-    await waitFor(() => expect(onAdd).toHaveBeenCalledTimes(1));
-    expect(onAdd.mock.calls[0]?.[0]).toEqual(
-      questions.map((question) => (question.kind === 'choice' ? question.itemId : '')),
-    );
-
     await fireEvent.press(ui.getByRole('button', { name: 'Повторить ошибки' }));
-    expect(ui.queryByText('Результат')).toBeNull();
+    expect(ui.queryByText('Правильно: 0 · Ошибок: 10')).toBeNull();
     expect(ui.getByTestId('test-counter')).toHaveTextContent('1 / 10');
     expect(ui.queryByText('Ошибки')).toBeNull();
   });

@@ -31,8 +31,8 @@ export type SpeakPracticeProps = {
   options?: readonly SpeechOption[];
   onMatch?: (optionId: string) => void;
   onSkip?: () => void;
-  /** `passed` is false when the learner moves on after a miss. */
-  onContinue?: (passed: boolean) => void;
+  /** `passed` is false when the learner moves on after a miss. `score` is 0–100. */
+  onContinue?: (passed: boolean, score: number | null) => void;
   onClose?: () => void;
   attemptsUsed?: number;
   onAttemptsUsed?: (count: number) => void;
@@ -161,7 +161,7 @@ export function SpeakPractice({
           practice.onAgain();
         }}
         onNext={() => {
-          if (onContinue) onContinue(practice.passed);
+          if (onContinue) onContinue(practice.passed, shown?.score ?? null);
           else onClose?.();
         }}
         onSkip={() => {

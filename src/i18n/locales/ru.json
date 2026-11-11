@@ -730,6 +730,23 @@
       "speakProgress": "{{current}} из {{total}}"
     }
   },
+  "sessionSummary": {
+    "percent": "{{count}}%",
+    "scoreLabel": "Результат {{percent}} процентов",
+    "line": "Правильно: {{correct}} · Ошибок: {{wrong}}",
+    "cardsLine": "Знаю {{know}} · Ещё учу {{again}}",
+    "speakLine": "Средняя оценка: {{score}}",
+    "youAnswered": "Вы ответили: {{answer}}",
+    "play": "Озвучить {{phrase}}, ошибка {{index}}",
+    "repeat": "Повторить ошибки",
+    "repeatCards": "Повторить «ещё учу»",
+    "done": "Готово",
+    "perfect": "Без единой ошибки!",
+    "rowScore": "Оценка: {{score}}",
+    "true": "Верно",
+    "false": "Неверно",
+    "blank": "—"
+  },
   "studyModes": {
     "title": "Выберите способ",
     "recommended": "Рекомендуем",

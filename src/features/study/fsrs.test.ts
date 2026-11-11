@@ -1,12 +1,15 @@
 import { createReviewRepository } from '@/features/review/repository';
 import type { KeyValueStorage, ReviewRemote } from '@/features/review/types';
 
+import { difficultItemIds } from '@/features/vocab/model';
+
 import {
   STUDY_FSRS,
   cardIsHard,
   masteryBand,
   masteryCounts,
   ratingForStudyGrade,
+  recordStillLearning,
   recordStudyResult,
   settleStudyCheck,
   studyModeGrades,
@@ -99,6 +102,44 @@ describe('recordStudyResult', () => {
       expect(wrote).toBe(studyModeGrades(mode));
       expect(snapshot.logs).toHaveLength(studyModeGrades(mode) ? 1 : 0);
     }
+  });
+});
+
+describe('recordStillLearning', () => {
+  it('writes Again so a second mark fills Difficult and the card is due soon', async () => {
+    const repository = offlineRepository();
+    await repository.introduceItems(USER, [{ id: 'hola' }]);
+    await recordStillLearning(repository, USER, {
+      itemId: 'hola',
+      direction: 'es_to_ru',
+      clientId: 'again-1',
+      reviewedAt: '2026-06-01T00:00:00.000Z',
+    });
+    await recordStillLearning(repository, USER, {
+      itemId: 'hola',
+      direction: 'es_to_ru',
+      clientId: 'again-2',
+      reviewedAt: '2026-06-01T00:01:00.000Z',
+    });
+
+    const snapshot = await repository.read(USER);
+    expect(snapshot.logs.map((log) => log.rating)).toEqual(['again', 'again']);
+    const card = snapshot.cards.find((item) => item.itemId === 'hola');
+    expect(card).toBeTruthy();
+    if (!card) return;
+    const dueIn = Date.parse(card.due) - Date.parse('2026-06-01T00:01:00.000Z');
+    expect(dueIn).toBeLessThanOrEqual(24 * 60 * 60 * 1000);
+    expect(cardIsHard(card) || dueIn <= 60 * 60 * 1000).toBe(true);
+    expect(
+      difficultItemIds(
+        snapshot.logs.map((log) => ({
+          itemId: log.itemId,
+          rating: log.rating,
+          reviewedAt: log.reviewedAt,
+        })),
+        new Date('2026-06-01T00:01:00.000Z'),
+      ),
+    ).toEqual(['hola']);
   });
 });
 

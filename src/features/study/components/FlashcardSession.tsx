@@ -1,5 +1,5 @@
 import { Shuffle, X } from 'lucide-react-native';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
@@ -15,33 +15,36 @@ import {
   applyMark,
   cardsLeft,
   currentCard,
-  flashSummary,
   repeatStillLearning,
   shuffleRemaining,
   startRound,
   type FlashMark,
   type FlashRound,
 } from '../flashcards';
+import { summarizeCards } from '../sessionSummary';
 import type { StudyFlashcardStep } from '../types';
 import { FlashcardDeck } from './FlashcardDeck';
-import { FlashcardSummary } from './FlashcardSummary';
+import { SessionSummaryView } from './SessionSummary';
 
 type FlashcardSessionProps = {
   steps: readonly StudyFlashcardStep[];
   onClose: () => void;
-  onAddDifficult: (itemIds: readonly string[]) => Promise<void>;
+  /** «Still learning» writes Again so the phrase shows up sooner in Learn. */
+  onStillLearning?: (input: {
+    itemId: string;
+    direction: StudyFlashcardStep['direction'];
+    clientId: string;
+  }) => void;
 };
 
-export function FlashcardSession({ steps, onClose, onAddDifficult }: FlashcardSessionProps) {
+export function FlashcardSession({ steps, onClose, onStillLearning }: FlashcardSessionProps) {
   const { t } = useTranslation();
   const preference = useAudioPreference();
+  const markSeq = useRef(0);
   const [round, setRound] = useState<FlashRound>(() => startRound(steps));
   const [revealed, setRevealed] = useState(false);
-  const [adding, setAdding] = useState(false);
-  const [added, setAdded] = useState(false);
-  const [addError, setAddError] = useState(false);
   const card = currentCard(round);
-  const summary = flashSummary(round);
+  const summary = summarizeCards(round);
 
   useEffect(() => {
     if (!card?.autoplay) return undefined;
@@ -57,6 +60,14 @@ export function FlashcardSession({ steps, onClose, onAddDifficult }: FlashcardSe
   }, [card, preference, revealed]);
 
   const markCard = (stepId: string, mark: FlashMark) => {
+    if (mark === 'again' && card && card.id === stepId) {
+      markSeq.current += 1;
+      onStillLearning?.({
+        itemId: card.itemId,
+        direction: card.direction,
+        clientId: `flash-again:${card.itemId}:${card.direction}:${markSeq.current}`,
+      });
+    }
     setRevealed(false);
     setRound((current) => {
       const active = currentCard(current);
@@ -74,20 +85,8 @@ export function FlashcardSession({ steps, onClose, onAddDifficult }: FlashcardSe
 
   const repeat = () => {
     setRevealed(false);
-    setAdded(false);
-    setAddError(false);
     setRound((current) => repeatStillLearning(current));
     void stopLessonAudio();
-  };
-
-  const add = () => {
-    if (adding || added || summary.againIds.length === 0) return;
-    setAdding(true);
-    setAddError(false);
-    void onAddDifficult(summary.againIds)
-      .then(() => setAdded(true))
-      .catch(() => setAddError(true))
-      .finally(() => setAdding(false));
   };
 
   return (
@@ -124,16 +123,7 @@ export function FlashcardSession({ steps, onClose, onAddDifficult }: FlashcardSe
           onPlay={(speed: AudioSpeed) => playFlashPhrase(card, speed, preference)}
         />
       ) : (
-        <FlashcardSummary
-          know={summary.know}
-          again={summary.again}
-          adding={adding}
-          added={added}
-          addError={addError}
-          onRepeat={repeat}
-          onAdd={add}
-          onClose={onClose}
-        />
+        <SessionSummaryView summary={summary} onRepeat={repeat} onDone={onClose} />
       )}
     </View>
   );

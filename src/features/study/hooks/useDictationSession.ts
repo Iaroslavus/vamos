@@ -6,6 +6,7 @@ import { gradeAnswer, type GradeResult, type GradeStatus } from '@/features/less
 
 import { dictationGrade, dictationPoints, nextReveal } from '../games/dictation';
 import { settleStudyCheck } from '../fsrs';
+import { attemptFromDictation, type ScoreAttempt } from '../sessionSummary';
 import type { StudyRecordInput } from './useStudyPlayer';
 import type { StudyUnit } from '../types';
 
@@ -17,9 +18,10 @@ type Pending =
 type DictationSessionInput = {
   units: readonly StudyUnit[];
   onRecord: (record: StudyRecordInput) => Promise<void>;
+  onAttempt?: (attempt: ScoreAttempt) => void;
 };
 
-export function useDictationSession({ units, onRecord }: DictationSessionInput) {
+export function useDictationSession({ units, onRecord, onAttempt }: DictationSessionInput) {
   const [index, setIndex] = useState(0);
   const [value, setValue] = useState('');
   const [reveals, setReveals] = useState(0);
@@ -73,6 +75,7 @@ export function useDictationSession({ units, onRecord }: DictationSessionInput) 
         return;
       }
       setTotal((current) => current + pending.points);
+      onAttempt?.(attemptFromDictation(unit, pending.grade, value));
       advance();
     } finally {
       lock.current = false;

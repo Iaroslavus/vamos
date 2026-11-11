@@ -40,7 +40,7 @@ export function SpeakRepeatStep({
         confusables={confusables}
         featuresPath={featuresPath}
         onSkip={onSkip}
-        onContinue={onContinue}
+        onContinue={(passed) => onContinue(passed)}
       />
     </View>
   );

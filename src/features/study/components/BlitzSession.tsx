@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
-import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
 import { space } from '@/theme/tokens';
 
 import { blitzRemainingMs, formatBlitzClock } from '../blitz';
+import { studyStepsForRepeat, summarizeScores, type ScoreAttempt } from '../sessionSummary';
 import type { StudyStep } from '../types';
+import { SessionSummaryView } from './SessionSummary';
 import { StudyPlayer } from './StudyPlayer';
 
 type BlitzSessionProps = {
@@ -16,6 +17,51 @@ type BlitzSessionProps = {
 };
 
 export function BlitzSession({ steps, onClose }: BlitzSessionProps) {
+  const [queue, setQueue] = useState(steps);
+  const [attempts, setAttempts] = useState<ScoreAttempt[]>([]);
+  const [round, setRound] = useState(0);
+  const [stopped, setStopped] = useState(false);
+
+  if (stopped) {
+    const summary = summarizeScores(attempts);
+    return (
+      <SessionSummaryView
+        summary={summary}
+        onDone={onClose}
+        onRepeat={() => {
+          const next = studyStepsForRepeat(queue, summary.repeatIds);
+          if (next.length === 0) return;
+          setQueue(next);
+          setAttempts([]);
+          setRound((value) => value + 1);
+          setStopped(false);
+        }}
+      />
+    );
+  }
+
+  return (
+    <BlitzRun
+      key={round}
+      steps={queue}
+      onAttempt={(attempt) => setAttempts((current) => [...current, attempt])}
+      onStop={() => setStopped(true)}
+      onClose={onClose}
+    />
+  );
+}
+
+function BlitzRun({
+  steps,
+  onAttempt,
+  onStop,
+  onClose,
+}: {
+  steps: readonly StudyStep[];
+  onAttempt: (attempt: ScoreAttempt) => void;
+  onStop: () => void;
+  onClose: () => void;
+}) {
   const { t } = useTranslation();
   const [startedAt] = useState(() => Date.now());
   const [now, setNow] = useState(startedAt);
@@ -33,16 +79,9 @@ export function BlitzSession({ steps, onClose }: BlitzSessionProps) {
     return () => clearInterval(timer);
   }, [startedAt, stopped]);
 
-  if (stopped) {
-    return (
-      <View style={styles.done}>
-        <Text variant="h2" style={styles.center}>
-          {t('study.blitz.done')}
-        </Text>
-        <Button title={t('study.backToFolder')} onPress={onClose} />
-      </View>
-    );
-  }
+  useEffect(() => {
+    if (stopped) onStop();
+  }, [onStop, stopped]);
 
   return (
     <View style={styles.root}>
@@ -57,6 +96,7 @@ export function BlitzSession({ steps, onClose }: BlitzSessionProps) {
         steps={steps}
         recordGrades={false}
         onRecord={() => Promise.resolve()}
+        onAttempt={onAttempt}
         onClose={onClose}
         onFinished={() => setStopped(true)}
       />
@@ -70,14 +110,6 @@ const styles = StyleSheet.create({
     gap: space.md,
   },
   clock: {
-    textAlign: 'center',
-  },
-  done: {
-    flex: 1,
-    justifyContent: 'center',
-    gap: space.lg,
-  },
-  center: {
     textAlign: 'center',
   },
 });

@@ -106,6 +106,21 @@ describe('sessionPlan', () => {
     expect(isPlayableStudyMode('test')).toBe(true);
   });
 
+  it('reviews a still-learning phrase before a calm one', () => {
+    const units = [
+      word('calm', 'calma', 'спокойно', { state: 2 }),
+      word('fresh', 'nuevo', 'новое', { state: 0 }),
+      word('due', 'hoy', 'срок', { state: 2, due: true }),
+      word('hard', 'difícil', 'трудно', { state: 2, hard: true }),
+    ];
+    expect(phraseIds(sessionPlan('learn', units, settings({ count: 20 })))).toEqual([
+      'due',
+      'fresh',
+      'hard',
+      'calm',
+    ]);
+  });
+
   it('studies due phrases before new ones and cycles choice, pairs, typing, and dictation', () => {
     const many = Array.from({ length: 8 }, (_, index) =>
       word(`w${index}`, `es${index}`, `tr${index}`, {

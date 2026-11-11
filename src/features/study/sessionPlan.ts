@@ -134,19 +134,23 @@ function selectUnits(
 }
 
 /**
- * Due reviews first, then FSRS-new phrases, then everything else the filter kept.
+ * Due reviews first, then FSRS-new phrases, then hard ones
+ * (a «still learning» mark writes Again, which makes the card hard or due),
+ * then everything else the filter kept.
  * Due cards that are still new stay in the review group.
  */
 function orderForLearn(units: readonly StudyUnit[]): StudyUnit[] {
   const due: StudyUnit[] = [];
   const fresh: StudyUnit[] = [];
+  const struggling: StudyUnit[] = [];
   const rest: StudyUnit[] = [];
   for (const unit of units) {
     if (unit.due) due.push(unit);
     else if (unit.state === 0) fresh.push(unit);
+    else if (unit.hard) struggling.push(unit);
     else rest.push(unit);
   }
-  return [...due, ...fresh, ...rest];
+  return [...due, ...fresh, ...struggling, ...rest];
 }
 
 /** Introduced phrases that are actually due. The «Вчити» badge uses this. */

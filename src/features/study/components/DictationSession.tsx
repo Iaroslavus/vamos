@@ -17,6 +17,7 @@ import { dictationMask, dictationPoints } from '../games/dictation';
 import { playUnit } from '../playUnit';
 import { useDictationSession } from '../hooks/useDictationSession';
 import type { StudyRecordInput } from '../hooks/useStudyPlayer';
+import type { ScoreAttempt } from '../sessionSummary';
 import type { StudyUnit } from '../types';
 import { DictationPrompt } from './DictationPrompt';
 
@@ -24,14 +25,21 @@ type DictationSessionProps = {
   units: readonly StudyUnit[];
   onRecord: (record: StudyRecordInput) => Promise<void>;
   onClose: () => void;
+  onAttempt?: (attempt: ScoreAttempt) => void;
   /** When set, the last phrase continues a mixed session instead of the summary. */
   onFinished?: () => void;
 };
 
-export function DictationSession({ units, onRecord, onClose, onFinished }: DictationSessionProps) {
+export function DictationSession({
+  units,
+  onRecord,
+  onClose,
+  onFinished,
+  onAttempt,
+}: DictationSessionProps) {
   const { t } = useTranslation();
   const preference = useAudioPreference();
-  const session = useDictationSession({ units, onRecord });
+  const session = useDictationSession({ units, onRecord, onAttempt });
   const unit = session.unit;
   const reported = useRef(false);
 

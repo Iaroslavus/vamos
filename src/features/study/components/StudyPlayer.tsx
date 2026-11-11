@@ -1,5 +1,5 @@
 import { X } from 'lucide-react-native';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
 
@@ -17,7 +17,9 @@ import { colors, space } from '@/theme/tokens';
 import { studyStepExercise } from '../exercise';
 import { playUnit } from '../playUnit';
 import { useStudyPlayer, type StudyRecordInput } from '../hooks/useStudyPlayer';
+import { studyStepsForRepeat, summarizeScores, type ScoreAttempt } from '../sessionSummary';
 import type { StudyStep } from '../types';
+import { SessionSummaryView } from './SessionSummary';
 import { StudyStepBody } from './StudyStepBody';
 
 type StudyPlayerProps = {
@@ -25,20 +27,40 @@ type StudyPlayerProps = {
   recordGrades: boolean;
   onRecord: (record: StudyRecordInput) => Promise<void>;
   onClose: () => void;
+  onAttempt?: (attempt: ScoreAttempt) => void;
   /** When set, finishing the last step continues a mixed session instead of the summary. */
   onFinished?: () => void;
 };
 
-export function StudyPlayer({
+export function StudyPlayer({ steps, ...rest }: StudyPlayerProps) {
+  const [session, setSession] = useState({ steps, round: 0 });
+
+  return (
+    <StudyPlayerRound
+      key={session.round}
+      {...rest}
+      steps={session.steps}
+      onReplay={(ids) => {
+        const next = studyStepsForRepeat(session.steps, ids);
+        if (next.length === 0) return;
+        setSession({ steps: next, round: session.round + 1 });
+      }}
+    />
+  );
+}
+
+function StudyPlayerRound({
   steps,
   recordGrades,
   onRecord,
   onClose,
+  onAttempt,
   onFinished,
-}: StudyPlayerProps) {
+  onReplay,
+}: StudyPlayerProps & { onReplay: (itemIds: readonly string[]) => void }) {
   const { t } = useTranslation();
   const preference = useAudioPreference();
-  const player = useStudyPlayer({ steps, recordGrades, onRecord });
+  const player = useStudyPlayer({ steps, recordGrades, onRecord, onAttempt });
   const step = player.step;
   const reported = useRef(false);
 
@@ -65,16 +87,13 @@ export function StudyPlayer({
 
   if (player.done || !step) {
     if (onFinished) return null;
+    const summary = summarizeScores(player.attempts);
     return (
-      <View style={styles.done}>
-        <Text variant="h2" style={styles.center}>
-          {t('study.summaryTitle')}
-        </Text>
-        <Text variant="body" color={colors.inkMuted} style={styles.center}>
-          {t('study.summaryBody', { count: player.total })}
-        </Text>
-        <Button title={t('study.backToFolder')} onPress={onClose} />
-      </View>
+      <SessionSummaryView
+        summary={summary}
+        onDone={onClose}
+        onRepeat={() => onReplay(summary.repeatIds)}
+      />
     );
   }
 
@@ -194,11 +213,6 @@ const styles = StyleSheet.create({
   bodyContent: {
     flexGrow: 1,
     paddingBottom: space.lg,
-  },
-  done: {
-    flex: 1,
-    justifyContent: 'center',
-    gap: space.lg,
   },
   center: {
     textAlign: 'center',

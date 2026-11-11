@@ -9,9 +9,10 @@ import { colors, space } from '@/theme/tokens';
 
 import { useTestSession } from '../hooks/useTestSession';
 import type { StudyRecordInput } from '../hooks/useStudyPlayer';
+import { summaryFromTest } from '../sessionSummary';
 import type { StudyUnit, TestSettings } from '../types';
+import { SessionSummaryView } from './SessionSummary';
 import { TestQuiz } from './TestQuiz';
-import { TestResultView } from './TestResult';
 import { TestSetup } from './TestSetup';
 
 type TestSessionProps = {
@@ -19,7 +20,6 @@ type TestSessionProps = {
   settings: TestSettings;
   onChangeSettings: (settings: TestSettings) => void;
   onRecord: (record: StudyRecordInput) => Promise<void>;
-  onAddDifficult: (itemIds: readonly string[]) => Promise<void>;
   onClose: () => void;
 };
 
@@ -28,10 +28,10 @@ export function TestSession({
   settings,
   onChangeSettings,
   onRecord,
-  onAddDifficult,
   onClose,
 }: TestSessionProps) {
-  const session = useTestSession({ units, settings, onChangeSettings, onRecord, onAddDifficult });
+  const { t } = useTranslation();
+  const session = useTestSession({ units, settings, onChangeSettings, onRecord });
 
   if (session.phase === 'setup') {
     return (
@@ -51,16 +51,11 @@ export function TestSession({
     return (
       <View style={styles.root}>
         <CloseHeader onClose={onClose} />
-        <TestResultView
-          score={session.score}
-          canRepeat={session.canRepeat}
-          adding={session.adding}
-          added={session.added}
-          addError={session.addError}
-          rateError={session.rateError}
-          onRepeat={session.repeat}
-          onAdd={session.add}
-          onClose={onClose}
+        <SessionSummaryView
+          summary={summaryFromTest(session.score)}
+          notice={session.rateError ? t('study.test.rateError') : null}
+          onRepeat={session.canRepeat ? session.repeat : () => undefined}
+          onDone={onClose}
         />
       </View>
     );

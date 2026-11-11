@@ -66,6 +66,32 @@ export async function recordStudyResult(
   return true;
 }
 
+/**
+ * A flashcard marked «still learning».
+ * Again makes the phrase due, so the next «Learn» session takes it first,
+ * and a second Again inside the window fills «Difficult» on its own.
+ * «Know» does not write a rating.
+ */
+export async function recordStillLearning(
+  repository: Pick<ReviewRepository, 'recordRating'>,
+  userId: string,
+  input: {
+    itemId: string;
+    direction: 'es_to_ru' | 'ru_to_es';
+    clientId: string;
+    reviewedAt?: string;
+  },
+): Promise<void> {
+  await repository.recordRating(userId, {
+    itemId: input.itemId,
+    direction: input.direction,
+    rating: 'again',
+    reviewedAt: input.reviewedAt,
+    clientId: input.clientId,
+    createIfMissing: false,
+  });
+}
+
 export function cardIsHard(card: { difficulty: number; lapses: number; state: number }): boolean {
   return card.lapses > 0 || card.state === 3 || card.difficulty >= HARD_DIFFICULTY;
 }

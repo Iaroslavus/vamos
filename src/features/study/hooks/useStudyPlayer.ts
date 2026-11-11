@@ -8,6 +8,7 @@ import type { ReviewDirection } from '@/features/review/types';
 
 import { isGradedStep, studyStepExercise } from '../exercise';
 import { settleStudyCheck } from '../fsrs';
+import { attemptsForStep, type ScoreAttempt } from '../sessionSummary';
 import type { StudyGrade, StudyStep } from '../types';
 
 export type StudyRecordInput = {
@@ -26,8 +27,9 @@ export function useStudyPlayer(input: {
   steps: readonly StudyStep[];
   recordGrades: boolean;
   onRecord: (record: StudyRecordInput) => Promise<void>;
+  onAttempt?: (attempt: ScoreAttempt) => void;
 }) {
-  const { steps, recordGrades, onRecord } = input;
+  const { steps, recordGrades, onRecord, onAttempt } = input;
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState('');
   const [grades, setGrades] = useState<GradeStatus[]>([]);
@@ -35,6 +37,7 @@ export function useStudyPlayer(input: {
   const [pending, setPending] = useState<Pending>({ kind: 'idle' });
   const [sheet, setSheet] = useState(false);
   const [done, setDone] = useState(false);
+  const [attempts, setAttempts] = useState<ScoreAttempt[]>([]);
   const [busy, setBusy] = useState(false);
   const [rateError, setRateError] = useState(false);
   const inputRef = useRef<AnswerTextFieldHandle>(null);
@@ -84,6 +87,17 @@ export function useStudyPlayer(input: {
         }
       }
 
+      const produced = attemptsForStep(
+        step,
+        action.kind === 'next' ? { kind: 'next' } : { kind: 'record', grade: action.grade },
+        answer,
+        result?.wrongKeys ?? [],
+        result?.mistakes ?? 0,
+      );
+      if (produced.length > 0) {
+        setAttempts((current) => [...current, ...produced]);
+        for (const attempt of produced) onAttempt?.(attempt);
+      }
       finishStep();
     } finally {
       lock.current = false;
@@ -123,6 +137,7 @@ export function useStudyPlayer(input: {
     index,
     total: steps.length,
     done,
+    attempts,
     answer,
     setAnswer,
     result,

@@ -730,6 +730,23 @@
       "speakProgress": "{{current}} з {{total}}"
     }
   },
+  "sessionSummary": {
+    "percent": "{{count}}%",
+    "scoreLabel": "Результат {{percent}} відсотків",
+    "line": "Правильно: {{correct}} · Помилок: {{wrong}}",
+    "cardsLine": "Знаю {{know}} · Ще вчу {{again}}",
+    "speakLine": "Середня оцінка: {{score}}",
+    "youAnswered": "Ви відповіли: {{answer}}",
+    "play": "Озвучити {{phrase}}, помилка {{index}}",
+    "repeat": "Повторити помилки",
+    "repeatCards": "Повторити «Ще вчу»",
+    "done": "Готово",
+    "perfect": "Без жодної помилки!",
+    "rowScore": "Оцінка: {{score}}",
+    "true": "Вірно",
+    "false": "Невірно",
+    "blank": "—"
+  },
   "studyModes": {
     "title": "Оберіть спосіб",
     "recommended": "Рекомендовано",

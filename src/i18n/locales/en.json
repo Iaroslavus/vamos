@@ -730,6 +730,23 @@
       "speakProgress": "{{current}} of {{total}}"
     }
   },
+  "sessionSummary": {
+    "percent": "{{count}}%",
+    "scoreLabel": "Score {{percent}} percent",
+    "line": "Correct: {{correct}} · Mistakes: {{wrong}}",
+    "cardsLine": "Know {{know}} · Still learning {{again}}",
+    "speakLine": "Average score: {{score}}",
+    "youAnswered": "You answered: {{answer}}",
+    "play": "Play {{phrase}}, mistake {{index}}",
+    "repeat": "Repeat mistakes",
+    "repeatCards": "Repeat still learning",
+    "done": "Done",
+    "perfect": "Not a single mistake!",
+    "rowScore": "Score: {{score}}",
+    "true": "True",
+    "false": "False",
+    "blank": "—"
+  },
   "studyModes": {
     "title": "Choose a way",
     "recommended": "Recommended",
