@@ -18,11 +18,35 @@ export type FolderItem = {
   folderId: string;
   itemId: string;
   addedAt: string;
+  /** Set when `itemId` is this learner's user item. Null for a course phrase. */
+  userItemId: string | null;
+};
+
+export type UserItem = {
+  id: string;
+  es: string;
+  tr: string;
+  note: string | null;
+  createdAt: string;
+};
+
+/** Fields the form collects. The repository stores a trimmed word. */
+export type UserItemDraft = {
+  es: string;
+  tr: string;
+  note: string;
+};
+
+export type ParsedUserItem = {
+  es: string;
+  tr: string;
+  note: string | null;
 };
 
 export type FolderSnapshot = {
   folders: Folder[];
   items: FolderItem[];
+  userItems: UserItem[];
   pending: number;
 };
 
@@ -36,7 +60,8 @@ export type FolderDraft = {
   color: FolderColor;
 };
 
-export type OutboxKind = 'folder' | 'folder-delete' | 'item-add' | 'item-remove';
+export type OutboxKind =
+  'folder' | 'folder-delete' | 'item-add' | 'item-remove' | 'user-item' | 'user-item-delete';
 
 export type OutboxItem = {
   kind: OutboxKind;
@@ -48,6 +73,7 @@ export type PersistedFolders = {
   version: 1;
   folders: Record<string, Folder>;
   items: Record<string, FolderItem>;
+  userItems: Record<string, UserItem>;
   outbox: OutboxItem[];
   favoritesMigrated: boolean;
   /**
@@ -71,7 +97,10 @@ export type NetworkMonitor = {
 export type VocabRemote = {
   fetchFolders(userId: string): Promise<Folder[]>;
   fetchItems(userId: string): Promise<FolderItem[]>;
+  fetchUserItems(userId: string): Promise<UserItem[]>;
   upsertFolder(userId: string, folder: Folder): Promise<Folder>;
+  upsertUserItem(userId: string, item: UserItem): Promise<UserItem>;
+  deleteUserItem(userId: string, itemId: string): Promise<void>;
   insertItem(userId: string, item: FolderItem): Promise<void>;
   deleteItem(userId: string, folderId: string, itemId: string): Promise<void>;
   deleteFolder(userId: string, folderId: string): Promise<void>;
@@ -103,6 +132,15 @@ export type VocabRepository = {
     userId: string,
     input: { itemId: string; fromId: string; toId: string },
   ): Promise<FolderSnapshot>;
+  /** Creates the learner's word and puts it in the folder. Saves offline first. */
+  addUserItem(
+    userId: string,
+    folderId: string,
+    input: ParsedUserItem,
+  ): Promise<{ snapshot: FolderSnapshot; item: UserItem }>;
+  updateUserItem(userId: string, itemId: string, input: ParsedUserItem): Promise<FolderSnapshot>;
+  /** Removes the word from every folder. FSRS cards are dropped with the server row. */
+  deleteUserItem(userId: string, itemId: string): Promise<FolderSnapshot>;
   sync(userId: string): Promise<FolderSnapshot>;
   start(userId: string, onSynced: () => void): () => void;
   settled(): Promise<void>;

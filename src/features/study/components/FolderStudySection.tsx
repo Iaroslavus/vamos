@@ -6,6 +6,8 @@ import { StyleSheet, View } from 'react-native';
 import { Button } from '@/components/Button';
 import { space } from '@/theme/tokens';
 
+import type { UserItem } from '@/features/vocab/types';
+
 import { MasteryBar } from './MasteryBar';
 import { StudySheet } from './StudySheet';
 import { glossItem } from '../gloss';
@@ -20,9 +22,15 @@ type FolderStudySectionProps = {
   folderId: string;
   userId: string | null;
   itemIds: readonly string[];
+  userItems?: readonly UserItem[];
 };
 
-export function FolderStudySection({ folderId, userId, itemIds }: FolderStudySectionProps) {
+export function FolderStudySection({
+  folderId,
+  userId,
+  itemIds,
+  userItems = [],
+}: FolderStudySectionProps) {
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const review = useReviewSnapshot(userId);
@@ -35,9 +43,9 @@ export function FolderStudySection({ folderId, userId, itemIds }: FolderStudySec
         itemIds,
         cards: review.data?.cards ?? [],
         now,
-        gloss: (id) => glossItem(id, i18n.language),
+        gloss: (id) => glossItem(id, i18n.language, userItems),
       }),
-    [i18n.language, itemIds, now, review.data],
+    [i18n.language, itemIds, now, review.data, userItems],
   );
 
   const start = (mode: StudyMode) => {

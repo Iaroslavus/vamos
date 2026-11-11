@@ -83,6 +83,11 @@ function createRemote() {
         throw new Error('acknowledgement lost');
       }
     },
+    async deleteCards(_userId, itemId) {
+      for (const [key, card] of cards) {
+        if (card.itemId === itemId) cards.delete(key);
+      }
+    },
   };
 
   return {
@@ -185,5 +190,23 @@ describe('review repository', () => {
     expect(server.cards.size).toBe(2);
     expect((await repo.read(USER)).cards[0]?.reps).toBe(1);
     expect((await repo.read(USER)).pending).toBe(0);
+  });
+
+  it('forgets a custom word offline and does not restore its cards from the server', async () => {
+    const { repo, server, network } = setup(false);
+    await repo.introduceItems(USER, [{ id: '11111111-1111-4111-8111-111111111111' }]);
+    network.setOnline(true);
+    await repo.sync(USER);
+    expect(server.cards.size).toBe(1);
+
+    network.setOnline(false);
+    const forgotten = await repo.forgetItems(USER, ['11111111-1111-4111-8111-111111111111']);
+    expect(forgotten.cards).toEqual([]);
+    expect(server.cards.size).toBe(1);
+
+    network.setOnline(true);
+    const synced = await repo.sync(USER);
+    expect(synced.cards).toEqual([]);
+    expect(server.cards.size).toBe(0);
   });
 });

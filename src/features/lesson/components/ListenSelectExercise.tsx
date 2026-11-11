@@ -13,7 +13,7 @@ import {
   playLessonAudio,
   stopLessonAudio,
 } from '@/features/audio/playback';
-import { selectClip, type AudioPreference } from '@/features/audio/select';
+import { selectClip, speechLocale, type AudioPreference } from '@/features/audio/select';
 import { displayText } from '@/features/content/displayText';
 import { getItem } from '@/features/content/loader';
 import { motion, space } from '@/theme/tokens';
@@ -85,11 +85,12 @@ export function ListenSelectExercise({
       audio: clips.normal,
       text: exercise.speakText,
       rate: NORMAL_RATE,
+      language: speechLocale(preference),
     });
     return () => {
       void stopLessonAudio();
     };
-  }, [clips.normal, disabled, exercise.id, exercise.speakText]);
+  }, [clips.normal, disabled, exercise.id, exercise.speakText, preference]);
 
   const play = (rate: number) => {
     if (disabled) return;
@@ -98,6 +99,7 @@ export function ListenSelectExercise({
       audio: slow ? (clips.slow ?? null) : (clips.normal ?? null),
       text: exercise.speakText,
       rate,
+      language: speechLocale(preference),
     });
   };
 

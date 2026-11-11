@@ -28,6 +28,13 @@ export function audioPreferenceFromVariant(variant: string | null | undefined): 
   return variant === 'latam' ? 'latam' : 'es';
 }
 
+export type SpeechLocale = 'es-ES' | 'es-MX';
+
+/** Device TTS follows the same profile voice as the stored clips. */
+export function speechLocale(preference: AudioPreference): SpeechLocale {
+  return preference === 'latam' ? 'es-MX' : 'es-ES';
+}
+
 /**
  * A clip the app can fetch.
  * Legacy bundled names such as `a1/hola.mp3` are not storage objects.

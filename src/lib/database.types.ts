@@ -8,17 +8,20 @@ export type Database = {
           added_at: string;
           folder_id: string;
           item_id: string;
+          user_item_id: string | null;
         };
         ComputedFields: never;
         Insert: {
           added_at?: string;
           folder_id: string;
           item_id: string;
+          user_item_id?: string | null;
         };
         Update: {
           added_at?: string;
           folder_id?: string;
           item_id?: string;
+          user_item_id?: string | null;
         };
         Relationships: [
           {
@@ -26,6 +29,13 @@ export type Database = {
             columns: ['folder_id'];
             isOneToOne: false;
             referencedRelation: 'folders';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'folder_items_user_item_id_fkey';
+            columns: ['user_item_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_items';
             referencedColumns: ['id'];
           },
         ];
@@ -172,6 +182,7 @@ export type Database = {
           state: number;
           updated_at: string;
           user_id: string;
+          user_item_id: string | null;
         };
         ComputedFields: never;
         Insert: {
@@ -182,6 +193,7 @@ export type Database = {
           elapsed_days?: number;
           id?: string;
           item_id: string;
+          user_item_id?: string | null;
           lapses?: number;
           last_review?: string | null;
           learning_steps?: number;
@@ -209,6 +221,7 @@ export type Database = {
           state?: number;
           updated_at?: string;
           user_id?: string;
+          user_item_id?: string | null;
         };
         Relationships: [
           {
@@ -216,6 +229,13 @@ export type Database = {
             columns: ['user_id'];
             isOneToOne: false;
             referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'review_cards_user_item_id_fkey';
+            columns: ['user_item_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_items';
             referencedColumns: ['id'];
           },
         ];
@@ -306,6 +326,42 @@ export type Database = {
             foreignKeyName: 'streaks_user_id_fkey';
             columns: ['user_id'];
             isOneToOne: true;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      user_items: {
+        Row: {
+          created_at: string;
+          es: string;
+          id: string;
+          note: string | null;
+          tr: string;
+          user_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          created_at?: string;
+          es: string;
+          id?: string;
+          note?: string | null;
+          tr: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          es?: string;
+          id?: string;
+          note?: string | null;
+          tr?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'user_items_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
             referencedRelation: 'profiles';
             referencedColumns: ['id'];
           },

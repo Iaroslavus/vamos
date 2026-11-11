@@ -84,8 +84,8 @@ describe('FlashcardSession', () => {
     await waitFor(() => {
       expect(playLessonAudio).toHaveBeenCalledWith({
         text: 'adiós',
-        audio: null,
         rate: 0.7,
+        language: 'es-ES',
       });
     });
   });

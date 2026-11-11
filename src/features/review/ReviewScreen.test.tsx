@@ -161,6 +161,7 @@ describe('ReviewScreen', () => {
     useLessonStore.getState().reset();
     read.mockReset();
     readFolders.mockReset();
+    readFolders.mockResolvedValue({ folders: [], items: [], userItems: [] });
     recordRating.mockReset();
     recordRating.mockImplementation(async () => ({ cards: [], logs: [], dueCount: 0, pending: 0 }));
     awardXp.mockClear();
@@ -413,6 +414,7 @@ describe('ReviewScreen', () => {
         },
       ],
       items: [{ folderId: 'folder-1', itemId: 'hola.hola', addedAt: '2026-10-25T00:00:00.000Z' }],
+      userItems: [],
       pending: 0,
     });
     read.mockResolvedValue({

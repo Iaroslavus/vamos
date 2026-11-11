@@ -1,21 +1,27 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
 import { useAudioPreference } from '@/features/audio/preference';
+import { reviewRepository } from '@/features/review/defaultRepository';
+import { reviewDueQueryKey } from '@/features/review/hooks/useReviewDueCount';
+import { reviewSnapshotKey } from '@/features/study/hooks/useReviewSnapshot';
 import { colors } from '@/theme/tokens';
 
+import { CustomWordSheet } from './components/CustomWordSheet';
+import { DeleteCustomWordSheet } from './components/DeleteCustomWordSheet';
 import { FolderContents } from './components/FolderContents';
 import { FolderFormSheet } from './components/FolderFormSheet';
 import {
   DeleteFolderSheet,
   FolderMenuButton,
   FolderMenuSheet,
-  SoonSheet,
 } from './components/FolderManageSheets';
 import { MoveItemSheet } from './components/MoveItemSheet';
 import { PhraseSearchModal } from './components/PhraseSearchModal';
+import { deleteCustomWord, saveCustomWord, updateCustomWord } from './customWord';
 import { vocabRepository } from './defaultRepository';
 import { folderTitle } from './display';
 import { useFolders } from './hooks/useFolders';
@@ -32,7 +38,11 @@ export function FolderScreen() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
   const [searching, setSearching] = useState(false);
-  const [soon, setSoon] = useState(false);
+  const [composer, setComposer] = useState<
+    null | { mode: 'create' } | { mode: 'edit'; id: string }
+  >(null);
+  const [deletingWordId, setDeletingWordId] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
   const folder = vocab.snapshot?.folders.find((entry) => entry.id === folderId);
   const title = folder ? folderTitle(folder, t) : t('vocab.title');
@@ -45,10 +55,19 @@ export function FolderScreen() {
         .map((item) => item.itemId) ?? [],
     [folderId, vocab.snapshot?.items],
   );
+  const userItems = vocab.snapshot?.userItems ?? [];
+  const editingWord = userItems.find(
+    (item) => item.id === (composer?.mode === 'edit' ? composer.id : ''),
+  );
+  const deletingWord = userItems.find((item) => item.id === deletingWordId);
 
   const change = async (task: () => Promise<unknown>) => {
     await task();
     await vocab.refresh();
+    if (vocab.userId) {
+      await queryClient.invalidateQueries({ queryKey: reviewSnapshotKey(vocab.userId) });
+      await queryClient.invalidateQueries({ queryKey: reviewDueQueryKey(vocab.userId) });
+    }
   };
 
   const togglePhrase = (itemId: string) => {
@@ -76,6 +95,7 @@ export function FolderScreen() {
         folder={folder}
         userId={vocab.userId}
         itemIds={itemIds}
+        userItems={userItems}
         editable={editable}
         preference={preference}
         onRetry={() => {
@@ -84,8 +104,13 @@ export function FolderScreen() {
         onRemove={(itemId) => {
           const userId = vocab.userId;
           if (!userId || !folder) return;
+          if (userItems.some((item) => item.id === itemId)) {
+            setDeletingWordId(itemId);
+            return;
+          }
           void change(() => vocabRepository.removeItem(userId, folder.id, itemId));
         }}
+        onEdit={(itemId) => setComposer({ mode: 'edit', id: itemId })}
         onMove={setMovingId}
         onAdd={() => setSearching(true)}
       />
@@ -129,7 +154,13 @@ export function FolderScreen() {
         onClose={() => setConfirmingDelete(false)}
         onConfirm={async () => {
           if (!vocab.userId || !folder) throw new Error('Invalid user id');
+          const owned = userItems.map((item) => item.id);
           await vocabRepository.deleteFolder(vocab.userId, folder.id);
+          const after = await vocabRepository.read(vocab.userId);
+          const removed = owned.filter((id) => !after.userItems.some((item) => item.id === id));
+          if (removed.length > 0) {
+            await reviewRepository.forgetItems(vocab.userId, removed);
+          }
           await vocab.refresh();
         }}
         onDeleted={() => router.back()}
@@ -138,15 +169,52 @@ export function FolderScreen() {
         <PhraseSearchModal
           visible
           selectedIds={itemIds}
-          onClose={() => {
-            setSearching(false);
-            setSoon(false);
-          }}
+          onClose={() => setSearching(false)}
           onToggle={togglePhrase}
-          onAddOwn={() => setSoon(true)}
+          onAddOwn={() => {
+            setSearching(false);
+            setComposer({ mode: 'create' });
+          }}
         />
       ) : null}
-      <SoonSheet visible={soon} onClose={() => setSoon(false)} />
+      <CustomWordSheet
+        visible={composer !== null}
+        mode={composer?.mode ?? 'create'}
+        editingId={composer?.mode === 'edit' ? composer.id : undefined}
+        initial={
+          editingWord
+            ? { es: editingWord.es, tr: editingWord.tr, note: editingWord.note ?? '' }
+            : undefined
+        }
+        existing={userItems}
+        onClose={() => setComposer(null)}
+        onSubmit={async (draft) => {
+          if (!vocab.userId || !folder) throw new Error('Invalid user id');
+          if (composer?.mode === 'edit') {
+            await updateCustomWord(vocabRepository, vocab.userId, composer.id, draft, userItems);
+          } else {
+            await saveCustomWord(
+              vocabRepository,
+              reviewRepository,
+              vocab.userId,
+              folder.id,
+              draft,
+              userItems,
+            );
+          }
+          await change(async () => undefined);
+        }}
+      />
+      <DeleteCustomWordSheet
+        visible={deletingWordId !== null}
+        es={deletingWord?.es ?? ''}
+        onClose={() => setDeletingWordId(null)}
+        onConfirm={async () => {
+          if (!vocab.userId || !deletingWordId) throw new Error('Invalid user id');
+          await deleteCustomWord(vocabRepository, reviewRepository, vocab.userId, deletingWordId);
+          await change(async () => undefined);
+        }}
+      />
     </View>
   );
 }

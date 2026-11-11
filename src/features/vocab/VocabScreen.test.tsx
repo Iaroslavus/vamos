@@ -89,6 +89,8 @@ jest.mock('@/features/review/defaultRepository', () => ({
       dueCount: 1,
       pending: 0,
     })),
+    introduceItems: jest.fn(async () => ({ cards: [], logs: [], dueCount: 0, pending: 0 })),
+    forgetItems: jest.fn(async () => ({ cards: [], logs: [], dueCount: 0, pending: 0 })),
   },
 }));
 
@@ -427,7 +429,29 @@ describe('FolderScreen', () => {
 
     await user.press(screen.getByRole('button', { name: '+ Добавить слова' }));
     await user.press(await screen.findByRole('button', { name: 'Добавить своё слово' }));
-    expect(await screen.findByText('скоро')).toBeTruthy();
+    expect(await screen.findByText('Своё слово')).toBeTruthy();
+
+    await user.press(screen.getByRole('button', { name: 'Сохранить' }));
+    expect(screen.getByText('Напишите слово по-испански')).toBeTruthy();
+
+    await fireEvent.changeText(screen.getByLabelText('По-испански'), 'gato');
+    await user.press(screen.getByRole('button', { name: 'Сохранить' }));
+    expect(screen.getByText('Напишите перевод')).toBeTruthy();
+
+    await fireEvent.changeText(screen.getByLabelText('Перевод'), 'кот');
+    await user.press(screen.getByRole('button', { name: 'Сохранить' }));
+    expect(await screen.findByText('✎ Gato')).toBeTruthy();
+    expect(screen.getByText('Кот')).toBeTruthy();
+    expect(jest.mocked(reviewRepository.introduceItems)).toHaveBeenCalledWith('user-1', [
+      expect.objectContaining({ id: expect.any(String) }),
+    ]);
+
+    await user.press(screen.getByRole('button', { name: '+ Добавить слова' }));
+    await user.press(await screen.findByRole('button', { name: 'Добавить своё слово' }));
+    await fireEvent.changeText(screen.getByLabelText('По-испански'), 'Gató');
+    await fireEvent.changeText(screen.getByLabelText('Перевод'), 'кошка');
+    await user.press(screen.getByRole('button', { name: 'Сохранить' }));
+    expect(screen.getByText('Такое слово уже есть')).toBeTruthy();
   });
 
   it('hides the folder menu on favorites, tricky words, and topic folders', async () => {

@@ -8,14 +8,14 @@ import { IconButton } from '@/components/IconButton';
 import { ProgressBar } from '@/components/ProgressBar';
 import { ResultSheet } from '@/components/ResultSheet';
 import { Text } from '@/components/Text';
-import { play, stopLessonAudio } from '@/features/audio/playback';
+import { stopLessonAudio } from '@/features/audio/playback';
 import { useAudioPreference } from '@/features/audio/preference';
-import { getItem } from '@/features/content/loader';
 import { AccentBar } from '@/features/lesson/components/AccentBar';
 import { buildResultSheetModel } from '@/features/lesson/feedbackView';
 import { colors, space } from '@/theme/tokens';
 
 import { studyStepExercise } from '../exercise';
+import { playUnit } from '../playUnit';
 import type { LearnController } from '../hooks/useLearnSession';
 import { StudyStepBody } from './StudyStepBody';
 
@@ -36,11 +36,9 @@ export function LearnQuiz({ player, onClose }: LearnQuizProps) {
     const shouldPlay =
       step.type === 'speak_repeat' || (step.type === 'type_translation' && step.playEs);
     if (!itemId || !shouldPlay) return undefined;
-    try {
-      void play(getItem(itemId), 'normal', preference);
-    } catch {
-      return undefined;
-    }
+    const es =
+      step.type === 'speak_repeat' ? step.promptEs : 'phraseEs' in step ? step.phraseEs : '';
+    playUnit(itemId, es, preference);
     return () => {
       void stopLessonAudio();
     };

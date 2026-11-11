@@ -122,28 +122,6 @@ export function DeleteFolderSheet({
   );
 }
 
-type SoonSheetProps = {
-  visible: boolean;
-  onClose: () => void;
-};
-
-export function SoonSheet({ visible, onClose }: SoonSheetProps) {
-  const { t } = useTranslation();
-
-  return (
-    <BottomSheet visible={visible} onClose={onClose}>
-      <View style={styles.body}>
-        <Text variant="h3" style={styles.center}>
-          {t('folder.addOwn')}
-        </Text>
-        <Text variant="body" color={colors.inkMuted} style={styles.center}>
-          {t('folder.soon')}
-        </Text>
-      </View>
-    </BottomSheet>
-  );
-}
-
 const styles = StyleSheet.create({
   hit: {
     width: 44,

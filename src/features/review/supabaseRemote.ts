@@ -51,6 +51,15 @@ export function createSupabaseReviewRemote(client: TypedSupabaseClient): ReviewR
       });
       if (error) throw error;
     },
+
+    async deleteCards(userId, itemId) {
+      const { error } = await client
+        .from('review_cards')
+        .delete()
+        .eq('user_id', userId)
+        .eq('item_id', itemId);
+      if (error) throw error;
+    },
   };
 }
 

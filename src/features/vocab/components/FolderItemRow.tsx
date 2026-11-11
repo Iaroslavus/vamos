@@ -19,18 +19,34 @@ type FolderItemRowProps = {
   es: string;
   ru: string;
   editable: boolean;
+  own?: boolean;
   onPlay: () => void;
   onRemove: () => void;
   onMove: () => void;
+  onEdit?: () => void;
 };
 
-export function FolderItemRow({ es, ru, editable, onPlay, onRemove, onMove }: FolderItemRowProps) {
+export function FolderItemRow({
+  es,
+  ru,
+  editable,
+  own = false,
+  onPlay,
+  onRemove,
+  onMove,
+  onEdit,
+}: FolderItemRowProps) {
   const { t } = useTranslation();
   const [menu, setMenu] = useState(false);
   const shownEs = displayText(es);
   const shownRu = displayText(ru);
   const { gesture, cardStyle, close } = useFolderRowSwipe(editable);
   const phrase = shownRu ? `${shownEs}, ${shownRu}` : shownEs;
+  const label = own ? `${t('customWords.badge')}. ${phrase}` : phrase;
+  const edit = () => {
+    close();
+    onEdit?.();
+  };
 
   return (
     <View style={styles.clip}>
@@ -40,18 +56,28 @@ export function FolderItemRow({ es, ru, editable, onPlay, onRemove, onMove }: Fo
           accessibilityElementsHidden
           importantForAccessibility="no-hide-descendants"
         >
+          {own ? (
+            <SwipeAction
+              label={t('customWords.edit')}
+              face={colors.surface}
+              sole={colors.borderStrong}
+              ink={colors.ink}
+              onPress={edit}
+            />
+          ) : (
+            <SwipeAction
+              label={t('vocab.moveTitle')}
+              face={colors.surface}
+              sole={colors.borderStrong}
+              ink={colors.ink}
+              onPress={() => {
+                close();
+                onMove();
+              }}
+            />
+          )}
           <SwipeAction
-            label={t('vocab.moveTitle')}
-            face={colors.surface}
-            sole={colors.borderStrong}
-            ink={colors.ink}
-            onPress={() => {
-              close();
-              onMove();
-            }}
-          />
-          <SwipeAction
-            label={t('vocab.delete')}
+            label={own ? t('customWords.delete') : t('vocab.delete')}
             face={colors.coral}
             sole={colors.coralDeep}
             ink={colors.inkOnDark}
@@ -69,13 +95,21 @@ export function FolderItemRow({ es, ru, editable, onPlay, onRemove, onMove }: Fo
               style={styles.copy}
               delayLongPress={400}
               accessibilityRole="button"
-              accessibilityLabel={phrase}
+              accessibilityLabel={label}
               accessibilityHint={t('vocab.rowActionsHint')}
-              accessibilityActions={[
-                { name: 'move', label: t('vocab.move', { es: shownEs }) },
-                { name: 'delete', label: t('vocab.deleteNamed', { es: shownEs }) },
-              ]}
+              accessibilityActions={
+                own
+                  ? [
+                      { name: 'edit', label: t('customWords.editNamed', { es: shownEs }) },
+                      { name: 'delete', label: t('customWords.deleteNamed', { es: shownEs }) },
+                    ]
+                  : [
+                      { name: 'move', label: t('vocab.move', { es: shownEs }) },
+                      { name: 'delete', label: t('vocab.deleteNamed', { es: shownEs }) },
+                    ]
+              }
               onAccessibilityAction={(event) => {
+                if (event.nativeEvent.actionName === 'edit') onEdit?.();
                 if (event.nativeEvent.actionName === 'move') onMove();
                 if (event.nativeEvent.actionName === 'delete') onRemove();
               }}
@@ -84,11 +118,11 @@ export function FolderItemRow({ es, ru, editable, onPlay, onRemove, onMove }: Fo
                 setMenu(true);
               }}
             >
-              <PhraseCopy es={shownEs} ru={shownRu} />
+              <PhraseCopy es={shownEs} ru={shownRu} own={own} mark={t('customWords.mark')} />
             </Pressable>
           ) : (
             <View style={styles.copy}>
-              <PhraseCopy es={shownEs} ru={shownRu} />
+              <PhraseCopy es={shownEs} ru={shownRu} own={own} mark={t('customWords.mark')} />
             </View>
           )}
           <IconButton accessibilityLabel={t('vocab.play', { es: shownEs })} onPress={onPlay}>
@@ -99,19 +133,21 @@ export function FolderItemRow({ es, ru, editable, onPlay, onRemove, onMove }: Fo
       {menu ? (
         <FolderItemMenu
           es={shownEs}
+          own={own}
           onClose={() => setMenu(false)}
           onMove={onMove}
           onRemove={onRemove}
+          onEdit={() => onEdit?.()}
         />
       ) : null}
     </View>
   );
 }
 
-function PhraseCopy({ es, ru }: { es: string; ru: string }) {
+function PhraseCopy({ es, ru, own, mark }: { es: string; ru: string; own: boolean; mark: string }) {
   return (
     <>
-      <Text variant="bodyBold">{es}</Text>
+      <Text variant="bodyBold">{own ? `${mark} ${es}` : es}</Text>
       {ru ? (
         <Text variant="caption" color={colors.inkMuted}>
           {ru}

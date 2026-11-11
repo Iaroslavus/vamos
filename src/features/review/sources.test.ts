@@ -57,6 +57,9 @@ function setup() {
     async insertLog() {
       return undefined;
     },
+    async deleteCards() {
+      return undefined;
+    },
   };
   const schedule: Scheduler = () => () => undefined;
   let ids = 0;

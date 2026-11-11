@@ -7,7 +7,7 @@ import type { AudioPreference } from '@/features/audio/select';
 import { FolderStudySection } from '@/features/study/components/FolderStudySection';
 import { colors, space } from '@/theme/tokens';
 
-import type { Folder } from '../types';
+import type { Folder, UserItem } from '../types';
 import { AddWordsControl } from './AddWordsControl';
 import { FolderPhraseList } from './FolderPhraseList';
 
@@ -17,11 +17,13 @@ type FolderContentsProps = {
   folder: Folder | undefined;
   userId: string | null;
   itemIds: readonly string[];
+  userItems?: readonly UserItem[];
   editable: boolean;
   preference: AudioPreference;
   onRetry: () => void;
   onRemove: (itemId: string) => void;
   onMove: (itemId: string) => void;
+  onEdit: (itemId: string) => void;
   onAdd: () => void;
 };
 
@@ -31,11 +33,13 @@ export function FolderContents({
   folder,
   userId,
   itemIds,
+  userItems = [],
   editable,
   preference,
   onRetry,
   onRemove,
   onMove,
+  onEdit,
   onAdd,
 }: FolderContentsProps) {
   const { t } = useTranslation();
@@ -66,7 +70,12 @@ export function FolderContents({
 
   return (
     <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-      <FolderStudySection folderId={folder.id} userId={userId} itemIds={itemIds} />
+      <FolderStudySection
+        folderId={folder.id}
+        userId={userId}
+        itemIds={itemIds}
+        userItems={userItems}
+      />
       {itemIds.length === 0 ? (
         <View style={styles.afterStudy}>
           {editable ? <AddWordsControl variant="button" onPress={onAdd} /> : null}
@@ -77,11 +86,13 @@ export function FolderContents({
       ) : (
         <FolderPhraseList
           itemIds={itemIds}
+          userItems={userItems}
           editable={editable}
           canAdd={editable}
           preference={preference}
           onRemove={onRemove}
           onMove={onMove}
+          onEdit={onEdit}
           onAdd={onAdd}
         />
       )}
