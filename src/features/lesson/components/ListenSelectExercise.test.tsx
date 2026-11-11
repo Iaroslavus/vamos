@@ -1,11 +1,18 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { I18nextProvider } from 'react-i18next';
+import { StyleSheet } from 'react-native';
 
 import { playLessonAudio, SLOW_RATE } from '@/features/audio/playback';
 import i18n from '@/i18n';
+import { type as typeScale } from '@/theme/tokens';
 
 import { useLessonStore, type ListenSelectItem } from '../store';
 import { ListenSelectExercise } from './ListenSelectExercise';
+
+jest.mock('expo-haptics', () => ({
+  impactAsync: jest.fn(() => Promise.resolve()),
+  ImpactFeedbackStyle: { Light: 'light' },
+}));
 
 jest.mock('lucide-react-native', () => {
   // jest.mock is hoisted above imports, so the factory cannot use ESM imports.
@@ -34,18 +41,74 @@ const listen: ListenSelectItem = {
   speakText: 'Hola',
 };
 
-function renderExercise(exercise: ListenSelectItem, disabled = false) {
+function renderExercise(
+  exercise: ListenSelectItem,
+  disabled = false,
+  onSelect: (option: string) => void = jest.fn(),
+) {
   return render(
     <I18nextProvider i18n={i18n}>
       <ListenSelectExercise
         exercise={exercise}
         selected=""
         disabled={disabled}
-        onSelect={jest.fn()}
+        onSelect={onSelect}
       />
     </I18nextProvider>,
   );
 }
+
+function faceWidth(testID: string): number {
+  const width = StyleSheet.flatten(screen.getByTestId(testID).props.style).width;
+  return typeof width === 'number' ? width : 0;
+}
+
+describe('ListenSelectExercise', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    useLessonStore.getState().reset();
+  });
+
+  it('shows the question as a heading and stacks full-width options', async () => {
+    await renderExercise(listen);
+
+    expect(screen.getByText(listen.prompt_ru)).toHaveStyle({
+      fontSize: typeScale.h2.fontSize,
+      fontFamily: typeScale.h2.fontFamily,
+    });
+    expect(faceWidth('listen-play')).toBeGreaterThan(faceWidth('listen-slow'));
+    for (const option of listen.options) {
+      expect(screen.getByRole('button', { name: option })).toHaveStyle({ minHeight: 56 });
+    }
+  });
+
+  it('plays the phrase when the exercise appears', async () => {
+    await renderExercise(listen);
+
+    expect(playLessonAudio).toHaveBeenCalledWith({
+      audio: listen.audio,
+      text: listen.speakText,
+      rate: 1,
+    });
+  });
+
+  it('stays quiet until the exercise is active', async () => {
+    await renderExercise(listen, true);
+
+    expect(playLessonAudio).not.toHaveBeenCalled();
+  });
+
+  it('records a choice and leaves grading to the check button', async () => {
+    const onSelect = jest.fn();
+    await renderExercise(listen, false, onSelect);
+    const plays = jest.mocked(playLessonAudio).mock.calls.length;
+
+    fireEvent.press(screen.getByRole('button', { name: 'Hola' }));
+
+    expect(onSelect).toHaveBeenCalledWith('Hola');
+    expect(playLessonAudio).toHaveBeenCalledTimes(plays);
+  });
+});
 
 describe('ListenSelectExercise slow button', () => {
   beforeEach(() => {

@@ -33,6 +33,12 @@ describe('Chip', () => {
     expect(onPress).not.toHaveBeenCalled();
   });
 
+  it('uses a 56px full-width hit target when fill is set', async () => {
+    await render(<Chip label="hola" fill onPress={() => undefined} />);
+
+    expect(screen.getByRole('button', { name: 'hola' })).toHaveStyle({ minHeight: 56 });
+  });
+
   it('keeps selected chips pressable for reselection', async () => {
     const onPress = jest.fn();
 
