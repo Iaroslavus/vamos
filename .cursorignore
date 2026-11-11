@@ -1,0 +1,4 @@
+# Scratch audio and agent worktrees. Keep them out of the index.
+tmp/
+.cursor/worktrees/
+.claude/worktrees/

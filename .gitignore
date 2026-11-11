@@ -46,6 +46,10 @@ dist
 
 # Local TTS comparison clips. Listen here; do not commit them.
 tmp/
+
+# Git worktrees belong outside this folder. A nested copy makes Metro run out of memory.
+.cursor/worktrees/
+.claude/worktrees/
 .env.content*
 supabase/snippets/
 supabase/snippets/
