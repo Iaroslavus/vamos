@@ -7,6 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "vamos",
     "userInterfaceStyle": "automatic",
+    "platforms": ["ios", "android"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.iaroslavus.vamos",
@@ -27,7 +28,7 @@
     },
     "web": {
       "bundler": "metro",
-      "output": "server",
+      "output": "single",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
@@ -52,9 +53,7 @@
         {
           "microphonePermission": "Vamos слушает фразу, чтобы проверить, понятно ли произношение. Запись не сохраняется.",
           "speechRecognitionPermission": "Vamos распознаёт испанскую речь, чтобы сравнить фразу с образцом. Запись не сохраняется.",
-          "androidSpeechServicePackages": [
-            "com.google.android.googlequicksearchbox"
-          ]
+          "androidSpeechServicePackages": ["com.google.android.googlequicksearchbox"]
         }
       ],
       "expo-localization",
