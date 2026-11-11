@@ -59,7 +59,8 @@
       ],
       "expo-localization",
       "expo-status-bar",
-      "expo-asset"
+      "expo-asset",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
