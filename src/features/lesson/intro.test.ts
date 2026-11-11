@@ -2,6 +2,7 @@ import { blankAudio, type CefrLevel, type Item } from '@/features/content/schema
 import { fillLocales } from '@/features/content/text';
 
 import {
+  hasIntroBreakdown,
   itemAudioPath,
   partAudioPath,
   shouldAdvanceOnSwipe,
@@ -45,6 +46,26 @@ describe('showsSayRu', () => {
     ['C2', false],
   ] as const)('level %s → %s', (level: CefrLevel, expected: boolean) => {
     expect(showsSayRu(level)).toBe(expected);
+  });
+});
+
+describe('hasIntroBreakdown', () => {
+  it('is true when any detail is present and false when the card has nothing to open', () => {
+    expect(hasIntroBreakdown(item(), 'ru')).toBe(true);
+    expect(
+      hasIntroBreakdown(
+        item({
+          level: 'B1',
+          say: fillLocales('буЭнос дИас'),
+          parts: [],
+          literal: null,
+          note: null,
+          why: null,
+        }),
+        'ru',
+      ),
+    ).toBe(false);
+    expect(hasIntroBreakdown(item({ say: null, note: fillLocales('ранком') }), 'uk')).toBe(true);
   });
 });
 

@@ -1,6 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
-import type { ComponentProps } from 'react';
+import type { ComponentProps, ReactElement } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -13,7 +14,9 @@ import {
 } from '@/features/audio/playback';
 import { blankAudio, type Item } from '@/features/content/schema';
 import { fillLocales } from '@/features/content/text';
+import { usePhraseBreakdownStore } from '@/features/settings/phraseBreakdownStore';
 import i18n from '@/i18n';
+import { colors } from '@/theme/tokens';
 
 import { DEFAULT_MAX_HEARTS, useLessonStore } from '../store';
 import { IntroStep } from './IntroStep';
@@ -98,8 +101,8 @@ const phrase: Item = {
   draft_i18n: false,
 };
 
-function renderStep(item: Item, props: Partial<ComponentProps<typeof IntroStep>> = {}) {
-  return render(
+function stepTree(item: Item, props: Partial<ComponentProps<typeof IntroStep>> = {}): ReactElement {
+  return (
     <I18nextProvider i18n={i18n}>
       <SafeAreaProvider
         initialMetrics={{
@@ -116,8 +119,12 @@ function renderStep(item: Item, props: Partial<ComponentProps<typeof IntroStep>>
           {...props}
         />
       </SafeAreaProvider>
-    </I18nextProvider>,
+    </I18nextProvider>
   );
+}
+
+function renderStep(item: Item, props: Partial<ComponentProps<typeof IntroStep>> = {}) {
+  return render(stepTree(item, props));
 }
 
 const speech = ExpoSpeechRecognitionModule as unknown as {
@@ -139,31 +146,65 @@ function emitTranscript(transcript: string): void {
 }
 
 describe('IntroStep', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.clearAllMocks();
     mockVocabMemory.clear();
     useLessonStore.getState().reset();
+    await AsyncStorage.clear();
+    await usePhraseBreakdownStore.persist.rehydrate();
+    usePhraseBreakdownStore.setState({ show: false, streak: 0 });
     jest.mocked(ExpoSpeechRecognitionModule.isRecognitionAvailable).mockReturnValue(true);
     jest.mocked(ExpoSpeechRecognitionModule.getPermissionsAsync).mockResolvedValue(granted);
     jest.mocked(ExpoSpeechRecognitionModule.requestPermissionsAsync).mockResolvedValue(granted);
   });
 
-  it('shows the new-phrase label, translation, hint, note, and equal audio buttons', async () => {
+  it('shows the phrase, translation, and audio, with the breakdown closed', async () => {
     await renderStep(phrase);
 
     expect(screen.getByText('Новые фразы 2 из 6')).toBeTruthy();
     expect(screen.getByText('Buenos días')).toBeTruthy();
-    expect(screen.getByText('буЭнос дИас')).toBeTruthy();
     expect(screen.getByText('Доброе утро')).toBeTruthy();
-    expect(screen.getByText('Так говорят утром, примерно до обеда.')).toBeTruthy();
-    expect(screen.getByText('Buenos · Добрые')).toBeTruthy();
-    expect(screen.getByText('Días · Дни')).toBeTruthy();
-    expect(screen.getByText('буквально: Добрые дни')).toBeTruthy();
+    expect(screen.getByRole('button', { name: '+ В словник' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Слушать' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Медленно' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Подробнее' })).toBeTruthy();
+    expect(screen.queryByText('буЭнос дИас')).toBeNull();
+    expect(screen.queryByText('Так говорят утром, примерно до обеда.')).toBeNull();
+    expect(screen.queryByText('Buenos · Добрые')).toBeNull();
+    expect(screen.queryByText('Почему так?')).toBeNull();
+    expect(StyleSheet.flatten(screen.getByText('Подробнее').props.style).color).toBe(
+      colors.inkMuted,
+    );
 
     const listen = StyleSheet.flatten(screen.getByTestId('intro-listen').props.style);
     const slow = StyleSheet.flatten(screen.getByTestId('intro-slow').props.style);
     expect(listen).toMatchObject({ width: 44, height: 44 });
     expect(slow).toMatchObject({ width: 44, height: 44 });
+
+    const footer = StyleSheet.flatten(screen.getByTestId('intro-footer').props.style);
+    expect(footer).toMatchObject({ flexDirection: 'row' });
+  });
+
+  it('opens the breakdown inside the card and closes it again', async () => {
+    await renderStep(phrase);
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Подробнее' }));
+
+    expect(screen.getByText('Как произносить')).toBeTruthy();
+    expect(screen.getByText('буЭнос дИас')).toBeTruthy();
+    expect(screen.getByText('Дословно')).toBeTruthy();
+    expect(screen.getByText('Buenos · Добрые')).toBeTruthy();
+    expect(screen.getByText('Días · Дни')).toBeTruthy();
+    expect(screen.getByText('буквально: Добрые дни')).toBeTruthy();
+    expect(screen.getByText('Так говорят утром, примерно до обеда.')).toBeTruthy();
+    expect(screen.getByText('Почему так?')).toBeTruthy();
+    expect(screen.getByText(phrase.why?.ru ?? '')).toBeTruthy();
+    expect(screen.queryByText('Понятно')).toBeNull();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Скрыть' }));
+
+    expect(screen.queryByText('буЭнос дИас')).toBeNull();
+    expect(screen.queryByText('Почему так?')).toBeNull();
   });
 
   it('plays the phrase when the card appears, and again for listen and slow', async () => {
@@ -192,6 +233,7 @@ describe('IntroStep', () => {
 
   it('speaks a part on its own when a chip is tapped', async () => {
     await renderStep(phrase);
+    await fireEvent.press(screen.getByRole('button', { name: 'Подробнее' }));
 
     await fireEvent.press(screen.getByText('Buenos · Добрые'));
 
@@ -216,18 +258,8 @@ describe('IntroStep', () => {
     expect(screen.queryByText('буЭнос дИас')).toBeNull();
     expect(screen.queryByText(/буквально/)).toBeNull();
     expect(screen.queryByText('Почему так?')).toBeNull();
+    expect(screen.queryByText('Подробнее')).toBeNull();
     expect(screen.queryByText('Так говорят утром, примерно до обеда.')).toBeNull();
-  });
-
-  it('opens the why sheet when why_ru is set', async () => {
-    await renderStep(phrase);
-
-    expect(screen.queryByText(phrase.why?.ru ?? '')).toBeNull();
-    await fireEvent.press(screen.getByText('Почему так?'));
-    expect(screen.getByText(phrase.why?.ru ?? '')).toBeTruthy();
-
-    await fireEvent.press(screen.getByText('Понятно'));
-    expect(screen.queryByText(phrase.why?.ru ?? '')).toBeNull();
   });
 
   it('opens the folder sheet and saves the unit into favorites', async () => {
@@ -341,6 +373,51 @@ describe('IntroStep', () => {
     expect(onRepeatAloud).toHaveBeenCalledTimes(1);
     expect(onNext).toHaveBeenCalledTimes(1);
     expect(playLessonAudio).toHaveBeenCalledTimes(playsBeforeRepeat);
+  });
+
+  it('remembers the breakdown after three cards opened in a row', async () => {
+    const onNext = jest.fn();
+    const view = await renderStep(phrase, { onNext });
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Подробнее' }));
+    expect(usePhraseBreakdownStore.getState()).toMatchObject({ show: false, streak: 1 });
+
+    await view.rerender(stepTree({ ...phrase, id: 'phrase.2' }, { onNext }));
+    expect(screen.queryByText('буЭнос дИас')).toBeNull();
+    await fireEvent.press(screen.getByRole('button', { name: 'Подробнее' }));
+    expect(usePhraseBreakdownStore.getState()).toMatchObject({ show: false, streak: 2 });
+
+    await view.rerender(stepTree({ ...phrase, id: 'phrase.3' }, { onNext }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Подробнее' }));
+    expect(usePhraseBreakdownStore.getState()).toMatchObject({ show: true, streak: 0 });
+
+    await view.rerender(stepTree({ ...phrase, id: 'phrase.4' }, { onNext }));
+    expect(screen.getByText('Как произносить')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Скрыть' })).toBeTruthy();
+    expect(onNext).not.toHaveBeenCalled();
+  });
+
+  it('resets the streak when the next card is left closed', async () => {
+    const onNext = jest.fn();
+    const view = await renderStep(phrase, { onNext });
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Подробнее' }));
+    await fireEvent.press(screen.getByText('Дальше'));
+    expect(usePhraseBreakdownStore.getState().streak).toBe(1);
+
+    await view.rerender(stepTree({ ...phrase, id: 'phrase.2' }, { onNext }));
+    await fireEvent.press(screen.getByText('Дальше'));
+
+    expect(usePhraseBreakdownStore.getState()).toMatchObject({ show: false, streak: 0 });
+    expect(onNext).toHaveBeenCalledTimes(2);
+  });
+
+  it('starts expanded when the profile setting is on', async () => {
+    usePhraseBreakdownStore.setState({ show: true, streak: 0 });
+    await renderStep(phrase);
+
+    expect(screen.getByText('буЭнос дИас')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Скрыть' })).toBeTruthy();
   });
 
   it('stops audio when the step unmounts', async () => {

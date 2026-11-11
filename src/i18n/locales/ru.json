@@ -236,7 +236,8 @@
   },
   "profile": {
     "title": "Профиль",
-    "stub": "Здесь появятся настройки, напоминания и подписка."
+    "stub": "Здесь появятся настройки, напоминания и подписка.",
+    "showPhraseBreakdown": "Показывать разбор фраз"
   },
   "auth": {
     "saveTitle": "Сохранить прогресс",
@@ -329,8 +330,11 @@
     "introProgress": "Новые фразы {{current}} из {{total}}",
     "introPart": "{{es}} · {{ru}}",
     "introLiteral": "буквально: {{text}}",
+    "introSay": "Как произносить",
+    "introWordForWord": "Дословно",
+    "introMore": "Подробнее",
+    "introLess": "Скрыть",
     "introWhy": "Почему так?",
-    "introWhyClose": "Понятно",
     "introSave": "+ В словник",
     "introSaved": "В избранном",
     "introInVocab": "В словнике",

@@ -19,10 +19,10 @@ import { useItemSaveState } from '@/features/vocab/hooks/useItemSaveState';
 import { colors, radius, space } from '@/theme/tokens';
 
 import { useCardSwipe } from '../hooks/useCardSwipe';
+import { useIntroBreakdown } from '../hooks/useIntroBreakdown';
 import { useIntroPlayback } from '../hooks/useIntroPlayback';
-import { itemAudioPath, showsSayRu, type AudioPreference } from '../intro';
+import { hasIntroBreakdown, itemAudioPath, showsSayRu, type AudioPreference } from '../intro';
 import { IntroCard } from './IntroCard';
-import { IntroWhySheet } from './IntroWhySheet';
 
 type IntroStepProps = {
   item: Item;
@@ -54,7 +54,6 @@ export function IntroStep({
   const insets = useSafeAreaInsets();
   const saveState = useItemSaveState([item.id]);
   const { playPhrase, playPart } = useIntroPlayback(item, audioVariant);
-  const [whyItemId, setWhyItemId] = useState<string | null>(null);
   const [vocabOpen, setVocabOpen] = useState(false);
   const [practiceItemId, setPracticeItemId] = useState<string | null>(null);
   const saveLabel = saveState.inFavorites
@@ -62,8 +61,6 @@ export function IntroStep({
     : saveState.inAny
       ? t('lesson.introInVocab')
       : t('lesson.introSave');
-  const whyOpen = whyItemId === item.id;
-  const why = textOf(item.why, language);
   const sayRu = showsSayRu(item.level) ? textOf(item.say, language) : null;
   const speechParts = item.parts.map((part) => ({ es: part.es, ru: textOf(part.tr, language) }));
   const confusables = useMemo(
@@ -71,11 +68,13 @@ export function IntroStep({
     [item.confusables, item.es],
   );
   const TopicIcon = resolveTopicIcon(topicIcon);
-  const swipe = useCardSwipe(onNext, item.id);
+  const breakdown = useIntroBreakdown(item.id, hasIntroBreakdown(item, language), onNext);
+  const swipe = useCardSwipe(breakdown.goNext, item.id);
 
   return (
     <View style={styles.root}>
       <ScrollView
+        style={styles.scrollView}
         contentContainerStyle={styles.scroll}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
@@ -92,32 +91,37 @@ export function IntroStep({
               sayRu={sayRu}
               saved={saveState.inAny}
               saveLabel={saveLabel}
+              expanded={breakdown.expanded}
               onPlay={playPhrase}
               onPlayPart={playPart}
               onSave={() => setVocabOpen(true)}
-              onWhy={() => setWhyItemId(item.id)}
+              onToggleDetails={breakdown.toggle}
             />
           </Appear>
         </Animated.View>
       </ScrollView>
 
-      <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, space.lg) }]}>
+      <View
+        testID="intro-footer"
+        style={[styles.footer, { paddingBottom: Math.max(insets.bottom, space.lg) }]}
+      >
         <Button
           title={t('lesson.introRepeat')}
           variant="secondary"
+          style={styles.footerButton}
           onPress={() => {
             onRepeatAloud?.();
             setPracticeItemId(item.id);
           }}
         />
-        <Button title={t('lesson.continue')} variant="primary" onPress={onNext} />
+        <Button
+          title={t('lesson.continue')}
+          variant="primary"
+          style={styles.footerButton}
+          onPress={breakdown.goNext}
+        />
       </View>
 
-      <IntroWhySheet
-        visible={whyOpen && Boolean(why)}
-        text={why}
-        onClose={() => setWhyItemId(null)}
-      />
       <AddToVocabSheet
         visible={vocabOpen}
         itemIds={[item.id]}
@@ -144,6 +148,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.ground,
   },
+  scrollView: {
+    flex: 1,
+  },
   scroll: {
     paddingHorizontal: space.xl,
     paddingTop: space.lg,
@@ -162,11 +169,17 @@ const styles = StyleSheet.create({
     paddingVertical: space.sm,
   },
   footer: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
     gap: space.sm,
     paddingHorizontal: space.xl,
     paddingTop: space.md,
     borderTopWidth: 1,
     borderTopColor: colors.border,
     backgroundColor: colors.ground,
+  },
+  footerButton: {
+    flex: 1,
+    minWidth: 0,
   },
 });

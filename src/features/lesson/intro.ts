@@ -1,5 +1,6 @@
 import { selectClip, type AudioPreference, type AudioSpeed } from '@/features/audio/select';
 import type { CefrLevel, Item } from '@/features/content/schema';
+import { textOf } from '@/features/content/text';
 
 export type { AudioPreference, AudioSpeed };
 
@@ -8,6 +9,17 @@ const BEGINNER_LEVELS: ReadonlySet<CefrLevel> = new Set(['A1', 'A2']);
 /** Cyrillic pronunciation hint is only shown while the learner is a beginner. */
 export function showsSayRu(level: CefrLevel): boolean {
   return BEGINNER_LEVELS.has(level);
+}
+
+/** Pronunciation, word-for-word chips, a note, or a why — anything «Детальніше» can open. */
+export function hasIntroBreakdown(item: Item, language: string | null | undefined): boolean {
+  if (showsSayRu(item.level) && textOf(item.say, language).length > 0) return true;
+  if (item.parts.length > 0) return true;
+  return (
+    textOf(item.literal, language).length > 0 ||
+    textOf(item.note, language).length > 0 ||
+    textOf(item.why, language).length > 0
+  );
 }
 
 /**
