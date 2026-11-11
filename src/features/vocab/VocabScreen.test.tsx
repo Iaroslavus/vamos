@@ -251,17 +251,17 @@ describe('FolderScreen', () => {
 
     await renderFolder();
 
-    expect(await screen.findByText('hola')).toBeTruthy();
-    expect(screen.getByText('привет')).toBeTruthy();
+    expect(await screen.findByText('Hola')).toBeTruthy();
+    expect(screen.getByText('Привет')).toBeTruthy();
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Слушать hola' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Слушать Hola' }));
     expect(play).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'hola.hola', es: 'hola' }),
       'normal',
       'es',
     );
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Убрать hola' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Убрать Hola' }));
     expect(
       await screen.findByText('В этой папке пока пусто. Добавьте фразу с карточки или из диалога.'),
     ).toBeTruthy();

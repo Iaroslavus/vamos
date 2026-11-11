@@ -316,8 +316,8 @@ describe('Today screen', () => {
     );
 
     expect(await lesson.findByText('Новые фразы 1 из 8')).toBeOnTheScreen();
-    expect(lesson.getByText('hola')).toBeOnTheScreen();
-    expect(lesson.getByText('привет')).toBeOnTheScreen();
+    expect(lesson.getByText('Hola')).toBeOnTheScreen();
+    expect(lesson.getByText('Привет')).toBeOnTheScreen();
     expect(lesson.getByText('Дальше')).toBeOnTheScreen();
     expect(lesson.queryByText('Проверить')).toBeNull();
     expect(lesson.queryByText('Экран урока скоро будет здесь.')).toBeNull();

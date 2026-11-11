@@ -91,8 +91,8 @@ describe('ResultSheet', () => {
       onContinue: jest.fn(),
     });
 
-    expect(screen.getByText('buenas tardes')).toBeOnTheScreen();
-    expect(screen.getByText('добрий день')).toBeOnTheScreen();
+    expect(screen.getByText('Buenas tardes')).toBeOnTheScreen();
+    expect(screen.getByText('Добрий день')).toBeOnTheScreen();
     expect(screen.getByRole('button', { name: 'Слушать' })).toBeOnTheScreen();
     expect(screen.getByRole('button', { name: 'В словник' })).toBeOnTheScreen();
     expect(playLessonAudio).toHaveBeenCalledWith(
@@ -118,8 +118,8 @@ describe('ResultSheet', () => {
     });
 
     expect(screen.getByText('Правильно:')).toBeOnTheScreen();
-    expect(screen.getByText('buenas tardes')).toBeOnTheScreen();
-    expect(screen.getByText('добрий день')).toBeOnTheScreen();
+    expect(screen.getByText('Buenas tardes')).toBeOnTheScreen();
+    expect(screen.getByText('Добрий день')).toBeOnTheScreen();
     expect(playLessonAudio).not.toHaveBeenCalled();
   });
 
@@ -135,8 +135,8 @@ describe('ResultSheet', () => {
       onContinue: jest.fn(),
     });
 
-    expect(screen.getByText('buenas tardes — добрий день')).toBeOnTheScreen();
-    expect(screen.getByText('hola — привіт ✗')).toBeOnTheScreen();
+    expect(screen.getByText('Buenas tardes — Добрий день')).toBeOnTheScreen();
+    expect(screen.getByText('Hola — Привіт ✗')).toBeOnTheScreen();
     expect(screen.queryByText(/::/)).toBeNull();
     expect(screen.queryByText(/\|/)).toBeNull();
   });

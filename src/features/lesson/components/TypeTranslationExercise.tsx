@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/Text';
+import { displayText } from '@/features/content/displayText';
 import { colors, space } from '@/theme/tokens';
 
 import type { TypeTranslationItem } from '../store';
@@ -36,7 +37,7 @@ export function TypeTranslationExercise({
         {directionHint}
       </Text>
       <Text variant="h2" style={styles.prompt}>
-        {exercise.prompt}
+        {displayText(exercise.prompt)}
       </Text>
       <AnswerTextField
         ref={inputRef}

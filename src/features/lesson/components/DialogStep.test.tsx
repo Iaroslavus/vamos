@@ -154,7 +154,7 @@ describe('DialogStep', () => {
     expect(playLessonAudio).toHaveBeenCalledWith(
       expect.objectContaining({ text: '¡Hola!', audio: null }),
     );
-    expect(screen.queryByText('gracias')).toBeNull();
+    expect(screen.queryByText('Gracias')).toBeNull();
     expect(screen.queryByText('Привет!')).toBeNull();
 
     await fireEvent.press(screen.getByLabelText('Показать перевод: ¡Hola!'));
@@ -183,9 +183,9 @@ describe('DialogStep', () => {
     await renderStep({ onComplete, onContinue });
 
     await finishPlayback();
-    await fireEvent.press(screen.getByText('buenos días'));
+    await fireEvent.press(screen.getByText('Buenos días'));
 
-    expect(screen.getByLabelText('Ваша реплика: buenos días')).toBeTruthy();
+    expect(screen.getByLabelText('Ваша реплика: Buenos días')).toBeTruthy();
     expect(playLessonAudio).toHaveBeenCalledWith(
       expect.objectContaining({ text: 'buenos días', audio: 'hola.buenos_dias.mp3' }),
     );
@@ -224,16 +224,16 @@ describe('DialogStep', () => {
     await renderStep({ onComplete });
 
     await finishPlayback();
-    await fireEvent.press(screen.getByText('gracias'));
+    await fireEvent.press(screen.getByText('Gracias'));
 
-    expect(screen.getByText('Подсказка: доброе утро')).toBeTruthy();
-    expect(screen.getByRole('button', { name: 'gracias' })).toBeDisabled();
+    expect(screen.getByText('Подсказка: Доброе утро')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Gracias' })).toBeDisabled();
     expect(playGradeSound).toHaveBeenCalledWith('wrong');
-    expect(screen.queryByLabelText('Ваша реплика: buenos días')).toBeNull();
+    expect(screen.queryByLabelText('Ваша реплика: Buenos días')).toBeNull();
 
-    await fireEvent.press(screen.getByText('adiós'));
+    await fireEvent.press(screen.getByText('Adiós'));
 
-    expect(screen.getByLabelText('Ваша реплика: buenos días')).toBeTruthy();
+    expect(screen.getByLabelText('Ваша реплика: Buenos días')).toBeTruthy();
     expect(useLessonStore.getState().status).toBe('failed');
     expect(useLessonStore.getState().hearts).toBe(0);
     expect(useLessonStore.getState().wrongCount).toBe(1);
@@ -258,7 +258,7 @@ describe('DialogStep', () => {
     await renderStep();
     await finishPlayback();
 
-    fireEvent(screen.getByRole('button', { name: 'buenos días' }), 'longPress');
+    fireEvent(screen.getByRole('button', { name: 'Buenos días' }), 'longPress');
 
     expect(await screen.findByText('Добавить в словник')).toBeTruthy();
     expect(screen.getByRole('checkbox', { name: 'Добавить в «Избранное»' })).toBeTruthy();
@@ -269,7 +269,7 @@ describe('DialogStep', () => {
     await renderStep({ responseMode: 'speak', onSpeakAloud });
     await finishPlayback();
 
-    expect(screen.queryByText('gracias')).toBeNull();
+    expect(screen.queryByText('Gracias')).toBeNull();
     await fireEvent.press(screen.getByText('Сказать вслух'));
     expect(onSpeakAloud).toHaveBeenCalledTimes(1);
   });
@@ -279,7 +279,7 @@ describe('DialogStep', () => {
     await finishPlayback();
 
     expect(screen.getByText('Сказать вслух')).toBeTruthy();
-    expect(screen.getByText('gracias')).toBeTruthy();
+    expect(screen.getByText('Gracias')).toBeTruthy();
 
     await fireEvent.press(screen.getByText('Сказать вслух'));
     await waitFor(() => {
@@ -299,7 +299,7 @@ describe('DialogStep', () => {
       });
     });
 
-    expect(screen.getByLabelText('Ваша реплика: buenos días')).toBeTruthy();
+    expect(screen.getByLabelText('Ваша реплика: Buenos días')).toBeTruthy();
   });
 
   it('stops dialog recording when the microphone is tapped', async () => {
@@ -338,7 +338,7 @@ describe('DialogStep', () => {
     expect(
       screen.getByText('Не расслышали реплику. Скажите ещё раз или выберите её.'),
     ).toBeTruthy();
-    expect(screen.getByText('gracias')).toBeTruthy();
-    expect(screen.queryByLabelText('Ваша реплика: buenos días')).toBeNull();
+    expect(screen.getByText('Gracias')).toBeTruthy();
+    expect(screen.queryByLabelText('Ваша реплика: Buenos días')).toBeNull();
   });
 });

@@ -3,6 +3,7 @@ import { GestureDetector } from 'react-native-gesture-handler';
 import Animated, { type AnimatedStyle } from 'react-native-reanimated';
 
 import { Text } from '@/components/Text';
+import { displayText } from '@/features/content/displayText';
 import { colors, radius, space } from '@/theme/tokens';
 
 import type { FlashMark } from '../flashcards';
@@ -53,7 +54,7 @@ export function FlashCard({
                 accessibilityElementsHidden={revealed}
               >
                 <Text variant="h1" style={styles.word}>
-                  {front}
+                  {displayText(front)}
                 </Text>
               </Animated.View>
               <Animated.View
@@ -62,7 +63,7 @@ export function FlashCard({
                 accessibilityElementsHidden={!revealed}
               >
                 <Text variant="h1" style={styles.word}>
-                  {back}
+                  {displayText(back)}
                 </Text>
               </Animated.View>
             </Pressable>

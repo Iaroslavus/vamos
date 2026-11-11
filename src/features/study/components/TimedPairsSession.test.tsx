@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react-native';
 import type { ReactNode } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
+import { displayText } from '@/features/content/displayText';
 import i18n from '@/i18n';
 
 import { pairsRecordKey, parsePairsRecord, serializePairsRecord } from '../games/pairsRecord';
@@ -39,7 +40,7 @@ function word(index: number): StudyUnit {
 }
 
 async function press(name: string) {
-  await fireEvent.press(screen.getByRole('button', { name }));
+  await fireEvent.press(screen.getByRole('button', { name: displayText(name) }));
 }
 
 describe('TimedPairsSession', () => {

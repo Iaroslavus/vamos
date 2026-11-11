@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { Chip } from '@/components/Chip';
 import { Text } from '@/components/Text';
+import { displayText } from '@/features/content/displayText';
 import { AccentBar } from '@/features/lesson/components/AccentBar';
 import {
   AnswerTextField,
@@ -46,8 +47,8 @@ export function TestQuestionView({ question, answer, onAnswer }: TestQuestionVie
         <Text variant="caption" color={colors.inkMuted}>
           {t('study.test.promptBool')}
         </Text>
-        <Text variant="h2">{question.prompt}</Text>
-        <Text variant="body">{t('study.test.claim', { claim: question.claim })}</Text>
+        <Text variant="h2">{displayText(question.prompt)}</Text>
+        <Text variant="body">{t('study.test.claim', { claim: displayText(question.claim) })}</Text>
         <View style={styles.options}>
           <BoolChip
             label={t('study.test.true')}
@@ -71,12 +72,12 @@ export function TestQuestionView({ question, answer, onAnswer }: TestQuestionVie
         <Text variant="caption" color={colors.inkMuted}>
           {t('study.test.promptChoice')}
         </Text>
-        <Text variant="h2">{question.prompt}</Text>
+        <Text variant="h2">{displayText(question.prompt)}</Text>
         <View style={styles.options}>
           {question.options.map((option) => (
             <Chip
               key={option}
-              label={option}
+              label={displayText(option)}
               selected={text === option}
               onPress={() => onAnswer({ kind: 'text', value: option })}
               style={styles.chip}
@@ -108,7 +109,7 @@ function TestInput({
       <Text variant="caption" color={colors.inkMuted}>
         {t('study.test.promptInput')}
       </Text>
-      <Text variant="h2">{question.prompt}</Text>
+      <Text variant="h2">{displayText(question.prompt)}</Text>
       <AnswerTextField
         ref={inputRef}
         value={value}

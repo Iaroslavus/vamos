@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/Text';
+import { displayText } from '@/features/content/displayText';
 import { colors, radius, space } from '@/theme/tokens';
 
 import { orderBySeed, type TestPairLink, type TestPairsQuestion } from '../testMode';
@@ -39,7 +40,7 @@ export function TestPairs({ question, matched, onChange }: TestPairsProps) {
         {left.map((link) => (
           <Tile
             key={link.itemId}
-            label={link.left}
+            label={displayText(link.left)}
             mark={numbers.left.get(link.itemId) ?? null}
             selected={active === link.itemId}
             onPress={() => setActive((current) => (current === link.itemId ? null : link.itemId))}
@@ -50,7 +51,7 @@ export function TestPairs({ question, matched, onChange }: TestPairsProps) {
         {right.map((value, index) => (
           <Tile
             key={`${value}:${index}`}
-            label={value}
+            label={displayText(value)}
             mark={numbers.right.get(value) ?? null}
             selected={false}
             onPress={() => {

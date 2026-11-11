@@ -16,6 +16,7 @@ type FillGapExerciseProps = {
   inputRef?: Ref<AnswerTextFieldHandle>;
 };
 
+/** The blank stays in the sentence. A finished phrase is capitalized on the result sheet. */
 function renderSentence(sentence: string) {
   const parts = sentence.split('___');
   return (

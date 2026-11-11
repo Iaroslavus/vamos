@@ -49,6 +49,24 @@ describe('locale catalogs', () => {
     }
   });
 
+  it('never calls a phrase a unit', () => {
+    const banned = /единиц|одиниц|\bunits?\b/i;
+    for (const [name, catalog] of [
+      ['ru', ru],
+      ['uk', uk],
+      ['en', en],
+    ] as const) {
+      for (const path of leafKeys(catalog)) {
+        const value = leafValue(catalog, path);
+        if (typeof value !== 'string') continue;
+        const visible = value.replace(/\{\{[^}]+\}\}/g, '');
+        if (banned.test(visible)) {
+          throw new Error(`${name} ${path} still says a unit: ${value}`);
+        }
+      }
+    }
+  });
+
   it('uses the glossary names for the main sections', () => {
     expect(en.tabs.today).toBe('Today');
     expect(uk.tabs.today).toBe('Сьогодні');

@@ -39,22 +39,22 @@ describe('MatchPairsExercise', () => {
     const onSolved = jest.fn();
     await render(<MatchPairsExercise exercise={EXERCISE} onSolved={onSolved} />);
 
-    await press('buenas tardes');
+    await press('Buenas tardes');
 
     expect(onSolved).not.toHaveBeenCalled();
-    expect(screen.getByRole('button', { name: 'buenas tardes' })).toBeSelected();
-    expect(screen.getByRole('button', { name: 'добрий день' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Buenas tardes' })).toBeSelected();
+    expect(screen.getByRole('button', { name: 'Добрий день' })).toBeEnabled();
   });
 
   it('locks a correct pair immediately', async () => {
     const onSolved = jest.fn();
     await render(<MatchPairsExercise exercise={EXERCISE} onSolved={onSolved} />);
 
-    await press('buenas tardes');
-    await press('добрий день');
+    await press('Buenas tardes');
+    await press('Добрий день');
 
-    expect(screen.getByRole('button', { name: 'buenas tardes' })).toBeDisabled();
-    expect(screen.getByRole('button', { name: 'добрий день' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Buenas tardes' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Добрий день' })).toBeDisabled();
     expect(onSolved).not.toHaveBeenCalled();
   });
 
@@ -62,15 +62,15 @@ describe('MatchPairsExercise', () => {
     const onSolved = jest.fn();
     await render(<MatchPairsExercise exercise={EXERCISE} onSolved={onSolved} />);
 
-    await press('buenas tardes');
-    await press('привіт');
+    await press('Buenas tardes');
+    await press('Привіт');
     expect(onSolved).not.toHaveBeenCalled();
     await settleShake();
 
-    await press('buenas tardes');
-    await press('добрий день');
-    await press('hola');
-    await press('привіт');
+    await press('Buenas tardes');
+    await press('Добрий день');
+    await press('Hola');
+    await press('Привіт');
 
     expect(onSolved).toHaveBeenCalledTimes(1);
     expect(onSolved).toHaveBeenCalledWith({

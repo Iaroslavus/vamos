@@ -2,6 +2,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { Chip, type ChipTone } from '@/components/Chip';
 import { Text } from '@/components/Text';
+import { displayText } from '@/features/content/displayText';
 import { AudioControls } from '@/features/audio/AudioControls';
 import { useAudioPreference } from '@/features/audio/preference';
 import { selectClip, type AudioPreference } from '@/features/audio/select';
@@ -86,7 +87,7 @@ export function ListenSelectExercise({
           return (
             <Chip
               key={option}
-              label={option}
+              label={displayText(option)}
               selected={isSelected && !revealed}
               tone={optionTone(option, selected, gradeStatus, exercise.answer)}
               disabled={disabled}

@@ -6,6 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import LessonScreen from '../../../app/(lesson)/lesson/[id]';
 import { playLessonAudio } from '@/features/audio/playback';
+import { displayText } from '@/features/content/displayText';
 import { getLesson } from '@/features/content/loader';
 import type { DialogStep, LessonStep } from '@/features/lesson/generator';
 import { loadLessonSession, type LoadedLesson } from '@/features/lesson/session';
@@ -123,8 +124,8 @@ async function press(label: string): Promise<void> {
 async function answerExercise(step: LessonStep): Promise<void> {
   if (step.type === 'match_pairs') {
     for (const pair of step.pairs) {
-      await press(pair.left);
-      await press(pair.right);
+      await press(displayText(pair.left));
+      await press(displayText(pair.right));
     }
     return;
   }
@@ -141,7 +142,7 @@ async function answerExercise(step: LessonStep): Promise<void> {
     return;
   }
   if (step.type === 'select_translation' || step.type === 'listen_select') {
-    await press(step.answer);
+    await press(displayText(step.answer));
   }
 }
 
@@ -187,7 +188,8 @@ function visibleDialogChoice(step: DialogStep, session: LoadedLesson): string | 
     if (recorded.includes(`${step.id}:${index}`)) continue;
     const target = session.items.find((item) => item.id === line.target);
     if (!target) continue;
-    if (screen.queryByText(target.es)) return target.es;
+    const shown = displayText(target.es);
+    if (screen.queryByText(shown)) return shown;
   }
   return null;
 }
@@ -248,7 +250,7 @@ async function playToSummary(session: LoadedLesson): Promise<void> {
     if (!step) {
       const exercise = state.getCurrentExercise();
       if (!exercise) throw new Error('missing retry');
-      if (exercise.type === 'select_translation') await press(exercise.answer);
+      if (exercise.type === 'select_translation') await press(displayText(exercise.answer));
       else {
         await fireEvent.changeText(await screen.findByLabelText('Введите ответ'), exercise.answer);
       }

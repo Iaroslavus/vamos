@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
+import { displayText } from '@/features/content/displayText';
 import type { AudioSpeed } from '@/features/audio/select';
 import { colors, space } from '@/theme/tokens';
 
@@ -32,7 +33,7 @@ export function FlashcardDeck({ card, revealed, onFlip, onMark, onPlay }: Flashc
           revealed={revealed}
           knowLabel={t('study.flash.know')}
           againLabel={t('study.flash.again')}
-          flipLabel={t('study.flash.flipLabel', { text: face })}
+          flipLabel={t('study.flash.flipLabel', { text: displayText(face) })}
           onFlip={onFlip}
           onMark={onMark}
         />

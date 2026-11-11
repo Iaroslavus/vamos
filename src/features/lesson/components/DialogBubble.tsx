@@ -12,6 +12,7 @@ import Animated, {
 
 import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
+import { displayText } from '@/features/content/displayText';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, motion, radius, space } from '@/theme/tokens';
 
@@ -74,16 +75,17 @@ export function DialogBubble({
     ],
   }));
 
+  const shownEs = displayText(es);
   const translationLabel = revealed
-    ? t('lesson.dialogHideTranslation', { line: es })
-    : t('lesson.dialogShowTranslation', { line: es });
+    ? t('lesson.dialogHideTranslation', { line: shownEs })
+    : t('lesson.dialogShowTranslation', { line: shownEs });
 
   return (
     <Animated.View style={[styles.row, user ? styles.rowUser : styles.rowNpc, animated]}>
       <View style={[styles.bubble, user ? styles.userBubble : styles.npcBubble]}>
         {onReplay ? (
           <IconButton
-            accessibilityLabel={t('lesson.dialogReplay', { line: es })}
+            accessibilityLabel={t('lesson.dialogReplay', { line: shownEs })}
             onPress={onReplay}
           >
             <Volume2 color={colors.blue} size={22} strokeWidth={2.2} />
@@ -93,22 +95,26 @@ export function DialogBubble({
           <Pressable
             accessibilityRole="button"
             accessibilityLabel={
-              onToggleTranslation ? translationLabel : t('lesson.dialogYou', { line: es })
+              onToggleTranslation ? translationLabel : t('lesson.dialogYou', { line: shownEs })
             }
             accessibilityHint={longPressHint}
             onPress={onToggleTranslation}
             onLongPress={onLongPress}
             style={styles.textHit}
           >
-            <LineText es={es} ru={revealed && onToggleTranslation ? ru : null} user={user} />
+            <LineText
+              es={shownEs}
+              ru={revealed && onToggleTranslation ? displayText(ru) : null}
+              user={user}
+            />
           </Pressable>
         ) : (
           <View
             accessible
             style={styles.textHit}
-            accessibilityLabel={t('lesson.dialogYou', { line: es })}
+            accessibilityLabel={t('lesson.dialogYou', { line: shownEs })}
           >
-            <LineText es={es} ru={null} user={user} />
+            <LineText es={shownEs} ru={null} user={user} />
           </View>
         )}
       </View>

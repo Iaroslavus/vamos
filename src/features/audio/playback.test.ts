@@ -265,6 +265,15 @@ describe('playLessonAudio', () => {
     registerAudioCache(null);
   });
 
+  it('stops the current clip and starts again when play is called twice', async () => {
+    await playLessonAudio({ text: 'hola' });
+    await playLessonAudio({ text: 'hola' });
+
+    expect(Speech.stop).toHaveBeenCalled();
+    expect(Speech.speak).toHaveBeenNthCalledWith(1, 'hola', expect.any(Object));
+    expect(Speech.speak).toHaveBeenNthCalledWith(2, 'hola', expect.any(Object));
+  });
+
   it('stops speech and file playback', async () => {
     await playLessonAudio({
       audio: 'https://cdn.example/clip.mp3',

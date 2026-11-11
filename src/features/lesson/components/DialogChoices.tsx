@@ -11,6 +11,7 @@ import Animated, {
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
 import { Text } from '@/components/Text';
+import { displayText } from '@/features/content/displayText';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, motion, radius, space } from '@/theme/tokens';
 
@@ -92,7 +93,7 @@ export function DialogChoices({
           accessibilityLiveRegion="polite"
           style={styles.hint}
         >
-          {t('lesson.dialogHint', { hint })}
+          {t('lesson.dialogHint', { hint: displayText(hint) })}
         </Text>
       ) : null}
       <Animated.View style={animated}>
@@ -106,7 +107,7 @@ export function DialogChoices({
                 return (
                   <Chip
                     key={option.id}
-                    label={option.es}
+                    label={displayText(option.es)}
                     tone={rejected ? 'error' : 'neutral'}
                     disabled={rejected}
                     accessibilityHint={longPressHint}

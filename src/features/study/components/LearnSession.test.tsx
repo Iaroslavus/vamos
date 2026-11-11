@@ -68,11 +68,11 @@ describe('LearnSession', () => {
     await renderSession();
 
     expect(screen.getByTestId('learn-progress')).toHaveTextContent('0 из 2 выучено');
-    await fireEvent.press(screen.getByRole('button', { name: 'привет' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Привет' }));
     await fireEvent.press(screen.getByRole('button', { name: 'Проверить' }));
     await fireEvent.press(screen.getByRole('button', { name: 'Дальше' }));
 
-    expect(screen.getByText('adiós')).toBeTruthy();
+    expect(screen.getByText('Adiós')).toBeTruthy();
     expect(screen.getByTestId('learn-progress')).toHaveTextContent('0 из 2 выучено');
   });
 

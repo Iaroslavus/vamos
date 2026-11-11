@@ -5,6 +5,7 @@ import { StyleSheet, View } from 'react-native';
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
 import { Text } from '@/components/Text';
+import { displayText } from '@/features/content/displayText';
 import type { Item } from '@/features/content/schema';
 import { contentLocale, textOf } from '@/features/content/text';
 import { colors, depth, radius, space } from '@/theme/tokens';
@@ -55,7 +56,7 @@ export function IntroCard({
         />
 
         <Text variant="h1" style={styles.center}>
-          {item.es}
+          {displayText(item.es)}
         </Text>
 
         <IntroAudioButtons onPlay={onPlay} />
@@ -67,13 +68,16 @@ export function IntroCard({
         ) : null}
 
         <Text variant="bodyBold" style={styles.center}>
-          {translation}
+          {displayText(translation)}
         </Text>
 
         {item.parts.length > 0 ? (
           <View style={styles.parts}>
             {item.parts.map((part, index) => {
-              const label = t('lesson.introPart', { es: part.es, ru: textOf(part.tr, language) });
+              const label = t('lesson.introPart', {
+                es: displayText(part.es),
+                ru: displayText(textOf(part.tr, language)),
+              });
               return (
                 <Chip
                   key={`${part.es}-${index}`}
@@ -88,13 +92,13 @@ export function IntroCard({
 
         {literal ? (
           <Text variant="caption" color={colors.inkMuted} style={styles.center}>
-            {t('lesson.introLiteral', { text: literal })}
+            {t('lesson.introLiteral', { text: displayText(literal) })}
           </Text>
         ) : null}
 
         {note ? (
           <Text variant="caption" color={colors.inkMuted} style={styles.center}>
-            {note}
+            {displayText(note)}
           </Text>
         ) : null}
 

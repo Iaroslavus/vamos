@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { displayText } from '@/features/content/displayText';
 import i18n from '@/i18n';
 
 import { planTest, type TestChoiceQuestion } from '../testMode';
@@ -83,7 +84,7 @@ async function answerPaper(correct: boolean) {
     const choice = correct
       ? question.answer
       : (question.options.find((option) => option !== question.answer) ?? question.answer);
-    await fireEvent.press(ui.getByRole('button', { name: choice }));
+    await fireEvent.press(ui.getByRole('button', { name: displayText(choice) }));
     const last = index === questions.length - 1;
     expect(ui.queryByText('Ошибки')).toBeNull();
     await fireEvent.press(ui.getByRole('button', { name: last ? 'Сдать' : 'Дальше' }));
@@ -137,8 +138,10 @@ describe('TestSession', () => {
     await fireEvent.press(ui.getByRole('button', { name: 'Начать' }));
     await answerPaper(false);
 
-    expect(await ui.findByText(`${wrong} → ${first.answer}`)).toBeTruthy();
-    expect(ui.getByLabelText(`Озвучить ${first.prompt}, ошибка 1`)).toBeTruthy();
+    expect(
+      await ui.findByText(`${displayText(wrong)} → ${displayText(first.answer)}`),
+    ).toBeTruthy();
+    expect(ui.getByLabelText(`Озвучить ${displayText(first.prompt)}, ошибка 1`)).toBeTruthy();
     await waitFor(() => expect(onRecord).toHaveBeenCalled());
     expect(onRecord.mock.calls.every((call) => call[0].grade === 'incorrect')).toBe(true);
 

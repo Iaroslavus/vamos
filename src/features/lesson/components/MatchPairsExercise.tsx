@@ -8,6 +8,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { Text } from '@/components/Text';
+import { displayText } from '@/features/content/displayText';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, motion, radius, space } from '@/theme/tokens';
 
@@ -130,7 +131,7 @@ export function MatchPairsExercise({
           {leftItems.map((label) => (
             <PairTile
               key={`L-${label}`}
-              label={label}
+              label={displayText(label)}
               tone={toneFor('left', label)}
               disabled={disabled}
               onPress={() => select('left', label)}
@@ -141,7 +142,7 @@ export function MatchPairsExercise({
           {rightItems.map((label) => (
             <PairTile
               key={`R-${label}`}
-              label={label}
+              label={displayText(label)}
               tone={toneFor('right', label)}
               disabled={disabled}
               onPress={() => select('right', label)}
