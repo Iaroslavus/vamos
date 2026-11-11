@@ -2,6 +2,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { Chip, type ChipTone } from '@/components/Chip';
 import { Text } from '@/components/Text';
+import { displayText } from '@/features/content/displayText';
 import { colors, space } from '@/theme/tokens';
 
 import type { GradeStatus } from '../grading';
@@ -47,7 +48,7 @@ export function SelectTranslationExercise({
         {exercise.prompt_ru}
       </Text>
       <Text variant="h2" style={styles.prompt}>
-        {exercise.prompt}
+        {displayText(exercise.prompt)}
       </Text>
       <View style={styles.options}>
         {exercise.options.map((option) => {
@@ -55,7 +56,7 @@ export function SelectTranslationExercise({
           return (
             <Chip
               key={option}
-              label={option}
+              label={displayText(option)}
               selected={isSelected && !revealed}
               tone={optionTone(option, selected, gradeStatus, exercise.answer)}
               disabled={disabled}

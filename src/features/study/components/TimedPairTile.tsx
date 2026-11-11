@@ -8,6 +8,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { Text } from '@/components/Text';
+import { displayText } from '@/features/content/displayText';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, motion, radius, space } from '@/theme/tokens';
 
@@ -78,6 +79,7 @@ export function TimedPairTile({
 
   if (retired) return null;
 
+  const shown = displayText(tile.label);
   const tone = gone
     ? styles.gone
     : shaking
@@ -93,12 +95,12 @@ export function TimedPairTile({
         onPress={() => onPress(tile)}
         disabled={disabled || gone}
         accessibilityRole="button"
-        accessibilityLabel={tile.label}
+        accessibilityLabel={shown}
         accessibilityState={{ selected, disabled: disabled || gone }}
         style={[styles.tile, tone]}
       >
         <Text variant="bodyBold" color={textColor}>
-          {tile.label}
+          {shown}
         </Text>
       </Pressable>
     </Animated.View>

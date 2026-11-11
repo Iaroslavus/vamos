@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
+import { displayText } from '@/features/content/displayText';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, motion, radius, space } from '@/theme/tokens';
 
@@ -87,7 +88,7 @@ export function IntroWhySheet({ visible, text, onClose }: IntroWhySheetProps) {
         <Text variant="h3" style={styles.title}>
           {t('lesson.introWhy')}
         </Text>
-        <Text variant="body">{text}</Text>
+        <Text variant="body">{displayText(text)}</Text>
         <Button title={t('lesson.introWhyClose')} variant="primary" onPress={onClose} />
       </Animated.View>
     </View>

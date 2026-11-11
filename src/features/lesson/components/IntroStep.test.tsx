@@ -152,13 +152,13 @@ describe('IntroStep', () => {
     await renderStep(phrase);
 
     expect(screen.getByText('Новые фразы 2 из 6')).toBeTruthy();
-    expect(screen.getByText('buenos días')).toBeTruthy();
+    expect(screen.getByText('Buenos días')).toBeTruthy();
     expect(screen.getByText('буЭнос дИас')).toBeTruthy();
-    expect(screen.getByText('доброе утро')).toBeTruthy();
+    expect(screen.getByText('Доброе утро')).toBeTruthy();
     expect(screen.getByText('Так говорят утром, примерно до обеда.')).toBeTruthy();
-    expect(screen.getByText('buenos · добрые')).toBeTruthy();
-    expect(screen.getByText('días · дни')).toBeTruthy();
-    expect(screen.getByText('буквально: добрые дни')).toBeTruthy();
+    expect(screen.getByText('Buenos · Добрые')).toBeTruthy();
+    expect(screen.getByText('Días · Дни')).toBeTruthy();
+    expect(screen.getByText('буквально: Добрые дни')).toBeTruthy();
 
     const listen = StyleSheet.flatten(screen.getByTestId('intro-listen').props.style);
     const slow = StyleSheet.flatten(screen.getByTestId('intro-slow').props.style);
@@ -193,7 +193,7 @@ describe('IntroStep', () => {
   it('speaks a part on its own when a chip is tapped', async () => {
     await renderStep(phrase);
 
-    await fireEvent.press(screen.getByText('buenos · добрые'));
+    await fireEvent.press(screen.getByText('Buenos · Добрые'));
 
     expect(playLessonAudio).toHaveBeenCalledWith({
       audio: null,

@@ -38,13 +38,13 @@ describe('FlashcardSession', () => {
     );
 
     await fireEvent.press(screen.getByRole('button', { name: /Перевернуть карточку/ }));
-    expect(screen.getByRole('button', { name: /привет/ }).props.accessibilityState).toEqual(
+    expect(screen.getByRole('button', { name: /Привет/ }).props.accessibilityState).toEqual(
       expect.objectContaining({ expanded: true }),
     );
 
     await fireEvent.press(screen.getByRole('button', { name: 'Знаю' }));
     expect(screen.getByText('2 / 2')).toBeTruthy();
-    expect(screen.getByText('adiós')).toBeTruthy();
+    expect(screen.getByText('Adiós')).toBeTruthy();
     expect(screen.getByLabelText('Перемешать').props.accessibilityState).toEqual(
       expect.objectContaining({ disabled: true }),
     );
@@ -54,7 +54,7 @@ describe('FlashcardSession', () => {
 
     await fireEvent.press(screen.getByRole('button', { name: 'Повторить «ещё учу»' }));
     expect(screen.getByText('1 / 1')).toBeTruthy();
-    expect(screen.getByText('adiós')).toBeTruthy();
+    expect(screen.getByText('Adiós')).toBeTruthy();
 
     await fireEvent.press(screen.getByRole('button', { name: 'Ещё учу' }));
     await fireEvent.press(screen.getByRole('button', { name: 'Добавить в Сложные' }));

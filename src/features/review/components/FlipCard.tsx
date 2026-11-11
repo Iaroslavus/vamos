@@ -10,6 +10,7 @@ import Animated, {
 
 import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
+import { displayText } from '@/features/content/displayText';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, motion, radius, space } from '@/theme/tokens';
 
@@ -106,7 +107,7 @@ function FaceBody({ face }: { face: Face }) {
         </View>
       ) : null}
       <Text variant="h1" style={styles.word}>
-        {face.text}
+        {displayText(face.text)}
       </Text>
     </>
   );

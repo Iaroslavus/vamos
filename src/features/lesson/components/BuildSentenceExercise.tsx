@@ -9,6 +9,7 @@ import { colors, radius, space } from '@/theme/tokens';
 import type { GradeStatus } from '../grading';
 import type { BuildSentenceItem } from '../store';
 
+/** Tiles keep the casing of the sentence. Cards and options use `displayText`. */
 type BuildSentenceExerciseProps = {
   exercise: BuildSentenceItem;
   disabled?: boolean;

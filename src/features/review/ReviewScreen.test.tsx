@@ -166,7 +166,7 @@ describe('ReviewScreen', () => {
     await renderReview();
     await startCards();
 
-    expect(await screen.findByText('hola')).toBeTruthy();
+    expect(await screen.findByText('Hola')).toBeTruthy();
     expect(play).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'hola.hola', es: 'hola' }),
       'normal',
@@ -174,7 +174,7 @@ describe('ReviewScreen', () => {
     );
 
     fireEvent.press(screen.getByText('Показать ответ'));
-    expect(await screen.findByText('привет')).toBeTruthy();
+    expect(await screen.findByText('Привет')).toBeTruthy();
     expect(screen.getByLabelText(/Снова, /)).toBeTruthy();
     expect(screen.getByLabelText(/Трудно, /)).toBeTruthy();
     expect(screen.getByLabelText(/Хорошо, /)).toBeTruthy();
@@ -205,11 +205,11 @@ describe('ReviewScreen', () => {
     await renderReview();
     await startCards();
 
-    expect(await screen.findByText('спасибо')).toBeTruthy();
+    expect(await screen.findByText('Спасибо')).toBeTruthy();
     expect(play).not.toHaveBeenCalled();
 
     fireEvent.press(screen.getByText('Показать ответ'));
-    expect(await screen.findByText('gracias')).toBeTruthy();
+    expect(await screen.findByText('Gracias')).toBeTruthy();
     expect(play).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'hola.gracias', es: 'gracias' }),
       'normal',
@@ -263,7 +263,7 @@ describe('ReviewScreen', () => {
     await renderReview();
 
     await fireEvent.press(await screen.findByText('Быстрое повторение'));
-    await fireEvent.press(await screen.findByRole('button', { name: 'привет' }));
+    await fireEvent.press(await screen.findByRole('button', { name: 'Привет' }));
     await fireEvent.press(screen.getByRole('button', { name: 'Проверить' }));
     await pressContinue();
 
@@ -282,13 +282,13 @@ describe('ReviewScreen', () => {
     await renderReview();
 
     await fireEvent.press(await screen.findByText('Быстрое повторение'));
-    await fireEvent.press(await screen.findByRole('button', { name: 'здесь' }));
+    await fireEvent.press(await screen.findByRole('button', { name: 'Здесь' }));
     await fireEvent.press(screen.getByRole('button', { name: 'Проверить' }));
     await pressContinue();
 
     expect(recordRating).not.toHaveBeenCalled();
     await fireEvent.press(await screen.findByText('Поехали'));
-    await fireEvent.press(screen.getByRole('button', { name: 'привет' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Привет' }));
     await fireEvent.press(screen.getByRole('button', { name: 'Проверить' }));
     await pressContinue();
 

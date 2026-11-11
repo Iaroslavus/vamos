@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/Text';
+import { displayText } from '@/features/content/displayText';
 import { playLessonAudio } from '@/features/audio/playback';
 import { useAudioPreference } from '@/features/audio/preference';
 import { selectClip, type AudioPreference } from '@/features/audio/select';
@@ -51,7 +52,9 @@ export function NewWordsList({
       <View style={styles.list}>
         {items.map((item) => {
           const checked = selectedIds.has(item.id);
-          const label = `${item.es}, ${item.ru}`;
+          const es = displayText(item.es);
+          const ru = displayText(item.ru);
+          const label = `${es}, ${ru}`;
           return (
             <View key={item.id} style={styles.row}>
               <Pressable
@@ -77,9 +80,9 @@ export function NewWordsList({
                 style={styles.main}
               >
                 <View style={styles.texts}>
-                  <Text variant="bodyBold">{item.es}</Text>
+                  <Text variant="bodyBold">{es}</Text>
                   <Text variant="caption" color={colors.inkMuted}>
-                    {item.ru}
+                    {ru}
                   </Text>
                 </View>
                 <Volume2 size={22} color={colors.blue} strokeWidth={2.2} />

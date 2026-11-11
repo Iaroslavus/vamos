@@ -8,6 +8,7 @@ import { Ring } from '@/components/Ring';
 import { Text } from '@/components/Text';
 import { Appear } from '@/features/auth/components/Appear';
 import { playLessonAudio } from '@/features/audio/playback';
+import { displayLine, displayText } from '@/features/content/displayText';
 import { colors, motion, radius, space } from '@/theme/tokens';
 
 import type { TestMiss, TestResult as TestScore } from '../testMode';
@@ -108,17 +109,19 @@ export function TestResultView({
 function MissRow({ miss, index }: { miss: TestMiss; index: number }) {
   const { t } = useTranslation();
   const yours =
-    miss.kind === 'bool' ? judgment(miss.yours, t) : miss.yours || t('study.test.blank');
-  const correct = miss.kind === 'bool' ? judgment(miss.correct, t) : miss.correct;
+    miss.kind === 'bool'
+      ? judgment(miss.yours, t)
+      : displayLine(miss.yours) || t('study.test.blank');
+  const correct = miss.kind === 'bool' ? judgment(miss.correct, t) : displayLine(miss.correct);
 
   return (
     <View style={styles.miss}>
       <View style={styles.missTop}>
         <Text variant="bodyBold" style={styles.caption}>
-          {miss.caption}
+          {displayLine(miss.caption)}
         </Text>
         <IconButton
-          accessibilityLabel={t('study.test.play', { phrase: miss.phraseEs, index })}
+          accessibilityLabel={t('study.test.play', { phrase: displayText(miss.phraseEs), index })}
           onPress={() => {
             void playLessonAudio({ audio: miss.audio, text: miss.phraseEs });
           }}
@@ -129,7 +132,7 @@ function MissRow({ miss, index }: { miss: TestMiss; index: number }) {
       <Text variant="body">{t('study.test.missLine', { yours, correct })}</Text>
       {miss.truth ? (
         <Text variant="caption" color={colors.inkMuted}>
-          {t('study.test.truth', { text: miss.truth })}
+          {t('study.test.truth', { text: displayText(miss.truth) })}
         </Text>
       ) : null}
     </View>

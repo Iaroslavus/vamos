@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
+import { displayText } from '@/features/content/displayText';
 import { colors, radius, space } from '@/theme/tokens';
 
 type FolderItemRowProps = {
@@ -17,27 +18,29 @@ type FolderItemRowProps = {
 
 export function FolderItemRow({ es, ru, editable, onPlay, onRemove, onMove }: FolderItemRowProps) {
   const { t } = useTranslation();
+  const shownEs = displayText(es);
+  const shownRu = displayText(ru);
 
   return (
     <View style={styles.row}>
       <View style={styles.copy}>
-        <Text variant="bodyBold">{es}</Text>
-        {ru ? (
+        <Text variant="bodyBold">{shownEs}</Text>
+        {shownRu ? (
           <Text variant="caption" color={colors.inkMuted}>
-            {ru}
+            {shownRu}
           </Text>
         ) : null}
       </View>
-      <IconButton accessibilityLabel={t('vocab.play', { es })} onPress={onPlay}>
+      <IconButton accessibilityLabel={t('vocab.play', { es: shownEs })} onPress={onPlay}>
         <Volume2 color={colors.blue} size={22} strokeWidth={2.2} />
       </IconButton>
       {editable ? (
-        <IconButton accessibilityLabel={t('vocab.move', { es })} onPress={onMove}>
+        <IconButton accessibilityLabel={t('vocab.move', { es: shownEs })} onPress={onMove}>
           <ArrowRightLeft color={colors.ink} size={22} strokeWidth={2.2} />
         </IconButton>
       ) : null}
       {editable ? (
-        <IconButton accessibilityLabel={t('vocab.remove', { es })} onPress={onRemove}>
+        <IconButton accessibilityLabel={t('vocab.remove', { es: shownEs })} onPress={onRemove}>
           <Trash2 color={colors.coral} size={22} strokeWidth={2.2} />
         </IconButton>
       ) : null}

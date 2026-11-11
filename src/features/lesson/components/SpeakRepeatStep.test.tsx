@@ -116,7 +116,7 @@ describe('SpeakRepeatStep', () => {
     expect(screen.queryByText(/Проверяем/)).toBeNull();
     expect(screen.queryByText(/не сохраняется/)).toBeNull();
     expect(screen.queryByText(/Осталось/)).toBeNull();
-    expect(screen.getByText('buenos')).toBeTruthy();
+    expect(screen.getByText('Buenos')).toBeTruthy();
     expect(screen.getByText('días')).toBeTruthy();
     expect(screen.getByLabelText('Слушать образец')).toBeTruthy();
     expect(screen.getByText('Пропустить')).toBeTruthy();
@@ -229,7 +229,7 @@ describe('SpeakRepeatStep', () => {
     expect(screen.queryByText(/Это значит/)).toBeNull();
     expect(screen.queryByText(/Как звучит/)).toBeNull();
     expect(screen.getByText('93%')).toBeTruthy();
-    expect(screen.getByText('buenos')).toHaveStyle({ color: colors.teal });
+    expect(screen.getByText('Buenos')).toHaveStyle({ color: colors.teal });
     expect(screen.getByText('días')).toHaveStyle({ color: colors.teal });
     expect(screen.getByText('Ещё раз')).toBeTruthy();
     expect(screen.getByText('Дальше')).toBeTruthy();
@@ -391,7 +391,7 @@ describe('SpeakRepeatStep', () => {
 
     expect(screen.getByText('ll звучит как «й»: ме йАмо')).toBeTruthy();
     expect(screen.queryByText(/Это значит/)).toBeNull();
-    expect(screen.getByText('me')).toHaveStyle({ color: colors.coralDeep });
+    expect(screen.getByText('Me')).toHaveStyle({ color: colors.coralDeep });
 
     await fireEvent.press(screen.getByText('Ещё раз'));
     await waitFor(() => {

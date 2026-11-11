@@ -1,4 +1,4 @@
-import { Square, Turtle, Volume2 } from 'lucide-react-native';
+import { Turtle, Volume2 } from 'lucide-react-native';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -7,7 +7,7 @@ import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
 import { colors, radius, space } from '@/theme/tokens';
 
-import { NORMAL_RATE, SLOW_RATE, playLessonAudio, stopLessonAudio } from './playback';
+import { NORMAL_RATE, SLOW_RATE, playLessonAudio } from './playback';
 
 type AudioControlsProps = {
   text: string;
@@ -60,16 +60,6 @@ export function AudioControls({ text, audio, slowAudio, disabled = false }: Audi
         accessibilityLabel={t('lesson.playSlow')}
       >
         <Turtle size={20} color={colors.ink} strokeWidth={2.2} />
-      </IconButton>
-
-      <IconButton
-        onPress={() => {
-          void stopLessonAudio();
-        }}
-        disabled={disabled}
-        accessibilityLabel={t('lesson.stopAudio')}
-      >
-        <Square size={20} color={colors.ink} strokeWidth={2.2} fill={colors.ink} />
       </IconButton>
     </View>
   );

@@ -6,6 +6,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
+import { displayLine, displayText } from '@/features/content/displayText';
 import { playLessonAudio, stopLessonAudio } from '@/features/audio/playback';
 import { colors, radius, space } from '@/theme/tokens';
 
@@ -72,7 +73,7 @@ export function ResultPhrase({
               color={pair.wrong ? colors.errorInk : colors.ink}
               style={styles.pair}
             >
-              {pair.text}
+              {displayLine(pair.text)}
             </Text>
           ))}
         </View>
@@ -80,12 +81,12 @@ export function ResultPhrase({
         <View style={styles.phrase}>
           {phraseEs ? (
             <Text variant="h2" style={styles.center}>
-              {phraseEs}
+              {displayText(phraseEs)}
             </Text>
           ) : null}
           {phraseTr ? (
             <Text variant="body" color={colors.inkMuted} style={styles.center}>
-              {phraseTr}
+              {displayText(phraseTr)}
             </Text>
           ) : null}
         </View>

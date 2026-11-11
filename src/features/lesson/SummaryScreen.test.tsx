@@ -230,11 +230,11 @@ describe('LessonSummaryScreen', () => {
     expect(screen.getByText('100%')).toBeOnTheScreen();
     expect(screen.getByText('0:00')).toBeOnTheScreen();
     expect(screen.getByText('1 новая фраза')).toBeOnTheScreen();
-    expect(screen.getByText('hola')).toBeOnTheScreen();
+    expect(screen.getByText('Hola')).toBeOnTheScreen();
     expect(screen.getByRole('button', { name: 'В словник · 1' })).toBeOnTheScreen();
-    expect(screen.getByRole('checkbox', { name: 'hola, привет' })).toBeChecked();
+    expect(screen.getByRole('checkbox', { name: 'Hola, Привет' })).toBeChecked();
 
-    const check = screen.getByRole('checkbox', { name: 'hola, привет' });
+    const check = screen.getByRole('checkbox', { name: 'Hola, Привет' });
     const checkStyle = StyleSheet.flatten(check.props.style);
     expect(checkStyle).toMatchObject({ width: 44, height: 44 });
 
@@ -346,24 +346,24 @@ describe('LessonSummaryScreen', () => {
     await flush();
 
     expect(screen.getByRole('button', { name: 'В словник · 2' })).toBeEnabled();
-    expect(screen.getByRole('checkbox', { name: 'hola, привет' })).toBeChecked();
-    expect(screen.getByRole('checkbox', { name: 'adiós, пока' })).toBeChecked();
+    expect(screen.getByRole('checkbox', { name: 'Hola, Привет' })).toBeChecked();
+    expect(screen.getByRole('checkbox', { name: 'Adiós, Пока' })).toBeChecked();
     expect(screen.getByRole('button', { name: 'Снять все' })).toBeOnTheScreen();
 
-    await fireEvent.press(screen.getByRole('checkbox', { name: 'adiós, пока' }));
+    await fireEvent.press(screen.getByRole('checkbox', { name: 'Adiós, Пока' }));
 
-    expect(screen.getByRole('checkbox', { name: 'adiós, пока' })).not.toBeChecked();
+    expect(screen.getByRole('checkbox', { name: 'Adiós, Пока' })).not.toBeChecked();
     expect(screen.getByRole('button', { name: 'В словник · 1' })).toBeEnabled();
     expect(screen.getByRole('button', { name: 'Выбрать все' })).toBeOnTheScreen();
 
     await fireEvent.press(screen.getByRole('button', { name: 'Выбрать все' }));
 
-    expect(screen.getByRole('checkbox', { name: 'adiós, пока' })).toBeChecked();
+    expect(screen.getByRole('checkbox', { name: 'Adiós, Пока' })).toBeChecked();
     expect(screen.getByRole('button', { name: 'В словник · 2' })).toBeEnabled();
 
     await fireEvent.press(screen.getByRole('button', { name: 'Снять все' }));
 
-    expect(screen.getByRole('checkbox', { name: 'hola, привет' })).not.toBeChecked();
+    expect(screen.getByRole('checkbox', { name: 'Hola, Привет' })).not.toBeChecked();
     expect(screen.getByRole('button', { name: 'В словник · 0' })).toBeDisabled();
   });
 
@@ -374,7 +374,7 @@ describe('LessonSummaryScreen', () => {
     await renderSummary(recordCompletion);
     await flush();
 
-    await fireEvent.press(screen.getByRole('checkbox', { name: 'adiós, пока' }));
+    await fireEvent.press(screen.getByRole('checkbox', { name: 'Adiós, Пока' }));
     await fireEvent.press(screen.getByRole('button', { name: 'В словник · 1' }));
     await fireEvent.press(await screen.findByRole('checkbox', { name: 'Добавить в «Избранное»' }));
     await fireEvent.press(screen.getByText('Готово'));
@@ -390,7 +390,7 @@ describe('LessonSummaryScreen', () => {
     await renderSummary(recordCompletion);
     await flush();
 
-    fireEvent(screen.getByRole('button', { name: 'adiós, пока' }), 'longPress');
+    fireEvent(screen.getByRole('button', { name: 'Adiós, Пока' }), 'longPress');
     await fireEvent.press(await screen.findByRole('checkbox', { name: 'Добавить в «Избранное»' }));
     await fireEvent.press(screen.getByText('Готово'));
 
