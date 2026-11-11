@@ -217,6 +217,8 @@ export function createVocabRepository(deps: VocabRepositoryDeps): VocabRepositor
       seen.add(outboxToken(item));
       try {
         if (item.kind === 'folder') state = await flushFolder(userId, state, item);
+        else if (item.kind === 'folder-delete')
+          state = await flushFolderDelete(userId, state, item);
         else if (item.kind === 'item-add') state = await flushAdd(userId, state, item);
         else state = await flushRemove(userId, state, item);
       } catch (error) {
@@ -242,6 +244,17 @@ export function createVocabRepository(deps: VocabRepositoryDeps): VocabRepositor
     if (saved.id !== folder.id) state = adoptFolderId(state, folder.id, saved.id);
     state = without(state, { kind: 'folder', key: folder.id, attempts: 0 });
     state = without(state, { kind: 'folder', key: saved.id, attempts: 0 });
+    await save(userId, state);
+    return state;
+  }
+
+  async function flushFolderDelete(
+    userId: string,
+    state: PersistedFolders,
+    item: OutboxItem,
+  ): Promise<PersistedFolders> {
+    await deps.remote.deleteFolder(userId, item.key);
+    state = without(state, item);
     await save(userId, state);
     return state;
   }
@@ -347,6 +360,16 @@ export function createVocabRepository(deps: VocabRepositoryDeps): VocabRepositor
             attempts: 0,
           }),
         );
+      });
+    },
+
+    deleteFolder(userId, folderId) {
+      return finish(userId, async () => {
+        const state = await load(userId);
+        const folder = state.folders[folderId];
+        if (!folder) throw new Error('Unknown folder');
+        if (folder.kind !== 'custom') throw new Error('System folder cannot be deleted');
+        await save(userId, dropFolder(state, folderId));
       });
     },
 
@@ -535,6 +558,27 @@ function putFolder(state: PersistedFolders, folder: Folder): PersistedFolders {
   return { ...state, folders: { ...state.folders, [folder.id]: folder } };
 }
 
+function dropFolder(state: PersistedFolders, folderId: string): PersistedFolders {
+  const folders = { ...state.folders };
+  delete folders[folderId];
+  const items: Record<string, FolderItem> = {};
+  for (const [key, item] of Object.entries(state.items)) {
+    if (item.folderId !== folderId) items[key] = item;
+  }
+  const prefix = `${folderId}:`;
+  const outbox = state.outbox.filter((entry) => {
+    if (entry.key === folderId && (entry.kind === 'folder' || entry.kind === 'folder-delete')) {
+      return false;
+    }
+    if (entry.key.startsWith(prefix)) return false;
+    return true;
+  });
+  return enqueue(
+    { ...state, folders, items, outbox },
+    { kind: 'folder-delete', key: folderId, attempts: 0 },
+  );
+}
+
 function addItem(
   state: PersistedFolders,
   folderId: string,
@@ -609,6 +653,9 @@ function mergeRemote(
   const remoteIds = new Set(remoteFolders.map((folder) => folder.id));
 
   for (const remote of remoteFolders) {
+    if (state.outbox.some((entry) => entry.kind === 'folder-delete' && entry.key === remote.id)) {
+      continue;
+    }
     const pending = state.outbox.some(
       (entry) => entry.kind === 'folder' && entry.key === remote.id,
     );

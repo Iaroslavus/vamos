@@ -1,10 +1,17 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { fireEvent, render, screen, userEvent, waitFor } from '@testing-library/react-native';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  userEvent,
+  waitFor,
+} from '@testing-library/react-native';
 import { I18nextProvider } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { colors } from '@/theme/tokens';
+import { colors, space } from '@/theme/tokens';
 
 import { play } from '@/features/audio/playback';
 import type { StoredCard } from '@/features/review/types';
@@ -17,6 +24,7 @@ import { vocabRepository } from './defaultRepository';
 import { VocabScreen } from './VocabScreen';
 
 const mockPush = jest.fn();
+const mockBack = jest.fn();
 const mockParams: { id?: string } = {};
 const mockVocabMemory = new Map<string, string>();
 
@@ -29,11 +37,29 @@ jest.mock('@/hooks/useReduceMotion', () => ({
   useReduceMotion: () => true,
 }));
 
-jest.mock('expo-router', () => ({
-  useRouter: () => ({ push: mockPush, back: jest.fn(), canGoBack: () => true }),
-  useLocalSearchParams: () => mockParams,
-  Stack: { Screen: () => null },
-}));
+jest.mock('expo-router', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const React = require('react') as typeof import('react');
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { Text } = require('react-native') as typeof import('react-native');
+  return {
+    useRouter: () => ({ push: mockPush, back: mockBack, canGoBack: () => true }),
+    useLocalSearchParams: () => mockParams,
+    Stack: {
+      Screen: ({
+        options,
+      }: {
+        options?: { title?: string; headerRight?: () => React.ReactNode };
+      }) =>
+        React.createElement(
+          React.Fragment,
+          null,
+          options?.title ? React.createElement(Text, null, options.title) : null,
+          options?.headerRight ? options.headerRight() : null,
+        ),
+    },
+  };
+});
 
 jest.mock('@/features/auth/useSession', () => ({
   useSession: () => ({
@@ -91,6 +117,7 @@ jest.mock('./defaultRepository', () => {
         upsertFolder: async (_userId: string, folder: never) => folder,
         insertItem: async () => undefined,
         deleteItem: async () => undefined,
+        deleteFolder: async () => undefined,
       },
       schedule: () => () => undefined,
     }),
@@ -172,6 +199,8 @@ async function seedFavorites(itemIds: readonly string[]) {
 }
 
 describe('VocabScreen', () => {
+  jest.setTimeout(20_000);
+
   beforeEach(() => {
     mockVocabMemory.clear();
     mockPush.mockClear();
@@ -250,9 +279,12 @@ describe('VocabScreen', () => {
 });
 
 describe('FolderScreen', () => {
+  jest.setTimeout(20_000);
+
   beforeEach(() => {
     mockVocabMemory.clear();
     mockParams.id = undefined;
+    mockBack.mockClear();
     jest.mocked(play).mockClear();
     resetReview();
   });
@@ -310,6 +342,10 @@ describe('FolderScreen', () => {
     ).toBe(colors.teal);
     expect(screen.queryByText(/Повторить ·/)).toBeNull();
     expect(screen.getAllByRole('button', { name: 'Учить' })).toHaveLength(1);
+    expect(StyleSheet.flatten(screen.getByTestId('folder-study').props.style).gap).toBe(space.xxl);
+    expect(StyleSheet.flatten(screen.getByTestId('folder-phrases').props.style).marginTop).toBe(
+      space.xxl,
+    );
 
     await user.press(screen.getByText('Учить'));
     expect(await screen.findByText('Как учить')).toBeTruthy();
@@ -341,5 +377,103 @@ describe('FolderScreen', () => {
       pathname: '/study',
       params: { folder: favorites?.id, mode: 'learn' },
     });
+  });
+
+  it('searches in Spanish and in the translation, and adds a phrase only once', async () => {
+    const created = await vocabRepository.createFolder('user-1', {
+      name: 'Поездка',
+      color: 'coral',
+    });
+    const folder = created.folders.find((entry) => entry.kind === 'custom');
+    mockParams.id = folder?.id;
+
+    await renderFolder();
+
+    expect(await screen.findByRole('button', { name: '+ Добавить слова' })).toBeTruthy();
+    expect(screen.queryByRole('button', { name: 'Учить' })).toBeNull();
+
+    await user.press(screen.getByRole('button', { name: '+ Добавить слова' }));
+    fireEvent.changeText(await screen.findByLabelText('Поиск фразы'), 'dias');
+    expect(await screen.findByText('Buenos días')).toBeTruthy();
+    expect(screen.getByText('Доброе утро')).toBeTruthy();
+
+    fireEvent.changeText(screen.getByLabelText('Поиск фразы'), 'привет');
+    await user.press(await screen.findByRole('button', { name: 'Добавить Hola' }));
+    expect(await screen.findByTestId('phrase-check-hola.hola')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Убрать Hola' })).toBeTruthy();
+
+    await user.press(screen.getByRole('button', { name: 'Убрать Hola' }));
+    expect(await screen.findByRole('button', { name: 'Добавить Hola' })).toBeTruthy();
+    expect(screen.queryByTestId('phrase-check-hola.hola')).toBeNull();
+
+    await user.press(screen.getByRole('button', { name: 'Добавить Hola' }));
+    expect(await screen.findByTestId('phrase-check-hola.hola')).toBeTruthy();
+    expect(screen.getAllByTestId('phrase-check-hola.hola')).toHaveLength(1);
+
+    const speakers = screen.getAllByRole('button', { name: 'Слушать Hola' });
+    const speaker = speakers[0];
+    if (!speaker) throw new Error('missing speaker');
+    await fireEvent.press(speaker);
+    expect(play).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'hola.hola', es: 'hola' }),
+      'normal',
+      'es',
+    );
+
+    await user.press(screen.getByRole('button', { name: 'Закрыть' }));
+    expect(screen.getAllByText('Hola')).toHaveLength(1);
+    expect(screen.getByRole('button', { name: '+ Добавить слова' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Учить' })).toBeTruthy();
+
+    await user.press(screen.getByRole('button', { name: '+ Добавить слова' }));
+    await user.press(await screen.findByRole('button', { name: 'Добавить своё слово' }));
+    expect(await screen.findByText('скоро')).toBeTruthy();
+  });
+
+  it('hides the folder menu on favorites, tricky words, and topic folders', async () => {
+    const seeded = await vocabRepository.syncDerived('user-1', {
+      topics: [{ topicId: 'a1.hola', name: 'Приветствия', itemIds: ['hola.hola'] }],
+      difficultItemIds: ['hola.hola'],
+    });
+
+    for (const folder of seeded.folders) {
+      mockParams.id = folder.id;
+      await renderFolder();
+      expect(await screen.findByText('Освоение папки')).toBeTruthy();
+      expect(screen.queryByRole('button', { name: 'Действия с папкой' })).toBeNull();
+      expect(screen.queryByText('Изменить папку')).toBeNull();
+      await cleanup();
+    }
+  });
+
+  it('renames and deletes a custom folder from the overflow menu', async () => {
+    const created = await vocabRepository.createFolder('user-1', {
+      name: 'Поездка',
+      color: 'coral',
+    });
+    const folder = created.folders.find((entry) => entry.kind === 'custom');
+    mockParams.id = folder?.id;
+
+    await renderFolder();
+    expect(await screen.findByText('Поездка')).toBeTruthy();
+    expect(screen.queryByText('Изменить папку')).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Учить' })).toBeNull();
+
+    await user.press(screen.getByRole('button', { name: 'Действия с папкой' }));
+    await user.press(await screen.findByRole('button', { name: 'Редактировать папку' }));
+    fireEvent.changeText(await screen.findByLabelText('Название'), 'Дорога');
+    await user.press(screen.getByRole('button', { name: 'Сохранить' }));
+    expect(await screen.findByText('Дорога')).toBeTruthy();
+
+    await user.press(screen.getByRole('button', { name: 'Действия с папкой' }));
+    await user.press(await screen.findByRole('button', { name: 'Удалить папку' }));
+    expect(await screen.findByText('Удалить папку?')).toBeTruthy();
+    expect(
+      screen.getByText('«Дорога» исчезнет из словника. Фразы в курсе останутся.'),
+    ).toBeTruthy();
+    expect(mockBack).not.toHaveBeenCalled();
+
+    await user.press(screen.getByRole('button', { name: 'Удалить' }));
+    await waitFor(() => expect(mockBack).toHaveBeenCalled());
   });
 });

@@ -69,6 +69,7 @@ jest.mock('@/features/vocab/defaultRepository', () => {
         upsertFolder: async (_userId: string, folder: never) => folder,
         insertItem: async () => undefined,
         deleteItem: async () => undefined,
+        deleteFolder: async () => undefined,
       },
       schedule: () => () => undefined,
     }),

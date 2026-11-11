@@ -143,6 +143,24 @@
     "moveEmpty": "Сначала создайте свою папку.",
     "longPressAdd": "Удерживайте, чтобы добавить в словник"
   },
+  "folder": {
+    "menu": "Действия с папкой",
+    "edit": "Редактировать папку",
+    "delete": "Удалить папку",
+    "deleteTitle": "Удалить папку?",
+    "deleteBody": "«{{name}}» исчезнет из словника. Фразы в курсе останутся.",
+    "deleteConfirm": "Удалить",
+    "addWords": "+ Добавить слова",
+    "searchTitle": "Добавить слова",
+    "addOwn": "Добавить своё слово",
+    "searchLabel": "Поиск фразы",
+    "searchPlaceholder": "По-испански или по-русски",
+    "clearSearch": "Очистить поиск",
+    "searchEmpty": "Ничего не нашли",
+    "addPhrase": "Добавить {{es}}",
+    "removePhrase": "Убрать {{es}}",
+    "soon": "скоро"
+  },
   "topics": {
     "title": "Темы",
     "searchLabel": "Поиск темы",

@@ -52,6 +52,11 @@ export function createSupabaseVocabRemote(client: TypedSupabaseClient): VocabRem
         .eq('item_id', itemId);
       if (error) throw error;
     },
+
+    async deleteFolder(_userId, folderId) {
+      const { error } = await client.from('folders').delete().eq('id', folderId);
+      if (error) throw error;
+    },
   };
 }
 

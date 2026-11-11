@@ -46,6 +46,7 @@ function createRemote() {
   let failAdds = 0;
   const inserted: FolderItem[] = [];
   const removed: string[] = [];
+  const deletedFolders: string[] = [];
 
   const remote: VocabRemote = {
     async fetchFolders() {
@@ -76,6 +77,13 @@ function createRemote() {
       items.delete(itemKey(folderId, itemId));
       removed.push(itemKey(folderId, itemId));
     },
+    async deleteFolder(_userId, folderId) {
+      folders.delete(folderId);
+      for (const key of [...items.keys()]) {
+        if (key.startsWith(`${folderId}:`)) items.delete(key);
+      }
+      deletedFolders.push(folderId);
+    },
   };
 
   return {
@@ -84,6 +92,7 @@ function createRemote() {
     items,
     inserted,
     removed,
+    deletedFolders,
     failNextAdd() {
       failAdds += 1;
     },
@@ -308,6 +317,39 @@ describe('vocab repository', () => {
     await expect(repository.addItems(USER, difficult?.id ?? '', ['hola.hola'])).rejects.toThrow(
       'Folder is automatic',
     );
+  });
+
+  it('adds a phrase once and deletes only a custom folder', async () => {
+    const { repository, network, remote } = setup(false);
+    const created = await repository.createFolder(USER, { name: 'Поездка', color: 'teal' });
+    const folder = created.folders.find((entry) => entry.kind === 'custom');
+    const favorites = created.folders.find((entry) => entry.systemKey === 'favorites');
+    const folderId = folder?.id ?? '';
+
+    const once = await repository.addItems(USER, folderId, ['hola.hola']);
+    const twice = await repository.addItems(USER, folderId, ['hola.hola', 'hola.hola']);
+    expect(twice.items.filter((item) => item.itemId === 'hola.hola')).toHaveLength(1);
+    expect(twice.pending).toBe(once.pending);
+
+    network.setOnline(true);
+    await repository.sync(USER);
+    network.setOnline(false);
+    expect(remote.folders.has(folderId)).toBe(true);
+
+    await expect(repository.deleteFolder(USER, favorites?.id ?? '')).rejects.toThrow(
+      'System folder cannot be deleted',
+    );
+    const removed = await repository.deleteFolder(USER, folderId);
+    expect(removed.folders.find((entry) => entry.id === folderId)).toBeUndefined();
+    expect(removed.items.filter((item) => item.folderId === folderId)).toEqual([]);
+    expect(remote.folders.has(folderId)).toBe(true);
+
+    network.setOnline(true);
+    const synced = await repository.sync(USER);
+    expect(synced.folders.find((entry) => entry.id === folderId)).toBeUndefined();
+    expect(synced.pending).toBe(0);
+    expect(remote.deletedFolders).toEqual([folderId]);
+    expect(remote.folders.has(folderId)).toBe(false);
   });
 
   it('refuses an unreadable local cache', async () => {

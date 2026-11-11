@@ -36,7 +36,7 @@ export type FolderDraft = {
   color: FolderColor;
 };
 
-export type OutboxKind = 'folder' | 'item-add' | 'item-remove';
+export type OutboxKind = 'folder' | 'folder-delete' | 'item-add' | 'item-remove';
 
 export type OutboxItem = {
   kind: OutboxKind;
@@ -74,6 +74,7 @@ export type VocabRemote = {
   upsertFolder(userId: string, folder: Folder): Promise<Folder>;
   insertItem(userId: string, item: FolderItem): Promise<void>;
   deleteItem(userId: string, folderId: string, itemId: string): Promise<void>;
+  deleteFolder(userId: string, folderId: string): Promise<void>;
 };
 
 export type Scheduler = (fn: () => void, delayMs: number) => () => void;
@@ -89,6 +90,8 @@ export type VocabRepository = {
   syncDerived(userId: string, input: DerivedInput): Promise<FolderSnapshot>;
   createFolder(userId: string, input: FolderDraft): Promise<FolderSnapshot>;
   updateFolder(userId: string, folderId: string, input: FolderDraft): Promise<FolderSnapshot>;
+  /** Removes a custom folder and the phrases saved only in it. System folders stay. */
+  deleteFolder(userId: string, folderId: string): Promise<FolderSnapshot>;
   addItems(userId: string, folderId: string, itemIds: readonly string[]): Promise<FolderSnapshot>;
   /**
    * Puts phrases into Сложные and keeps them there after the automatic rebuild.
