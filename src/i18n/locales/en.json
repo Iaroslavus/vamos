@@ -730,6 +730,11 @@
       "speakProgress": "{{current}} of {{total}}"
     }
   },
+  "studyModes": {
+    "title": "Choose a way",
+    "recommended": "Recommended",
+    "due": "{{due}} to review"
+  },
   "common": {
     "devComponents": "Components (dev)",
     "devIntro": "Meet the phrase",

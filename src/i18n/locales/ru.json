@@ -730,6 +730,11 @@
       "speakProgress": "{{current}} из {{total}}"
     }
   },
+  "studyModes": {
+    "title": "Выберите способ",
+    "recommended": "Рекомендуем",
+    "due": "{{due}} к повторению"
+  },
   "common": {
     "devComponents": "Компоненты (dev)",
     "devIntro": "Знакомство с фразой",
