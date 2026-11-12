@@ -13,7 +13,7 @@ const DAY_ONE = buildTodayPlan(listTopics(), []).dayOneLessonId;
 
 /**
  * New learners see their name, then day 1. Goal and minutes wait until that
- * first lesson is finished. Everyone else stays on Today.
+ * first lesson is finished. Everyone else stays on the path.
  * The navigator stays mounted under the cover so the redirect can run.
  */
 export function LearnerGate({ children }: { children: ReactNode }) {

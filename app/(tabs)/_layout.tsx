@@ -1,9 +1,8 @@
 import { Tabs } from 'expo-router';
-import { LayoutGrid, Library, Sun, User } from 'lucide-react-native';
+import { LayoutGrid, Library, Route, User } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { Text } from 'react-native';
 
-import { useReviewDueCount } from '@/features/review/hooks/useReviewDueCount';
 import { colors, fonts } from '@/theme/tokens';
 
 const ICON_STROKE = 2.2;
@@ -11,7 +10,6 @@ const ICON_SIZE = 24;
 
 export default function TabLayout() {
   const { t } = useTranslation();
-  const dueReviews = useReviewDueCount();
 
   return (
     <Tabs
@@ -42,17 +40,10 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: t('tabs.today'),
-          tabBarAccessibilityLabel:
-            dueReviews > 0 ? t('tabs.todayDue', { count: dueReviews }) : t('tabs.today'),
-          tabBarBadge: dueReviews > 0 ? dueReviews : undefined,
-          tabBarBadgeStyle: {
-            backgroundColor: colors.coral,
-            color: colors.inkOnDark,
-            fontFamily: fonts.bodyHeavy,
-          },
+          title: t('path.tab'),
+          headerShown: false,
           tabBarIcon: ({ color }) => (
-            <Sun color={color} size={ICON_SIZE} strokeWidth={ICON_STROKE} />
+            <Route color={color} size={ICON_SIZE} strokeWidth={ICON_STROKE} />
           ),
         }}
       />
@@ -85,6 +76,7 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen name="today" options={{ href: null }} />
       <Tabs.Screen name="dialog" options={{ href: null, title: t('dialog.title') }} />
       <Tabs.Screen name="progress" options={{ href: null, title: t('progress.title') }} />
     </Tabs>

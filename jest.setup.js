@@ -233,10 +233,13 @@ jest.mock('react-native-svg', () => {
 
   const Mock = (props) => React.createElement(View, props);
 
-  return {
-    __esModule: true,
-    default: Mock,
-    Svg: Mock,
-    Circle: Mock,
-  };
+  return new Proxy(
+    { __esModule: true, default: Mock, Svg: Mock, Circle: Mock },
+    {
+      get(target, prop) {
+        if (prop in target) return target[prop];
+        return Mock;
+      },
+    },
+  );
 });
