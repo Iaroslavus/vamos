@@ -6,6 +6,49 @@
     "vocab": "Словник",
     "profile": "Профиль"
   },
+  "path": {
+    "tab": "Путь",
+    "moduleTitle": "{{level}} · {{week}} · {{city}}",
+    "weekLabel": "Неделя {{week}}",
+    "reviewChip": "↻ {{count}}",
+    "reviewA11y": "Повторить {{count}}",
+    "streakA11y": "Серия {{count}}",
+    "nodeLabel": "{{title}}, {{status}}",
+    "status": {
+      "done": "пройдено",
+      "current": "рекомендуем сейчас",
+      "open": "ещё не начато",
+      "chest": "чекпоинт"
+    },
+    "badge": {
+      "done": "ПРОЙДЕНО",
+      "current": "РЕКОМЕНДУЕМ",
+      "open": "МОЖНО СРАЗУ"
+    },
+    "cardDay": "День {{day}} · {{badge}}",
+    "cardWeek": "Неделя {{week}} · {{badge}}",
+    "action": {
+      "continue": "Продолжить · урок {{lesson}}",
+      "start": "Начать тему",
+      "repeat": "Повторить тему",
+      "try": "Попробовать"
+    },
+    "cheatsheet": "Шпаргалка",
+    "cheatsheetTitle": "Фразы темы",
+    "chestTitle": "Сундук",
+    "chestCardTitle": "Итог недели",
+    "chestCanDo": "Сценка из фраз этой недели",
+    "loading": "Загружаем путь",
+    "loadError": "Не удалось загрузить путь. Проверьте сеть и повторите.",
+    "empty": "Темы скоро появятся здесь."
+  },
+  "hero": {
+    "vamos": "¡Vamos!",
+    "known": "¡Ya lo sé!",
+    "shortcut": "¡Un atajo!",
+    "challenge": "¿Un reto?",
+    "done": "¡Lo logramos!"
+  },
   "learn": {
     "title": "Учиться",
     "unitTitle": "{{level}} · Блок {{unit}}",

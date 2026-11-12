@@ -68,6 +68,9 @@ describe('locale catalogs', () => {
   });
 
   it('uses the glossary names for the main sections', () => {
+    expect(en.path.tab).toBe('Path');
+    expect(uk.path.tab).toBe('Шлях');
+    expect(ru.path.tab).toBe('Путь');
     expect(en.tabs.today).toBe('Today');
     expect(uk.tabs.today).toBe('Сьогодні');
     expect(en.tabs.topics).toBe('Topics');

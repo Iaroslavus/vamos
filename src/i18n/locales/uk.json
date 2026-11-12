@@ -6,6 +6,49 @@
     "vocab": "Словник",
     "profile": "Профіль"
   },
+  "path": {
+    "tab": "Шлях",
+    "moduleTitle": "{{level}} · {{week}} · {{city}}",
+    "weekLabel": "Тиждень {{week}}",
+    "reviewChip": "↻ {{count}}",
+    "reviewA11y": "Повторити {{count}}",
+    "streakA11y": "Серія {{count}}",
+    "nodeLabel": "{{title}}, {{status}}",
+    "status": {
+      "done": "пройдено",
+      "current": "радимо зараз",
+      "open": "ще не почато",
+      "chest": "чекпоінт"
+    },
+    "badge": {
+      "done": "ПРОЙДЕНО",
+      "current": "РАДИМО",
+      "open": "МОЖНА ВІДРАЗУ"
+    },
+    "cardDay": "День {{day}} · {{badge}}",
+    "cardWeek": "Тиждень {{week}} · {{badge}}",
+    "action": {
+      "continue": "Продовжити · урок {{lesson}}",
+      "start": "Почати тему",
+      "repeat": "Повторити тему",
+      "try": "Спробувати"
+    },
+    "cheatsheet": "Шпаргалка",
+    "cheatsheetTitle": "Фрази теми",
+    "chestTitle": "Скриня",
+    "chestCardTitle": "Підсумок тижня",
+    "chestCanDo": "Сценка з фраз цього тижня",
+    "loading": "Завантажуємо шлях",
+    "loadError": "Не вдалося завантажити шлях. Перевірте мережу і спробуйте ще.",
+    "empty": "Теми незабаром з'являться тут."
+  },
+  "hero": {
+    "vamos": "¡Vamos!",
+    "known": "¡Ya lo sé!",
+    "shortcut": "¡Un atajo!",
+    "challenge": "¿Un reto?",
+    "done": "¡Lo logramos!"
+  },
   "learn": {
     "title": "Вчитися",
     "unitTitle": "{{level}} · Блок {{unit}}",

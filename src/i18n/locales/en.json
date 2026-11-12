@@ -6,6 +6,49 @@
     "vocab": "Phrasebook",
     "profile": "Profile"
   },
+  "path": {
+    "tab": "Path",
+    "moduleTitle": "{{level}} · {{week}} · {{city}}",
+    "weekLabel": "Week {{week}}",
+    "reviewChip": "↻ {{count}}",
+    "reviewA11y": "Review {{count}}",
+    "streakA11y": "Streak {{count}}",
+    "nodeLabel": "{{title}}, {{status}}",
+    "status": {
+      "done": "completed",
+      "current": "recommended now",
+      "open": "not started yet",
+      "chest": "checkpoint"
+    },
+    "badge": {
+      "done": "DONE",
+      "current": "RECOMMENDED",
+      "open": "START ANYTIME"
+    },
+    "cardDay": "Day {{day}} · {{badge}}",
+    "cardWeek": "Week {{week}} · {{badge}}",
+    "action": {
+      "continue": "Continue · lesson {{lesson}}",
+      "start": "Start topic",
+      "repeat": "Repeat topic",
+      "try": "Try it"
+    },
+    "cheatsheet": "Cheat sheet",
+    "cheatsheetTitle": "Topic phrases",
+    "chestTitle": "Chest",
+    "chestCardTitle": "Week recap",
+    "chestCanDo": "A scene made of this week's phrases",
+    "loading": "Loading the path",
+    "loadError": "We couldn't load the path. Check your connection and try again.",
+    "empty": "Topics will show up here soon."
+  },
+  "hero": {
+    "vamos": "¡Vamos!",
+    "known": "¡Ya lo sé!",
+    "shortcut": "¡Un atajo!",
+    "challenge": "¿Un reto?",
+    "done": "¡Lo logramos!"
+  },
   "learn": {
     "title": "Learn",
     "unitTitle": "{{level}} · Block {{unit}}",

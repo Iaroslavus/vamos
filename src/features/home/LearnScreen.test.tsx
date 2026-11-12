@@ -5,7 +5,7 @@ import { I18nextProvider } from 'react-i18next';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import LessonScreen from '../../../app/(lesson)/lesson/[id]';
-import LearnScreen from '../../../app/(tabs)/index';
+import { TodayScreen as LearnScreen } from '@/features/today/TodayScreen';
 import { LearnerProvider } from '@/features/learner/context';
 import type { LearnerProfile } from '@/features/learner/profile';
 import type { LearnerRepository } from '@/features/learner/repository';

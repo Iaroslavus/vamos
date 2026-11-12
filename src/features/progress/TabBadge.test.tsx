@@ -169,15 +169,15 @@ describe('progress tab badge', () => {
   it('hides the badge when nothing is due', async () => {
     await renderTabs();
 
-    expect(await screen.findByText('Сегодня')).toBeTruthy();
+    expect(await screen.findByText('Путь')).toBeTruthy();
     expect(screen.getByText('Темы')).toBeTruthy();
     expect(screen.getByText('Словник')).toBeTruthy();
     expect(screen.getByText('Профиль')).toBeTruthy();
+    expect(screen.queryByText('Сегодня')).toBeNull();
     expect(screen.queryByText('Диалог')).toBeNull();
     expect(screen.queryByText('Прогресс')).toBeNull();
     await flush();
     expect(screen.queryByText(/^badge:/)).toBeNull();
-    expect(screen.getByText('a11y:Сегодня')).toBeTruthy();
   });
 
   it('counts one word once when both card directions are due', async () => {
@@ -191,12 +191,12 @@ describe('progress tab badge', () => {
     );
     await renderTabs();
 
-    expect(await screen.findByText('badge:1')).toBeTruthy();
-    expect(screen.getByText('a11y:Сегодня, повторить: 1')).toBeTruthy();
+    expect(await screen.findByText('Путь')).toBeTruthy();
+    expect(screen.queryByText(/^badge:/)).toBeNull();
     await flush();
   });
 
-  it('shows the due count on the progress tab', async () => {
+  it('keeps due reviews off the path tab', async () => {
     const cards = {
       'hola:es_to_ru': dueCard('hola'),
       'gracias:es_to_ru': dueCard('gracias'),
@@ -207,22 +207,22 @@ describe('progress tab badge', () => {
     );
     await renderTabs();
 
-    expect(await screen.findByText('badge:2')).toBeTruthy();
-    expect(screen.getByText('a11y:Сегодня, повторить: 2')).toBeTruthy();
+    expect(await screen.findByText('Путь')).toBeTruthy();
+    expect(screen.queryByText(/^badge:/)).toBeNull();
     await flush();
   });
 
-  it('updates the badge after a lesson introduces a word', async () => {
+  it('does not badge the path tab after a lesson introduces a word', async () => {
     prepareLesson();
     await renderTabs(true);
 
-    expect(await screen.findByText('a11y:Сегодня')).toBeTruthy();
+    expect(await screen.findByText('Путь')).toBeTruthy();
     expect(screen.queryByText(/^badge:/)).toBeNull();
 
     await fireEvent.press(screen.getByLabelText('finish-lesson'));
 
-    expect(await screen.findByText('badge:1')).toBeTruthy();
-    expect(screen.getByText('a11y:Сегодня, повторить: 1')).toBeTruthy();
+    expect(screen.queryByText(/^badge:/)).toBeNull();
+    expect(screen.getByText('Путь')).toBeTruthy();
     await flush();
   });
 });

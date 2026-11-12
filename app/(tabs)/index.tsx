@@ -1,5 +1,5 @@
-import { TodayScreen } from '@/features/today/TodayScreen';
+import { PathScreen } from '@/features/path/PathScreen';
 
-export default function TodayRoute() {
-  return <TodayScreen />;
+export default function PathRoute() {
+  return <PathScreen />;
 }
