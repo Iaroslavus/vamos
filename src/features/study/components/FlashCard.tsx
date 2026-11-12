@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { Pressable, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated, { type AnimatedStyle } from 'react-native-reanimated';
@@ -20,6 +21,7 @@ type FlashCardProps = {
   flipLabel: string;
   onFlip: () => void;
   onMark: (mark: FlashMark) => void;
+  renderAudio?: () => ReactNode;
 };
 
 export function FlashCard({
@@ -32,6 +34,7 @@ export function FlashCard({
   flipLabel,
   onFlip,
   onMark,
+  renderAudio,
 }: FlashCardProps) {
   const drag = useFlashDrag(cardKey, onMark);
   const flip = useCardFlip(cardKey, revealed);
@@ -41,38 +44,71 @@ export function FlashCard({
       <Animated.View style={drag.dragStyle} collapsable={false}>
         <Animated.View style={flip.enterStyle}>
           <View style={styles.stage}>
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel={flipLabel}
-              accessibilityState={{ expanded: revealed }}
-              onPress={onFlip}
-              style={styles.hit}
-            >
+            <View style={styles.hit}>
               <Animated.View
                 style={[styles.face, flip.frontStyle]}
                 pointerEvents={revealed ? 'none' : 'auto'}
                 accessibilityElementsHidden={revealed}
               >
-                <Text variant="h1" style={styles.word}>
-                  {displayText(front)}
-                </Text>
+                <Face
+                  word={front}
+                  flipLabel={flipLabel}
+                  revealed={revealed}
+                  onFlip={onFlip}
+                  audio={renderAudio?.()}
+                />
               </Animated.View>
               <Animated.View
                 style={[styles.face, flip.backStyle]}
                 pointerEvents={revealed ? 'auto' : 'none'}
                 accessibilityElementsHidden={!revealed}
               >
-                <Text variant="h1" style={styles.word}>
-                  {displayText(back)}
-                </Text>
+                <Face
+                  word={back}
+                  flipLabel={flipLabel}
+                  revealed={revealed}
+                  onFlip={onFlip}
+                  audio={renderAudio?.()}
+                />
               </Animated.View>
-            </Pressable>
+            </View>
             <Tint label={againLabel} tone="again" style={drag.againStyle} />
             <Tint label={knowLabel} tone="know" style={drag.knowStyle} />
           </View>
         </Animated.View>
       </Animated.View>
     </GestureDetector>
+  );
+}
+
+function Face({
+  word,
+  flipLabel,
+  revealed,
+  onFlip,
+  audio,
+}: {
+  word: string;
+  flipLabel: string;
+  revealed: boolean;
+  onFlip: () => void;
+  audio?: ReactNode;
+}) {
+  return (
+    <>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={flipLabel}
+        accessibilityState={{ expanded: revealed }}
+        onPress={onFlip}
+        style={styles.wordHit}
+      >
+        <Text variant="h1" style={styles.word}>
+          {displayText(word)}
+        </Text>
+      </Pressable>
+      {audio}
+    </>
   );
 }
 
@@ -101,24 +137,32 @@ function Tint({
 
 const styles = StyleSheet.create({
   stage: {
-    minHeight: 280,
+    minHeight: 320,
     borderRadius: radius.xl,
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.border,
   },
   hit: {
-    minHeight: 280,
+    minHeight: 320,
   },
   face: {
     ...StyleSheet.absoluteFill,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: space.xxl,
-    paddingVertical: space.xxxl,
+    paddingVertical: space.xl,
+    gap: space.lg,
     borderRadius: radius.xl,
     backgroundColor: colors.surface,
     backfaceVisibility: 'hidden',
+  },
+  wordHit: {
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexGrow: 1,
+    minHeight: 44,
   },
   word: {
     textAlign: 'center',

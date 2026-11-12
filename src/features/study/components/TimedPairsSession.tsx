@@ -1,17 +1,17 @@
-import { X } from 'lucide-react-native';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
-import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
 import { colors, space } from '@/theme/tokens';
 
-import { formatRaceTime } from '../games/timedPairs';
+import { pairCount } from '../games/timedPairs';
 import { usePairsRecord } from '../hooks/usePairsRecord';
 import { useTimedPairs } from '../hooks/useTimedPairs';
-import type { StudyUnit } from '../types';
+import type { StudySettings, StudyUnit } from '../types';
+import { PairsBoardStatus } from './PairsBoardStatus';
 import { PairsFinish } from './PairsFinish';
+import { SessionBar, type SessionPlace } from './SessionBar';
 import { TimedPairGrid } from './TimedPairGrid';
 
 type TimedPairsSessionProps = {
@@ -24,6 +24,9 @@ type TimedPairsSessionProps = {
    * The ids are the phrases that were paired wrong.
    */
   onFinished?: (missedItemIds: readonly string[]) => void;
+  place?: SessionPlace;
+  settings?: StudySettings;
+  onChangeSettings?: (settings: StudySettings) => void;
 };
 
 export function TimedPairsSession({
@@ -32,10 +35,14 @@ export function TimedPairsSession({
   folderId,
   onClose,
   onFinished,
+  place,
+  settings,
+  onChangeSettings,
 }: TimedPairsSessionProps) {
   const { t } = useTranslation();
   const record = usePairsRecord(userId, folderId);
-  const game = useTimedPairs(units, record, record.ready);
+  const showTimer = settings?.showTimer ?? false;
+  const game = useTimedPairs(units, record, record.ready, showTimer);
   const reported = useRef(false);
   const finished = record.ready && game.phase === 'done';
 
@@ -63,42 +70,48 @@ export function TimedPairsSession({
         <Text variant="h3" style={styles.centerText}>
           {t('study.emptyTitle')}
         </Text>
-        <IconButton accessibilityLabel={t('study.close')} onPress={onClose}>
-          <X size={22} color={colors.ink} strokeWidth={2.2} />
-        </IconButton>
+        <SessionBar current={0} total={0} onClose={onClose} />
       </View>
     );
   }
 
+  const header = place ?? { current: game.index + 1, total: game.rounds.length };
+  const pairs = pairCount(game.round);
+  const playing = game.phase === 'play';
+
   return (
     <View style={styles.root}>
-      <View style={styles.header}>
-        <IconButton accessibilityLabel={t('study.close')} onPress={onClose}>
-          <X size={22} color={colors.ink} strokeWidth={2.2} />
-        </IconButton>
-        <View style={styles.headerBody}>
-          <Text variant="caption" color={colors.inkMuted}>
-            {t('study.games.pairsBoard', { current: game.index + 1, total: game.rounds.length })}
-          </Text>
-          <Text variant="h2" accessibilityLabel={t('study.games.pairsTime', { time: game.clock })}>
-            {game.clock}
-          </Text>
-          <RecordLine bestMs={record.bestMs} />
+      <SessionBar
+        current={header.current}
+        total={header.total}
+        onClose={onClose}
+        onShuffle={playing ? game.shuffle : undefined}
+        shuffleDisabled={!playing || pairs < 2}
+        settings={settings}
+        onChangeSettings={onChangeSettings}
+      />
+      {game.phase === 'play' ? (
+        <>
+          <PairsBoardStatus
+            found={game.progress.matched.length}
+            total={pairs}
+            round={game.index + 1}
+            rounds={game.rounds.length}
+            timer={showTimer ? t('session.timer', { time: game.clock }) : null}
+          />
           {game.progress.penalties > 0 ? (
             <Text variant="caption" color={colors.coral}>
               {t('study.games.pairsPenalties', { count: game.progress.penalties })}
             </Text>
           ) : null}
-        </View>
-      </View>
-      {game.phase === 'play' ? (
-        <TimedPairGrid
-          round={game.round}
-          progress={game.progress}
-          disabled={game.frozenMs != null}
-          onPress={game.onPress}
-          onRetired={game.onRetired}
-        />
+          <TimedPairGrid
+            round={game.round}
+            progress={game.progress}
+            disabled={game.frozenMs != null}
+            onPress={game.onPress}
+            onRetired={game.onRetired}
+          />
+        </>
       ) : (
         <PairsFinish
           phase={game.phase}
@@ -113,32 +126,10 @@ export function TimedPairsSession({
   );
 }
 
-function RecordLine({ bestMs }: { bestMs: number | null }) {
-  const { t } = useTranslation();
-  const label =
-    bestMs == null
-      ? t('study.games.pairsNoRecord')
-      : t('study.games.pairsRecord', { time: formatRaceTime(bestMs) });
-  return (
-    <Text variant="caption" color={colors.inkMuted}>
-      {label}
-    </Text>
-  );
-}
-
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     gap: space.md,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: space.md,
-  },
-  headerBody: {
-    flex: 1,
-    gap: space.xs,
   },
   center: {
     flex: 1,

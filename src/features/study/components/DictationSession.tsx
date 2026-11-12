@@ -1,10 +1,8 @@
-import { X } from 'lucide-react-native';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { IconButton } from '@/components/IconButton';
 import { ResultSheet } from '@/components/ResultSheet';
 import { Text } from '@/components/Text';
 import { stopLessonAudio } from '@/features/audio/playback';
@@ -17,9 +15,11 @@ import { dictationMask, dictationPoints } from '../games/dictation';
 import { playUnit } from '../playUnit';
 import { useDictationSession } from '../hooks/useDictationSession';
 import type { StudyRecordInput } from '../hooks/useStudyPlayer';
+import { shuffleFrom } from '../order';
 import type { ScoreAttempt } from '../sessionSummary';
-import type { StudyUnit } from '../types';
+import type { StudySettings, StudyUnit } from '../types';
 import { DictationPrompt } from './DictationPrompt';
+import { SessionBar, type SessionPlace } from './SessionBar';
 
 type DictationSessionProps = {
   units: readonly StudyUnit[];
@@ -28,6 +28,11 @@ type DictationSessionProps = {
   onAttempt?: (attempt: ScoreAttempt) => void;
   /** When set, the last phrase continues a mixed session instead of the summary. */
   onFinished?: () => void;
+  place?: SessionPlace;
+  onShuffle?: () => void;
+  shuffleDisabled?: boolean;
+  settings?: StudySettings;
+  onChangeSettings?: (settings: StudySettings) => void;
 };
 
 export function DictationSession({
@@ -36,10 +41,20 @@ export function DictationSession({
   onClose,
   onFinished,
   onAttempt,
+  place,
+  onShuffle,
+  shuffleDisabled = false,
+  settings,
+  onChangeSettings,
 }: DictationSessionProps) {
   const { t } = useTranslation();
   const preference = useAudioPreference();
-  const session = useDictationSession({ units, onRecord, onAttempt });
+  const [queue, setQueue] = useState(() => [...units]);
+  const session = useDictationSession({ units: queue, onRecord, onAttempt });
+  const ownShuffle = queue.length - session.index >= 2;
+  const shuffle = ownShuffle
+    ? () => setQueue((current) => shuffleFrom(current, session.index, Math.random))
+    : onShuffle;
   const unit = session.unit;
   const reported = useRef(false);
 
@@ -105,20 +120,16 @@ export function DictationSession({
       style={styles.root}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <View style={styles.header}>
-        <IconButton accessibilityLabel={t('study.close')} onPress={onClose}>
-          <X size={22} color={colors.ink} strokeWidth={2.2} />
-        </IconButton>
-        <View style={styles.headerBody}>
-          <Text variant="caption" color={colors.inkMuted}>
-            {t('study.games.speakProgress', {
-              current: session.index + 1,
-              total: session.totalUnits,
-            })}
-          </Text>
-          <Text variant="bodyBold">{t('study.games.dictationStake', { score: stake })}</Text>
-        </View>
-      </View>
+      <SessionBar
+        current={place?.current ?? session.index + 1}
+        total={place?.total ?? session.totalUnits}
+        onClose={onClose}
+        onShuffle={shuffle}
+        shuffleDisabled={ownShuffle ? false : shuffleDisabled || !onShuffle}
+        settings={settings}
+        onChangeSettings={onChangeSettings}
+      />
+      <Text variant="bodyBold">{t('study.games.dictationStake', { score: stake })}</Text>
       <DictationPrompt
         prompt={t('study.games.dictationPrompt')}
         phrase={unit.es}
@@ -162,15 +173,6 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     gap: space.md,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: space.md,
-  },
-  headerBody: {
-    flex: 1,
-    gap: space.xs,
   },
   done: {
     flex: 1,

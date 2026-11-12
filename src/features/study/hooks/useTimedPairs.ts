@@ -9,6 +9,7 @@ import {
   pairCount,
   raceTimeMs,
   roundCleared,
+  shuffleRoundTiles,
   tapTimedTile,
   type TimedProgress,
   type TimedTile,
@@ -22,8 +23,13 @@ type RecordStore = {
   save: (ms: number) => void;
 };
 
-export function useTimedPairs(units: readonly StudyUnit[], record: RecordStore, armed: boolean) {
-  const [rounds] = useState(() => buildTimedRounds(units));
+export function useTimedPairs(
+  units: readonly StudyUnit[],
+  record: RecordStore,
+  armed: boolean,
+  showTimer = false,
+) {
+  const [rounds, setRounds] = useState(() => buildTimedRounds(units));
   const [index, setIndex] = useState(0);
   const [progress, setProgress] = useState<TimedProgress>(EMPTY_TIMED);
   const [phase, setPhase] = useState<Phase>('play');
@@ -31,7 +37,7 @@ export function useTimedPairs(units: readonly StudyUnit[], record: RecordStore, 
   const [fresh, setFresh] = useState(false);
   const [startedAt, setStartedAt] = useState(() => Date.now());
   const [missedIds, setMissedIds] = useState<readonly string[]>([]);
-  const now = useTickingClock(armed && phase === 'play' && frozenMs == null);
+  const now = useTickingClock(armed && phase === 'play' && frozenMs == null && showTimer);
   const retired = useRef(new Set<string>());
   const finished = useRef(false);
   const latest = useRef({
@@ -110,6 +116,14 @@ export function useTimedPairs(units: readonly StudyUnit[], record: RecordStore, 
     setPhase(snap.index + 1 >= snap.total ? 'done' : 'between');
   };
 
+  const shuffle = () => {
+    setRounds((current) =>
+      current.map((item, itemIndex) =>
+        itemIndex === index ? shuffleRoundTiles(item, Math.random) : item,
+      ),
+    );
+  };
+
   const onNext = () => {
     retired.current = new Set();
     finished.current = false;
@@ -134,6 +148,7 @@ export function useTimedPairs(units: readonly StudyUnit[], record: RecordStore, 
     onPress,
     onRetired,
     onNext,
+    shuffle,
     missedIds,
   };
 }

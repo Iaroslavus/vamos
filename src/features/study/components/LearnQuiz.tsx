@@ -1,11 +1,8 @@
-import { X } from 'lucide-react-native';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { IconButton } from '@/components/IconButton';
-import { ProgressBar } from '@/components/ProgressBar';
 import { ResultSheet } from '@/components/ResultSheet';
 import { Text } from '@/components/Text';
 import { stopLessonAudio } from '@/features/audio/playback';
@@ -17,14 +14,18 @@ import { colors, space } from '@/theme/tokens';
 import { studyStepExercise } from '../exercise';
 import { playUnit } from '../playUnit';
 import type { LearnController } from '../hooks/useLearnSession';
+import type { StudySettings } from '../types';
+import { SessionBar } from './SessionBar';
 import { StudyStepBody } from './StudyStepBody';
 
 type LearnQuizProps = {
   player: LearnController;
   onClose: () => void;
+  settings?: StudySettings;
+  onChangeSettings?: (settings: StudySettings) => void;
 };
 
-export function LearnQuiz({ player, onClose }: LearnQuizProps) {
+export function LearnQuiz({ player, onClose, settings, onChangeSettings }: LearnQuizProps) {
   const { t } = useTranslation();
   const preference = useAudioPreference();
   const step = player.step;
@@ -55,30 +56,24 @@ export function LearnQuiz({ player, onClose }: LearnQuizProps) {
     failed: false,
   });
   const typing = step.type === 'type_translation' && step.direction === 'ru_to_es' && !player.sheet;
-  const progress =
-    player.progress.total === 0 ? 0 : player.progress.learned / player.progress.total;
+  const current =
+    player.progress.total === 0 ? 0 : Math.min(player.progress.total, player.progress.learned + 1);
 
   return (
     <KeyboardAvoidingView
       style={styles.root}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <View style={styles.header}>
-        <IconButton accessibilityLabel={t('study.close')} onPress={onClose}>
-          <X size={22} color={colors.ink} strokeWidth={2.2} />
-        </IconButton>
-        <View style={styles.progress}>
-          <Text
-            variant="caption"
-            color={colors.inkMuted}
-            accessible={false}
-            testID="learn-progress"
-          >
-            {caption}
-          </Text>
-          <ProgressBar progress={progress} accessibilityLabel={caption} />
-        </View>
-      </View>
+      <SessionBar
+        current={current}
+        total={player.progress.total}
+        onClose={onClose}
+        settings={settings}
+        onChangeSettings={onChangeSettings}
+      />
+      <Text variant="caption" color={colors.inkMuted} accessible={false} testID="learn-progress">
+        {caption}
+      </Text>
 
       {step.type === 'speak_repeat' ? (
         <StudyStepBody
@@ -165,15 +160,6 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     gap: space.md,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: space.md,
-  },
-  progress: {
-    flex: 1,
-    gap: space.xs,
   },
   body: {
     flex: 1,

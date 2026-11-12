@@ -157,6 +157,45 @@ export function formatRaceTime(ms: number): string {
   return `${minutes}:${String(seconds).padStart(2, '0')}.${tenths}`;
 }
 
+/** Comma for Ukrainian and Russian, dot for English. */
+export function resultDecimal(language: string): ',' | '.' {
+  return language.toLowerCase().startsWith('en') ? '.' : ',';
+}
+
+/**
+ * Quiet result clock: `8,6` under a minute, `1:05,0` after.
+ * The caller adds the seconds unit and the record phrase.
+ */
+export function formatResultClock(ms: number, decimal: ',' | '.' = ','): string {
+  const total = Math.max(0, Math.floor(Number.isFinite(ms) ? ms : 0));
+  const minutes = Math.floor(total / 60_000);
+  const seconds = Math.floor((total % 60_000) / 1000);
+  const tenths = Math.floor((total % 1000) / 100);
+  const fraction = `${decimal}${tenths}`;
+  if (minutes === 0) return `${seconds}${fraction}`;
+  return `${minutes}:${String(seconds).padStart(2, '0')}${fraction}`;
+}
+
+/** New order for the two columns. Matches stay attached to the same tiles. */
+export function shuffleRoundTiles(
+  round: TimedRound,
+  random: () => number = Math.random,
+): TimedRound {
+  return {
+    ...round,
+    tiles: [
+      ...shuffle(
+        round.tiles.filter((tile) => tile.side === 'es'),
+        random,
+      ),
+      ...shuffle(
+        round.tiles.filter((tile) => tile.side === 'tr'),
+        random,
+      ),
+    ],
+  };
+}
+
 export function pairCount(round: TimedRound): number {
   return round.tiles.filter((tile) => tile.side === 'es').length;
 }

@@ -50,6 +50,8 @@ export type StudySettings = {
   count: StudyCount;
   autoplay: boolean;
   accentStrictness: AccentStrictness;
+  /** Live clock during blitz and pairs. Off until the learner asks for it. */
+  showTimer: boolean;
 };
 
 export const DEFAULT_STUDY_SETTINGS: StudySettings = {
@@ -58,6 +60,7 @@ export const DEFAULT_STUDY_SETTINGS: StudySettings = {
   count: DEFAULT_STUDY_COUNT,
   autoplay: true,
   accentStrictness: 'standard',
+  showTimer: false,
 };
 
 export type StudyPrefs = {

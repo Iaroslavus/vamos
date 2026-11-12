@@ -62,6 +62,7 @@ export function useStudyLaunch(folderId: string, mode: StudyMode | null) {
     selected,
     settings,
     testSettings: prefs.prefs.test,
+    setSettings: prefs.setSettings,
     setTestSettings: prefs.setTestSettings,
     userId: vocab.userId,
     reload: () => {
