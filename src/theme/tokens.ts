@@ -38,6 +38,7 @@ export const fonts = {
 } as const;
 
 export const type = {
+  display: { fontFamily: fonts.display, fontSize: 40, lineHeight: 46, letterSpacing: -0.8 },
   h1: { fontFamily: fonts.display, fontSize: 30, lineHeight: 34, letterSpacing: -0.6 },
   h2: { fontFamily: fonts.display, fontSize: 26, lineHeight: 30, letterSpacing: -0.4 },
   h3: { fontFamily: fonts.display, fontSize: 22, lineHeight: 26 },

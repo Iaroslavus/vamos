@@ -3,7 +3,7 @@ import { confusableReportLines } from '@/features/speech/confusables';
 
 import { contentIssues, type ContentBundle } from '../integrity';
 import { literalPartWarnings } from '../literal';
-import type { Item, Lesson } from '../schema';
+import type { Item, Lesson, Topic } from '../schema';
 import { CONTENT_LOCALES, type ContentLocale } from '../text';
 import { gapsByLocale, translationGaps } from '../translations';
 
@@ -18,6 +18,8 @@ export type LessonStat = {
 export type ContentReport = {
   topics: number;
   draftTopics: number;
+  /** Topics that publish optional search synonyms (`tags`). */
+  searchTags: number;
   lessons: LessonStat[];
   items: number;
   phrases: number;
@@ -54,6 +56,7 @@ export function buildReport(
   return {
     topics: bundle.topics.length,
     draftTopics: bundle.topics.filter((topic) => topic.draft).length,
+    searchTags: bundle.topics.filter((topic) => hasSearchTags(topic)).length,
     lessons,
     items: bundle.items.length,
     phrases,
@@ -77,6 +80,7 @@ export function formatReport(report: ContentReport): string {
   const share = Math.round(report.phraseShare * 100);
   const lines = [
     `Темы: ${report.topics} (черновики: ${report.draftTopics})`,
+    `Теги поиска: ${report.searchTags}`,
     `Уроки: ${report.lessons.length} (черновики: ${report.draftLessons})`,
     `Единицы: ${report.items}, фразы: ${report.phrases} (${share}%)`,
     `Черновики единиц: ${report.draftItems}`,
@@ -110,6 +114,12 @@ export function formatReport(report: ContentReport): string {
     ...report.issues.map((issue) => `  ${issue}`),
   ];
   return lines.join('\n');
+}
+
+function hasSearchTags(topic: Topic): boolean {
+  const tags = topic.tags;
+  if (!tags) return false;
+  return [tags.ru, tags.uk, tags.en].some((list) => (list?.length ?? 0) > 0);
 }
 
 function lessonStat(lesson: Lesson, byId: ReadonlyMap<string, Item>): LessonStat {

@@ -25,6 +25,11 @@
       "en": "Pay at the checkout"
     }
   ],
+  "tags": {
+    "ru": ["продукты", "касса", "молоко", "хлеб", "покупки"],
+    "uk": ["продукти", "каса", "молоко", "хліб", "покупки"],
+    "en": ["groceries", "checkout", "milk", "bread", "shopping"]
+  },
   "lessons": [
     "a1.supermercado.l1",
     "a1.supermercado.l2",

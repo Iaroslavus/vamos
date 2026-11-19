@@ -252,6 +252,14 @@ export const LessonSchema = z.object({
 });
 export type Lesson = z.infer<typeof LessonSchema>;
 
+/** Search synonyms for a topic. Optional, and only used by local phrase search. */
+export const TopicTagsSchema = z.object({
+  ru: z.array(z.string().trim().min(1)).max(16).optional(),
+  uk: z.array(z.string().trim().min(1)).max(16).optional(),
+  en: z.array(z.string().trim().min(1)).max(16).optional(),
+});
+export type TopicTags = z.infer<typeof TopicTagsSchema>;
+
 /** A situation the learner can handle, made of several lessons and a scene. */
 export const TopicSchema = z.object({
   id: ContentIdSchema,
@@ -260,6 +268,8 @@ export const TopicSchema = z.object({
   title: LocalizedTextSchema,
   icon: z.string().min(1),
   can_do: z.array(LocalizedTextSchema).min(1),
+  /** Words a learner might type instead of the title, such as food or waiter. */
+  tags: TopicTagsSchema.optional(),
   lessons: z.array(ContentIdSchema).min(1),
   scene: ContentIdSchema,
   /** Day 1–7 of the starter course. Omitted when the topic is not in that week. */

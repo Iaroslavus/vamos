@@ -25,10 +25,12 @@
       "en": "Understand «left» and «straight»"
     }
   ],
-  "lessons": [
-    "a1.camino.l1",
-    "a1.camino.l2"
-  ],
+  "tags": {
+    "ru": ["дорога", "направо", "налево", "улица", "карта"],
+    "uk": ["дорога", "праворуч", "ліворуч", "вулиця", "мапа"],
+    "en": ["directions", "right", "left", "street", "map"]
+  },
+  "lessons": ["a1.camino.l1", "a1.camino.l2"],
   "scene": "a1.camino.scene",
   "starter_day": 5,
   "draft": true,

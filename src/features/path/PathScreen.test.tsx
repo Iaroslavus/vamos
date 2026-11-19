@@ -191,4 +191,26 @@ describe('Path screen', () => {
     expect(mockPush).toHaveBeenCalledWith('/review');
     await flush();
   });
+
+  it('opens the cheatsheet of the selected topic', async () => {
+    await renderPath();
+
+    await fireEvent.press(await screen.findByText('Шпаргалка'));
+    expect(mockPush).toHaveBeenCalledWith({
+      pathname: '/cheatsheet',
+      params: { topicId: 'a1.hola', source: 'path' },
+    });
+    await flush();
+  });
+
+  it('opens phrase search from the header', async () => {
+    await renderPath();
+
+    await fireEvent.press(await screen.findByLabelText('Найти фразу: ресторан, дни недели…'));
+    expect(mockPush).toHaveBeenCalledWith({
+      pathname: '/cheatsheet',
+      params: { source: 'search', focus: '1' },
+    });
+    await flush();
+  });
 });
