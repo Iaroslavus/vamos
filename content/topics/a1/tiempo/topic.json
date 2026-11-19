@@ -25,12 +25,12 @@
       "en": "Say when you are meeting"
     }
   ],
-  "lessons": [
-    "a1.tiempo.l1",
-    "a1.tiempo.l2",
-    "a1.tiempo.l3",
-    "a1.tiempo.l4"
-  ],
+  "tags": {
+    "ru": ["часы", "календарь", "встреча", "сегодня", "завтра"],
+    "uk": ["годинник", "календар", "зустріч", "сьогодні", "завтра"],
+    "en": ["clock", "calendar", "meeting", "today", "tomorrow"]
+  },
+  "lessons": ["a1.tiempo.l1", "a1.tiempo.l2", "a1.tiempo.l3", "a1.tiempo.l4"],
   "scene": "a1.tiempo.scene",
   "draft": true,
   "draft_i18n": true

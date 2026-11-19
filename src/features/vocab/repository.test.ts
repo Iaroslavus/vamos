@@ -455,6 +455,49 @@ describe('vocab repository', () => {
     await storage.setItem(vocabStorageKey(USER), '{');
     await expect(repository.read(USER)).rejects.toThrow('Stored folders are unreadable');
   });
+
+  it('adds phrases to the topic folder and undoes that add', async () => {
+    const { repository } = setup();
+    const added = await repository.addTopicItems(USER, {
+      topicId: 'a1.restaurante',
+      name: 'В ресторане',
+      itemIds: ['restaurante.mesa', 'restaurante.reservar'],
+    });
+    const folder = added.snapshot.folders.find((entry) => entry.topicId === 'a1.restaurante');
+
+    expect(added.created).toBe(true);
+    expect(added.name).toBe('В ресторане');
+    expect(folder).toMatchObject({ kind: 'system', topicId: 'a1.restaurante' });
+    expect(topicItems(added.snapshot, folder?.id).sort()).toEqual([
+      'restaurante.mesa',
+      'restaurante.reservar',
+    ]);
+
+    const again = await repository.addTopicItems(USER, {
+      topicId: 'a1.restaurante',
+      name: 'В ресторане',
+      itemIds: ['restaurante.mesa', 'restaurante.carta'],
+    });
+    expect(again.created).toBe(false);
+    expect(again.addedIds).toEqual(['restaurante.carta']);
+
+    const kept = await repository.undoTopicItems(USER, {
+      folderId: again.folderId,
+      itemIds: again.addedIds,
+      dropFolder: false,
+    });
+    expect(topicItems(kept, again.folderId).sort()).toEqual([
+      'restaurante.mesa',
+      'restaurante.reservar',
+    ]);
+
+    const cleared = await repository.undoTopicItems(USER, {
+      folderId: added.folderId,
+      itemIds: added.addedIds,
+      dropFolder: true,
+    });
+    expect(cleared.folders.find((entry) => entry.topicId === 'a1.restaurante')).toBeUndefined();
+  });
 });
 
 function difficultItems(

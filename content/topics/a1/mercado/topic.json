@@ -25,12 +25,12 @@
       "en": "Ask if it is fresh"
     }
   ],
-  "lessons": [
-    "a1.mercado.l1",
-    "a1.mercado.l2",
-    "a1.mercado.l3",
-    "a1.mercado.l4"
-  ],
+  "tags": {
+    "ru": ["фрукты", "овощи", "килограмм", "рынок", "продукты"],
+    "uk": ["фрукти", "овочі", "кілограм", "ринок", "продукти"],
+    "en": ["fruit", "vegetables", "kilogram", "market", "groceries"]
+  },
+  "lessons": ["a1.mercado.l1", "a1.mercado.l2", "a1.mercado.l3", "a1.mercado.l4"],
   "scene": "a1.mercado.scene",
   "draft": true,
   "draft_i18n": true

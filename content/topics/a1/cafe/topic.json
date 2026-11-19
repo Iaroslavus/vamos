@@ -25,10 +25,12 @@
       "en": "Ask for the bill"
     }
   ],
-  "lessons": [
-    "a1.cafe.l1",
-    "a1.cafe.l2"
-  ],
+  "tags": {
+    "ru": ["кофе", "напиток", "бар", "счёт", "чай"],
+    "uk": ["кава", "напій", "бар", "рахунок", "чай"],
+    "en": ["coffee", "drink", "bar", "bill", "tea"]
+  },
+  "lessons": ["a1.cafe.l1", "a1.cafe.l2"],
   "scene": "a1.cafe.scene",
   "starter_day": 2,
   "draft": true,

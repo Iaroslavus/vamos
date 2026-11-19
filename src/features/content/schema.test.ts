@@ -57,6 +57,15 @@ describe('content v2 schema', () => {
     });
     expect(topic.draft).toBe(false);
     expect(topic.starter_day).toBe(2);
+    expect(topic.tags).toBeUndefined();
+
+    expect(
+      TopicSchema.parse({
+        ...topic,
+        tags: { ru: ['  кофе  ', 'счёт'], uk: ['кава'], en: ['coffee'] },
+      }).tags,
+    ).toEqual({ ru: ['кофе', 'счёт'], uk: ['кава'], en: ['coffee'] });
+    expect(TopicSchema.safeParse({ ...topic, tags: { ru: [''] } }).success).toBe(false);
 
     const lesson = LessonSchema.parse({
       id: 'a1.cafe.l1',

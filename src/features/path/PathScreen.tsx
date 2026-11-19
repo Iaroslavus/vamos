@@ -25,7 +25,6 @@ import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, space } from '@/theme/tokens';
 
 import { cityName } from './cities';
-import { CheatSheet } from './components/CheatSheet';
 import { PathCanvas } from './components/PathCanvas';
 import { PathCard } from './components/PathCard';
 import { PathHeader } from './components/PathHeader';
@@ -62,7 +61,6 @@ export function PathScreen() {
   const nodes = useMemo(() => buildPath(plan, { completedLessonIds }), [completedLessonIds, plan]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [moduleId, setModuleId] = useState<string | null>(null);
-  const [sheetOpen, setSheetOpen] = useState(false);
   const [topicJustFinished, setTopicJustFinished] = useState(false);
   const [jumpToken, setJumpToken] = useState(0);
   const [confetti, setConfetti] = useState(false);
@@ -138,7 +136,11 @@ export function PathScreen() {
         streakLabel={t('path.streakA11y', { count: streak })}
         reviewChip={t('path.reviewChip', { count: dueReviews })}
         reviewLabel={t('path.reviewA11y', { count: dueReviews })}
+        searchLabel={t('cheatsheet.searchPlaceholder')}
         onReview={() => router.push('/review')}
+        onSearch={() =>
+          router.push({ pathname: '/cheatsheet', params: { source: 'search', focus: '1' } })
+        }
       />
       {nodes.length === 0 || !selected ? (
         <View style={styles.empty}>
@@ -172,13 +174,12 @@ export function PathScreen() {
               if (!lessonId) return;
               router.push({ pathname: '/lesson/[id]', params: { id: lessonId } });
             }}
-            onCheatSheet={() => setSheetOpen(true)}
-          />
-          <CheatSheet
-            visible={sheetOpen}
-            title={titles.get(selected.id) ?? selected.id}
-            lessonIds={selected.lessonIds}
-            onClose={() => setSheetOpen(false)}
+            {...cheatSheetProps(selected.topicId, (id) =>
+              router.push({
+                pathname: '/cheatsheet',
+                params: { topicId: id, source: 'path' },
+              }),
+            )}
           />
         </>
       )}
@@ -194,6 +195,14 @@ export function PathScreen() {
       ) : null}
     </View>
   );
+}
+
+function cheatSheetProps(
+  topicId: string | null,
+  open: (topicId: string) => void,
+): { onCheatSheet: () => void } | Record<string, never> {
+  if (!topicId) return {};
+  return { onCheatSheet: () => open(topicId) };
 }
 
 function nodeTitles(

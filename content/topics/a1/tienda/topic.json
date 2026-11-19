@@ -25,10 +25,12 @@
       "en": "Pay by card"
     }
   ],
-  "lessons": [
-    "a1.tienda.l1",
-    "a1.tienda.l2"
-  ],
+  "tags": {
+    "ru": ["покупка", "пакет", "карта", "товар", "магазин"],
+    "uk": ["покупка", "пакет", "картка", "товар", "крамниця"],
+    "en": ["purchase", "bag", "card", "product", "shop"]
+  },
+  "lessons": ["a1.tienda.l1", "a1.tienda.l2"],
   "scene": "a1.tienda.scene",
   "starter_day": 4,
   "draft": true,

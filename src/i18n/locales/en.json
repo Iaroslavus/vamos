@@ -42,6 +42,28 @@
     "loadError": "We couldn't load the path. Check your connection and try again.",
     "empty": "Topics will show up here soon."
   },
+  "cheatsheet": {
+    "title": "Cheat sheet",
+    "searchPlaceholder": "Find a phrase: restaurant, days of the week…",
+    "searchLabel": "Find a phrase",
+    "clear": "Clear search",
+    "hint": "Need it right now? Tap a phrase and it plays…",
+    "chip": "{{title}} · {{level}}",
+    "study_one": "Study topic · {{count}} lesson",
+    "study_few": "Study topic · {{count}} lessons",
+    "study_many": "Study topic · {{count}} lessons",
+    "study_other": "Study topic · {{count}} lessons",
+    "addAll": "Add everything to the phrasebook",
+    "added": "Added to “{{folder}}”",
+    "already": "Already in “{{folder}}”",
+    "undo": "Undo",
+    "addFailed": "Couldn't add these phrases. Try again.",
+    "listen": "Listen",
+    "listenPhrase": "Listen: {{phrase}}",
+    "showLarge": "Show large: {{phrase}}",
+    "close": "Close",
+    "back": "Back"
+  },
   "hero": {
     "vamos": "¡Vamos!",
     "known": "¡Ya lo sé!",
