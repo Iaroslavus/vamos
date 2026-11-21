@@ -6,12 +6,13 @@ import {
   useWindowDimensions,
   type ScrollViewInstance,
 } from 'react-native';
-import Svg, { Path } from 'react-native-svg';
+import Svg, { Circle, Ellipse, Path } from 'react-native-svg';
 
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors } from '@/theme/tokens';
 
 import {
+  decorSpot,
   doneTrack,
   mapHeight,
   moduleAtScroll,
@@ -112,31 +113,60 @@ export function PathCanvas({
       <View style={{ height, width }}>
         <View pointerEvents="none" style={StyleSheet.absoluteFill}>
           <Svg width={width} height={height}>
+            <Circle cx={50} cy={48} r={22} fill={colors.sun} />
+            <Circle
+              cx={50}
+              cy={48}
+              r={30}
+              fill="none"
+              stroke={colors.sun}
+              strokeWidth={3}
+              strokeDasharray="3 9"
+            />
+            {anchors.map((point, index) =>
+              index % 3 === 0 ? (
+                <Ellipse
+                  key={`hill-${index}`}
+                  cx={index % 2 === 0 ? 24 : width - 10}
+                  cy={point.y + 30}
+                  rx={86}
+                  ry={42}
+                  fill={colors.hill}
+                />
+              ) : null,
+            )}
             <Path
               d={track}
-              stroke={colors.borderStrong}
-              strokeWidth={10}
+              stroke={colors.road}
+              strokeWidth={26}
               fill="none"
               strokeLinecap="round"
             />
             {walked ? (
               <Path
                 d={walked}
-                stroke={colors.teal}
-                strokeWidth={10}
+                stroke={colors.roadDone}
+                strokeWidth={26}
                 fill="none"
                 strokeLinecap="round"
               />
             ) : null}
+            <Path
+              d={track}
+              stroke={colors.surface}
+              strokeWidth={3}
+              strokeDasharray="2 12"
+              fill="none"
+              strokeLinecap="round"
+            />
           </Svg>
         </View>
         {decorSpots(nodes).map((spot, motif) => {
-          const point = anchors[spot];
-          if (!point) return null;
-          const left = point.x > width / 2 ? point.x - 112 : point.x + 28;
-          return (
-            <PathDecor key={nodes[spot]?.moduleId} motif={motif} left={left} top={point.y - 28} />
-          );
+          const from = anchors[spot];
+          const to = anchors[spot + 1];
+          if (!from || !to) return null;
+          const { left, top } = decorSpot(from, to, width);
+          return <PathDecor key={`decor-${spot}`} motif={motif} left={left} top={top} />;
         })}
         {nodes.map((node, index) => {
           const point = anchors[index];
@@ -157,6 +187,7 @@ export function PathCanvas({
           <MapHero
             x={hero.x}
             y={hero.y}
+            width={width}
             line={line}
             reduceMotion={reduceMotion}
             jumpToken={jumpToken}
@@ -167,13 +198,14 @@ export function PathCanvas({
   );
 }
 
+/** One street piece at each module start and then every third step. */
 function decorSpots(nodes: readonly PathNode[]): number[] {
   const seen = new Set<string>();
   const spots: number[] = [];
   nodes.forEach((node, index) => {
-    if (seen.has(node.moduleId)) return;
+    const firstOfModule = !seen.has(node.moduleId);
     seen.add(node.moduleId);
-    spots.push(index);
+    if (firstOfModule || index % 3 === 1) spots.push(index);
   });
   return spots;
 }

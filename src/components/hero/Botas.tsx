@@ -1,51 +1,76 @@
 import Svg, { Circle, Ellipse, Path, Rect } from 'react-native-svg';
 
-import { colors } from '@/theme/tokens';
+import { colors, hero } from '@/theme/tokens';
 
 type BotasProps = {
   fur?: string;
+  furDark?: string;
   boots?: string;
+  bootsDark?: string;
   scarf?: string;
-  width?: number;
-  height?: number;
+  /** Width in pt; height keeps the 64×78 proportions. */
+  size?: number;
 };
 
-/** Boot-wearing mascot. Fur, boots, and scarf come from the caller so the palette stays in tokens. */
+export const BOTAS_WIDTH = 64;
+export const BOTAS_HEIGHT = 78;
+
+/**
+ * Botas — a grey cat in coral boots with a saffron scarf and a teal backpack.
+ * Drawn from the «v3 · Путь» board; palette lives in `hero` tokens.
+ */
 export function Botas({
-  fur = colors.saffron,
-  boots = colors.coral,
-  scarf = colors.teal,
-  width = 76,
-  height = 92,
+  fur = hero.fur,
+  furDark = hero.furDark,
+  boots = hero.boots,
+  bootsDark = hero.bootsDark,
+  scarf = hero.scarf,
+  size = BOTAS_WIDTH,
 }: BotasProps) {
+  const height = (size * BOTAS_HEIGHT) / BOTAS_WIDTH;
   return (
-    <Svg width={width} height={height} viewBox="0 0 76 92">
-      <Ellipse cx={16} cy={58} rx={8} ry={5} fill={fur} />
-      <Ellipse cx={38} cy={58} rx={20} ry={18} fill={fur} />
-      <Path d="M24 50c2 8 22 8 26 0" fill={scarf} />
-      <Rect x={22} y={48} width={30} height={8} rx={4} fill={scarf} />
-      <Path d="M48 52c8 2 12 8 8 12" stroke={scarf} strokeWidth={4} strokeLinecap="round" />
-      <Circle cx={38} cy={32} r={16} fill={fur} />
-      <Ellipse cx={24} cy={20} rx={6} ry={8} fill={fur} />
-      <Ellipse cx={52} cy={20} rx={6} ry={8} fill={fur} />
-      <Ellipse cx={22} cy={22} rx={3} ry={4} fill={colors.surface} />
-      <Ellipse cx={54} cy={22} rx={3} ry={4} fill={colors.surface} />
-      <Circle cx={32} cy={32} r={2.4} fill={colors.ink} />
-      <Circle cx={44} cy={32} r={2.4} fill={colors.ink} />
-      <Ellipse cx={38} cy={38} rx={3} ry={2} fill={colors.ink} />
+    <Svg width={size} height={height} viewBox="0 0 64 78">
       <Path
-        d="M33 41c2 2 8 2 10 0"
-        stroke={colors.ink}
-        strokeWidth={1.6}
-        strokeLinecap="round"
+        d="M46 56 C60 54 62 40 54 34"
+        stroke={furDark}
+        strokeWidth={6}
         fill="none"
+        strokeLinecap="round"
       />
-      <Rect x={20} y={72} width={14} height={14} rx={4} fill={boots} />
-      <Rect x={42} y={72} width={14} height={14} rx={4} fill={boots} />
-      <Rect x={18} y={82} width={18} height={5} rx={2} fill={colors.ink} />
-      <Rect x={40} y={82} width={18} height={5} rx={2} fill={colors.ink} />
-      <Rect x={22} y={74} width={10} height={3} rx={1} fill={colors.surface} />
-      <Rect x={44} y={74} width={10} height={3} rx={1} fill={colors.surface} />
+      <Rect x={8} y={40} width={12} height={20} rx={4} fill={hero.backpack} />
+      <Ellipse cx={32} cy={52} rx={16} ry={15} fill={fur} />
+      <Ellipse cx={32} cy={55} rx={9} ry={10} fill={hero.belly} />
+      <Path d="M20 42 L26 60" stroke={hero.strap} strokeWidth={2.5} strokeLinecap="round" />
+      <Path d="M20 62 h10 v10 h4 a3 3 0 0 1 0 6 H20 z" fill={boots} />
+      <Rect x={19} y={61} width={12} height={4} rx={2} fill={bootsDark} />
+      <Path d="M34 62 h10 v10 h4 a3 3 0 0 1 0 6 H34 z" fill={boots} />
+      <Rect x={33} y={61} width={12} height={4} rx={2} fill={bootsDark} />
+      <Path d="M18 20 L17 5 L29 13 Z" fill={fur} />
+      <Path d="M46 20 L47 5 L35 13 Z" fill={fur} />
+      <Path d="M20 17 L19.5 9 L26 13 Z" fill={hero.ear} />
+      <Path d="M44 17 L44.5 9 L38 13 Z" fill={hero.ear} />
+      <Circle cx={32} cy={27} r={16} fill={fur} />
+      <Ellipse cx={32} cy={33} rx={8} ry={6} fill={hero.belly} />
+      <Ellipse cx={26} cy={26} rx={2.6} ry={3.4} fill={colors.ink} />
+      <Ellipse cx={38} cy={26} rx={2.6} ry={3.4} fill={colors.ink} />
+      <Circle cx={27} cy={25} r={0.9} fill={colors.surface} />
+      <Circle cx={39} cy={25} r={0.9} fill={colors.surface} />
+      <Path d="M30 30.5 h4 l-2 2.2 z" fill={colors.coral} />
+      <Path
+        d="M29.5 34 q2.5 2 2.5 0 q0 2 2.5 0"
+        stroke={colors.ink}
+        strokeWidth={1.2}
+        fill="none"
+        strokeLinecap="round"
+      />
+      <Path
+        d="M14 31 h7 M14 34 l7 -1 M50 31 h-7 M50 34 l-7 -1"
+        stroke={colors.ink}
+        strokeWidth={0.8}
+        strokeLinecap="round"
+        opacity={0.55}
+      />
+      <Path d="M19 39 Q32 45 45 39 L44 43 Q32 49 20 43 Z" fill={scarf} />
     </Svg>
   );
 }

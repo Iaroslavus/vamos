@@ -28,6 +28,27 @@ export const colors = {
   errorSoft: '#FFE1DA',
   errorInk: '#9E2F1B',
   hint: '#FFF0C9',
+
+  // карта «Путь»
+  road: '#EAD9BF',
+  roadDone: '#BFE3D3',
+  hill: '#E3EFDF',
+  sun: '#FFE08A',
+  windowGlass: '#DCE6FA',
+  wood: '#8A806F',
+} as const;
+
+// Герой Botas — собственная палитра персонажа
+export const hero = {
+  fur: '#5B5E73',
+  furDark: '#4B4E63',
+  belly: '#F4EDE2',
+  ear: '#F6B7A8',
+  boots: '#E8553A',
+  bootsDark: '#B83A24',
+  scarf: '#F2B530',
+  backpack: '#0E6B64',
+  strap: '#0A4F4A',
 } as const;
 
 export const fonts = {
@@ -65,5 +86,5 @@ export const motion = {
   progress: { duration: 900 },
 } as const;
 
-export const theme = { colors, fonts, type, space, radius, depth, motion };
+export const theme = { colors, hero, fonts, type, space, radius, depth, motion };
 export type Theme = typeof theme;

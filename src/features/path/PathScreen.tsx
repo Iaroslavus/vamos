@@ -119,22 +119,25 @@ export function PathScreen() {
     dailyGoalMinutes: profile.data?.dailyMinutes ?? DEFAULT_DAILY_GOAL_MINUTES,
   }).streak;
   const locale = contentLanguage();
+  const weekLabel = active ? t('path.weekLabel', { week: active.week }) : '';
+  const city = active ? cityName(active.moduleId, locale) : t('path.empty');
   const headerTitle = active
-    ? t('path.moduleTitle', {
-        level: active.level,
-        week: t('path.weekLabel', { week: active.week }),
-        city: cityName(active.moduleId, locale),
-      })
+    ? t('path.moduleTitle', { level: active.level, week: weekLabel, city })
     : t('path.empty');
+  const headerEyebrow = active
+    ? t('path.moduleEyebrow', { level: active.level, week: weekLabel }).toLocaleUpperCase(locale)
+    : '';
 
   return (
     <View style={styles.root}>
       <PathHeader
-        title={headerTitle}
+        eyebrow={headerEyebrow}
+        city={city}
+        a11yTitle={headerTitle}
         paddingTop={insets.top + space.sm}
         streak={streak}
         streakLabel={t('path.streakA11y', { count: streak })}
-        reviewChip={t('path.reviewChip', { count: dueReviews })}
+        reviewCount={dueReviews}
         reviewLabel={t('path.reviewA11y', { count: dueReviews })}
         searchLabel={t('cheatsheet.searchPlaceholder')}
         onReview={() => router.push('/review')}
@@ -164,6 +167,7 @@ export function PathScreen() {
           />
           <PathCard
             {...cardProps(selected, topics, t)}
+            eyebrowColor={eyebrowColor(selected)}
             lessonCount={selected.lessonIds.length}
             completedLessons={selected.completedLessons}
             action={pathAction(selected)}
@@ -221,6 +225,12 @@ function nodeTitles(
     titles.set(node.id, topic ? textOf(topic.title, language) : node.id);
   }
   return titles;
+}
+
+function eyebrowColor(node: PathNode): string {
+  if (node.status === 'current') return colors.coralDeep;
+  if (node.status === 'chest') return colors.saffronDeep;
+  return colors.teal;
 }
 
 function cardProps(

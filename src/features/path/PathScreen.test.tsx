@@ -120,7 +120,9 @@ describe('Path screen', () => {
     await renderPath();
 
     expect(await screen.findByText('Начать тему')).toBeTruthy();
-    expect(screen.getByText('A1 · Неделя 1 · Мадрид')).toBeTruthy();
+    expect(screen.getByLabelText('A1 · Неделя 1 · Мадрид')).toBeTruthy();
+    expect(screen.getByText('A1 · НЕДЕЛЯ 1')).toBeTruthy();
+    expect(screen.getByText('Мадрид')).toBeTruthy();
     expect(screen.getByText('День 1 · РЕКОМЕНДУЕМ')).toBeTruthy();
     expect(screen.getByLabelText('¡Hola! Знакомство, рекомендуем сейчас')).toBeTruthy();
     expect(screen.getByLabelText('В кафе, ещё не начато')).toBeTruthy();

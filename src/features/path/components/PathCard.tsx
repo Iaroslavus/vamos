@@ -9,6 +9,7 @@ import type { PathAction } from '../map';
 
 type PathCardProps = {
   eyebrow: string;
+  eyebrowColor: string;
   title: string;
   canDo: string;
   lessonCount: number;
@@ -22,6 +23,7 @@ type PathCardProps = {
 
 export function PathCard({
   eyebrow,
+  eyebrowColor,
   title,
   canDo,
   lessonCount,
@@ -40,57 +42,96 @@ export function PathCard({
 
   return (
     <View style={styles.card}>
-      <Text variant="label" color={colors.coral}>
-        {eyebrow}
+      <View style={styles.top}>
+        <Text variant="label" color={eyebrowColor} numberOfLines={1} style={styles.eyebrow}>
+          {eyebrow}
+        </Text>
+        {lessonCount > 0 ? (
+          <View style={styles.dots} accessibilityElementsHidden>
+            {Array.from({ length: lessonCount }, (_, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.dot,
+                  index < completedLessons ? styles.dotDone : null,
+                  action === 'continue' && index === completedLessons ? styles.dotNext : null,
+                ]}
+              />
+            ))}
+          </View>
+        ) : null}
+      </View>
+      <Text variant="h3" numberOfLines={2}>
+        {title}
       </Text>
-      <Text variant="h3">{title}</Text>
       {canDo ? (
-        <Text variant="body" color={colors.inkMuted} numberOfLines={2}>
+        <Text variant="caption" color={colors.inkMuted} numberOfLines={2}>
           {canDo}
         </Text>
       ) : null}
-      {lessonCount > 0 ? (
-        <View style={styles.dots} accessibilityElementsHidden>
-          {Array.from({ length: lessonCount }, (_, index) => (
-            <View
-              key={index}
-              style={[
-                styles.dot,
-                index < completedLessons ? styles.dotDone : null,
-                index === completedLessons && index < lessonCount ? styles.dotNext : null,
-              ]}
-            />
-          ))}
-        </View>
-      ) : null}
-      <Button title={primary} disabled={primaryDisabled} onPress={onPrimary} />
-      {onCheatSheet ? (
-        <Button title={t('path.cheatsheet')} variant="secondary" onPress={onCheatSheet} />
-      ) : null}
+      <View style={styles.actions}>
+        <Button
+          title={primary}
+          variant={action === 'continue' ? 'primary' : 'success'}
+          disabled={primaryDisabled}
+          onPress={onPrimary}
+          style={styles.primary}
+        />
+        {onCheatSheet ? (
+          <Button
+            title={t('path.cheatsheet')}
+            variant="secondary"
+            onPress={onCheatSheet}
+            style={styles.secondary}
+          />
+        ) : null}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    gap: space.sm,
-    marginHorizontal: space.lg,
+    gap: space.xs + 2,
+    marginHorizontal: space.md,
     marginBottom: space.md,
-    padding: space.lg,
-    borderRadius: radius.xl,
-    borderWidth: 1,
-    borderColor: colors.border,
+    paddingHorizontal: space.lg + 2,
+    paddingVertical: space.lg,
+    borderRadius: 28,
     backgroundColor: colors.surface,
+    shadowColor: colors.border,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 2,
+  },
+  top: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.sm,
+  },
+  eyebrow: {
+    flex: 1,
+  },
+  actions: {
+    flexDirection: 'row',
+    gap: space.sm + 2,
+    marginTop: space.sm,
+  },
+  primary: {
+    flex: 1,
+  },
+  secondary: {
+    flexShrink: 0,
+    minWidth: 128,
   },
   dots: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: space.sm,
-    paddingVertical: space.xs,
+    gap: 5,
   },
   dot: {
-    width: 10,
-    height: 10,
+    width: 18,
+    height: 6,
     borderRadius: radius.pill,
     backgroundColor: colors.surfaceSunken,
   },
