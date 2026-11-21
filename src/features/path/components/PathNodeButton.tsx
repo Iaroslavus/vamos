@@ -10,11 +10,11 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
-import Svg, { Path, Rect } from 'react-native-svg';
+import Svg, { Path } from 'react-native-svg';
 
 import { Text } from '@/components/Text';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
-import { colors, depth, motion, space } from '@/theme/tokens';
+import { colors, depth, motion, radius, space } from '@/theme/tokens';
 
 import { nodeSize } from '../layout';
 import type { PathNode, PathNodeStatus } from '../map';
@@ -36,7 +36,7 @@ export function PathNodeButton({ node, title, x, y, selected, onPress }: PathNod
   const reduceMotion = useReduceMotion();
   const pulse = useSharedValue(1);
   const size = nodeSize(node.status);
-  const palette = facePalette(node.status, selected);
+  const palette = facePalette(node.status);
   const current = node.status === 'current';
 
   useEffect(() => {
@@ -107,6 +107,15 @@ export function PathNodeButton({ node, title, x, y, selected, onPress }: PathNod
             },
           ]}
         />
+        {selected ? (
+          <View
+            pointerEvents="none"
+            style={[
+              styles.selection,
+              { width: size + 14, height: size + 14, borderRadius: (size + 14) / 2 },
+            ]}
+          />
+        ) : null}
         <View
           style={[
             styles.face,
@@ -122,31 +131,41 @@ export function PathNodeButton({ node, title, x, y, selected, onPress }: PathNod
           <NodeIcon status={node.status} color={palette.icon} />
         </View>
       </Pressable>
-      <Text variant="caption" numberOfLines={2} style={styles.label}>
-        {title}
-      </Text>
+      <View style={[styles.pill, { backgroundColor: palette.pill }]}>
+        <Text variant="label" numberOfLines={2} color={palette.pillText} style={styles.label}>
+          {title}
+        </Text>
+      </View>
     </View>
   );
 }
 
 function NodeIcon({ status, color }: { status: PathNodeStatus; color: string }) {
-  if (status === 'done') return <Check color={color} size={28} strokeWidth={ICON_STROKE} />;
-  if (status === 'current') return <Star color={color} size={28} strokeWidth={ICON_STROKE} />;
-  if (status === 'open') return <Play color={color} size={24} strokeWidth={ICON_STROKE} />;
+  if (status === 'done') return <Check color={color} size={28} strokeWidth={3} />;
+  if (status === 'current')
+    return <Star color={color} fill={color} size={30} strokeWidth={ICON_STROKE} />;
+  if (status === 'open')
+    return <Play color={color} fill={color} size={22} strokeWidth={ICON_STROKE} />;
   return <ChestIcon />;
 }
 
 function ChestIcon() {
   return (
-    <Svg width={32} height={26} viewBox="0 0 32 26">
-      <Rect x={2} y={8} width={28} height={15} rx={3} fill={colors.saffronDeep} />
-      <Path d="M3 10h26c0-6-6-8-13-8S3 4 3 10z" fill={colors.inkOnDark} />
-      <Rect x={14} y={12} width={4} height={6} rx={1} fill={colors.ink} />
+    <Svg width={30} height={30} viewBox="0 0 24 24">
+      <Path d="M3 10a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v9H3z" fill={colors.hint} />
+      <Path
+        d="M3 10a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v9H3zM3 12h18M10 12v3h4v-3"
+        stroke={colors.saffronDeep}
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
     </Svg>
   );
 }
 
-function facePalette(status: PathNodeStatus, selected: boolean) {
+function facePalette(status: PathNodeStatus) {
   if (status === 'done') {
     return {
       face: colors.teal,
@@ -154,6 +173,8 @@ function facePalette(status: PathNodeStatus, selected: boolean) {
       icon: colors.inkOnDark,
       border: colors.teal,
       borderWidth: 0,
+      pill: colors.surface,
+      pillText: colors.tealDeep,
     };
   }
   if (status === 'current') {
@@ -163,23 +184,29 @@ function facePalette(status: PathNodeStatus, selected: boolean) {
       icon: colors.inkOnDark,
       border: colors.coral,
       borderWidth: 0,
+      pill: colors.coral,
+      pillText: colors.inkOnDark,
     };
   }
   if (status === 'chest') {
     return {
-      face: colors.saffron,
-      sole: colors.saffronDeep,
-      icon: colors.ink,
-      border: colors.saffronDeep,
+      face: colors.saffronSoft,
+      sole: colors.saffron,
+      icon: colors.saffronDeep,
+      border: colors.saffronSoft,
       borderWidth: 0,
+      pill: colors.surface,
+      pillText: colors.saffronDeep,
     };
   }
   return {
     face: colors.surface,
     sole: colors.borderStrong,
-    icon: colors.coral,
-    border: selected ? colors.coral : colors.borderStrong,
-    borderWidth: 2,
+    icon: colors.teal,
+    border: colors.roadDone,
+    borderWidth: 3,
+    pill: colors.surface,
+    pillText: colors.ink,
   };
 }
 
@@ -218,9 +245,28 @@ const styles = StyleSheet.create({
   pressed: {
     transform: [{ translateY: depth.node }],
   },
+  selection: {
+    position: 'absolute',
+    top: -7,
+    left: -7,
+    borderWidth: 3,
+    borderColor: colors.ink,
+  },
+  pill: {
+    marginTop: space.sm - 2,
+    maxWidth: 112,
+    paddingHorizontal: space.sm + 1,
+    paddingVertical: 3,
+    borderRadius: radius.sm - 2,
+    shadowColor: colors.border,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 1,
+  },
   label: {
-    marginTop: space.xs,
     textAlign: 'center',
-    color: colors.ink,
+    fontSize: 12,
+    letterSpacing: 0,
   },
 });

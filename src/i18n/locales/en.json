@@ -9,8 +9,8 @@
   "path": {
     "tab": "Path",
     "moduleTitle": "{{level}} · {{week}} · {{city}}",
+    "moduleEyebrow": "{{level}} · {{week}}",
     "weekLabel": "Week {{week}}",
-    "reviewChip": "↻ {{count}}",
     "reviewA11y": "Review {{count}}",
     "streakA11y": "Streak {{count}}",
     "nodeLabel": "{{title}}, {{status}}",

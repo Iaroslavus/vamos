@@ -1,17 +1,46 @@
 import type { PathNodeStatus } from './map';
 
-/** X slots repeat every six topics, from the left edge of the map. */
-export const X_PATTERN = [0.2, 0.58, 0.84, 0.62, 0.28, 0.72] as const;
+/**
+ * X slots repeat every six topics, as a share of (width − 48) from a 24 pt inset.
+ * Taken from the «v3 · Путь» board (390 pt wide): 96, 250, 300, 150, 80, 230.
+ */
+export const X_PATTERN = [0.21, 0.66, 0.81, 0.37, 0.16, 0.6] as const;
 
-export const NODE_STEP = 136;
-export const MAP_TOP = 88;
+export const NODE_STEP = 96;
+export const MAP_TOP = 120;
 export const MAP_BOTTOM = 72;
 export const WALK_MS = 700;
 
+export const HERO_BOX_WIDTH = 76;
+export const HERO_BOX_HEIGHT = 106;
+
 export function nodeSize(status: PathNodeStatus): number {
   if (status === 'current') return 74;
-  if (status === 'chest') return 68;
-  return 64;
+  if (status === 'chest') return 62;
+  if (status === 'done') return 60;
+  return 58;
+}
+
+/**
+ * Botas stands beside the node, never on it: to the right of nodes near the left edge,
+ * to the left otherwise. Feet sit a little below the node centre, on the road.
+ */
+export function heroBox(x: number, y: number, width: number): { left: number; top: number } {
+  const gap = 34;
+  const left = x < width * 0.4 ? x + gap : x - gap - HERO_BOX_WIDTH;
+  return { left, top: y + 18 - HERO_BOX_HEIGHT };
+}
+
+/** Decoration spot halfway to the next node, on the side away from the road. */
+export function decorSpot(
+  from: { x: number; y: number },
+  to: { x: number; y: number },
+  width: number,
+): { left: number; top: number } {
+  const midX = (from.x + to.x) / 2;
+  const midY = (from.y + to.y) / 2;
+  const left = midX < width / 2 ? width - 76 : 12;
+  return { left, top: midY - 32 };
 }
 
 export function mapHeight(count: number): number {

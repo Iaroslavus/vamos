@@ -9,8 +9,8 @@
   "path": {
     "tab": "Шлях",
     "moduleTitle": "{{level}} · {{week}} · {{city}}",
+    "moduleEyebrow": "{{level}} · {{week}}",
     "weekLabel": "Тиждень {{week}}",
-    "reviewChip": "↻ {{count}}",
     "reviewA11y": "Повторити {{count}}",
     "streakA11y": "Серія {{count}}",
     "nodeLabel": "{{title}}, {{status}}",
