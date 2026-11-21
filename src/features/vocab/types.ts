@@ -60,6 +60,26 @@ export type FolderDraft = {
   color: FolderColor;
 };
 
+export type TopicFolderInput = {
+  topicId: string;
+  name: string;
+  itemIds: readonly string[];
+};
+
+export type TopicFolderAdd = {
+  snapshot: FolderSnapshot;
+  folderId: string;
+  name: string;
+  addedIds: string[];
+  created: boolean;
+};
+
+export type TopicFolderUndo = {
+  folderId: string;
+  itemIds: readonly string[];
+  dropFolder: boolean;
+};
+
 export type OutboxKind =
   'folder' | 'folder-delete' | 'item-add' | 'item-remove' | 'user-item' | 'user-item-delete';
 
@@ -122,6 +142,13 @@ export type VocabRepository = {
   /** Removes a custom folder and the phrases saved only in it. System folders stay. */
   deleteFolder(userId: string, folderId: string): Promise<FolderSnapshot>;
   addItems(userId: string, folderId: string, itemIds: readonly string[]): Promise<FolderSnapshot>;
+  /**
+   * Puts every phrase of a topic into that topic's folder.
+   * Creates the folder the first time, using the same shape as a finished topic.
+   */
+  addTopicItems(userId: string, input: TopicFolderInput): Promise<TopicFolderAdd>;
+  /** Removes phrases added by `addTopicItems`. Drops the folder when this call created it. */
+  undoTopicItems(userId: string, input: TopicFolderUndo): Promise<FolderSnapshot>;
   /**
    * Puts phrases into Сложные and keeps them there after the automatic rebuild.
    * Saves on the device first, then flushes when the network is back.

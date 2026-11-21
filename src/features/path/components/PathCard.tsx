@@ -17,7 +17,7 @@ type PathCardProps = {
   lessonNumber: number;
   primaryDisabled: boolean;
   onPrimary: () => void;
-  onCheatSheet: () => void;
+  onCheatSheet?: () => void;
 };
 
 export function PathCard({
@@ -64,7 +64,9 @@ export function PathCard({
         </View>
       ) : null}
       <Button title={primary} disabled={primaryDisabled} onPress={onPrimary} />
-      <Button title={t('path.cheatsheet')} variant="secondary" onPress={onCheatSheet} />
+      {onCheatSheet ? (
+        <Button title={t('path.cheatsheet')} variant="secondary" onPress={onCheatSheet} />
+      ) : null}
     </View>
   );
 }

@@ -143,6 +143,7 @@ function RootLayoutNav() {
       }}
     >
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="cheatsheet" options={{ headerShown: false }} />
       <Stack.Screen
         name="(lesson)"
         options={{ presentation: 'fullScreenModal', headerShown: false }}

@@ -25,10 +25,12 @@
       "en": "Ask «how much is it?»"
     }
   ],
-  "lessons": [
-    "a1.numbers.l1",
-    "a1.numbers.l2"
-  ],
+  "tags": {
+    "ru": ["цена", "сколько", "цифры", "деньги", "стоимость"],
+    "uk": ["ціна", "скільки", "цифри", "гроші", "вартість"],
+    "en": ["price", "how much", "digits", "money", "cost"]
+  },
+  "lessons": ["a1.numbers.l1", "a1.numbers.l2"],
   "scene": "a1.numbers.scene",
   "starter_day": 3,
   "draft": true,

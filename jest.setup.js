@@ -1,3 +1,7 @@
+jest.mock('expo-keep-awake', () => ({
+  useKeepAwake: () => undefined,
+}));
+
 jest.mock('lottie-react-native', () => 'LottieView');
 
 jest.mock('expo-localization', () => ({

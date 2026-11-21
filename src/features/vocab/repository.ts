@@ -13,6 +13,7 @@ import type {
   PersistedFolders,
   Scheduler,
   SystemKey,
+  TopicFolderAdd,
   UserItem,
   VocabRemote,
   VocabRepository,
@@ -446,6 +447,74 @@ export function createVocabRepository(deps: VocabRepositoryDeps): VocabRepositor
           const added = addItem(state, folderId, itemId, addedAt);
           state = added.state;
           changed = changed || added.changed;
+        }
+        if (changed) await save(userId, state);
+      });
+    },
+
+    addTopicItems(userId, input) {
+      const saved: { value: Omit<TopicFolderAdd, 'snapshot'> | null } = { value: null };
+      const snapshot = finish(userId, async () => {
+        const topicId = cleanItemId(input.topicId);
+        const name = parseFolderName(input.name);
+        if (!topicId || !name) throw new Error('Invalid topic folder');
+        const ids = uniqueItemIds(input.itemIds);
+        if (ids.length === 0) throw new Error('No phrases to save');
+
+        let state = await applyBases(userId);
+        let folder = findTopic(state, topicId);
+        let created = false;
+        if (!folder) {
+          folder = {
+            id: createId(),
+            name,
+            color: 'teal',
+            kind: 'system',
+            topicId,
+            systemKey: null,
+            createdAt: now(),
+          };
+          state = enqueue(putFolder(state, folder), {
+            kind: 'folder',
+            key: folder.id,
+            attempts: 0,
+          });
+          created = true;
+        }
+
+        const addedIds: string[] = [];
+        const addedAt = now();
+        for (const itemId of ids) {
+          const added = addItem(state, folder.id, itemId, addedAt);
+          state = added.state;
+          if (added.changed) addedIds.push(itemId);
+        }
+        if (created || addedIds.length > 0) await save(userId, state);
+        saved.value = { folderId: folder.id, name: folder.name, addedIds, created };
+      });
+      return snapshot.then((next) => {
+        const value = saved.value;
+        if (!value) throw new Error('Topic folder was not saved');
+        return { snapshot: next, ...value };
+      });
+    },
+
+    undoTopicItems(userId, input) {
+      return finish(userId, async () => {
+        let state = await load(userId);
+        const folder = state.folders[input.folderId];
+        if (!folder) return;
+        if (input.dropFolder) {
+          await save(userId, dropFolder(state, input.folderId));
+          return;
+        }
+        let changed = false;
+        for (const raw of input.itemIds) {
+          const itemId = cleanItemId(raw);
+          if (!itemId) continue;
+          const removed = removeItem(state, input.folderId, itemId);
+          state = removed.state;
+          changed = changed || removed.changed;
         }
         if (changed) await save(userId, state);
       });

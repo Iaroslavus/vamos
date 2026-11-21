@@ -25,10 +25,12 @@
       "en": "Mention an allergy"
     }
   ],
-  "lessons": [
-    "a1.restaurante.l1",
-    "a1.restaurante.l2"
-  ],
+  "tags": {
+    "ru": ["еда", "ужин", "официант", "меню"],
+    "uk": ["їжа", "вечеря", "офіціант", "меню"],
+    "en": ["food", "dinner", "waiter", "menu"]
+  },
+  "lessons": ["a1.restaurante.l1", "a1.restaurante.l2"],
   "scene": "a1.restaurante.scene",
   "starter_day": 6,
   "draft": true,

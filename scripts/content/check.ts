@@ -1,9 +1,11 @@
 /**
  * Content report for CI.
  * Prints units per lesson, phrase share, units still missing a storage clip,
- * missing translations, drafts, a warning when parts[].tr glue matches tr
+ * missing translations, drafts, optional topic search tags (`tags` {ru,uk,en}),
+ * a warning when parts[].tr glue matches tr
  * on a phrase whose word-for-word reading (literal) differs, and the
  * distance-1 neighbors generated for short words.
+ * A topic tag that is empty or the wrong shape fails this check through TopicSchema.
  * Exits with code 1 when a link does not resolve. Missing audio stays on device TTS.
  * Literal-part warnings do not fail the link check.
  */

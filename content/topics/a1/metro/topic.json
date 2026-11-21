@@ -25,12 +25,12 @@
       "en": "Understand a bus number"
     }
   ],
-  "lessons": [
-    "a1.metro.l1",
-    "a1.metro.l2",
-    "a1.metro.l3",
-    "a1.metro.l4"
-  ],
+  "tags": {
+    "ru": ["билет", "автобус", "станция", "выход", "транспорт"],
+    "uk": ["квиток", "автобус", "станція", "вихід", "транспорт"],
+    "en": ["ticket", "bus", "station", "exit", "transport"]
+  },
+  "lessons": ["a1.metro.l1", "a1.metro.l2", "a1.metro.l3", "a1.metro.l4"],
   "scene": "a1.metro.scene",
   "draft": true,
   "draft_i18n": true

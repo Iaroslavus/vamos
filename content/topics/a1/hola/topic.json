@@ -30,10 +30,12 @@
       "en": "Ask how someone is"
     }
   ],
-  "lessons": [
-    "a1.hola.l1",
-    "a1.hola.l2"
-  ],
+  "tags": {
+    "ru": ["привет", "знакомство", "имя", "спасибо", "здравствуйте"],
+    "uk": ["привіт", "знайомство", "ім'я", "дякую", "вітання"],
+    "en": ["hello", "introduction", "name", "thanks", "greeting"]
+  },
+  "lessons": ["a1.hola.l1", "a1.hola.l2"],
   "scene": "a1.hola.scene",
   "starter_day": 1,
   "draft": true,

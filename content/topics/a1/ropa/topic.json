@@ -25,12 +25,12 @@
       "en": "Say it doesn't fit"
     }
   ],
-  "lessons": [
-    "a1.ropa.l1",
-    "a1.ropa.l2",
-    "a1.ropa.l3",
-    "a1.ropa.l4"
-  ],
+  "tags": {
+    "ru": ["одежда", "размер", "цвет", "примерка", "футболка"],
+    "uk": ["одяг", "розмір", "колір", "примірка", "футболка"],
+    "en": ["clothes", "size", "colour", "fitting", "shirt"]
+  },
+  "lessons": ["a1.ropa.l1", "a1.ropa.l2", "a1.ropa.l3", "a1.ropa.l4"],
   "scene": "a1.ropa.scene",
   "draft": true,
   "draft_i18n": true
