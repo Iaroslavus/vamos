@@ -339,7 +339,16 @@ describe('tts plan', () => {
   });
 
   it('regenerates only slow clips when --only-slow --force is set, and skips a narrator', () => {
-    expect(parseTtsArgs(['--only-slow', '--force'])).toEqual({ onlySlow: true, force: true });
+    expect(parseTtsArgs(['--only-slow', '--force'])).toEqual({
+      onlySlow: true,
+      force: true,
+      only: [],
+    });
+    expect(parseTtsArgs(['--only', 'hola.encantado'])).toEqual({
+      onlySlow: false,
+      force: false,
+      only: ['hola.encantado'],
+    });
     expect(() => parseTtsArgs(['--all'])).toThrow('--all');
 
     const recorded = word('cafe.aqui');
@@ -517,6 +526,8 @@ function validDraft(): TopicDraft {
       id: 'a1.cafe.scene',
       topic: 'a1.cafe',
       title: fillLocales('У стойки'),
+      partner: fillLocales('Lucía'),
+      place: fillLocales('У стойки'),
       draft: true,
     }),
   };
@@ -534,9 +545,9 @@ function lesson(id: string, title: string, items: string[], speak: string[]) {
     dialog: {
       lines: [
         { who: 'npc', es: '¿Qué le pongo?', tr: fillLocales('Что вам?') },
-        { who: 'user', target, options: [target, other] },
+        { who: 'user', accept: [target], options: [target, other] },
         { who: 'npc', es: 'Aquí tiene.', tr: fillLocales('Вот.') },
-        { who: 'user', target: other, options: [other, target] },
+        { who: 'user', accept: [other], options: [other, target] },
       ],
     },
     draft: true,

@@ -33,11 +33,13 @@
       },
       {
         "who": "user",
-        "target": "camino.recto",
         "options": [
           "camino.recto",
           "camino.derecho",
           "camino.izquierda"
+        ],
+        "accept": [
+          "camino.recto"
         ]
       },
       {
@@ -51,11 +53,13 @@
       },
       {
         "who": "user",
-        "target": "camino.izquierda",
         "options": [
           "camino.izquierda",
           "camino.derecha",
           "camino.lejos"
+        ],
+        "accept": [
+          "camino.izquierda"
         ]
       },
       {
@@ -69,11 +73,13 @@
       },
       {
         "who": "user",
-        "target": "camino.cerca",
         "options": [
           "camino.cerca",
           "camino.lejos",
           "camino.primera"
+        ],
+        "accept": [
+          "camino.cerca"
         ]
       }
     ]

@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "supermercado.una_botella",
         "options": [
           "supermercado.una_botella",
           "supermercado.un_paquete",
           "supermercado.una_barra_de_pan"
+        ],
+        "accept": [
+          "supermercado.una_botella"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "supermercado.dos_litros",
         "options": [
           "supermercado.dos_litros",
           "supermercado.necesito",
           "supermercado.hay_oferta"
+        ],
+        "accept": [
+          "supermercado.dos_litros"
         ]
       }
     ]

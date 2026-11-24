@@ -6,6 +6,7 @@ import {
   type AudioSpeed,
 } from '@/features/audio/select';
 
+import { speakableText } from '../gender';
 import type { Item } from '../schema';
 
 export type { TtsHttpRequest as HttpRequest } from './ttsProviders';
@@ -14,6 +15,8 @@ export type PlannedClip = {
   itemId: string;
   text: string;
   partIndex: number | null;
+  /** Feminine form. Masculine uses the phrase tracks. */
+  form: 'f' | null;
   voice: AudioPreference;
   locale: 'es-ES' | 'es-MX';
   speed: AudioSpeed;
@@ -23,6 +26,7 @@ export type PlannedClip = {
 export type AudioPathUpdate = {
   id: string;
   partIndex: number | null;
+  form?: 'f' | null;
   voice: AudioPreference;
   speed: AudioSpeed;
   path: string;
@@ -43,15 +47,23 @@ export type PlanClipOptions = {
 export type TtsCliOptions = {
   onlySlow: boolean;
   force: boolean;
+  /** Item ids to synthesize. Empty means every item. */
+  only: string[];
 };
 
 /** `--only-slow` regenerates slow clips. `--force` replaces paths that already exist. */
 export function parseTtsArgs(argv: readonly string[]): TtsCliOptions {
-  const options: TtsCliOptions = { onlySlow: false, force: false };
-  for (const arg of argv) {
+  const options: TtsCliOptions = { onlySlow: false, force: false, only: [] };
+  for (let index = 0; index < argv.length; index += 1) {
+    const arg = argv[index] ?? '';
     if (arg === '--only-slow') options.onlySlow = true;
     else if (arg === '--force') options.force = true;
-    else throw new Error(`Неизвестный аргумент ${arg}`);
+    else if (arg === '--only') {
+      const id = argv[index + 1];
+      if (!id || id.startsWith('--')) throw new Error('После --only нужен id единицы');
+      options.only.push(id);
+      index += 1;
+    } else throw new Error(`Неизвестный аргумент ${arg}`);
   }
   return options;
 }
@@ -84,14 +96,15 @@ export function assertSlowLongerThanNormal(
 /** `items/<level>/<slug>/<name>[.pN].<es|mx>.<normal|slow>.m4a` */
 export function audioObjectPath(
   item: Pick<Item, 'id' | 'level'>,
-  clip: { partIndex: number | null; voice: AudioPreference; speed: AudioSpeed },
+  clip: { partIndex: number | null; voice: AudioPreference; speed: AudioSpeed; form?: 'f' | null },
 ): string {
   const level = item.level.toLowerCase();
   const [slug, ...rest] = item.id.split('.');
   const name = rest.length > 0 ? rest.join('.') : item.id;
   const part = clip.partIndex === null ? '' : `.p${clip.partIndex}`;
+  const form = clip.form === 'f' ? '.f' : '';
   const voice = clip.voice === 'es' ? 'es' : 'mx';
-  return `items/${level}/${slug}/${name}${part}.${voice}.${clip.speed}.m4a`;
+  return `items/${level}/${slug}/${name}${part}${form}.${voice}.${clip.speed}.m4a`;
 }
 
 /**
@@ -102,24 +115,37 @@ export function planItemClips(item: Item, options: PlanClipOptions = {}): Planne
   if (item.audio.source === 'human') return [];
   const planned: PlannedClip[] = [];
   const voices = voicesForVariant(item.variant);
-  const slots: { partIndex: number | null; text: string }[] = [
-    { partIndex: null, text: item.es },
-    ...item.parts.map((part, index) => ({ partIndex: index, text: part.es })),
+  const slots: { partIndex: number | null; form: 'f' | null; text: string }[] = [
+    { partIndex: null, form: null, text: speakableText(item.forms?.m.es ?? item.es) },
+    ...(item.forms
+      ? [{ partIndex: null, form: 'f' as const, text: speakableText(item.forms.f.es) }]
+      : []),
+    ...item.parts.map((part, index) => ({
+      partIndex: index,
+      form: null as 'f' | null,
+      text: speakableText(part.es),
+    })),
   ];
   const speeds = options.onlySlow ? (['slow'] as const) : SPEEDS;
   for (const slot of slots) {
     for (const voice of voices) {
       for (const speed of speeds) {
-        const existing = existingPath(item, slot.partIndex, voice, speed);
+        const existing = existingPath(item, slot.partIndex, voice, speed, slot.form);
         if (!options.force && isStoredAudioPath(existing)) continue;
         planned.push({
           itemId: item.id,
           text: slot.text,
           partIndex: slot.partIndex,
+          form: slot.form,
           voice,
           locale: voice === 'es' ? 'es-ES' : 'es-MX',
           speed,
-          objectPath: audioObjectPath(item, { partIndex: slot.partIndex, voice, speed }),
+          objectPath: audioObjectPath(item, {
+            partIndex: slot.partIndex,
+            voice,
+            speed,
+            form: slot.form,
+          }),
         });
       }
     }
@@ -134,7 +160,7 @@ export function clipPath(
   voice: AudioPreference,
   speed: AudioSpeed,
 ): string | null {
-  return existingPath(item, partIndex, voice, speed);
+  return existingPath(item, partIndex, voice, speed, null);
 }
 
 function existingPath(
@@ -142,8 +168,14 @@ function existingPath(
   partIndex: number | null,
   voice: AudioPreference,
   speed: AudioSpeed,
+  form: 'f' | null,
 ): string | null {
-  const track = partIndex === null ? item.audio : item.audio.parts[partIndex];
+  const track =
+    form === 'f'
+      ? item.audio.forms?.f
+      : partIndex === null
+        ? item.audio
+        : item.audio.parts[partIndex];
   if (!track) return null;
   const pair = speed === 'slow' ? track.slow : track;
   return pair[voice] ?? null;
@@ -240,8 +272,19 @@ export function applyAudioPaths(raw: unknown, updates: readonly AudioPathUpdate[
         : {};
     if (audio.source === 'human') return row;
     const phrase = asTrack(audio);
+    const feminine = asTrack(
+      audio.forms && typeof audio.forms === 'object'
+        ? (audio.forms as Record<string, unknown>).f
+        : null,
+    );
     const parts = Array.isArray(audio.parts) ? audio.parts.map((part) => asTrack(part)) : [];
+    let wroteFeminine = Boolean(audio.forms);
     for (const update of list) {
+      if (update.form === 'f') {
+        writeClip(feminine, update.voice, update.speed, update.path);
+        wroteFeminine = true;
+        continue;
+      }
       if (update.partIndex === null) {
         writeClip(phrase, update.voice, update.speed, update.path);
         continue;
@@ -258,6 +301,7 @@ export function applyAudioPaths(raw: unknown, updates: readonly AudioPathUpdate[
         latam: phrase.latam,
         slow: phrase.slow,
         parts,
+        ...(wroteFeminine ? { forms: { f: feminine } } : {}),
         features: asPath(audio.features),
       },
     };

@@ -63,7 +63,7 @@ describe('topic catalog', () => {
       completedLessons: 0,
       progress: 0,
     });
-    expect(sections[0]?.topics[1]).toMatchObject({ lessonCount: 2, phraseCount: 14 });
+    expect(sections[0]?.topics[1]).toMatchObject({ lessonCount: 4, phraseCount: 25 });
     expect(sections[1]?.topics.map((item) => item.id)).toEqual([
       'a1.cafe',
       'a1.restaurante',

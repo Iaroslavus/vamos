@@ -29,6 +29,8 @@ export type SpeakPracticeProps = {
   mode: SpeakPracticeMode;
   confusables?: readonly string[];
   options?: readonly SpeechOption[];
+  /** Gendered lines. Each one has its own sound button, and any of them counts. */
+  lines?: readonly { es: string; audio?: string | null }[];
   onMatch?: (optionId: string) => void;
   onSkip?: () => void;
   /** `passed` is false when the learner moves on after a miss. `score` is 0–100. */
@@ -53,6 +55,7 @@ export function SpeakPractice({
   mode,
   confusables = [],
   options,
+  lines,
   onMatch,
   onSkip,
   onContinue,
@@ -66,10 +69,14 @@ export function SpeakPractice({
   const { t } = useTranslation();
   const sampleDurationMs = useSampleDuration(audio);
   const references = useUnitFeatures(featuresPath);
+  const spokenOptions =
+    lines && lines.length > 1
+      ? lines.map((line, index) => ({ id: String(index), es: line.es }))
+      : options;
   const practice = useSpeakPractice({
     phrase,
     mode,
-    options,
+    options: spokenOptions,
     confusables,
     onMatch,
     attemptsUsed,
@@ -98,7 +105,24 @@ export function SpeakPractice({
   return (
     <View style={[styles.root, mode === 'step' ? styles.step : null]}>
       <View style={styles.top}>
-        {mode === 'dialog' || phrase.length === 0 ? null : (
+        {mode === 'dialog' || phrase.length === 0 ? null : lines && lines.length > 1 ? (
+          lines.map((line) => (
+            <View key={line.es} style={styles.phraseRow}>
+              <View style={styles.phrase}>
+                <ColoredPhrase phrase={line.es} color={scoreColor} />
+              </View>
+              <IconButton
+                accessibilityLabel={t('speech.listenSample')}
+                onPress={() => {
+                  practice.cancelRecording();
+                  void playLessonAudio({ audio: line.audio, text: line.es });
+                }}
+              >
+                <Volume2 size={22} color={colors.ink} strokeWidth={2.2} />
+              </IconButton>
+            </View>
+          ))
+        ) : (
           <View style={styles.phraseRow}>
             <View style={styles.phrase}>
               <ColoredPhrase phrase={phrase} color={scoreColor} />

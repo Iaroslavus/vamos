@@ -8,7 +8,7 @@ import Animated from 'react-native-reanimated';
 
 import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
-import { displayText } from '@/features/content/displayText';
+import { displayEs, displayText } from '@/features/content/displayText';
 import { colors, radius, space } from '@/theme/tokens';
 
 import { useFolderRowSwipe } from '../hooks/useFolderRowSwipe';
@@ -38,7 +38,7 @@ export function FolderItemRow({
 }: FolderItemRowProps) {
   const { t } = useTranslation();
   const [menu, setMenu] = useState(false);
-  const shownEs = displayText(es);
+  const shownEs = displayEs(es);
   const shownRu = displayText(ru);
   const { gesture, cardStyle, close } = useFolderRowSwipe(editable);
   const phrase = shownRu ? `${shownEs}, ${shownRu}` : shownEs;

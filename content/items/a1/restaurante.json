@@ -95,16 +95,16 @@
     "type": "phrase",
     "es": "Quisiera reservar",
     "tr": {
-      "ru": "Я бы хотел(а) забронировать",
-      "uk": "Я б хотів(ла) забронювати",
+      "ru": "Я бы хотел забронировать",
+      "uk": "Я б хотів забронювати",
       "en": "I would like to book"
     },
     "parts": [
       {
         "es": "Quisiera",
         "tr": {
-          "ru": "я бы хотел(а)",
-          "uk": "я б хотів(ла)",
+          "ru": "я бы хотел",
+          "uk": "я б хотів",
           "en": "I would like"
         }
       },
@@ -160,13 +160,42 @@
           }
         }
       ],
+      "forms": {
+        "f": {
+          "es": "items/a1/restaurante/reservar.f.es.normal.m4a",
+          "latam": "items/a1/restaurante/reservar.f.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/restaurante/reservar.f.es.slow.m4a",
+            "latam": "items/a1/restaurante/reservar.f.mx.slow.m4a"
+          }
+        }
+      },
       "features": "items/a1/restaurante/reservar.features.json"
     },
     "tags": [
       "restaurant"
     ],
     "draft": true,
-    "draft_i18n": true
+    "draft_i18n": true,
+    "literal": null,
+    "forms": {
+      "m": {
+        "es": "Quisiera reservar",
+        "tr": {
+          "ru": "Я бы хотел забронировать",
+          "uk": "Я б хотів забронювати",
+          "en": "I would like to book"
+        }
+      },
+      "f": {
+        "es": "Quisiera reservar",
+        "tr": {
+          "ru": "Я бы хотела забронировать",
+          "uk": "Я б хотіла забронювати",
+          "en": "I would like to book"
+        }
+      }
+    }
   },
   {
     "id": "restaurante.esta_noche",

@@ -5,7 +5,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
-import { displayText } from '@/features/content/displayText';
+import { displayEs, displayText } from '@/features/content/displayText';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, radius, space } from '@/theme/tokens';
 
@@ -24,7 +24,7 @@ type PhraseRowProps = {
 export function PhraseRow({ phrase, translation, playing, onPlay, onShow }: PhraseRowProps) {
   const { t } = useTranslation();
   const reduceMotion = useReduceMotion();
-  const shownPhrase = displayText(phrase);
+  const shownPhrase = displayEs(phrase);
   const shownTranslation = displayText(translation);
 
   return (

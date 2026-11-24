@@ -11,7 +11,7 @@ import Animated, {
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
 import { Text } from '@/components/Text';
-import { displayText } from '@/features/content/displayText';
+import { displayEs, displayText } from '@/features/content/displayText';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, motion, radius, space } from '@/theme/tokens';
 
@@ -107,7 +107,7 @@ export function DialogChoices({
                 return (
                   <Chip
                     key={option.id}
-                    label={displayText(option.es)}
+                    label={displayEs(option.es)}
                     tone={rejected ? 'error' : 'neutral'}
                     disabled={rejected}
                     accessibilityHint={longPressHint}

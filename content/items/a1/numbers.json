@@ -36,7 +36,8 @@
       "number"
     ],
     "draft": true,
-    "draft_i18n": true
+    "draft_i18n": true,
+    "display": "1"
   },
   {
     "id": "numbers.dos",
@@ -71,7 +72,8 @@
       "number"
     ],
     "draft": true,
-    "draft_i18n": true
+    "draft_i18n": true,
+    "display": "2"
   },
   {
     "id": "numbers.tres",
@@ -106,269 +108,8 @@
       "number"
     ],
     "draft": true,
-    "draft_i18n": true
-  },
-  {
-    "id": "numbers.cuatro_y_cinco",
-    "type": "phrase",
-    "es": "cuatro y cinco",
-    "tr": {
-      "ru": "четыре и пять",
-      "uk": "чотири і п'ять",
-      "en": "four and five"
-    },
-    "parts": [
-      {
-        "es": "cuatro",
-        "tr": {
-          "ru": "четыре",
-          "uk": "чотири",
-          "en": "four"
-        }
-      },
-      {
-        "es": "y",
-        "tr": {
-          "ru": "и",
-          "uk": "і",
-          "en": "and"
-        }
-      },
-      {
-        "es": "cinco",
-        "tr": {
-          "ru": "пять",
-          "uk": "п'ять",
-          "en": "five"
-        }
-      }
-    ],
-    "say": {
-      "ru": "куАтро и сИнко",
-      "uk": "куАтро і сІнко",
-      "en": "kuAtro i sInko"
-    },
-    "note": {
-      "ru": "y между числами читается как «и».",
-      "uk": "y між числами читається як «і».",
-      "en": "Between numbers, y is read as «and»."
-    },
-    "why": null,
-    "level": "A1",
-    "variant": "both",
-    "audio": {
-      "source": "tts",
-      "es": "items/a1/numbers/cuatro_y_cinco.es.normal.m4a",
-      "latam": "items/a1/numbers/cuatro_y_cinco.mx.normal.m4a",
-      "slow": {
-        "es": "items/a1/numbers/cuatro_y_cinco.es.slow.m4a",
-        "latam": "items/a1/numbers/cuatro_y_cinco.mx.slow.m4a"
-      },
-      "parts": [
-        {
-          "es": "items/a1/numbers/cuatro_y_cinco.p0.es.normal.m4a",
-          "latam": "items/a1/numbers/cuatro_y_cinco.p0.mx.normal.m4a",
-          "slow": {
-            "es": "items/a1/numbers/cuatro_y_cinco.p0.es.slow.m4a",
-            "latam": "items/a1/numbers/cuatro_y_cinco.p0.mx.slow.m4a"
-          }
-        },
-        {
-          "es": "items/a1/numbers/cuatro_y_cinco.p1.es.normal.m4a",
-          "latam": "items/a1/numbers/cuatro_y_cinco.p1.mx.normal.m4a",
-          "slow": {
-            "es": "items/a1/numbers/cuatro_y_cinco.p1.es.slow.m4a",
-            "latam": "items/a1/numbers/cuatro_y_cinco.p1.mx.slow.m4a"
-          }
-        },
-        {
-          "es": "items/a1/numbers/cuatro_y_cinco.p2.es.normal.m4a",
-          "latam": "items/a1/numbers/cuatro_y_cinco.p2.mx.normal.m4a",
-          "slow": {
-            "es": "items/a1/numbers/cuatro_y_cinco.p2.es.slow.m4a",
-            "latam": "items/a1/numbers/cuatro_y_cinco.p2.mx.slow.m4a"
-          }
-        }
-      ],
-      "features": "items/a1/numbers/cuatro_y_cinco.features.json"
-    },
-    "tags": [
-      "number"
-    ],
-    "draft": true,
-    "draft_i18n": true
-  },
-  {
-    "id": "numbers.seis_y_siete",
-    "type": "phrase",
-    "es": "seis y siete",
-    "tr": {
-      "ru": "шесть и семь",
-      "uk": "шість і сім",
-      "en": "six and seven"
-    },
-    "parts": [
-      {
-        "es": "seis",
-        "tr": {
-          "ru": "шесть",
-          "uk": "шість",
-          "en": "six"
-        }
-      },
-      {
-        "es": "y",
-        "tr": {
-          "ru": "и",
-          "uk": "і",
-          "en": "and"
-        }
-      },
-      {
-        "es": "siete",
-        "tr": {
-          "ru": "семь",
-          "uk": "сім",
-          "en": "seven"
-        }
-      }
-    ],
-    "say": {
-      "ru": "сейс и сьЕте",
-      "uk": "сейс і сьЕте",
-      "en": "seys i sEte"
-    },
-    "note": null,
-    "why": null,
-    "level": "A1",
-    "variant": "both",
-    "audio": {
-      "source": "tts",
-      "es": "items/a1/numbers/seis_y_siete.es.normal.m4a",
-      "latam": "items/a1/numbers/seis_y_siete.mx.normal.m4a",
-      "slow": {
-        "es": "items/a1/numbers/seis_y_siete.es.slow.m4a",
-        "latam": "items/a1/numbers/seis_y_siete.mx.slow.m4a"
-      },
-      "parts": [
-        {
-          "es": "items/a1/numbers/seis_y_siete.p0.es.normal.m4a",
-          "latam": "items/a1/numbers/seis_y_siete.p0.mx.normal.m4a",
-          "slow": {
-            "es": "items/a1/numbers/seis_y_siete.p0.es.slow.m4a",
-            "latam": "items/a1/numbers/seis_y_siete.p0.mx.slow.m4a"
-          }
-        },
-        {
-          "es": "items/a1/numbers/seis_y_siete.p1.es.normal.m4a",
-          "latam": "items/a1/numbers/seis_y_siete.p1.mx.normal.m4a",
-          "slow": {
-            "es": "items/a1/numbers/seis_y_siete.p1.es.slow.m4a",
-            "latam": "items/a1/numbers/seis_y_siete.p1.mx.slow.m4a"
-          }
-        },
-        {
-          "es": "items/a1/numbers/seis_y_siete.p2.es.normal.m4a",
-          "latam": "items/a1/numbers/seis_y_siete.p2.mx.normal.m4a",
-          "slow": {
-            "es": "items/a1/numbers/seis_y_siete.p2.es.slow.m4a",
-            "latam": "items/a1/numbers/seis_y_siete.p2.mx.slow.m4a"
-          }
-        }
-      ],
-      "features": "items/a1/numbers/seis_y_siete.features.json"
-    },
-    "tags": [
-      "number"
-    ],
-    "draft": true,
-    "draft_i18n": true
-  },
-  {
-    "id": "numbers.ocho_y_nueve",
-    "type": "phrase",
-    "es": "ocho y nueve",
-    "tr": {
-      "ru": "восемь и девять",
-      "uk": "вісім і дев'ять",
-      "en": "eight and nine"
-    },
-    "parts": [
-      {
-        "es": "ocho",
-        "tr": {
-          "ru": "восемь",
-          "uk": "вісім",
-          "en": "eight"
-        }
-      },
-      {
-        "es": "y",
-        "tr": {
-          "ru": "и",
-          "uk": "і",
-          "en": "and"
-        }
-      },
-      {
-        "es": "nueve",
-        "tr": {
-          "ru": "девять",
-          "uk": "дев'ять",
-          "en": "nine"
-        }
-      }
-    ],
-    "say": {
-      "ru": "Очо и нуЭве",
-      "uk": "Очо і нуЕве",
-      "en": "Ocho i nuEve"
-    },
-    "note": null,
-    "why": null,
-    "level": "A1",
-    "variant": "both",
-    "audio": {
-      "source": "tts",
-      "es": "items/a1/numbers/ocho_y_nueve.es.normal.m4a",
-      "latam": "items/a1/numbers/ocho_y_nueve.mx.normal.m4a",
-      "slow": {
-        "es": "items/a1/numbers/ocho_y_nueve.es.slow.m4a",
-        "latam": "items/a1/numbers/ocho_y_nueve.mx.slow.m4a"
-      },
-      "parts": [
-        {
-          "es": "items/a1/numbers/ocho_y_nueve.p0.es.normal.m4a",
-          "latam": "items/a1/numbers/ocho_y_nueve.p0.mx.normal.m4a",
-          "slow": {
-            "es": "items/a1/numbers/ocho_y_nueve.p0.es.slow.m4a",
-            "latam": "items/a1/numbers/ocho_y_nueve.p0.mx.slow.m4a"
-          }
-        },
-        {
-          "es": "items/a1/numbers/ocho_y_nueve.p1.es.normal.m4a",
-          "latam": "items/a1/numbers/ocho_y_nueve.p1.mx.normal.m4a",
-          "slow": {
-            "es": "items/a1/numbers/ocho_y_nueve.p1.es.slow.m4a",
-            "latam": "items/a1/numbers/ocho_y_nueve.p1.mx.slow.m4a"
-          }
-        },
-        {
-          "es": "items/a1/numbers/ocho_y_nueve.p2.es.normal.m4a",
-          "latam": "items/a1/numbers/ocho_y_nueve.p2.mx.normal.m4a",
-          "slow": {
-            "es": "items/a1/numbers/ocho_y_nueve.p2.es.slow.m4a",
-            "latam": "items/a1/numbers/ocho_y_nueve.p2.mx.slow.m4a"
-          }
-        }
-      ],
-      "features": "items/a1/numbers/ocho_y_nueve.features.json"
-    },
-    "tags": [
-      "number"
-    ],
-    "draft": true,
-    "draft_i18n": true
+    "draft_i18n": true,
+    "display": "3"
   },
   {
     "id": "numbers.numero_diez",
@@ -900,6 +641,856 @@
     "tags": [
       "price"
     ],
+    "draft": true,
+    "draft_i18n": true
+  },
+  {
+    "id": "numbers.cero",
+    "type": "word",
+    "es": "cero",
+    "tr": {
+      "ru": "ноль",
+      "uk": "нуль",
+      "en": "zero"
+    },
+    "literal": null,
+    "parts": [],
+    "say": {
+      "ru": "сЭро",
+      "uk": "сЭро",
+      "en": "сэро"
+    },
+    "note": null,
+    "why": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "source": "tts",
+      "es": "items/a1/numbers/cero.es.normal.m4a",
+      "latam": "items/a1/numbers/cero.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/cero.es.slow.m4a",
+        "latam": "items/a1/numbers/cero.mx.slow.m4a"
+      },
+      "parts": [],
+      "features": "items/a1/numbers/cero.features.json"
+    },
+    "tags": [
+      "number"
+    ],
+    "display": "0",
+    "confusables": [],
+    "draft": true,
+    "draft_i18n": true
+  },
+  {
+    "id": "numbers.cuatro",
+    "type": "word",
+    "es": "cuatro",
+    "tr": {
+      "ru": "четыре",
+      "uk": "чотири",
+      "en": "four"
+    },
+    "literal": null,
+    "parts": [],
+    "say": {
+      "ru": "куАтро",
+      "uk": "куАтро",
+      "en": "куатро"
+    },
+    "note": null,
+    "why": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "source": "tts",
+      "es": "items/a1/numbers/cuatro.es.normal.m4a",
+      "latam": "items/a1/numbers/cuatro.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/cuatro.es.slow.m4a",
+        "latam": "items/a1/numbers/cuatro.mx.slow.m4a"
+      },
+      "parts": [],
+      "features": "items/a1/numbers/cuatro.features.json"
+    },
+    "tags": [
+      "number"
+    ],
+    "display": "4",
+    "confusables": [],
+    "draft": true,
+    "draft_i18n": true
+  },
+  {
+    "id": "numbers.cinco",
+    "type": "word",
+    "es": "cinco",
+    "tr": {
+      "ru": "пять",
+      "uk": "п'ять",
+      "en": "five"
+    },
+    "literal": null,
+    "parts": [],
+    "say": {
+      "ru": "сИнко",
+      "uk": "сИнко",
+      "en": "синко"
+    },
+    "note": null,
+    "why": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "source": "tts",
+      "es": "items/a1/numbers/cinco.es.normal.m4a",
+      "latam": "items/a1/numbers/cinco.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/cinco.es.slow.m4a",
+        "latam": "items/a1/numbers/cinco.mx.slow.m4a"
+      },
+      "parts": [],
+      "features": "items/a1/numbers/cinco.features.json"
+    },
+    "tags": [
+      "number"
+    ],
+    "display": "5",
+    "confusables": [],
+    "draft": true,
+    "draft_i18n": true
+  },
+  {
+    "id": "numbers.seis",
+    "type": "word",
+    "es": "seis",
+    "tr": {
+      "ru": "шесть",
+      "uk": "шість",
+      "en": "six"
+    },
+    "literal": null,
+    "parts": [],
+    "say": {
+      "ru": "сейс",
+      "uk": "сейс",
+      "en": "сейс"
+    },
+    "note": null,
+    "why": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "source": "tts",
+      "es": "items/a1/numbers/seis.es.normal.m4a",
+      "latam": "items/a1/numbers/seis.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/seis.es.slow.m4a",
+        "latam": "items/a1/numbers/seis.mx.slow.m4a"
+      },
+      "parts": [],
+      "features": "items/a1/numbers/seis.features.json"
+    },
+    "tags": [
+      "number"
+    ],
+    "display": "6",
+    "confusables": [],
+    "draft": true,
+    "draft_i18n": true
+  },
+  {
+    "id": "numbers.siete",
+    "type": "word",
+    "es": "siete",
+    "tr": {
+      "ru": "семь",
+      "uk": "сім",
+      "en": "seven"
+    },
+    "literal": null,
+    "parts": [],
+    "say": {
+      "ru": "сьЕте",
+      "uk": "сьЕте",
+      "en": "сьете"
+    },
+    "note": null,
+    "why": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "source": "tts",
+      "es": "items/a1/numbers/siete.es.normal.m4a",
+      "latam": "items/a1/numbers/siete.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/siete.es.slow.m4a",
+        "latam": "items/a1/numbers/siete.mx.slow.m4a"
+      },
+      "parts": [],
+      "features": "items/a1/numbers/siete.features.json"
+    },
+    "tags": [
+      "number"
+    ],
+    "display": "7",
+    "confusables": [],
+    "draft": true,
+    "draft_i18n": true
+  },
+  {
+    "id": "numbers.ocho",
+    "type": "word",
+    "es": "ocho",
+    "tr": {
+      "ru": "восемь",
+      "uk": "вісім",
+      "en": "eight"
+    },
+    "literal": null,
+    "parts": [],
+    "say": {
+      "ru": "Очо",
+      "uk": "Очо",
+      "en": "очо"
+    },
+    "note": null,
+    "why": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "source": "tts",
+      "es": "items/a1/numbers/ocho.es.normal.m4a",
+      "latam": "items/a1/numbers/ocho.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/ocho.es.slow.m4a",
+        "latam": "items/a1/numbers/ocho.mx.slow.m4a"
+      },
+      "parts": [],
+      "features": "items/a1/numbers/ocho.features.json"
+    },
+    "tags": [
+      "number"
+    ],
+    "display": "8",
+    "confusables": [],
+    "draft": true,
+    "draft_i18n": true
+  },
+  {
+    "id": "numbers.nueve",
+    "type": "word",
+    "es": "nueve",
+    "tr": {
+      "ru": "девять",
+      "uk": "дев'ять",
+      "en": "nine"
+    },
+    "literal": null,
+    "parts": [],
+    "say": {
+      "ru": "нуЭве",
+      "uk": "нуЭве",
+      "en": "нуэве"
+    },
+    "note": null,
+    "why": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "source": "tts",
+      "es": "items/a1/numbers/nueve.es.normal.m4a",
+      "latam": "items/a1/numbers/nueve.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/nueve.es.slow.m4a",
+        "latam": "items/a1/numbers/nueve.mx.slow.m4a"
+      },
+      "parts": [],
+      "features": "items/a1/numbers/nueve.features.json"
+    },
+    "tags": [
+      "number"
+    ],
+    "display": "9",
+    "confusables": [],
+    "draft": true,
+    "draft_i18n": true
+  },
+  {
+    "id": "numbers.diez",
+    "type": "word",
+    "es": "diez",
+    "tr": {
+      "ru": "десять",
+      "uk": "десять",
+      "en": "ten"
+    },
+    "literal": null,
+    "parts": [],
+    "say": {
+      "ru": "дьес",
+      "uk": "дьес",
+      "en": "дьес"
+    },
+    "note": null,
+    "why": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "source": "tts",
+      "es": "items/a1/numbers/diez.es.normal.m4a",
+      "latam": "items/a1/numbers/diez.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/diez.es.slow.m4a",
+        "latam": "items/a1/numbers/diez.mx.slow.m4a"
+      },
+      "parts": [],
+      "features": "items/a1/numbers/diez.features.json"
+    },
+    "tags": [
+      "number"
+    ],
+    "display": "10",
+    "confusables": [],
+    "draft": true,
+    "draft_i18n": true
+  },
+  {
+    "id": "numbers.cuantos",
+    "type": "word",
+    "es": "¿Cuántos?",
+    "tr": {
+      "ru": "Сколько?",
+      "uk": "Скільки?",
+      "en": "How many?"
+    },
+    "literal": null,
+    "parts": [],
+    "say": {
+      "ru": "куАнтос",
+      "uk": "куАнтос",
+      "en": "куантос"
+    },
+    "note": null,
+    "why": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "source": "tts",
+      "es": "items/a1/numbers/cuantos.es.normal.m4a",
+      "latam": "items/a1/numbers/cuantos.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/cuantos.es.slow.m4a",
+        "latam": "items/a1/numbers/cuantos.mx.slow.m4a"
+      },
+      "parts": [],
+      "features": "items/a1/numbers/cuantos.features.json"
+    },
+    "tags": [
+      "number"
+    ],
+    "confusables": [],
+    "draft": true,
+    "draft_i18n": true
+  },
+  {
+    "id": "numbers.dos_cafes",
+    "type": "phrase",
+    "es": "Dos cafés",
+    "tr": {
+      "ru": "Два кофе",
+      "uk": "Дві кави",
+      "en": "Two coffees"
+    },
+    "literal": null,
+    "parts": [
+      {
+        "es": "Dos",
+        "tr": {
+          "ru": "два",
+          "uk": "дві",
+          "en": "two"
+        }
+      },
+      {
+        "es": "cafés",
+        "tr": {
+          "ru": "кофе",
+          "uk": "кави",
+          "en": "coffees"
+        }
+      }
+    ],
+    "say": {
+      "ru": "дос кафЭс",
+      "uk": "дос кафЭс",
+      "en": "дос кафэс"
+    },
+    "note": null,
+    "why": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "source": "tts",
+      "es": "items/a1/numbers/dos_cafes.es.normal.m4a",
+      "latam": "items/a1/numbers/dos_cafes.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/dos_cafes.es.slow.m4a",
+        "latam": "items/a1/numbers/dos_cafes.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/numbers/dos_cafes.p0.es.normal.m4a",
+          "latam": "items/a1/numbers/dos_cafes.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/dos_cafes.p0.es.slow.m4a",
+            "latam": "items/a1/numbers/dos_cafes.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/dos_cafes.p1.es.normal.m4a",
+          "latam": "items/a1/numbers/dos_cafes.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/dos_cafes.p1.es.slow.m4a",
+            "latam": "items/a1/numbers/dos_cafes.p1.mx.slow.m4a"
+          }
+        }
+      ],
+      "features": "items/a1/numbers/dos_cafes.features.json"
+    },
+    "tags": [
+      "number"
+    ],
+    "confusables": [],
+    "draft": true,
+    "draft_i18n": true
+  },
+  {
+    "id": "numbers.cuantos_anos",
+    "type": "phrase",
+    "es": "¿Cuántos años tienes?",
+    "tr": {
+      "ru": "Сколько тебе лет?",
+      "uk": "Скільки тобі років?",
+      "en": "How old are you?"
+    },
+    "literal": null,
+    "parts": [
+      {
+        "es": "¿Cuántos",
+        "tr": {
+          "ru": "сколько",
+          "uk": "скільки",
+          "en": "how many"
+        }
+      },
+      {
+        "es": "años",
+        "tr": {
+          "ru": "лет",
+          "uk": "років",
+          "en": "years"
+        }
+      },
+      {
+        "es": "tienes?",
+        "tr": {
+          "ru": "тебе",
+          "uk": "тобі",
+          "en": "do you have"
+        }
+      }
+    ],
+    "say": {
+      "ru": "куАнтос Аньос тьЕнес",
+      "uk": "куАнтос Аньос тьЕнес",
+      "en": "куантос аньос тьенес"
+    },
+    "note": null,
+    "why": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "source": "tts",
+      "es": "items/a1/numbers/cuantos_anos.es.normal.m4a",
+      "latam": "items/a1/numbers/cuantos_anos.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/cuantos_anos.es.slow.m4a",
+        "latam": "items/a1/numbers/cuantos_anos.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/numbers/cuantos_anos.p0.es.normal.m4a",
+          "latam": "items/a1/numbers/cuantos_anos.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/cuantos_anos.p0.es.slow.m4a",
+            "latam": "items/a1/numbers/cuantos_anos.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/cuantos_anos.p1.es.normal.m4a",
+          "latam": "items/a1/numbers/cuantos_anos.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/cuantos_anos.p1.es.slow.m4a",
+            "latam": "items/a1/numbers/cuantos_anos.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/cuantos_anos.p2.es.normal.m4a",
+          "latam": "items/a1/numbers/cuantos_anos.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/cuantos_anos.p2.es.slow.m4a",
+            "latam": "items/a1/numbers/cuantos_anos.p2.mx.slow.m4a"
+          }
+        }
+      ],
+      "features": "items/a1/numbers/cuantos_anos.features.json"
+    },
+    "tags": [
+      "number"
+    ],
+    "confusables": [],
+    "draft": true,
+    "draft_i18n": true
+  },
+  {
+    "id": "numbers.tengo_treinta",
+    "type": "phrase",
+    "es": "Tengo treinta años",
+    "tr": {
+      "ru": "Мне тридцать лет",
+      "uk": "Мені тридцять років",
+      "en": "I am thirty"
+    },
+    "literal": null,
+    "parts": [
+      {
+        "es": "Tengo",
+        "tr": {
+          "ru": "мне",
+          "uk": "мені",
+          "en": "I have"
+        }
+      },
+      {
+        "es": "treinta",
+        "tr": {
+          "ru": "тридцать",
+          "uk": "тридцять",
+          "en": "thirty"
+        }
+      },
+      {
+        "es": "años",
+        "tr": {
+          "ru": "лет",
+          "uk": "років",
+          "en": "years"
+        }
+      }
+    ],
+    "say": {
+      "ru": "тЭнго трейнта Аньос",
+      "uk": "тЭнго трейнта Аньос",
+      "en": "тэнго трейнта аньос"
+    },
+    "note": null,
+    "why": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "source": "tts",
+      "es": "items/a1/numbers/tengo_treinta.es.normal.m4a",
+      "latam": "items/a1/numbers/tengo_treinta.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/tengo_treinta.es.slow.m4a",
+        "latam": "items/a1/numbers/tengo_treinta.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/numbers/tengo_treinta.p0.es.normal.m4a",
+          "latam": "items/a1/numbers/tengo_treinta.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/tengo_treinta.p0.es.slow.m4a",
+            "latam": "items/a1/numbers/tengo_treinta.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/tengo_treinta.p1.es.normal.m4a",
+          "latam": "items/a1/numbers/tengo_treinta.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/tengo_treinta.p1.es.slow.m4a",
+            "latam": "items/a1/numbers/tengo_treinta.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/tengo_treinta.p2.es.normal.m4a",
+          "latam": "items/a1/numbers/tengo_treinta.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/tengo_treinta.p2.es.slow.m4a",
+            "latam": "items/a1/numbers/tengo_treinta.p2.mx.slow.m4a"
+          }
+        }
+      ],
+      "features": "items/a1/numbers/tengo_treinta.features.json"
+    },
+    "tags": [
+      "number"
+    ],
+    "confusables": [],
+    "draft": true,
+    "draft_i18n": true
+  },
+  {
+    "id": "numbers.tengo_treinta_y_dos",
+    "type": "phrase",
+    "es": "Tengo treinta y dos años",
+    "tr": {
+      "ru": "Мне тридцать два года",
+      "uk": "Мені тридцять два роки",
+      "en": "I am thirty-two"
+    },
+    "literal": null,
+    "parts": [
+      {
+        "es": "Tengo",
+        "tr": {
+          "ru": "мне",
+          "uk": "мені",
+          "en": "I have"
+        }
+      },
+      {
+        "es": "treinta y dos",
+        "tr": {
+          "ru": "тридцать два",
+          "uk": "тридцять два",
+          "en": "thirty-two"
+        }
+      },
+      {
+        "es": "años",
+        "tr": {
+          "ru": "года",
+          "uk": "роки",
+          "en": "years"
+        }
+      }
+    ],
+    "say": {
+      "ru": "тЭнго трейнта и дос Аньос",
+      "uk": "тЭнго трейнта и дос Аньос",
+      "en": "тэнго трейнта и дос аньос"
+    },
+    "note": null,
+    "why": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "source": "tts",
+      "es": "items/a1/numbers/tengo_treinta_y_dos.es.normal.m4a",
+      "latam": "items/a1/numbers/tengo_treinta_y_dos.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/tengo_treinta_y_dos.es.slow.m4a",
+        "latam": "items/a1/numbers/tengo_treinta_y_dos.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/numbers/tengo_treinta_y_dos.p0.es.normal.m4a",
+          "latam": "items/a1/numbers/tengo_treinta_y_dos.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/tengo_treinta_y_dos.p0.es.slow.m4a",
+            "latam": "items/a1/numbers/tengo_treinta_y_dos.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/tengo_treinta_y_dos.p1.es.normal.m4a",
+          "latam": "items/a1/numbers/tengo_treinta_y_dos.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/tengo_treinta_y_dos.p1.es.slow.m4a",
+            "latam": "items/a1/numbers/tengo_treinta_y_dos.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/tengo_treinta_y_dos.p2.es.normal.m4a",
+          "latam": "items/a1/numbers/tengo_treinta_y_dos.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/tengo_treinta_y_dos.p2.es.slow.m4a",
+            "latam": "items/a1/numbers/tengo_treinta_y_dos.p2.mx.slow.m4a"
+          }
+        }
+      ],
+      "features": "items/a1/numbers/tengo_treinta_y_dos.features.json"
+    },
+    "tags": [
+      "number"
+    ],
+    "confusables": [],
+    "draft": true,
+    "draft_i18n": true
+  },
+  {
+    "id": "numbers.mi_numero",
+    "type": "phrase",
+    "es": "Mi número es…",
+    "tr": {
+      "ru": "Мой номер…",
+      "uk": "Мій номер…",
+      "en": "My number is…"
+    },
+    "literal": null,
+    "parts": [
+      {
+        "es": "Mi",
+        "tr": {
+          "ru": "мой",
+          "uk": "мій",
+          "en": "my"
+        }
+      },
+      {
+        "es": "número",
+        "tr": {
+          "ru": "номер",
+          "uk": "номер",
+          "en": "number"
+        }
+      },
+      {
+        "es": "es…",
+        "tr": {
+          "ru": "это…",
+          "uk": "це…",
+          "en": "is…"
+        }
+      }
+    ],
+    "say": {
+      "ru": "ми нУмеро эс",
+      "uk": "ми нУмеро эс",
+      "en": "ми нумеро эс"
+    },
+    "note": null,
+    "why": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "source": "tts",
+      "es": "items/a1/numbers/mi_numero.es.normal.m4a",
+      "latam": "items/a1/numbers/mi_numero.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/mi_numero.es.slow.m4a",
+        "latam": "items/a1/numbers/mi_numero.mx.slow.m4a"
+      },
+      "parts": [
+        {
+          "es": "items/a1/numbers/mi_numero.p0.es.normal.m4a",
+          "latam": "items/a1/numbers/mi_numero.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/mi_numero.p0.es.slow.m4a",
+            "latam": "items/a1/numbers/mi_numero.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/mi_numero.p1.es.normal.m4a",
+          "latam": "items/a1/numbers/mi_numero.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/mi_numero.p1.es.slow.m4a",
+            "latam": "items/a1/numbers/mi_numero.p1.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/numbers/mi_numero.p2.es.normal.m4a",
+          "latam": "items/a1/numbers/mi_numero.p2.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/numbers/mi_numero.p2.es.slow.m4a",
+            "latam": "items/a1/numbers/mi_numero.p2.mx.slow.m4a"
+          }
+        }
+      ],
+      "features": "items/a1/numbers/mi_numero.features.json"
+    },
+    "tags": [
+      "number"
+    ],
+    "confusables": [],
+    "draft": true,
+    "draft_i18n": true
+  },
+  {
+    "id": "numbers.cien",
+    "type": "word",
+    "es": "cien",
+    "tr": {
+      "ru": "сто",
+      "uk": "сто",
+      "en": "one hundred"
+    },
+    "literal": null,
+    "parts": [],
+    "say": {
+      "ru": "сьен",
+      "uk": "сьен",
+      "en": "сьен"
+    },
+    "note": null,
+    "why": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "source": "tts",
+      "es": "items/a1/numbers/cien.es.normal.m4a",
+      "latam": "items/a1/numbers/cien.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/cien.es.slow.m4a",
+        "latam": "items/a1/numbers/cien.mx.slow.m4a"
+      },
+      "parts": [],
+      "features": "items/a1/numbers/cien.features.json"
+    },
+    "tags": [
+      "number"
+    ],
+    "confusables": [],
+    "draft": true,
+    "draft_i18n": true
+  },
+  {
+    "id": "numbers.mil",
+    "type": "word",
+    "es": "mil",
+    "tr": {
+      "ru": "тысяча",
+      "uk": "тисяча",
+      "en": "one thousand"
+    },
+    "literal": null,
+    "parts": [],
+    "say": {
+      "ru": "миль",
+      "uk": "миль",
+      "en": "миль"
+    },
+    "note": null,
+    "why": null,
+    "level": "A1",
+    "variant": "both",
+    "audio": {
+      "source": "tts",
+      "es": "items/a1/numbers/mil.es.normal.m4a",
+      "latam": "items/a1/numbers/mil.mx.normal.m4a",
+      "slow": {
+        "es": "items/a1/numbers/mil.es.slow.m4a",
+        "latam": "items/a1/numbers/mil.mx.slow.m4a"
+      },
+      "parts": [],
+      "features": "items/a1/numbers/mil.features.json"
+    },
+    "tags": [
+      "number"
+    ],
+    "confusables": [],
     "draft": true,
     "draft_i18n": true
   }

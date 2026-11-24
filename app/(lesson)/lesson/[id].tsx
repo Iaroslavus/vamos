@@ -23,7 +23,11 @@ import { useAudioPreference } from '@/features/audio/preference';
 import { selectClip, type AudioPreference } from '@/features/audio/select';
 import { itemsForTopic } from '@/features/audio/topicAudio';
 import { playGradeSound } from '@/features/audio/sounds';
+import { displayEs } from '@/features/content/displayText';
+import { fallbackName, spokenLines } from '@/features/content/gender';
 import { getItem, getLesson } from '@/features/content/loader';
+import type { AddressForm } from '@/features/learner/profile';
+import { useLearnerProfile } from '@/features/learner/useLearnerProfile';
 import { contentLocale, textOf, type ContentLocale } from '@/features/content/text';
 import { AccentBar } from '@/features/lesson/components/AccentBar';
 import { type AnswerTextFieldHandle } from '@/features/lesson/components/AnswerTextField';
@@ -65,6 +69,9 @@ export default function LessonScreen() {
   const { t, i18n } = useTranslation();
   const language = contentLocale(i18n.language);
   const audioPreference = useAudioPreference();
+  const learner = useLearnerProfile();
+  const address = learner.data?.address ?? 'both';
+  const speakerName = fallbackName(learner.data?.name, address);
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const answerInputRef = useRef<AnswerTextFieldHandle>(null);
@@ -261,6 +268,8 @@ export default function LessonScreen() {
           total={intro.total}
           topicIcon={loaded.session.topicIcon}
           audioVariant={audioPreference}
+          address={address}
+          speakerName={speakerName}
           onNext={onSoftContinue}
         />
       ) : null}
@@ -270,13 +279,15 @@ export default function LessonScreen() {
           step={step}
           items={loaded.session.items}
           audioVariant={audioPreference}
+          speakerName={speakerName}
           onContinue={onSoftContinue}
         />
       ) : null}
 
       {surface === 'speak' && step?.type === 'speak_repeat' ? (
         <SpeakRepeatStep
-          promptEs={step.prompt_es}
+          promptEs={displaySpeak(step.prompt_es, speakerName)}
+          lines={speakLinesFor(step.itemIds[0], address, speakerName, audioPreference)}
           audio={clipForItem(step.itemIds[0], audioPreference) ?? step.audio}
           sayRu={speakHint(loaded.session, step.itemIds[0] ?? '', language)}
           parts={speakParts(loaded.session, step.itemIds[0] ?? '', language)}
@@ -387,6 +398,25 @@ function clipForItem(itemId: string | undefined, preference: AudioPreference): s
     return selectClip(getItem(itemId).audio, preference, 'normal');
   } catch {
     return null;
+  }
+}
+
+function displaySpeak(es: string, name: string): string {
+  return displayEs(es, name);
+}
+
+function speakLinesFor(
+  itemId: string | undefined,
+  address: AddressForm,
+  name: string,
+  preference: AudioPreference,
+) {
+  if (!itemId) return undefined;
+  try {
+    const lines = spokenLines(getItem(itemId), address, name, preference);
+    return lines.length > 1 ? lines : undefined;
+  } catch {
+    return undefined;
   }
 }
 

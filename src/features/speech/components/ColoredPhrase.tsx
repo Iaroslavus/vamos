@@ -1,8 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/Text';
-import { displayText } from '@/features/content/displayText';
-import { speechWords } from '@/features/speech/score';
+import { displayEs } from '@/features/content/displayText';
 import { space } from '@/theme/tokens';
 
 type ColoredPhraseProps = {
@@ -12,8 +11,8 @@ type ColoredPhraseProps = {
 
 /** The reference, one color for every word. */
 export function ColoredPhrase({ phrase, color }: ColoredPhraseProps) {
-  const shown = displayText(phrase);
-  const words = speechWords(shown);
+  const shown = displayEs(phrase);
+  const words = shown.split(/\s+/).filter((word) => word.length > 0);
 
   if (words.length === 0) {
     return (

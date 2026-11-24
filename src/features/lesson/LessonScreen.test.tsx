@@ -11,6 +11,9 @@ import { getLesson } from '@/features/content/loader';
 import type { DialogStep, LessonStep } from '@/features/lesson/generator';
 import { loadLessonSession, type LoadedLesson } from '@/features/lesson/session';
 import { DEFAULT_MAX_HEARTS, useLessonStore } from '@/features/lesson/store';
+import { LearnerProvider } from '@/features/learner/context';
+import { EMPTY_PROFILE } from '@/features/learner/profile';
+import type { LearnerRepository } from '@/features/learner/repository';
 import { ProgressProvider } from '@/features/progress/ProgressProvider';
 import type { ProgressRepository } from '@/features/progress/types';
 import { reviewRepository } from '@/features/review/defaultRepository';
@@ -65,6 +68,13 @@ jest.mock('@/features/review/defaultRepository', () => ({
   },
 }));
 
+function learnerRepository(): LearnerRepository {
+  return {
+    read: async () => EMPTY_PROFILE,
+    save: async () => EMPTY_PROFILE,
+  };
+}
+
 function repository(): ProgressRepository {
   return {
     readProgress: jest.fn(async () => ({ lessons: [], totalXp: 0, pending: 0 })),
@@ -92,7 +102,9 @@ function renderLesson(recordCompletion: ProgressRepository['recordCompletion']) 
           }}
         >
           <ProgressProvider repository={repo}>
-            <LessonScreen />
+            <LearnerProvider repository={learnerRepository()}>
+              <LessonScreen />
+            </LearnerProvider>
           </ProgressProvider>
         </SafeAreaProvider>
       </I18nextProvider>
@@ -186,7 +198,7 @@ function visibleDialogChoice(step: DialogStep, session: LoadedLesson): string | 
     const line = step.lines[index];
     if (!line || line.who !== 'user') continue;
     if (recorded.includes(`${step.id}:${index}`)) continue;
-    const target = session.items.find((item) => item.id === line.target);
+    const target = session.items.find((item) => item.id === line.accept[0]);
     if (!target) continue;
     const shown = displayText(target.es);
     if (screen.queryByText(shown)) return shown;

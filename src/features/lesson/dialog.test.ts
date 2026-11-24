@@ -44,7 +44,7 @@ const lines: PlayableDialogLine[] = resolveDialogLines(
     { who: 'npc', es: '¡Hola!', tr: fillLocales('Привет!') },
     {
       who: 'user',
-      target: 'hola.buenos_dias',
+      accept: ['hola.buenos_dias'],
       options: ['hola.buenos_dias', 'hola.gracias', 'hola.adios'],
     },
     { who: 'npc', es: '¿Un café?', tr: fillLocales('Кофе?') },
@@ -68,7 +68,7 @@ describe('dialog lines', () => {
   it('refuses an option that is not in the library', () => {
     expect(() =>
       resolveDialogLines(
-        [{ who: 'user', target: 'missing', options: ['missing', 'hola.gracias'] }],
+        [{ who: 'user', accept: ['missing'], options: ['missing', 'hola.gracias'] }],
         items,
       ),
     ).toThrow(/Unknown dialog item: missing/);

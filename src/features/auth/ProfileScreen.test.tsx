@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import { I18nextProvider } from 'react-i18next';
 import { Alert } from 'react-native';
@@ -6,6 +7,9 @@ import { Alert } from 'react-native';
 import ProfileScreen from '../../../app/(tabs)/profile';
 import { SessionProvider } from '@/features/auth/SessionProvider';
 import type { AuthGateway, AuthSession, AuthUser } from '@/features/auth/types';
+import { LearnerProvider } from '@/features/learner/context';
+import { EMPTY_PROFILE } from '@/features/learner/profile';
+import type { LearnerRepository } from '@/features/learner/repository';
 import { usePhraseBreakdownStore } from '@/features/settings/phraseBreakdownStore';
 import i18n from '@/i18n';
 import { activeUiLanguage } from '@/i18n/language';
@@ -91,13 +95,27 @@ function createAuth() {
   return auth;
 }
 
+function learnerRepository(): LearnerRepository {
+  return {
+    read: async () => EMPTY_PROFILE,
+    save: async () => EMPTY_PROFILE,
+  };
+}
+
 function renderProfile(auth: AuthGateway) {
+  const client = new QueryClient({
+    defaultOptions: { queries: { retry: false, gcTime: Infinity } },
+  });
   return render(
-    <I18nextProvider i18n={i18n}>
-      <SessionProvider auth={auth}>
-        <ProfileScreen />
-      </SessionProvider>
-    </I18nextProvider>,
+    <QueryClientProvider client={client}>
+      <I18nextProvider i18n={i18n}>
+        <SessionProvider auth={auth}>
+          <LearnerProvider repository={learnerRepository()}>
+            <ProfileScreen />
+          </LearnerProvider>
+        </SessionProvider>
+      </I18nextProvider>
+    </QueryClientProvider>,
   );
 }
 

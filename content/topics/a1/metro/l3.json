@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "metro.va_al_centro",
         "options": [
           "metro.va_al_centro",
           "metro.esta_parada",
           "metro.la_parada"
+        ],
+        "accept": [
+          "metro.va_al_centro"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "metro.numero_cinco",
         "options": [
           "metro.numero_cinco",
           "metro.el_autobus",
           "metro.el_bus"
+        ],
+        "accept": [
+          "metro.numero_cinco"
         ]
       }
     ]

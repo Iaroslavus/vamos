@@ -52,6 +52,7 @@ const named: LearnerProfile = {
   preferencesAsked: false,
   uiLanguage: null,
   spanishVariant: 'spain',
+  address: 'both',
 };
 
 function languageMemory(initial: UiLanguage | null = null): UiLanguageStorage & {
@@ -114,6 +115,7 @@ describe('createLearnerRepository', () => {
       preferencesAsked: true,
       uiLanguage: 'uk',
       spanishVariant: 'spain',
+      address: 'both',
     });
     expect(profileFromRemote(null)).toBeNull();
     expect(

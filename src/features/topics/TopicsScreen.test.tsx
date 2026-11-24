@@ -142,7 +142,7 @@ describe('TopicsScreen', () => {
       await screen.findByLabelText('¡Hola! Знакомство, 2 урока, 15 фраз, пройдено 0 из 2'),
     ).toBeTruthy();
     expect(screen.getByText('2 урока · 15 фраз')).toBeTruthy();
-    expect(screen.getByLabelText('Числа и цены, 2 урока, 14 фраз, пройдено 0 из 2')).toBeTruthy();
+    expect(screen.getByLabelText('Числа и цены, 4 урока, 25 фраз, пройдено 0 из 4')).toBeTruthy();
     expect(screen.getByLabelText('Уровень A1')).toBeSelected();
     expect(screen.queryByText('Темы этого уровня ещё готовятся.')).toBeNull();
 
@@ -198,7 +198,7 @@ describe('TopicsScreen', () => {
     expect(
       await screen.findByLabelText('¡Hola! Знакомство, 2 урока, 15 фраз, пройдено 1 из 2'),
     ).toBeTruthy();
-    expect(screen.getByLabelText('Числа и цены, 2 урока, 14 фраз, пройдено 0 из 2')).toBeTruthy();
+    expect(screen.getByLabelText('Числа и цены, 4 урока, 25 фраз, пройдено 0 из 4')).toBeTruthy();
     await flush();
   });
 });
@@ -260,13 +260,19 @@ describe('TopicScreen', () => {
     mockParams.id = 'a1.numbers';
     await renderWith(
       <TopicScreen />,
-      repository({ readProgress: async () => snapshot(['a1.numbers.l1', 'a1.numbers.l2']) }),
+      repository({
+        readProgress: async () =>
+          snapshot(['a1.numbers.l1', 'a1.numbers.l2', 'a1.numbers.l3', 'a1.numbers.l4']),
+      }),
     );
 
     expect(await screen.findByLabelText('Понять цену на слух, уже получается')).toBeTruthy();
     expect(screen.getByLabelText('Назвать количество, уже получается')).toBeTruthy();
     expect(screen.getByLabelText('Спросить «сколько стоит?», уже получается')).toBeTruthy();
-    expect(screen.getByLabelText('Числа 1–10, пройден')).toBeTruthy();
+    expect(screen.getByLabelText('Числа 1–5, пройден')).toBeTruthy();
+    expect(screen.getByLabelText('Числа 6–10, пройден')).toBeTruthy();
+    expect(screen.getByLabelText('Цены, пройден')).toBeTruthy();
+    expect(screen.getByLabelText('Возраст и телефон, пройден')).toBeTruthy();
     expect(screen.getByLabelText('Сколько это стоит?, сценка')).toBeTruthy();
     expect(screen.queryByText('Сценка · закрыта')).toBeNull();
     await flush();

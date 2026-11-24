@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "supermercado.la_leche",
         "options": [
           "supermercado.la_leche",
           "supermercado.el_pan",
           "supermercado.el_agua"
+        ],
+        "accept": [
+          "supermercado.la_leche"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "supermercado.el_pan",
         "options": [
           "supermercado.el_pan",
           "supermercado.el_queso",
           "supermercado.los_huevos"
+        ],
+        "accept": [
+          "supermercado.el_pan"
         ]
       }
     ]

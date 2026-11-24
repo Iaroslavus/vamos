@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "tienda.quiero_esto",
         "options": [
           "tienda.quiero_esto",
           "tienda.tiene_pan",
           "tienda.hay_leche"
+        ],
+        "accept": [
+          "tienda.quiero_esto"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "tienda.tiene_pan",
         "options": [
           "tienda.tiene_pan",
           "tienda.no_hay",
           "tienda.si_hay"
+        ],
+        "accept": [
+          "tienda.tiene_pan"
         ]
       },
       {
@@ -68,11 +72,13 @@
       },
       {
         "who": "user",
-        "target": "tienda.si_hay",
         "options": [
           "tienda.si_hay",
           "tienda.no_hay",
           "tienda.eso"
+        ],
+        "accept": [
+          "tienda.si_hay"
         ]
       }
     ]

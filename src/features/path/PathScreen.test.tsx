@@ -55,6 +55,7 @@ const LEARNER: LearnerProfile = {
   preferencesAsked: true,
   uiLanguage: null,
   spanishVariant: 'spain',
+  address: 'both',
 };
 
 function learnerRepository(): LearnerRepository {

@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "ropa.una_talla_menos",
         "options": [
           "ropa.una_talla_menos",
           "ropa.una_talla_mas",
           "ropa.grande"
+        ],
+        "accept": [
+          "ropa.una_talla_menos"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "ropa.me_queda",
         "options": [
           "ropa.me_queda",
           "ropa.la_talla",
           "ropa.el_talle"
+        ],
+        "accept": [
+          "ropa.me_queda"
         ]
       }
     ]

@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "tienda.una_bolsa",
         "options": [
           "tienda.una_bolsa",
           "tienda.puedo_pagar",
           "tienda.el_ticket"
+        ],
+        "accept": [
+          "tienda.una_bolsa"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "tienda.con_tarjeta",
         "options": [
           "tienda.con_tarjeta",
           "tienda.en_efectivo",
           "tienda.puedo_pagar"
+        ],
+        "accept": [
+          "tienda.con_tarjeta"
         ]
       },
       {
@@ -68,11 +72,13 @@
       },
       {
         "who": "user",
-        "target": "tienda.el_ticket",
         "options": [
           "tienda.el_ticket",
           "hola.gracias",
           "cafe.cuanto_es"
+        ],
+        "accept": [
+          "tienda.el_ticket"
         ]
       }
     ]

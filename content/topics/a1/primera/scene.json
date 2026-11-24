@@ -7,5 +7,15 @@
     "en": "A day in the city"
   },
   "draft": true,
-  "draft_i18n": true
+  "draft_i18n": true,
+  "partner": {
+    "ru": "Ана",
+    "uk": "Ана",
+    "en": "Ana"
+  },
+  "place": {
+    "ru": "День в городе",
+    "uk": "День у місті",
+    "en": "A day in the city"
+  }
 }

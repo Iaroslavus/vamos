@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "cafe.cafe_con_leche",
         "options": [
           "cafe.cafe_con_leche",
           "cafe.un_te",
           "cafe.agua"
+        ],
+        "accept": [
+          "cafe.cafe_con_leche"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "cafe.para_llevar",
         "options": [
           "cafe.para_llevar",
           "cafe.para_tomar_aqui",
           "cafe.un_cafe"
+        ],
+        "accept": [
+          "cafe.para_llevar"
         ]
       }
     ]

@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "metro.linea_dos",
         "options": [
           "metro.linea_dos",
           "metro.a_que_linea",
           "metro.direccion_centro"
+        ],
+        "accept": [
+          "metro.linea_dos"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "metro.donde_bajo",
         "options": [
           "metro.donde_bajo",
           "metro.la_proxima",
           "metro.salida"
+        ],
+        "accept": [
+          "metro.donde_bajo"
         ]
       }
     ]

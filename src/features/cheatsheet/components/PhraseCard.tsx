@@ -10,7 +10,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '@/components/Button';
 import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
-import { displayText } from '@/features/content/displayText';
+import { displayEs, displayText } from '@/features/content/displayText';
 import { colors, space } from '@/theme/tokens';
 
 const ICON_STROKE = 2.2;
@@ -25,7 +25,7 @@ type PhraseCardProps = {
 export function PhraseCard({ phrase, translation, onListen, onClose }: PhraseCardProps) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const shownPhrase = displayText(phrase);
+  const shownPhrase = displayEs(phrase);
   const shownTranslation = displayText(translation);
   const edge = useMemo(() => {
     const pan = Gesture.Pan()

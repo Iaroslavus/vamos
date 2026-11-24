@@ -12,6 +12,7 @@ import { deleteSpeechFile } from '../recording';
 import {
   SPEECH_PASS_SCORE,
   isSpeechPass,
+  bestSpeechReference,
   matchSpokenOption,
   scoreSpeech,
   type SpeechOption,
@@ -156,7 +157,11 @@ export function useSpeakPractice({
         return;
       }
 
-      const text = scoreSpeech(phrase, result.transcript, {
+      const reference =
+        optionsRef.current.length > 0
+          ? bestSpeechReference(result.transcript, optionsRef.current, phrase)
+          : phrase;
+      const text = scoreSpeech(reference, result.transcript, {
         confidence: result.confidence,
         alternatives: result.alternatives,
         confusables: confusablesRef.current,
@@ -286,9 +291,13 @@ export function useSpeakPractice({
     return () => clearInterval(timer);
   }, [capture.listening, mode]);
 
+  const liveReference =
+    options.length > 0 && capture.transcript
+      ? bestSpeechReference(capture.transcript, options, phrase)
+      : phrase;
   const live =
     mode !== 'dialog' && capture.listening && capture.transcript && scored === null
-      ? scoreSpeech(phrase, capture.transcript)
+      ? scoreSpeech(liveReference, capture.transcript)
       : null;
   const shown = mode === 'dialog' || phrase.length === 0 ? null : (live ?? scored);
   const passed = mode !== 'dialog' && scored !== null && isSpeechPass(scored, passScore);

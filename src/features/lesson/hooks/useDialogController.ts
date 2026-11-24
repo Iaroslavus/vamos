@@ -28,6 +28,8 @@ type UseDialogControllerInput = {
   step: DialogStepData;
   items: readonly Item[];
   audioVariant: AudioPreference;
+  /** Profile name, or Ana / Pablo when the profile has none. */
+  speakerName?: string | null;
   onComplete?: (result: DialogStepResult) => void;
 };
 
@@ -35,6 +37,7 @@ export function useDialogController({
   step,
   items,
   audioVariant,
+  speakerName = null,
   onComplete,
 }: UseDialogControllerInput) {
   const { t, i18n } = useTranslation();
@@ -42,8 +45,9 @@ export function useDialogController({
   const recordDialogLine = useLessonStore((state) => state.recordDialogLine);
   const promptRu = t('lesson.dialogRetryPrompt');
   const playable = useMemo(
-    () => resolveDialogLines(step.lines, indexDialogItems(items), audioVariant, language),
-    [audioVariant, items, language, step.lines],
+    () =>
+      resolveDialogLines(step.lines, indexDialogItems(items), audioVariant, language, speakerName),
+    [audioVariant, items, language, speakerName, step.lines],
   );
   const [state, setState] = useState(() => createDialogState(playable));
   const blocked = useRef(false);

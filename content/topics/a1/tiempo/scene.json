@@ -7,5 +7,15 @@
     "en": "Saturday at ten"
   },
   "draft": true,
-  "draft_i18n": true
+  "draft_i18n": true,
+  "partner": {
+    "ru": "Пабло",
+    "uk": "Пабло",
+    "en": "Pablo"
+  },
+  "place": {
+    "ru": "В субботу утром",
+    "uk": "У суботу вранці",
+    "en": "Saturday morning"
+  }
 }

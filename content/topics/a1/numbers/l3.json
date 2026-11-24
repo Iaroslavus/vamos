@@ -1,0 +1,68 @@
+{
+  "id": "a1.numbers.l3",
+  "topic": "a1.numbers",
+  "title": {
+    "ru": "Цены",
+    "uk": "Ціни",
+    "en": "Prices"
+  },
+  "items": [
+    "numbers.cuanto_cuesta",
+    "numbers.cuanto_cuestan",
+    "numbers.un_euro",
+    "numbers.dos_euros",
+    "numbers.diez_euros",
+    "numbers.dos_con_cincuenta"
+  ],
+  "speak": [
+    "numbers.cuanto_cuesta",
+    "numbers.dos_euros"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿Cuánto cuesta?",
+        "tr": {
+          "ru": "Сколько стоит?",
+          "uk": "Скільки коштує?",
+          "en": "How much is it?"
+        }
+      },
+      {
+        "who": "user",
+        "accept": [
+          "numbers.dos_euros"
+        ],
+        "options": [
+          "numbers.dos_euros",
+          "numbers.un_euro",
+          "numbers.diez_euros"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "Son dos con cincuenta.",
+        "tr": {
+          "ru": "Два пятьдесят.",
+          "uk": "Два п'ятдесят.",
+          "en": "Two fifty."
+        }
+      },
+      {
+        "who": "user",
+        "accept": [
+          "numbers.dos_con_cincuenta"
+        ],
+        "options": [
+          "numbers.dos_con_cincuenta",
+          "numbers.cuanto_cuesta",
+          "numbers.diez_euros"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true,
+  "draft_i18n": true
+}

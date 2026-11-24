@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "ropa.muy_caro",
         "options": [
           "ropa.muy_caro",
           "ropa.muy_cara",
           "ropa.me_lo_llevo"
+        ],
+        "accept": [
+          "ropa.muy_caro"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "ropa.solo_miro",
         "options": [
           "ropa.solo_miro",
           "ropa.no_me_queda",
           "ropa.hay_rebaja"
+        ],
+        "accept": [
+          "ropa.solo_miro"
         ]
       }
     ]

@@ -66,6 +66,8 @@ const LESSON_FILES: readonly unknown[] = [
   require('../../../content/topics/a1/metro/l4.json') as unknown,
   require('../../../content/topics/a1/numbers/l1.json') as unknown,
   require('../../../content/topics/a1/numbers/l2.json') as unknown,
+  require('../../../content/topics/a1/numbers/l3.json') as unknown,
+  require('../../../content/topics/a1/numbers/l4.json') as unknown,
   require('../../../content/topics/a1/primera/l1.json') as unknown,
   require('../../../content/topics/a1/primera/l2.json') as unknown,
   require('../../../content/topics/a1/restaurante/l1.json') as unknown,

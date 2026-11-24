@@ -7,6 +7,11 @@ export const LEARNING_GOALS: readonly LearningGoal[] = ['travel', 'work', 'reloc
 
 export type SpanishVariant = 'spain' | 'latam';
 
+/** How gendered Spanish addresses the learner. `both` shows each form. */
+export type AddressForm = 'm' | 'f' | 'both';
+
+export const ADDRESS_FORMS: readonly AddressForm[] = ['m', 'f', 'both'];
+
 export type LearnerProfile = {
   name: string | null;
   goal: LearningGoal | null;
@@ -15,6 +20,8 @@ export type LearnerProfile = {
   uiLanguage: UiLanguage | null;
   /** Spain is es-ES audio. Latin America is es-MX. */
   spanishVariant: SpanishVariant;
+  /** Masculine, feminine, or both forms. Both is the default. */
+  address: AddressForm;
 };
 
 export const EMPTY_PROFILE: LearnerProfile = {
@@ -24,6 +31,7 @@ export const EMPTY_PROFILE: LearnerProfile = {
   preferencesAsked: false,
   uiLanguage: null,
   spanishVariant: 'spain',
+  address: 'both',
 };
 
 const NAME_MAX = 60;
@@ -70,6 +78,14 @@ export function applyPatch(
   ) {
     next.spanishVariant = profile.spanishVariant;
   }
+  if (
+    patch.address !== undefined &&
+    patch.address !== 'm' &&
+    patch.address !== 'f' &&
+    patch.address !== 'both'
+  ) {
+    next.address = profile.address;
+  }
   return next;
 }
 
@@ -90,6 +106,7 @@ export function mergeProfiles(
     preferencesAsked,
     uiLanguage: local.uiLanguage ?? remote.uiLanguage,
     spanishVariant: remote.spanishVariant,
+    address: local.address,
   };
 }
 
@@ -100,6 +117,7 @@ export function profilesEqual(a: LearnerProfile, b: LearnerProfile): boolean {
     a.dailyMinutes === b.dailyMinutes &&
     a.preferencesAsked === b.preferencesAsked &&
     a.uiLanguage === b.uiLanguage &&
-    a.spanishVariant === b.spanishVariant
+    a.spanishVariant === b.spanishVariant &&
+    a.address === b.address
   );
 }

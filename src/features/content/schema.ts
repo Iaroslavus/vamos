@@ -106,12 +106,35 @@ export const AudioSchema = z.object({
   latam: nullablePath.default(null),
   slow: SpeedPairSchema.default({ es: null, latam: null }),
   parts: z.array(AudioTrackSchema).default([]),
+  /**
+   * One clip set per grammatical gender.
+   * The masculine line uses the phrase tracks above. `f` is the feminine file.
+   */
+  forms: z
+    .object({
+      f: AudioTrackSchema.optional(),
+    })
+    .optional(),
   /** Compact MFCC reference for the phrase, normal speed, every stored voice. */
   features: nullablePath.default(null),
 });
 export type Audio = z.infer<typeof AudioSchema>;
 
 const EMPTY_SPEED = { es: null, latam: null } as const;
+
+/** One grammatical gender of a phrase: Spanish line and its translation. */
+export const GenderFormSchema = z.object({
+  es: z.string().min(1),
+  tr: LocalizedTextSchema,
+});
+export type GenderForm = z.infer<typeof GenderFormSchema>;
+
+/** Masculine and feminine lines. Replaces a slash or a parenthesis in one string. */
+export const GenderFormsSchema = z.object({
+  m: GenderFormSchema,
+  f: GenderFormSchema,
+});
+export type GenderForms = z.infer<typeof GenderFormsSchema>;
 
 /** A fresh audio object. Use this in fixtures so every clip slot exists. */
 export function blankAudio(
@@ -185,6 +208,14 @@ export const ItemSchema = z
     }),
     tags: z.array(z.string().min(1)).default([]),
     /**
+     * Masculine and feminine lines.
+     * Absent when the phrase does not change with the speaker's gender.
+     * `es` and `tr` stay the masculine line, with no slash and no parentheses.
+     */
+    forms: GenderFormsSchema.optional(),
+    /** Digit shown on a number card, such as "8" for ocho. */
+    display: z.string().min(1).optional(),
+    /**
      * Words the recognizer mixes up with this unit.
      * Example: hola → ola, olla, hora, jola.
      * Short words also gain distance-1 neighbors from the course lexicon when scoring.
@@ -214,8 +245,11 @@ const NpcLineSchema = z.object({
 
 const UserLineSchema = z.object({
   who: z.literal('user'),
-  target: ContentIdSchema,
+  /** Every item that counts as this line. The first one is the line we reveal. */
+  accept: z.array(ContentIdSchema).min(1),
   options: z.array(ContentIdSchema).min(2),
+  /** `name` fills `{name}` from the profile, or Ana / Pablo for the chosen gender. */
+  slot: z.literal('name').optional(),
 });
 
 export const DialogLineSchema = z.discriminatedUnion('who', [NpcLineSchema, UserLineSchema]);
@@ -284,6 +318,10 @@ export const SceneSchema = z.object({
   id: ContentIdSchema,
   topic: ContentIdSchema,
   title: LocalizedTextSchema,
+  /** Who the learner is talking to. */
+  partner: LocalizedTextSchema,
+  /** Where the scene happens. */
+  place: LocalizedTextSchema,
   draft: z.boolean().default(false),
   draft_i18n: z.boolean().default(false),
 });

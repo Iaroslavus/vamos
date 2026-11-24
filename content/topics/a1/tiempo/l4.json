@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "tiempo.a_las_diez",
         "options": [
           "tiempo.a_las_diez",
           "tiempo.a_la_una",
           "tiempo.quedamos_a_las_cinco"
+        ],
+        "accept": [
+          "tiempo.a_las_diez"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "tiempo.hasta_manana",
         "options": [
           "tiempo.hasta_manana",
           "tiempo.vale",
           "tiempo.el_sabado_por_la_manana"
+        ],
+        "accept": [
+          "tiempo.hasta_manana"
         ]
       }
     ]

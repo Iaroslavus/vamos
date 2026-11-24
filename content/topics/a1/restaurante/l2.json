@@ -33,11 +33,13 @@
       },
       {
         "who": "user",
-        "target": "restaurante.la_carta",
         "options": [
           "restaurante.la_carta",
           "restaurante.el_menu",
           "restaurante.para_mi"
+        ],
+        "accept": [
+          "restaurante.la_carta"
         ]
       },
       {
@@ -51,11 +53,13 @@
       },
       {
         "who": "user",
-        "target": "restaurante.alergia",
         "options": [
           "restaurante.alergia",
           "restaurante.sin_gluten",
           "restaurante.fructos"
+        ],
+        "accept": [
+          "restaurante.alergia"
         ]
       },
       {
@@ -69,11 +73,13 @@
       },
       {
         "who": "user",
-        "target": "cafe.la_cuenta",
         "options": [
           "cafe.la_cuenta",
           "restaurante.para_mi",
           "restaurante.sin_gluten"
+        ],
+        "accept": [
+          "cafe.la_cuenta"
         ]
       }
     ]

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/Text';
-import { displayText } from '@/features/content/displayText';
+import { displayEs, displayText } from '@/features/content/displayText';
 import { playLessonAudio } from '@/features/audio/playback';
 import { useAudioPreference } from '@/features/audio/preference';
 import { selectClip, type AudioPreference } from '@/features/audio/select';
@@ -52,7 +52,7 @@ export function NewWordsList({
       <View style={styles.list}>
         {items.map((item) => {
           const checked = selectedIds.has(item.id);
-          const es = displayText(item.es);
+          const es = displayEs(item.es);
           const ru = displayText(item.ru);
           const label = `${es}, ${ru}`;
           return (

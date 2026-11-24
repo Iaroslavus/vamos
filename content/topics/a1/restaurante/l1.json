@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "restaurante.reservar",
         "options": [
           "restaurante.reservar",
           "restaurante.mesa",
           "restaurante.esta_noche"
+        ],
+        "accept": [
+          "restaurante.reservar"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "restaurante.para_dos",
         "options": [
           "restaurante.para_dos",
           "restaurante.mesa",
           "restaurante.a_las_ocho"
+        ],
+        "accept": [
+          "restaurante.para_dos"
         ]
       },
       {
@@ -68,11 +72,13 @@
       },
       {
         "who": "user",
-        "target": "restaurante.a_mi_nombre",
         "options": [
           "restaurante.a_mi_nombre",
           "restaurante.para_dos",
           "restaurante.reservar"
+        ],
+        "accept": [
+          "restaurante.a_mi_nombre"
         ]
       }
     ]

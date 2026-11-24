@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "ropa.camiseta_negra",
         "options": [
           "ropa.camiseta_negra",
           "ropa.negro",
           "ropa.azul"
+        ],
+        "accept": [
+          "ropa.camiseta_negra"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "ropa.la_camiseta",
         "options": [
           "ropa.la_camiseta",
           "ropa.la_camisa",
           "ropa.los_pantalones"
+        ],
+        "accept": [
+          "ropa.la_camiseta"
         ]
       }
     ]

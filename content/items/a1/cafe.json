@@ -467,8 +467,8 @@
     "type": "word",
     "es": "quiero",
     "tr": {
-      "ru": "хочу",
-      "uk": "хочу",
+      "ru": "я хочу",
+      "uk": "я хочу",
       "en": "I want"
     },
     "say": {
@@ -477,9 +477,9 @@
       "en": "kEro"
     },
     "note": {
-      "ru": "Дальше сразу напиток: quiero un café.",
-      "uk": "Далі одразу напій: quiero un café.",
-      "en": "The drink comes right after: quiero un café."
+      "ru": "(querer). Дальше сразу то, что вы хотите.",
+      "uk": "(querer). Далі одразу те, що ви хочете.",
+      "en": "(querer). What you want comes right after."
     },
     "why": {
       "ru": "Форма глагола querer для «я».",

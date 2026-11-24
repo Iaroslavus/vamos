@@ -2,22 +2,21 @@
   "id": "a1.numbers.l1",
   "topic": "a1.numbers",
   "title": {
-    "ru": "Числа 1–10",
-    "uk": "Числа 1–10",
-    "en": "Numbers 1–10"
+    "ru": "Числа 1–5",
+    "uk": "Числа 1–5",
+    "en": "Numbers 1–5"
   },
   "items": [
     "numbers.uno",
     "numbers.dos",
     "numbers.tres",
-    "numbers.cuatro_y_cinco",
-    "numbers.seis_y_siete",
-    "numbers.ocho_y_nueve",
-    "numbers.numero_diez"
+    "numbers.cuatro",
+    "numbers.cinco",
+    "numbers.cuantos"
   ],
   "speak": [
     "numbers.tres",
-    "numbers.numero_diez"
+    "numbers.cuantos"
   ],
   "dialog": {
     "lines": [
@@ -32,29 +31,33 @@
       },
       {
         "who": "user",
-        "target": "numbers.tres",
-        "options": [
-          "numbers.uno",
-          "numbers.dos",
+        "accept": [
           "numbers.tres"
+        ],
+        "options": [
+          "numbers.tres",
+          "numbers.uno",
+          "numbers.dos"
         ]
       },
       {
         "who": "npc",
-        "es": "¿Y del cuatro al diez?",
+        "es": "¿Y cinco?",
         "tr": {
-          "ru": "А от четырёх до десяти?",
-          "uk": "А від чотирьох до десяти?",
-          "en": "And from four to ten?"
+          "ru": "А пять?",
+          "uk": "А п'ять?",
+          "en": "And five?"
         }
       },
       {
         "who": "user",
-        "target": "numbers.cuatro_y_cinco",
+        "accept": [
+          "numbers.cinco"
+        ],
         "options": [
-          "numbers.cuatro_y_cinco",
-          "numbers.seis_y_siete",
-          "numbers.numero_diez"
+          "numbers.cinco",
+          "numbers.cuatro",
+          "numbers.dos"
         ]
       }
     ]

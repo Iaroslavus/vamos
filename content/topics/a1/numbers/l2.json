@@ -2,78 +2,62 @@
   "id": "a1.numbers.l2",
   "topic": "a1.numbers",
   "title": {
-    "ru": "Сколько стоит?",
-    "uk": "Скільки коштує?",
-    "en": "How much is it?"
+    "ru": "Числа 6–10",
+    "uk": "Числа 6–10",
+    "en": "Numbers 6–10"
   },
   "items": [
-    "numbers.cuanto_cuesta",
-    "numbers.cuanto_cuestan",
-    "numbers.un_euro",
-    "numbers.dos_euros",
-    "numbers.diez_euros",
-    "numbers.dos_con_cincuenta",
-    "cafe.esta_bien"
+    "numbers.seis",
+    "numbers.siete",
+    "numbers.ocho",
+    "numbers.nueve",
+    "numbers.diez",
+    "numbers.dos_cafes"
   ],
   "speak": [
-    "numbers.cuanto_cuesta",
-    "numbers.dos_euros",
-    "numbers.dos_con_cincuenta"
+    "numbers.ocho",
+    "numbers.dos_cafes"
   ],
   "dialog": {
     "lines": [
       {
         "who": "npc",
-        "es": "El café cuesta dos euros.",
+        "es": "¿Cuántos cafés?",
         "tr": {
-          "ru": "Кофе стоит два евро.",
-          "uk": "Кава коштує два євро.",
-          "en": "The coffee costs two euros."
+          "ru": "Сколько кофе?",
+          "uk": "Скільки кави?",
+          "en": "How many coffees?"
         }
       },
       {
         "who": "user",
-        "target": "numbers.dos_euros",
+        "accept": [
+          "numbers.dos_cafes"
+        ],
         "options": [
-          "numbers.dos_euros",
-          "numbers.un_euro",
-          "numbers.diez_euros"
+          "numbers.dos_cafes",
+          "numbers.ocho",
+          "numbers.diez"
         ]
       },
       {
         "who": "npc",
-        "es": "¿Y dos cafés?",
+        "es": "¿Y el ocho?",
         "tr": {
-          "ru": "А два кофе?",
-          "uk": "А дві кави?",
-          "en": "And two coffees?"
+          "ru": "А восемь?",
+          "uk": "А вісім?",
+          "en": "And eight?"
         }
       },
       {
         "who": "user",
-        "target": "numbers.cuanto_cuestan",
+        "accept": [
+          "numbers.ocho"
+        ],
         "options": [
-          "numbers.cuanto_cuestan",
-          "numbers.cuanto_cuesta",
-          "numbers.dos_con_cincuenta"
-        ]
-      },
-      {
-        "who": "npc",
-        "es": "Dos con cincuenta.",
-        "tr": {
-          "ru": "Два пятьдесят.",
-          "uk": "Два п'ятдесят.",
-          "en": "Two fifty."
-        }
-      },
-      {
-        "who": "user",
-        "target": "cafe.esta_bien",
-        "options": [
-          "cafe.esta_bien",
-          "numbers.un_euro",
-          "numbers.diez_euros"
+          "numbers.ocho",
+          "numbers.nueve",
+          "numbers.seis"
         ]
       }
     ]

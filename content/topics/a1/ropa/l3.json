@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "ropa.puedo_probarme",
         "options": [
           "ropa.puedo_probarme",
           "ropa.el_probador",
           "ropa.esta_camisa"
+        ],
+        "accept": [
+          "ropa.puedo_probarme"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "ropa.me_queda_bien",
         "options": [
           "ropa.me_queda_bien",
           "ropa.me_queda_grande",
           "ropa.me_queda_pequena"
+        ],
+        "accept": [
+          "ropa.me_queda_bien"
         ]
       }
     ]

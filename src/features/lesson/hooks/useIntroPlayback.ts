@@ -11,26 +11,32 @@ import type { Item } from '@/features/content/schema';
 import { itemAudioPath, partAudioPath, type AudioPreference, type AudioSpeed } from '../intro';
 
 /** Plays the phrase when the card appears, plus listen / slow / part taps. */
-export function useIntroPlayback(item: Item, audioVariant: AudioPreference) {
-  const audioPath = itemAudioPath(item, audioVariant, 'normal');
+export function useIntroPlayback(
+  item: Item,
+  audioVariant: AudioPreference,
+  line?: { es: string; audio: string | null; slow: string | null },
+) {
+  const text = line?.es ?? item.es;
+  const normalAudio = line ? line.audio : itemAudioPath(item, audioVariant, 'normal');
+  const slowAudio = line ? line.slow : itemAudioPath(item, audioVariant, 'slow');
 
   useEffect(() => {
-    void playLessonAudio({ audio: audioPath, text: item.es, rate: NORMAL_RATE });
+    void playLessonAudio({ audio: normalAudio, text, rate: NORMAL_RATE });
     return () => {
       void stopLessonAudio();
     };
-  }, [audioPath, item.es, item.id]);
+  }, [normalAudio, text, item.id]);
 
   const playPhrase = useCallback(
     (rate: number) => {
       const speed: AudioSpeed = rate < 1 ? 'slow' : 'normal';
       void playLessonAudio({
-        audio: itemAudioPath(item, audioVariant, speed),
-        text: item.es,
+        audio: speed === 'slow' ? slowAudio : normalAudio,
+        text,
         rate: speed === 'slow' ? SLOW_RATE : NORMAL_RATE,
       });
     },
-    [audioVariant, item],
+    [normalAudio, slowAudio, text],
   );
 
   const playPart = useCallback(
