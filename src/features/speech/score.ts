@@ -316,6 +316,27 @@ export function isSpeechPass(result: SpeechScore, passScore = SPEECH_PASS_SCORE)
  * Best option the learner seems to have said.
  * Returns null when none of the lines is understood.
  */
+/**
+ * The reference line closest to what was heard.
+ * Used when either gendered form may count.
+ */
+export function bestSpeechReference(
+  heard: string,
+  options: readonly SpeechOption[],
+  fallback: string,
+): string {
+  let best = fallback;
+  let bestScore = scoreSpeech(fallback, heard).score;
+  for (const option of options) {
+    const score = scoreSpeech(option.es, heard).score;
+    if (score > bestScore) {
+      best = option.es;
+      bestScore = score;
+    }
+  }
+  return best;
+}
+
 export function matchSpokenOption(
   heard: string,
   options: readonly SpeechOption[],

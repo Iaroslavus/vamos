@@ -7,5 +7,15 @@
     "en": "In the fitting room"
   },
   "draft": true,
-  "draft_i18n": true
+  "draft_i18n": true,
+  "partner": {
+    "ru": "Елена",
+    "uk": "Олена",
+    "en": "Elena"
+  },
+  "place": {
+    "ru": "В примерочной",
+    "uk": "У примірочній",
+    "en": "In the fitting room"
+  }
 }

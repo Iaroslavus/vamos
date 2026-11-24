@@ -16,6 +16,8 @@ describe('curriculum path', () => {
       'a1.cafe.l2',
       'a1.numbers.l1',
       'a1.numbers.l2',
+      'a1.numbers.l3',
+      'a1.numbers.l4',
       'a1.tienda.l1',
       'a1.tienda.l2',
       'a1.camino.l1',
@@ -68,7 +70,7 @@ describe('level progress', () => {
     expect(rows.find((row) => row.level === 'A1')).toEqual({
       level: 'A1',
       completed: 0,
-      total: 14,
+      total: 16,
     });
     expect(rows.filter((row) => row.level !== 'A1').every((row) => row.total === 0)).toBe(true);
     expect(currentLevel(rows)).toBe('A1');

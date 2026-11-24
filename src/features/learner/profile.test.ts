@@ -51,6 +51,7 @@ describe('mergeProfiles', () => {
       preferencesAsked: true,
       uiLanguage: null,
       spanishVariant: 'spain',
+      address: 'both',
     });
   });
 
@@ -62,6 +63,7 @@ describe('mergeProfiles', () => {
       preferencesAsked: true,
       uiLanguage: null,
       spanishVariant: 'spain' as const,
+      address: 'both' as const,
     };
     const merged = mergeProfiles(local, {
       ...EMPTY_PROFILE,

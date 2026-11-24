@@ -1,10 +1,12 @@
 import * as Haptics from 'expo-haptics';
-import { ChevronDown, type LucideIcon } from 'lucide-react-native';
+import { ChevronDown, Volume2, type LucideIcon } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
-import { displayText } from '@/features/content/displayText';
+import { displayEs, displayText } from '@/features/content/displayText';
+import type { SpokenLine } from '@/features/content/gender';
 import type { Item } from '@/features/content/schema';
 import { contentLocale, textOf } from '@/features/content/text';
 import { colors, depth, radius, space } from '@/theme/tokens';
@@ -18,6 +20,9 @@ type Part = Item['parts'][number];
 
 type IntroCardProps = {
   item: Item;
+  /** Two gendered lines, each with its own sound button. */
+  lines?: readonly SpokenLine[];
+  onPlayLine?: (line: SpokenLine) => void;
   TopicIcon: LucideIcon;
   sayRu: string | null;
   saved: boolean;
@@ -31,6 +36,8 @@ type IntroCardProps = {
 
 export function IntroCard({
   item,
+  lines,
+  onPlayLine,
   TopicIcon,
   sayRu,
   saved,
@@ -63,15 +70,38 @@ export function IntroCard({
           onSave={onSave}
         />
 
-        <Text variant="h1" style={styles.center}>
-          {displayText(item.es)}
-        </Text>
+        {lines && lines.length > 1 ? (
+          lines.map((line) => (
+            <View key={line.id} style={styles.formRow}>
+              <View style={styles.formText}>
+                <Text variant="h2" style={styles.center}>
+                  {displayEs(line.es)}
+                </Text>
+                <Text variant="bodyBold" style={styles.center}>
+                  {displayText(textOf(line.tr, language))}
+                </Text>
+              </View>
+              <IconButton
+                accessibilityLabel={t('lesson.playAudio')}
+                onPress={() => onPlayLine?.(line)}
+              >
+                <Volume2 size={22} color={colors.ink} strokeWidth={2.2} />
+              </IconButton>
+            </View>
+          ))
+        ) : (
+          <>
+            <Text variant="h1" style={styles.center}>
+              {displayEs(lines?.[0]?.es ?? item.es)}
+            </Text>
 
-        <IntroAudioButtons onPlay={onPlay} />
+            <IntroAudioButtons onPlay={onPlay} />
 
-        <Text variant="bodyBold" style={styles.center}>
-          {displayText(translation)}
-        </Text>
+            <Text variant="bodyBold" style={styles.center}>
+              {displayText(lines?.[0] ? textOf(lines[0].tr, language) : translation)}
+            </Text>
+          </>
+        )}
 
         {showDetails ? (
           <>
@@ -118,6 +148,15 @@ const styles = StyleSheet.create({
   },
   center: {
     textAlign: 'center',
+  },
+  formRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.md,
+  },
+  formText: {
+    flex: 1,
+    gap: space.xs,
   },
   more: {
     minHeight: 44,

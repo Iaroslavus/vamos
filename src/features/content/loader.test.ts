@@ -22,7 +22,7 @@ describe('content index', () => {
     });
     expect(getLesson('a1.hola.l1').title.ru).toBe('Приветствия');
     expect(getLesson('a1.hola.l2').items).toHaveLength(7);
-    expect(getLesson('a1.numbers.l1').items).toHaveLength(7);
+    expect(getLesson('a1.numbers.l1').items).toHaveLength(6);
     expect(getItem('hola.hola')).toMatchObject({
       es: 'hola',
       tr: { ru: 'привет', uk: 'привіт', en: 'hello' },
@@ -85,6 +85,8 @@ describe('content index', () => {
       'a1.metro.l4',
       'a1.numbers.l1',
       'a1.numbers.l2',
+      'a1.numbers.l3',
+      'a1.numbers.l4',
       'a1.primera.l1',
       'a1.primera.l2',
       'a1.restaurante.l1',
@@ -105,7 +107,7 @@ describe('content index', () => {
       'a1.tienda.l2',
     ]);
     expect(listItems().every((item) => item.draft)).toBe(true);
-    expect(listLessons()).toHaveLength(34);
+    expect(listLessons()).toHaveLength(36);
   });
 
   it('throws for an unknown id', () => {

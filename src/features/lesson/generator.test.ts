@@ -1,4 +1,4 @@
-import { getLesson, getTopic, listItems, listLessons } from '@/features/content/loader';
+import { getItem, getLesson, getTopic, listItems, listLessons } from '@/features/content/loader';
 import { fillLocales, textOf } from '@/features/content/text';
 import { blankAudio, type Item, type Lesson } from '@/features/content/schema';
 
@@ -22,6 +22,13 @@ function bundledSteps(lessonId: string, seed?: string): LessonStep[] {
     items,
     seen: seenItemsBeforeLesson(ordered, items, lesson.id),
     seed,
+  });
+}
+
+function lessonHasPhrase(lessonId: string): boolean {
+  return getLesson(lessonId).items.some((id) => {
+    const item = getItem(id);
+    return item.type === 'phrase' && item.es.trim().split(/\s+/).length >= 2;
   });
 }
 
@@ -90,7 +97,12 @@ describe('generateLessonSteps', () => {
   it('teaches, then drills, in one pass per phase', () => {
     for (const lesson of listLessons()) {
       const steps = bundledSteps(lesson.id, 'alpha');
-      expect(collapsedPhases(steps)).toBe('intro>recognize>build>recall>speak>dialog');
+      const assembled = lessonHasPhrase(lesson.id);
+      expect(collapsedPhases(steps)).toBe(
+        assembled
+          ? 'intro>recognize>build>recall>speak>dialog'
+          : 'intro>recognize>recall>speak>dialog',
+      );
       expect(steps.map((step) => step.id)).toEqual(steps.map((_, index) => `s${index}`));
     }
   });
@@ -144,8 +156,10 @@ describe('generateLessonSteps', () => {
       expect(steps.some((step) => step.type === 'listen_select')).toBe(true);
       expect(steps.some((step) => step.type === 'match_pairs')).toBe(true);
       expect(steps.some((step) => step.type === 'select_translation')).toBe(true);
-      expect(steps.some((step) => step.type === 'build_sentence')).toBe(true);
-      expect(steps.some((step) => step.type === 'fill_gap')).toBe(true);
+      if (lessonHasPhrase(lesson.id)) {
+        expect(steps.some((step) => step.type === 'build_sentence')).toBe(true);
+        expect(steps.some((step) => step.type === 'fill_gap')).toBe(true);
+      }
 
       for (const step of steps) {
         if (step.type === 'listen_select' || step.type === 'select_translation') {
@@ -256,7 +270,7 @@ describe('generateLessonSteps', () => {
             lines: [
               {
                 who: 'user',
-                target: 'numbers.uno',
+                accept: ['numbers.uno'],
                 options: ['numbers.uno', 'hola.hola'],
               },
             ],
@@ -402,7 +416,7 @@ function lessonOf(id: string, items: string[], speak: string[]): Lesson {
     dialog: {
       lines: [
         { who: 'npc', es: 'Hola', tr: fillLocales('Привет') },
-        { who: 'user', target: items[0] ?? id, options: [items[0] ?? id, items[1] ?? id] },
+        { who: 'user', accept: [items[0] ?? id], options: [items[0] ?? id, items[1] ?? id] },
       ],
     },
     overrides: [],

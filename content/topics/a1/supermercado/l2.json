@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "supermercado.busco",
         "options": [
           "supermercado.busco",
           "supermercado.donde_esta",
           "supermercado.la_caja"
+        ],
+        "accept": [
+          "supermercado.busco"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "supermercado.al_fondo",
         "options": [
           "supermercado.al_fondo",
           "supermercado.a_la_derecha",
           "supermercado.a_la_izquierda"
+        ],
+        "accept": [
+          "supermercado.al_fondo"
         ]
       }
     ]

@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "tiempo.el_lunes",
         "options": [
           "tiempo.el_lunes",
           "tiempo.el_martes",
           "tiempo.el_miercoles"
+        ],
+        "accept": [
+          "tiempo.el_lunes"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "tiempo.el_martes",
         "options": [
           "tiempo.el_martes",
           "tiempo.el_viernes",
           "tiempo.el_domingo"
+        ],
+        "accept": [
+          "tiempo.el_martes"
         ]
       }
     ]

@@ -12,7 +12,7 @@ import Animated, {
 
 import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
-import { displayText } from '@/features/content/displayText';
+import { displayEs, displayText } from '@/features/content/displayText';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, motion, radius, space } from '@/theme/tokens';
 
@@ -75,7 +75,7 @@ export function DialogBubble({
     ],
   }));
 
-  const shownEs = displayText(es);
+  const shownEs = displayEs(es);
   const translationLabel = revealed
     ? t('lesson.dialogHideTranslation', { line: shownEs })
     : t('lesson.dialogShowTranslation', { line: shownEs });

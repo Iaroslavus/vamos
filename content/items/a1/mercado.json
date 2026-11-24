@@ -14,7 +14,7 @@
         "tr": {
           "ru": "мн. ж.",
           "uk": "мн. ж.",
-          "en": "the (f. pl.)"
+          "en": "the"
         }
       },
       {
@@ -88,7 +88,7 @@
         "tr": {
           "ru": "мн. ж.",
           "uk": "мн. ж.",
-          "en": "the (f. pl.)"
+          "en": "the"
         }
       },
       {
@@ -158,7 +158,7 @@
         "tr": {
           "ru": "мн. м.",
           "uk": "мн. ч.",
-          "en": "the (m. pl.)"
+          "en": "the"
         }
       },
       {
@@ -232,7 +232,7 @@
         "tr": {
           "ru": "мн. ж.",
           "uk": "мн. ж.",
-          "en": "the (f. pl.)"
+          "en": "the"
         }
       },
       {
@@ -526,7 +526,7 @@
         "tr": {
           "ru": "мн. м.",
           "uk": "мн. ч.",
-          "en": "the (m. pl.)"
+          "en": "the"
         }
       },
       {
@@ -601,7 +601,7 @@
         "tr": {
           "ru": "мн. ж.",
           "uk": "мн. ж.",
-          "en": "the (f. pl.)"
+          "en": "the"
         }
       },
       {
@@ -680,7 +680,7 @@
         "tr": {
           "ru": "мн. ж.",
           "uk": "мн. ж.",
-          "en": "the (f. pl.)"
+          "en": "the"
         }
       },
       {
@@ -754,7 +754,7 @@
         "tr": {
           "ru": "ж.р.",
           "uk": "ж.р.",
-          "en": "the (f.)"
+          "en": "the"
         }
       },
       {
@@ -824,7 +824,7 @@
         "tr": {
           "ru": "мн. м.",
           "uk": "мн. ч.",
-          "en": "the (m. pl.)"
+          "en": "the"
         }
       },
       {
@@ -1267,8 +1267,8 @@
     "type": "word",
     "es": "quiero",
     "tr": {
-      "ru": "хочу",
-      "uk": "хочу",
+      "ru": "я хочу",
+      "uk": "я хочу",
       "en": "I want"
     },
     "say": {
@@ -1276,7 +1276,11 @@
       "uk": "кьЕро",
       "en": "kEro"
     },
-    "note": null,
+    "note": {
+      "ru": "(querer). Дальше сразу то, что вы хотите.",
+      "uk": "(querer). Далі одразу те, що ви хочете.",
+      "en": "(querer). What you want comes right after."
+    },
     "why": {
       "ru": "Форма «я» от querer. Дальше сразу продукт: quiero fresas.",
       "uk": "Форма «я» від querer. Далі одразу продукт: quiero fresas.",
@@ -1306,8 +1310,8 @@
     "type": "word",
     "es": "quisiera",
     "tr": {
-      "ru": "хотел(а) бы",
-      "uk": "хотів(ла) би",
+      "ru": "хотел бы",
+      "uk": "хотів би",
       "en": "I would like"
     },
     "say": {
@@ -1315,7 +1319,11 @@
       "uk": "кісьЕра",
       "en": "kisEra"
     },
-    "note": null,
+    "note": {
+      "ru": "(querer). Вежливое «я бы хотел».",
+      "uk": "(querer). Ввічливе «я б хотів».",
+      "en": "(querer). A polite \"I would like\"."
+    },
     "why": {
       "ru": "Quisiera — вежливое «я бы хотел». На A1 это готовая фраза.",
       "uk": "Quisiera — ввічливе «я б хотів». На A1 це готова фраза.",
@@ -1332,13 +1340,43 @@
         "latam": "items/a1/mercado/quisiera.mx.slow.m4a"
       },
       "parts": [],
+      "forms": {
+        "f": {
+          "es": "items/a1/mercado/quisiera.f.es.normal.m4a",
+          "latam": "items/a1/mercado/quisiera.f.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/mercado/quisiera.f.es.slow.m4a",
+            "latam": "items/a1/mercado/quisiera.f.mx.slow.m4a"
+          }
+        }
+      },
       "features": "items/a1/mercado/quisiera.features.json"
     },
     "tags": [
       "mercado"
     ],
     "draft": true,
-    "draft_i18n": true
+    "draft_i18n": true,
+    "literal": null,
+    "parts": [],
+    "forms": {
+      "m": {
+        "es": "quisiera",
+        "tr": {
+          "ru": "хотел бы",
+          "uk": "хотів би",
+          "en": "I would like"
+        }
+      },
+      "f": {
+        "es": "quisiera",
+        "tr": {
+          "ru": "хотела бы",
+          "uk": "хотіла би",
+          "en": "I would like"
+        }
+      }
+    }
   },
   {
     "id": "mercado.algo_mas",

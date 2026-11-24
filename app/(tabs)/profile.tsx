@@ -19,6 +19,7 @@ import { ErrorNote } from '@/features/auth/components/ErrorNote';
 import { UnsavedAccount } from '@/features/auth/components/UnsavedAccount';
 import { useSession } from '@/features/auth/useSession';
 import type { AuthErrorCode } from '@/features/auth/errors';
+import { AddressSetting } from '@/features/learner/AddressSetting';
 import { PhraseBreakdownSetting } from '@/features/settings/PhraseBreakdownSetting';
 import { colors, radius, space } from '@/theme/tokens';
 
@@ -105,6 +106,8 @@ export default function ProfileScreen() {
             )}
 
             {signOutError ? <ErrorNote message={t(`auth.errors.${signOutError}`)} /> : null}
+
+            <AddressSetting />
 
             <PhraseBreakdownSetting />
 

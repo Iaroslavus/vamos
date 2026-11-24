@@ -15,7 +15,7 @@ export default function DevDialogScreen() {
     const ids = new Set<string>();
     for (const line of lesson.dialog.lines) {
       if (line.who !== 'user') continue;
-      ids.add(line.target);
+      for (const id of line.accept) ids.add(id);
       for (const id of line.options) ids.add(id);
     }
     return [...ids].map((id) => getItem(id));

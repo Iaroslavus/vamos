@@ -69,6 +69,7 @@ async function main(): Promise<void> {
     const featureUpdates: { id: string; path: string }[] = [];
 
     for (const item of items) {
+      if (cli.only.length > 0 && !cli.only.includes(item.id)) continue;
       const rendered = new Map<string, RenderedClip>();
       for (const clip of planItemClips(item, cli)) {
         const request = provider.request({
@@ -98,6 +99,7 @@ async function main(): Promise<void> {
         updates.push({
           id: item.id,
           partIndex: clip.partIndex,
+          form: clip.form,
           voice: clip.voice,
           speed: clip.speed,
           path: clip.objectPath,

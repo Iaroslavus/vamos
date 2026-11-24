@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "tiempo.son_las_dos",
         "options": [
           "tiempo.son_las_dos",
           "tiempo.es_la_una",
           "tiempo.son_las_tres"
+        ],
+        "accept": [
+          "tiempo.son_las_dos"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "tiempo.y_media",
         "options": [
           "tiempo.y_media",
           "tiempo.y_cuarto",
           "tiempo.menos_cuarto"
+        ],
+        "accept": [
+          "tiempo.y_media"
         ]
       }
     ]

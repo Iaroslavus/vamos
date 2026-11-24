@@ -1,4 +1,4 @@
-import { displayLine, displayText } from './displayText';
+import { displayEs, displayLine, displayText } from './displayText';
 
 describe('displayText', () => {
   it('raises the first letter of a word or phrase', () => {
@@ -41,6 +41,16 @@ describe('displayText', () => {
     expect(displayText('¿?')).toBe('¿?');
     expect(displayText('123')).toBe('123');
     expect(displayText('  ')).toBe('  ');
+  });
+});
+
+describe('displayEs', () => {
+  it('keeps Spanish question marks and fills the profile name', () => {
+    expect(displayEs('¿cómo te llamas?')).toBe('¿Cómo te llamas?');
+    expect(displayEs('¡hola!')).toBe('¡Hola!');
+    expect(displayEs('Me llamo {name}')).toBe('Me llamo Ana');
+    expect(displayEs('Me llamo {name}', 'Pablo')).toBe('Me llamo Pablo');
+    expect(displayEs('Me llamo {name}', '  ')).toBe('Me llamo Ana');
   });
 });
 

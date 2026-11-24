@@ -33,12 +33,15 @@
       },
       {
         "who": "user",
-        "target": "hola.me_llamo",
         "options": [
           "hola.me_llamo",
           "hola.como_te_llamas",
           "hola.soy"
-        ]
+        ],
+        "accept": [
+          "hola.me_llamo"
+        ],
+        "slot": "name"
       },
       {
         "who": "npc",
@@ -51,11 +54,13 @@
       },
       {
         "who": "user",
-        "target": "hola.bien_gracias",
         "options": [
           "hola.bien_gracias",
           "hola.que_tal",
           "hola.mucho_gusto"
+        ],
+        "accept": [
+          "hola.bien_gracias"
         ]
       },
       {
@@ -69,11 +74,14 @@
       },
       {
         "who": "user",
-        "target": "hola.mucho_gusto",
         "options": [
           "hola.mucho_gusto",
           "hola.encantado",
           "hola.me_llamo"
+        ],
+        "accept": [
+          "hola.mucho_gusto",
+          "hola.encantado"
         ]
       }
     ]

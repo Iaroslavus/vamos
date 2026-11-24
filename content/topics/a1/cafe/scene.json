@@ -7,5 +7,15 @@
     "en": "At the counter"
   },
   "draft": true,
-  "draft_i18n": true
+  "draft_i18n": true,
+  "partner": {
+    "ru": "Лусия",
+    "uk": "Лусія",
+    "en": "Lucía"
+  },
+  "place": {
+    "ru": "У стойки кафе",
+    "uk": "Біля стійки кав’ярні",
+    "en": "At the café counter"
+  }
 }

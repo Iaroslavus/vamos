@@ -1,3 +1,4 @@
+import { isNumberCard } from './quality';
 import { listItems, listLessons, listScenes, listTopics } from './loader';
 import { contentIssues, type ContentBundle } from './integrity';
 import { ItemSchema, LessonSchema, SceneSchema, TopicSchema } from './schema';
@@ -24,7 +25,7 @@ describe('bundled content', () => {
       expect(units.every((unit) => unit !== undefined)).toBe(true);
       expect(lesson.items.length).toBeGreaterThanOrEqual(6);
       expect(lesson.items.length).toBeLessThanOrEqual(8);
-      const words = units.filter((unit) => unit?.type === 'word');
+      const words = units.filter((unit) => unit?.type === 'word' && !isNumberCard(unit));
       expect(words.length).toBeLessThanOrEqual(3);
     }
   });
@@ -33,9 +34,9 @@ describe('bundled content', () => {
 describe('contentIssues', () => {
   const base = (): ContentBundle => ({
     items: [
-      word('t.uno', 'uno', 'один'),
-      word('t.dos', 'dos', 'два'),
-      word('t.tres', 'tres', 'три'),
+      word('t.uno', 'pan', 'хлеб'),
+      word('t.dos', 'agua', 'вода'),
+      word('t.tres', 'leche', 'молоко'),
       word('t.hola', 'hola', 'привет'),
       phrase('t.gracias_por', 'gracias por', 'спасибо за'),
       phrase('t.por_favor', 'por favor', 'пожалуйста'),
@@ -64,7 +65,7 @@ describe('contentIssues', () => {
           lines: [
             {
               who: 'user',
-              target: 't.por_favor',
+              accept: ['t.por_favor'],
               options: ['t.por_favor', 't.hola'],
             },
           ],
@@ -77,6 +78,8 @@ describe('contentIssues', () => {
         id: 'a1.t.scene',
         topic: 'a1.t',
         title: fillLocales('Сценка'),
+        partner: fillLocales('Ана'),
+        place: fillLocales('На улице'),
         draft: true,
       }),
     ],
@@ -91,7 +94,7 @@ describe('contentIssues', () => {
           lines: [
             {
               who: 'user',
-              target: 't.missing',
+              accept: ['t.missing'],
               options: ['t.missing', 't.hola'],
             },
           ],
@@ -99,7 +102,7 @@ describe('contentIssues', () => {
       },
     ];
 
-    expect(contentIssues(broken).join('\n')).toContain('dialog target t.missing is missing');
+    expect(contentIssues(broken).join('\n')).toContain('dialog accept t.missing is missing');
   });
 
   it('reports a lesson with more than three words', () => {

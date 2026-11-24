@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "cafe.cuanto_es",
         "options": [
           "cafe.cuanto_es",
           "cafe.la_cuenta",
           "cafe.nada_mas"
+        ],
+        "accept": [
+          "cafe.cuanto_es"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "cafe.esta_bien",
         "options": [
           "cafe.esta_bien",
           "cafe.cuanto_es",
           "cafe.la_cuenta"
+        ],
+        "accept": [
+          "cafe.esta_bien"
         ]
       },
       {
@@ -68,11 +72,13 @@
       },
       {
         "who": "user",
-        "target": "cafe.la_cuenta",
         "options": [
           "cafe.la_cuenta",
           "cafe.nada_mas",
           "cafe.un_cafe"
+        ],
+        "accept": [
+          "cafe.la_cuenta"
         ]
       }
     ]

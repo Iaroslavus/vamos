@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native';
 import { Chip } from '@/components/Chip';
 import { Text } from '@/components/Text';
 import { Appear } from '@/features/auth/components/Appear';
-import { displayText } from '@/features/content/displayText';
+import { displayEs, displayText } from '@/features/content/displayText';
 import type { Item } from '@/features/content/schema';
 import { contentLocale, textOf } from '@/features/content/text';
 import { colors, radius, space } from '@/theme/tokens';
@@ -46,7 +46,7 @@ export function IntroBreakdown({ open, item, say, onPlayPart }: IntroBreakdownPr
               <View style={styles.parts}>
                 {item.parts.map((part, index) => {
                   const label = t('lesson.introPart', {
-                    es: displayText(part.es),
+                    es: displayEs(part.es),
                     ru: displayText(textOf(part.tr, language)),
                   });
                   return (

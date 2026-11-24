@@ -7,5 +7,15 @@
     "en": "Meeting someone on the street"
   },
   "draft": true,
-  "draft_i18n": true
+  "draft_i18n": true,
+  "partner": {
+    "ru": "Ана",
+    "uk": "Ана",
+    "en": "Ana"
+  },
+  "place": {
+    "ru": "Знакомство на вечеринке",
+    "uk": "Знайомство на вечірці",
+    "en": "Meeting someone at a party"
+  }
 }

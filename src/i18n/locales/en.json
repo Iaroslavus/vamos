@@ -98,10 +98,12 @@
     "lessons": {
       "a1-u01-l01": "Greetings",
       "a1-u01-l02": "Introductions",
-      "a1-u01-l03": "Numbers 1–10",
+      "a1-u01-l03": "Numbers 1–5",
       "a1-cafe-l1": "Ordering a drink",
       "a1-cafe-l2": "The price and the bill",
-      "a1-numbers-l2": "How much is it?",
+      "a1-numbers-l2": "Numbers 6–10",
+      "a1-numbers-l3": "Prices",
+      "a1-numbers-l4": "Age and phone",
       "a1-tienda-l1": "Do you have…?",
       "a1-tienda-l2": "A bag and a card",
       "a1-camino-l1": "How do I get there?",
@@ -350,7 +352,11 @@
   "profile": {
     "title": "Profile",
     "stub": "Settings, reminders, and your subscription will live here.",
-    "showPhraseBreakdown": "Show phrase breakdown"
+    "showPhraseBreakdown": "Show phrase breakdown",
+    "addressTitle": "How should we address you",
+    "addressMasculine": "In the masculine",
+    "addressFeminine": "In the feminine",
+    "addressBoth": "Show both"
   },
   "auth": {
     "saveTitle": "Save your progress",

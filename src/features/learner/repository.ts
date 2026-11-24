@@ -127,6 +127,7 @@ export function profileFromRemote(
     preferencesAsked: goal != null,
     uiLanguage: isUiLanguage(row.ui_language) ? row.ui_language : null,
     spanishVariant: row.spanish_variant === 'latam' ? 'latam' : 'spain',
+    address: 'both',
   };
 }
 

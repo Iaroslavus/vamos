@@ -33,11 +33,13 @@
       },
       {
         "who": "user",
-        "target": "tienda.tiene_pan",
         "options": [
           "tienda.tiene_pan",
           "tienda.una_bolsa",
           "tienda.puedo_pagar"
+        ],
+        "accept": [
+          "tienda.tiene_pan"
         ]
       },
       {
@@ -51,11 +53,13 @@
       },
       {
         "who": "user",
-        "target": "tienda.una_bolsa",
         "options": [
           "tienda.una_bolsa",
           "tienda.puedo_pagar",
           "hola.hasta_luego"
+        ],
+        "accept": [
+          "tienda.una_bolsa"
         ]
       },
       {
@@ -69,11 +73,13 @@
       },
       {
         "who": "user",
-        "target": "hola.hasta_luego",
         "options": [
           "hola.hasta_luego",
           "camino.recto",
           "camino.derecha"
+        ],
+        "accept": [
+          "hola.hasta_luego"
         ]
       }
     ]

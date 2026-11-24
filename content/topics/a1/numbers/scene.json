@@ -7,5 +7,15 @@
     "en": "How much does this cost?"
   },
   "draft": true,
-  "draft_i18n": true
+  "draft_i18n": true,
+  "partner": {
+    "ru": "Пабло",
+    "uk": "Пабло",
+    "en": "Pablo"
+  },
+  "place": {
+    "ru": "На рынке",
+    "uk": "На ринку",
+    "en": "At the market"
+  }
 }

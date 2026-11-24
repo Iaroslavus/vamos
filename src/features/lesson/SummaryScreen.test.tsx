@@ -155,6 +155,7 @@ const ASKED: LearnerProfile = {
   preferencesAsked: true,
   uiLanguage: null,
   spanishVariant: 'spain',
+  address: 'both',
 };
 
 function summaryTree(
@@ -327,6 +328,7 @@ describe('LessonSummaryScreen', () => {
       preferencesAsked: false,
       uiLanguage: null,
       spanishVariant: 'spain',
+      address: 'both',
     });
     await waitFor(() => {
       expect(view.client.getQueryData(['learner', 'user-1'])).toMatchObject({

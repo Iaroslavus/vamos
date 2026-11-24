@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "mercado.estan_frescos",
         "options": [
           "mercado.estan_frescos",
           "mercado.esta_fresca",
           "mercado.esta_muy_rico"
+        ],
+        "accept": [
+          "mercado.estan_frescos"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "mercado.eso_es_todo",
         "options": [
           "mercado.eso_es_todo",
           "mercado.algo_mas",
           "mercado.quisiera"
+        ],
+        "accept": [
+          "mercado.eso_es_todo"
         ]
       }
     ]

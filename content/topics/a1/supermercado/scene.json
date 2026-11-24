@@ -7,5 +7,15 @@
     "en": "At the till"
   },
   "draft": true,
-  "draft_i18n": true
+  "draft_i18n": true,
+  "partner": {
+    "ru": "Диего",
+    "uk": "Дієго",
+    "en": "Diego"
+  },
+  "place": {
+    "ru": "У кассы",
+    "uk": "Біля каси",
+    "en": "At the checkout"
+  }
 }

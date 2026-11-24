@@ -36,6 +36,7 @@ export type DialogStepProps = {
   responseMode?: DialogResponseMode;
   onSpeakAloud?: () => void;
   audioVariant?: AudioPreference;
+  speakerName?: string | null;
 };
 
 export function DialogStep({
@@ -46,6 +47,7 @@ export function DialogStep({
   responseMode = 'choose',
   onSpeakAloud,
   audioVariant: audioVariantProp,
+  speakerName = null,
 }: DialogStepProps) {
   const { t } = useTranslation();
   const profilePreference = useAudioPreference();
@@ -55,6 +57,7 @@ export function DialogStep({
     step,
     items,
     audioVariant,
+    speakerName,
     onComplete,
   });
   const [vocabItemId, setVocabItemId] = useState<string | null>(null);

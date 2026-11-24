@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "mercado.los_tomates",
         "options": [
           "mercado.los_tomates",
           "mercado.las_patatas",
           "mercado.las_papas"
+        ],
+        "accept": [
+          "mercado.los_tomates"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "mercado.un_kilo_de_tomates",
         "options": [
           "mercado.un_kilo_de_tomates",
           "mercado.la_cebolla",
           "mercado.los_huevos"
+        ],
+        "accept": [
+          "mercado.un_kilo_de_tomates"
         ]
       }
     ]

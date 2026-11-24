@@ -1,3 +1,4 @@
+import { isNumberCard, qualityIssues } from './quality';
 import type { Item, Lesson, Scene, Topic } from './schema';
 
 export type ContentBundle = {
@@ -48,7 +49,7 @@ export function contentIssues(bundle: ContentBundle): string[] {
     checkLesson(lesson, items, issues);
   }
 
-  return issues;
+  return [...issues, ...qualityIssues(bundle)];
 }
 
 function checkLesson(lesson: Lesson, items: ReadonlyMap<string, Item>, issues: string[]): void {
@@ -69,7 +70,7 @@ function checkLesson(lesson: Lesson, items: ReadonlyMap<string, Item>, issues: s
       continue;
     }
 
-    if (item.type === 'word') words += 1;
+    if (item.type === 'word' && !isNumberCard(item)) words += 1;
     const tokens = spanishTokens(item.es);
     if (item.type === 'word' && tokens.length !== 1) {
       issues.push(`item ${item.id} is marked word but has ${tokens.length} Spanish tokens`);
@@ -90,11 +91,13 @@ function checkLesson(lesson: Lesson, items: ReadonlyMap<string, Item>, issues: s
 
   for (const line of lesson.dialog.lines) {
     if (line.who !== 'user') continue;
-    if (!items.has(line.target)) {
-      issues.push(`lesson ${lesson.id} dialog target ${line.target} is missing`);
-    }
-    if (!line.options.includes(line.target)) {
-      issues.push(`lesson ${lesson.id} dialog target ${line.target} is not an option`);
+    for (const acceptId of line.accept) {
+      if (!items.has(acceptId)) {
+        issues.push(`lesson ${lesson.id} dialog accept ${acceptId} is missing`);
+      }
+      if (!line.options.includes(acceptId)) {
+        issues.push(`lesson ${lesson.id} dialog accept ${acceptId} is not an option`);
+      }
     }
     for (const option of line.options) {
       if (!items.has(option)) {

@@ -127,6 +127,7 @@ const LEARNER: LearnerProfile = {
   preferencesAsked: true,
   uiLanguage: null,
   spanishVariant: 'spain',
+  address: 'both',
 };
 
 function learnerRepository(profile: LearnerProfile = LEARNER): LearnerRepository {
@@ -309,7 +310,9 @@ describe('Today screen', () => {
           }}
         >
           <I18nextProvider i18n={i18n}>
-            <LessonScreen />
+            <LearnerProvider repository={learnerRepository()}>
+              <LessonScreen />
+            </LearnerProvider>
           </I18nextProvider>
         </SafeAreaProvider>
       </QueryClientProvider>,

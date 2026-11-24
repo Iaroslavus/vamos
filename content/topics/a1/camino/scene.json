@@ -7,5 +7,15 @@
     "en": "Ask for directions"
   },
   "draft": true,
-  "draft_i18n": true
+  "draft_i18n": true,
+  "partner": {
+    "ru": "Луис",
+    "uk": "Луїс",
+    "en": "Luis"
+  },
+  "place": {
+    "ru": "На улице",
+    "uk": "На вулиці",
+    "en": "On the street"
+  }
 }

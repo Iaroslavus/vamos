@@ -524,11 +524,11 @@
   {
     "id": "hola.me_llamo",
     "type": "phrase",
-    "es": "me llamo",
+    "es": "Me llamo {name}",
     "tr": {
-      "ru": "меня зовут",
-      "uk": "мене звати",
-      "en": "my name is"
+      "ru": "Меня зовут {name}",
+      "uk": "Мене звати {name}",
+      "en": "My name is {name}"
     },
     "literal": {
       "ru": "себя зову",
@@ -559,9 +559,9 @@
       "en": "me yAmo"
     },
     "note": {
-      "ru": "Дальше сразу имя: me llamo Ana.",
-      "uk": "Далі одразу ім'я: me llamo Ana.",
-      "en": "The name comes right after: me llamo Ana."
+      "ru": "Вместо {name} — имя из профиля. Инфинитив llamarse.",
+      "uk": "Замість {name} — ім'я з профілю. Інфінітив llamarse.",
+      "en": "{name} is the name from the profile. Infinitive llamarse."
     },
     "why": null,
     "level": "A1",
@@ -776,22 +776,22 @@
   },
   {
     "id": "hola.soy",
-    "type": "word",
-    "es": "soy",
+    "type": "phrase",
+    "es": "Soy Ana",
     "tr": {
-      "ru": "я",
-      "uk": "я",
-      "en": "I am"
+      "ru": "Я Ана",
+      "uk": "Я Ана",
+      "en": "I'm Ana"
     },
     "say": {
-      "ru": "сой",
-      "uk": "сой",
-      "en": "soy"
+      "ru": "сой Ана",
+      "uk": "сой Ана",
+      "en": "soy Ana"
     },
     "note": {
-      "ru": "Имя и откуда вы: soy Ana, soy de Rusia.",
-      "uk": "Ім'я і звідки ви: soy Ana, soy de Rusia.",
-      "en": "Your name and where you are from: soy Ana, soy de Rusia."
+      "ru": "Имя после soy. Инфинитив ser.",
+      "uk": "Ім'я після soy. Інфінітив ser.",
+      "en": "The name follows soy. Infinitive ser."
     },
     "why": {
       "ru": "Форма глагола ser для «я»: yo soy.",
@@ -808,14 +808,50 @@
         "es": "items/a1/hola/soy.es.slow.m4a",
         "latam": "items/a1/hola/soy.mx.slow.m4a"
       },
-      "parts": [],
+      "parts": [
+        {
+          "es": "items/a1/hola/soy.p0.es.normal.m4a",
+          "latam": "items/a1/hola/soy.p0.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/soy.p0.es.slow.m4a",
+            "latam": "items/a1/hola/soy.p0.mx.slow.m4a"
+          }
+        },
+        {
+          "es": "items/a1/hola/soy.p1.es.normal.m4a",
+          "latam": "items/a1/hola/soy.p1.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/soy.p1.es.slow.m4a",
+            "latam": "items/a1/hola/soy.p1.mx.slow.m4a"
+          }
+        }
+      ],
       "features": "items/a1/hola/soy.features.json"
     },
     "tags": [
       "intro"
     ],
     "draft": true,
-    "draft_i18n": true
+    "draft_i18n": true,
+    "literal": null,
+    "parts": [
+      {
+        "es": "Soy",
+        "tr": {
+          "ru": "я есть",
+          "uk": "я є",
+          "en": "I am"
+        }
+      },
+      {
+        "es": "Ana",
+        "tr": {
+          "ru": "Ана",
+          "uk": "Ана",
+          "en": "Ana"
+        }
+      }
+    ]
   },
   {
     "id": "hola.de",
@@ -858,17 +894,17 @@
   },
   {
     "id": "hola.encantado",
-    "type": "phrase",
-    "es": "encantado / encantada",
+    "type": "word",
+    "es": "encantado",
     "tr": {
-      "ru": "рад(а) познакомиться",
-      "uk": "радий(а) познайомитися",
+      "ru": "рад познакомиться",
+      "uk": "радий познайомитися",
       "en": "pleased to meet you"
     },
     "literal": {
-      "ru": "очарован / очарована",
-      "uk": "зачарований / зачарована",
-      "en": "enchanted / enchanted"
+      "ru": "очарован",
+      "uk": "зачарований",
+      "en": "enchanted"
     },
     "parts": [
       {
@@ -876,7 +912,7 @@
         "tr": {
           "ru": "очарован",
           "uk": "зачарований",
-          "en": "enchanted (m.)"
+          "en": "enchanted"
         }
       },
       {
@@ -884,14 +920,14 @@
         "tr": {
           "ru": "очарована",
           "uk": "зачарована",
-          "en": "enchanted (f.)"
+          "en": "enchanted"
         }
       }
     ],
     "say": {
-      "ru": "энкантАдо / энкантАда",
-      "uk": "енкантАдо / енкантАда",
-      "en": "enkantAdo / enkantAda"
+      "ru": "энкантАдо",
+      "uk": "енкантАдо",
+      "en": "enkantAdo"
     },
     "note": {
       "ru": "Окончание зависит от того, кто говорит.",
@@ -931,13 +967,41 @@
           }
         }
       ],
+      "forms": {
+        "f": {
+          "es": "items/a1/hola/encantado.f.es.normal.m4a",
+          "latam": "items/a1/hola/encantado.f.mx.normal.m4a",
+          "slow": {
+            "es": "items/a1/hola/encantado.f.es.slow.m4a",
+            "latam": "items/a1/hola/encantado.f.mx.slow.m4a"
+          }
+        }
+      },
       "features": "items/a1/hola/encantado.features.json"
     },
     "tags": [
       "intro"
     ],
     "draft": true,
-    "draft_i18n": true
+    "draft_i18n": true,
+    "forms": {
+      "m": {
+        "es": "encantado",
+        "tr": {
+          "ru": "рад познакомиться",
+          "uk": "радий познайомитися",
+          "en": "pleased to meet you"
+        }
+      },
+      "f": {
+        "es": "encantada",
+        "tr": {
+          "ru": "рада познакомиться",
+          "uk": "рада познайомитися",
+          "en": "pleased to meet you"
+        }
+      }
+    }
   },
   {
     "id": "hola.usted",

@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "mercado.me_da_un_kilo",
         "options": [
           "mercado.me_da_un_kilo",
           "mercado.medio_kilo_de_fresas",
           "mercado.hay_fresas"
+        ],
+        "accept": [
+          "mercado.me_da_un_kilo"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "mercado.cuanto_es_todo",
         "options": [
           "mercado.cuanto_es_todo",
           "mercado.no_hay",
           "mercado.muchas_gracias"
+        ],
+        "accept": [
+          "mercado.cuanto_es_todo"
         ]
       }
     ]

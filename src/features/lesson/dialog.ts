@@ -1,3 +1,4 @@
+import { fillName } from '@/features/content/gender';
 import { contentLanguage } from '@/features/content/language';
 import type { DialogLine, Item } from '@/features/content/schema';
 import { textOf } from '@/features/content/text';
@@ -8,6 +9,8 @@ import { itemAudioPath } from './intro';
 export type DialogOption = {
   id: string;
   es: string;
+  ru: string;
+  audio: string | null;
 };
 
 export type PlayableNpcLine = {
@@ -18,7 +21,10 @@ export type PlayableNpcLine = {
 
 export type PlayableUserLine = {
   who: 'user';
+  /** First accepted item. This is the line revealed after two misses. */
   targetId: string;
+  /** Every option id that counts as this turn. */
+  acceptIds: readonly string[];
   es: string;
   ru: string;
   audio: string | null;
@@ -83,22 +89,48 @@ export function resolveDialogLines(
   items: ReadonlyMap<string, Item>,
   preference: AudioPreference = 'es',
   language: string | null | undefined = contentLanguage(),
+  name: string | null = null,
 ): PlayableDialogLine[] {
+  const speaker = name?.trim() || 'Ana';
   return lines.map((line) => {
     if (line.who === 'npc') return { who: 'npc', es: line.es, ru: textOf(line.tr, language) };
-    const target = requiredItem(items, line.target);
+    const primaryId = line.accept[0];
+    if (!primaryId) throw new Error('Dialog user line has no accepted item');
+    const target = requiredItem(items, primaryId);
+    const named = line.slot === 'name';
+    const spoken = speakItem(target, named, speaker, preference, language);
     return {
       who: 'user',
       targetId: target.id,
-      es: target.es,
-      ru: textOf(target.tr, language),
-      audio: itemAudioPath(target, preference),
+      acceptIds: line.accept,
+      es: spoken.es,
+      ru: spoken.ru,
+      audio: spoken.audio,
       options: line.options.map((id) => {
         const option = requiredItem(items, id);
-        return { id: option.id, es: option.es };
+        const lineSpoken = speakItem(option, named, speaker, preference, language);
+        return { id: option.id, es: lineSpoken.es, ru: lineSpoken.ru, audio: lineSpoken.audio };
       }),
     };
   });
+}
+
+function speakItem(
+  item: Item,
+  named: boolean,
+  speaker: string,
+  preference: AudioPreference,
+  language: string | null | undefined,
+): { es: string; ru: string; audio: string | null } {
+  const usesName = named || item.es.includes('{name}');
+  const es = usesName ? fillName(item.es, speaker) : item.es;
+  const ru = fillName(textOf(item.tr, language), speaker);
+  const recorded = usesName ? fillName(item.es, 'Ana') : item.es;
+  const audio =
+    es.trim().toLowerCase() === recorded.trim().toLowerCase()
+      ? itemAudioPath(item, preference)
+      : null;
+  return { es, ru, audio };
 }
 
 export function createDialogState(lines: readonly PlayableDialogLine[]): DialogState {
@@ -139,9 +171,9 @@ export function chooseDialogOption(state: DialogState, optionId: string): Dialog
   if (state.rejectedIds.includes(optionId)) return state;
   if (!line.options.some((option) => option.id === optionId)) return state;
 
-  const correct = optionId === line.targetId;
+  const correct = line.acceptIds.includes(optionId);
   if (correct) {
-    return sendLine(state, line, { missed: state.attempt === 2, revealed: false });
+    return sendLine(state, line, { missed: state.attempt === 2, revealed: false, optionId });
   }
   if (state.attempt === 1) {
     return {
@@ -172,13 +204,21 @@ export function dialogResult(stepId: string, state: DialogState): DialogStepResu
 function sendLine(
   state: DialogState,
   line: PlayableUserLine,
-  input: { missed: boolean; revealed: boolean; rejectedIds?: readonly string[] },
+  input: {
+    missed: boolean;
+    revealed: boolean;
+    optionId?: string;
+    rejectedIds?: readonly string[];
+  },
 ): DialogState {
+  const chosen =
+    line.options.find((option) => option.id === input.optionId) ??
+    line.options.find((option) => option.id === line.targetId);
   const outcome: DialogLineOutcome = {
     index: state.index,
-    itemId: line.targetId,
-    es: line.es,
-    ru: line.ru,
+    itemId: chosen?.id ?? line.targetId,
+    es: chosen?.es ?? line.es,
+    ru: chosen?.ru ?? line.ru,
     options: line.options.map((option) => option.es),
     missed: input.missed,
   };
@@ -189,8 +229,8 @@ function sendLine(
     hint: null,
     rejectedIds: input.rejectedIds ?? state.rejectedIds,
     outcomes: [...state.outcomes, outcome],
-    sendingEs: line.es,
-    sendingAudio: line.audio,
+    sendingEs: chosen?.es ?? line.es,
+    sendingAudio: chosen?.audio ?? line.audio,
     sendingRevealed: input.revealed,
   };
 }

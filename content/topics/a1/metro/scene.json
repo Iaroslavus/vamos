@@ -7,5 +7,15 @@
     "en": "At the station"
   },
   "draft": true,
-  "draft_i18n": true
+  "draft_i18n": true,
+  "partner": {
+    "ru": "Андрес",
+    "uk": "Андрес",
+    "en": "Andrés"
+  },
+  "place": {
+    "ru": "На станции метро",
+    "uk": "На станції метро",
+    "en": "At the metro station"
+  }
 }

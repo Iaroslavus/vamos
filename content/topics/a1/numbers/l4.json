@@ -1,0 +1,69 @@
+{
+  "id": "a1.numbers.l4",
+  "topic": "a1.numbers",
+  "title": {
+    "ru": "Возраст и телефон",
+    "uk": "Вік і телефон",
+    "en": "Age and phone"
+  },
+  "items": [
+    "numbers.cuantos_anos",
+    "numbers.tengo_treinta",
+    "numbers.tengo_treinta_y_dos",
+    "numbers.mi_numero",
+    "numbers.cero",
+    "numbers.cien",
+    "numbers.mil"
+  ],
+  "speak": [
+    "numbers.cuantos_anos",
+    "numbers.tengo_treinta"
+  ],
+  "dialog": {
+    "lines": [
+      {
+        "who": "npc",
+        "es": "¿Cuántos años tienes?",
+        "tr": {
+          "ru": "Сколько тебе лет?",
+          "uk": "Скільки тобі років?",
+          "en": "How old are you?"
+        }
+      },
+      {
+        "who": "user",
+        "accept": [
+          "numbers.tengo_treinta"
+        ],
+        "options": [
+          "numbers.tengo_treinta",
+          "numbers.tengo_treinta_y_dos",
+          "numbers.mi_numero"
+        ]
+      },
+      {
+        "who": "npc",
+        "es": "¿Y el teléfono?",
+        "tr": {
+          "ru": "А телефон?",
+          "uk": "А телефон?",
+          "en": "And the phone?"
+        }
+      },
+      {
+        "who": "user",
+        "accept": [
+          "numbers.mi_numero"
+        ],
+        "options": [
+          "numbers.mi_numero",
+          "numbers.cero",
+          "numbers.cien"
+        ]
+      }
+    ]
+  },
+  "overrides": [],
+  "draft": true,
+  "draft_i18n": true
+}

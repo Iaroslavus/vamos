@@ -33,11 +33,13 @@
       },
       {
         "who": "user",
-        "target": "hola.buenos_dias",
         "options": [
           "hola.buenos_dias",
           "hola.buenas_noches",
           "hola.gracias"
+        ],
+        "accept": [
+          "hola.buenos_dias"
         ]
       },
       {
@@ -51,11 +53,13 @@
       },
       {
         "who": "user",
-        "target": "hola.por_favor",
         "options": [
           "hola.por_favor",
           "hola.adios",
           "hola.hasta_luego"
+        ],
+        "accept": [
+          "hola.por_favor"
         ]
       },
       {
@@ -69,11 +73,13 @@
       },
       {
         "who": "user",
-        "target": "hola.gracias",
         "options": [
           "hola.gracias",
           "hola.hola",
           "hola.adios"
+        ],
+        "accept": [
+          "hola.gracias"
         ]
       }
     ]

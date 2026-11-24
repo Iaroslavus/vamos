@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "mercado.me_da",
         "options": [
           "mercado.me_da",
           "mercado.un_kilo",
           "mercado.medio_kilo"
+        ],
+        "accept": [
+          "mercado.me_da"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "mercado.las_manzanas",
         "options": [
           "mercado.las_manzanas",
           "mercado.las_naranjas",
           "mercado.los_platanos"
+        ],
+        "accept": [
+          "mercado.las_manzanas"
         ]
       }
     ]

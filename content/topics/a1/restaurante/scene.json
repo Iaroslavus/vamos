@@ -7,5 +7,15 @@
     "en": "Dinner"
   },
   "draft": true,
-  "draft_i18n": true
+  "draft_i18n": true,
+  "partner": {
+    "ru": "Кармен",
+    "uk": "Кармен",
+    "en": "Carmen"
+  },
+  "place": {
+    "ru": "Ужин в ресторане",
+    "uk": "Вечеря в ресторані",
+    "en": "Dinner at a restaurant"
+  }
 }

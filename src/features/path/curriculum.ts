@@ -31,6 +31,8 @@ const CURRICULUM: readonly CurriculumLesson[] = [
   { id: 'a1.cafe.l2', level: 'A1', unit: 2, titleKey: 'learn.lessons.a1-cafe-l2' },
   { id: 'a1.numbers.l1', level: 'A1', unit: 3, titleKey: 'learn.lessons.a1-u01-l03' },
   { id: 'a1.numbers.l2', level: 'A1', unit: 3, titleKey: 'learn.lessons.a1-numbers-l2' },
+  { id: 'a1.numbers.l3', level: 'A1', unit: 3, titleKey: 'learn.lessons.a1-numbers-l3' },
+  { id: 'a1.numbers.l4', level: 'A1', unit: 3, titleKey: 'learn.lessons.a1-numbers-l4' },
   { id: 'a1.tienda.l1', level: 'A1', unit: 4, titleKey: 'learn.lessons.a1-tienda-l1' },
   { id: 'a1.tienda.l2', level: 'A1', unit: 4, titleKey: 'learn.lessons.a1-tienda-l2' },
   { id: 'a1.camino.l1', level: 'A1', unit: 5, titleKey: 'learn.lessons.a1-camino-l1' },

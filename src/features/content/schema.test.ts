@@ -85,7 +85,7 @@ describe('content v2 schema', () => {
           { who: 'npc', es: '¡Hola! ¿Qué le pongo?', tr: fillLocales('Здравствуйте! Что вам?') },
           {
             who: 'user',
-            target: 'cafe.cafe_con_leche',
+            accept: ['cafe.cafe_con_leche'],
             options: ['cafe.cafe_con_leche', 'cafe.un_te', 'cafe.cuanto_es'],
           },
           {
@@ -95,7 +95,7 @@ describe('content v2 schema', () => {
           },
           {
             who: 'user',
-            target: 'cafe.para_llevar',
+            accept: ['cafe.para_llevar'],
             options: ['cafe.para_llevar', 'cafe.aqui'],
           },
         ],
@@ -105,7 +105,7 @@ describe('content v2 schema', () => {
 
     expect(lesson.items).toHaveLength(6);
     expect(lesson.overrides).toEqual([]);
-    expect(lesson.dialog.lines[1]).toMatchObject({ target: 'cafe.cafe_con_leche' });
+    expect(lesson.dialog.lines[1]).toMatchObject({ accept: ['cafe.cafe_con_leche'] });
   });
 
   it('defaults literal to null and keeps a word-for-word gloss', () => {

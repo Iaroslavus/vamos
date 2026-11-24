@@ -6,7 +6,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
-import { displayLine, displayText } from '@/features/content/displayText';
+import { displayEs, displayLine, displayText } from '@/features/content/displayText';
 import { playLessonAudio, stopLessonAudio } from '@/features/audio/playback';
 import { colors, radius, space } from '@/theme/tokens';
 
@@ -81,7 +81,7 @@ export function ResultPhrase({
         <View style={styles.phrase}>
           {phraseEs ? (
             <Text variant="h2" style={styles.center}>
-              {displayText(phraseEs)}
+              {displayEs(phraseEs)}
             </Text>
           ) : null}
           {phraseTr ? (

@@ -5,10 +5,13 @@ import { SpeakPractice } from '@/features/speech/components/SpeakPractice';
 import { space } from '@/theme/tokens';
 
 type SpeakPart = { es: string; ru: string };
+type SpeakLine = { es: string; audio: string | null };
 
 type SpeakRepeatStepProps = {
   promptEs: string;
   audio: string | null;
+  /** Two gendered lines. Either pronunciation counts. */
+  lines?: readonly SpeakLine[];
   sayRu?: string | null;
   parts?: readonly SpeakPart[];
   confusables?: readonly string[];
@@ -20,6 +23,7 @@ type SpeakRepeatStepProps = {
 export function SpeakRepeatStep({
   promptEs,
   audio,
+  lines,
   sayRu = null,
   parts = [],
   confusables = [],
@@ -33,8 +37,9 @@ export function SpeakRepeatStep({
     <View style={[styles.root, { paddingBottom: Math.max(insets.bottom, space.lg) }]}>
       <SpeakPractice
         mode="step"
-        phrase={promptEs}
+        phrase={lines && lines.length > 1 ? (lines[0]?.es ?? promptEs) : promptEs}
         audio={audio}
+        lines={lines}
         sayRu={sayRu}
         parts={parts}
         confusables={confusables}

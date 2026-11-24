@@ -33,11 +33,13 @@
       },
       {
         "who": "user",
-        "target": "camino.donde_esta",
         "options": [
           "camino.donde_esta",
           "camino.como_llego",
           "camino.el_metro"
+        ],
+        "accept": [
+          "camino.donde_esta"
         ]
       },
       {
@@ -51,11 +53,13 @@
       },
       {
         "who": "user",
-        "target": "camino.la_estacion",
         "options": [
           "camino.la_estacion",
           "camino.el_metro",
           "camino.por_alli"
+        ],
+        "accept": [
+          "camino.la_estacion"
         ]
       },
       {
@@ -69,11 +73,13 @@
       },
       {
         "who": "user",
-        "target": "camino.por_alli",
         "options": [
           "camino.por_alli",
           "camino.por_aqui",
           "hola.por_favor"
+        ],
+        "accept": [
+          "camino.por_alli"
         ]
       }
     ]

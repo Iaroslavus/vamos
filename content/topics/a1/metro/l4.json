@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "metro.estoy_perdido",
         "options": [
           "metro.estoy_perdido",
           "metro.me_ayuda",
           "metro.una_tarjeta"
+        ],
+        "accept": [
+          "metro.estoy_perdido"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "metro.donde_esta_la_salida",
         "options": [
           "metro.donde_esta_la_salida",
           "metro.el_anden",
           "metro.anden_dos"
+        ],
+        "accept": [
+          "metro.donde_esta_la_salida"
         ]
       }
     ]

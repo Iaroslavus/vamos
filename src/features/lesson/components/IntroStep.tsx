@@ -7,8 +7,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
 import { Appear } from '@/features/auth/components/Appear';
+import { playLessonAudio } from '@/features/audio/playback';
 import { useAudioPreference } from '@/features/audio/preference';
+import { spokenLines } from '@/features/content/gender';
 import { listItems } from '@/features/content/loader';
+import type { AddressForm } from '@/features/learner/profile';
 import type { Item } from '@/features/content/schema';
 import { contentLocale, textOf } from '@/features/content/text';
 import { resolveTopicIcon } from '@/features/content/topicIcons';
@@ -33,6 +36,10 @@ type IntroStepProps = {
   topicIcon?: string;
   /** Which recording to prefer. Defaults to the profile variant. */
   audioVariant?: AudioPreference;
+  /** Which gendered line to show. Both draws two rows. */
+  address?: AddressForm;
+  /** Profile name for `{name}`. Ana or Pablo when it is empty. */
+  speakerName?: string | null;
   onNext: () => void;
   /** Optional notice when practice opens. The sheet itself does not grade the lesson. */
   onRepeatAloud?: () => void;
@@ -44,6 +51,8 @@ export function IntroStep({
   total,
   topicIcon,
   audioVariant: audioVariantProp,
+  address = 'both',
+  speakerName = null,
   onNext,
   onRepeatAloud,
 }: IntroStepProps) {
@@ -53,7 +62,18 @@ export function IntroStep({
   const language = contentLocale(i18n.language);
   const insets = useSafeAreaInsets();
   const saveState = useItemSaveState([item.id]);
-  const { playPhrase, playPart } = useIntroPlayback(item, audioVariant);
+  const lines = spokenLines(item, address, speakerName, audioVariant);
+  const slowLines = spokenLines(item, address, speakerName, audioVariant, 'slow');
+  const primary = lines[0];
+  const customLine =
+    lines.length > 1 || (primary && primary.es !== item.es)
+      ? {
+          es: primary?.es ?? item.es,
+          audio: primary?.audio ?? null,
+          slow: slowLines[0]?.audio ?? null,
+        }
+      : undefined;
+  const { playPhrase, playPart } = useIntroPlayback(item, audioVariant, customLine);
   const [vocabOpen, setVocabOpen] = useState(false);
   const [practiceItemId, setPracticeItemId] = useState<string | null>(null);
   const saveLabel = saveState.inFavorites
@@ -87,6 +107,10 @@ export function IntroStep({
           <Appear key={item.id}>
             <IntroCard
               item={item}
+              lines={lines}
+              onPlayLine={(line) => {
+                void playLessonAudio({ audio: line.audio, text: line.es });
+              }}
               TopicIcon={TopicIcon}
               sayRu={sayRu}
               saved={saveState.inAny}
@@ -131,8 +155,9 @@ export function IntroStep({
       <SpeakPracticeSheet
         visible={practiceItemId === item.id}
         mode="practice"
-        phrase={item.es}
-        audio={itemAudioPath(item, audioVariant)}
+        phrase={primary?.es ?? item.es}
+        audio={primary?.audio ?? itemAudioPath(item, audioVariant)}
+        lines={lines.length > 1 ? lines : undefined}
         sayRu={sayRu}
         parts={speechParts}
         confusables={confusables}

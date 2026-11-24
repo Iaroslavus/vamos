@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
-import { displayText } from '@/features/content/displayText';
+import { displayEs, displayText } from '@/features/content/displayText';
 import { colors, radius, space } from '@/theme/tokens';
 
 type PhraseResultRowProps = {
@@ -25,7 +25,7 @@ export function PhraseResultRow({
   onPlay,
 }: PhraseResultRowProps) {
   const { t } = useTranslation();
-  const shownEs = displayText(es);
+  const shownEs = displayEs(es);
   const shownTranslation = displayText(translation);
 
   return (

@@ -7,5 +7,15 @@
     "en": "At the stall"
   },
   "draft": true,
-  "draft_i18n": true
+  "draft_i18n": true,
+  "partner": {
+    "ru": "Роса",
+    "uk": "Роса",
+    "en": "Rosa"
+  },
+  "place": {
+    "ru": "У прилавка",
+    "uk": "Біля прилавка",
+    "en": "At the stall"
+  }
 }

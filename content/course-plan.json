@@ -127,8 +127,8 @@
                       "type": "phrase"
                     },
                     {
-                      "es": "Soy Pablo",
-                      "ru": "Я Пабло",
+                      "es": "Soy Ana",
+                      "ru": "Я Ана",
                       "type": "phrase"
                     },
                     {
@@ -408,44 +408,91 @@
               "lessons": [
                 {
                   "id": "a1.numbers.l1",
-                  "title_ru": "От 1 до 10",
-                  "goal_ru": "Считать до десяти и называть количество",
+                  "title_ru": "Числа 1–5",
+                  "goal_ru": "Считать от одного до пяти и спросить «сколько?»",
                   "items": [
                     {
-                      "es": "Uno, dos, tres",
-                      "ru": "Один, два, три",
-                      "type": "phrase"
+                      "es": "Uno",
+                      "ru": "Один",
+                      "type": "word",
+                      "display": "1"
                     },
                     {
-                      "es": "Cuatro, cinco, seis",
-                      "ru": "Четыре, пять, шесть",
-                      "type": "phrase"
+                      "es": "Dos",
+                      "ru": "Два",
+                      "type": "word",
+                      "display": "2"
                     },
                     {
-                      "es": "Siete, ocho, nueve, diez",
-                      "ru": "Семь, восемь, девять, десять",
-                      "type": "phrase"
+                      "es": "Tres",
+                      "ru": "Три",
+                      "type": "word",
+                      "display": "3"
+                    },
+                    {
+                      "es": "Cuatro",
+                      "ru": "Четыре",
+                      "type": "word",
+                      "display": "4"
+                    },
+                    {
+                      "es": "Cinco",
+                      "ru": "Пять",
+                      "type": "word",
+                      "display": "5"
                     },
                     {
                       "es": "¿Cuántos?",
                       "ru": "Сколько?",
                       "type": "word"
-                    },
-                    {
-                      "es": "Dos cafés",
-                      "ru": "Два кофе",
-                      "type": "phrase"
-                    },
-                    {
-                      "es": "Tres personas",
-                      "ru": "Три человека",
-                      "type": "phrase"
                     }
                   ]
                 },
                 {
                   "id": "a1.numbers.l2",
-                  "title_ru": "Сколько стоит?",
+                  "title_ru": "Числа 6–10",
+                  "goal_ru": "Считать от шести до десяти и назвать количество",
+                  "items": [
+                    {
+                      "es": "Seis",
+                      "ru": "Шесть",
+                      "type": "word",
+                      "display": "6"
+                    },
+                    {
+                      "es": "Siete",
+                      "ru": "Семь",
+                      "type": "word",
+                      "display": "7"
+                    },
+                    {
+                      "es": "Ocho",
+                      "ru": "Восемь",
+                      "type": "word",
+                      "display": "8"
+                    },
+                    {
+                      "es": "Nueve",
+                      "ru": "Девять",
+                      "type": "word",
+                      "display": "9"
+                    },
+                    {
+                      "es": "Diez",
+                      "ru": "Десять",
+                      "type": "word",
+                      "display": "10"
+                    },
+                    {
+                      "es": "Dos cafés",
+                      "ru": "Два кофе",
+                      "type": "phrase"
+                    }
+                  ]
+                },
+                {
+                  "id": "a1.numbers.l3",
+                  "title_ru": "Цены",
                   "goal_ru": "Спросить и понять цену",
                   "items": [
                     {
@@ -454,34 +501,34 @@
                       "type": "phrase"
                     },
                     {
-                      "es": "Cuesta cinco euros",
-                      "ru": "Стоит пять евро",
+                      "es": "¿Cuánto cuestan?",
+                      "ru": "Сколько стоят?",
                       "type": "phrase"
                     },
                     {
-                      "es": "Es muy caro",
-                      "ru": "Это очень дорого",
+                      "es": "Un euro",
+                      "ru": "Один евро",
                       "type": "phrase"
                     },
                     {
-                      "es": "Es barato",
-                      "ru": "Это дёшево",
+                      "es": "Dos euros",
+                      "ru": "Два евро",
                       "type": "phrase"
                     },
                     {
-                      "es": "Veinte euros",
-                      "ru": "Двадцать евро",
+                      "es": "Diez euros",
+                      "ru": "Десять евро",
                       "type": "phrase"
                     },
                     {
-                      "es": "Cincuenta céntimos",
-                      "ru": "Пятьдесят центов",
+                      "es": "Dos con cincuenta",
+                      "ru": "Два пятьдесят",
                       "type": "phrase"
                     }
                   ]
                 },
                 {
-                  "id": "a1.numbers.l3",
+                  "id": "a1.numbers.l4",
                   "title_ru": "Возраст и телефон",
                   "goal_ru": "Назвать возраст и номер телефона",
                   "items": [
@@ -496,14 +543,20 @@
                       "type": "phrase"
                     },
                     {
+                      "es": "Tengo treinta y dos años",
+                      "ru": "Мне тридцать два года",
+                      "type": "phrase"
+                    },
+                    {
                       "es": "Mi número es…",
                       "ru": "Мой номер…",
                       "type": "phrase"
                     },
                     {
-                      "es": "Once, doce, quince",
-                      "ru": "Одиннадцать, двенадцать, пятнадцать",
-                      "type": "phrase"
+                      "es": "Cero",
+                      "ru": "Ноль",
+                      "type": "word",
+                      "display": "0"
                     },
                     {
                       "es": "Cien",

@@ -568,9 +568,9 @@ function dialogStep(lesson: Lesson): DialogStep {
   const distractorIds: string[] = [];
   for (const line of lesson.dialog.lines) {
     if (line.who !== 'user') continue;
-    itemIds.push(line.target);
+    itemIds.push(...line.accept);
     for (const option of line.options) {
-      if (option !== line.target) distractorIds.push(option);
+      if (!line.accept.includes(option)) distractorIds.push(option);
     }
   }
   return {
@@ -825,7 +825,12 @@ function audioOf(item: Item): string | null {
 
 function cloneLine(line: DialogLine): DialogLine {
   if (line.who === 'npc') return { who: 'npc', es: line.es, tr: { ...line.tr } };
-  return { who: 'user', target: line.target, options: [...line.options] };
+  return {
+    who: 'user',
+    accept: [...line.accept],
+    options: [...line.options],
+    ...(line.slot ? { slot: line.slot } : {}),
+  };
 }
 
 function requireResolvable(lesson: Lesson, byId: ReadonlyMap<string, Item>): void {
@@ -833,7 +838,7 @@ function requireResolvable(lesson: Lesson, byId: ReadonlyMap<string, Item>): voi
   for (const id of lesson.speak) requiredItem(byId, id);
   for (const line of lesson.dialog.lines) {
     if (line.who !== 'user') continue;
-    requiredItem(byId, line.target);
+    for (const id of line.accept) requiredItem(byId, id);
     for (const option of line.options) requiredItem(byId, option);
   }
   for (const override of lesson.overrides) {
@@ -845,7 +850,7 @@ function requireIntroduced(lesson: Lesson, allowed: ReadonlySet<string>): void {
   const used = [...lesson.speak];
   for (const line of lesson.dialog.lines) {
     if (line.who !== 'user') continue;
-    used.push(line.target, ...line.options);
+    used.push(...line.accept, ...line.options);
   }
   for (const id of used) {
     if (!allowed.has(id)) {

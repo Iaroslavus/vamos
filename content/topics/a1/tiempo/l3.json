@@ -32,11 +32,13 @@
       },
       {
         "who": "user",
-        "target": "tiempo.hoy_es_lunes",
         "options": [
           "tiempo.hoy_es_lunes",
           "tiempo.manana_es_martes",
           "tiempo.hoy"
+        ],
+        "accept": [
+          "tiempo.hoy_es_lunes"
         ]
       },
       {
@@ -50,11 +52,13 @@
       },
       {
         "who": "user",
-        "target": "tiempo.por_la_manana",
         "options": [
           "tiempo.por_la_manana",
           "tiempo.por_la_tarde",
           "tiempo.por_la_noche"
+        ],
+        "accept": [
+          "tiempo.por_la_manana"
         ]
       }
     ]

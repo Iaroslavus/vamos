@@ -142,8 +142,9 @@ function answerDialog(
 ): void {
   step.lines.forEach((line, lineIndex) => {
     if (line.who !== 'user') return;
-    const target = items.find((item) => item.id === line.target);
-    if (!target) throw new Error(`Unknown item id: ${line.target}`);
+    const targetId = line.accept[0];
+    const target = items.find((item) => item.id === targetId);
+    if (!target || !targetId) throw new Error(`Unknown item id: ${targetId ?? ''}`);
     useLessonStore.getState().recordDialogLine({
       stepId: step.id,
       lineIndex,
