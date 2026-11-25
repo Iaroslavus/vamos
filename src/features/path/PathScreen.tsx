@@ -25,6 +25,7 @@ import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, space } from '@/theme/tokens';
 
 import { phrasebookTarget } from '@/features/cheatsheet/route';
+import { takeTopicCelebration } from '@/features/topicTest/celebration';
 
 import { cityName } from './cities';
 import { PathCanvas } from './components/PathCanvas';
@@ -71,14 +72,18 @@ export function PathScreen() {
   useFocusEffect(
     useCallback(() => {
       if (progress.isLoading && !progress.data) return;
-      const event = pathCelebration(previous.current, snapshotOf(nodes));
+      const queued = takeTopicCelebration();
+      const event = queued ? 'topic' : pathCelebration(previous.current, snapshotOf(nodes));
       previous.current = snapshotOf(nodes);
       if (event === 'topic') {
         setTopicJustFinished(true);
         const next = nodes.find((node) => node.status === 'current');
         if (next) setSelectedId(next.id);
         void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        return;
+        if (reduceMotion) return;
+        setConfetti(true);
+        const timer = setTimeout(() => setConfetti(false), 1700);
+        return () => clearTimeout(timer);
       }
       if (event !== 'lesson') return;
       setTopicJustFinished(false);
@@ -182,6 +187,9 @@ export function PathScreen() {
             {...cheatSheetProps(selected.topicId, (id) =>
               router.push(phrasebookTarget({ topicId: id, source: 'path' })),
             )}
+            {...topicTestProps(selected, (id) =>
+              router.push({ pathname: '/topic-test/[id]', params: { id } }),
+            )}
           />
         </>
       )}
@@ -197,6 +205,15 @@ export function PathScreen() {
       ) : null}
     </View>
   );
+}
+
+function topicTestProps(
+  node: PathNode,
+  open: (topicId: string) => void,
+): { onTopicTest: () => void } | Record<string, never> {
+  if (node.kind !== 'topic' || node.status === 'done' || !node.topicId) return {};
+  const topicId = node.topicId;
+  return { onTopicTest: () => open(topicId) };
 }
 
 function cheatSheetProps(

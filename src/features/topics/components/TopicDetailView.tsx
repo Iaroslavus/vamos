@@ -6,6 +6,7 @@ import { Text } from '@/components/Text';
 import { resolveTopicIcon } from '@/features/content/topicIcons';
 import type { TopicDetail } from '@/features/topics/catalog';
 import { CanDoList } from '@/features/topics/components/CanDoList';
+import { TopicTestEntry } from '@/features/topicTest/components/TopicTestEntry';
 import { TopicGlyph } from '@/features/topics/components/TopicGlyph';
 import { TopicOutline } from '@/features/topics/components/TopicOutline';
 import { colors, radius, space } from '@/theme/tokens';
@@ -13,9 +14,10 @@ import { colors, radius, space } from '@/theme/tokens';
 type TopicDetailViewProps = {
   detail: TopicDetail;
   onOpenLesson: (lessonId: string) => void;
+  onTopicTest?: () => void;
 };
 
-export function TopicDetailView({ detail, onOpenLesson }: TopicDetailViewProps) {
+export function TopicDetailView({ detail, onOpenLesson, onTopicTest }: TopicDetailViewProps) {
   const { t } = useTranslation();
   const lessons = t('topics.lessonCount', { count: detail.lessonCount });
   const phrases = t('topics.phraseCount', { count: detail.phraseCount });
@@ -46,6 +48,7 @@ export function TopicDetailView({ detail, onOpenLesson }: TopicDetailViewProps) 
       </View>
       <CanDoList items={detail.canDos} />
       <TopicOutline detail={detail} onOpenLesson={onOpenLesson} />
+      {onTopicTest ? <TopicTestEntry onPress={onTopicTest} /> : null}
     </View>
   );
 }

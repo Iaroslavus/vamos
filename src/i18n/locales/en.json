@@ -877,6 +877,35 @@
     "recommended": "Recommended",
     "due": "{{due}} to review"
   },
+  "topicTest": {
+    "entry": "Take the topic test",
+    "title": "Topic test",
+    "progress": "{{current}} of {{total}}",
+    "check": "Check",
+    "next": "Next",
+    "correct": "Correct!",
+    "wrong": "Not quite",
+    "passedTitle": "Passed",
+    "passedBody": "Topic closed. {{score}}% correct.",
+    "failedTitle": "Not passed",
+    "failedBody": "{{score}}% — 80% is required.",
+    "reviewLessons": "Review: {{lessons}}",
+    "lesson": "Lesson {{number}}",
+    "retry": "Try again",
+    "continue": "Continue",
+    "close": "Close",
+    "empty": "This topic has no test tasks yet.",
+    "saveError": "Could not save the result. Try again.",
+    "saveRetry": "Save again",
+    "prompt": {
+      "recognize": "Choose the translation",
+      "build": "Build the phrase",
+      "buildNamed": "Build: {{text}}",
+      "recall": "Write it in Spanish",
+      "listen": "What do you hear?",
+      "speak": "Say it aloud"
+    }
+  },
   "common": {
     "devComponents": "Components (dev)",
     "devIntro": "Meet the phrase",

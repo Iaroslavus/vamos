@@ -196,6 +196,39 @@ describe('Path screen', () => {
     await flush();
   });
 
+  it('opens the topic test from the card before the topic is done', async () => {
+    await renderPath();
+
+    await fireEvent.press(await screen.findByText('Сдать тест темы'));
+    expect(mockPush).toHaveBeenCalledWith({
+      pathname: '/topic-test/[id]',
+      params: { id: 'a1.hola' },
+    });
+    await flush();
+  });
+
+  it('hides the topic test on a finished topic', async () => {
+    await renderPath([
+      {
+        lessonId: 'a1.hola.l1',
+        status: 'completed',
+        bestAccuracy: 1,
+        completedAt: '2026-05-01T10:00:00.000Z',
+      },
+      {
+        lessonId: 'a1.hola.l2',
+        status: 'completed',
+        bestAccuracy: 1,
+        completedAt: '2026-05-01T10:00:00.000Z',
+      },
+    ]);
+
+    await fireEvent.press(await screen.findByLabelText('¡Hola! Знакомство, пройдено'));
+    expect(screen.getByText('Повторить тему')).toBeTruthy();
+    expect(screen.queryByText('Сдать тест темы')).toBeNull();
+    await flush();
+  });
+
   it('opens the cheatsheet of the selected topic', async () => {
     await renderPath();
 

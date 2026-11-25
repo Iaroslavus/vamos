@@ -877,6 +877,35 @@
     "recommended": "Рекомендовано",
     "due": "{{due}} до повторення"
   },
+  "topicTest": {
+    "entry": "Здати тест теми",
+    "title": "Тест теми",
+    "progress": "{{current}} із {{total}}",
+    "check": "Перевірити",
+    "next": "Далі",
+    "correct": "Правильно!",
+    "wrong": "Не так",
+    "passedTitle": "Здано",
+    "passedBody": "Тему закрито. {{score}}% правильних.",
+    "failedTitle": "Не здано",
+    "failedBody": "{{score}}% — потрібно 80%.",
+    "reviewLessons": "Пройдіть: {{lessons}}",
+    "lesson": "Урок {{number}}",
+    "retry": "Перескласти",
+    "continue": "Далі",
+    "close": "Закрити",
+    "empty": "У цій темі ще немає завдань для тесту.",
+    "saveError": "Не вдалося зберегти результат. Спробуйте ще раз.",
+    "saveRetry": "Зберегти ще раз",
+    "prompt": {
+      "recognize": "Оберіть переклад",
+      "build": "Складіть фразу",
+      "buildNamed": "Складіть: {{text}}",
+      "recall": "Напишіть іспанською",
+      "listen": "Що ви чуєте?",
+      "speak": "Скажіть уголос"
+    }
+  },
   "common": {
     "devComponents": "Компоненти (dev)",
     "devIntro": "Знайомство з фразою",

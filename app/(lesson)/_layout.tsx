@@ -29,6 +29,10 @@ export default function LessonLayout() {
         name="study"
         options={{ headerShown: false, title: t('study.learn'), gestureEnabled: false }}
       />
+      <Stack.Screen
+        name="topic-test/[id]"
+        options={{ headerShown: false, title: t('topicTest.title'), gestureEnabled: false }}
+      />
     </Stack>
   );
 }
