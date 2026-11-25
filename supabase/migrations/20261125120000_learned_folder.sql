@@ -3,19 +3,7 @@
 
 alter table public.folders drop constraint folders_shape;
 
-do $$
-declare
-  cons text;
-begin
-  select c.conname into cons
-  from pg_constraint as c
-  where c.conrelid = 'public.folders'::regclass
-    and c.contype = 'c'
-    and pg_get_constraintdef(c.oid) ilike '%system_key in%';
-  if cons is not null then
-    execute format('alter table public.folders drop constraint %I', cons);
-  end if;
-end $$;
+alter table public.folders drop constraint if exists folders_system_key_check;
 
 alter table public.folders
   add constraint folders_system_key_check
