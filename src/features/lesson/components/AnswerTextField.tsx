@@ -1,5 +1,10 @@
 import { forwardRef, useImperativeHandle, useState } from 'react';
-import { StyleSheet, TextInput, type NativeSyntheticEvent } from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  type KeyboardTypeOptions,
+  type NativeSyntheticEvent,
+} from 'react-native';
 
 import { colors, fonts, radius, space } from '@/theme/tokens';
 
@@ -16,11 +21,20 @@ type AnswerTextFieldProps = {
   disabled?: boolean;
   autoFocus?: boolean;
   accessibilityLabel?: string;
+  keyboardType?: KeyboardTypeOptions;
 };
 
 export const AnswerTextField = forwardRef<AnswerTextFieldHandle, AnswerTextFieldProps>(
   function AnswerTextField(
-    { value, onChangeText, placeholder, disabled = false, autoFocus = false, accessibilityLabel },
+    {
+      value,
+      onChangeText,
+      placeholder,
+      disabled = false,
+      autoFocus = false,
+      accessibilityLabel,
+      keyboardType,
+    },
     ref,
   ) {
     const [selection, setSelection] = useState<TextSelection>({
@@ -58,6 +72,7 @@ export const AnswerTextField = forwardRef<AnswerTextFieldHandle, AnswerTextField
         placeholder={placeholder}
         placeholderTextColor={colors.inkDisabled}
         accessibilityLabel={accessibilityLabel}
+        keyboardType={keyboardType}
         style={[styles.input, disabled && styles.inputDisabled]}
       />
     );

@@ -173,7 +173,7 @@ export function chooseDialogOption(state: DialogState, optionId: string): Dialog
 
   const correct = line.acceptIds.includes(optionId);
   if (correct) {
-    return sendLine(state, line, { missed: state.attempt === 2, revealed: false, optionId });
+    return sendLine(state, line, { missed: false, revealed: false, optionId });
   }
   if (state.attempt === 1) {
     return {

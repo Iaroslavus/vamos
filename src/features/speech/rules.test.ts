@@ -10,6 +10,8 @@ describe('pronunciationHints', () => {
     expect(pronunciationHints('gente').map((rule) => rule.id)).toEqual(['jota']);
     expect(pronunciationHints('gato').map((rule) => rule.id)).toEqual([]);
     expect(pronunciationHints('días').map((rule) => rule.id)).toEqual(['stress']);
+    expect(pronunciationHints('perro').map((rule) => rule.id)).toEqual(['rr']);
+    expect(pronunciationHints('pero').map((rule) => rule.id)).toEqual([]);
   });
 
   it('can match more than one rule in registry order', () => {

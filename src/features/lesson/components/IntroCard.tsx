@@ -65,6 +65,7 @@ export function IntroCard({
       <View style={styles.face}>
         <IntroCardHeader
           TopicIcon={TopicIcon}
+          display={item.display}
           saved={saved}
           saveLabel={saveLabel}
           onSave={onSave}

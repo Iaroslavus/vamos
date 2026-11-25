@@ -9,8 +9,9 @@ import { activeUiLanguage, type UiLanguage } from '@/i18n/language';
 import { claimUiLanguage } from '@/i18n/preference';
 import { colors } from '@/theme/tokens';
 
-const PHRASE = 'me llamo';
+const PHRASE = '¿Cómo te llamas?';
 const SAY = 'ме йАмо';
+const HEARD = 'como te';
 
 /** Dev preview of the speak sheet, before an attempt and after a miss. */
 export default function DevSpeakScreen() {
@@ -36,7 +37,7 @@ export default function DevSpeakScreen() {
     return <Redirect href="/(tabs)" />;
   }
 
-  const preview = phaseParam === 'after' ? scoreSpeech(PHRASE, 'xxxx') : null;
+  const preview = phaseParam === 'after' ? scoreSpeech(PHRASE, HEARD) : null;
 
   return (
     <View style={styles.root}>
@@ -47,6 +48,7 @@ export default function DevSpeakScreen() {
           phrase={PHRASE}
           sayRu={SAY}
           preview={preview}
+          previewHeard={preview ? HEARD : null}
           onClose={() => undefined}
         />
       ) : null}

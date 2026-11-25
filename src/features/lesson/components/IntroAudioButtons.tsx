@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   listen: {
-    backgroundColor: colors.blue,
+    backgroundColor: colors.teal,
   },
   slow: {
     backgroundColor: colors.surface,

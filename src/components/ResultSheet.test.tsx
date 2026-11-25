@@ -91,13 +91,12 @@ describe('ResultSheet', () => {
       onContinue: jest.fn(),
     });
 
-    expect(screen.getByText('Buenas tardes')).toBeOnTheScreen();
-    expect(screen.getByText('Добрий день')).toBeOnTheScreen();
-    expect(screen.getByRole('button', { name: 'Слушать' })).toBeOnTheScreen();
+    expect(screen.queryByText('Buenas tardes')).toBeNull();
+    expect(screen.queryByText('Добрий день')).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Слушать' })).toBeNull();
     expect(screen.getByRole('button', { name: 'В словник' })).toBeOnTheScreen();
-    expect(playLessonAudio).toHaveBeenCalledWith(
-      expect.objectContaining({ text: 'buenas tardes' }),
-    );
+    expect(screen.getByTestId('result-bar')).toBeOnTheScreen();
+    expect(playLessonAudio).not.toHaveBeenCalled();
 
     fireEvent.press(screen.getByRole('button', { name: 'В словник' }));
     expect(onSave).toHaveBeenCalledTimes(1);

@@ -1,5 +1,5 @@
 import * as Haptics from 'expo-haptics';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import {
   AccessibilityInfo,
   Pressable,
@@ -14,6 +14,9 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-na
 
 import { colors, depth, motion, radius, space, type } from '@/theme/tokens';
 
+/** Face height of a bottom action, before the 5pt sole. */
+export const FOOTER_BUTTON_HEIGHT = 56;
+
 export type ButtonVariant = 'primary' | 'secondary' | 'success';
 
 export type ButtonProps = Omit<PressableProps, 'children' | 'style'> & {
@@ -21,6 +24,9 @@ export type ButtonProps = Omit<PressableProps, 'children' | 'style'> & {
   variant?: ButtonVariant;
   /** Taller face for the two review grades. */
   large?: boolean;
+  /** Bottom pair: 56pt face, label on one line. */
+  footer?: boolean;
+  icon?: ReactNode;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
 };
@@ -61,6 +67,8 @@ export function Button({
   title,
   variant = 'primary',
   large = false,
+  footer = false,
+  icon,
   disabled = false,
   onPress,
   onPressIn,
@@ -115,9 +123,11 @@ export function Button({
     <View style={[styles.wrap, style]} pointerEvents={disabled ? 'none' : 'auto'}>
       <View style={[styles.sole, { backgroundColor: palette.sole, top: soleHeight }]} />
       <Animated.View
+        testID={footer ? 'footer-button-face' : undefined}
         style={[
           styles.face,
           large ? styles.faceLarge : null,
+          footer ? styles.faceFooter : null,
           faceStyle,
           {
             backgroundColor: palette.face,
@@ -135,9 +145,23 @@ export function Button({
           onPress={disabled ? undefined : onPress}
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}
-          style={[styles.pressable, large ? styles.pressableLarge : null]}
+          style={[
+            styles.pressable,
+            large ? styles.pressableLarge : null,
+            footer ? styles.pressableFooter : null,
+          ]}
         >
-          <Text style={[styles.label, { color: palette.label }]}>{title}</Text>
+          <View style={styles.labelRow}>
+            {icon}
+            <Text
+              style={[styles.label, { color: palette.label }]}
+              numberOfLines={footer ? 1 : undefined}
+              adjustsFontSizeToFit={footer}
+              minimumFontScale={footer ? 0.75 : undefined}
+            >
+              {title}
+            </Text>
+          </View>
         </Pressable>
       </Animated.View>
     </View>
@@ -191,6 +215,23 @@ const styles = StyleSheet.create({
   pressableLarge: {
     minHeight: 64,
     paddingVertical: space.lg,
+  },
+  faceFooter: {
+    height: FOOTER_BUTTON_HEIGHT,
+    minHeight: FOOTER_BUTTON_HEIGHT,
+  },
+  pressableFooter: {
+    height: FOOTER_BUTTON_HEIGHT,
+    minHeight: FOOTER_BUTTON_HEIGHT,
+    paddingVertical: 0,
+    paddingHorizontal: space.md,
+  },
+  labelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: space.sm,
+    maxWidth: '100%',
   },
   label: {
     fontFamily: type.button.fontFamily,

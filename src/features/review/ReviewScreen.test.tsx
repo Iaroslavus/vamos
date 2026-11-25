@@ -360,7 +360,7 @@ describe('ReviewScreen', () => {
     read.mockResolvedValue({ cards: [card('hola.hola')], logs: [], dueCount: 1, pending: 0 });
     await renderReview();
 
-    await fireEvent.press(await screen.findByText('Быстрое повторение'));
+    await fireEvent.press(await screen.findByText('Тренировка'));
     await fireEvent.press(await screen.findByRole('button', { name: 'Привет' }));
     await fireEvent.press(screen.getByRole('button', { name: 'Проверить' }));
     await pressContinue();
@@ -379,7 +379,7 @@ describe('ReviewScreen', () => {
     read.mockResolvedValue({ cards: [card('hola.hola')], logs: [], dueCount: 1, pending: 0 });
     await renderReview();
 
-    await fireEvent.press(await screen.findByText('Быстрое повторение'));
+    await fireEvent.press(await screen.findByText('Тренировка'));
     await fireEvent.press(await screen.findByRole('button', { name: 'Здесь' }));
     await fireEvent.press(screen.getByRole('button', { name: 'Проверить' }));
     await pressContinue();

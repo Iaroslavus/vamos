@@ -28,6 +28,7 @@ export function SpeakPracticeFooter({
         <Button
           title={t('speech.again')}
           variant="secondary"
+          footer
           disabled={againDisabled}
           onPress={onAgain}
           style={styles.half}
@@ -35,6 +36,7 @@ export function SpeakPracticeFooter({
         <Button
           title={t('lesson.continue')}
           variant="primary"
+          footer
           onPress={onNext}
           style={styles.half}
         />
@@ -54,7 +56,7 @@ export function SpeakPracticeFooter({
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    alignItems: 'stretch',
+    alignItems: 'flex-end',
     gap: space.sm,
   },
   half: {

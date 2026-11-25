@@ -10,10 +10,14 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Button } from '@/components/Button';
+import { BookmarkPlus } from 'lucide-react-native';
+import { useTranslation } from 'react-i18next';
+
+import { Button, FOOTER_BUTTON_HEIGHT } from '@/components/Button';
+import { IconButton } from '@/components/IconButton';
 import { ResultPhrase } from '@/components/ResultPhrase';
-import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { stopLessonAudio } from '@/features/audio/playback';
+import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, motion, radius, space, type } from '@/theme/tokens';
 
 export type ResultSheetVariant = 'success' | 'error';
@@ -71,8 +75,11 @@ export function ResultSheet({
   onContinue,
   style,
 }: ResultSheetProps) {
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const reduceMotion = useReduceMotion();
+  const compact =
+    variant === 'success' && !message && !correctLabel && !(pairs ?? []).some((pair) => pair.wrong);
   const translateY = useSharedValue(SHEET_OFFSET);
   const sheetOpacity = useSharedValue(0);
   const iconScale = useSharedValue<number>(motion.pop.from);
@@ -147,6 +154,41 @@ export function ResultSheet({
 
   if (!visible) {
     return null;
+  }
+
+  if (compact) {
+    return (
+      <View pointerEvents="box-none" testID="result-bar" style={[styles.overlay, style]}>
+        <View
+          style={[
+            styles.bar,
+            {
+              paddingBottom: Math.max(insets.bottom, space.sm),
+              borderTopColor: theme.accent,
+            },
+          ]}
+        >
+          <Text style={[styles.barTitle, { color: theme.accent }]} numberOfLines={1}>
+            {title}
+          </Text>
+          {onSave ? (
+            <IconButton accessibilityLabel={t('lesson.feedbackSave')} onPress={onSave}>
+              <BookmarkPlus size={22} color={colors.ink} strokeWidth={2.2} />
+            </IconButton>
+          ) : null}
+          <Button
+            title={continueLabel}
+            variant="success"
+            footer
+            onPress={() => {
+              void stopLessonAudio();
+              onContinue();
+            }}
+            style={styles.barButton}
+          />
+        </View>
+      </View>
+    );
   }
 
   return (
@@ -241,5 +283,26 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: space.md,
+  },
+  bar: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    gap: space.sm,
+    backgroundColor: colors.tealSoft,
+    borderTopWidth: 4,
+    paddingHorizontal: space.xl,
+    paddingTop: space.sm,
+  },
+  barTitle: {
+    flex: 1,
+    minWidth: 0,
+    fontFamily: type.h3.fontFamily,
+    fontSize: type.h3.fontSize,
+    lineHeight: FOOTER_BUTTON_HEIGHT,
+    height: FOOTER_BUTTON_HEIGHT,
+  },
+  barButton: {
+    flex: 1,
+    minWidth: 0,
   },
 });

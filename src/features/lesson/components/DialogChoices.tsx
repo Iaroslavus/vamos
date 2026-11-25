@@ -8,6 +8,8 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import { Mic } from 'lucide-react-native';
+
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
 import { Text } from '@/components/Text';
@@ -79,6 +81,8 @@ export function DialogChoices({
     <Button
       title={listening ? t('speech.listening') : t('lesson.dialogSpeak')}
       variant="secondary"
+      footer
+      icon={listening ? undefined : <Mic size={20} color={colors.ink} strokeWidth={2.2} />}
       disabled={speakDisabled}
       onPress={() => onSpeakAloud?.()}
     />

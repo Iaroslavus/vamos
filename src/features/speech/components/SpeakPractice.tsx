@@ -3,21 +3,19 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
 import { IconButton } from '@/components/IconButton';
-import { Ring } from '@/components/Ring';
 import { Text } from '@/components/Text';
-import { playLessonAudio, stopLessonAudio } from '@/features/audio/playback';
-import { colors, space } from '@/theme/tokens';
+import { playLessonAudio, SLOW_RATE, stopLessonAudio } from '@/features/audio/playback';
+import { colors, fonts, space } from '@/theme/tokens';
 
-import { pronunciationCoach } from '../coach';
 import { useSampleDuration } from '../hooks/useSampleDuration';
 import { useSpeakPractice, type SpeakPracticeMode } from '../hooks/useSpeakPractice';
 import { useUnitFeatures } from '../hooks/useUnitFeatures';
 import type { SpeechOption, SpeechScore } from '../score';
-import { speechScoreColor } from '../scoreColor';
 import { ColoredPhrase } from './ColoredPhrase';
 import { MicButton } from './MicButton';
 import { SpeakPracticeFooter } from './SpeakPracticeFooter';
 import { SpeechFallback, type SpeechFallbackTone } from './SpeechFallback';
+import { SpeechFeedback } from './SpeechFeedback';
 
 type Part = { es: string; ru: string };
 
@@ -29,6 +27,10 @@ export type SpeakPracticeProps = {
   mode: SpeakPracticeMode;
   confusables?: readonly string[];
   options?: readonly SpeechOption[];
+  /** Options that count as a correct dialog line. */
+  acceptIds?: readonly string[];
+  /** Shown instead of the phrase until the learner has spoken. A digit, for example. */
+  cue?: string | null;
   /** Gendered lines. Each one has its own sound button, and any of them counts. */
   lines?: readonly { es: string; audio?: string | null }[];
   onMatch?: (optionId: string) => void;
@@ -46,15 +48,18 @@ export type SpeakPracticeProps = {
    * Dev gallery only. A release build ignores it, so a fake score cannot ship.
    */
   preview?: SpeechScore | null;
+  /** Dev gallery only. The line under the colored words. */
+  previewHeard?: string | null;
 };
 
 export function SpeakPractice({
   phrase,
   audio = null,
-  sayRu = null,
   mode,
   confusables = [],
   options,
+  acceptIds,
+  cue = null,
   lines,
   onMatch,
   onSkip,
@@ -65,6 +70,7 @@ export function SpeakPractice({
   featuresPath = null,
   passScore,
   preview = null,
+  previewHeard = null,
 }: SpeakPracticeProps) {
   const { t } = useTranslation();
   const sampleDurationMs = useSampleDuration(audio);
@@ -77,6 +83,7 @@ export function SpeakPractice({
     phrase,
     mode,
     options: spokenOptions,
+    acceptIds,
     confusables,
     onMatch,
     attemptsUsed,
@@ -91,9 +98,8 @@ export function SpeakPractice({
   const listening = practice.recording || practice.capture.listening;
   const shown = __DEV__ && preview ? preview : practice.shown;
   const answered = shown != null || (mode === 'dialog' && practice.dialogMiss);
-  const scoreColor = shown ? speechScoreColor(shown.score) : colors.ink;
-  const hint = shown?.problem ? coachLine(t, phrase, shown.problem.expected, sayRu) : null;
   const micDisabled = practice.grading || ((practice.locked || practice.micBlocked) && !listening);
+  const reference = practice.reference || phrase;
 
   const onSample = () => {
     practice.cancelRecording();
@@ -105,11 +111,31 @@ export function SpeakPractice({
   return (
     <View style={[styles.root, mode === 'step' ? styles.step : null]}>
       <View style={styles.top}>
-        {mode === 'dialog' || phrase.length === 0 ? null : lines && lines.length > 1 ? (
+        {shown ? (
+          <SpeechFeedback
+            phrase={reference}
+            score={shown}
+            heard={preview ? previewHeard : practice.heard}
+            mineDisabled={!practice.clip && preview == null}
+            onPlayWord={(word) => {
+              void playLessonAudio({ text: word, rate: SLOW_RATE });
+            }}
+            onPlayMine={() => {
+              if (!practice.clip) return;
+              void playLessonAudio({ audio: practice.clip, text: reference });
+            }}
+            onPlaySample={() => {
+              const line = lines?.find((item) => item.es === reference);
+              void playLessonAudio({ audio: line?.audio ?? audio, text: reference });
+            }}
+          />
+        ) : cue ? (
+          <Text style={styles.cue}>{cue}</Text>
+        ) : mode === 'dialog' || phrase.length === 0 ? null : lines && lines.length > 1 ? (
           lines.map((line) => (
             <View key={line.es} style={styles.phraseRow}>
               <View style={styles.phrase}>
-                <ColoredPhrase phrase={line.es} color={scoreColor} />
+                <ColoredPhrase phrase={line.es} color={colors.ink} />
               </View>
               <IconButton
                 accessibilityLabel={t('speech.listenSample')}
@@ -125,19 +151,14 @@ export function SpeakPractice({
         ) : (
           <View style={styles.phraseRow}>
             <View style={styles.phrase}>
-              <ColoredPhrase phrase={phrase} color={scoreColor} />
+              <ColoredPhrase phrase={phrase} color={colors.ink} />
             </View>
             <IconButton accessibilityLabel={t('speech.listenSample')} onPress={onSample}>
               <Volume2 size={22} color={colors.ink} strokeWidth={2.2} />
             </IconButton>
           </View>
         )}
-        {hint ? (
-          <Text variant="body" accessibilityLiveRegion="polite">
-            {hint}
-          </Text>
-        ) : null}
-        {mode === 'dialog' && practice.dialogMiss ? (
+        {mode === 'dialog' && practice.dialogMiss && !shown ? (
           <Text variant="body" color={colors.inkMuted}>
             {t('speech.dialogMiss')}
           </Text>
@@ -154,17 +175,7 @@ export function SpeakPractice({
       </View>
 
       <View style={styles.stage}>
-        {shown ? (
-          <Ring
-            progress={shown.score / 100}
-            size={120}
-            strokeWidth={10}
-            color={scoreColor}
-            labelColor={scoreColor}
-            prominent
-            accessibilityLabel={t('speech.scoreA11y', { score: shown.score })}
-          />
-        ) : answered ? null : (
+        {shown || answered ? null : (
           <MicButton
             listening={listening}
             disabled={micDisabled}
@@ -185,6 +196,11 @@ export function SpeakPractice({
           practice.onAgain();
         }}
         onNext={() => {
+          if (mode === 'dialog') {
+            if (practice.matchedId) onMatch?.(practice.matchedId);
+            else onClose?.();
+            return;
+          }
           if (onContinue) onContinue(practice.passed, shown?.score ?? null);
           else onClose?.();
         }}
@@ -196,19 +212,6 @@ export function SpeakPractice({
       />
     </View>
   );
-}
-
-function coachLine(
-  translate: (key: string, options?: Record<string, string>) => string,
-  phrase: string,
-  problemWord: string,
-  say: string | null,
-): string | null {
-  const rule = pronunciationCoach(phrase, problemWord);
-  const tip = rule ? translate(rule.hintKey) : null;
-  const spoken = say?.trim() ? say.trim() : null;
-  if (tip && spoken) return translate('speech.coachLine', { tip, say: spoken });
-  return tip ?? spoken;
 }
 
 const styles = StyleSheet.create({
@@ -237,5 +240,12 @@ const styles = StyleSheet.create({
     minHeight: 132,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  cue: {
+    fontFamily: fonts.display,
+    fontSize: 72,
+    lineHeight: 80,
+    color: colors.ink,
+    textAlign: 'center',
   },
 });

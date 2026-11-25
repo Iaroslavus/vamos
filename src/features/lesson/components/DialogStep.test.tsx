@@ -265,30 +265,30 @@ describe('DialogStep', () => {
     expect(screen.getByRole('checkbox', { name: 'Добавить в «Избранное»' })).toBeTruthy();
   });
 
-  it('shows «Сказать вслух» instead of chips when speech mode is on', async () => {
+  it('shows «Сказать» instead of chips when speech mode is on', async () => {
     const onSpeakAloud = jest.fn();
     await renderStep({ responseMode: 'speak', onSpeakAloud });
     await finishPlayback();
 
     expect(screen.queryByText('Gracias')).toBeNull();
-    await fireEvent.press(screen.getByText('Сказать вслух'));
+    await fireEvent.press(screen.getByText('Сказать'));
     expect(onSpeakAloud).toHaveBeenCalledTimes(1);
   });
 
-  it('shows «Сказать вслух» next to the chips and accepts a matching line', async () => {
+  it('shows «Сказать» next to the chips and accepts a matching line', async () => {
     await renderStep();
     await finishPlayback();
 
-    expect(screen.getByText('Сказать вслух')).toBeTruthy();
+    expect(screen.getByText('Сказать')).toBeTruthy();
     expect(screen.getByText('Gracias')).toBeTruthy();
 
-    await fireEvent.press(screen.getByText('Сказать вслух'));
+    await fireEvent.press(screen.getByText('Сказать'));
     await waitFor(() => {
       expect(ExpoSpeechRecognitionModule.start).toHaveBeenCalled();
     });
     const started = jest.mocked(ExpoSpeechRecognitionModule.start).mock.calls.at(-1)?.[0];
     expect(started?.contextualStrings).toEqual(['buenos días', 'gracias', 'adiós']);
-    expect(started).not.toHaveProperty('recordingOptions');
+    expect(started?.recordingOptions).toEqual({ persist: true });
 
     const speech = ExpoSpeechRecognitionModule as unknown as {
       __emit: (event: string, payload: unknown) => void;
@@ -300,6 +300,8 @@ describe('DialogStep', () => {
       });
     });
 
+    expect(screen.queryByLabelText('Ваша реплика: Buenos días')).toBeNull();
+    await fireEvent.press(screen.getByText('Дальше'));
     expect(screen.getByLabelText('Ваша реплика: Buenos días')).toBeTruthy();
   });
 
@@ -307,7 +309,7 @@ describe('DialogStep', () => {
     await renderStep();
     await finishPlayback();
 
-    await fireEvent.press(screen.getByText('Сказать вслух'));
+    await fireEvent.press(screen.getByText('Сказать'));
     await waitFor(() => {
       expect(ExpoSpeechRecognitionModule.start).toHaveBeenCalled();
     });
@@ -325,7 +327,7 @@ describe('DialogStep', () => {
     await renderStep();
     await finishPlayback();
 
-    await fireEvent.press(screen.getByText('Сказать вслух'));
+    await fireEvent.press(screen.getByText('Сказать'));
     const speech = ExpoSpeechRecognitionModule as unknown as {
       __emit: (event: string, payload: unknown) => void;
     };
@@ -336,9 +338,7 @@ describe('DialogStep', () => {
       });
     });
 
-    expect(
-      screen.getByText('Не расслышали реплику. Скажите ещё раз или выберите её.'),
-    ).toBeTruthy();
+    expect(screen.getByText('Попробуйте ещё раз')).toBeTruthy();
     expect(screen.getByText('Gracias')).toBeTruthy();
     expect(screen.queryByLabelText('Ваша реплика: Buenos días')).toBeNull();
   });

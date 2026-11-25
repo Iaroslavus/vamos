@@ -150,11 +150,11 @@ export function useDialogController({
 
   const replay = (index: number) => {
     const line = state.lines[index];
-    if (!line || line.who !== 'npc') return;
-    const currentCue = state.phase === 'listen' && state.index === index;
+    if (!line) return;
+    const currentCue = line.who === 'npc' && state.phase === 'listen' && state.index === index;
     void playLessonAudio({
       text: line.es,
-      audio: null,
+      audio: line.who === 'user' ? line.audio : null,
       onEnd: currentCue ? () => advanceRef.current() : undefined,
     });
   };

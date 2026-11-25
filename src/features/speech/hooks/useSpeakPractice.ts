@@ -23,6 +23,7 @@ import { SPEECH_LEVEL, takeLimitMs, takeStopReason } from '../takeStop';
 export type SpeakPracticeMode = 'step' | 'practice' | 'dialog';
 
 const NO_OPTIONS: readonly SpeechOption[] = [];
+const NO_ACCEPT: readonly string[] = [];
 const NO_CONFUSABLES: readonly string[] = [];
 const WATCH_MS = 100;
 
@@ -30,6 +31,8 @@ type UseSpeakPracticeInput = {
   phrase: string;
   mode: SpeakPracticeMode;
   options?: readonly SpeechOption[];
+  /** Dialog lines that count. Scoring ignores the other options. */
+  acceptIds?: readonly string[];
   confusables?: readonly string[];
   onMatch?: (optionId: string) => void;
   /** Dialog keeps the try count above the sheet, so closing it does not reset the cap. */
@@ -53,6 +56,7 @@ export function useSpeakPractice({
   phrase,
   mode,
   options = NO_OPTIONS,
+  acceptIds = NO_ACCEPT,
   confusables = NO_CONFUSABLES,
   onMatch,
   attemptsUsed,
@@ -63,12 +67,18 @@ export function useSpeakPractice({
 }: UseSpeakPracticeInput) {
   const [localAttempts, setLocalAttempts] = useState(0);
   const [scored, setScored] = useState<SpeechScore | null>(null);
+  const [heard, setHeard] = useState<string | null>(null);
+  const [clip, setClip] = useState<string | null>(null);
+  const [matchedId, setMatchedId] = useState<string | null>(null);
+  const [reference, setReference] = useState(phrase);
   const [dialogMiss, setDialogMiss] = useState(false);
   const [micUnavailable, setMicUnavailable] = useState(false);
   const [grading, setGrading] = useState(false);
   const onMatchRef = useRef(onMatch);
   const optionsRef = useRef(options);
+  const acceptRef = useRef(acceptIds);
   const confusablesRef = useRef(confusables);
+  const clipRef = useRef<string | null>(null);
   const attemptsRef = useRef(attemptsUsed ?? 0);
   const onAttemptsUsedRef = useRef(onAttemptsUsed);
   const phraseRef = useRef(phrase);
@@ -90,12 +100,24 @@ export function useSpeakPractice({
   useEffect(() => {
     onMatchRef.current = onMatch;
     optionsRef.current = options;
+    acceptRef.current = acceptIds;
     confusablesRef.current = confusables;
+    clipRef.current = clip;
     onAttemptsUsedRef.current = onAttemptsUsed;
     referencesRef.current = references;
     passScoreRef.current = passScore;
     limitRef.current = limitMs;
-  }, [confusables, limitMs, onAttemptsUsed, onMatch, options, passScore, references]);
+  }, [
+    acceptIds,
+    clip,
+    confusables,
+    limitMs,
+    onAttemptsUsed,
+    onMatch,
+    options,
+    passScore,
+    references,
+  ]);
 
   useEffect(() => {
     attemptsRef.current = attempts;
@@ -114,6 +136,7 @@ export function useSpeakPractice({
     return () => {
       wavRef.current.discard();
       deleteSpeechFile(recordingRef.current);
+      deleteSpeechFile(clipRef.current);
     };
   }, []);
 
@@ -144,24 +167,16 @@ export function useSpeakPractice({
       if (onAttemptsUsedRef.current) onAttemptsUsedRef.current(nextCount);
       else setLocalAttempts(nextCount);
 
-      if (mode === 'dialog') {
-        const match = matchSpokenOption(result.transcript, optionsRef.current);
-        if (match) {
-          setDialogMiss(false);
-          void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-          onMatchRef.current?.(match.id);
-          return;
-        }
-        setDialogMiss(true);
-        void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-        return;
-      }
-
-      const reference =
-        optionsRef.current.length > 0
-          ? bestSpeechReference(result.transcript, optionsRef.current, phrase)
+      const pool = acceptedOptions(
+        phrase,
+        optionsRef.current,
+        mode === 'dialog' ? acceptRef.current : [],
+      );
+      const referenceLine =
+        pool.length > 0
+          ? bestSpeechReference(result.transcript, pool, pool[0]?.es ?? phrase)
           : phrase;
-      const text = scoreSpeech(reference, result.transcript, {
+      const text = scoreSpeech(referenceLine, result.transcript, {
         confidence: result.confidence,
         alternatives: result.alternatives,
         confusables: confusablesRef.current,
@@ -177,13 +192,26 @@ export function useSpeakPractice({
           acoustic?.penalty ?? 0,
         ),
       };
-      setMicUnavailable(false);
-      setScored(next);
-      deleteSpeechFile(recordingRef.current);
-      deleteSpeechFile(result.recordingUri);
+      const match = mode === 'dialog' ? matchSpokenOption(result.transcript, pool) : null;
+      const kept = recordingRef.current ?? result.recordingUri;
       recordingRef.current = null;
+      if (result.recordingUri && result.recordingUri !== kept)
+        deleteSpeechFile(result.recordingUri);
+      setMicUnavailable(false);
+      setHeard(result.transcript.trim());
+      setReference(referenceLine);
+      setMatchedId(match?.id ?? null);
+      setClip((prev) => {
+        if (prev && prev !== kept) deleteSpeechFile(prev);
+        clipRef.current = kept;
+        return kept;
+      });
+      setScored(next);
+      setDialogMiss(mode === 'dialog' && match === null);
+      const understood =
+        mode === 'dialog' ? match !== null : isSpeechPass(next, passScoreRef.current);
       void Haptics.notificationAsync(
-        isSpeechPass(next, passScoreRef.current)
+        understood
           ? Haptics.NotificationFeedbackType.Success
           : Haptics.NotificationFeedbackType.Error,
       );
@@ -192,7 +220,7 @@ export function useSpeakPractice({
   );
 
   const capture = useSpeechCapture(
-    { mode: mode === 'dialog' ? 'dialog' : 'grade', hints, record: false },
+    { mode: mode === 'dialog' ? 'dialog' : 'grade', hints, record: mode === 'dialog' },
     onFinal,
   );
   const captureRef = useRef(capture);
@@ -299,8 +327,9 @@ export function useSpeakPractice({
     mode !== 'dialog' && capture.listening && capture.transcript && scored === null
       ? scoreSpeech(liveReference, capture.transcript)
       : null;
-  const shown = mode === 'dialog' || phrase.length === 0 ? null : (live ?? scored);
-  const passed = mode !== 'dialog' && scored !== null && isSpeechPass(scored, passScore);
+  const shown = mode === 'dialog' ? scored : phrase.length === 0 ? null : (live ?? scored);
+  const passed =
+    scored !== null && (mode === 'dialog' ? matchedId !== null : isSpeechPass(scored, passScore));
   const locked = mode !== 'practice' && attempts >= SPEECH_MAX_ATTEMPTS;
   const micBlocked = capture.access === 'blocked' || capture.access === 'unavailable';
 
@@ -333,6 +362,13 @@ export function useSpeakPractice({
   const onAgain = () => {
     if (locked || micBlocked || gradingRef.current) return;
     setScored(null);
+    setHeard(null);
+    setMatchedId(null);
+    setClip((prev) => {
+      deleteSpeechFile(prev);
+      clipRef.current = null;
+      return null;
+    });
     setDialogMiss(false);
     setMicUnavailable(false);
     forgetRecording();
@@ -370,6 +406,10 @@ export function useSpeakPractice({
   return {
     capture,
     shown,
+    heard,
+    clip,
+    matchedId,
+    reference,
     passed,
     locked,
     micBlocked,
@@ -383,4 +423,18 @@ export function useSpeakPractice({
     onAgain,
     cancelRecording,
   };
+}
+
+function acceptedOptions(
+  phrase: string,
+  options: readonly SpeechOption[],
+  acceptIds: readonly string[],
+): SpeechOption[] {
+  if (acceptIds.length > 0) {
+    const allowed = new Set(acceptIds);
+    const picked = options.filter((option) => allowed.has(option.id));
+    if (picked.length > 0) return picked;
+  }
+  if (options.length > 0) return [...options];
+  return phrase ? [{ id: 'phrase', es: phrase }] : [];
 }

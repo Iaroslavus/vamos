@@ -2,14 +2,20 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
+import { Volume2 } from 'lucide-react-native';
+
 import { Chip, type ChipTone } from '@/components/Chip';
+import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
+import { playLessonAudio } from '@/features/audio/playback';
+import { displayEs } from '@/features/content/displayText';
 import { colors, radius, space } from '@/theme/tokens';
 
 import type { GradeStatus } from '../grading';
 import type { BuildSentenceItem } from '../store';
+import { assembledPhrase } from '../tiles';
 
-/** Tiles keep the casing of the sentence. Cards and options use `displayText`. */
+/** Tiles are lower case. The well restores capitals and ¿?¡! from the phrase. */
 type BuildSentenceExerciseProps = {
   exercise: BuildSentenceItem;
   disabled?: boolean;
@@ -47,6 +53,12 @@ export function BuildSentenceExercise({
   const [selected, setSelected] = useState<TileSlot[]>([]);
   const revealed = Boolean(gradeStatus);
   const tone = resultTone(gradeStatus);
+  const canonical = exercise.phraseEs || exercise.answer;
+  const built = assembledPhrase(
+    selected.map((slot) => slot.label),
+    canonical,
+  );
+  const shownBuilt = built ? displayEs(built) : '';
 
   const pick = (slot: TileSlot) => {
     if (disabled) return;
@@ -66,9 +78,22 @@ export function BuildSentenceExercise({
 
   return (
     <View style={styles.root}>
-      <Text variant="caption" color={colors.inkMuted}>
-        {exercise.prompt_ru}
-      </Text>
+      <View style={styles.promptRow}>
+        <Text variant="h3" style={styles.prompt}>
+          {exercise.prompt_ru}
+        </Text>
+        <IconButton
+          accessibilityLabel={t('lesson.playAudio')}
+          onPress={() => {
+            void playLessonAudio({
+              audio: exercise.audio,
+              text: exercise.phraseEs ?? exercise.answer,
+            });
+          }}
+        >
+          <Volume2 size={22} color={colors.teal} strokeWidth={2.2} />
+        </IconButton>
+      </View>
 
       <View style={styles.answerWell} accessibilityLabel={t('lesson.builtAnswer')}>
         {selected.length === 0 ? (
@@ -77,10 +102,10 @@ export function BuildSentenceExercise({
           </Text>
         ) : (
           <View style={styles.row}>
-            {selected.map((slot) => (
+            {selected.map((slot, index) => (
               <Chip
                 key={slot.key}
-                label={slot.label}
+                label={shownBuilt.split(/\s+/)[index] ?? slot.label}
                 selected={!revealed}
                 tone={tone}
                 disabled={disabled}
@@ -112,6 +137,14 @@ export function BuildSentenceExercise({
 const styles = StyleSheet.create({
   root: {
     gap: space.lg,
+  },
+  promptRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.sm,
+  },
+  prompt: {
+    flex: 1,
   },
   answerWell: {
     minHeight: 72,

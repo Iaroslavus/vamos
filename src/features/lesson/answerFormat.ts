@@ -77,6 +77,8 @@ function phraseOf(exercise: LessonExerciseItem): { es: string; tr: string } {
         : { es: exercise.answer, tr: exercise.prompt };
     case 'listen_select':
       return { es: exercise.speakText, tr: exercise.answer };
+    case 'number_listen':
+      return { es: exercise.phraseEs ?? exercise.display, tr: exercise.display };
     case 'build_sentence':
       return { es: exercise.answer, tr: '' };
     case 'fill_gap':

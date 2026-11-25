@@ -176,23 +176,33 @@ export default function LessonSummaryScreen() {
         />
       </ScrollView>
 
-      <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, space.lg) }]}>
+      <View
+        style={[
+          styles.footer,
+          newItems.length > 0 ? styles.footerRow : null,
+          { paddingBottom: Math.max(insets.bottom, space.lg) },
+        ]}
+      >
         {newItems.length > 0 ? (
           <Button
             title={t('lesson.summaryToVocabCount', { count: selectedCount })}
             variant="secondary"
+            footer
             disabled={leaving || selectedCount === 0}
             onPress={() => {
               void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               setSheetIds([...selectedIds]);
             }}
+            style={styles.footerButton}
           />
         ) : null}
         <Button
           title={t('lesson.summaryContinue')}
           variant="primary"
+          footer={newItems.length > 0}
           disabled={leaving}
           onPress={goHome}
+          style={newItems.length > 0 ? styles.footerButton : undefined}
         />
       </View>
       <AddToVocabSheet
@@ -258,5 +268,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: space.xl,
     paddingTop: space.md,
     zIndex: 2,
+  },
+  footerRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+  },
+  footerButton: {
+    flex: 1,
+    minWidth: 0,
   },
 });

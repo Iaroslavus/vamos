@@ -25,7 +25,7 @@ import { itemsForTopic } from '@/features/audio/topicAudio';
 import { playGradeSound } from '@/features/audio/sounds';
 import { displayEs } from '@/features/content/displayText';
 import { fallbackName, spokenLines } from '@/features/content/gender';
-import { getItem, getLesson } from '@/features/content/loader';
+import { getItem, getLesson, getScene, getTopic } from '@/features/content/loader';
 import type { AddressForm } from '@/features/learner/profile';
 import { useLearnerProfile } from '@/features/learner/useLearnerProfile';
 import { contentLocale, textOf, type ContentLocale } from '@/features/content/text';
@@ -111,6 +111,7 @@ export default function LessonScreen() {
   const recordMistake = useRecordLessonMistake();
 
   const step = loaded.ok && flow === 'script' ? loaded.session.steps[scriptIndex] : undefined;
+  const sceneCopy = useMemo(() => lessonSceneCopy(lessonId, language), [language, lessonId]);
   const surface = step ? stepSurface(step) : null;
   const progress = useMemo(() => {
     const total = stepTotal;
@@ -278,8 +279,20 @@ export default function LessonScreen() {
         <DialogStep
           step={step}
           items={loaded.session.items}
+          partner={sceneCopy.partner}
+          place={sceneCopy.place}
           audioVariant={audioPreference}
           speakerName={speakerName}
+          onContinue={onSoftContinue}
+        />
+      ) : null}
+
+      {surface === 'speak' && step?.type === 'number_listen' ? (
+        <SpeakRepeatStep
+          promptEs={step.prompt_es}
+          audio={step.audio}
+          cue={step.display}
+          onSkip={onSoftContinue}
           onContinue={onSoftContinue}
         />
       ) : null}
@@ -386,6 +399,19 @@ export default function LessonScreen() {
       />
     </KeyboardAvoidingView>
   );
+}
+
+function lessonSceneCopy(
+  lessonId: string,
+  language: ContentLocale,
+): { partner: string; place: string } {
+  if (!lessonId) return { partner: '', place: '' };
+  try {
+    const scene = getScene(getTopic(getLesson(lessonId).topic).scene);
+    return { partner: textOf(scene.partner, language), place: textOf(scene.place, language) };
+  } catch {
+    return { partner: '', place: '' };
+  }
 }
 
 function getLessonTopicId(lessonId: string): string {

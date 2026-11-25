@@ -48,12 +48,14 @@ export function FlashcardDeck({ card, revealed, onFlip, onMark, onPlay }: Flashc
         <Button
           title={t('study.flash.again')}
           variant="secondary"
+          footer
           onPress={() => onMark('again')}
           style={styles.grow}
         />
         <Button
           title={t('study.flash.know')}
           variant="success"
+          footer
           onPress={() => onMark('know')}
           style={styles.grow}
         />
@@ -77,6 +79,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
+    alignItems: 'flex-end',
     gap: space.sm,
   },
   grow: {

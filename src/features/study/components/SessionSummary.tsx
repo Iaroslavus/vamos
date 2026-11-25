@@ -79,19 +79,25 @@ export function SessionSummaryView({ summary, onRepeat, onDone, notice }: Sessio
           </Text>
         ) : null}
       </ScrollView>
-      {canRepeat ? (
+      <View style={canRepeat ? styles.actions : undefined}>
+        {canRepeat ? (
+          <Button
+            title={t(
+              summary.variant === 'cards' ? 'sessionSummary.repeatCards' : 'sessionSummary.repeat',
+            )}
+            footer
+            onPress={onRepeat}
+            style={styles.action}
+          />
+        ) : null}
         <Button
-          title={t(
-            summary.variant === 'cards' ? 'sessionSummary.repeatCards' : 'sessionSummary.repeat',
-          )}
-          onPress={onRepeat}
+          title={t('sessionSummary.done')}
+          variant={canRepeat ? 'secondary' : 'primary'}
+          footer={canRepeat}
+          onPress={onDone}
+          style={canRepeat ? styles.action : undefined}
         />
-      ) : null}
-      <Button
-        title={t('sessionSummary.done')}
-        variant={canRepeat ? 'secondary' : 'primary'}
-        onPress={onDone}
-      />
+      </View>
     </View>
   );
 }
@@ -206,5 +212,14 @@ const styles = StyleSheet.create({
   },
   caption: {
     flex: 1,
+  },
+  actions: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    gap: space.sm,
+  },
+  action: {
+    flex: 1,
+    minWidth: 0,
   },
 });

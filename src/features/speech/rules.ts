@@ -2,7 +2,7 @@ import { normalizeForCompare, stripDiacritics } from '@/features/lesson/grading'
 
 import { speechWords } from './score';
 
-export type PronunciationRuleId = 'silent-h' | 'yeismo' | 'jota' | 'stress';
+export type PronunciationRuleId = 'silent-h' | 'yeismo' | 'jota' | 'rr' | 'stress';
 
 export type PronunciationRule = {
   id: PronunciationRuleId;
@@ -33,6 +33,11 @@ function hasJota(phrase: string): boolean {
   return speechWords(phrase).some((word) => /j|g[ei]/.test(plain(word)));
 }
 
+/** A double r is the trill. A single r is not this rule. */
+function hasRr(phrase: string): boolean {
+  return speechWords(phrase).some((word) => plain(word).includes('rr'));
+}
+
 /** A written accent marks the stressed syllable. */
 function hasStressMark(phrase: string): boolean {
   return /[áéíóú]/iu.test(phrase);
@@ -43,6 +48,7 @@ export const PRONUNCIATION_RULES: readonly PronunciationRule[] = [
   { id: 'silent-h', hintKey: 'speech.ruleSilentH', applies: hasSilentH },
   { id: 'yeismo', hintKey: 'speech.ruleYeismo', applies: hasYeismo },
   { id: 'jota', hintKey: 'speech.ruleJota', applies: hasJota },
+  { id: 'rr', hintKey: 'lesson.speechRuleRr', applies: hasRr },
   { id: 'stress', hintKey: 'speech.ruleStress', applies: hasStressMark },
 ];
 

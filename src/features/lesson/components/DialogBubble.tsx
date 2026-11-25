@@ -88,7 +88,7 @@ export function DialogBubble({
             accessibilityLabel={t('lesson.dialogReplay', { line: shownEs })}
             onPress={onReplay}
           >
-            <Volume2 color={colors.blue} size={22} strokeWidth={2.2} />
+            <Volume2 color={colors.teal} size={22} strokeWidth={2.2} />
           </IconButton>
         ) : null}
         {onToggleTranslation || onLongPress ? (

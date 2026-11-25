@@ -225,12 +225,13 @@ describe('SpeakRepeatStep', () => {
       emitTranscript('buenos dias');
     });
 
-    expect(screen.getByText('ударение на отмеченной гласной: буЭнос дИас')).toBeTruthy();
+    expect(screen.getByText('Отлично!')).toBeTruthy();
+    expect(screen.getByText('días — ударение на отмеченной гласной: ДИА-с')).toBeTruthy();
     expect(screen.queryByText(/Это значит/)).toBeNull();
     expect(screen.queryByText(/Как звучит/)).toBeNull();
     expect(screen.getByText('93%')).toBeTruthy();
     expect(screen.getByText('Buenos')).toHaveStyle({ color: colors.teal });
-    expect(screen.getByText('días')).toHaveStyle({ color: colors.teal });
+    expect(screen.getByText('días')).toHaveStyle({ color: colors.saffronDeep });
     expect(screen.getByText('Ещё раз')).toBeTruthy();
     expect(screen.getByText('Дальше')).toBeTruthy();
     expect(screen.queryByText('Звучит так же')).toBeNull();
@@ -266,7 +267,7 @@ describe('SpeakRepeatStep', () => {
       emitTranscript('hola', { alternatives: ['jola'] });
     });
 
-    expect(screen.getByText('h не читается: буЭнос дИас')).toBeTruthy();
+    expect(screen.getByText('hola — h не читается: О-ла')).toBeTruthy();
     expect(screen.getByText('Дальше')).toBeTruthy();
     expect(screen.queryByText('Звучит так же')).toBeNull();
   });
@@ -389,7 +390,7 @@ describe('SpeakRepeatStep', () => {
       emitTranscript('xxxx');
     });
 
-    expect(screen.getByText('ll звучит как «й»: ме йАмо')).toBeTruthy();
+    expect(screen.getByText('llamo — ll читается как «й»: ЙА-мо')).toBeTruthy();
     expect(screen.queryByText(/Это значит/)).toBeNull();
     expect(screen.getByText('Me')).toHaveStyle({ color: colors.coralDeep });
 
