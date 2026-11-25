@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
+import { TopicTestEntry } from '@/features/topicTest/components/TopicTestEntry';
 import { colors, radius, space } from '@/theme/tokens';
 
 import type { PathAction } from '../map';
@@ -21,6 +22,7 @@ type PathCardProps = {
   primaryDisabled: boolean;
   onPrimary: () => void;
   onCheatSheet?: () => void;
+  onTopicTest?: () => void;
 };
 
 export function PathCard({
@@ -36,6 +38,7 @@ export function PathCard({
   primaryDisabled,
   onPrimary,
   onCheatSheet,
+  onTopicTest,
 }: PathCardProps) {
   const { t } = useTranslation();
   const primary = action === 'continue' ? t('path.action.continue') : t(`path.action.${action}`);
@@ -96,6 +99,7 @@ export function PathCard({
           />
         ) : null}
       </View>
+      {onTopicTest ? <TopicTestEntry onPress={onTopicTest} /> : null}
     </View>
   );
 }

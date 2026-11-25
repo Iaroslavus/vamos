@@ -877,6 +877,35 @@
     "recommended": "Рекомендуем",
     "due": "{{due}} к повторению"
   },
+  "topicTest": {
+    "entry": "Сдать тест темы",
+    "title": "Тест темы",
+    "progress": "{{current}} из {{total}}",
+    "check": "Проверить",
+    "next": "Дальше",
+    "correct": "Правильно!",
+    "wrong": "Не так",
+    "passedTitle": "Сдано",
+    "passedBody": "Тема закрыта. {{score}}% правильных.",
+    "failedTitle": "Не сдано",
+    "failedBody": "{{score}}% — нужно 80%.",
+    "reviewLessons": "Пройдите: {{lessons}}",
+    "lesson": "Урок {{number}}",
+    "retry": "Пересдать",
+    "continue": "Дальше",
+    "close": "Закрыть",
+    "empty": "В этой теме пока нет заданий для теста.",
+    "saveError": "Не удалось сохранить результат. Попробуйте ещё раз.",
+    "saveRetry": "Сохранить ещё раз",
+    "prompt": {
+      "recognize": "Выберите перевод",
+      "build": "Составьте фразу",
+      "buildNamed": "Составьте: {{text}}",
+      "recall": "Напишите по-испански",
+      "listen": "Что вы слышите?",
+      "speak": "Скажите вслух"
+    }
+  },
   "common": {
     "devComponents": "Компоненты (dev)",
     "devIntro": "Знакомство с фразой",

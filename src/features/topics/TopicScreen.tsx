@@ -37,6 +37,13 @@ export function TopicScreen() {
         onOpenLesson={(lessonId) => {
           router.push({ pathname: '/lesson/[id]', params: { id: lessonId } });
         }}
+        {...(detail.progress < 1 && topicId
+          ? {
+              onTopicTest: () => {
+                router.push({ pathname: '/topic-test/[id]', params: { id: topicId } });
+              },
+            }
+          : {})}
       />
     </ScrollView>
   ) : (

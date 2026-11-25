@@ -222,6 +222,13 @@ describe('TopicScreen', () => {
     expect(screen.getByLabelText('Знакомство, закрыт')).toBeDisabled();
     expect(screen.getByLabelText('Знакомство на улице, сценка, закрыта')).toBeTruthy();
     expect(screen.getByLabelText('Пройдено 0 из 2')).toBeTruthy();
+    expect(screen.getByText('Сдать тест темы')).toBeTruthy();
+
+    await fireEvent.press(screen.getByText('Сдать тест темы'));
+    expect(mockPush).toHaveBeenCalledWith({
+      pathname: '/topic-test/[id]',
+      params: { id: 'a1.hola' },
+    });
 
     mockPush.mockClear();
     await fireEvent.press(screen.getByLabelText('Знакомство, закрыт'));
@@ -275,6 +282,7 @@ describe('TopicScreen', () => {
     expect(screen.getByLabelText('Возраст и телефон, пройден')).toBeTruthy();
     expect(screen.getByLabelText('Сколько это стоит?, сценка')).toBeTruthy();
     expect(screen.queryByText('Сценка · закрыта')).toBeNull();
+    expect(screen.queryByText('Сдать тест темы')).toBeNull();
     await flush();
   });
 
