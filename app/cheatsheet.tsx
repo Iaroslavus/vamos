@@ -1,17 +1,18 @@
-import { useLocalSearchParams } from 'expo-router';
+import { Redirect, useLocalSearchParams } from 'expo-router';
 
-import { CheatsheetScreen } from '@/features/cheatsheet/CheatsheetScreen';
+import { cheatsheetRedirectTarget } from '@/features/cheatsheet/route';
 
-export default function CheatsheetRoute() {
+/** Old шпаргалка links open the same topic in Словник → Розмовник. */
+export default function CheatsheetRedirect() {
   const params = useLocalSearchParams<{ topicId?: string; source?: string; focus?: string }>();
-  const topicId = first(params.topicId);
-  const source = first(params.source) === 'path' ? 'path' : 'search';
 
   return (
-    <CheatsheetScreen
-      topicId={topicId}
-      source={source}
-      autoFocus={source === 'search' || first(params.focus) === '1'}
+    <Redirect
+      href={cheatsheetRedirectTarget({
+        topicId: first(params.topicId),
+        source: first(params.source),
+        focus: first(params.focus),
+      })}
     />
   );
 }

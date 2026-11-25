@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSession } from '@/features/auth/useSession';
 
 import { vocabRepository } from '../defaultRepository';
+import { isAutomaticSystem } from '../model';
 
 export type ItemSaveState = {
   inFavorites: boolean;
@@ -26,7 +27,7 @@ export function useItemSaveState(itemIds: readonly string[]): ItemSaveState {
         const favorites = snapshot.folders.find((folder) => folder.systemKey === 'favorites');
         const editable = new Set(
           snapshot.folders
-            .filter((folder) => folder.systemKey !== 'difficult')
+            .filter((folder) => !isAutomaticSystem(folder.systemKey))
             .map((folder) => folder.id),
         );
         setState({

@@ -1,6 +1,6 @@
 import type { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
@@ -13,6 +13,7 @@ type VocabHeaderProps = {
   due: number;
   nextInMs: number | null;
   onReview: () => void;
+  onLearned: () => void;
 };
 
 const NEXT_KEY: Record<IntervalUnit, string> = {
@@ -21,8 +22,9 @@ const NEXT_KEY: Record<IntervalUnit, string> = {
   days: 'vocab.nextDays',
 };
 
-export function VocabHeader({ learned, due, nextInMs, onReview }: VocabHeaderProps) {
+export function VocabHeader({ learned, due, nextInMs, onReview, onLearned }: VocabHeaderProps) {
   const { t } = useTranslation();
+  const learnedLabel = t('vocab.learned', { count: learned });
   const caption =
     due === 0
       ? t('vocab.caughtUp', { when: nextLabel(nextInMs, t) })
@@ -34,9 +36,16 @@ export function VocabHeader({ learned, due, nextInMs, onReview }: VocabHeaderPro
   return (
     <View style={styles.block}>
       <View style={styles.copy}>
-        <Text variant="h1" accessibilityRole="header">
-          {t('vocab.learned', { count: learned })}
-        </Text>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={learnedLabel}
+          onPress={onLearned}
+          style={styles.learned}
+        >
+          <Text variant="h1" accessibilityRole="header">
+            {learnedLabel}
+          </Text>
+        </Pressable>
         <Text variant="body" color={colors.inkMuted}>
           {caption}
         </Text>
@@ -58,5 +67,9 @@ const styles = StyleSheet.create({
   },
   copy: {
     gap: space.sm,
+  },
+  learned: {
+    minHeight: 44,
+    justifyContent: 'center',
   },
 });

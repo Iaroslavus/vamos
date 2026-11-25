@@ -16,6 +16,8 @@ type PathCardProps = {
   completedLessons: number;
   action: PathAction;
   lessonNumber: number;
+  /** Topic cards show «Урок 2 з 4» above the title. Chests do not. */
+  showProgress?: boolean;
   primaryDisabled: boolean;
   onPrimary: () => void;
   onCheatSheet?: () => void;
@@ -30,15 +32,18 @@ export function PathCard({
   completedLessons,
   action,
   lessonNumber,
+  showProgress = false,
   primaryDisabled,
   onPrimary,
   onCheatSheet,
 }: PathCardProps) {
   const { t } = useTranslation();
-  const primary =
-    action === 'continue'
-      ? t('path.action.continue', { lesson: lessonNumber })
-      : t(`path.action.${action}`);
+  const primary = action === 'continue' ? t('path.action.continue') : t(`path.action.${action}`);
+  const lessonCurrent = action === 'repeat' ? lessonCount : lessonNumber;
+  const progress =
+    showProgress && lessonCount > 0
+      ? t('path.lessonOf', { current: lessonCurrent, total: lessonCount })
+      : null;
 
   return (
     <View style={styles.card}>
@@ -61,6 +66,11 @@ export function PathCard({
           </View>
         ) : null}
       </View>
+      {progress ? (
+        <Text variant="caption" color={colors.ink}>
+          {progress}
+        </Text>
+      ) : null}
       <Text variant="h3" numberOfLines={2}>
         {title}
       </Text>
@@ -79,7 +89,7 @@ export function PathCard({
         />
         {onCheatSheet ? (
           <Button
-            title={t('path.cheatsheet')}
+            title={t('path.cheatsheetTitle')}
             variant="secondary"
             onPress={onCheatSheet}
             style={styles.secondary}
@@ -115,6 +125,7 @@ const styles = StyleSheet.create({
   },
   actions: {
     flexDirection: 'row',
+    alignItems: 'flex-end',
     gap: space.sm + 2,
     marginTop: space.sm,
   },

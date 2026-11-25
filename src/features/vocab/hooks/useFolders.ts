@@ -12,6 +12,7 @@ import { dueUnitCount, learnedUnitCount, nextDueInMs } from '@/features/review/u
 
 import { vocabRepository } from '../defaultRepository';
 import { folderTitle } from '../display';
+import { learnedFromLessons } from '../learned';
 import {
   countMatchingUnits,
   difficultItemIds,
@@ -80,6 +81,20 @@ export function useFolders() {
           })),
           now,
         ),
+        learned: learnedFromLessons(
+          listLessons().map((lesson) => ({
+            id: lesson.id,
+            topicId: lesson.topic,
+            itemIds: lesson.items,
+          })),
+          (progress.data?.lessons ?? [])
+            .filter((lesson) => lesson.status === 'completed')
+            .map((lesson) => ({
+              lessonId: lesson.lessonId,
+              completedAt: lesson.completedAt,
+            })),
+          now.toISOString(),
+        ).map(({ itemId, addedAt }) => ({ itemId, addedAt })),
       });
       const dueCards = selectDueCards(review.cards, now);
       return {
@@ -109,7 +124,7 @@ export function useFolders() {
         .map((item) => item.itemId);
       return {
         folder,
-        title: folderTitle(folder, t),
+        title: folderTitle(folder, t, itemIds.length),
         count: itemIds.length,
         due: countMatchingUnits(query.data?.dueCards ?? [], itemIds),
         countNoun: folderCountNoun(itemIds.map(itemType)),
@@ -123,12 +138,33 @@ export function useFolders() {
     return queryClient.invalidateQueries({ queryKey: ['vocab', userId] });
   };
 
+  const dueItemIds = useMemo(() => {
+    const ids = new Set<string>();
+    for (const card of query.data?.dueCards ?? []) {
+      if (card.itemId.length > 0) ids.add(card.itemId);
+    }
+    return [...ids];
+  }, [query.data]);
+
+  const difficultIds = useMemo(() => {
+    const snapshot = query.data?.snapshot;
+    const folder = snapshot?.folders.find((entry) => entry.systemKey === 'difficult');
+    if (!snapshot || !folder) return [];
+    return snapshot.items.filter((item) => item.folderId === folder.id).map((item) => item.itemId);
+  }, [query.data]);
+
+  const learnedFolderId =
+    query.data?.snapshot.folders.find((folder) => folder.systemKey === 'learned')?.id ?? null;
+
   return {
     ...query,
     rows,
     learnedTotal: query.data?.learned ?? 0,
     dueTotal: query.data?.due ?? 0,
     nextInMs: query.data?.nextInMs ?? null,
+    dueItemIds,
+    difficultIds,
+    learnedFolderId,
     userId,
     refresh,
     snapshot: query.data?.snapshot,

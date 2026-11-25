@@ -1,7 +1,7 @@
 -- RLS on folders and folder_items, plus the difficult-item rule.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(25);
+select plan(27);
 
 insert into auth.users (id, email, raw_user_meta_data, is_anonymous) values
   ('11111111-1111-1111-1111-111111111111', 'alice@example.com', '{}', false),
@@ -19,8 +19,8 @@ set local role authenticated;
 
 select results_eq(
   $$ select system_key from public.folders where system_key is not null order by system_key $$,
-  $$ values ('difficult'), ('favorites') $$,
-  'alice sees her two system folders'
+  $$ values ('difficult'), ('favorites'), ('learned') $$,
+  'alice sees her three system folders'
 );
 select is_empty(
   $$ select 1 from public.folders where user_id = '22222222-2222-2222-2222-222222222222' $$,
@@ -64,6 +64,16 @@ select throws_ok(
 select is_empty(
   $$ delete from public.folders where system_key = 'favorites' returning id $$,
   'a system folder cannot be deleted'
+);
+select throws_ok(
+  $$ update public.folders set name = 'Моё' where system_key = 'learned' $$,
+  '42501',
+  null,
+  'the learned folder cannot be renamed'
+);
+select is_empty(
+  $$ delete from public.folders where system_key = 'learned' returning id $$,
+  'the learned folder cannot be deleted'
 );
 select lives_ok(
   $$
@@ -184,8 +194,8 @@ set local role authenticated;
 
 select results_eq(
   $$ select count(*) from public.folders $$,
-  $$ values (2::bigint) $$,
-  'anonymous sign-in gets the two system folders'
+  $$ values (3::bigint) $$,
+  'anonymous sign-in gets the three system folders'
 );
 
 -- ---------------------------------------------------------------------------

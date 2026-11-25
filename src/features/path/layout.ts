@@ -8,7 +8,12 @@ export const X_PATTERN = [0.21, 0.66, 0.81, 0.37, 0.16, 0.6] as const;
 
 export const NODE_STEP = 96;
 export const MAP_TOP = 120;
-export const MAP_BOTTOM = 72;
+/**
+ * Room under the lowest node so its circle and the two-line label sit above the card.
+ * Current node is 74 pt; the label hangs below the centre by about half the node,
+ * the 5 pt sole, and two lines of type.
+ */
+export const MAP_BOTTOM = 148;
 export const WALK_MS = 700;
 
 export const HERO_BOX_WIDTH = 76;

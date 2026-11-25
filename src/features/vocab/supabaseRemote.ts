@@ -168,6 +168,6 @@ function kindOf(value: string): FolderKind {
 
 function systemKeyOf(value: string | null): SystemKey | null {
   if (value === null) return null;
-  if (value === 'favorites' || value === 'difficult') return value;
+  if (value === 'learned' || value === 'favorites' || value === 'difficult') return value;
   throw new Error('Invalid system folder');
 }

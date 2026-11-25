@@ -1,9 +1,8 @@
 import * as Haptics from 'expo-haptics';
-import { Square } from 'lucide-react-native';
+import { Maximize } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import { IconButton } from '@/components/IconButton';
 import { Text } from '@/components/Text';
 import { displayEs, displayText } from '@/features/content/displayText';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
@@ -49,15 +48,18 @@ export function PhraseRow({ phrase, translation, playing, onPlay, onShow }: Phra
         </View>
         {playing ? <PhraseWave reduceMotion={reduceMotion} /> : null}
       </Pressable>
-      <IconButton
+      <Pressable
+        accessibilityRole="button"
         accessibilityLabel={t('cheatsheet.showLarge', { phrase: shownPhrase })}
         onPress={() => {
           void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
           onShow();
         }}
+        style={styles.show}
       >
-        <Square color={colors.ink} size={20} strokeWidth={ICON_STROKE} />
-      </IconButton>
+        <Maximize color={colors.ink} size={18} strokeWidth={ICON_STROKE} />
+        <Text variant="caption">{t('cheatsheet.show')}</Text>
+      </Pressable>
     </View>
   );
 }
@@ -90,5 +92,14 @@ const styles = StyleSheet.create({
   copy: {
     flex: 1,
     gap: space.xs,
+  },
+  show: {
+    minWidth: 44,
+    minHeight: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: space.xs,
+    paddingVertical: space.xs,
+    gap: 2,
   },
 });

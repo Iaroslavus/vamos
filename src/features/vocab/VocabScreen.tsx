@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -7,15 +7,47 @@ import { Button } from '@/components/Button';
 import { RetryNote } from '@/components/RetryNote';
 import { Text } from '@/components/Text';
 import { Appear } from '@/features/auth/components/Appear';
+import { CheatsheetScreen } from '@/features/cheatsheet/CheatsheetScreen';
 import { colors, motion, space } from '@/theme/tokens';
 
 import { FolderFormSheet } from './components/FolderFormSheet';
 import { FolderRow } from './components/FolderRow';
 import { VocabHeader } from './components/VocabHeader';
+import { VocabTabs, type VocabTab } from './components/VocabTabs';
 import { useFolders } from './hooks/useFolders';
 import { vocabRepository } from './defaultRepository';
 
 export function VocabScreen() {
+  const params = useLocalSearchParams<{
+    tab?: string;
+    topicId?: string;
+    focus?: string;
+    source?: string;
+  }>();
+  const requested = first(params.tab) === 'phrasebook' ? 'phrasebook' : 'folders';
+  const routeKey = `${requested}:${first(params.topicId) ?? ''}:${first(params.focus) ?? ''}`;
+  const [choice, setChoice] = useState<{ key: string; tab: VocabTab } | null>(null);
+  if (choice && choice.key !== routeKey) setChoice(null);
+  const tab = choice?.key === routeKey ? choice.tab : requested;
+
+  return (
+    <View style={styles.root}>
+      <VocabTabs tab={tab} onChange={(next) => setChoice({ key: routeKey, tab: next })} />
+      {tab === 'phrasebook' ? (
+        <CheatsheetScreen
+          embedded
+          topicId={first(params.topicId)}
+          source={first(params.source) === 'path' ? 'path' : 'search'}
+          autoFocus={first(params.focus) === '1'}
+        />
+      ) : (
+        <FoldersPane />
+      )}
+    </View>
+  );
+}
+
+function FoldersPane() {
   const { t } = useTranslation();
   const router = useRouter();
   const vocab = useFolders();
@@ -54,13 +86,17 @@ export function VocabScreen() {
   }
 
   return (
-    <View style={styles.root}>
+    <>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <VocabHeader
           learned={vocab.learnedTotal}
           due={vocab.dueTotal}
           nextInMs={vocab.nextInMs}
           onReview={() => router.push('/review')}
+          onLearned={() => {
+            if (!vocab.learnedFolderId) return;
+            router.push({ pathname: '/vocab/[id]', params: { id: vocab.learnedFolderId } });
+          }}
         />
         <View style={styles.list}>
           {vocab.rows.map((row, index) => (
@@ -90,8 +126,14 @@ export function VocabScreen() {
           await vocab.refresh();
         }}
       />
-    </View>
+    </>
   );
+}
+
+function first(value: string | string[] | undefined): string | null {
+  if (typeof value === 'string' && value.length > 0) return value;
+  if (Array.isArray(value)) return first(value[0]);
+  return null;
 }
 
 const styles = StyleSheet.create({

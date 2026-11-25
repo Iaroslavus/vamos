@@ -1,5 +1,5 @@
 import * as Haptics from 'expo-haptics';
-import { Bookmark, Flame, Folder, type LucideIcon } from 'lucide-react-native';
+import { Bookmark, Flame, Folder, Library, type LucideIcon } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 
@@ -19,6 +19,7 @@ type FolderRowProps = {
 export function FolderRow({ row, onPress }: FolderRowProps) {
   const { t } = useTranslation();
   const emptyDifficult = row.folder.systemKey === 'difficult' && row.count === 0;
+  const emptyLearned = row.folder.systemKey === 'learned' && row.count === 0;
   const hint = t('vocab.difficultEmpty');
   const items = t(`vocab.${row.countNoun}`, { count: row.count });
   const due = t('vocab.due', { count: row.due });
@@ -27,9 +28,11 @@ export function FolderRow({ row, onPress }: FolderRowProps) {
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={
-        emptyDifficult
-          ? t('vocab.folderEmptyLabel', { name: row.title, hint })
-          : t('vocab.folderLabel', { name: row.title, items, due })
+        emptyLearned
+          ? t('vocab.folderEmptyLabel', { name: row.title, hint: t('vocab.learnedEmpty') })
+          : emptyDifficult
+            ? t('vocab.folderEmptyLabel', { name: row.title, hint })
+            : t('vocab.folderLabel', { name: row.title, items, due })
       }
       onPress={() => {
         void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -43,7 +46,11 @@ export function FolderRow({ row, onPress }: FolderRowProps) {
       <View style={styles.copy}>
         <Text variant="bodyBold">{row.title}</Text>
         <Text variant="caption" color={colors.inkMuted}>
-          {emptyDifficult ? hint : t('vocab.rowMeta', { items, due })}
+          {emptyLearned
+            ? t('vocab.learnedEmpty')
+            : emptyDifficult
+              ? hint
+              : t('vocab.rowMeta', { items, due })}
         </Text>
       </View>
     </Pressable>
@@ -51,6 +58,7 @@ export function FolderRow({ row, onPress }: FolderRowProps) {
 }
 
 function iconFor(row: FolderRowModel): LucideIcon {
+  if (row.folder.systemKey === 'learned') return Library;
   if (row.folder.systemKey === 'favorites') return Bookmark;
   if (row.folder.systemKey === 'difficult') return Flame;
   if (row.folder.topicId) return resolveTopicIcon(row.icon);

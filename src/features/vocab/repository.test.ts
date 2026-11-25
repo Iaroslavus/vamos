@@ -156,12 +156,16 @@ describe('vocab repository', () => {
     const first = await repository.ensureBases(USER);
     const second = await repository.ensureBases(USER);
 
-    expect(first.folders.map((folder) => folder.systemKey)).toEqual(['favorites', 'difficult']);
-    expect(first.pending).toBe(2);
+    expect(first.folders.map((folder) => folder.systemKey)).toEqual([
+      'learned',
+      'favorites',
+      'difficult',
+    ]);
+    expect(first.pending).toBe(3);
     expect(second.folders.map((folder) => folder.id)).toEqual(
       first.folders.map((folder) => folder.id),
     );
-    expect(second.pending).toBe(2);
+    expect(second.pending).toBe(3);
   });
 
   it('copies the old favorites list once', async () => {
@@ -187,6 +191,7 @@ describe('vocab repository', () => {
     const first = await repository.syncDerived(USER, {
       topics: [{ topicId: 'a1.hola', name: '¡Hola!', itemIds: ['hola.hola', 'hola.adios'] }],
       difficultItemIds: ['hola.gracias', 'hola.hola'],
+      learned: [],
     });
     const difficult = first.folders.find((folder) => folder.systemKey === 'difficult');
     const topic = first.folders.find((folder) => folder.topicId === 'a1.hola');
@@ -198,6 +203,7 @@ describe('vocab repository', () => {
     const second = await repository.syncDerived(USER, {
       topics: [{ topicId: 'a1.hola', name: '¡Hola!', itemIds: ['hola.hola', 'hola.adios'] }],
       difficultItemIds: ['hola.gracias'],
+      learned: [],
     });
     expect(difficultItems(second, difficult?.id)).toEqual(['hola.gracias']);
     expect(topicItems(second, topic?.id)).toEqual(['hola.adios']);
@@ -308,6 +314,7 @@ describe('vocab repository', () => {
     const seeded = await repository.syncDerived(USER, {
       topics: [],
       difficultItemIds: ['hola.hola', 'hola.gracias'],
+      learned: [],
     });
     const difficult = seeded.folders.find((folder) => folder.systemKey === 'difficult');
     const pinned = await repository.pinDifficult(USER, ['hola.hola', 'hola.adios']);
@@ -330,6 +337,7 @@ describe('vocab repository', () => {
     const dropped = await repository.syncDerived(USER, {
       topics: [],
       difficultItemIds: [],
+      learned: [],
     });
     expect(difficultItems(dropped, difficult?.id)).toEqual(['hola.adios', 'hola.hola']);
   });
@@ -497,6 +505,47 @@ describe('vocab repository', () => {
       dropFolder: true,
     });
     expect(cleared.folders.find((entry) => entry.topicId === 'a1.restaurante')).toBeUndefined();
+  });
+
+  it('fills the learned folder from lessons and own words, and refuses edits', async () => {
+    const { repository } = setup();
+    const seeded = await repository.syncDerived(USER, {
+      topics: [],
+      difficultItemIds: [],
+      learned: [
+        { itemId: 'hola.hola', addedAt: '2026-05-02T00:00:00.000Z' },
+        { itemId: 'hola.adios', addedAt: '2026-05-01T00:00:00.000Z' },
+      ],
+    });
+    const learned = seeded.folders.find((folder) => folder.systemKey === 'learned');
+    expect(difficultItems(seeded, learned?.id)).toEqual(['hola.adios', 'hola.hola']);
+
+    const custom = await repository.createFolder(USER, { name: 'Поездка', color: 'blue' });
+    const folder = custom.folders.find((entry) => entry.kind === 'custom');
+    const saved = await repository.addUserItem(USER, folder?.id ?? '', {
+      es: 'gato',
+      tr: 'кот',
+      note: null,
+    });
+    const again = await repository.syncDerived(USER, {
+      topics: [],
+      difficultItemIds: [],
+      learned: [{ itemId: 'hola.hola', addedAt: '2026-05-02T00:00:00.000Z' }],
+    });
+    const ids = difficultItems(again, learned?.id);
+    expect(ids).toContain('hola.hola');
+    expect(ids).not.toContain('hola.adios');
+    expect(ids).toContain(saved.item.id);
+
+    await expect(repository.deleteFolder(USER, learned?.id ?? '')).rejects.toThrow(
+      'System folder cannot be deleted',
+    );
+    await expect(
+      repository.updateFolder(USER, learned?.id ?? '', { name: 'Моё', color: 'coral' }),
+    ).rejects.toThrow('System folder cannot be edited');
+    await expect(repository.addItems(USER, learned?.id ?? '', ['hola.gracias'])).rejects.toThrow(
+      'Folder is automatic',
+    );
   });
 });
 

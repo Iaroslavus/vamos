@@ -158,7 +158,8 @@ describe('Path screen', () => {
       },
     ]);
 
-    await fireEvent.press(await screen.findByText('Продолжить · урок 2'));
+    expect(await screen.findByText('Урок 2 из 2')).toBeTruthy();
+    await fireEvent.press(screen.getByText('Продолжить'));
     expect(mockPush).toHaveBeenCalledWith({
       pathname: '/lesson/[id]',
       params: { id: 'a1.hola.l2' },
@@ -198,10 +199,10 @@ describe('Path screen', () => {
   it('opens the cheatsheet of the selected topic', async () => {
     await renderPath();
 
-    await fireEvent.press(await screen.findByText('Шпаргалка'));
+    await fireEvent.press(await screen.findByText('Фразы темы'));
     expect(mockPush).toHaveBeenCalledWith({
-      pathname: '/cheatsheet',
-      params: { topicId: 'a1.hola', source: 'path' },
+      pathname: '/vocab',
+      params: { tab: 'phrasebook', topicId: 'a1.hola', source: 'path' },
     });
     await flush();
   });
@@ -211,8 +212,8 @@ describe('Path screen', () => {
 
     await fireEvent.press(await screen.findByLabelText('Найти фразу: ресторан, дни недели…'));
     expect(mockPush).toHaveBeenCalledWith({
-      pathname: '/cheatsheet',
-      params: { source: 'search', focus: '1' },
+      pathname: '/vocab',
+      params: { tab: 'phrasebook', source: 'search', focus: '1' },
     });
     await flush();
   });

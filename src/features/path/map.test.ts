@@ -9,7 +9,7 @@ import {
   type PathPlan,
   type PathSnapshot,
 } from './map';
-import { doneTrack, moduleAtScroll, nodeAnchor, smoothPath } from './layout';
+import { MAP_BOTTOM, doneTrack, mapHeight, moduleAtScroll, nodeAnchor, smoothPath } from './layout';
 
 const plan: PathPlan = {
   modules: [
@@ -156,6 +156,8 @@ describe('path layout', () => {
     expect(first.x).toBe(seventh.x);
     expect(first.x).not.toBe(second.x);
     expect(first.y).toBeGreaterThan(second.y);
+    expect(mapHeight(12) - first.y).toBe(MAP_BOTTOM);
+    expect(MAP_BOTTOM).toBeGreaterThanOrEqual(140);
   });
 
   it('draws a curve and paints only the stretches that leave a finished node', () => {
