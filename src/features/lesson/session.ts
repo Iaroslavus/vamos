@@ -28,6 +28,7 @@ const EXERCISE_TYPES = new Set<LessonStep['type']>([
   'match_pairs',
   'type_translation',
   'fill_gap',
+  'number_listen',
 ]);
 
 /** Where a generated step belongs on the lesson screen. */
@@ -46,6 +47,8 @@ export function stepSurface(step: LessonStep): StepSurface {
     case 'type_translation':
     case 'fill_gap':
       return 'exercise';
+    case 'number_listen':
+      return step.mode === 'speak' ? 'speak' : 'exercise';
     default:
       return 'prompt';
   }
@@ -181,6 +184,16 @@ function exerciseFromStep(
         sentence_es: step.sentence_es,
         answer: step.answer,
         ...(step.options ? { options: step.options } : {}),
+        ...glossFor(step.itemIds, byId, language),
+      };
+    case 'number_listen':
+      if (step.mode === 'speak') return null;
+      return {
+        id: step.id,
+        type: 'number_listen',
+        prompt_ru: step.prompt_ru,
+        display: step.display,
+        answer: step.answer,
         ...glossFor(step.itemIds, byId, language),
       };
     default:

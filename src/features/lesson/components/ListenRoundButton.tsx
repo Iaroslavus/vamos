@@ -94,7 +94,7 @@ export function ListenRoundButton({
               height: diameter,
               borderRadius: diameter / 2,
               backgroundColor: palette.face,
-              borderColor: primary ? colors.blue : colors.borderStrong,
+              borderColor: primary ? colors.teal : colors.borderStrong,
               borderWidth: primary ? 0 : 2,
             },
           ]}
@@ -125,8 +125,8 @@ function colorsFor(primary: boolean, disabled: boolean) {
   }
   if (primary) {
     return {
-      face: colors.blue,
-      sole: colors.ink,
+      face: colors.teal,
+      sole: colors.tealDeep,
       icon: colors.inkOnDark,
       label: colors.inkOnDark,
     };

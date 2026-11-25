@@ -4,6 +4,8 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { Mic } from 'lucide-react-native';
+
 import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
 import { Appear } from '@/features/auth/components/Appear';
@@ -132,6 +134,8 @@ export function IntroStep({
         <Button
           title={t('lesson.introRepeat')}
           variant="secondary"
+          footer
+          icon={<Mic size={20} color={colors.ink} strokeWidth={2.2} />}
           style={styles.footerButton}
           onPress={() => {
             onRepeatAloud?.();
@@ -141,6 +145,7 @@ export function IntroStep({
         <Button
           title={t('lesson.continue')}
           variant="primary"
+          footer
           style={styles.footerButton}
           onPress={breakdown.goNext}
         />

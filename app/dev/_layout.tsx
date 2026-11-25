@@ -21,7 +21,8 @@ export default function DevLayout() {
     >
       <Stack.Screen name="components" options={{ title: t('common.devComponents') }} />
       <Stack.Screen name="intro" options={{ title: t('lesson.introTitle') }} />
-      <Stack.Screen name="dialog" options={{ title: t('lesson.dialogTitle') }} />
+      <Stack.Screen name="dialog" options={{ headerShown: false }} />
+      <Stack.Screen name="feedback" options={{ headerShown: false }} />
       <Stack.Screen name="speak" options={{ headerShown: false }} />
       <Stack.Screen name="session-summary" options={{ headerShown: false }} />
       <Stack.Screen name="session-ui" options={{ headerShown: false }} />

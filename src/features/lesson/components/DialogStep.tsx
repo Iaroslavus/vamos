@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Button } from '@/components/Button';
+import { Text } from '@/components/Text';
 import { useAudioPreference } from '@/features/audio/preference';
 import type { Item } from '@/features/content/schema';
 import { SpeakPracticeSheet } from '@/features/speech/components/SpeakPracticeSheet';
 import { AddToVocabSheet } from '@/features/vocab/components/AddToVocabSheet';
-import { colors, space } from '@/theme/tokens';
+import { colors, fonts, radius, space } from '@/theme/tokens';
 
 import type { DialogStepResult, PlayableDialogLine } from '../dialog';
 import { normalizeForCompare } from '../grading';
@@ -17,6 +17,7 @@ import { useDialogController } from '../hooks/useDialogController';
 import { useDialogSpeakSheet } from '../hooks/useDialogSpeakSheet';
 import type { AudioPreference } from '../intro';
 import { DialogChoices } from './DialogChoices';
+import { DialogFinale } from './DialogFinale';
 import { DialogTranscript } from './DialogTranscript';
 
 const EMPTY_LINES = new Set<number>();
@@ -37,6 +38,8 @@ export type DialogStepProps = {
   onSpeakAloud?: () => void;
   audioVariant?: AudioPreference;
   speakerName?: string | null;
+  partner?: string;
+  place?: string;
 };
 
 export function DialogStep({
@@ -48,6 +51,8 @@ export function DialogStep({
   onSpeakAloud,
   audioVariant: audioVariantProp,
   speakerName = null,
+  partner = '',
+  place = '',
 }: DialogStepProps) {
   const { t } = useTranslation();
   const profilePreference = useAudioPreference();
@@ -61,6 +66,7 @@ export function DialogStep({
     onComplete,
   });
   const [vocabItemId, setVocabItemId] = useState<string | null>(null);
+  const [showTranslation, setShowTranslation] = useState(false);
   const [openByStep, setOpenByStep] = useState<{ id: string; open: ReadonlySet<number> }>(() => ({
     id: step.id,
     open: new Set(),
@@ -86,12 +92,42 @@ export function DialogStep({
     speak.openSheet();
   };
 
+  const initial = partner.trim().charAt(0).toLocaleUpperCase();
+
   return (
     <View style={styles.root}>
+      <View style={styles.header}>
+        <View style={styles.who}>
+          <View style={styles.avatar}>
+            <Text style={styles.initial}>{initial}</Text>
+          </View>
+          <View style={styles.whoCopy}>
+            <Text variant="bodyBold" numberOfLines={1}>
+              {partner}
+            </Text>
+            <Text variant="caption" color={colors.inkMuted} numberOfLines={1}>
+              {place}
+            </Text>
+          </View>
+        </View>
+        <Pressable
+          accessibilityRole="switch"
+          accessibilityLabel={t('lesson.dialogTranslation')}
+          accessibilityState={{ checked: showTranslation }}
+          onPress={() => setShowTranslation((open) => !open)}
+          style={[styles.translate, showTranslation ? styles.translateOn : null]}
+        >
+          <Text variant="caption" color={showTranslation ? colors.tealDeep : colors.ink}>
+            {t('lesson.dialogTranslation')}
+          </Text>
+        </Pressable>
+      </View>
       <DialogTranscript
         state={state}
         title={t('lesson.dialogTitle')}
-        openTranslations={openTranslations}
+        openTranslations={
+          showTranslation ? new Set(state.lines.map((_, index) => index)) : openTranslations
+        }
         onToggleTranslation={toggleTranslation}
         onReplay={replay}
         canLongPress={(index) => itemIdForLine(state.lines[index], items) !== null}
@@ -117,7 +153,7 @@ export function DialogStep({
           />
         ) : null}
         {state.phase === 'done' ? (
-          <Button title={t('lesson.continue')} variant="primary" onPress={onContinue} />
+          <DialogFinale lines={state.lines.slice(0, state.visibleCount)} onContinue={onContinue} />
         ) : null}
       </View>
       <SpeakPracticeSheet
@@ -125,6 +161,7 @@ export function DialogStep({
         mode="dialog"
         phrase=""
         options={speak.options}
+        acceptIds={userLine?.acceptIds}
         attemptsUsed={speak.used}
         onAttemptsUsed={speak.onAttemptsUsed}
         onMatch={(optionId) => {
@@ -157,6 +194,51 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: colors.ground,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.md,
+    paddingHorizontal: space.xl,
+    paddingTop: space.md,
+  },
+  who: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.sm,
+    minWidth: 0,
+  },
+  whoCopy: {
+    flex: 1,
+    minWidth: 0,
+  },
+  avatar: {
+    width: 44,
+    height: 44,
+    borderRadius: radius.pill,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.saffronSoft,
+  },
+  initial: {
+    fontFamily: fonts.display,
+    fontSize: 20,
+    lineHeight: 24,
+    color: colors.ink,
+  },
+  translate: {
+    minHeight: 44,
+    justifyContent: 'center',
+    borderRadius: radius.pill,
+    borderWidth: 1.5,
+    borderColor: colors.borderStrong,
+    paddingHorizontal: space.md,
+    backgroundColor: colors.surface,
+  },
+  translateOn: {
+    backgroundColor: colors.tealSoft,
+    borderColor: colors.teal,
   },
   footer: {
     gap: space.sm,

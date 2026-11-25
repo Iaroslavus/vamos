@@ -5,6 +5,7 @@ import type { MatchPairsOutcome } from '../hooks/useMatchPairs';
 import type { LessonExerciseItem } from '../store';
 import type { AnswerTextFieldHandle } from './AnswerTextField';
 import { BuildSentenceExercise } from './BuildSentenceExercise';
+import { NumberListenExercise } from './NumberListenExercise';
 import { FillGapExercise } from './FillGapExercise';
 import { ListenSelectExercise } from './ListenSelectExercise';
 import { MatchPairsExercise } from './MatchPairsExercise';
@@ -75,6 +76,18 @@ export function LessonExerciseBody({
         exercise={exercise}
         disabled={disabled}
         onSolved={onMatchSolved}
+      />
+    );
+  }
+
+  if (exercise.type === 'number_listen') {
+    return (
+      <NumberListenExercise
+        key={exercise.id}
+        exercise={exercise}
+        value={userAnswer}
+        disabled={disabled}
+        onChangeText={onAnswerChange}
       />
     );
   }

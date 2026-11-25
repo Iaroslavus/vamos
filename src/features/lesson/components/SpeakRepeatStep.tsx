@@ -10,6 +10,8 @@ type SpeakLine = { es: string; audio: string | null };
 type SpeakRepeatStepProps = {
   promptEs: string;
   audio: string | null;
+  /** Replaces the phrase until the learner speaks. */
+  cue?: string | null;
   /** Two gendered lines. Either pronunciation counts. */
   lines?: readonly SpeakLine[];
   sayRu?: string | null;
@@ -23,6 +25,7 @@ type SpeakRepeatStepProps = {
 export function SpeakRepeatStep({
   promptEs,
   audio,
+  cue = null,
   lines,
   sayRu = null,
   parts = [],
@@ -39,6 +42,7 @@ export function SpeakRepeatStep({
         mode="step"
         phrase={lines && lines.length > 1 ? (lines[0]?.es ?? promptEs) : promptEs}
         audio={audio}
+        cue={cue}
         lines={lines}
         sayRu={sayRu}
         parts={parts}

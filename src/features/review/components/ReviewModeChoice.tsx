@@ -1,9 +1,9 @@
+import { Layers, Zap, type LucideIcon } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
-import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
-import { colors, space } from '@/theme/tokens';
+import { colors, radius, space } from '@/theme/tokens';
 
 import { QUICK_REVIEW_LIMIT, type ReviewStudyMode } from '../exercises';
 
@@ -25,23 +25,64 @@ export function ReviewModeChoice({ count, onChoose }: ReviewModeChoiceProps) {
       <Text variant="body" color={colors.inkMuted} style={styles.center}>
         {t('review.chooseCount', { count })}
       </Text>
-      <View style={styles.option}>
-        <Button title={t('review.modeCards')} onPress={() => onChoose('cards')} />
-        <Text variant="caption" color={colors.inkMuted} style={styles.center}>
-          {t('review.modeCardsHint')}
-        </Text>
-      </View>
-      <View style={styles.option}>
-        <Button
+      <View style={styles.row}>
+        <ModeCard
+          title={t('review.modeCards')}
+          hint={t('review.modeCardsHint')}
+          Icon={Layers}
+          testID="review-mode-cards"
+          onPress={() => onChoose('cards')}
+        />
+        <ModeCard
           title={t('review.modeQuick')}
-          variant="secondary"
+          hint={t('review.modeQuickHint', { count: QUICK_REVIEW_LIMIT })}
+          Icon={Zap}
+          badge={t('review.recommended')}
+          testID="review-mode-quick"
           onPress={() => onChoose('quick')}
         />
-        <Text variant="caption" color={colors.inkMuted} style={styles.center}>
-          {t('review.modeQuickHint', { count: QUICK_REVIEW_LIMIT })}
-        </Text>
       </View>
     </View>
+  );
+}
+
+type ModeCardProps = {
+  title: string;
+  hint: string;
+  Icon: LucideIcon;
+  badge?: string;
+  testID: string;
+  onPress: () => void;
+};
+
+function ModeCard({ title, hint, Icon, badge, testID, onPress }: ModeCardProps) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={title}
+      testID={testID}
+      onPress={onPress}
+      style={styles.card}
+    >
+      {badge ? (
+        <View style={styles.badge}>
+          <Text variant="caption" color={colors.tealDeep}>
+            {badge}
+          </Text>
+        </View>
+      ) : (
+        <View style={styles.badgeSpacer} />
+      )}
+      <View style={styles.icon}>
+        <Icon size={28} color={colors.ink} strokeWidth={2.2} />
+      </View>
+      <Text variant="h3" style={styles.center}>
+        {title}
+      </Text>
+      <Text variant="caption" color={colors.inkMuted} style={styles.center}>
+        {hint}
+      </Text>
+    </Pressable>
   );
 }
 
@@ -51,8 +92,41 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: space.lg,
   },
-  option: {
+  row: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
     gap: space.sm,
+  },
+  card: {
+    flex: 1,
+    minWidth: 0,
+    minHeight: 180,
+    gap: space.sm,
+    borderRadius: radius.lg,
+    borderWidth: 1.5,
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
+    padding: space.md,
+  },
+  badge: {
+    alignSelf: 'center',
+    minHeight: 24,
+    borderRadius: radius.pill,
+    backgroundColor: colors.tealSoft,
+    paddingHorizontal: space.sm,
+    justifyContent: 'center',
+  },
+  badgeSpacer: {
+    height: 24,
+  },
+  icon: {
+    width: 48,
+    height: 48,
+    borderRadius: radius.md,
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.saffronSoft,
   },
   center: {
     textAlign: 'center',

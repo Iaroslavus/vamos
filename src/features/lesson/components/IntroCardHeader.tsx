@@ -1,16 +1,25 @@
 import { BookmarkCheck, BookmarkPlus, type LucideIcon } from 'lucide-react-native';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import { colors, radius } from '@/theme/tokens';
+import { Text } from '@/components/Text';
+import { colors, fonts, radius } from '@/theme/tokens';
 
 type IntroCardHeaderProps = {
   TopicIcon: LucideIcon;
+  /** Large digit in place of the topic icon, for a number card. */
+  display?: string | null;
   saved: boolean;
   saveLabel: string;
   onSave: () => void;
 };
 
-export function IntroCardHeader({ TopicIcon, saved, saveLabel, onSave }: IntroCardHeaderProps) {
+export function IntroCardHeader({
+  TopicIcon,
+  display,
+  saved,
+  saveLabel,
+  onSave,
+}: IntroCardHeaderProps) {
   return (
     <View style={styles.top}>
       <View style={styles.balance} />
@@ -19,7 +28,11 @@ export function IntroCardHeader({ TopicIcon, saved, saveLabel, onSave }: IntroCa
         accessibilityElementsHidden
         importantForAccessibility="no-hide-descendants"
       >
-        <TopicIcon size={28} color={colors.ink} strokeWidth={2.2} />
+        {display ? (
+          <Text style={styles.digit}>{display}</Text>
+        ) : (
+          <TopicIcon size={28} color={colors.ink} strokeWidth={2.2} />
+        )}
       </View>
       <Pressable
         accessibilityRole="button"
@@ -69,5 +82,11 @@ const styles = StyleSheet.create({
   saveOn: {
     backgroundColor: colors.saffronSoft,
     borderColor: colors.saffron,
+  },
+  digit: {
+    fontFamily: fonts.display,
+    fontSize: 32,
+    lineHeight: 36,
+    color: colors.ink,
   },
 });

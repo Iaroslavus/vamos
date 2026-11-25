@@ -82,12 +82,23 @@ export function AddToVocabSheet({ visible, itemIds, onClose, onChanged }: AddToV
             );
           })}
         </ScrollView>
-        <Button
-          title={t('vocab.newFolder')}
-          variant="secondary"
-          disabled={sheet.busy}
-          onPress={() => sheet.setCreating((open) => !open)}
-        />
+        <View style={styles.actions}>
+          <Button
+            title={t('vocab.newFolder')}
+            variant="secondary"
+            footer
+            disabled={sheet.busy}
+            onPress={() => sheet.setCreating((open) => !open)}
+            style={styles.action}
+          />
+          <Button
+            title={t('vocab.done')}
+            footer
+            disabled={sheet.busy}
+            onPress={() => void sheet.save()}
+            style={styles.action}
+          />
+        </View>
         {sheet.creating ? (
           <TextInput
             accessibilityLabel={t('vocab.nameLabel')}
@@ -107,7 +118,6 @@ export function AddToVocabSheet({ visible, itemIds, onClose, onChanged }: AddToV
             {t('vocab.nameInvalid')}
           </Text>
         ) : null}
-        <Button title={t('vocab.done')} disabled={sheet.busy} onPress={() => void sheet.save()} />
       </BottomSheet>
       <SaveToast message={sheet.toast} onHide={sheet.dismissToast} />
     </>
@@ -160,6 +170,15 @@ const styles = StyleSheet.create({
   },
   name: {
     flex: 1,
+  },
+  actions: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    gap: space.sm,
+  },
+  action: {
+    flex: 1,
+    minWidth: 0,
   },
   input: {
     minHeight: 48,

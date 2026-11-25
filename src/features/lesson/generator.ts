@@ -8,9 +8,13 @@ import type {
   Lesson,
   LessonOverride,
 } from '@/features/content/schema';
+import { displayText } from '@/features/content/displayText';
 import { contentLocale, textOf, type ContentLocale } from '@/features/content/text';
 import { normalizeForCompare } from '@/features/lesson/grading';
 import { itemAudioPath } from '@/features/lesson/intro';
+
+import { repairDialogLines } from './dialogOptions';
+import { phraseTileLabels } from './tiles';
 
 /** Screen count for a generated lesson, including one intro card per new unit. */
 export const LESSON_STEP_MIN = 18;
@@ -118,6 +122,17 @@ export type ListenTypeStep = StepRefs & {
   answer: string;
 };
 
+/** Hear a number and type its digits, or see the digit and say the word. */
+export type NumberListenStep = StepRefs & {
+  type: 'number_listen';
+  mode: 'digits' | 'speak';
+  prompt_ru: string;
+  display: string;
+  prompt_es: string;
+  audio: string | null;
+  answer: string;
+};
+
 /** Override kinds that name an exercise without enough fields to build one. */
 export type AuthoredStep = StepRefs & {
   type: 'conjugate' | 'reading_comprehension' | 'free_writing' | 'roleplay';
@@ -136,6 +151,7 @@ export type LessonStep =
   | SpeakRepeatStep
   | DialogStep
   | ListenTypeStep
+  | NumberListenStep
   | AuthoredStep;
 
 export type GenerateLessonStepsInput = {
@@ -237,6 +253,8 @@ export function phaseOf(step: LessonStep): LessonPhase | null {
     case 'dialog':
       return 'dialog';
     case 'listen_type':
+    case 'number_listen':
+      return 'recognize';
     case 'conjugate':
     case 'reading_comprehension':
     case 'free_writing':
@@ -264,13 +282,13 @@ function assemble(input: AssembleInput): LessonStep[] {
   const prompts = lessonPrompts(language);
   const intros = lessonItems.map(introStep);
   const recognizeBank = recognizeSteps(lessonItems, pool, rng, language, prompts);
-  const buildBank = buildSteps(lessonItems, pool, rng, prompts);
+  const buildBank = buildSteps(lessonItems, pool, rng, language);
   const recallCount = chooseRecall(rng, lessonItems.length, lesson.speak.length);
   const recall = shuffle(lessonItems, rng)
     .slice(0, recallCount)
     .map((item) => typeTranslationStep(item, language, prompts.recall));
   const speak = lesson.speak.map((id) => speakStep(requiredItem(byId, id), prompts.speak));
-  const dialog = dialogStep(lesson);
+  const dialog = dialogStep(lesson, pool);
 
   const budget = practiceBudget(intros.length, speak.length, recall.length);
   const recognizeAvailable =
@@ -297,7 +315,8 @@ function recognizeSteps(
   prompts: LessonPrompt,
 ) {
   const order = shuffle(lessonItems, rng);
-  const listen = order.flatMap((item) => {
+  const listen = order.flatMap((item): LessonStep[] => {
+    if (item.display) return numberListenSteps(item, language);
     const step = listenSelectStep(item, pool, rng, language, prompts.listen);
     return step ? [step] : [];
   });
@@ -315,14 +334,15 @@ function buildSteps(
   lessonItems: readonly Item[],
   pool: readonly Item[],
   rng: Rng,
-  prompts: LessonPrompt,
+  language: ContentLocale,
 ) {
+  const prompts = lessonPrompts(language);
   const phrases = shuffle(
     lessonItems.filter((item) => phrasePieces(item) !== null),
     rng,
   );
   const sentences = phrases.flatMap((item) => {
-    const step = buildSentenceStep(item, pool, rng, prompts.build);
+    const step = buildSentenceStep(item, pool, rng, language);
     return step ? [step] : [];
   });
   const gaps = phrases.flatMap((item) => fillGapSteps(item, pool, rng, prompts.gap));
@@ -403,6 +423,24 @@ function introStep(item: Item): IntroStep {
     itemIds: [item.id],
     distractorIds: [],
   };
+}
+
+function numberListenSteps(item: Item, language: ContentLocale): NumberListenStep[] {
+  const display = item.display ?? '';
+  return (['digits', 'speak'] as const).map((mode) => ({
+    id: '',
+    type: 'number_listen' as const,
+    mode,
+    prompt_ru: i18n.t(mode === 'digits' ? 'lesson.numberType' : 'lesson.numberSpeak', {
+      lng: language,
+    }),
+    display,
+    prompt_es: item.es,
+    audio: audioOf(item),
+    answer: mode === 'digits' ? display : item.es,
+    itemIds: [item.id],
+    distractorIds: [],
+  }));
 }
 
 function listenSelectStep(
@@ -486,17 +524,21 @@ function buildSentenceStep(
   item: Item,
   pool: readonly Item[],
   rng: Rng,
-  promptRu: string,
+  language: ContentLocale,
 ): BuildSentenceStep | null {
   const parts = phrasePieces(item);
   if (!parts) return null;
   const extras = extraTiles(item, parts, pool, 1 + rng.int(2), rng);
   const answer = parts.join(' ');
+  const gloss = displayText(textOf(item.tr, language))
+    .replaceAll('{name}', '')
+    .replace(/\s+/g, ' ')
+    .trim();
   const step: BuildSentenceStep = {
     id: '',
     type: 'build_sentence',
-    prompt_ru: promptRu,
-    tiles: shuffle([...parts, ...extras.tiles], rng),
+    prompt_ru: i18n.t('lesson.promptBuildNamed', { lng: language, text: gloss }),
+    tiles: shuffle([...phraseTileLabels(parts), ...extras.tiles], rng),
     answer,
     itemIds: [item.id],
     distractorIds: extras.ids,
@@ -563,10 +605,11 @@ function speakStep(item: Item, promptRu: string): SpeakRepeatStep {
   };
 }
 
-function dialogStep(lesson: Lesson): DialogStep {
+function dialogStep(lesson: Lesson, pool: readonly Item[]): DialogStep {
+  const lines = repairDialogLines(lesson.dialog.lines, pool);
   const itemIds: string[] = [];
   const distractorIds: string[] = [];
-  for (const line of lesson.dialog.lines) {
+  for (const line of lines) {
     if (line.who !== 'user') continue;
     itemIds.push(...line.accept);
     for (const option of line.options) {
@@ -576,7 +619,7 @@ function dialogStep(lesson: Lesson): DialogStep {
   return {
     id: '',
     type: 'dialog',
-    lines: lesson.dialog.lines.map(cloneLine),
+    lines: lines.map(cloneLine),
     itemIds: unique(itemIds),
     distractorIds: unique(distractorIds),
   };
@@ -646,7 +689,7 @@ function stepFromOverride(override: LessonOverride, ctx: OverrideContext): Lesso
         prompt_ru: promptRu,
       };
     case 'build_sentence': {
-      const step = buildSentenceStep(focus, ctx.pool, ctx.rng, prompts.build);
+      const step = buildSentenceStep(focus, ctx.pool, ctx.rng, ctx.language);
       if (!step) throw new Error(`Cannot build build_sentence for ${focus.id}`);
       return { ...step, prompt_ru: promptRu };
     }
@@ -809,8 +852,11 @@ function tileCandidates(
 }
 
 function looseTiles(item: Item): string[] {
-  if (item.parts.length > 0) return item.parts.map((part) => part.es);
-  return item.es.split(/\s+/).filter((token) => token.length > 0);
+  const source =
+    item.parts.length > 0
+      ? item.parts.map((part) => part.es)
+      : item.es.split(/\s+/).filter((token) => token.length > 0);
+  return phraseTileLabels(source);
 }
 
 function placeAnswer(answer: string, extras: readonly string[], rng: Rng): string[] {

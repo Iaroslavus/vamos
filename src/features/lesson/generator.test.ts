@@ -9,6 +9,7 @@ import {
   seenItemsBeforeLesson,
   type LessonStep,
 } from './generator';
+import { phraseTileLabels } from './tiles';
 
 const SEEDS = ['alpha', 'omega', '42'];
 
@@ -153,7 +154,9 @@ describe('generateLessonSteps', () => {
     const items = itemMap();
     for (const lesson of listLessons()) {
       const steps = bundledSteps(lesson.id, 'alpha');
-      expect(steps.some((step) => step.type === 'listen_select')).toBe(true);
+      expect(
+        steps.some((step) => step.type === 'listen_select' || step.type === 'number_listen'),
+      ).toBe(true);
       expect(steps.some((step) => step.type === 'match_pairs')).toBe(true);
       expect(steps.some((step) => step.type === 'select_translation')).toBe(true);
       if (lessonHasPhrase(lesson.id)) {
@@ -185,7 +188,7 @@ describe('generateLessonSteps', () => {
           const parts = unit?.parts.map((part) => part.es) ?? [];
           expect(parts.length).toBeGreaterThanOrEqual(2);
           if (step.type === 'build_sentence') {
-            for (const part of parts) expect(step.tiles).toContain(part);
+            for (const label of phraseTileLabels(parts)) expect(step.tiles).toContain(label);
             const extras = step.tiles.length - parts.length;
             expect(extras).toBeGreaterThanOrEqual(1);
             expect(extras).toBeLessThanOrEqual(2);
@@ -221,7 +224,21 @@ describe('generateLessonSteps', () => {
 
       const dialog = steps[steps.length - 1];
       expect(dialog?.type).toBe('dialog');
-      if (dialog?.type === 'dialog') expect(dialog.lines).toEqual(lesson.dialog.lines);
+      if (dialog?.type === 'dialog') {
+        expect(dialog.lines.map((line) => line.who)).toEqual(
+          lesson.dialog.lines.map((line) => line.who),
+        );
+        dialog.lines.forEach((line, index) => {
+          const authored = lesson.dialog.lines[index];
+          if (line.who !== 'user' || authored?.who !== 'user') {
+            expect(line).toEqual(authored);
+            return;
+          }
+          expect(line.accept).toEqual(authored.accept);
+          expect(line.options).toEqual(expect.arrayContaining([...line.accept]));
+          expect(new Set(line.options).size).toBe(line.options.length);
+        });
+      }
     }
   });
 
@@ -348,6 +365,17 @@ describe('generateLessonSteps', () => {
     expect(select.answer).toBe('hello');
     expect(select.options).toContain('hello');
     expect(select.options).toContain('бувай');
+  });
+
+  it('puts number_listen in the numbers topic', () => {
+    const steps = bundledSteps('a1.numbers.l1', 'alpha');
+    const digits = steps.find((step) => step.type === 'number_listen' && step.mode === 'digits');
+    const speak = steps.find((step) => step.type === 'number_listen' && step.mode === 'speak');
+    expect(digits).toMatchObject({ answer: expect.stringMatching(/^\d+$/) });
+    expect(speak).toMatchObject({
+      display: digits && digits.type === 'number_listen' ? digits.display : '',
+    });
+    expect(speak && speak.type === 'number_listen' ? speak.prompt_es.length : 0).toBeGreaterThan(0);
   });
 });
 

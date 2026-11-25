@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.sm,
-    backgroundColor: colors.blue,
+    backgroundColor: colors.teal,
   },
   pressed: {
     opacity: 0.85,

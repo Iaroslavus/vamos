@@ -274,13 +274,27 @@ describe('IntroStep', () => {
     expect(await screen.findByRole('button', { name: 'В избранном' })).toBeTruthy();
   });
 
+  it('gives the two footer buttons the same face height', async () => {
+    await renderStep(phrase);
+    const faces = screen.getAllByTestId('footer-button-face');
+    expect(faces).toHaveLength(2);
+    for (const face of faces) {
+      const style = StyleSheet.flatten(face.props.style);
+      expect(style.height).toBe(56);
+      expect(style.minHeight).toBe(56);
+      const wrap = StyleSheet.flatten(face.parent?.props.style);
+      expect(wrap.flex).toBe(1);
+      expect(wrap.minWidth).toBe(0);
+    }
+  });
+
   it('opens speak practice when the learner taps repeat aloud', async () => {
     await renderStep(phrase);
 
     expect(screen.queryByText('Повторите вслух')).toBeNull();
     expect(screen.queryByLabelText('Слушать образец')).toBeNull();
 
-    await fireEvent.press(screen.getByText('Повторить вслух'));
+    await fireEvent.press(screen.getByText('Сказать'));
 
     expect(screen.queryByText('Повторите вслух')).toBeNull();
     expect(screen.queryByText('Тренировка: сердечки и ошибки урока не меняются.')).toBeNull();
@@ -294,7 +308,7 @@ describe('IntroStep', () => {
     jest.mocked(ExpoSpeechRecognitionModule.isRecognitionAvailable).mockReturnValue(false);
     await renderStep(phrase);
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Повторить вслух' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Сказать' }));
 
     expect(await screen.findByText('Распознавание недоступно')).toBeTruthy();
     expect(screen.getByText(/Прослушайте фразу и повторите её сами/)).toBeTruthy();
@@ -316,7 +330,7 @@ describe('IntroStep', () => {
     });
     await renderStep(phrase);
 
-    await fireEvent.press(screen.getByText('Повторить вслух'));
+    await fireEvent.press(screen.getByText('Сказать'));
 
     expect(await screen.findByText('Микрофон недоступен')).toBeTruthy();
     expect(screen.getByText(/Прослушайте фразу и повторите её сами/)).toBeTruthy();
@@ -344,14 +358,14 @@ describe('IntroStep', () => {
       ],
     });
     await renderStep(phrase);
-    await fireEvent.press(screen.getByText('Повторить вслух'));
+    await fireEvent.press(screen.getByText('Сказать'));
     expect(await screen.findByLabelText('Говорить')).toBeTruthy();
 
     await act(async () => {
       emitTranscript('zzzz');
     });
 
-    expect(await screen.findByText('ударение на отмеченной гласной: буЭнос дИас')).toBeTruthy();
+    expect(await screen.findByText('días — ударение на отмеченной гласной: ДИА-с')).toBeTruthy();
     const state = useLessonStore.getState();
     expect(state.hearts).toBe(DEFAULT_MAX_HEARTS);
     expect(state.wrongCount).toBe(0);
@@ -368,7 +382,7 @@ describe('IntroStep', () => {
     await renderStep(phrase, { onNext, onRepeatAloud });
     const playsBeforeRepeat = jest.mocked(playLessonAudio).mock.calls.length;
 
-    await fireEvent.press(screen.getByText('Повторить вслух'));
+    await fireEvent.press(screen.getByText('Сказать'));
     await fireEvent.press(screen.getByText('Дальше'));
 
     expect(onRepeatAloud).toHaveBeenCalledTimes(1);
@@ -430,7 +444,7 @@ describe('IntroStep', () => {
   it('releases the microphone when the practice sheet closes', async () => {
     (globalThis as { __resetAudio__?: () => void }).__resetAudio__?.();
     await renderStep(phrase);
-    await fireEvent.press(screen.getByText('Повторить вслух'));
+    await fireEvent.press(screen.getByText('Сказать'));
     await fireEvent.press(await screen.findByLabelText('Говорить'));
     expect(await screen.findByLabelText('Остановить запись')).toBeTruthy();
 

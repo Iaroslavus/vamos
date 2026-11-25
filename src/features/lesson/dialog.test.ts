@@ -120,7 +120,24 @@ describe('dialog turns', () => {
     const sent = chooseDialogOption(hinted, 'hola.buenos_dias');
     expect(sent.phase).toBe('send');
     expect(sent.sendingRevealed).toBe(false);
-    expect(sent.outcomes[0]).toMatchObject({ missed: true, es: 'buenos días' });
+    expect(sent.outcomes[0]).toMatchObject({ missed: false, es: 'buenos días' });
+  });
+
+  it('accepts any id from accept and does not mark that reply as a miss', () => {
+    const named = new Map(items);
+    named.set('hola.soy', item('hola.soy', 'Soy Ana', 'я Ана'));
+    const resolved = resolveDialogLines(
+      [
+        {
+          who: 'user',
+          accept: ['hola.buenos_dias', 'hola.soy'],
+          options: ['hola.gracias', 'hola.soy', 'hola.buenos_dias'],
+        },
+      ],
+      named,
+    );
+    const sent = chooseDialogOption(createDialogState(resolved), 'hola.soy');
+    expect(sent.outcomes[0]).toMatchObject({ missed: false, itemId: 'hola.soy', es: 'Soy Ana' });
   });
 
   it('reveals the correct line when the second chance misses too', () => {

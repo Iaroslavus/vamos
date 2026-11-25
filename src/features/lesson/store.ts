@@ -68,6 +68,12 @@ export type FillGapItem = LessonExerciseBase & {
   options?: readonly string[];
 };
 
+export type NumberListenItem = LessonExerciseBase & {
+  type: 'number_listen';
+  /** Digit shown or typed, such as "8". */
+  display: string;
+};
+
 /** Playable exercise payload for the lesson session (MVP types). */
 export type LessonExerciseItem =
   | SelectTranslationItem
@@ -75,7 +81,8 @@ export type LessonExerciseItem =
   | ListenSelectItem
   | MatchPairsItem
   | TypeTranslationItem
-  | FillGapItem;
+  | FillGapItem
+  | NumberListenItem;
 
 export type LessonSessionStatus =
   'idle' | 'active' | 'feedback' | 'mistakes_intro' | 'completed' | 'failed';

@@ -72,6 +72,7 @@ export function DialogTranscript({
             es={line.es}
             ru={line.ru}
             revealed={false}
+            onReplay={() => onReplay(index)}
             onLongPress={holdUser ? () => onLongPress?.(index) : undefined}
             longPressHint={holdUser ? longPressHint : undefined}
           />
