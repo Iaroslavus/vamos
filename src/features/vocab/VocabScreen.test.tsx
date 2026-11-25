@@ -18,14 +18,29 @@ import type { StoredCard } from '@/features/review/types';
 import i18n from '@/i18n';
 
 import { reviewRepository } from '@/features/review/defaultRepository';
+import * as progressModule from '@/features/progress/useProgress';
 
-import { FolderScreen } from './FolderScreen';
 import { vocabRepository } from './defaultRepository';
+import { FolderScreen } from './FolderScreen';
 import { VocabScreen } from './VocabScreen';
+
+const progressState = (
+  progressModule as unknown as {
+    progressState: {
+      lessons: {
+        lessonId: string;
+        status: 'completed' | 'in_progress';
+        bestAccuracy: number | null;
+        completedAt: string | null;
+      }[];
+    };
+  }
+).progressState;
 
 const mockPush = jest.fn();
 const mockBack = jest.fn();
-const mockParams: { id?: string } = {};
+const mockParams: { id?: string; tab?: string; topicId?: string; focus?: string; source?: string } =
+  {};
 const mockVocabMemory = new Map<string, string>();
 
 jest.mock('expo-haptics', () => ({
@@ -45,6 +60,7 @@ jest.mock('expo-router', () => {
   return {
     useRouter: () => ({ push: mockPush, back: mockBack, canGoBack: () => true }),
     useLocalSearchParams: () => mockParams,
+    useNavigation: () => ({ addListener: () => () => undefined }),
     Stack: {
       Screen: ({
         options,
@@ -68,17 +84,31 @@ jest.mock('@/features/auth/useSession', () => ({
   }),
 }));
 
-jest.mock('@/features/progress/useProgress', () => ({
-  useProgress: () => ({
-    isSuccess: true,
-    isPending: false,
-    isError: false,
-    data: { lessons: [], totalXp: 0, pending: 0 },
-  }),
-}));
+jest.mock('@/features/progress/useProgress', () => {
+  const progressState = {
+    lessons: [] as {
+      lessonId: string;
+      status: 'completed' | 'in_progress';
+      bestAccuracy: number | null;
+      completedAt: string | null;
+    }[],
+  };
+  return {
+    progressState,
+    useProgress: () => ({
+      isSuccess: true,
+      isPending: false,
+      isError: false,
+      data: { lessons: progressState.lessons, totalXp: 0, pending: 0 },
+      refetch: jest.fn(),
+    }),
+  };
+});
 
 jest.mock('@/features/audio/playback', () => ({
   play: jest.fn(() => Promise.resolve('file')),
+  playLessonAudio: jest.fn(() => Promise.resolve('speech')),
+  stopLessonAudio: jest.fn(() => Promise.resolve()),
 }));
 
 jest.mock('@/features/review/defaultRepository', () => ({
@@ -195,6 +225,7 @@ async function seedFavorites(itemIds: readonly string[]) {
   const seeded = await vocabRepository.syncDerived('user-1', {
     topics: [],
     difficultItemIds: [],
+    learned: [],
   });
   const favorites = seeded.folders.find((folder) => folder.systemKey === 'favorites');
   await vocabRepository.addItems('user-1', favorites?.id ?? '', itemIds);
@@ -207,6 +238,11 @@ describe('VocabScreen', () => {
     mockVocabMemory.clear();
     mockPush.mockClear();
     mockParams.id = undefined;
+    mockParams.tab = undefined;
+    mockParams.topicId = undefined;
+    mockParams.focus = undefined;
+    mockParams.source = undefined;
+    progressState.lessons = [];
     resetReview();
   });
 
@@ -230,6 +266,143 @@ describe('VocabScreen', () => {
     await user.press(screen.getByText('Создать'));
 
     expect(await screen.findByText('Для переезда')).toBeTruthy();
+    expect(screen.getByText('Все изученные · 0')).toBeTruthy();
+    expect(screen.getByRole('tab', { name: 'Мои папки', selected: true })).toBeTruthy();
+  });
+
+  it('opens the learned folder from the header and filters its phrases', async () => {
+    progressState.lessons = [
+      {
+        lessonId: 'a1.hola.l1',
+        status: 'completed',
+        bestAccuracy: 1,
+        completedAt: '2026-05-01T10:00:00.000Z',
+      },
+    ];
+    jest.mocked(reviewRepository.read).mockResolvedValue({
+      cards: [mockDueCard('hola.hola')],
+      logs: [
+        {
+          clientId: 'log-1',
+          cardId: 'hola.gracias:es_to_ru',
+          rating: 'again',
+          reviewedAt: new Date().toISOString(),
+          elapsedDays: 0,
+          scheduledDays: 0,
+          state: 0,
+          itemId: 'hola.gracias',
+          direction: 'es_to_ru',
+        },
+        {
+          clientId: 'log-2',
+          cardId: 'hola.gracias:ru_to_es',
+          rating: 'again',
+          reviewedAt: new Date().toISOString(),
+          elapsedDays: 0,
+          scheduledDays: 0,
+          state: 0,
+          itemId: 'hola.gracias',
+          direction: 'ru_to_es',
+        },
+      ],
+      dueCount: 1,
+      pending: 0,
+    });
+
+    const seeded = await vocabRepository.syncDerived('user-1', {
+      topics: [],
+      difficultItemIds: ['hola.gracias'],
+      learned: [
+        { itemId: 'hola.hola', addedAt: '2026-05-01T10:00:00.000Z' },
+        { itemId: 'hola.buenos_dias', addedAt: '2026-05-01T10:00:00.000Z' },
+        { itemId: 'hola.gracias', addedAt: '2026-05-01T10:00:00.000Z' },
+      ],
+    });
+    const learned = seeded.folders.find((folder) => folder.systemKey === 'learned');
+    mockParams.id = learned?.id;
+
+    await renderVocab();
+    expect(await screen.findByText('Все изученные · 8')).toBeTruthy();
+    await user.press(screen.getByRole('button', { name: 'Изучено 1 слово' }));
+    expect(mockPush).toHaveBeenCalledWith({
+      pathname: '/vocab/[id]',
+      params: { id: learned?.id },
+    });
+  });
+
+  it('filters the learned folder by due, difficult, and search', async () => {
+    progressState.lessons = [
+      {
+        lessonId: 'a1.hola.l1',
+        status: 'completed',
+        bestAccuracy: 1,
+        completedAt: '2026-05-01T10:00:00.000Z',
+      },
+    ];
+    jest.mocked(reviewRepository.read).mockResolvedValue({
+      cards: [mockDueCard('hola.hola')],
+      logs: [
+        {
+          clientId: 'log-1',
+          cardId: 'hola.gracias:es_to_ru',
+          rating: 'again',
+          reviewedAt: new Date().toISOString(),
+          elapsedDays: 0,
+          scheduledDays: 0,
+          state: 0,
+          itemId: 'hola.gracias',
+          direction: 'es_to_ru',
+        },
+        {
+          clientId: 'log-2',
+          cardId: 'hola.gracias:ru_to_es',
+          rating: 'again',
+          reviewedAt: new Date().toISOString(),
+          elapsedDays: 0,
+          scheduledDays: 0,
+          state: 0,
+          itemId: 'hola.gracias',
+          direction: 'ru_to_es',
+        },
+      ],
+      dueCount: 1,
+      pending: 0,
+    });
+    const seeded = await vocabRepository.syncDerived('user-1', {
+      topics: [],
+      difficultItemIds: [],
+      learned: [],
+    });
+    mockParams.id = seeded.folders.find((folder) => folder.systemKey === 'learned')?.id;
+
+    await renderFolder();
+
+    expect(await screen.findByText('Hola')).toBeTruthy();
+    expect(screen.getByText('Buenos días')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Учить' })).toBeTruthy();
+
+    await user.press(screen.getByRole('button', { name: 'Ждут повторения' }));
+    expect(screen.getByText('Hola')).toBeTruthy();
+    expect(screen.queryByText('Buenos días')).toBeNull();
+
+    await user.press(screen.getByRole('button', { name: 'Сложные' }));
+    expect(await screen.findByText('Gracias')).toBeTruthy();
+    expect(screen.queryByText('Hola')).toBeNull();
+
+    await user.press(screen.getByRole('button', { name: 'Все' }));
+    await fireEvent.changeText(screen.getByLabelText('Поиск в изученных'), 'días');
+    expect(screen.getByText('Buenos días')).toBeTruthy();
+    expect(screen.queryByText('Hola')).toBeNull();
+  });
+
+  it('opens the phrasebook on the topic from the route', async () => {
+    mockParams.tab = 'phrasebook';
+    mockParams.topicId = 'a1.cafe';
+    mockParams.source = 'path';
+    await renderVocab();
+
+    expect(await screen.findByRole('tab', { name: 'Разговорник', selected: true })).toBeTruthy();
+    expect(await screen.findByText('В кафе · A1')).toBeTruthy();
   });
 
   it('counts one word when both card directions are due', async () => {
@@ -295,6 +468,7 @@ describe('FolderScreen', () => {
     const seeded = await vocabRepository.syncDerived('user-1', {
       topics: [],
       difficultItemIds: [],
+      learned: [],
     });
     const favorites = seeded.folders.find((folder) => folder.systemKey === 'favorites');
     await vocabRepository.addItems('user-1', favorites?.id ?? '', ['hola.hola']);
@@ -326,6 +500,7 @@ describe('FolderScreen', () => {
     const seeded = await vocabRepository.syncDerived('user-1', {
       topics: [],
       difficultItemIds: [],
+      learned: [],
     });
     const favorites = seeded.folders.find((folder) => folder.systemKey === 'favorites');
     await vocabRepository.addItems('user-1', favorites?.id ?? '', ['hola.hola']);
@@ -458,6 +633,7 @@ describe('FolderScreen', () => {
     const seeded = await vocabRepository.syncDerived('user-1', {
       topics: [{ topicId: 'a1.hola', name: 'Приветствия', itemIds: ['hola.hola'] }],
       difficultItemIds: ['hola.hola'],
+      learned: [],
     });
 
     for (const folder of seeded.folders) {

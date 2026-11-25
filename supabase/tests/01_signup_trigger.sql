@@ -58,8 +58,12 @@ select results_eq(
     where user_id = '11111111-1111-1111-1111-111111111111'
     order by system_key
   $$,
-  $$ values ('difficult', 'Сложные', 'coral', 'system'), ('favorites', 'Избранное', 'saffron', 'system') $$,
-  'signup creates the favorites and difficult folders'
+  $$ values
+    ('difficult', 'Сложные', 'coral', 'system'),
+    ('favorites', 'Избранное', 'saffron', 'system'),
+    ('learned', 'Все изученные', 'teal', 'system')
+  $$,
+  'signup creates the learned, favorites, and difficult folders'
 );
 
 -- Overly long names must not break signup.

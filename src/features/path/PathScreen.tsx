@@ -24,6 +24,8 @@ import { useReviewDueCount } from '@/features/review/hooks/useReviewDueCount';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { colors, space } from '@/theme/tokens';
 
+import { phrasebookTarget } from '@/features/cheatsheet/route';
+
 import { cityName } from './cities';
 import { PathCanvas } from './components/PathCanvas';
 import { PathCard } from './components/PathCard';
@@ -141,9 +143,7 @@ export function PathScreen() {
         reviewLabel={t('path.reviewA11y', { count: dueReviews })}
         searchLabel={t('cheatsheet.searchPlaceholder')}
         onReview={() => router.push('/review')}
-        onSearch={() =>
-          router.push({ pathname: '/cheatsheet', params: { source: 'search', focus: '1' } })
-        }
+        onSearch={() => router.push(phrasebookTarget({ focus: true, source: 'search' }))}
       />
       {nodes.length === 0 || !selected ? (
         <View style={styles.empty}>
@@ -172,6 +172,7 @@ export function PathScreen() {
             completedLessons={selected.completedLessons}
             action={pathAction(selected)}
             lessonNumber={selected.nextLessonNumber ?? 1}
+            showProgress={selected.kind === 'topic'}
             primaryDisabled={lessonToOpen(selected) == null}
             onPrimary={() => {
               const lessonId = lessonToOpen(selected);
@@ -179,10 +180,7 @@ export function PathScreen() {
               router.push({ pathname: '/lesson/[id]', params: { id: lessonId } });
             }}
             {...cheatSheetProps(selected.topicId, (id) =>
-              router.push({
-                pathname: '/cheatsheet',
-                params: { topicId: id, source: 'path' },
-              }),
+              router.push(phrasebookTarget({ topicId: id, source: 'path' })),
             )}
           />
         </>

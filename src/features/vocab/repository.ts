@@ -22,6 +22,7 @@ import type {
 const LEGACY_FAVORITES_KEY = 'vamos-favorites';
 
 const SYSTEM_FOLDER: Record<SystemKey, { name: string; color: Folder['color'] }> = {
+  learned: { name: 'Все изученные', color: 'teal' },
   favorites: { name: 'Избранное', color: 'saffron' },
   difficult: { name: 'Сложные', color: 'coral' },
 };
@@ -124,7 +125,7 @@ export function createVocabRepository(deps: VocabRepositoryDeps): VocabRepositor
     let changed = false;
     const createdAt = now();
 
-    for (const key of ['favorites', 'difficult'] as const) {
+    for (const key of ['learned', 'favorites', 'difficult'] as const) {
       if (findSystem(state, key)) continue;
       const folder = makeSystem(key, createId(), createdAt);
       state = enqueue(putFolder(state, folder), { kind: 'folder', key: folder.id, attempts: 0 });
@@ -171,6 +172,12 @@ export function createVocabRepository(deps: VocabRepositoryDeps): VocabRepositor
       state = added.state;
       changed = changed || added.changed;
     }
+
+    const learned = findSystem(state, 'learned');
+    if (!learned) throw new Error('Learned folder is missing');
+    const replaced = replaceLearned(state, learned.id, learnedWanted(state, input.learned));
+    state = replaced.state;
+    changed = changed || replaced.changed;
 
     for (const topic of input.topics) {
       const topicId = cleanItemId(topic.topicId);
@@ -1036,7 +1043,52 @@ function requireDraft(input: FolderDraft): FolderDraft {
 }
 
 function assertEditable(folder: Folder): void {
-  if (folder.systemKey === 'difficult') throw new Error('Folder is automatic');
+  if (folder.systemKey === 'difficult' || folder.systemKey === 'learned') {
+    throw new Error('Folder is automatic');
+  }
+}
+
+function learnedWanted(
+  state: PersistedFolders,
+  learned: readonly { itemId: string; addedAt: string }[],
+): Map<string, { addedAt: string; userItemId: string | null }> {
+  const wanted = new Map<string, { addedAt: string; userItemId: string | null }>();
+  for (const entry of learned) {
+    const itemId = cleanItemId(entry.itemId);
+    const addedAt = entry.addedAt.trim();
+    if (!itemId || addedAt.length === 0) continue;
+    const prev = wanted.get(itemId);
+    if (!prev || addedAt < prev.addedAt) wanted.set(itemId, { addedAt, userItemId: null });
+  }
+  for (const word of Object.values(state.userItems)) {
+    const prev = wanted.get(word.id);
+    if (prev) {
+      wanted.set(word.id, { addedAt: prev.addedAt, userItemId: word.id });
+      continue;
+    }
+    wanted.set(word.id, { addedAt: word.createdAt, userItemId: word.id });
+  }
+  return wanted;
+}
+
+function replaceLearned(
+  state: PersistedFolders,
+  folderId: string,
+  wanted: ReadonlyMap<string, { addedAt: string; userItemId: string | null }>,
+): { state: PersistedFolders; changed: boolean } {
+  let changed = false;
+  for (const item of Object.values(state.items)) {
+    if (item.folderId !== folderId || wanted.has(item.itemId)) continue;
+    const removed = removeItem(state, folderId, item.itemId);
+    state = removed.state;
+    changed = changed || removed.changed;
+  }
+  for (const [itemId, spec] of wanted) {
+    const added = addItem(state, folderId, itemId, spec.addedAt, spec.userItemId);
+    state = added.state;
+    changed = changed || added.changed;
+  }
+  return { state, changed };
 }
 
 function assertUser(userId: string): void {

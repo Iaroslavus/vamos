@@ -23,8 +23,10 @@ import { MoveItemSheet } from './components/MoveItemSheet';
 import { PhraseSearchModal } from './components/PhraseSearchModal';
 import { deleteCustomWord, saveCustomWord, updateCustomWord } from './customWord';
 import { vocabRepository } from './defaultRepository';
+import { LearnedFolderBody } from './components/LearnedFolderBody';
 import { folderTitle } from './display';
 import { useFolders } from './hooks/useFolders';
+import { isAutomaticSystem } from './model';
 
 export function FolderScreen() {
   const { t } = useTranslation();
@@ -45,8 +47,7 @@ export function FolderScreen() {
   const queryClient = useQueryClient();
 
   const folder = vocab.snapshot?.folders.find((entry) => entry.id === folderId);
-  const title = folder ? folderTitle(folder, t) : t('vocab.title');
-  const editable = folder != null && folder.systemKey !== 'difficult';
+  const editable = folder != null && !isAutomaticSystem(folder.systemKey);
   const custom = folder?.kind === 'custom';
   const itemIds = useMemo(
     () =>
@@ -56,6 +57,7 @@ export function FolderScreen() {
     [folderId, vocab.snapshot?.items],
   );
   const userItems = vocab.snapshot?.userItems ?? [];
+  const title = folder ? folderTitle(folder, t, itemIds.length) : t('vocab.title');
   const editingWord = userItems.find(
     (item) => item.id === (composer?.mode === 'edit' ? composer.id : ''),
   );
@@ -89,31 +91,43 @@ export function FolderScreen() {
             : undefined,
         }}
       />
-      <FolderContents
-        isError={vocab.isError}
-        isReady={vocab.isSuccess}
-        folder={folder}
-        userId={vocab.userId}
-        itemIds={itemIds}
-        userItems={userItems}
-        editable={editable}
-        preference={preference}
-        onRetry={() => {
-          void vocab.refetch();
-        }}
-        onRemove={(itemId) => {
-          const userId = vocab.userId;
-          if (!userId || !folder) return;
-          if (userItems.some((item) => item.id === itemId)) {
-            setDeletingWordId(itemId);
-            return;
-          }
-          void change(() => vocabRepository.removeItem(userId, folder.id, itemId));
-        }}
-        onEdit={(itemId) => setComposer({ mode: 'edit', id: itemId })}
-        onMove={setMovingId}
-        onAdd={() => setSearching(true)}
-      />
+      {folder?.systemKey === 'learned' && vocab.isSuccess ? (
+        <LearnedFolderBody
+          folderId={folder.id}
+          userId={vocab.userId}
+          items={vocab.snapshot?.items.filter((item) => item.folderId === folder.id) ?? []}
+          userItems={userItems}
+          dueIds={vocab.dueItemIds}
+          difficultIds={vocab.difficultIds}
+          preference={preference}
+        />
+      ) : (
+        <FolderContents
+          isError={vocab.isError}
+          isReady={vocab.isSuccess}
+          folder={folder}
+          userId={vocab.userId}
+          itemIds={itemIds}
+          userItems={userItems}
+          editable={editable}
+          preference={preference}
+          onRetry={() => {
+            void vocab.refetch();
+          }}
+          onRemove={(itemId) => {
+            const userId = vocab.userId;
+            if (!userId || !folder) return;
+            if (userItems.some((item) => item.id === itemId)) {
+              setDeletingWordId(itemId);
+              return;
+            }
+            void change(() => vocabRepository.removeItem(userId, folder.id, itemId));
+          }}
+          onEdit={(itemId) => setComposer({ mode: 'edit', id: itemId })}
+          onMove={setMovingId}
+          onAdd={() => setSearching(true)}
+        />
+      )}
       <MoveItemSheet
         visible={movingId !== null}
         folders={vocab.snapshot?.folders ?? []}

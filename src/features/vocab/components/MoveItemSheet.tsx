@@ -5,7 +5,7 @@ import { Text } from '@/components/Text';
 import { colors, space } from '@/theme/tokens';
 
 import { folderTitle } from '../display';
-import { sortFolders } from '../model';
+import { isAutomaticSystem, sortFolders } from '../model';
 import type { Folder } from '../types';
 import { BottomSheet } from './BottomSheet';
 
@@ -20,7 +20,7 @@ type MoveItemSheetProps = {
 export function MoveItemSheet({ visible, folders, fromId, onClose, onMove }: MoveItemSheetProps) {
   const { t } = useTranslation();
   const targets = sortFolders(folders).filter(
-    (folder) => folder.id !== fromId && folder.systemKey !== 'difficult',
+    (folder) => folder.id !== fromId && !isAutomaticSystem(folder.systemKey),
   );
 
   return (

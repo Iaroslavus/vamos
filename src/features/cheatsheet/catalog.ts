@@ -26,6 +26,28 @@ export function buildCheatsheetIndex(): CheatsheetEntry[] {
   });
 }
 
+const LEVEL_ORDER = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
+
+/** Course topics grouped by CEFR level, in curriculum order inside each level. */
+export function courseLevels(
+  entries: readonly { id: string; level: string }[],
+): { level: string; ids: string[] }[] {
+  const groups = new Map<string, string[]>();
+  for (const entry of entries) {
+    const ids = groups.get(entry.level) ?? [];
+    ids.push(entry.id);
+    groups.set(entry.level, ids);
+  }
+  return [...groups.keys()]
+    .sort((left, right) => levelRank(left) - levelRank(right) || left.localeCompare(right))
+    .map((level) => ({ level, ids: groups.get(level) ?? [] }));
+}
+
+function levelRank(level: string): number {
+  const index = LEVEL_ORDER.indexOf(level as (typeof LEVEL_ORDER)[number]);
+  return index === -1 ? LEVEL_ORDER.length : index;
+}
+
 /** Topics from the starter week, in day order. Otherwise the first topics. */
 export function popularTopicIds(entries: readonly CheatsheetEntry[]): string[] {
   const starred = entries

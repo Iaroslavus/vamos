@@ -50,9 +50,16 @@ export type FolderSnapshot = {
   pending: number;
 };
 
+export type LearnedSeed = {
+  itemId: string;
+  addedAt: string;
+};
+
 export type DerivedInput = {
   topics: readonly { topicId: string; name: string; itemIds: readonly string[] }[];
   difficultItemIds: readonly string[];
+  /** Items from lessons the learner has finished. Own words are added by the repository. */
+  learned: readonly LearnedSeed[];
 };
 
 export type FolderDraft = {
@@ -130,7 +137,7 @@ export type Scheduler = (fn: () => void, delayMs: number) => () => void;
 
 export type VocabRepository = {
   read(userId: string): Promise<FolderSnapshot>;
-  /** Creates Избранное and Сложные and copies the old local favorites once. */
+  /** Creates Усі вивчені, Избранное and Сложные, and copies the old local favorites once. */
   ensureBases(userId: string): Promise<FolderSnapshot>;
   /**
    * Ensures the system folders, replaces Сложные with `difficultItemIds`,

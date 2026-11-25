@@ -31,9 +31,16 @@ type CheatsheetScreenProps = {
   topicId: string | null;
   source: 'path' | 'search';
   autoFocus?: boolean;
+  /** Inside the vocab tab: no back bar, the tab is the title. */
+  embedded?: boolean;
 };
 
-export function CheatsheetScreen({ topicId, source, autoFocus = false }: CheatsheetScreenProps) {
+export function CheatsheetScreen({
+  topicId,
+  source,
+  autoFocus = false,
+  embedded = false,
+}: CheatsheetScreenProps) {
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const navigation = useNavigation();
@@ -70,22 +77,34 @@ export function CheatsheetScreen({ topicId, source, autoFocus = false }: Cheatsh
   }, [card, navigation]);
 
   const lessonId = topic ? lessonToStudy(topic, completed) : null;
-  const bottom = Math.max(insets.bottom, space.md);
+  const bottom = embedded ? space.md : Math.max(insets.bottom, space.md);
 
   return (
-    <View style={styles.root}>
-      <View style={[styles.header, { paddingTop: insets.top + space.sm }]}>
-        <IconButton accessibilityLabel={t('cheatsheet.back')} onPress={() => router.back()}>
-          <ChevronLeft color={colors.ink} size={22} strokeWidth={ICON_STROKE} />
-        </IconButton>
-        <Text variant="h3" accessibilityRole="header" style={styles.title}>
-          {t('cheatsheet.title')}
-        </Text>
-      </View>
+    <View style={[styles.root, embedded ? styles.embedded : null]}>
+      {embedded ? null : (
+        <View style={[styles.header, { paddingTop: insets.top + space.sm }]}>
+          <IconButton accessibilityLabel={t('cheatsheet.back')} onPress={() => router.back()}>
+            <ChevronLeft color={colors.ink} size={22} strokeWidth={ICON_STROKE} />
+          </IconButton>
+          <Text variant="h3" accessibilityRole="header" style={styles.title}>
+            {t('cheatsheet.title')}
+          </Text>
+        </View>
+      )}
       <CheatsheetSearch value={query.query} onChangeText={query.setQuery} autoFocus={autoFocus} />
       <Text variant="body" style={styles.hint}>
         {t('cheatsheet.hint')}
       </Text>
+      {query.browsing && query.levels.length > 0 ? (
+        <TopicChips
+          chips={query.levels.map((entry) => ({
+            id: entry.level,
+            label: entry.level,
+            selected: entry.level === query.level,
+          }))}
+          onPress={query.setLevel}
+        />
+      ) : null}
       <TopicChips
         chips={query.chips.map((entry) => ({
           id: entry.id,
@@ -168,6 +187,9 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: colors.ground,
+  },
+  embedded: {
+    paddingTop: space.sm,
   },
   header: {
     flexDirection: 'row',

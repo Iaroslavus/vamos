@@ -5,7 +5,13 @@ import { useSession } from '@/features/auth/useSession';
 
 import { vocabRepository } from '../defaultRepository';
 import { folderTitle } from '../display';
-import { folderHoldsAll, parseFolderName, sortFolders, type FolderColor } from '../model';
+import {
+  folderHoldsAll,
+  isAutomaticSystem,
+  parseFolderName,
+  sortFolders,
+  type FolderColor,
+} from '../model';
 import type { Folder, FolderSnapshot } from '../types';
 
 const NEW_FOLDER_COLOR: FolderColor = 'coral';
@@ -54,7 +60,7 @@ export function useAddToVocabSheet({
   if (visible && snapshot && seededKey !== itemKey) {
     const initial = new Set<string>();
     for (const folder of snapshot.folders) {
-      if (folder.systemKey === 'difficult') continue;
+      if (isAutomaticSystem(folder.systemKey)) continue;
       if (folderHoldsAll(snapshot.items, folder.id, ids)) initial.add(folder.id);
     }
     setSeededKey(itemKey);
@@ -78,7 +84,8 @@ export function useAddToVocabSheet({
   }, [userId, visible]);
 
   const folders = useMemo(
-    () => sortFolders(snapshot?.folders ?? []).filter((folder) => folder.systemKey !== 'difficult'),
+    () =>
+      sortFolders(snapshot?.folders ?? []).filter((folder) => !isAutomaticSystem(folder.systemKey)),
     [snapshot],
   );
 
@@ -129,7 +136,7 @@ export function useAddToVocabSheet({
       }
 
       for (const folder of before.folders) {
-        if (folder.systemKey === 'difficult') continue;
+        if (isAutomaticSystem(folder.systemKey)) continue;
         if (!folderHoldsAll(before.items, folder.id, ids)) continue;
         if (targets.has(folder.id)) continue;
         latest = await removeItems(userId, folder.id, ids);

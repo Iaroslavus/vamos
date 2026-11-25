@@ -8,7 +8,7 @@ export const ITEM_ID_MAX = 100;
 export const DIFFICULT_WINDOW_MS = 14 * 24 * 60 * 60 * 1000;
 export const DIFFICULT_MIN_ERRORS = 2;
 
-export type SystemKey = 'favorites' | 'difficult';
+export type SystemKey = 'learned' | 'favorites' | 'difficult';
 
 export type MistakeLog = {
   itemId: string;
@@ -198,11 +198,17 @@ export function parseLegacyFavoriteIds(raw: string | null): string[] {
   return unique;
 }
 
+/** Difficult and «all learned» rebuild themselves. The learner cannot edit them. */
+export function isAutomaticSystem(key: SystemKey | null): boolean {
+  return key === 'learned' || key === 'difficult';
+}
+
 function folderRank(folder: { systemKey: SystemKey | null; topicId: string | null }): number {
-  if (folder.systemKey === 'favorites') return 0;
-  if (folder.systemKey === 'difficult') return 1;
-  if (folder.topicId) return 2;
-  return 3;
+  if (folder.systemKey === 'learned') return 0;
+  if (folder.systemKey === 'favorites') return 1;
+  if (folder.systemKey === 'difficult') return 2;
+  if (folder.topicId) return 3;
+  return 4;
 }
 
 function clampFolderName(value: string, fallback: string): string | null {

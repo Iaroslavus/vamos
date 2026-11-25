@@ -5,6 +5,7 @@ import {
   folderHoldsAll,
   parseFolderName,
   parseLegacyFavoriteIds,
+  sortFolders,
   topicSeeds,
 } from './model';
 
@@ -123,6 +124,21 @@ describe('folder helpers', () => {
     expect(folderHoldsAll(items, 'fav', ['hola.hola', 'hola.adios'])).toBe(true);
     expect(folderHoldsAll(items, 'fav', ['hola.hola', 'hola.gracias'])).toBe(false);
     expect(folderHoldsAll(items, 'fav', [])).toBe(false);
+  });
+
+  it('lists the learned folder ahead of favorites', () => {
+    const folders = sortFolders([
+      { systemKey: 'favorites', topicId: null, name: 'Избранное', createdAt: '2' },
+      { systemKey: 'learned', topicId: null, name: 'Все', createdAt: '3' },
+      { systemKey: 'difficult', topicId: null, name: 'Сложные', createdAt: '1' },
+      { systemKey: null, topicId: null, name: 'А', createdAt: '4' },
+    ]);
+    expect(folders.map((folder) => folder.systemKey ?? folder.name)).toEqual([
+      'learned',
+      'favorites',
+      'difficult',
+      'А',
+    ]);
   });
 
   it('reads the old favorites list once', () => {
